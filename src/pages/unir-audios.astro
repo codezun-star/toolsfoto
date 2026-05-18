@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import UnirAudiosTool from '@/components/tools/UnirAudiosTool';
+
+const faqs = [
+  { q: '¿Cuántos archivos puedo unir?', a: 'No hay un límite fijo, pero el procesamiento se realiza en la RAM de tu navegador. Con 10-15 archivos de tamaño normal (3-5 MB cada uno) no deberían surgir problemas. Para archivos WAV sin comprimir o archivos muy grandes, ten en cuenta que la RAM disponible puede ser un factor limitante.' },
+  { q: '¿Los archivos deben estar en el mismo formato?', a: 'No. La herramienta recodifica automáticamente todos los archivos a MP3 antes de unirlos, por lo que puedes combinar MP3, WAV, OGG y AAC sin problema. El resultado siempre se descarga en MP3.' },
+  { q: '¿Cómo funciona el reordenamiento?', a: 'Arrastra los archivos de la lista usando el icono de agarre (⠿) para cambiar su orden antes de unirlos. El orden de la lista es el orden en que aparecerán en el audio final.' },
+  { q: '¿Se puede añadir silencio entre los archivos?', a: 'Esta herramienta une los audios directamente sin silencio entre ellos. Si necesitas añadir silencios, una opción es crear un archivo WAV de silencio con la herramienta de ajuste de volumen aplicada a un audio vacío, y añadirlo entre los archivos.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tus archivos de audio nunca salen de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="unir-audios" faqs={faqs}>
+  <UnirAudiosTool client:load />
+</ToolLayout>

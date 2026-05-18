@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AnadirAudioVideoTool from '@/components/tools/AnadirAudioVideoTool';
+
+const faqs = [
+  {
+    q: '¿Qué diferencia hay entre reemplazar y mezclar el audio?',
+    a: 'El modo Reemplazar elimina el audio original del vídeo y lo sustituye completamente por el archivo de audio que subas. El modo Mezclar mantiene el audio original del vídeo y añade el archivo de audio como capa adicional (música de fondo, por ejemplo), combinando ambas pistas.',
+  },
+  {
+    q: '¿El vídeo pierde calidad al añadir el audio?',
+    a: 'En modo Reemplazar, el stream de vídeo se copia directamente sin recodificar (copia de stream), por lo que la calidad visual es idéntica al original. En modo Mezclar es necesario un pequeño procesamiento de audio pero el vídeo sigue sin recodificarse.',
+  },
+  {
+    q: '¿Qué pasa si el audio es más largo que el vídeo?',
+    a: 'La herramienta usa la opción -shortest de FFmpeg, que corta el resultado a la duración del stream más corto. Si el audio es más largo que el vídeo, el resultado tendrá la duración del vídeo. Si el audio es más corto, el vídeo se cortará cuando el audio termine.',
+  },
+  {
+    q: '¿Qué formatos de vídeo y audio se admiten?',
+    a: 'Vídeo: MP4, WebM, MOV, AVI. Audio: MP3, WAV, OGG, AAC, FLAC. El resultado siempre se descarga como MP4. Si tienes un formato no listado, puedes convertirlo primero con las herramientas de conversión de ToolsFoto.',
+  },
+  {
+    q: '¿Se envían mis archivos a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el audio salen de tu dispositivo en ningún momento.',
+  },
+];
+---
+<ToolLayout slug="anadir-audio-video" faqs={faqs}>
+  <AnadirAudioVideoTool client:load />
+</ToolLayout>

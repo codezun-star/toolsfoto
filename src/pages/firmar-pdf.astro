@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FirmarPDFTool from '@/components/tools/FirmarPDFTool';
+
+const faqs = [
+  {
+    q: '¿Es válida legalmente la firma digital generada con esta herramienta?',
+    a: 'Esta herramienta crea una firma manuscrita visual (imagen de tu trazo dibujado) incrustada en el PDF. No genera una firma digital criptográfica con certificado. Para documentos con validez legal plena en España (eIDAS), se necesita una firma electrónica cualificada con certificado reconocido como el DNI electrónico.',
+  },
+  {
+    q: '¿Puedo usar el dedo en móvil para dibujar la firma?',
+    a: 'Sí. El área de firma admite tanto mouse como eventos táctiles. En móviles y tablets puedes dibujar directamente con el dedo. Recomendamos usar el dedo índice y trazar despacio para obtener una firma más precisa.',
+  },
+  {
+    q: '¿En qué página se inserta la firma?',
+    a: 'Puedes elegir el número de página donde insertar la firma. La herramienta carga automáticamente el número total de páginas del PDF para que sepas el rango disponible.',
+  },
+  {
+    q: '¿Cómo funciona el posicionamiento de la firma?',
+    a: 'La posición se define como porcentaje del ancho y alto de la página (ejes X e Y). Esto hace que funcione correctamente independientemente del tamaño de la página. El 0% es la esquina superior izquierda. Puedes también ajustar el ancho en puntos para hacer la firma más grande o más pequeña.',
+  },
+  {
+    q: '¿El PDF original se modifica?',
+    a: 'No. La herramienta carga el PDF original en memoria, añade la firma como imagen incrustada y genera un nuevo PDF descargable. El archivo original en tu dispositivo no se toca.',
+  },
+];
+---
+<ToolLayout slug="firmar-pdf" faqs={faqs}>
+  <FirmarPDFTool client:load />
+</ToolLayout>

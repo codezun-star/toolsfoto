@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JPGaPDFTool from '@/components/tools/JPGaPDFTool';
+
+const faqs = [
+  {
+    q: '¿Qué formatos de imagen puedo usar?',
+    a: 'Puedes usar imágenes en formato JPG, PNG y WebP. Si subes un PNG o WebP, la herramienta lo convierte internamente antes de incrustrarlo en el PDF, por lo que el resultado siempre es compatible con cualquier lector de PDFs.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre tamaño A4, Carta y Automático?',
+    a: 'A4 (210×297 mm) y Carta (216×279 mm) son los tamaños de papel estándar más usados. Con estas opciones, cada imagen se escala para caber en el tamaño de página seleccionado, manteniedo la proporción y centrando la imagen. Con "Automático" la página tiene exactamente el tamaño de la imagen.',
+  },
+  {
+    q: '¿Cómo ordeno las imágenes antes de crear el PDF?',
+    a: 'Usa las flechas de arriba y abajo que aparecen sobre cada imagen en la cuadrícula para cambiar el orden. El primer elemento de la cuadrícula será la primera página del PDF.',
+  },
+  {
+    q: '¿Se comprimen las imágenes al incrustarlas en el PDF?',
+    a: 'Las imágenes JPEG se incrustan directamente sin recompresión adicional. Las imágenes PNG y WebP se convierten a PNG antes de incrustarse. Para obtener el PDF más ligero, comprime las imágenes con nuestra herramienta "Comprimir imagen" antes de crear el PDF.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el proceso usa la librería pdf-lib y ocurre completamente en tu navegador. Tus imágenes nunca salen de tu dispositivo.',
+  },
+];
+---
+<ToolLayout slug="jpg-a-pdf" faqs={faqs}>
+  <JPGaPDFTool client:load />
+</ToolLayout>

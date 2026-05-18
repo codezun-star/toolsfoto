@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PDFaPNGTool from '@/components/tools/PDFaPNGTool';
+
+const faqs = [
+  {
+    q: '¿Qué diferencia hay entre PDF a PNG y PDF a JPG?',
+    a: 'PNG es un formato sin pérdida que admite transparencia. Es ideal para PDFs con texto, gráficos vectoriales o logos donde necesitas bordes nítidos y sin artefactos. JPG tiene compresión con pérdida y es mejor para PDFs con fotografías donde el tamaño del archivo importa más.',
+  },
+  {
+    q: '¿Qué resoluciones están disponibles?',
+    a: 'Puedes elegir entre cuatro calidades: 72 dpi (escala ×1, resolución de pantalla estándar), 108 dpi (×1.5), 144 dpi (×2, recomendada para impresión básica) y 216 dpi (×3, para uso profesional o impresión de alta calidad).',
+  },
+  {
+    q: '¿Cada página del PDF se convierte en un PNG separado?',
+    a: 'Sí. Cada página genera un archivo PNG individual. Puedes descargar cada imagen por separado o usar el botón "Descargar todas" para obtenerlas todas de una vez.',
+  },
+  {
+    q: '¿Funciona con PDFs protegidos con contraseña?',
+    a: 'No. Los PDFs con contraseña no se pueden convertir directamente. Primero debes eliminar la protección con nuestra herramienta "Eliminar contraseña PDF" y luego convertir el PDF resultante.',
+  },
+  {
+    q: '¿Por qué la conversión usa PDF.js de un CDN externo?',
+    a: 'PDF.js necesita un archivo worker para el renderizado en segundo plano. Se carga desde la CDN de Cloudflare, que es pública y de alta disponibilidad. El renderizado de tu PDF ocurre íntegramente en tu navegador; el contenido del PDF no se envía a ningún servidor.',
+  },
+];
+---
+<ToolLayout slug="pdf-a-png" faqs={faqs}>
+  <PDFaPNGTool client:load />
+</ToolLayout>

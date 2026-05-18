@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ProtegerPDFTool from '@/components/tools/ProtegerPDFTool';
+
+const faqs = [
+  {
+    q: '¿La contraseña se envía a algún servidor?',
+    a: 'Nunca. El cifrado se aplica completamente en tu navegador con la librería pdf-lib. Ni el PDF ni la contraseña se envían a ningún servidor externo. Todo ocurre en tu dispositivo.',
+  },
+  {
+    q: '¿Qué diferencia hay entre contraseña de usuario y de propietario?',
+    a: 'La contraseña de usuario es necesaria para abrir y ver el PDF. La contraseña de propietario controla los permisos del documento: si alguien la conoce, puede imprimir en alta resolución, copiar texto o editar el archivo. Si no estableces contraseña de propietario, se usará la misma que la de usuario.',
+  },
+  {
+    q: '¿Qué permisos tiene el PDF protegido resultante?',
+    a: 'El PDF protegido permite impresión en alta resolución y cumplimentar formularios, pero no permite copiar texto, editar el contenido ni ensamblar el documento. Estos permisos están definidos por la contraseña de propietario.',
+  },
+  {
+    q: '¿Puedo quitar la contraseña más adelante?',
+    a: 'Sí. Si conoces la contraseña de usuario, puedes usar nuestra herramienta "Eliminar contraseña PDF" para obtener una versión desbloqueada del documento.',
+  },
+  {
+    q: '¿Qué nivel de cifrado se aplica?',
+    a: 'pdf-lib aplica cifrado RC4 de 128 bits, compatible con la mayoría de lectores de PDF (Acrobat Reader, Preview de macOS, navegadores modernos). Para cifrado AES-256 necesitarías Adobe Acrobat o herramientas especializadas.',
+  },
+];
+---
+<ToolLayout slug="proteger-pdf" faqs={faqs}>
+  <ProtegerPDFTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FormatearJSONTool from '@/components/tools/FormatearJSONTool';
+
+const faqs = [
+  {
+    q: '¿Qué diferencia hay entre formatear con 2 y con 4 espacios?',
+    a: '2 espacios produce un JSON más compacto, habitual en código JavaScript y proyectos web. 4 espacios es más legible y es el estilo predeterminado en muchos editores como VS Code. Ambos son JSON válido; la diferencia es puramente estética.',
+  },
+  {
+    q: '¿Qué hace la opción de minificar?',
+    a: 'Minificar elimina todos los espacios, saltos de línea e indentación del JSON, produciendo el texto más compacto posible. Es útil para reducir el tamaño de archivos de configuración o respuestas de API antes de almacenarlos o transmitirlos.',
+  },
+  {
+    q: '¿Cómo valida la herramienta el JSON?',
+    a: 'Usa el parser nativo de JavaScript (JSON.parse). Si el JSON tiene errores de sintaxis (comillas faltantes, comas extra, llaves sin cerrar…) se muestra el mensaje de error con el número de línea aproximado donde se encuentra el problema.',
+  },
+  {
+    q: '¿Puedo formatear JSON muy grande?',
+    a: 'Sí. La herramienta funciona completamente en tu navegador sin enviar datos a ningún servidor. Para JSON de gran tamaño (varios megabytes) el formateo puede tardar un segundo, pero es completamente funcional.',
+  },
+  {
+    q: '¿Puedo descargar el JSON formateado?',
+    a: 'Sí. El botón de descarga guarda el resultado como archivo .json con el nombre "resultado.json". También puedes copiar todo el contenido al portapapeles con el botón Copiar para pegarlo directamente en tu editor de código.',
+  },
+];
+---
+<ToolLayout slug="formatear-json" faqs={faqs}>
+  <FormatearJSONTool client:load />
+</ToolLayout>

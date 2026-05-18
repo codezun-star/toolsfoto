@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirVideoTool from '@/components/tools/ComprimirVideoTool';
+
+const faqs = [
+  { q: '¿Qué formatos de vídeo admite esta herramienta?', a: 'Admite MP4, WebM y MOV como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos móviles.' },
+  { q: '¿Qué significa el nivel CRF?', a: 'CRF (Constant Rate Factor) controla la calidad visual de la compresión. Un valor bajo (20) produce mayor calidad y mayor tamaño de archivo. Un valor alto (36) produce menor calidad pero mucho menor tamaño. El valor 28 es el equilibrio recomendado para la mayoría de los casos.' },
+  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez que usas la herramienta se descarga el procesador FFmpeg.wasm (~30 MB) desde la CDN. El navegador guarda en caché este archivo, por lo que las siguientes veces es inmediato. Tu vídeo nunca sale de tu dispositivo.' },
+  { q: '¿Cuánto puedo reducir el tamaño del vídeo?', a: 'Depende del vídeo original. Un vídeo grabado con el móvil sin compresión puede reducirse un 50-80%. Un vídeo ya comprimido (como los descargados de YouTube) se reducirá menos. La calidad "Baja" puede reducir hasta un 70-80% del tamaño original.' },
+  { q: '¿Hay límite de tamaño del archivo?', a: 'El límite técnico está en la memoria RAM disponible en tu navegador. Para la mayoría de los casos, archivos de hasta 500 MB se procesan sin problemas. Si el vídeo es muy largo, considera primero recortarlo con la herramienta de recorte.' },
+];
+---
+<ToolLayout slug="comprimir-video" faqs={faqs}>
+  <ComprimirVideoTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ColoresImagenTool from '@/components/tools/ColoresImagenTool';
+
+const faqs = [
+  {
+    q: '¿Cómo se determinan los colores "dominantes"?',
+    a: 'La imagen se redimensiona a 200×200 px para una muestra representativa. Luego cada píxel se cuantiza a una paleta reducida de 16 bits por canal (4 bits), agrupando colores similares. Los grupos más frecuentes determinan los colores dominantes. Es un algoritmo de cuantización por frecuencia, eficiente y sin dependencias externas.',
+  },
+  {
+    q: '¿Para qué sirven los valores HSL?',
+    a: 'HSL (Hue, Saturation, Lightness) es la representación de color más intuitiva para diseñadores y developers front-end. Permite ajustar fácilmente el tono (hue), la saturación y la luminosidad en CSS. Por ejemplo, `hsl(210, 80%, 50%)` es más fácil de entender que su equivalente hexadecimal.',
+  },
+  {
+    q: '¿Cuántos colores debo extraer?',
+    a: 'Depende del uso. 5 colores es ideal para paletas de marca minimalistas. 8 colores es el equilibrio perfecto para la mayoría de proyectos de diseño. 12 colores es útil cuando quieres capturar matices más sutiles de fotografías complejas.',
+  },
+  {
+    q: '¿Por qué algunos colores aparecen desaturados o grises?',
+    a: 'Las fotografías suelen tener grandes áreas de cielo, fondo o sombras con colores neutros. Si los colores neutros dominan en la imagen, aparecerán en la paleta. Para obtener colores más vivos, usa imágenes con mayor contraste cromático o con sujetos de colores saturados.',
+  },
+  {
+    q: '¿Puedo descargar la paleta como imagen?',
+    a: 'Sí. El botón "Descargar paleta" genera una imagen PNG con todos los colores extraídos en formato de franja con sus códigos hexadecimales. Es útil para documentar paletas de marca en presentaciones o guías de estilo.',
+  },
+];
+---
+<ToolLayout slug="colores-imagen" faqs={faqs}>
+  <ColoresImagenTool client:load />
+</ToolLayout>

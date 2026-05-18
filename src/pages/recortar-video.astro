@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RecortarVideoTool from '@/components/tools/RecortarVideoTool';
+
+const faqs = [
+  { q: '¿Se pierde calidad al recortar el vídeo?', a: 'No. La herramienta usa la opción "-c copy" de FFmpeg, que copia los streams de vídeo y audio sin recodificar. Esto significa que el recorte es sin pérdida de calidad y además es muy rápido, ya que no hay que decodificar y volver a codificar el vídeo.' },
+  { q: '¿Cómo introduzco los tiempos correctamente?', a: 'Puedes usar el formato mm:ss (por ejemplo, "01:30" para 1 minuto y 30 segundos) o h:mm:ss para vídeos de más de una hora. También puedes escribir directamente los segundos (por ejemplo, "90" para 1 minuto y 30 segundos). El reproductor de vídeo te ayuda a identificar los tiempos exactos.' },
+  { q: '¿Puede haber un pequeño desfase en el punto de corte?', a: 'Sí, en vídeos H.264, el punto de corte exacto puede desplazarse al keyframe (fotograma clave) anterior más cercano. Esto es normal con "-c copy" y suele ser de menos de 1-2 segundos. Si necesitas cortes de precisión exacta, el vídeo deberá recodificarse.' },
+  { q: '¿Puedo recortar el principio y el final a la vez?', a: 'Sí. Introduce el tiempo de inicio para eliminar la parte inicial y el tiempo de fin para eliminar la parte final. Todo lo que esté entre inicio y fin se conservará en el vídeo descargado.' },
+  { q: '¿Qué formatos admite la herramienta?', a: 'MP4, WebM y MOV como entrada. El resultado se descarga siempre como MP4, que es el formato con mayor compatibilidad universal.' },
+];
+---
+<ToolLayout slug="recortar-video" faqs={faqs}>
+  <RecortarVideoTool client:load />
+</ToolLayout>

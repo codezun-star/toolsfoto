@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import Base64TextoTool from '@/components/tools/Base64TextoTool';
+
+const faqs = [
+  {
+    q: '¿Para qué se usa la codificación Base64?',
+    a: 'Base64 se usa para transmitir datos binarios a través de sistemas que solo soportan texto ASCII: tokens de autenticación en HTTP headers (Basic Auth), imágenes incrustadas en HTML o CSS (data URIs), archivos adjuntos en emails (MIME), datos en JSON que incluyen bytes binarios, y credenciales en archivos de configuración.',
+  },
+  {
+    q: '¿Base64 es un tipo de cifrado?',
+    a: 'No. Base64 es solo una codificación, no un cifrado. Cualquiera puede decodificar un texto en Base64 sin necesidad de clave. No debe usarse para proteger información sensible. Para seguridad real se necesitan algoritmos de cifrado como AES o RSA.',
+  },
+  {
+    q: '¿Funciona con caracteres Unicode, emojis y acentos?',
+    a: 'Sí. La herramienta maneja correctamente caracteres Unicode completos, incluyendo emojis, caracteres con acento (á, é, ñ…), caracteres CJK (chino, japonés, coreano) y cualquier otro script. Internamente usa TextEncoder para una conversión correcta.',
+  },
+  {
+    q: '¿Qué diferencia hay entre Base64 normal y Base64 URL-safe?',
+    a: 'El Base64 estándar usa los caracteres +, / y = que tienen significado especial en URLs. El Base64 URL-safe reemplaza + por -, / por _ y omite el relleno =. Esta herramienta genera Base64 estándar; si necesitas URL-safe, reemplaza los caracteres manualmente.',
+  },
+  {
+    q: '¿Hay límite de tamaño del texto a codificar?',
+    a: 'No hay límite impuesto por la herramienta. El procesamiento ocurre en tu navegador con JavaScript nativo. Para textos muy largos (varios megabytes), puede tardar un momento, pero funciona correctamente.',
+  },
+];
+---
+<ToolLayout slug="base64-texto" faqs={faqs}>
+  <Base64TextoTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ImagenABase64Tool from '@/components/tools/ImagenABase64Tool';
+
+const faqs = [
+  {
+    q: '¿Cuándo debo usar Base64 para imágenes?',
+    a: 'Base64 es útil para imágenes muy pequeñas (iconos, placeholders) que quieres incrustar directamente en HTML o CSS para evitar una petición HTTP adicional. No es recomendable para imágenes grandes: Base64 incrementa el tamaño un 33%, lo que aumenta el tiempo de carga y el peso del HTML.',
+  },
+  {
+    q: '¿Cuál es el tamaño máximo recomendado para Base64?',
+    a: 'Como regla general, no superes los 10 KB para imágenes incrustadas en HTML/CSS. Para imágenes más grandes, es mucho más eficiente servirlas como archivos estáticos. La herramienta muestra el tamaño resultante en Base64 para que puedas valorarlo.',
+  },
+  {
+    q: '¿Funciona con todos los formatos de imagen?',
+    a: 'Sí. Acepta cualquier imagen que soporte tu navegador: JPG, PNG, WebP, GIF, AVIF, SVG, ICO, etc. El Data URI resultante incluye el tipo MIME correcto para que el navegador lo renderice correctamente.',
+  },
+  {
+    q: '¿El código generado funciona en todos los navegadores?',
+    a: 'Los Data URIs Base64 tienen soporte universal en todos los navegadores modernos (Chrome, Firefox, Safari, Edge). El formato `data:image/jpeg;base64,...` es un estándar web definido en RFC 2397 y es compatible desde Internet Explorer 8.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. La conversión a Base64 usa la API FileReader del navegador, que opera completamente en local. Tu imagen nunca se envía a ningún servidor externo.',
+  },
+];
+---
+<ToolLayout slug="imagen-a-base64" faqs={faqs}>
+  <ImagenABase64Tool client:load />
+</ToolLayout>

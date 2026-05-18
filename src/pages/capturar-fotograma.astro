@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CapturarFotogramaTool from '@/components/tools/CapturarFotogramaTool';
+
+const faqs = [
+  {
+    q: '¿En qué formato se descarga el fotograma extraído?',
+    a: 'El fotograma se descarga como imagen PNG, que es un formato sin pérdida que preserva toda la calidad del cuadro original. El nombre del archivo incluye el tiempo en segundos del fotograma para identificarlo fácilmente.',
+  },
+  {
+    q: '¿Cómo elijo el momento exacto que quiero capturar?',
+    a: 'La herramienta carga el vídeo en el navegador y muestra un reproductor con un slider de tiempo. Arrastra el slider al momento que quieras y el vídeo se posiciona en ese instante. También puedes reproducir el vídeo y pausarlo en el fotograma exacto que buscas.',
+  },
+  {
+    q: '¿Qué resolución tiene el fotograma capturado?',
+    a: 'La imagen PNG resultante tiene exactamente la misma resolución que el vídeo original. Si tu vídeo es 1920×1080, el fotograma capturado también será 1920×1080 píxeles.',
+  },
+  {
+    q: '¿Funciona con vídeos de alta resolución (4K)?',
+    a: 'Sí, aunque los vídeos 4K son archivos muy grandes y pueden tardar en cargarse en el navegador. El límite práctico depende de la memoria RAM de tu dispositivo. Para vídeos muy grandes, considera comprimirlos primero.',
+  },
+  {
+    q: '¿Puedo extraer varios fotogramas del mismo vídeo?',
+    a: 'Actualmente puedes capturar un fotograma a la vez. Después de descargar el primero, puedes mover el slider a otro momento y extraer otro fotograma sin necesidad de volver a subir el vídeo.',
+  },
+];
+---
+<ToolLayout slug="capturar-fotograma" faqs={faqs}>
+  <CapturarFotogramaTool client:load />
+</ToolLayout>

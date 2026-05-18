@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SvgAPngTool from '@/components/tools/SvgAPngTool';
+
+const faqs = [
+  {
+    q: '¿Por qué convertir SVG a PNG?',
+    a: 'Aunque SVG es el mejor formato para la web por su escalabilidad, muchas plataformas y aplicaciones no lo admiten: apps de mensajería, editores de presentaciones, redes sociales, documentos Word/PDF y sistemas de diseño como Figma en ciertos contextos requieren imágenes rasterizadas. PNG mantiene la transparencia que los SVG suelen tener.',
+  },
+  {
+    q: '¿Cuál es el tamaño recomendado para exportar?',
+    a: 'Depende del uso. Para favicon: 512×512. Para iconos web (2x): el doble del tamaño de display. Para OG images: 1200×630. Para impresión a 300 dpi: multiplica las dimensiones en cm por 118 (por ejemplo, 10 cm → 1180 px). La herramienta muestra las dimensiones originales del SVG como punto de partida.',
+  },
+  {
+    q: '¿Se mantiene la transparencia del SVG en el PNG?',
+    a: 'Sí, si seleccionas "Transparente" como fondo. El PNG resultante tendrá canal alfa y conservará la transparencia del SVG original. Si seleccionas "Color sólido", el fondo se rellena con el color elegido.',
+  },
+  {
+    q: '¿Funciona con SVGs que usan fuentes externas o referencias externas?',
+    a: 'El renderizado del SVG usa el motor del navegador, por lo que las fuentes del sistema disponibles en tu equipo sí se renderizan. Las referencias a URLs externas (imágenes, fuentes de CDN) pueden no cargarse por restricciones de seguridad del navegador (CORS).',
+  },
+  {
+    q: '¿Puedo convertir un SVG animado a PNG?',
+    a: 'Sí, pero el PNG capturará solo el estado inicial de la animación (el primer fotograma). Si necesitas capturar un frame específico, edita el SVG para eliminar las animaciones o ajustar el estado que quieres exportar.',
+  },
+];
+---
+<ToolLayout slug="svg-a-png" faqs={faqs}>
+  <SvgAPngTool client:load />
+</ToolLayout>

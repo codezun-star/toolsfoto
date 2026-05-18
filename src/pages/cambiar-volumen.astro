@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarVolumenTool from '@/components/tools/CambiarVolumenTool';
+
+const faqs = [
+  { q: '¿Qué significa aumentar o reducir el volumen en dB?', a: 'Los decibelios (dB) son una escala logarítmica. +6 dB duplica la amplitud de la onda (el sonido percibido es claramente más alto). -6 dB la reduce a la mitad. +3 dB es un aumento perceptible pero sutil. Para ajustes finos, usa valores entre -3 y +3 dB.' },
+  { q: '¿Qué hace la opción "Normalizar audio"?', a: 'La normalización (loudnorm) analiza el audio y ajusta el volumen para que el nivel más alto alcance el máximo posible sin distorsionar. Es ideal cuando tienes un audio grabado muy bajo y quieres subirlo al máximo nivel sin clipear. Ignora el slider de dB cuando está activada.' },
+  { q: '¿Puedo subir el volumen de un audio sin que se distorsione?', a: 'Si el audio original tiene partes que ya alcanzan el nivel máximo, subir el volumen puede producir distorsión (clipping). Usa la opción "Normalizar" para un resultado óptimo, ya que calcula automáticamente cuánto se puede subir sin distorsión.' },
+  { q: '¿Qué formatos admite?', a: 'MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el de entrada.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="cambiar-volumen" faqs={faqs}>
+  <CambiarVolumenTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FotoCarnetTool from '@/components/tools/FotoCarnetTool';
+
+const faqs = [
+  {
+    q: '¿Qué tamaños de foto carnet están disponibles?',
+    a: 'Incluimos los formatos oficiales más utilizados: DNI/Carnet de conducir español (32×26 mm), Pasaporte España (35×45 mm), Pasaporte USA (51×51 mm), Visa Schengen (35×45 mm), formato cuadrado 4×4 cm y LinkedIn (400×400 px).',
+  },
+  {
+    q: '¿Cómo se recorta la foto automáticamente?',
+    a: 'La herramienta centra la imagen en el recuadro del tamaño seleccionado con recorte por el centro. Para mejores resultados, sube una foto donde tu cara ocupe la mayor parte de la imagen y esté centrada.',
+  },
+  {
+    q: '¿Puedo elegir el color de fondo?',
+    a: 'Sí. Puedes elegir entre los colores más habituales (blanco, gris, azul claro) o seleccionar cualquier color con el selector de color personalizado. El fondo se aplica donde la imagen original tenga transparencia.',
+  },
+  {
+    q: '¿Los archivos se suben a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre 100% en tu navegador. Tu foto nunca sale de tu dispositivo, lo que garantiza total privacidad para documentos de identidad.',
+  },
+  {
+    q: '¿Cumplen los requisitos oficiales las fotos generadas?',
+    a: 'Las dimensiones en píxeles siguen los estándares oficiales, pero para documentos oficiales como pasaportes o DNI, los organismos también exigen requisitos de impresión (calidad, fondo blanco uniforme, sin sombras) que debes verificar. Esta herramienta es ideal para uso digital y como guía de referencia.',
+  },
+];
+---
+<ToolLayout slug="foto-carnet" faqs={faqs}>
+  <FotoCarnetTool client:load />
+</ToolLayout>

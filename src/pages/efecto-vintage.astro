@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EfectoVintageTool from '@/components/tools/EfectoVintageTool';
+
+const faqs = [
+  {
+    q: '¿Qué efectos vintage están disponibles?',
+    a: 'Puedes elegir entre cinco efectos: Sepia (tono cálido marrón clásico), Vintage (sepia suavizado con viñeta oscura en los bordes), Cine (alto contraste con grano de película), Polaroid (colores cálidos lavados con reborde claro) y Noir (blanco y negro con alto contraste estilo película negra).',
+  },
+  {
+    q: '¿Qué hace el control de intensidad?',
+    a: 'El slider de intensidad (del 10% al 100%) controla qué tan fuerte se aplica el efecto. Con valores bajos, el efecto se mezcla sutilmente con la imagen original. Al 100% se aplica la versión completa del efecto.',
+  },
+  {
+    q: '¿Se modifica la imagen original?',
+    a: 'No. La imagen original nunca se modifica. La herramienta crea una copia procesada que puedes descargar. La imagen original permanece sin cambios en tu dispositivo.',
+  },
+  {
+    q: '¿Funciona con fotos de alta resolución?',
+    a: 'Sí. El procesamiento se realiza con Canvas API directamente en tu navegador, manteniendo la resolución completa de la imagen original. No hay límite de tamaño impuesto por la herramienta.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con efecto?',
+    a: 'La imagen se descarga como PNG para preservar la máxima calidad, independientemente del formato original. El nombre del archivo incluye el nombre del efecto aplicado para identificarlo fácilmente.',
+  },
+];
+---
+<ToolLayout slug="efecto-vintage" faqs={faqs}>
+  <EfectoVintageTool client:load />
+</ToolLayout>

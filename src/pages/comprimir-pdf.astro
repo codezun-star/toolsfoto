@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirPDFTool from '@/components/tools/ComprimirPDFTool';
+
+const faqs = [
+  {
+    q: '¿Es seguro subir mi PDF para comprimirlo?',
+    a: 'Totalmente. Todo el proceso ocurre en tu navegador: el PDF nunca se envía a ningún servidor. Usamos la librería pdf-lib para procesar el archivo localmente, por lo que tus documentos siempre permanecen en tu dispositivo.',
+  },
+  {
+    q: '¿Cuánto se reduce el tamaño del PDF?',
+    a: 'Depende de cómo fue generado el PDF original. La compresión funciona mejor en archivos creados con herramientas verbosas (como exportadores de Word, Canva o editores de diseño). Típicamente se consigue una reducción del 10 al 40%. En PDFs ya optimizados el ahorro puede ser mínimo.',
+  },
+  {
+    q: '¿Se pierde calidad al comprimir el PDF?',
+    a: 'No. La compresión que aplicamos es estructural: recodifica los objetos internos del PDF de forma más eficiente sin tocar el texto, las imágenes incrustadas ni la maquetación. El resultado es visualmente idéntico al original.',
+  },
+  {
+    q: '¿Funciona con PDFs protegidos con contraseña?',
+    a: 'No. Para comprimir un PDF necesitamos acceso completo a su contenido. Si el archivo está protegido, primero elimina la contraseña con nuestra herramienta "Eliminar contraseña PDF" y después comprime el resultado.',
+  },
+  {
+    q: '¿Hay límite de tamaño o de número de páginas?',
+    a: 'No hay límite de páginas. El único límite práctico es la memoria disponible de tu navegador. PDFs de hasta 100 MB se procesan sin problemas en la mayoría de ordenadores modernos.',
+  },
+];
+---
+<ToolLayout slug="comprimir-pdf" faqs={faqs}>
+  <ComprimirPDFTool client:load />
+</ToolLayout>

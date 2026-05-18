@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CodificarURLTool from '@/components/tools/CodificarURLTool';
+
+const faqs = [
+  {
+    q: '¿Cuándo usar encodeURIComponent frente a encodeURI?',
+    a: 'Usa encodeURIComponent para codificar parámetros individuales de una URL (valores de query string, nombres de archivo, etc.). Usa encodeURI para codificar una URL completa manteniendo intactos los caracteres especiales de estructura como /, ?, & y =. Por ejemplo: encodeURIComponent("a b") → "a%20b"; encodeURI("https://ejemplo.com/a b") → "https://ejemplo.com/a%20b".',
+  },
+  {
+    q: '¿Para qué sirve codificar una URL?',
+    a: 'Los caracteres especiales como espacios, acentos, ñ, <, >, & no son válidos en URLs. La codificación URL (percent-encoding) convierte estos caracteres en secuencias %XX para que puedan transmitirse correctamente en peticiones HTTP, formularios y API REST.',
+  },
+  {
+    q: '¿La conversión es en tiempo real?',
+    a: 'Sí. La herramienta convierte automáticamente mientras escribes, sin necesidad de pulsar ningún botón. Puedes ver el resultado al instante en el panel de salida.',
+  },
+  {
+    q: '¿Puedo decodificar una URL ya codificada?',
+    a: 'Sí. Los modos decodeURI y decodeURIComponent convierten en sentido inverso, transformando las secuencias %XX de vuelta a caracteres legibles. Útil para depurar URLs codificadas que recibes en logs o respuestas de API.',
+  },
+  {
+    q: '¿Admite caracteres Unicode y emojis?',
+    a: 'Sí. Las funciones de JavaScript encodeURIComponent y encodeURI manejan correctamente caracteres Unicode, incluidos emojis, caracteres CJK, árabe y cualquier otro script. Por ejemplo, "café" se codifica como "caf%C3%A9".',
+  },
+];
+---
+<ToolLayout slug="codificar-url" faqs={faqs}>
+  <CodificarURLTool client:load />
+</ToolLayout>

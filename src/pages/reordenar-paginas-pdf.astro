@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ReordenarPaginasPDFTool from '@/components/tools/ReordenarPaginasPDFTool';
+
+const faqs = [
+  {
+    q: '¿Cómo se reordenan las páginas?',
+    a: 'La herramienta muestra una cuadrícula de miniaturas de todas las páginas del PDF. Usa los botones de flecha arriba y abajo en cada página para cambiar su posición en el documento. El número en la esquina superior izquierda muestra la nueva posición.',
+  },
+  {
+    q: '¿Puedo mover la primera página al final o viceversa?',
+    a: 'Sí. Puedes mover cualquier página a cualquier posición. Los botones de flecha están desactivados cuando la página ya está en el extremo (primera o última posición).',
+  },
+  {
+    q: '¿Se puede eliminar una página con esta herramienta?',
+    a: 'No directamente. Esta herramienta solo reordena páginas. Para eliminar páginas específicas, usa primero la herramienta "Extraer páginas PDF" para quedarte solo con las que necesitas, y luego reordénalas si es necesario.',
+  },
+  {
+    q: '¿Cuántas páginas puede tener el PDF?',
+    a: 'No hay un límite estricto, pero a partir de 50-60 páginas la carga de miniaturas puede tardar unos segundos ya que se renderiza cada página en el navegador. El reordenado en sí es siempre rápido independientemente del número de páginas.',
+  },
+  {
+    q: '¿El PDF resultante mantiene toda la calidad del original?',
+    a: 'Sí. El reordenado se realiza copiando las páginas originales sin modificar su contenido. No hay re-renderizado ni compresión adicional, por lo que la calidad del texto, imágenes y vectores es idéntica a la del PDF original.',
+  },
+];
+---
+<ToolLayout slug="reordenar-paginas-pdf" faqs={faqs}>
+  <ReordenarPaginasPDFTool client:load />
+</ToolLayout>

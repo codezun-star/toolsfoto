@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirVideoTool from '@/components/tools/ConvertirVideoTool';
+
+const faqs = [
+  { q: '¿Cuál es la diferencia entre MP4 y WebM?', a: 'MP4 (H.264) es el formato más compatible: funciona en todos los navegadores, dispositivos iOS, Android, Windows y macOS. WebM (VP8) es un formato abierto de Google, más ligero pero con menor compatibilidad en dispositivos más antiguos y en iOS.' },
+  { q: '¿Cuándo debo usar WebM?', a: 'WebM es ideal para vídeos que se van a incrustar en páginas web, ya que ofrece mejor compresión que MP4 con similar calidad visual. Sin embargo, si el vídeo se va a compartir o reproducir en dispositivos móviles o apps de mensajería, MP4 es la opción más segura.' },
+  { q: '¿Se pierde calidad al convertir?', a: 'La conversión entre formatos implica una recodificación que puede introducir una ligera pérdida de calidad. Para minimizarla, se usa un CRF de 23, que es la configuración de calidad estándar de FFmpeg. La diferencia visual es inapreciable en la mayoría de los casos.' },
+  { q: '¿Puedo convertir MOV o AVI?', a: 'Sí, también se admiten MOV y AVI como entrada. Todos los formatos se convierten a MP4 o WebM según tu selección.' },
+  { q: '¿Por qué el archivo WebM puede ser más grande?', a: 'El codificador VP8 de la versión single-threaded de FFmpeg.wasm es menos eficiente que el H.264 para algunos tipos de vídeo. Si el resultado WebM es más grande, elige MP4 para ese contenido.' },
+];
+---
+<ToolLayout slug="convertir-video" faqs={faqs}>
+  <ConvertirVideoTool client:load />
+</ToolLayout>

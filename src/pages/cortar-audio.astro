@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CortarAudioTool from '@/components/tools/CortarAudioTool';
+
+const faqs = [
+  { q: '¿Se pierde calidad al cortar el audio?', a: 'No. La herramienta usa "-c copy" de FFmpeg que copia el stream de audio sin recodificar. El corte es sin pérdida de calidad y muy rápido.' },
+  { q: '¿Cómo identifico el tiempo exacto de corte?', a: 'Usa el reproductor de audio integrado para escuchar y localizar el punto de inicio y fin que quieres. Anota los tiempos e introdúcelos en los campos correspondientes. El formato es mm:ss (por ejemplo, "02:30" para 2 minutos y 30 segundos).' },
+  { q: '¿Qué formatos admite?', a: 'MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el formato de entrada, preservando así las características originales del audio.' },
+  { q: '¿Puedo usarlo para crear un tono de llamada?', a: 'Sí. Un tono de llamada suele durar entre 20 y 30 segundos. Selecciona el fragmento de la canción que quieras, descárgalo como MP3 y transfiérelo a tu móvil. En iOS deberás renombrarlo a .m4r para que el sistema lo reconozca como tono.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="cortar-audio" faqs={faqs}>
+  <CortarAudioTool client:load />
+</ToolLayout>

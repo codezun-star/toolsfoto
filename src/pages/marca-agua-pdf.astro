@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MarcaAguaPDFTool from '@/components/tools/MarcaAguaPDFTool';
+
+const faqs = [
+  {
+    q: '¿En qué páginas se aplica la marca de agua?',
+    a: 'La marca de agua se aplica automáticamente a todas las páginas del PDF. No es posible seleccionar páginas individuales en esta versión; si necesitas marcar solo algunas páginas, usa primero la herramienta "Extraer páginas PDF" para separar el documento.',
+  },
+  {
+    q: '¿Puedo elegir el color y la opacidad de la marca de agua?',
+    a: 'Sí. Dispones de un selector de color para elegir cualquier tono (gris, rojo, azul, negro, etc.) y un control de opacidad entre el 10% y el 60%. Una opacidad baja (10-20%) es ideal para marcas sutiles que no dificulten la lectura del contenido.',
+  },
+  {
+    q: '¿Qué tamaños de texto están disponibles?',
+    a: 'Puedes elegir entre 40, 60, 80 y 100 puntos tipográficos. Para documentos A4 estándar, 60 pt suele ser el equilibrio ideal entre visibilidad y discreción. El texto se coloca en diagonal cruzando la página.',
+  },
+  {
+    q: '¿La marca de agua es permanente o se puede eliminar?',
+    a: 'La marca de agua se incrusta directamente en el contenido del PDF usando pdf-lib. Es una marca de baja seguridad: alguien con herramientas de edición PDF avanzadas podría intentar eliminarla. Para protección de alto nivel, combínala con la herramienta "Proteger PDF con contraseña".',
+  },
+  {
+    q: '¿Se envía el PDF a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre 100% en tu navegador. El PDF nunca sale de tu dispositivo. Esto lo hace seguro para documentos confidenciales como contratos, facturas o documentos legales.',
+  },
+];
+---
+<ToolLayout slug="marca-agua-pdf" faqs={faqs}>
+  <MarcaAguaPDFTool client:load />
+</ToolLayout>

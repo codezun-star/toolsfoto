@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import UnirPDFsTool from '@/components/tools/UnirPDFsTool';
+
+const faqs = [
+  {
+    q: '¿Cuántos PDFs puedo unir a la vez?',
+    a: 'No hay un límite fijo. Puedes añadir tantos archivos como quieras. El límite práctico depende de la memoria de tu navegador: en equipos modernos puedes unir decenas de PDFs sin problema. Para archivos muy grandes, trabaja en lotes.',
+  },
+  {
+    q: '¿Se conserva el orden y el contenido original?',
+    a: 'Sí. Las páginas se añaden exactamente en el orden en que aparecen tus archivos en la lista. Usa las flechas de arriba y abajo para reordenar los PDFs antes de unirlos. El texto, las imágenes y los hipervínculos internos se conservan.',
+  },
+  {
+    q: '¿Puedo unir PDFs protegidos con contraseña?',
+    a: 'No. Los PDFs cifrados no pueden fusionarse directamente. Primero desbloquéalos con la herramienta "Eliminar contraseña PDF" y luego únelos.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre en tu navegador con la librería pdf-lib. Tus documentos no salen de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿Qué pasa con los marcadores y el índice del PDF?',
+    a: 'Los marcadores (bookmarks) del documento original no se fusionan automáticamente; el PDF resultante tendrá las páginas combinadas pero sin un índice unificado. Para unificaciones complejas con marcadores avanzados recomendamos Adobe Acrobat.',
+  },
+];
+---
+<ToolLayout slug="unir-pdfs" faqs={faqs}>
+  <UnirPDFsTool client:load />
+</ToolLayout>

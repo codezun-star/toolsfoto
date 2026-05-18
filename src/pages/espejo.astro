@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EspejoTool from '@/components/tools/EspejoTool';
+
+const faqs = [
+  {
+    q: '¿Qué diferencia hay entre voltear horizontal y verticalmente?',
+    a: 'Voltear horizontalmente crea un efecto espejo de izquierda a derecha (como mirarte en un espejo). Voltear verticalmente invierte la imagen de arriba a abajo, como si la giraras boca abajo. Puedes combinar ambos para una rotación de 180° con efecto espejo.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen volteada?',
+    a: 'La imagen se descarga en el mismo formato que subiste: JPG, PNG, WebP o GIF. Si subiste un PNG con transparencia, la transparencia se preserva en el resultado.',
+  },
+  {
+    q: '¿Se pierde calidad al voltear la imagen?',
+    a: 'No se pierde calidad. El volteo es una operación geométrica pura que no modifica los píxeles, solo cambia su posición. La imagen de salida tiene exactamente la misma resolución y calidad que la original.',
+  },
+  {
+    q: '¿Puedo voltear imágenes de gran tamaño?',
+    a: 'Sí. El procesamiento se realiza en tu navegador usando Canvas API, por lo que no hay límite de tamaño impuesto por el servidor. El único límite es la memoria de tu dispositivo, que suele admitir imágenes de decenas de megapíxeles.',
+  },
+  {
+    q: '¿Para qué sirve voltear una imagen?',
+    a: 'Es útil para corregir selfies tomadas con cámara frontal (que aparecen en espejo), crear efectos de simetría, preparar imágenes para diseños reflectantes, o simplemente reorientar elementos visuales para mejorar la composición.',
+  },
+];
+---
+<ToolLayout slug="espejo" faqs={faqs}>
+  <EspejoTool client:load />
+</ToolLayout>

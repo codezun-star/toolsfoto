@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RotarVideoTool from '@/components/tools/RotarVideoTool';
+
+const faqs = [
+  {
+    q: '¿Por qué mi vídeo aparece girado al subirlo a internet?',
+    a: 'Los vídeos grabados con el móvil en vertical o girado almacenan la orientación como metadato (rotation flag) en el contenedor, pero algunos reproductores web ignoran ese metadato. Esta herramienta aplica la rotación directamente al stream de vídeo con FFmpeg, eliminando la dependencia del reproductor.',
+  },
+  {
+    q: '¿Se pierde calidad al rotar el vídeo?',
+    a: 'La rotación requiere re-codificar el vídeo (no es posible hacerlo sin re-encode como en el corte por tiempo). La herramienta usa libx264 con CRF 23, que es el balance estándar calidad/tamaño. La pérdida de calidad visual es prácticamente imperceptible.',
+  },
+  {
+    q: '¿Qué formatos de vídeo acepta?',
+    a: 'Acepta MP4, WebM, MOV, AVI y MKV. El vídeo resultante siempre se descarga en MP4, que es el formato más compatible con plataformas, redes sociales y reproductores.',
+  },
+  {
+    q: '¿Se conserva el audio al rotar el vídeo?',
+    a: 'Sí. La pista de audio se copia directamente sin modificar (stream copy), por lo que el audio del vídeo rotado es idéntico al original.',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'Depende del tamaño del vídeo. FFmpeg.wasm procesa en tu navegador sin enviar datos al servidor. Un vídeo de 1 minuto en 1080p puede tardar entre 1 y 3 minutos según la potencia de tu dispositivo. La primera carga del procesador (~30 MB) puede añadir unos segundos adicionales.',
+  },
+];
+---
+<ToolLayout slug="rotar-video" faqs={faqs}>
+  <RotarVideoTool client:load />
+</ToolLayout>

@@ -1,0 +1,168 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import HomeTools from '@/components/HomeTools';
+import { PAGE_SEO, SITE } from '@/lib/constants/seo';
+import { Shield, Zap, Gift, Wifi } from 'lucide-react';
+import '@/styles/global.css';
+
+const seo = PAGE_SEO.home;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={seo.canonical} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={SITE.ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ToolsFoto",
+      "url": "https://toolsfoto.com",
+      "description": seo.description,
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    })} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <!-- Hero -->
+      <section
+        class="relative bg-cover bg-center overflow-hidden"
+        style="background-image: url('/hero-bg.jpg')"
+      >
+        <!-- Dark overlay: stronger on the left (text side), lighter on the right (mockup side) -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/55 to-black/30"></div>
+        <!-- Bottom fade into page background -->
+        <div class="absolute bottom-0 left-0 right-0 h-28" style="background: linear-gradient(to bottom, transparent, var(--color-bg))"></div>
+
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-28">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-white text-sm font-medium mb-6 backdrop-blur-sm">
+                <Zap size={14} className="inline" client:load />
+                46 herramientas · 100% gratis · Sin registro
+              </div>
+              <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-[1.1] tracking-tight">
+                Herramientas para<br />
+                <span style="color: #ffb3a7;">imágenes, vídeo,</span><br />
+                audio y PDF
+              </h1>
+              <p class="mt-5 text-lg text-white/80 leading-relaxed max-w-lg">
+                Todo se procesa directamente en tu navegador. Ningún archivo sale de tu dispositivo.
+              </p>
+              <div class="mt-8 flex flex-wrap gap-3">
+                <a href="#imagen" class="px-6 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold hover:bg-[#C93D1E] transition-colors shadow-lg">
+                  Ver herramientas
+                </a>
+                <a href="/comprimir" class="px-6 py-3 rounded-xl border border-white/30 font-semibold text-white hover:bg-white/10 transition-colors backdrop-blur-sm">
+                  Comprimir imagen
+                </a>
+              </div>
+              <div class="mt-8 flex flex-wrap gap-5 text-sm font-medium text-white/65">
+                <span><strong class="text-white">21</strong> imagen</span>
+                <span><strong class="text-white">10</strong> PDF</span>
+                <span><strong class="text-white">5</strong> vídeo</span>
+                <span><strong class="text-white">5</strong> audio</span>
+                <span><strong class="text-white">0 MB</strong> enviados</span>
+              </div>
+            </div>
+
+            <div class="hidden lg:flex items-center justify-center">
+              <div class="relative w-full max-w-sm">
+                <div class="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-3xl rotate-3 border border-white/20"></div>
+                <div class="relative bg-white rounded-2xl border border-white/50 p-6 shadow-2xl">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    <span class="ml-2 text-xs text-[var(--color-text-muted)] font-mono">toolsfoto.com</span>
+                  </div>
+                  <div class="space-y-2">
+                    {[
+                      { icon: '🖼️', label: 'Comprimir imagen', sub: '2.4 MB → 480 KB' },
+                      { icon: '🎬', label: 'Recortar vídeo', sub: '0:00 → 0:45' },
+                      { icon: '🎵', label: 'Comprimir audio', sub: 'WAV 320k → MP3 128k' },
+                    ].map(item => (
+                      <div class="flex items-center gap-3 p-2.5 bg-[var(--color-bg)] rounded-lg">
+                        <span class="text-base">{item.icon}</span>
+                        <div>
+                          <p class="text-xs font-medium text-[var(--color-text)]">{item.label}</p>
+                          <p class="text-xs text-[var(--color-text-muted)]">{item.sub}</p>
+                        </div>
+                        <div class="ml-auto w-2 h-2 rounded-full bg-green-400"></div>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="mt-4 p-2.5 bg-green-50 rounded-lg border border-green-100 text-center">
+                    <p class="text-xs font-medium text-green-700">Sin subir nada al servidor</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trust bar -->
+      <div class="border-y border-[var(--color-border)] bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+          <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-sm font-medium text-[var(--color-text-secondary)]">
+            <div class="flex items-center gap-2">
+              <Shield size={16} className="text-[var(--color-tools-icon)]" client:load />
+              Sin registro
+            </div>
+            <div class="flex items-center gap-2">
+              <Shield size={16} className="text-[var(--color-tools-icon)]" client:load />
+              Sin uploads al servidor
+            </div>
+            <div class="flex items-center gap-2">
+              <Gift size={16} className="text-[var(--color-tools-icon)]" client:load />
+              Gratis para siempre
+            </div>
+            <div class="flex items-center gap-2">
+              <Wifi size={16} className="text-[var(--color-tools-icon)]" client:load />
+              Funciona offline
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLS TABS -->
+      <HomeTools client:load />
+
+      <!-- CTA bottom -->
+      <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 text-center">
+        <h2 class="text-3xl font-extrabold text-[var(--color-text)]">Todo gratis, para siempre</h2>
+        <p class="mt-3 text-[var(--color-text-secondary)] max-w-md mx-auto">
+          Sin descargas, sin registro, sin límites. Tus archivos nunca salen de tu dispositivo.
+        </p>
+        <a href="/comprimir" class="inline-flex items-center gap-2 mt-8 px-8 py-3.5 rounded-xl bg-[var(--color-accent)] text-white font-semibold hover:bg-[#C93D1E] transition-colors">
+          Empezar ahora
+        </a>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

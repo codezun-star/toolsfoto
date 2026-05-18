@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarVelocidadTool from '@/components/tools/CambiarVelocidadTool';
+
+const faqs = [
+  {
+    q: '¿Qué velocidades están disponibles?',
+    a: 'Puedes elegir entre 0.25x (cámara lenta extrema), 0.5x (cámara lenta), 0.75x (ligeramente más lento), 1.25x (ligeramente acelerado), 1.5x (moderadamente rápido) y 2x (doble velocidad). Todas las velocidades ajustan también el audio automáticamente.',
+  },
+  {
+    q: '¿Se mantiene el tono del audio al cambiar la velocidad?',
+    a: 'Sí. La herramienta usa el filtro atempo de FFmpeg, que ajusta la velocidad del audio preservando el tono natural (pitch correction). El audio no suena agudo ni grave al acelerarlo o ralentizarlo.',
+  },
+  {
+    q: '¿Puedo silenciar el audio del vídeo acelerado?',
+    a: 'Sí. Tienes la opción de conservar el audio ajustado o eliminarlo completamente del vídeo resultante. El modo sin audio produce archivos más pequeños y es útil para vídeos de fondo o presentaciones.',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'Depende del tamaño del vídeo y la velocidad de tu dispositivo. FFmpeg.wasm procesa en tu navegador sin enviar datos a ningún servidor. Un vídeo de 1 minuto en HD puede tardar entre 30 segundos y 2 minutos según el hardware.',
+  },
+  {
+    q: '¿Qué formatos de vídeo admite?',
+    a: 'La herramienta admite los formatos más comunes: MP4, WebM, MOV y AVI. El vídeo resultante siempre se descarga en formato MP4 con codificación H.264, compatible con la práctica totalidad de reproductores y plataformas.',
+  },
+];
+---
+<ToolLayout slug="cambiar-velocidad" faqs={faqs}>
+  <CambiarVelocidadTool client:load />
+</ToolLayout>

@@ -1,0 +1,63 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-[var(--color-border)] bg-white mt-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 text-sm">
+      <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">Imágenes</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/comprimir" class="block hover:text-[var(--color-text)] transition-colors">Comprimir</a>
+          <a href="/redimensionar" class="block hover:text-[var(--color-text)] transition-colors">Redimensionar</a>
+          <a href="/convertir" class="block hover:text-[var(--color-text)] transition-colors">Convertir</a>
+          <a href="/recortar" class="block hover:text-[var(--color-text)] transition-colors">Recortar</a>
+          <a href="/#imagen" class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">Ver todas →</a>
+        </nav>
+      </div>
+      <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">PDF</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/comprimir-pdf" class="block hover:text-[var(--color-text)] transition-colors">Comprimir PDF</a>
+          <a href="/unir-pdfs" class="block hover:text-[var(--color-text)] transition-colors">Unir PDFs</a>
+          <a href="/pdf-a-jpg" class="block hover:text-[var(--color-text)] transition-colors">PDF a JPG</a>
+          <a href="/jpg-a-pdf" class="block hover:text-[var(--color-text)] transition-colors">JPG a PDF</a>
+          <a href="/#pdf" class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">Ver todas →</a>
+        </nav>
+      </div>
+      <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">Vídeo</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/comprimir-video" class="block hover:text-[var(--color-text)] transition-colors">Comprimir vídeo</a>
+          <a href="/convertir-video" class="block hover:text-[var(--color-text)] transition-colors">Convertir vídeo</a>
+          <a href="/extraer-audio" class="block hover:text-[var(--color-text)] transition-colors">Extraer audio</a>
+          <a href="/video-a-gif" class="block hover:text-[var(--color-text)] transition-colors">Vídeo a GIF</a>
+          <a href="/#video" class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">Ver todas →</a>
+        </nav>
+      </div>
+      <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">Audio</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/comprimir-audio" class="block hover:text-[var(--color-text)] transition-colors">Comprimir audio</a>
+          <a href="/convertir-audio" class="block hover:text-[var(--color-text)] transition-colors">Convertir audio</a>
+          <a href="/cortar-audio" class="block hover:text-[var(--color-text)] transition-colors">Cortar audio</a>
+          <a href="/unir-audios" class="block hover:text-[var(--color-text)] transition-colors">Unir audios</a>
+          <a href="/#audio" class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">Ver todas →</a>
+        </nav>
+      </div>
+      <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">ToolsFoto</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/" class="block hover:text-[var(--color-text)] transition-colors">Inicio</a>
+          <a href="/#developer" class="block hover:text-[var(--color-text)] transition-colors">Developers</a>
+          <a href="/contacto" class="block hover:text-[var(--color-text)] transition-colors">Contacto</a>
+          <a href="/privacidad" class="block hover:text-[var(--color-text)] transition-colors">Privacidad</a>
+          <a href="/terminos" class="block hover:text-[var(--color-text)] transition-colors">Términos</a>
+        </nav>
+      </div>
+    </div>
+    <div class="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--color-text-muted)]">
+      <p>© {year} ToolsFoto · Tus archivos nunca salen de tu dispositivo</p>
+      <a href="/cookies" class="hover:text-[var(--color-text)] transition-colors">Política de cookies</a>
+    </div>
+  </div>
+</footer>

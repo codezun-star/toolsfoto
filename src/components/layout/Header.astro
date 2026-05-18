@@ -1,0 +1,24 @@
+---
+const currentPath = Astro.url.pathname;
+---
+<header class="sticky top-0 z-50 bg-white border-b border-[var(--color-border)]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+    <a href="/" class="font-extrabold text-lg tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors">
+      ToolsFoto
+    </a>
+    <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-[var(--color-text-secondary)]">
+      <a href="/" class={currentPath === '/' ? 'text-[var(--color-accent)]' : 'hover:text-[var(--color-text)] transition-colors'}>Inicio</a>
+      <a href="/#imagen" class="hover:text-[var(--color-text)] transition-colors">Imágenes</a>
+      <a href="/#pdf" class="hover:text-[var(--color-text)] transition-colors">PDF</a>
+      <a href="/#video" class="hover:text-[var(--color-text)] transition-colors">Vídeo</a>
+      <a href="/#audio" class="hover:text-[var(--color-text)] transition-colors">Audio</a>
+      <a href="/#developer" class="hover:text-[var(--color-text)] transition-colors">Dev</a>
+    </nav>
+    <a
+      href="/comprimir"
+      class="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
+    >
+      Usar gratis
+    </a>
+  </div>
+</header>

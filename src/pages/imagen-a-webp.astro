@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ImagenAWebpTool from '@/components/tools/ImagenAWebpTool';
+
+const faqs = [
+  {
+    q: '¿Qué ventajas tiene WebP sobre JPG y PNG?',
+    a: 'WebP ofrece hasta un 25-34% menos de tamaño que JPG con la misma calidad visual, y hasta un 26% menos que PNG. Además admite transparencia (como PNG) y animación (como GIF). Es el formato recomendado por Google para imágenes web y está soportado por todos los navegadores modernos.',
+  },
+  {
+    q: '¿Qué calidad debo elegir?',
+    a: 'Para fotografías e imágenes con gradientes, el rango 75-85% ofrece un excelente equilibrio entre calidad y tamaño. Para imágenes con texto o gráficos simples, 85-95% preserva mejor la nitidez. Para el máximo ahorro de espacio con cierta pérdida de calidad, prueba 60-70%.',
+  },
+  {
+    q: '¿Puedo convertir imágenes con fondo transparente a WebP?',
+    a: 'Sí. Si la imagen original es un PNG con canal alpha (transparencia), el WebP resultante también preservará la transparencia. WebP soporta transparencia de forma nativa, a diferencia de JPG.',
+  },
+  {
+    q: '¿Todos los navegadores soportan WebP?',
+    a: 'Sí. WebP es compatible con Chrome, Firefox, Safari (desde v14), Edge y Opera. Actualmente cubre el 97%+ de los usuarios de navegadores modernos. Para sitios web, WebP es el formato recomendado para imágenes.',
+  },
+  {
+    q: '¿La conversión se hace en mi dispositivo?',
+    a: 'Sí, completamente. La herramienta usa la Canvas API nativa del navegador para convertir la imagen. El archivo nunca se envía a ningún servidor. La conversión es instantánea en la mayoría de imágenes.',
+  },
+];
+---
+<ToolLayout slug="imagen-a-webp" faqs={faqs}>
+  <ImagenAWebpTool client:load />
+</ToolLayout>

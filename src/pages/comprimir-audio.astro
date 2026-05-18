@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirAudioTool from '@/components/tools/ComprimirAudioTool';
+
+const faqs = [
+  { q: '¿Qué bitrate debo elegir?', a: '64 kbps es suficiente para voz, podcasts y audiolibros. 128 kbps es el estándar para música en streaming y ofrece buena calidad para la mayoría de los oídos. 192 kbps es para quienes perciben diferencias en música con compresión. 320 kbps solo se justifica para escucha con auriculares de alta gama.' },
+  { q: '¿Qué formatos admite como entrada?', a: 'MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se descarga siempre en MP3, que es el formato con mayor compatibilidad en reproductores, plataformas de streaming y dispositivos.' },
+  { q: '¿Se puede comprimir un archivo MP3 ya comprimido?', a: 'Sí, pero con limitaciones. Al recomprimir un MP3 a un bitrate inferior, se introduce una generación adicional de pérdida de calidad. El resultado puede sonar ligeramente peor que si se hubiera comprimido desde el WAV original. Para archivos ya muy comprimidos (64-128 kbps), no tiene sentido reducir más.' },
+  { q: '¿Cuánto se puede reducir el tamaño?', a: 'Un WAV sin comprimir de 44.1 kHz puede reducirse un 85-95% al convertirlo a MP3 a 128 kbps. Un MP3 a 320 kbps puede reducirse un 60-70% al convertirlo a 64 kbps.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="comprimir-audio" faqs={faqs}>
+  <ComprimirAudioTool client:load />
+</ToolLayout>

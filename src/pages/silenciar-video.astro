@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SilenciarVideoTool from '@/components/tools/SilenciarVideoTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve silenciar un vídeo?',
+    a: 'Hay muchos casos de uso: vídeos de fondo para presentaciones o páginas web, clips para redes sociales donde añadirás tu propia música, vídeos con audio no deseado (viento, ruido ambiente), material de stock que no debe tener sonido, o simplemente para reducir el tamaño del archivo eliminando la pista de audio.',
+  },
+  {
+    q: '¿Se pierde calidad de vídeo al eliminar el audio?',
+    a: 'No. La herramienta usa la opción -c:v copy de FFmpeg, que copia el stream de vídeo sin re-codificar. La calidad visual es idéntica al original. Solo se elimina la pista de audio.',
+  },
+  {
+    q: '¿El archivo resultante es más pequeño?',
+    a: 'Sí. Al eliminar la pista de audio el archivo es más ligero, aunque el ahorro depende de qué proporción del tamaño total era el audio (normalmente entre un 5% y un 20% del tamaño del vídeo).',
+  },
+  {
+    q: '¿Qué formatos de vídeo acepta?',
+    a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado se descarga en MP4, el formato más compatible con plataformas, aplicaciones y redes sociales.',
+  },
+  {
+    q: '¿Puedo después añadir otra pista de audio al vídeo silenciado?',
+    a: 'Sí. Una vez que tengas el vídeo sin audio, puedes usar la herramienta "Añadir audio a vídeo" de ToolsFoto para insertar cualquier archivo de música o narración que quieras.',
+  },
+];
+---
+<ToolLayout slug="silenciar-video" faqs={faqs}>
+  <SilenciarVideoTool client:load />
+</ToolLayout>

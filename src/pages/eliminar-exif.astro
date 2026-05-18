@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EliminarExifTool from '@/components/tools/EliminarExifTool';
+
+const faqs = [
+  {
+    q: '¿Qué es EXIF y por qué debo eliminarlo?',
+    a: 'EXIF (Exchangeable Image File Format) son metadatos que las cámaras y móviles añaden automáticamente a las fotos. Incluyen la ubicación GPS exacta donde se tomó la foto, el modelo del dispositivo, la fecha y hora, y configuraciones técnicas de la cámara. Eliminarlos protege tu privacidad antes de publicar imágenes online.',
+  },
+  {
+    q: '¿Qué método se usa para eliminar los metadatos?',
+    a: 'La imagen se redibuja en un canvas HTML5 y se exporta de nuevo. Este proceso reconstruye el archivo desde cero sin metadatos, lo que garantiza que se eliminan todos los datos EXIF, IPTC y XMP. Es el mismo método que usan aplicaciones profesionales.',
+  },
+  {
+    q: '¿Se pierde calidad de imagen al eliminar el EXIF?',
+    a: 'Hay una leve recompresión si el archivo original es JPEG. La herramienta exporta a calidad 95, que es prácticamente indistinguible del original. Para archivos PNG, no hay pérdida de calidad porque PNG es sin pérdida.',
+  },
+  {
+    q: '¿La ubicación GPS también se elimina?',
+    a: 'Sí. Las coordenadas GPS son parte de los metadatos EXIF y se eliminan completamente junto con el resto. Después de procesar la imagen, ningún servicio ni usuario podrá extraer la localización de donde se tomó la foto.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. La imagen se procesa completamente en tu navegador usando la Canvas API. Ningún archivo sale de tu dispositivo en ningún momento.',
+  },
+];
+---
+<ToolLayout slug="eliminar-exif" faqs={faqs}>
+  <EliminarExifTool client:load />
+</ToolLayout>

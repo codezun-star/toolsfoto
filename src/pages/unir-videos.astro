@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import UnirVideosTool from '@/components/tools/UnirVideosTool';
+
+const faqs = [
+  {
+    q: '¿Cuántos vídeos puedo unir a la vez?',
+    a: 'Puedes unir hasta 10 vídeos en una sola operación. Si necesitas unir más, puedes usar la herramienta en varias pasadas: une los primeros 10, luego une el resultado con los siguientes clips.',
+  },
+  {
+    q: '¿Los vídeos tienen que ser del mismo formato o resolución?',
+    a: 'No es necesario que sean del mismo formato (puedes mezclar MP4, WebM, MOV…), pero se recomienda que tengan resoluciones similares para que el resultado sea visualmente coherente. La herramienta re-codifica todo con libx264 para garantizar la compatibilidad.',
+  },
+  {
+    q: '¿Puedo cambiar el orden de los clips antes de unirlos?',
+    a: 'Sí. Los clips aparecen numerados en el orden en que los subiste. Puedes eliminar clips con el botón de papelera y volver a subirlos en el orden que desees. En una próxima versión añadiremos reordenado por arrastre.',
+  },
+  {
+    q: '¿Se pierde calidad al unir los vídeos?',
+    a: 'La unión requiere re-codificar los vídeos para garantizar la sincronización y compatibilidad entre clips de diferentes fuentes. La herramienta usa libx264 con CRF 23, que produce un balance excelente de calidad y tamaño.',
+  },
+  {
+    q: '¿Puedo unir vídeos de diferentes duraciones?',
+    a: 'Sí, los vídeos pueden tener duraciones completamente diferentes. El resultado será la suma de las duraciones de todos los clips en el orden en que los hayas añadido.',
+  },
+];
+---
+<ToolLayout slug="unir-videos" faqs={faqs}>
+  <UnirVideosTool client:load />
+</ToolLayout>

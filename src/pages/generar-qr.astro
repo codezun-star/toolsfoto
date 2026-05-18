@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GenerarQRTool from '@/components/tools/GenerarQRTool';
+
+const faqs = [
+  {
+    q: '¿Qué tipo de datos puedo codificar en un código QR?',
+    a: 'Cualquier texto: URLs de páginas web, texto libre, números de teléfono (formato tel:+34…), direcciones de correo (mailto:…), SMS (smsto:…), Wi-Fi (WIFI:S:nombre;T:WPA;P:contraseña;;) y datos de contacto (vCard). La herramienta no valida el tipo de contenido, por lo que puedes codificar cualquier cadena de texto.',
+  },
+  {
+    q: '¿Qué nivel de corrección de errores debo elegir?',
+    a: 'El nivel L (7%) es suficiente para QR limpios en pantalla. El nivel M (15%) es el más equilibrado. El nivel Q (25%) es bueno si el QR puede rozarse o mancharse. El nivel H (30%) es para QR sobre superficies irregulares o donde parte del código podría estar dañado. Mayor corrección = QR más denso.',
+  },
+  {
+    q: '¿Puedo personalizar los colores del QR?',
+    a: 'Sí. Puedes elegir el color de primer plano (módulos del QR) y el color de fondo. Para que el QR sea legible por los lectores, asegúrate de que haya suficiente contraste entre ambos colores. El negro sobre blanco es la combinación más compatible.',
+  },
+  {
+    q: '¿En qué formato se descarga el código QR?',
+    a: 'Se descarga como PNG de alta calidad. Puedes elegir el tamaño entre 200 y 800 píxeles. Para impresión recomendamos al menos 600×600 px. Para uso digital (web, presentaciones) con 300×300 px es suficiente.',
+  },
+  {
+    q: '¿Caduca el código QR generado?',
+    a: 'No. Los códigos QR son simplemente imágenes que codifican datos. No caducan ni requieren ningún servicio externo para funcionar. El QR generado funciona indefinidamente mientras los datos que contiene sean accesibles (por ejemplo, una URL que siga activa).',
+  },
+];
+---
+<ToolLayout slug="generar-qr" faqs={faqs}>
+  <GenerarQRTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RedimensionarRedesTool from '@/components/tools/RedimensionarRedesTool';
+
+const faqs = [
+  {
+    q: '¿Qué redes sociales están disponibles?',
+    a: 'Incluimos los tamaños oficiales de Instagram (post cuadrado, historia, portada), Twitter/X (post, cabecera), YouTube (miniatura, portada), Facebook (post, portada), LinkedIn, TikTok y WhatsApp. Los tamaños se actualizan con los estándares actuales de cada plataforma.',
+  },
+  {
+    q: '¿Qué diferencia hay entre los modos "Recortar" y "Contener"?',
+    a: 'El modo Recortar ajusta la imagen al tamaño exacto cortando los bordes sobrantes (ideal para que ocupe todo el espacio). El modo Contener encaja la imagen completa dentro del marco sin cortar nada, rellenando el espacio restante con el color de fondo que elijas.',
+  },
+  {
+    q: '¿Puedo elegir el color de fondo en el modo Contener?',
+    a: 'Sí. En el modo Contener puedes seleccionar cualquier color de fondo con el selector de color. El color blanco o negro son los más habituales para publicaciones de redes sociales.',
+  },
+  {
+    q: '¿Se pierde calidad al redimensionar?',
+    a: 'La herramienta usa el algoritmo de interpolación bicúbico nativo del navegador, que es el mejor disponible sin plugins. Si la imagen original tiene suficiente resolución para el tamaño destino, la calidad visual es excelente.',
+  },
+  {
+    q: '¿Puedo procesar varias imágenes a la vez?',
+    a: 'Actualmente la herramienta procesa una imagen a la vez. Para procesar varias imágenes, puedes repetir el proceso. Si necesitas procesamiento por lotes, te recomendamos usar nuestra herramienta de redimensionado estándar con las medidas que necesitas.',
+  },
+];
+---
+<ToolLayout slug="redimensionar-redes" faqs={faqs}>
+  <RedimensionarRedesTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirColorTool from '@/components/tools/ConvertirColorTool';
+
+const faqs = [
+  {
+    q: '¿Qué formatos de color admite la herramienta?',
+    a: 'Puedes introducir colores en HEX (hexadecimal, ej: #FF5733), RGB (ej: rgb(255, 87, 51)), HSL (ej: hsl(11, 100%, 60%)) y HSB/HSV (ej: hsb(11, 80%, 100%)). La herramienta convierte automáticamente a todos los demás formatos al instante.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre HSL y HSB?',
+    a: 'HSL (Hue, Saturation, Lightness) y HSB/HSV (Hue, Saturation, Brightness/Value) son dos formas diferentes de describir el mismo espacio de color. En HSL el blanco puro es L=100%; en HSB el blanco puro es S=0%, B=100%. HSB es más intuitivo para diseñadores, mientras que HSL es más común en CSS.',
+  },
+  {
+    q: '¿Puedo copiar cada formato con un clic?',
+    a: 'Sí. Cada formato tiene un botón de copiar que guarda el valor en el portapapeles. El valor se copia exactamente como aparece en pantalla, listo para pegar en tu editor de código, herramienta de diseño o hoja de estilos CSS.',
+  },
+  {
+    q: '¿Hay un selector de color visual?',
+    a: 'Sí. Además de los campos numéricos, hay un selector de color nativo del navegador (color picker) que te permite elegir visualmente cualquier color. El swatch de previsualización en la parte superior muestra siempre el color actual.',
+  },
+  {
+    q: '¿La conversión es exacta o hay pérdida de precisión?',
+    a: 'Las conversiones entre HEX y RGB son exactas (son representaciones equivalentes del mismo espacio sRGB). Las conversiones a HSL y HSB implican aritmética de punto flotante y pueden tener variaciones de ±1 en el último decimal. Para uso en diseño y desarrollo esto es completamente irrelevante.',
+  },
+];
+---
+<ToolLayout slug="convertir-color" faqs={faqs}>
+  <ConvertirColorTool client:load />
+</ToolLayout>

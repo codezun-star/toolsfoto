@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RotarPDFTool from '@/components/tools/RotarPDFTool';
+
+const faqs = [
+  {
+    q: '¿La rotación se aplica a todas las páginas?',
+    a: 'Sí, la rotación se aplica a todas las páginas del documento con el mismo ángulo. Si necesitas rotar solo algunas páginas, puedes extraerlas primero con "Extraer páginas PDF", rotarlas por separado y luego unirlas de nuevo con "Unir PDFs".',
+  },
+  {
+    q: '¿Cuál es la diferencia entre rotar 90° y 270°?',
+    a: 'Rotar 90° gira el documento 90° en sentido horario (la parte derecha pasa a ser la parte inferior). Rotar 270° equivale a girar 90° en sentido antihorario. Rotar 180° invierte el documento verticalmente.',
+  },
+  {
+    q: '¿Se pierde calidad al rotar el PDF?',
+    a: 'No. La rotación es una operación de metadatos: simplemente cambia el atributo de rotación de cada página en la estructura del PDF. No hay rasterización ni recompresión de imágenes.',
+  },
+  {
+    q: '¿Funciona con PDFs escaneados?',
+    a: 'Sí, funciona perfectamente. Un PDF escaneado es técnicamente igual a cualquier otro PDF desde el punto de vista de la estructura de páginas. La rotación se aplica sin problema.',
+  },
+  {
+    q: '¿Se conservan las anotaciones y los campos de formulario?',
+    a: 'Sí. La operación de rotación no elimina ni modifica el contenido de las páginas, solo su orientación de visualización. Las anotaciones, sellos y campos de formulario permanecen intactos.',
+  },
+];
+---
+<ToolLayout slug="rotar-pdf" faqs={faqs}>
+  <RotarPDFTool client:load />
+</ToolLayout>

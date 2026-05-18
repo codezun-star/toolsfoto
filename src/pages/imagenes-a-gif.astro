@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ImagenesAGifTool from '@/components/tools/ImagenesAGifTool';
+
+const faqs = [
+  {
+    q: '¿Cuántas imágenes puedo usar para crear el GIF?',
+    a: 'Puedes usar entre 2 y 20 imágenes como fotogramas. Para crear GIFs animados fluidos recomendamos entre 5 y 15 frames. Con más frames el archivo GIF será más pesado pero la animación más suave.',
+  },
+  {
+    q: '¿Cómo se controla la velocidad del GIF?',
+    a: 'Puedes ajustar el tiempo de pausa entre frames (delay) de 100 ms a 2000 ms. Un delay de 100 ms equivale a unos 10 fotogramas por segundo (animación fluida), mientras que 500 ms da una presentación de diapositivas más lenta.',
+  },
+  {
+    q: '¿Qué formatos de imagen admite?',
+    a: 'Puedes usar imágenes JPG y PNG. Recomendamos que todas las imágenes tengan la misma relación de aspecto para que el GIF quede más uniforme. La herramienta redimensiona automáticamente al ancho que elijas.',
+  },
+  {
+    q: '¿Por qué tarda en procesarse?',
+    a: 'La creación de GIFs de calidad requiere calcular una paleta de colores óptima para todos los frames. Esta herramienta usa FFmpeg.wasm con optimización de paleta, lo que produce GIFs de mejor calidad a costa de algo más de tiempo de procesamiento. El proceso ocurre en tu navegador.',
+  },
+  {
+    q: '¿Se puede crear un GIF en bucle infinito?',
+    a: 'Sí. Por defecto los GIFs se generan en bucle infinito (loop = 0), que es el comportamiento estándar para animaciones web. Esto lo controla FFmpeg automáticamente con los parámetros de paleta optimizada.',
+  },
+];
+---
+<ToolLayout slug="imagenes-a-gif" faqs={faqs}>
+  <ImagenesAGifTool client:load />
+</ToolLayout>

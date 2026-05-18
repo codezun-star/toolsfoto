@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ThumbnailYoutubeTool from '@/components/tools/ThumbnailYoutubeTool';
+
+const faqs = [
+  {
+    q: '¿Cuál es el tamaño oficial de una miniatura de YouTube?',
+    a: 'YouTube recomienda 1280×720 píxeles (16:9) con un peso máximo de 2 MB. Esta herramienta genera miniaturas exactamente en ese tamaño. El formato JPG que usa está optimizado para que el archivo resultante sea pequeño y apto para subir directamente a YouTube.',
+  },
+  {
+    q: '¿Puedo añadir texto sobre la miniatura?',
+    a: 'Sí. Puedes añadir un título con texto personalizado, eligiendo la fuente (Impact, Arial Bold, Bebas, Georgia), el tamaño, el color y la posición (6 opciones de posicionamiento: esquinas, centros de bordes y centro). El texto tiene contorno automático para mejorar la legibilidad sobre cualquier fondo.',
+  },
+  {
+    q: '¿Es obligatorio subir una imagen de fondo?',
+    a: 'No. Puedes generar una miniatura solo con texto sobre un fondo de color sólido. Si subes una imagen de fondo, puedes controlar la opacidad del overlay de color para oscurecer o aclarar la imagen según necesites.',
+  },
+  {
+    q: '¿Necesito cuenta de Google para usar esta herramienta?',
+    a: 'No se necesita ningún registro ni cuenta. La herramienta funciona completamente en tu navegador sin conexión a YouTube ni a ningún servicio externo. Genera la miniatura y la descargas en tu dispositivo.',
+  },
+  {
+    q: '¿Cómo consigo que el texto sea legible sobre cualquier fondo?',
+    a: 'Usa el slider de opacidad del overlay para oscurecer la imagen de fondo y añadir contraste. También puedes elegir un color de texto claro (blanco) con el contorno automático que añade la herramienta. Estos dos recursos combinados garantizan legibilidad en casi cualquier imagen de fondo.',
+  },
+];
+---
+<ToolLayout slug="thumbnail-youtube" faqs={faqs}>
+  <ThumbnailYoutubeTool client:load />
+</ToolLayout>

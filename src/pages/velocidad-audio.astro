@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VelocidadAudioTool from '@/components/tools/VelocidadAudioTool';
+
+const faqs = [
+  {
+    q: '¿Qué velocidades puedo aplicar al audio?',
+    a: 'Puedes elegir entre 0.5x (la mitad de velocidad), 0.75x (ligeramente más lento), 1.25x (ligeramente más rápido), 1.5x (moderadamente rápido) y 2x (doble velocidad). Todas las velocidades preservan el tono original del audio.',
+  },
+  {
+    q: '¿Se conserva el tono de la voz o la música?',
+    a: 'Sí. La herramienta usa el filtro atempo de FFmpeg, que aplica técnicas de time-stretching para cambiar la velocidad sin alterar el tono (pitch). La voz no suena como en fast-forward ni lenta como en slow-motion de película.',
+  },
+  {
+    q: '¿Para qué se usa cambiar la velocidad del audio?',
+    a: 'Es muy útil para escuchar podcasts o audiolibros a mayor velocidad (ahorrando tiempo), practicar música a menor velocidad para aprender pasajes difíciles, crear efectos especiales en producción de audio, o adaptar narraciones a duraciones específicas.',
+  },
+  {
+    q: '¿Qué formatos de audio admite la herramienta?',
+    a: 'Admite MP3, WAV, OGG, AAC y FLAC. El archivo resultante se descarga en el mismo formato que subiste, manteniendo así la compatibilidad con tus reproductores y aplicaciones habituales.',
+  },
+  {
+    q: '¿El procesamiento ocurre en mi dispositivo?',
+    a: 'Sí. La herramienta usa FFmpeg.wasm para procesar el audio directamente en tu navegador. El archivo de audio nunca se envía a ningún servidor. El procesamiento puede tardar unos segundos según el tamaño del archivo y la velocidad de tu dispositivo.',
+  },
+];
+---
+<ToolLayout slug="velocidad-audio" faqs={faqs}>
+  <VelocidadAudioTool client:load />
+</ToolLayout>

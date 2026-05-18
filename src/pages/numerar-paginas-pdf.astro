@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import NumerarPaginasPDFTool from '@/components/tools/NumerarPaginasPDFTool';
+
+const faqs = [
+  {
+    q: '¿En qué posiciones puedo colocar los números de página?',
+    a: 'Tienes tres opciones de posición: inferior centro (la más habitual en documentos académicos y libros), inferior derecho (común en informes y presentaciones) y superior derecho (usado en documentos legales y contratos). El margen desde el borde es de 30 puntos.',
+  },
+  {
+    q: '¿Puedo elegir el formato de numeración?',
+    a: 'Sí. Puedes elegir entre tres formatos: solo el número (1, 2, 3…), el número con la palabra "Página" (Página 1, Página 2…) o el formato fraccionario que muestra el total de páginas (1/10, 2/10…). Este último es muy útil para documentos donde importa saber el total.',
+  },
+  {
+    q: '¿Desde qué número puedo empezar a numerar?',
+    a: 'Puedes configurar el número inicial desde cualquier valor mayor que 1. Esto es útil cuando el PDF forma parte de un documento más grande y las páginas anteriores ya están numeradas en otro archivo.',
+  },
+  {
+    q: '¿Se puede cambiar el tamaño del texto de los números?',
+    a: 'Sí. Puedes elegir entre 10, 12, 14 y 16 puntos tipográficos. El color es gris neutro (RGB 0.3, 0.3, 0.3) para que sea legible pero no distraiga del contenido principal.',
+  },
+  {
+    q: '¿Funciona con PDFs de cualquier tamaño de página?',
+    a: 'Sí. La herramienta detecta el tamaño de cada página individualmente y calcula la posición del número en consecuencia. Funciona con A4, Letter, A3, presentaciones en 16:9 y cualquier otro tamaño.',
+  },
+];
+---
+<ToolLayout slug="numerar-paginas-pdf" faqs={faqs}>
+  <NumerarPaginasPDFTool client:load />
+</ToolLayout>

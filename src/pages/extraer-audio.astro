@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ExtraerAudioTool from '@/components/tools/ExtraerAudioTool';
+
+const faqs = [
+  { q: '¿Qué formatos de audio puedo obtener?', a: 'Puedes extraer el audio como MP3 (comprimido, compatible universalmente), WAV (sin pérdida, mayor tamaño) o AAC (comprimido, mejor calidad que MP3 al mismo bitrate). MP3 es la opción recomendada para la mayoría de los usos.' },
+  { q: '¿Se puede extraer audio de cualquier vídeo?', a: 'Sí, siempre que el vídeo tenga una pista de audio (la mayoría los tiene). Si el vídeo no tiene audio, la herramienta mostrará un error. Formatos admitidos: MP4, WebM, MOV y AVI.' },
+  { q: '¿Se pierde calidad al extraer el audio?', a: 'En MP3 y AAC hay una pequeña recodificación que puede implicar una ligera pérdida de calidad respecto al audio original del vídeo. Si quieres preservar la máxima calidad, elige WAV (sin pérdida), aunque el archivo será más grande.' },
+  { q: '¿Para qué sirve extraer el audio de un vídeo?', a: 'Es útil para obtener la banda sonora de una presentación, el audio de una entrevista grabada en vídeo, la música de fondo de un clip, o para importar el audio en un editor de sonido como Audacity.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el audio extraído salen de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="extraer-audio" faqs={faqs}>
+  <ExtraerAudioTool client:load />
+</ToolLayout>

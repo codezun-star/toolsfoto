@@ -1,0 +1,118 @@
+---
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
+import ToolCard from '@/components/ui/ToolCard';
+import '@/styles/global.css';
+import { PAGE_SEO, SITE } from '@/lib/constants/seo';
+
+interface Props {
+  slug: string;
+  faqs?: Array<{ q: string; a: string }>;
+}
+
+const { slug, faqs } = Astro.props;
+const tool = TOOL_BY_SLUG[slug];
+const seo = PAGE_SEO[slug];
+const related = TOOLS.filter(t => tool.related.includes(t.slug)).slice(0, 4);
+
+const domainLabel: Record<string, string> = {
+  imagen: 'Herramientas de imagen',
+  pdf: 'Herramientas PDF',
+  video: 'Herramientas de vídeo',
+  audio: 'Herramientas de audio',
+  developer: 'Herramientas para developers',
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={seo.canonical} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={SITE.ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": tool.name,
+      "description": tool.longDescription,
+      "url": seo.canonical,
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    })} />
+
+    {faqs && faqs.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": { "@type": "Answer", "text": faq.a },
+        })),
+      })} />
+    )}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Header />
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+      <nav class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
+        <a href="/" class="hover:text-[var(--color-text)] transition-colors">Inicio</a>
+        <span>/</span>
+        <a href={`/#${tool.domain}`} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
+        <span>/</span>
+        <span class="text-[var(--color-text)]">{tool.name}</span>
+      </nav>
+
+      <div class="mb-8">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
+        <p class="text-[var(--color-text-secondary)] mt-2 text-lg max-w-2xl">{tool.longDescription}</p>
+      </div>
+
+      <slot />
+
+      {related.length > 0 && (
+        <section class="mt-20">
+          <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">Otras herramientas</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {related.map(t => <ToolCard tool={t} client:load />)}
+          </div>
+        </section>
+      )}
+
+      {faqs && faqs.length > 0 && (
+        <section class="mt-16">
+          <h2 class="text-2xl font-extrabold text-[var(--color-text)] mb-6">Preguntas frecuentes</h2>
+          <dl class="space-y-4">
+            {faqs.map((faq) => (
+              <div class="p-5 bg-white rounded-xl border border-[var(--color-border)]">
+                <dt class="font-bold text-[var(--color-text)] mb-2">{faq.q}</dt>
+                <dd class="text-[var(--color-text-secondary)] text-sm leading-relaxed">{faq.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+    </main>
+
+    <Footer />
+  </body>
+</html>

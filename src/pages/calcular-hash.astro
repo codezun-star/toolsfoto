@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CalcularHashTool from '@/components/tools/CalcularHashTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve calcular el hash de un archivo?',
+    a: 'El hash criptográfico es una "huella digital" única de un archivo o texto. Se usa para verificar la integridad de descargas (comparando el hash publicado con el del archivo descargado), detectar si un archivo fue modificado, comparar archivos sin abrirlos, y verificar la integridad de backups.',
+  },
+  {
+    q: '¿Qué algoritmos de hash están disponibles?',
+    a: 'SHA-1, SHA-256, SHA-384 y SHA-512. Para uso moderno recomendamos SHA-256 o SHA-512 ya que SHA-1 está considerado criptográficamente débil para aplicaciones de seguridad (aunque sigue siendo válido para verificar integridad sin adversario).',
+  },
+  {
+    q: '¿Por qué no está disponible MD5?',
+    a: 'La Web Crypto API nativa del navegador (que usa esta herramienta) no incluye MD5 por razones de seguridad. MD5 está considerado obsoleto para uso criptográfico. Si necesitas MD5, te recomendamos usar herramientas de línea de comandos como md5sum (Linux/Mac) o CertUtil (Windows).',
+  },
+  {
+    q: '¿El archivo se envía a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre en tu navegador usando la Web Crypto API nativa (window.crypto.subtle). El archivo nunca sale de tu dispositivo. Esto lo hace seguro para calcular hashes de archivos confidenciales.',
+  },
+  {
+    q: '¿Puedo calcular el hash de un archivo muy grande?',
+    a: 'Sí, aunque para archivos muy grandes (varios GB) la operación puede tardar unos segundos ya que el archivo completo debe leerse en memoria. La herramienta funciona con cualquier tipo de archivo: ejecutables, imágenes, documentos, bases de datos, etc.',
+  },
+];
+---
+<ToolLayout slug="calcular-hash" faqs={faqs}>
+  <CalcularHashTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GenerarFaviconTool from '@/components/tools/GenerarFaviconTool';
+
+const faqs = [
+  {
+    q: '¿Qué tamaños de favicon necesita mi web?',
+    a: 'Los tamaños esenciales son: 16×16 (barra de pestañas del navegador), 32×32 (atajos de escritorio en Windows), 48×48 (Windows Vista+), y 180×180 para el Apple Touch Icon (cuando se añade la web a la pantalla de inicio en iOS). Esta herramienta genera todos estos tamaños automáticamente.',
+  },
+  {
+    q: '¿Cómo añado los favicons a mi web?',
+    a: 'Descarga los archivos PNG, súbelos a la raíz de tu servidor web y añade las etiquetas HTML en el `<head>` de tu página. La herramienta genera las etiquetas listas para copiar. Solo necesitas añadirlas al HTML.',
+  },
+  {
+    q: '¿Qué tipo de imagen debo usar como fuente?',
+    a: 'Lo ideal es una imagen cuadrada PNG con fondo transparente de al menos 180×180 px. Imágenes con fondo opaco también funcionan. Evita logos con mucho texto ya que a 16×16 px será ilegible; usa solo el símbolo o la inicial de tu marca.',
+  },
+  {
+    q: '¿Por qué no genero un archivo .ico?',
+    a: 'El formato .ico fue el estándar clásico, pero hoy todos los navegadores modernos aceptan PNG. Los PNG son más fáciles de generar, editar y tienen mejor calidad. Si necesitas compatibilidad con IE8 o inferior (uso &lt;0.5%), necesitarías un .ico.',
+  },
+  {
+    q: '¿Necesito un favicon diferente para Android/Chrome?',
+    a: 'Para Progressive Web Apps (PWAs) Chrome recomienda un archivo `manifest.json` con iconos de 192×192 y 512×512. Esta herramienta genera los tamaños estándar de favicon. Para PWA puedes usar el tamaño 96×96 que generamos como punto de partida.',
+  },
+];
+---
+<ToolLayout slug="generar-favicon" faqs={faqs}>
+  <GenerarFaviconTool client:load />
+</ToolLayout>

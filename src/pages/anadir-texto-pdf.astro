@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AnadirTextoPDFTool from '@/components/tools/AnadirTextoPDFTool';
+
+const faqs = [
+  {
+    q: '¿Cuántos bloques de texto puedo añadir?',
+    a: 'Puedes añadir hasta 5 bloques de texto independientes en una sola operación. Cada bloque puede ir en una página diferente y tener su propio tamaño de fuente, posición y color. Si necesitas más bloques, puedes procesar el PDF resultante de nuevo.',
+  },
+  {
+    q: '¿Cómo funciona el sistema de posicionamiento X/Y?',
+    a: 'La posición X e Y se define como porcentaje del ancho y alto de la página. X=0% es el borde izquierdo, X=50% es el centro horizontal. Y=0% es la parte superior, Y=50% es el centro vertical. Esto funciona independientemente del tamaño de la página (A4, Letter, etc.).',
+  },
+  {
+    q: '¿Puedo añadir texto a PDFs escaneados (imágenes)?',
+    a: 'Sí. Los PDFs escaneados son imágenes incrustadas en un contenedor PDF. La herramienta añade el texto como una capa de texto encima de la imagen, igual que en un PDF con texto nativo. El resultado es un PDF con la imagen del escáner más el texto añadido.',
+  },
+  {
+    q: '¿Qué fuentes están disponibles?',
+    a: 'Actualmente la herramienta usa Helvetica, que es una fuente estándar incluida en la especificación PDF (no requiere incrustar el archivo de fuente). Esto garantiza compatibilidad universal con todos los lectores de PDF.',
+  },
+  {
+    q: '¿Funciona con PDFs protegidos con contraseña?',
+    a: 'No. Los PDFs con contraseña de escritura no permiten modificaciones. Usa primero la herramienta "Eliminar contraseña PDF" para desprotegerlo y luego añade el texto.',
+  },
+];
+---
+<ToolLayout slug="anadir-texto-pdf" faqs={faqs}>
+  <AnadirTextoPDFTool client:load />
+</ToolLayout>

@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ExtraerPaginasPDFTool from '@/components/tools/ExtraerPaginasPDFTool';
+
+const faqs = [
+  {
+    q: '¿Cómo indico qué páginas quiero extraer?',
+    a: 'Escribe los números de página separados por comas. Usa un guión para indicar rangos continuos. Por ejemplo: "1-3, 5, 8-10" extrae las páginas 1, 2, 3, 5, 8, 9 y 10 en ese orden. Las páginas aparecen en el nuevo PDF en el orden en que las escribas.',
+  },
+  {
+    q: '¿Puedo reordenar las páginas al extraerlas?',
+    a: 'Sí. El orden en que escribes los números de página en el campo de texto determina el orden en el PDF resultante. Por ejemplo, "5, 1, 3" extraerá la página 5 primero, luego la 1 y finalmente la 3.',
+  },
+  {
+    q: '¿Se mantiene la calidad de las páginas extraídas?',
+    a: 'Completamente. La extracción no rasteriza ni recomprime el contenido. Las páginas extraídas son idénticas en calidad al original, con todo su texto nativo, imágenes y vectores.',
+  },
+  {
+    q: '¿Puedo extraer páginas de un PDF con muchas páginas?',
+    a: 'Sí, no hay límite de páginas. La herramienta carga el PDF completo en memoria para procesar la extracción, por lo que PDFs muy grandes pueden requerir más tiempo y memoria del navegador.',
+  },
+  {
+    q: '¿Cuál es la diferencia con "Dividir PDF"?',
+    a: '"Dividir PDF" crea un archivo separado por cada página o por rangos predefinidos. "Extraer páginas" permite seleccionar páginas concretas en cualquier orden y exportarlas como un único documento nuevo.',
+  },
+];
+---
+<ToolLayout slug="extraer-paginas-pdf" faqs={faqs}>
+  <ExtraerPaginasPDFTool client:load />
+</ToolLayout>

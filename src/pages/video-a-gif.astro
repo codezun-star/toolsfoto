@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VideoAGifTool from '@/components/tools/VideoAGifTool';
+
+const faqs = [
+  { q: '¿Cuánto debe durar el clip para un buen GIF?', a: 'Los GIF más efectivos duran entre 2 y 5 segundos. GIFs más largos aumentan exponencialmente el tamaño del archivo: un GIF de 10 segundos puede pesar más de 50 MB. Para contenido en redes sociales, 3 segundos y 320 px de ancho es el equilibrio ideal.' },
+  { q: '¿Qué FPS debo elegir?', a: '10 fps es suficiente para la mayoría de los movimientos y mantiene el tamaño bajo. 15 fps da mayor fluidez para movimientos rápidos. 24 fps produce animaciones muy fluidas pero el archivo puede ser muy grande. Para contenido web, recomendamos 10-15 fps.' },
+  { q: '¿Por qué el GIF tiene peor calidad que el vídeo original?', a: 'El formato GIF solo admite 256 colores por fotograma, lo que reduce inevitablemente la calidad de color. La herramienta usa un algoritmo de paleta (palettegen + paletteuse de FFmpeg) para maximizar la calidad dentro de esa limitación.' },
+  { q: '¿Qué ancho debo elegir?', a: '320 px es el estándar para redes sociales y chats. 480 px ofrece mayor detalle pero duplica el tamaño del archivo. 640 px solo se recomienda para GIFs de texto o contenido con mucho detalle.' },
+  { q: '¿Puedo usar el GIF en redes sociales?', a: 'Sí. La mayoría de redes sociales (Twitter, Discord, Slack, WhatsApp) admiten GIFs. Para Twitter, el límite es 5 MB; para Discord, 8 MB. Mantén la duración corta y el ancho en 320 px para cumplir con los límites habituales.' },
+];
+---
+<ToolLayout slug="video-a-gif" faqs={faqs}>
+  <VideoAGifTool client:load />
+</ToolLayout>

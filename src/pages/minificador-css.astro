@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MinificadorCSSTool from '@/components/tools/MinificadorCSSTool';
+
+const faqs = [
+  {
+    q: '¿Cuánto puede reducirse el tamaño de un archivo CSS?',
+    a: 'Depende del estilo del código original. Un CSS bien formateado con muchos comentarios y espacios puede reducirse entre un 20% y un 50%. Archivos CSS de frameworks como Bootstrap o Tailwind generados pueden reducirse aún más. El porcentaje exacto se muestra después de minificar.',
+  },
+  {
+    q: '¿La minificación afecta al funcionamiento del CSS?',
+    a: 'No. La minificación solo elimina caracteres innecesarios (espacios, saltos de línea, comentarios y el último punto y coma antes de un }) que el navegador ignora. El resultado funciona exactamente igual que el original.',
+  },
+  {
+    q: '¿Se eliminan los comentarios del CSS?',
+    a: 'Sí. Todos los comentarios CSS (/* ... */) se eliminan en el proceso de minificación. Si necesitas preservar comentarios de licencia (por ejemplo /* @license */), estos se perderán también. Guarda siempre el CSS original sin minificar como fuente de edición.',
+  },
+  {
+    q: '¿Funciona con CSS con variables, nesting y funciones modernas?',
+    a: 'Sí. La minificación opera a nivel de texto, no interpreta el CSS semánticamente. Por tanto funciona con cualquier sintaxis CSS válida: variables (--my-var), calc(), clamp(), grid, flexbox, @media queries y CSS nesting.',
+  },
+  {
+    q: '¿Puedo usar esta herramienta para hacer legible un CSS minificado?',
+    a: 'Sí. El modo "Formatear" aplica indentación y saltos de línea para hacer legible un CSS comprimido. Es útil para inspeccionar CSS de terceros o de build tools.',
+  },
+];
+---
+<ToolLayout slug="minificador-css" faqs={faqs}>
+  <MinificadorCSSTool client:load />
+</ToolLayout>
