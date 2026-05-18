@@ -8,7 +8,6 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://toolsfoto.com',
   output: 'static',
-  adapter: cloudflare(),
   integrations: [
     react(),
     sitemap(),
