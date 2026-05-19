@@ -57,11 +57,12 @@ export default function MinificadorCSSTool() {
   function download() {
     if (!output) return;
     const blob = new Blob([output], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = mode === 'minify' ? 'styles.min.css' : 'styles.css';
     a.click();
-    URL.revokeObjectURL(a.href);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
   }
 
   return (

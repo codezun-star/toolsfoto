@@ -36,14 +36,13 @@ export default function RotarVideoTool() {
     setError(null);
     try {
       const ff = await createFFmpeg((p) => setProgress(p));
-      const bytes = await runFFmpeg(
+      const blob = await runFFmpeg(
         ff,
         video.file,
         'input.mp4',
         ['-vf', ROTATIONS[rotation].filter, '-c:a', 'copy'],
         'output.mp4',
       );
-      const blob = new Blob([bytes], { type: 'video/mp4' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
