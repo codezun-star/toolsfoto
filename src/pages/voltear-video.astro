@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VoltearVideoTool from '@/components/tools/VoltearVideoTool';
+
+const faqs = [
+  { q: '¿Qué diferencia hay entre volteo horizontal y vertical?', a: 'El volteo horizontal crea un espejo de izquierda a derecha, como ver la imagen reflejada en un espejo. El volteo vertical gira la imagen de arriba a abajo, como si la estuvieras viendo desde abajo.' },
+  { q: '¿Se conserva el audio al voltear el vídeo?', a: 'Sí. La pista de audio se copia directamente sin procesar, por lo que el audio del vídeo volteado es idéntico al original.' },
+  { q: '¿Qué formatos de vídeo acepta?', a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4, que es el más compatible con plataformas y reproductores.' },
+  { q: '¿Se pierde calidad al voltear el vídeo?', a: 'El volteo requiere re-codificar el vídeo. La herramienta usa libx264, que produce pérdidas mínimas e imperceptibles en condiciones normales de visualización.' },
+  { q: '¿Para qué sirve voltear un vídeo?', a: 'El volteo horizontal es útil para corregir vídeos grabados con cámara frontal (selfie) que aparecen al revés, crear efectos de espejo, o cumplir requisitos de plataformas de vídeo.' },
+];
+---
+<ToolLayout slug="voltear-video" faqs={faqs}>
+  <VoltearVideoTool client:load />
+</ToolLayout>

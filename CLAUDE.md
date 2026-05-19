@@ -149,8 +149,13 @@ toolsfoto-v2/
 | `/thumbnail-youtube` | `ThumbnailYoutubeTool.tsx` | Creativas | Canvas 1280×720 JPEG — overlay + texto con word-wrap |
 | `/imagenes-a-gif` | `ImagenesAGifTool.tsx` | Creativas | FFmpeg.wasm concat demuxer + palettegen/paletteuse |
 | `/imagen-a-webp` | `ImagenAWebpTool.tsx` | Básicas | Canvas API `toBlob('image/webp', quality)` |
+| `/ajustar-hsb` | `AjustarHSBTool.tsx` | Creativas | Canvas `ctx.filter` hue-rotate/saturate/brightness/contrast |
+| `/efecto-boceto` | `EfectoBocetoTool.tsx` | Creativas | Canvas grayscale + invert + blur → color dodge blend manual |
+| `/cambiar-fondo` | `CambiarFondoTool.tsx` | Básicas | Canvas `fillRect` con color + `drawImage` |
+| `/mosaico` | `MosaicoTool.tsx` | Creativas | Canvas `drawImage` en bucle NxM tiles |
+| `/efecto-duotono` | `EfectoDuotonoTool.tsx` | Creativas | `getImageData` + mapeo luminosidad → dos colores |
 
-### PDF (17)
+### PDF (20)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -171,8 +176,11 @@ toolsfoto-v2/
 | `/reordenar-paginas-pdf` | `ReordenarPaginasPDFTool.tsx` | Básicas | pdfjs-dist thumbnails + pdf-lib `copyPages(src, order)` |
 | `/recortar-pdf` | `RecortarPDFTool.tsx` | Básicas | pdf-lib `page.setCropBox()` — márgenes en mm → pt (×2.8346) |
 | `/anadir-texto-pdf` | `AnadirTextoPDFTool.tsx` | Básicas | pdf-lib `page.drawText()` — hasta 5 bloques, posición X/Y%, color |
+| `/eliminar-paginas-pdf` | `EliminarPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` conservando solo páginas no eliminadas |
+| `/anadir-imagen-pdf` | `AnadirImagenPDFTool.tsx` | Básicas | pdf-lib `embedJpg/embedPng` + `page.drawImage()` con posición % |
+| `/pdf-en-blanco` | `PDFEnBlancoTool.tsx` | Básicas | pdf-lib `addPage([w, h])` con tamaños estándar y orientación |
 
-### Vídeo (11)
+### Vídeo (15)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -187,8 +195,12 @@ toolsfoto-v2/
 | `/unir-videos` | `UnirVideosTool.tsx` | Básicas | FFmpeg.wasm — concat demuxer + re-encode libx264, hasta 10 clips |
 | `/silenciar-video` | `SilenciarVideoTool.tsx` | Básicas | FFmpeg.wasm — `-an -c:v copy` (stream copy, sin re-encode) |
 | `/capturar-fotograma` | `CapturarFotogramaTool.tsx` | Básicas | FFmpeg.wasm — `-ss {t} -frames:v 1` → PNG |
+| `/voltear-video` | `VoltearVideoTool.tsx` | Básicas | FFmpeg.wasm — `hflip`, `vflip` o ambos |
+| `/recortar-area-video` | `RecortarAreaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `crop=w:h:x:y` |
+| `/cambiar-resolucion-video` | `CambiarResolucionVideoTool.tsx` | Básicas | FFmpeg.wasm — `scale=w:h:force_original_aspect_ratio=decrease,pad` |
+| `/marca-agua-video` | `MarcaAguaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `drawtext` con posición y opacidad |
 
-### Audio (7)
+### Audio (10)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -199,8 +211,11 @@ toolsfoto-v2/
 | `/cambiar-volumen` | `CambiarVolumenTool.tsx` | Básicas | FFmpeg.wasm — `volume=${db}dB` o filtro `loudnorm` para normalizar |
 | `/velocidad-audio` | `VelocidadAudioTool.tsx` | Básicas | FFmpeg.wasm — `atempo` con chaining para <0.5× o >2× |
 | `/revertir-audio` | `RevertirAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `areverse`, preserva formato original |
+| `/agregar-fade-audio` | `AgregarFadeAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `afade=t=in/out:st:d` encadenado |
+| `/mezclar-audios` | `MezclarAudiosTool.tsx` | Básicas | FFmpeg.wasm — `amix=inputs=2:duration=longest` con volume por pista |
+| `/cambiar-tono` | `CambiarTonoTool.tsx` | Básicas | FFmpeg.wasm — `asetrate=44100*2^(s/12),aresample=44100` |
 
-### Developer (13)
+### Developer (18)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -217,6 +232,11 @@ toolsfoto-v2/
 | `/minificador-css` | `MinificadorCSSTool.tsx` | Básicas | Minificación y formateo CSS puro en JS — sin dependencias |
 | `/csv-a-json` | `CsvAJsonTool.tsx` | Básicas | Parser CSV propio con soporte de comillas — CSV↔JSON bidireccional |
 | `/calcular-hash` | `CalcularHashTool.tsx` | Básicas | Web Crypto API — SHA-1/256/384/512 sobre texto o archivo |
+| `/regex-tester` | `RegexTesterTool.tsx` | Básicas | `RegExp` nativo JS — resaltado de coincidencias + grupos de captura |
+| `/generador-uuid` | `GeneradorUUIDTool.tsx` | Básicas | `crypto.randomUUID()` — UUID v4 hasta 100 de una vez |
+| `/contador-palabras` | `ContadorPalabrasTool.tsx` | Básicas | JS puro — palabras, chars, frases, párrafos, tiempo de lectura |
+| `/convertir-timestamp` | `ConvertirTimestampTool.tsx` | Básicas | `Date` nativo — Unix↔fecha local/UTC/ISO 8601 bidireccional |
+| `/minificador-html` | `MinificadorHTMLTool.tsx` | Básicas | JS puro regex — elimina comments, colapsa whitespace, formatea |
 
 ### Páginas legales (5)
 
@@ -360,7 +380,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 82 páginas HTML estáticas** (28 imagen + 17 PDF + 11 vídeo + 7 audio + 13 developer + home + 5 legales).
+**El build genera actualmente 102 páginas HTML estáticas** (33 imagen + 20 PDF + 15 vídeo + 10 audio + 18 developer + home + 5 legales).
 
 ---
 

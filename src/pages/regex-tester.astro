@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RegexTesterTool from '@/components/tools/RegexTesterTool';
+
+const faqs = [
+  { q: '¿Qué son las expresiones regulares?', a: 'Las expresiones regulares (regex) son patrones para buscar y manipular texto. Usan caracteres especiales como . (cualquier carácter), * (0 o más repeticiones), + (1 o más), [] (conjuntos) y muchos más.' },
+  { q: '¿Qué significan los flags g, i, m y s?', a: 'g (global) encuentra todas las coincidencias en lugar de detenerse en la primera. i (case insensitive) ignora mayúsculas/minúsculas. m (multiline) hace que ^ y $ coincidan con inicio/fin de línea. s (dotAll) hace que . coincida también con saltos de línea.' },
+  { q: '¿Cómo se usan los grupos de captura?', a: 'Rodea una parte del patrón con paréntesis: (\\d+) captura uno o más dígitos. Con grupos nombrados: (?<año>\\d{4}). Las coincidencias de grupos se muestran en el detalle de cada resultado.' },
+  { q: '¿Se puede probar la regex contra texto multilínea?', a: 'Sí. El área de texto acepta múltiples líneas. Para que ^ y $ coincidan con inicio/fin de cada línea (no solo del texto completo), activa el flag m (multiline).' },
+  { q: '¿Las regex de esta herramienta son compatibles con JavaScript?', a: 'Sí. La herramienta usa el motor de JavaScript (RegExp) del navegador, por lo que el comportamiento es exactamente el mismo que al usar regex en código JavaScript.' },
+];
+---
+<ToolLayout slug="regex-tester" faqs={faqs}>
+  <RegexTesterTool client:load />
+</ToolLayout>

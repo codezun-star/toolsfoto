@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarTonoTool from '@/components/tools/CambiarTonoTool';
+
+const faqs = [
+  { q: '¿Qué es un semitono?', a: 'Un semitono es la distancia mínima entre dos notas musicales. Hay 12 semitonos en una octava. Subir 12 semitonos dobla la frecuencia del sonido. Subir 7 semitonos produce una quinta perfecta.' },
+  { q: '¿Cambiar el tono afecta la velocidad de reproducción?', a: 'No directamente. La herramienta usa el algoritmo asetrate+aresample, que cambia la frecuencia de muestreo para modificar el tono y luego la corrige para mantener la duración original.' },
+  { q: '¿Cuántos semitonos puedo cambiar?', a: 'El rango disponible es de -12 a +12 semitonos, equivalente a una octava hacia arriba o hacia abajo. Cambios de ±3 o ±4 semitonos ya son muy perceptibles.' },
+  { q: '¿Para qué se usa el cambio de tono?', a: 'Es útil para transportar música a una tonalidad más cómoda para cantar, crear efectos de voz, hacer covers, practicar instrumentos, o ajustar el tono de efectos de sonido.' },
+  { q: '¿Funciona con locuciones y podcast?', a: 'Sí, aunque el cambio de tono en voz humana puede sonar artificial con valores extremos. Para ajustes sutiles (±1-2 semitonos) los resultados son bastante naturales.' },
+];
+---
+<ToolLayout slug="cambiar-tono" faqs={faqs}>
+  <CambiarTonoTool client:load />
+</ToolLayout>

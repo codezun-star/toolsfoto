@@ -449,4 +449,106 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Inserta texto personalizado en cualquier posición de tu PDF. Elige página, posición X/Y, tamaño de fuente y color. Sin registro, sin subir archivos al servidor. Completamente gratis.',
     canonical: 'https://toolsfoto.com/anadir-texto-pdf',
   },
+
+  // ── 20 herramientas nuevas ────────────────────────────────────
+  'ajustar-hsb': {
+    title: 'Ajustar tono, saturación y brillo de imagen gratis | ToolsFoto',
+    description: 'Ajusta el tono (hue), saturación, brillo y contraste de tus imágenes con sliders en tiempo real. Preview instantáneo, sin registro, sin subir archivos. 100% gratis en el navegador.',
+    canonical: 'https://toolsfoto.com/ajustar-hsb',
+  },
+  'efecto-boceto': {
+    title: 'Efecto boceto a lápiz online gratis | ToolsFoto',
+    description: 'Convierte tus fotos en bocetos artísticos a lápiz con la técnica color dodge. Ajusta la suavidad del trazo. Sin registro, sin subir imágenes. 100% gratis en el navegador.',
+    canonical: 'https://toolsfoto.com/efecto-boceto',
+  },
+  'cambiar-fondo': {
+    title: 'Cambiar fondo de imagen online gratis | ToolsFoto',
+    description: 'Reemplaza el fondo de tu imagen por cualquier color sólido. Especialmente útil para PNGs con transparencia. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-fondo',
+  },
+  mosaico: {
+    title: 'Crear mosaico de imagen online gratis | ToolsFoto',
+    description: 'Repite tu imagen en una cuadrícula de hasta 6×6 tiles. Perfecto para fondos, papeles de pared y diseño gráfico. Sin registro, sin subir imágenes al servidor. 100% gratis.',
+    canonical: 'https://toolsfoto.com/mosaico',
+  },
+  'efecto-duotono': {
+    title: 'Efecto duotono a imagen online gratis | ToolsFoto',
+    description: 'Aplica efectos duotono profesionales de dos colores a tus imágenes. 5 presets populares y colores personalizados. Sin registro, sin subir archivos. 100% gratis en el navegador.',
+    canonical: 'https://toolsfoto.com/efecto-duotono',
+  },
+  'eliminar-paginas-pdf': {
+    title: 'Eliminar páginas de PDF online gratis | ToolsFoto',
+    description: 'Borra páginas específicas o rangos de un PDF (ej: 1, 3, 5-7). Sin registro, sin subir archivos al servidor. Procesamiento 100% local. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/eliminar-paginas-pdf',
+  },
+  'anadir-imagen-pdf': {
+    title: 'Añadir imagen a PDF online gratis | ToolsFoto',
+    description: 'Inserta imágenes JPG o PNG en cualquier página de tu PDF con control de posición y tamaño. Perfecto para firmas y sellos. Sin registro, sin subir archivos al servidor. Gratis.',
+    canonical: 'https://toolsfoto.com/anadir-imagen-pdf',
+  },
+  'pdf-en-blanco': {
+    title: 'Crear PDF en blanco online gratis | ToolsFoto',
+    description: 'Genera PDFs en blanco en A4, A3, Carta, Legal y A5. Elige la orientación y el número de páginas. Sin registro, sin instalación. Procesamiento 100% local. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/pdf-en-blanco',
+  },
+  'voltear-video': {
+    title: 'Voltear vídeo online gratis — espejo horizontal y vertical | ToolsFoto',
+    description: 'Voltea tu vídeo en espejo horizontal, vertical o en ambos ejes. El audio se preserva. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/voltear-video',
+  },
+  'recortar-area-video': {
+    title: 'Recortar área de vídeo online gratis | ToolsFoto',
+    description: 'Recorta un área específica de tu vídeo definiendo ancho, alto y posición en píxeles. El audio se preserva. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/recortar-area-video',
+  },
+  'cambiar-resolucion-video': {
+    title: 'Cambiar resolución de vídeo online gratis — 1080p 720p 480p | ToolsFoto',
+    description: 'Escala tu vídeo a 4K, 1080p, 720p, 480p, 360p o resolución personalizada. Mantiene la proporción. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-resolucion-video',
+  },
+  'marca-agua-video': {
+    title: 'Añadir marca de agua a vídeo online gratis | ToolsFoto',
+    description: 'Incrusta texto como marca de agua permanente en tu vídeo. Posición, tamaño y opacidad ajustables. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Gratis.',
+    canonical: 'https://toolsfoto.com/marca-agua-video',
+  },
+  'agregar-fade-audio': {
+    title: 'Añadir fade in y fade out a audio online gratis | ToolsFoto',
+    description: 'Aplica entrada y salida gradual (fade in/fade out) a cualquier audio. Duración configurable de forma independiente. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/agregar-fade-audio',
+  },
+  'mezclar-audios': {
+    title: 'Mezclar dos audios online gratis | ToolsFoto',
+    description: 'Combina dos pistas de audio en una sola con control de volumen independiente. Perfecto para música de fondo y locución. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/mezclar-audios',
+  },
+  'cambiar-tono': {
+    title: 'Cambiar tono de audio online gratis — pitch shifter | ToolsFoto',
+    description: 'Sube o baja el tono musical de tu audio en semitonos sin cambiar la velocidad. De -12 a +12 semitonos. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-tono',
+  },
+  'regex-tester': {
+    title: 'Tester de expresiones regulares (Regex) online gratis | ToolsFoto',
+    description: 'Prueba tus expresiones regulares JavaScript con resaltado de coincidencias en tiempo real. Soporta flags g, i, m, s y grupos de captura. Sin registro, 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/regex-tester',
+  },
+  'generador-uuid': {
+    title: 'Generador de UUID v4 online gratis | ToolsFoto',
+    description: 'Genera UUIDs v4 criptográficamente seguros al instante. Hasta 100 UUIDs de una vez, con opciones de formato. Web Crypto API. Sin registro, sin subir datos. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/generador-uuid',
+  },
+  'contador-palabras': {
+    title: 'Contador de palabras online gratis | ToolsFoto',
+    description: 'Cuenta palabras, caracteres, frases, párrafos y tiempo de lectura en tiempo real. Estadísticas instantáneas sin hacer clic. Sin registro, sin subir texto. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/contador-palabras',
+  },
+  'convertir-timestamp': {
+    title: 'Convertir Unix timestamp a fecha online gratis | ToolsFoto',
+    description: 'Convierte timestamps Unix a fechas legibles y viceversa. Detecta segundos o milisegundos automáticamente. Muestra local, UTC e ISO 8601. Sin registro, 100% gratuito.',
+    canonical: 'https://toolsfoto.com/convertir-timestamp',
+  },
+  'minificador-html': {
+    title: 'Minificador HTML online gratis — comprimir HTML al instante | ToolsFoto',
+    description: 'Minifica HTML eliminando comentarios, espacios y saltos de línea. También formatea HTML comprimido. Muestra el porcentaje de reducción. Sin registro, 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/minificador-html',
+  },
 };

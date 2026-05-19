@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EliminarPaginasPDFTool from '@/components/tools/EliminarPaginasPDFTool';
+
+const faqs = [
+  { q: '¿Cómo indico qué páginas quiero eliminar?', a: 'Escribe los números de página separados por comas. Para rangos continuos usa un guión. Por ejemplo: "1, 3, 5-7" elimina las páginas 1, 3, 5, 6 y 7.' },
+  { q: '¿Se puede deshacer la eliminación?', a: 'No directamente, pero el archivo original no se modifica. La herramienta crea un nuevo PDF con las páginas que se conservan. Siempre guarda el original antes de descargar el resultado.' },
+  { q: '¿Funciona con PDFs protegidos con contraseña?', a: 'No. Los PDFs cifrados no pueden procesarse sin la contraseña. Usa primero la herramienta "Eliminar contraseña PDF" para desbloquear el archivo.' },
+  { q: '¿Se pueden eliminar todas las páginas?', a: 'No. La herramienta impide generar un PDF vacío. Debe quedar al menos una página en el documento resultante.' },
+  { q: '¿Se conservan los metadatos, marcadores e hipervínculos?', a: 'Los metadatos básicos se conservan. Sin embargo, los marcadores (bookmarks) y algunos hipervínculos pueden quedar rotos si las páginas a las que apuntaban fueron eliminadas.' },
+];
+---
+<ToolLayout slug="eliminar-paginas-pdf" faqs={faqs}>
+  <EliminarPaginasPDFTool client:load />
+</ToolLayout>

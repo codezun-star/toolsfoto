@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PDFEnBlancoTool from '@/components/tools/PDFEnBlancoTool';
+
+const faqs = [
+  { q: '¿Para qué sirve crear un PDF en blanco?', a: 'Un PDF en blanco es útil como plantilla para rellenar manualmente, como soporte para añadir imágenes o firmas con otras herramientas, o para crear documentos base para presentaciones.' },
+  { q: '¿Cuáles son los tamaños disponibles?', a: 'Puedes crear PDFs en A4, A3, A5, Carta y Legal. Todos son los tamaños estándar internacionales. A4 es el más común en Europa y América Latina.' },
+  { q: '¿Hay límite en el número de páginas?', a: 'Puedes crear hasta 100 páginas en blanco de una sola vez. Para documentos más largos, puedes crear múltiples archivos y unirlos con la herramienta "Unir PDFs".' },
+  { q: '¿Puedo elegir orientación horizontal?', a: 'Sí. La opción "Horizontal" crea el PDF en formato apaisado, donde el ancho es mayor que el alto. Es ideal para presentaciones, hojas de cálculo e infografías.' },
+  { q: '¿El PDF creado es compatible con todos los lectores?', a: 'Sí. El PDF generado cumple con el estándar PDF 1.4 y es compatible con Adobe Acrobat, Vista previa de macOS, navegadores web y cualquier lector de PDF estándar.' },
+];
+---
+<ToolLayout slug="pdf-en-blanco" faqs={faqs}>
+  <PDFEnBlancoTool client:load />
+</ToolLayout>

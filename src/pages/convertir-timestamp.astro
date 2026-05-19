@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirTimestampTool from '@/components/tools/ConvertirTimestampTool';
+
+const faqs = [
+  { q: '¿Qué es un Unix timestamp?', a: 'Un Unix timestamp (o epoch time) es el número de segundos transcurridos desde las 00:00:00 UTC del 1 de enero de 1970. Es el estándar universal para representar fechas y horas en sistemas informáticos.' },
+  { q: '¿La herramienta detecta automáticamente segundos o milisegundos?', a: 'Sí. Si el número tiene más de 10 dígitos, se interpreta como milisegundos (como el que devuelve Date.now() en JavaScript). Si tiene 10 o menos dígitos, se interpreta como segundos.' },
+  { q: '¿Qué formatos de fecha acepta en la conversión inversa?', a: 'Acepta formatos estándar como YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SSZ (ISO 8601), y fechas en inglés como "January 15, 2024". Los formatos locales (DD/MM/YYYY) pueden no funcionar correctamente.' },
+  { q: '¿Las fechas se muestran en mi zona horaria?', a: 'Sí. La herramienta muestra tanto la hora local (según la configuración de tu navegador) como UTC. Así puedes ver la diferencia con el huso horario.' },
+  { q: '¿Para qué se usa el timestamp en programación?', a: 'Es el estándar para almacenar fechas en bases de datos, registros de logs, APIs REST, tokens JWT, cabeceras HTTP y cualquier sistema que necesite manejar fechas sin ambigüedad de zona horaria.' },
+];
+---
+<ToolLayout slug="convertir-timestamp" faqs={faqs}>
+  <ConvertirTimestampTool client:load />
+</ToolLayout>

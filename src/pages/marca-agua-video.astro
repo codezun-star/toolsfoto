@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MarcaAguaVideoTool from '@/components/tools/MarcaAguaVideoTool';
+
+const faqs = [
+  { q: '¿Puedo poner cualquier texto como marca de agua?', a: 'Sí. Puedes escribir cualquier texto: tu nombre, un copyright, un dominio web, un eslogan, etc. El texto se renderiza con fuente estándar del sistema sobre el vídeo.' },
+  { q: '¿Se puede cambiar el color de la marca de agua?', a: 'Actualmente la marca de agua es blanca con sombra negra, lo que garantiza legibilidad sobre cualquier tipo de fondo. Esta combinación funciona en el 99% de los casos.' },
+  { q: '¿Qué opacidad es la más adecuada?', a: 'Para marcas de agua sutiles, entre el 30% y el 50%. Para marcas de agua de protección visibles, entre el 70% y el 100%. Una opacidad del 60% es el equilibrio habitual entre visibilidad y discreción.' },
+  { q: '¿Se puede quitar la marca de agua del vídeo resultante?', a: 'La marca de agua queda incrustada permanentemente en el stream de vídeo. No puede eliminarse fácilmente sin software especializado, lo que la hace efectiva como protección visual.' },
+  { q: '¿Se pierde calidad al añadir la marca de agua?', a: 'El vídeo se re-codifica con libx264 para aplicar el filtro de texto. La calidad visual es prácticamente idéntica a la original, con pérdidas imperceptibles en condiciones normales.' },
+];
+---
+<ToolLayout slug="marca-agua-video" faqs={faqs}>
+  <MarcaAguaVideoTool client:load />
+</ToolLayout>

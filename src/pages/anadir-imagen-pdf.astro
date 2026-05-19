@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AnadirImagenPDFTool from '@/components/tools/AnadirImagenPDFTool';
+
+const faqs = [
+  { q: '¿Qué formatos de imagen acepta?', a: 'Acepta JPG y PNG. No se admiten otros formatos como WebP, GIF o SVG. Si tienes una imagen en otro formato, conviértela primero a JPG o PNG.' },
+  { q: '¿Cómo funciona el sistema de posición en porcentaje?', a: 'La posición X al 0% coloca la imagen en el borde izquierdo, y al 100% en el extremo derecho. La posición Y al 0% es el borde superior y al 100% el inferior. El 10% es un buen margen por defecto.' },
+  { q: '¿Se puede insertar la imagen en una página específica?', a: 'Sí. El campo "Página de destino" te permite indicar en qué página del PDF insertar la imagen. El primer número es la página 1.' },
+  { q: '¿Se mantiene la proporción de la imagen?', a: 'Sí. Solo defines el ancho deseado (como porcentaje del ancho de la página) y la altura se calcula automáticamente para mantener la relación de aspecto original.' },
+  { q: '¿Puedo insertar una firma o sello?', a: 'Sí. Esta herramienta es perfecta para insertar firmas escaneadas, sellos, logos o cualquier imagen en una posición específica del PDF.' },
+];
+---
+<ToolLayout slug="anadir-imagen-pdf" faqs={faqs}>
+  <AnadirImagenPDFTool client:load />
+</ToolLayout>

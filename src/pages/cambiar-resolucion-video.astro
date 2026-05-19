@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarResolucionVideoTool from '@/components/tools/CambiarResolucionVideoTool';
+
+const faqs = [
+  { q: '¿Se puede aumentar la resolución de un vídeo?', a: 'Técnicamente sí, pero no se gana calidad real. Aumentar la resolución (upscale) solo interpola píxeles existentes y puede hacer el vídeo más borroso. Es más útil reducir la resolución para ahorrar espacio.' },
+  { q: '¿Qué pasa si el vídeo tiene una relación de aspecto diferente?', a: 'La herramienta usa escalado con padding: escala el vídeo para que quepa en las dimensiones seleccionadas manteniendo la proporción original, y añade barras negras en los lados si es necesario.' },
+  { q: '¿Cuánto reduce el tamaño cambiar de 1080p a 720p?', a: 'En general, pasar de 1080p a 720p reduce el tamaño del archivo aproximadamente a la mitad, dependiendo del contenido. Es una de las formas más efectivas de reducir el peso de un vídeo.' },
+  { q: '¿Se conserva el audio al cambiar la resolución?', a: 'Sí. La pista de audio se copia directamente sin re-codificar, por lo que el audio permanece intacto e idéntico al original.' },
+  { q: '¿Qué resolución debo elegir?', a: '1080p es estándar para YouTube y streaming de calidad. 720p es la opción equilibrada para redes sociales. 480p o 360p son adecuadas para mensajería (WhatsApp, Telegram) o conexiones lentas.' },
+];
+---
+<ToolLayout slug="cambiar-resolucion-video" faqs={faqs}>
+  <CambiarResolucionVideoTool client:load />
+</ToolLayout>

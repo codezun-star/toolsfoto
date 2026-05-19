@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AgregarFadeAudioTool from '@/components/tools/AgregarFadeAudioTool';
+
+const faqs = [
+  { q: '¿Qué es un fade in y un fade out?', a: 'Fade in significa que el audio empieza en silencio y sube gradualmente hasta el volumen normal al inicio. Fade out es lo contrario: el audio baja gradualmente hasta silencio al final. Ambos crean transiciones suaves.' },
+  { q: '¿Puedo aplicar solo el fade in o solo el fade out?', a: 'Sí. Puedes activar o desactivar independientemente el fade in y el fade out mediante las casillas de verificación. Es posible usar solo uno de los dos.' },
+  { q: '¿Cuántos segundos de fade son apropiados?', a: 'Para música, entre 2 y 5 segundos es habitual. Para podcasts o locución, 1-2 segundos suele ser suficiente. El fade out para canciones puede llegar a 8-10 segundos.' },
+  { q: '¿El fade out necesita saber la duración total del audio?', a: 'Sí. La herramienta detecta automáticamente la duración del audio cuando lo reproduces en el reproductor integrado. Si no se detecta, el fade out puede no aplicarse correctamente.' },
+  { q: '¿Se conserva el formato original del audio?', a: 'Sí. Si subes un MP3, el resultado es MP3. Si subes WAV, el resultado es WAV. El formato de salida coincide con el de entrada para todos los formatos soportados.' },
+];
+---
+<ToolLayout slug="agregar-fade-audio" faqs={faqs}>
+  <AgregarFadeAudioTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AjustarHSBTool from '@/components/tools/AjustarHSBTool';
+
+const faqs = [
+  { q: '¿Qué es el tono (Hue) en una imagen?', a: 'El tono es el ángulo en la rueda de colores que define el color percibido: rojo, naranja, amarillo, verde, azul, etc. Rotarlo 180° invierte los colores al complementario.' },
+  { q: '¿Cuál es la diferencia entre brillo y contraste?', a: 'El brillo sube o baja la luminosidad de todos los píxeles por igual. El contraste amplía o reduce la diferencia entre píxeles claros y oscuros, haciendo la imagen más vívida o más plana.' },
+  { q: '¿La herramienta modifica el archivo original?', a: 'No. Todo el procesamiento ocurre en el navegador. Tu archivo original permanece intacto y el resultado se descarga como un archivo nuevo.' },
+  { q: '¿Qué formatos de imagen acepta?', a: 'Acepta JPG, PNG, WebP y AVIF. El resultado siempre se descarga como JPG, que es el formato más compatible y compacto para fotografías con color.' },
+  { q: '¿Puedo restablecer los ajustes a los valores originales?', a: 'Sí. Usa el botón "Restablecer" para volver a los valores por defecto: tono 0°, saturación 100%, brillo 100% y contraste 100%.' },
+];
+---
+<ToolLayout slug="ajustar-hsb" faqs={faqs}>
+  <AjustarHSBTool client:load />
+</ToolLayout>

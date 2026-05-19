@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EfectoDuotonoTool from '@/components/tools/EfectoDuotonoTool';
+
+const faqs = [
+  { q: '¿Qué es el efecto duotono?', a: 'El duotono es un proceso de impresión y diseño que usa dos colores en lugar del espectro completo. Las zonas oscuras de la imagen se mapean al color de sombras y las zonas claras al color de luces, creando un efecto gráfico y contemporáneo.' },
+  { q: '¿Qué tipos de imágenes funcionan mejor?', a: 'Los retratos y fotos con alto contraste producen los mejores resultados. Imágenes con áreas claramente diferenciadas entre luces y sombras muestran mejor el efecto duotono.' },
+  { q: '¿Cómo funciona el mapeo de colores?', a: 'El algoritmo calcula la luminosidad de cada píxel (entre 0 y 1) y lo interpola linealmente entre el color de sombras (luminosidad 0) y el color de luces (luminosidad 1), aplicando los mismos canales R, G, B.' },
+  { q: '¿Puedo crear combinaciones de colores propias?', a: 'Sí. Usa los selectores de color para elegir cualquier combinación. Los presets incluidos son combinaciones populares: azul/naranja, púrpura/amarillo, verde/rosa, rojo/cian y marrón/crema.' },
+  { q: '¿Se puede aplicar duotono a imágenes a color?', a: 'Sí. La herramienta funciona con cualquier imagen independientemente de su color original, ya que el cálculo de luminosidad extrae la información de brillo de todos los canales.' },
+];
+---
+<ToolLayout slug="efecto-duotono" faqs={faqs}>
+  <EfectoDuotonoTool client:load />
+</ToolLayout>

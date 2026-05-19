@@ -11,6 +11,10 @@ import {
   QrCode, Braces, Link2, Paintbrush2,
   Gauge, AudioLines, FastForward, Rewind,
   VolumeX, Camera, Binary, Code2, Table, ShieldCheck, ImageUp, Merge,
+  SlidersHorizontal, Pencil, PaintBucket, Grid2x2, Layers2,
+  FileX, ImagePlus, FilePlus, FlipHorizontal, Monitor,
+  TrendingUp, Combine, Music4, TestTube2, Fingerprint,
+  AlignLeft, Clock, FileCode, ScanSearch,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -88,6 +92,25 @@ const ICONS: Record<string, React.ReactNode> = {
   ShieldCheck: <ShieldCheck size={20} />,
   ImageUp: <ImageUp size={20} />,
   Merge: <Merge size={20} />,
+  SlidersHorizontal: <SlidersHorizontal size={20} />,
+  Pencil: <Pencil size={20} />,
+  PaintBucket: <PaintBucket size={20} />,
+  Grid2x2: <Grid2x2 size={20} />,
+  Layers2: <Layers2 size={20} />,
+  FileX: <FileX size={20} />,
+  ImagePlus: <ImagePlus size={20} />,
+  FilePlus: <FilePlus size={20} />,
+  FlipHorizontal: <FlipHorizontal size={20} />,
+  Monitor: <Monitor size={20} />,
+  TrendingUp: <TrendingUp size={20} />,
+  Combine: <Combine size={20} />,
+  Music4: <Music4 size={20} />,
+  TestTube2: <TestTube2 size={20} />,
+  Fingerprint: <Fingerprint size={20} />,
+  AlignLeft: <AlignLeft size={20} />,
+  Clock: <Clock size={20} />,
+  FileCode: <FileCode size={20} />,
+  ScanSearch: <ScanSearch size={20} />,
 };
 
 interface Props {

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MinificadorHTMLTool from '@/components/tools/MinificadorHTMLTool';
+
+const faqs = [
+  { q: '¿Qué hace el minificador HTML?', a: 'Elimina comentarios HTML, colapsa múltiples espacios en blanco en uno solo, y elimina espacios innecesarios entre etiquetas. El resultado es HTML funcionalmente idéntico pero con menor peso.' },
+  { q: '¿Cuánto se puede reducir el tamaño de un HTML?', a: 'Depende del código fuente. HTML con mucha indentación y comentarios puede reducirse un 20-40%. El mayor beneficio es en archivos con mucho espaciado o generados automáticamente.' },
+  { q: '¿El HTML minificado es funcionalmente idéntico?', a: 'Sí para HTML normal. Sin embargo, la minificación puede afectar el espaciado de elementos inline como <span> o <a> cuando hay espacios significativos entre ellos. Verifica el resultado en un navegador.' },
+  { q: '¿Para qué sirve el modo formatear?', a: 'El formateo (beautify) sirve para el proceso contrario: tomar HTML minificado o con formato incorrecto y hacerlo legible con indentación y saltos de línea. Es útil para revisar HTML comprimido.' },
+  { q: '¿Es seguro pegar código HTML confidencial?', a: 'Sí. Todo el procesamiento ocurre en tu navegador con JavaScript nativo. El código HTML que pegas nunca se envía a ningún servidor.' },
+];
+---
+<ToolLayout slug="minificador-html" faqs={faqs}>
+  <MinificadorHTMLTool client:load />
+</ToolLayout>

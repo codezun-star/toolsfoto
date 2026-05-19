@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EfectoBocetoTool from '@/components/tools/EfectoBocetoTool';
+
+const faqs = [
+  { q: '¿Cómo funciona el efecto de boceto?', a: 'El algoritmo convierte la imagen a escala de grises, crea una versión invertida y desenfocada, y luego aplica la mezcla "color dodge" entre ambas. Este proceso simula el efecto de un dibujo a lápiz.' },
+  { q: '¿Qué controla el slider de suavidad?', a: 'El slider controla el radio del desenfoque aplicado a la capa invertida. Valores bajos (1-4) generan trazos más finos y detallados. Valores altos (10-20) crean un boceto más suave y artístico.' },
+  { q: '¿Qué tipo de imágenes funcionan mejor?', a: 'Las fotos con buena iluminación y bordes bien definidos producen los mejores resultados. Retratos, arquitectura y objetos con contornos claros son los más adecuados para este efecto.' },
+  { q: '¿El resultado es en blanco y negro?', a: 'Sí. El efecto boceto produce una imagen en escala de grises que simula un dibujo a lápiz. No se conserva el color original de la imagen.' },
+  { q: '¿En qué formato se descarga el resultado?', a: 'El boceto se descarga en formato JPG de alta calidad (92% de compresión). Si necesitas fondo transparente, convierte primero la imagen a PNG.' },
+];
+---
+<ToolLayout slug="efecto-boceto" faqs={faqs}>
+  <EfectoBocetoTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MosaicoTool from '@/components/tools/MosaicoTool';
+
+const faqs = [
+  { q: '¿Para qué se usa un mosaico de imágenes?', a: 'Los mosaicos son populares en diseño gráfico, papeles de pared, fondos de pantalla, packaging y proyectos de arte. También se usan en redes sociales para crear posts "puzzle".' },
+  { q: '¿Cuál es el tamaño máximo del mosaico resultante?', a: 'El tamaño final es el ancho de la imagen original multiplicado por las columnas, y el alto multiplicado por las filas. Para 4 columnas × 4 filas, la imagen resultante tiene 16 veces más píxeles que la original.' },
+  { q: '¿Hay límite en el número de filas y columnas?', a: 'Puedes configurar hasta 6 columnas y 6 filas, lo que produce un mosaico de 36 copias. Para imágenes grandes esto puede generar archivos muy pesados.' },
+  { q: '¿Se pierde calidad al crear el mosaico?', a: 'No. Cada copia de la imagen se dibuja en el canvas a su resolución original sin ningún redimensionado. La calidad es idéntica a la imagen original.' },
+  { q: '¿En qué formato se descarga el mosaico?', a: 'El mosaico se descarga en formato JPG de alta calidad (92% de compresión). Si la imagen original tiene transparencia y quieres preservarla, convierte primero a PNG.' },
+];
+---
+<ToolLayout slug="mosaico" faqs={faqs}>
+  <MosaicoTool client:load />
+</ToolLayout>

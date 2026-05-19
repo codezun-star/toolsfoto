@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarFondoTool from '@/components/tools/CambiarFondoTool';
+
+const faqs = [
+  { q: '¿Para qué sirve cambiar el fondo de una imagen?', a: 'Es útil para preparar imágenes de productos con fondo blanco para e-commerce, hacer que las imágenes con fondo transparente (PNG) tengan un color sólido, o cambiar el fondo antes de imprimir.' },
+  { q: '¿Funciona con imágenes con fondo transparente?', a: 'Sí. Si subes un PNG con áreas transparentes, el color seleccionado rellenará esas áreas. Es la forma más efectiva de usar esta herramienta.' },
+  { q: '¿Qué pasa con imágenes sin transparencia?', a: 'Si la imagen original no tiene transparencia, el color de fondo se coloca detrás de la imagen pero no es visible (queda cubierto). Esta herramienta es más útil con PNGs transparentes.' },
+  { q: '¿Puedo usar un color personalizado?', a: 'Sí. Además de los colores preset, el selector circular con gradiente te permite elegir cualquier color del espectro.' },
+  { q: '¿En qué formato se descarga la imagen resultante?', a: 'El resultado se descarga en formato JPG. Si necesitas preservar la transparencia con un fondo diferente, usa la vista previa para verificar el resultado antes de descargar.' },
+];
+---
+<ToolLayout slug="cambiar-fondo" faqs={faqs}>
+  <CambiarFondoTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ContadorPalabrasTool from '@/components/tools/ContadorPalabrasTool';
+
+const faqs = [
+  { q: '¿Cómo se cuentan las palabras?', a: 'Las palabras se cuentan dividiendo el texto por espacios en blanco (espacios, tabulaciones, saltos de línea). Secuencias de caracteres separadas por estos espacios cuentan como una palabra.' },
+  { q: '¿Cómo se calculan las frases?', a: 'Se cuentan los signos de puntuación que terminan frases: punto (.), signo de exclamación (!) y signo de interrogación (?). Múltiples signos consecutivos cuentan como uno solo.' },
+  { q: '¿Qué velocidad de lectura se usa para el tiempo estimado?', a: 'Se usa la velocidad media de lectura adulta: 200 palabras por minuto. El tiempo se redondea al minuto más cercano, con un mínimo de 1 minuto para textos cortos.' },
+  { q: '¿Las estadísticas se actualizan en tiempo real?', a: 'Sí. Todas las estadísticas se recalculan instantáneamente mientras escribes o pegas texto, sin necesidad de hacer clic en ningún botón.' },
+  { q: '¿Para qué tipos de contenido es útil esta herramienta?', a: 'Es útil para artículos de blog (SEO suele recomendar 300-2000 palabras), tweets (280 caracteres), publicaciones de LinkedIn, correos electrónicos, informes académicos y cualquier contenido con límites de extensión.' },
+];
+---
+<ToolLayout slug="contador-palabras" faqs={faqs}>
+  <ContadorPalabrasTool client:load />
+</ToolLayout>

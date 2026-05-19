@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GeneradorUUIDTool from '@/components/tools/GeneradorUUIDTool';
+
+const faqs = [
+  { q: '¿Qué es un UUID?', a: 'UUID (Universally Unique Identifier) es un identificador de 128 bits estandarizado (RFC 4122) representado como 32 caracteres hexadecimales en formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. Se usa para identificar recursos de forma única sin coordinación centralizada.' },
+  { q: '¿Qué versión de UUID genera la herramienta?', a: 'Genera UUID versión 4, que usa números aleatorios criptográficamente seguros. Los bits 12-15 del tercer grupo son siempre "4" y los bits 6-7 del cuarto grupo son siempre "8", "9", "a" o "b".' },
+  { q: '¿La probabilidad de colisión es real?', a: 'Prácticamente nula. La probabilidad de generar un UUID duplicado entre dos UUIDs v4 aleatorios es de 1 en 2^122 (≈5.3 × 10^36). Para una colisión estadísticamente probable, habría que generar trillones de IDs.' },
+  { q: '¿Para qué se usan los UUID en desarrollo?', a: 'Son estándar en bases de datos como clave primaria, en APIs REST para identificar recursos, en sistemas distribuidos para crear IDs sin servidor central, y en tokens de sesión o referencias únicas.' },
+  { q: '¿Cuál es la diferencia entre UUID con y sin guiones?', a: 'Los guiones son parte del formato estándar y no afectan el valor. Algunos sistemas los admiten con guiones (550e8400-e29b-41d4-a716-446655440000) y otros sin ellos (550e8400e29b41d4a716446655440000). Ambas representan el mismo identificador.' },
+];
+---
+<ToolLayout slug="generador-uuid" faqs={faqs}>
+  <GeneradorUUIDTool client:load />
+</ToolLayout>

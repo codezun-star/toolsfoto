@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RecortarAreaVideoTool from '@/components/tools/RecortarAreaVideoTool';
+
+const faqs = [
+  { q: '¿Cómo sé las dimensiones originales del vídeo?', a: 'Puedes verlas haciendo clic derecho en el archivo y consultando Propiedades > Detalles, o reproduciéndolo y mirando la resolución. Los valores de ancho, alto y offsets deben caber dentro de esas dimensiones.' },
+  { q: '¿Qué significa el punto de inicio X e Y?', a: 'X es la distancia en píxeles desde el borde izquierdo donde empieza el recorte. Y es la distancia desde el borde superior. El punto (0, 0) es la esquina superior izquierda del vídeo.' },
+  { q: '¿Se conserva el audio al recortar el área?', a: 'Sí. La pista de audio se copia directamente sin modificar. El recorte solo afecta al área visual del vídeo.' },
+  { q: '¿Qué pasa si los valores de recorte exceden el tamaño del vídeo?', a: 'FFmpeg dará un error. Asegúrate de que "Inicio X + Ancho" no supere el ancho del vídeo original, y que "Inicio Y + Alto" no supere el alto original.' },
+  { q: '¿Para qué casos es útil recortar el área de un vídeo?', a: 'Es ideal para eliminar barras negras de vídeos con letterbox, recortar los bordes con marcas de cámara, extraer una región de interés, o preparar contenido para formatos específicos.' },
+];
+---
+<ToolLayout slug="recortar-area-video" faqs={faqs}>
+  <RecortarAreaVideoTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MezclarAudiosTool from '@/components/tools/MezclarAudiosTool';
+
+const faqs = [
+  { q: '¿Para qué sirve mezclar dos audios?', a: 'Es útil para añadir música de fondo a una locución o podcast, combinar efectos de sonido con voz, crear karaoke añadiendo la voz a la pista instrumental, o superponer narración sobre audio ambiental.' },
+  { q: '¿Cuál es la diferencia entre la pista principal y la secundaria?', a: 'No hay diferencia técnica en el procesamiento, solo de organización. Normalmente se pone la voz o el contenido principal en la primera pista y la música o efecto de fondo en la segunda.' },
+  { q: '¿Qué significa el volumen al 200%?', a: 'Un volumen superior al 100% amplifica la señal. Puede aumentar la sonoridad pero también introducir distorsión (clipping) si el nivel resultante supera el máximo. Úsalo con precaución.' },
+  { q: '¿Qué duración tiene la mezcla resultante?', a: 'La duración es la de la pista más larga. Si una pista termina antes, el silencio rellena el resto. Esto permite, por ejemplo, que la música siga sonando después de que acabe la voz.' },
+  { q: '¿En qué formato se descarga la mezcla?', a: 'La mezcla resultante siempre se descarga en formato MP3. Este es el formato más compatible y de menor tamaño para audio mezclado.' },
+];
+---
+<ToolLayout slug="mezclar-audios" faqs={faqs}>
+  <MezclarAudiosTool client:load />
+</ToolLayout>
