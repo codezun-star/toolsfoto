@@ -10,28 +10,26 @@ const MODES: { id: Mode; label: string; desc: string }[] = [
   { id: 'decodeURI', label: 'Decodificar URL completa', desc: 'decodeURI — decodifica una URL completa' },
 ];
 
+function compute(text: string, m: Mode): { output: string; error: string | null } {
+  if (!text) return { output: '', error: null };
+  try {
+    switch (m) {
+      case 'encodeComponent': return { output: encodeURIComponent(text), error: null };
+      case 'decodeComponent': return { output: decodeURIComponent(text), error: null };
+      case 'encodeURI': return { output: encodeURI(text), error: null };
+      case 'decodeURI': return { output: decodeURI(text), error: null };
+    }
+  } catch {
+    return { output: '', error: 'Error al procesar. Verifica que el texto sea válido para la operación seleccionada.' };
+  }
+}
+
 export default function CodificarURLTool() {
   const [input, setInput] = useState('');
   const [mode, setMode] = useState<Mode>('encodeComponent');
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  function process(text: string, m: Mode): string {
-    try {
-      setError(null);
-      switch (m) {
-        case 'encodeComponent': return encodeURIComponent(text);
-        case 'decodeComponent': return decodeURIComponent(text);
-        case 'encodeURI': return encodeURI(text);
-        case 'decodeURI': return decodeURI(text);
-      }
-    } catch {
-      setError('Error al procesar. Verifica que el texto sea válido para la operación seleccionada.');
-      return '';
-    }
-  }
-
-  const output = input ? process(input, mode) : '';
+  const { output, error } = compute(input, mode);
 
   async function copy() {
     if (!output) return;
@@ -46,7 +44,7 @@ export default function CodificarURLTool() {
         {MODES.map((m) => (
           <button
             key={m.id}
-            onClick={() => { setMode(m.id); setError(null); }}
+            onClick={() => setMode(m.id)}
             className={[
               'px-4 py-3 rounded-xl border text-sm text-left transition-colors',
               mode === m.id
@@ -67,7 +65,7 @@ export default function CodificarURLTool() {
             className="w-full h-44 font-mono text-sm p-4 rounded-xl border border-[var(--color-border)] bg-white focus:outline-none focus:border-[var(--color-accent)] resize-none"
             placeholder="Escribe o pega tu URL o texto aquí…"
             value={input}
-            onChange={(e) => { setInput(e.target.value); setError(null); }}
+            onChange={(e) => setInput(e.target.value)}
             spellCheck={false}
           />
         </div>

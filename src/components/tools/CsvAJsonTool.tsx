@@ -48,24 +48,21 @@ function jsonToCsv(json: string): string {
   return [headers.join(','), ...rows].join('\n');
 }
 
+function compute(text: string, m: Mode): { output: string; error: string | null } {
+  if (!text.trim()) return { output: '', error: null };
+  try {
+    return { output: m === 'csv-json' ? csvToJson(text) : jsonToCsv(text), error: null };
+  } catch (e) {
+    return { output: '', error: e instanceof Error ? e.message : 'Error al convertir.' };
+  }
+}
+
 export default function CsvAJsonTool() {
   const [mode, setMode] = useState<Mode>('csv-json');
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  function getOutput(): string {
-    if (!input.trim()) return '';
-    try {
-      setError(null);
-      return mode === 'csv-json' ? csvToJson(input) : jsonToCsv(input);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Error al convertir.');
-      return '';
-    }
-  }
-
-  const output = getOutput();
+  const { output, error } = compute(input, mode);
   const ext = mode === 'csv-json' ? '.json' : '.csv';
 
   async function copy() {
@@ -79,11 +76,12 @@ export default function CsvAJsonTool() {
     if (!output) return;
     const type = mode === 'csv-json' ? 'application/json' : 'text/csv';
     const blob = new Blob([output], { type });
+    const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = `resultado${ext}`;
     a.click();
-    URL.revokeObjectURL(a.href);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
   }
 
   return (
@@ -92,7 +90,7 @@ export default function CsvAJsonTool() {
         {(['csv-json', 'json-csv'] as const).map((m) => (
           <button
             key={m}
-            onClick={() => { setMode(m); setInput(''); setError(null); }}
+            onClick={() => { setMode(m); setInput(''); }}
             className={['py-2.5 rounded-xl border text-sm font-semibold transition-colors', mode === m ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)] text-[var(--color-accent)]' : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'].join(' ')}
           >
             {m === 'csv-json' ? 'CSV → JSON' : 'JSON → CSV'}
@@ -106,7 +104,7 @@ export default function CsvAJsonTool() {
         </label>
         <textarea
           value={input}
-          onChange={(e) => { setInput(e.target.value); setError(null); }}
+          onChange={(e) => setInput(e.target.value)}
           placeholder={mode === 'csv-json' ? 'nombre,edad,ciudad\nAna,30,Madrid\nLuis,25,Barcelona' : '[{"nombre":"Ana","edad":"30"},{"nombre":"Luis","edad":"25"}]'}
           rows={7}
           className="w-full px-3 py-2.5 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none focus:border-[var(--color-accent)] font-mono resize-y"

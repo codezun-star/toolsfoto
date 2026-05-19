@@ -11,24 +11,21 @@ function decodeBase64(b64: string): string {
   return decodeURIComponent(Array.from(atob(b64), (c) => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')).join(''));
 }
 
+function compute(text: string, m: Mode): { output: string; error: string | null } {
+  if (!text.trim()) return { output: '', error: null };
+  try {
+    return { output: m === 'encode' ? encodeBase64(text) : decodeBase64(text), error: null };
+  } catch {
+    return { output: '', error: m === 'encode' ? 'Error al codificar.' : 'El texto no es Base64 válido.' };
+  }
+}
+
 export default function Base64TextoTool() {
   const [mode, setMode] = useState<Mode>('encode');
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  function getOutput(): string {
-    if (!input.trim()) return '';
-    try {
-      setError(null);
-      return mode === 'encode' ? encodeBase64(input) : decodeBase64(input);
-    } catch {
-      setError(mode === 'encode' ? 'Error al codificar.' : 'El texto no es Base64 válido.');
-      return '';
-    }
-  }
-
-  const output = getOutput();
+  const { output, error } = compute(input, mode);
 
   async function copy() {
     if (!output) return;
@@ -43,7 +40,7 @@ export default function Base64TextoTool() {
         {(['encode', 'decode'] as const).map((m) => (
           <button
             key={m}
-            onClick={() => { setMode(m); setInput(''); setError(null); }}
+            onClick={() => { setMode(m); setInput(''); }}
             className={['py-2.5 rounded-xl border text-sm font-semibold transition-colors', mode === m ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)] text-[var(--color-accent)]' : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'].join(' ')}
           >
             {m === 'encode' ? 'Texto → Base64' : 'Base64 → Texto'}
@@ -57,7 +54,7 @@ export default function Base64TextoTool() {
         </label>
         <textarea
           value={input}
-          onChange={(e) => { setInput(e.target.value); setError(null); }}
+          onChange={(e) => setInput(e.target.value)}
           placeholder={mode === 'encode' ? 'Escribe el texto a codificar…' : 'Pega el Base64 a decodificar…'}
           rows={5}
           className="w-full px-3 py-2.5 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none focus:border-[var(--color-accent)] font-mono resize-y"
