@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { Upload, X } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface SvgFile { name: string; content: string; originalWidth: number; originalHeight: number }
 
@@ -52,7 +53,7 @@ export default function SvgAPngTool() {
     if (!svg) return;
     setLoading(true);
     setError(null);
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    if (previewUrl) revokeURL(previewUrl);
     try {
       const blob = new Blob([svg.content], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
@@ -65,7 +66,7 @@ export default function SvgAPngTool() {
           const ctx = canvas.getContext('2d')!;
           if (bgMode === 'color') { ctx.fillStyle = bgColor; ctx.fillRect(0, 0, width, height); }
           ctx.drawImage(img, 0, 0, width, height);
-          URL.revokeObjectURL(url);
+          revokeURL(url);
           canvas.toBlob(b => {
             if (!b) { rej(); return; }
             const pUrl = URL.createObjectURL(b);
@@ -91,7 +92,7 @@ export default function SvgAPngTool() {
     a.click();
   }
 
-  function handleClear() { if (previewUrl) URL.revokeObjectURL(previewUrl); setSvg(null); setPreviewUrl(null); setError(null); }
+  function handleClear() { if (previewUrl) revokeURL(previewUrl); setSvg(null); setPreviewUrl(null); setError(null); }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

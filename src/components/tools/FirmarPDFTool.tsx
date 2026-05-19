@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Trash2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 export default function FirmarPDFTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -68,7 +69,7 @@ export default function FirmarPDFTool() {
   }
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setFile(null);
     setResultUrl(null);
     setResultSize(0);
@@ -91,7 +92,7 @@ export default function FirmarPDFTool() {
 
   async function process() {
     if (!file || !hasSignature || !canvasRef.current) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {

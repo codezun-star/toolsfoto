@@ -2,6 +2,7 @@ import { useState } from 'react';
 import VideoUploader, { type VideoFile } from '@/components/ui/VideoUploader';
 import AudioUploader, { type AudioFile } from '@/components/ui/AudioUploader';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 
@@ -16,7 +17,7 @@ export default function AnadirAudioVideoTool() {
   const [error, setError] = useState<string | null>(null);
 
   function clearVideo() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setVideo(null);
     setResultUrl(null);
     setResultSize(0);
@@ -24,7 +25,7 @@ export default function AnadirAudioVideoTool() {
   }
 
   function clearAudio() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setAudio(null);
     setResultUrl(null);
     setResultSize(0);
@@ -33,7 +34,7 @@ export default function AnadirAudioVideoTool() {
 
   async function process() {
     if (!video || !audio) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);
@@ -90,7 +91,7 @@ export default function AnadirAudioVideoTool() {
   }
 
   function reset() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setVideo(null);
     setAudio(null);
     setResultUrl(null);

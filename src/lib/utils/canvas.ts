@@ -38,7 +38,7 @@ export function getContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D 
   return ctx;
 }
 
-export function imageToObjectURL(img: HTMLImageElement): string {
+export function imageToDataURL(img: HTMLImageElement): string {
   const canvas = createCanvas(img.naturalWidth, img.naturalHeight);
   const ctx = getContext(canvas);
   ctx.drawImage(img, 0, 0);

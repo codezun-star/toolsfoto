@@ -1,9 +1,10 @@
 import { useImageUpload } from '@/hooks/useImageUpload';
+import { useDownload } from '@/hooks/useDownload';
 import { loadImage, canvasToBlob, createCanvas, getContext, revokeURL } from '@/lib/utils/canvas';
 import ImageUploader from '@/components/ui/ImageUploader';
+import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
 import { useState } from 'react';
-import { Download } from 'lucide-react';
 
 const W = 1280, H = 720;
 const FONTS = ['Impact', 'Arial Black', 'Georgia', 'Montserrat'];
@@ -19,6 +20,7 @@ function getTextXY(pos: Pos, w: number, h: number, margin: number) {
 
 export default function ThumbnailYoutubeTool() {
   const upload = useImageUpload();
+  const { download } = useDownload('thumbnail-youtube');
   const [bgColor, setBgColor] = useState('#1a1a2e');
   const [title, setTitle] = useState('');
   const [fontSize, setFontSize] = useState(80);
@@ -27,13 +29,15 @@ export default function ThumbnailYoutubeTool() {
   const [textPos, setTextPos] = useState<Pos>('bottom-left');
   const [overlayOpacity, setOverlayOpacity] = useState(40);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
-    upload.clear();
+    setResultBlob(null);
+    upload.clearImage();
     setError(null);
   }
 
@@ -45,8 +49,8 @@ export default function ThumbnailYoutubeTool() {
       const canvas = createCanvas(W, H);
       const ctx = getContext(canvas);
 
-      if (upload.file && upload.previewUrl) {
-        const img = await loadImage(upload.previewUrl);
+      if (upload.image) {
+        const img = await loadImage(upload.image.url);
         const srcRatio = img.naturalWidth / img.naturalHeight;
         const dstRatio = W / H;
         let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
@@ -71,7 +75,6 @@ export default function ThumbnailYoutubeTool() {
         ctx.textAlign = align;
         ctx.textBaseline = textPos.includes('center') ? 'middle' : textPos.includes('top') ? 'top' : 'bottom';
 
-        // Wrap text
         const words = title.split(' ');
         const lines: string[] = [];
         let line = '';
@@ -99,6 +102,7 @@ export default function ThumbnailYoutubeTool() {
       }
 
       const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92);
+      setResultBlob(blob);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
       setError('Error al generar la miniatura.');
@@ -107,23 +111,24 @@ export default function ThumbnailYoutubeTool() {
     }
   }
 
-  function download() {
-    if (!resultUrl) return;
-    const a = document.createElement('a');
-    a.href = resultUrl;
-    a.download = 'thumbnail-youtube.jpg';
-    a.click();
-  }
-
   return (
     <div className="space-y-6">
       <div className="p-4 bg-[var(--color-tools-bg)] rounded-xl border border-[var(--color-tools-border)] text-sm text-[var(--color-text-secondary)]">
         Genera miniaturas en <strong className="text-[var(--color-text)]">1280 × 720 px</strong> (16:9). Sube una imagen de fondo o usa un color sólido.
       </div>
 
-      <ImageUploader state={upload} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {!upload.file && (
+      {!upload.image && (
         <div className="flex items-center gap-3">
           <label className="text-sm font-medium text-[var(--color-text)]">Color de fondo (si no hay imagen):</label>
           <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="w-10 h-9 rounded-lg border border-[var(--color-border)] cursor-pointer p-0.5" />
@@ -131,7 +136,7 @@ export default function ThumbnailYoutubeTool() {
       )}
 
       <div className="space-y-4">
-        {upload.file && (
+        {upload.image && (
           <Slider label="Oscurecer fondo" value={overlayOpacity} onChange={setOverlayOpacity} min={0} max={90} step={5} unit="%" />
         )}
 
@@ -187,10 +192,12 @@ export default function ThumbnailYoutubeTool() {
         <div className="space-y-4">
           <img src={resultUrl} alt="Miniatura" className="w-full rounded-xl border border-[var(--color-border)]" />
           <p className="text-center text-sm text-[var(--color-text-secondary)]">1280 × 720 px — listo para subir a YouTube</p>
-          <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
-            <Download size={18} />
-            Descargar miniatura JPG
-          </button>
+          <DownloadButton
+            onClick={() => { if (resultBlob) download(resultBlob, 'yt', 'jpg'); }}
+            disabled={!resultBlob}
+            label="Descargar miniatura JPG"
+            className="w-full"
+          />
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Crear nueva miniatura
           </button>

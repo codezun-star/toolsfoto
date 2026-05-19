@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AudioUploader, { type AudioFile } from '@/components/ui/AudioUploader';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 
@@ -28,7 +29,7 @@ export default function VelocidadAudioTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setAudio(null);
     setResultUrl(null);
     setResultSize(0);
@@ -37,7 +38,7 @@ export default function VelocidadAudioTool() {
 
   async function process() {
     if (!audio) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

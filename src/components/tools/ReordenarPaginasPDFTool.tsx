@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, ChevronUp, ChevronDown } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -18,8 +19,8 @@ export default function ReordenarPaginasPDFTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    thumbs.forEach((t) => URL.revokeObjectURL(t.url));
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    thumbs.forEach((t) => revokeURL(t.url));
+    if (resultUrl) revokeURL(resultUrl);
     setFile(null);
     setThumbs([]);
     setOrder([]);
@@ -70,7 +71,7 @@ export default function ReordenarPaginasPDFTool() {
 
   async function process() {
     if (!file) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {

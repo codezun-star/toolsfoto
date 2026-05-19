@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import DownloadButton from '@/components/ui/DownloadButton';
+import { revokeURL } from '@/lib/utils/canvas';
 
 const PAGE_SIZES: Record<string, [number, number]> = {
   'A4 (210×297 mm)': [595.28, 841.89],
@@ -35,7 +36,7 @@ export default function PDFEnBlancoTool() {
       a.href = url;
       a.download = `documento_en_blanco_${numPages}pag.pdf`;
       a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al crear el PDF. Inténtalo de nuevo.');
     } finally {

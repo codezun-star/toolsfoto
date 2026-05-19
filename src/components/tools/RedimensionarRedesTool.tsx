@@ -26,29 +26,31 @@ const REDS = [...new Set(PRESETS.map((p) => p.red))];
 
 export default function RedimensionarRedesTool() {
   const upload = useImageUpload();
-  const { download } = useDownload();
+  const { download } = useDownload(upload.image?.file.name);
   const [presetId, setPresetId] = useState('ig-post');
   const [mode, setMode] = useState<'cover' | 'contain'>('cover');
   const [bgColor, setBgColor] = useState('#FFFFFF');
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
-    upload.clear();
+    setResultBlob(null);
+    upload.clearImage();
     setError(null);
   }
 
   async function process() {
-    if (!upload.file) return;
+    if (!upload.image) return;
     if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {
       const preset = PRESETS.find((p) => p.id === presetId)!;
-      const img = await loadImage(upload.previewUrl!);
+      const img = await loadImage(upload.image.url);
       const canvas = createCanvas(preset.w, preset.h);
       const ctx = getContext(canvas);
 
@@ -71,6 +73,7 @@ export default function RedimensionarRedesTool() {
 
       ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
       const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92);
+      setResultBlob(blob);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
       setError('Error al procesar la imagen. Por favor, inténtalo de nuevo.');
@@ -83,9 +86,18 @@ export default function RedimensionarRedesTool() {
 
   return (
     <div className="space-y-6">
-      <ImageUploader state={upload} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {upload.file && !resultUrl && (
+      {upload.image && !resultUrl && (
         <div className="space-y-5">
           {REDS.map((red) => (
             <div key={red}>
@@ -156,7 +168,12 @@ export default function RedimensionarRedesTool() {
           <p className="text-sm text-center text-[var(--color-text-secondary)]">
             {selected.red} — {selected.name} · {selected.w} × {selected.h} px
           </p>
-          <DownloadButton url={resultUrl} filename={download(upload.file!.name, 'jpg')} label="Descargar imagen" />
+          <DownloadButton
+            onClick={() => { if (resultBlob) download(resultBlob, selected.id, 'jpg'); }}
+            disabled={!resultBlob}
+            label="Descargar imagen"
+            className="w-full"
+          />
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Procesar otra imagen
           </button>

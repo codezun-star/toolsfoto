@@ -3,7 +3,7 @@ import ImageUploader from '@/components/ui/ImageUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
-import { loadImage, createCanvas, canvasToBlob } from '@/lib/utils/canvas';
+import { loadImage, createCanvas, canvasToBlob, revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { ShieldOff, Check } from 'lucide-react';
 
@@ -24,7 +24,7 @@ export default function EliminarExifTool() {
   const { download } = useDownload(upload.image?.file.name);
 
   function clearResult() {
-    setResult(prev => { if (prev?.url) URL.revokeObjectURL(prev.url); return null; });
+    setResult(prev => { if (prev?.url) revokeURL(prev.url); return null; });
   }
 
   async function handleStrip() {

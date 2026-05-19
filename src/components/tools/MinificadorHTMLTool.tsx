@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Copy, Download, CheckCircle2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 function minifyHTML(html: string): string {
   return html
@@ -67,7 +68,7 @@ export default function MinificadorHTMLTool() {
     a.href = url;
     a.download = mode === 'minify' ? 'index.min.html' : 'index.html';
     a.click();
-    URL.revokeObjectURL(url);
+    revokeURL(url);
   }
 
   const reduction = input && output && mode === 'minify'

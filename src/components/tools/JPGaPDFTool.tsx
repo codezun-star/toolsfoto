@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 type PageSize = 'a4' | 'letter' | 'auto';
 
@@ -31,7 +32,7 @@ export default function JPGaPDFTool() {
   }, []);
 
   function remove(id: number) {
-    setImages(prev => { const e = prev.find(i => i.id === id); if (e) URL.revokeObjectURL(e.url); return prev.filter(i => i.id !== id); });
+    setImages(prev => { const e = prev.find(i => i.id === id); if (e) revokeURL(e.url); return prev.filter(i => i.id !== id); });
   }
   function moveUp(idx: number) { if (idx === 0) return; setImages(p => { const n = [...p]; [n[idx - 1], n[idx]] = [n[idx], n[idx - 1]]; return n; }); }
   function moveDown(idx: number) { setImages(p => { if (idx >= p.length - 1) return p; const n = [...p]; [n[idx], n[idx + 1]] = [n[idx + 1], n[idx]]; return n; }); }
@@ -75,7 +76,7 @@ export default function JPGaPDFTool() {
       const out = await pdf.save({ useObjectStreams: true });
       const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
       const a = document.createElement('a'); a.href = url; a.download = 'imagenes.pdf'; a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al crear el PDF. Intenta con otro formato de imagen.');
     } finally {

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Plus, Trash2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface TextEntry {
   id: number;
@@ -29,7 +30,7 @@ export default function AnadirTextoPDFTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setFile(null);
     setResultUrl(null);
     setResultSize(0);
@@ -63,7 +64,7 @@ export default function AnadirTextoPDFTool() {
 
   async function process() {
     if (!file || entries.every((e) => !e.text.trim())) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Copy, Check, Download } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
+import { revokeURL } from '@/lib/utils/canvas';
 
 type Mode = 'minify' | 'beautify';
 
@@ -62,7 +63,7 @@ export default function MinificadorCSSTool() {
     a.href = url;
     a.download = mode === 'minify' ? 'styles.min.css' : 'styles.css';
     a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 100);
+    setTimeout(() => revokeURL(url), 100);
   }
 
   return (

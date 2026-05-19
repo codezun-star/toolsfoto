@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Copy, Check, Download } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 type Mode = 'csv-json' | 'json-csv';
 
@@ -81,7 +82,7 @@ export default function CsvAJsonTool() {
     a.href = url;
     a.download = `resultado${ext}`;
     a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 100);
+    setTimeout(() => revokeURL(url), 100);
   }
 
   return (

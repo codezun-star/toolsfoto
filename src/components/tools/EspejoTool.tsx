@@ -17,9 +17,10 @@ const FLIP_MODES: { id: FlipMode; label: string; icon: React.ReactNode }[] = [
 
 export default function EspejoTool() {
   const upload = useImageUpload();
-  const { download } = useDownload();
+  const { download } = useDownload(upload.image?.file.name);
   const [mode, setMode] = useState<FlipMode>('horizontal');
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [resultSize, setResultSize] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,18 +28,19 @@ export default function EspejoTool() {
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
+    setResultBlob(null);
     setResultSize(0);
-    upload.clear();
+    upload.clearImage();
     setError(null);
   }
 
   async function process() {
-    if (!upload.file) return;
+    if (!upload.image) return;
     if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {
-      const img = await loadImage(upload.previewUrl!);
+      const img = await loadImage(upload.image.url);
       const canvas = createCanvas(img.naturalWidth, img.naturalHeight);
       const ctx = getContext(canvas);
       ctx.save();
@@ -49,6 +51,7 @@ export default function EspejoTool() {
       ctx.restore();
       const blob = await canvasToBlob(canvas, 'image/png');
       setResultSize(blob.size);
+      setResultBlob(blob);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
       setError('Error al procesar la imagen. Por favor, inténtalo de nuevo.');
@@ -59,9 +62,18 @@ export default function EspejoTool() {
 
   return (
     <div className="space-y-6">
-      <ImageUploader state={upload} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {upload.file && !resultUrl && (
+      {upload.image && !resultUrl && (
         <div className="space-y-4">
           <p className="text-sm font-semibold text-[var(--color-text)]">Tipo de volteo</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -91,17 +103,18 @@ export default function EspejoTool() {
         </div>
       )}
 
-      {resultUrl && upload.file && (
+      {resultUrl && upload.image && (
         <div className="space-y-4">
           <img src={resultUrl} alt="Resultado" className="max-w-full rounded-xl border border-[var(--color-border)]" />
           <div className="flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
-            <span>Original: <strong className="text-[var(--color-text)]">{formatBytes(upload.file.size)}</strong></span>
+            <span>Original: <strong className="text-[var(--color-text)]">{formatBytes(upload.image.file.size)}</strong></span>
             <span>Resultado: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></span>
           </div>
           <DownloadButton
-            url={resultUrl}
-            filename={download(upload.file.name, 'png')}
+            onClick={() => { if (resultBlob) download(resultBlob, 'espejo', 'png'); }}
+            disabled={!resultBlob}
             label="Descargar imagen"
+            className="w-full"
           />
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Procesar otra imagen

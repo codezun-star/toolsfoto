@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ImageUploader from '@/components/ui/ImageUploader';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { loadImage } from '@/lib/utils/canvas';
+import { loadImage, revokeURL } from '@/lib/utils/canvas';
 import { Copy, Check, Download } from 'lucide-react';
 
 const SIZES = [
@@ -21,7 +21,7 @@ export default function GenerarFaviconTool() {
   const [error, setError] = useState<string | null>(null);
   const [copiedHtml, setCopiedHtml] = useState(false);
 
-  function clearPreviews() { previews.forEach(p => URL.revokeObjectURL(p.url)); setPreviews([]); }
+  function clearPreviews() { previews.forEach(p => revokeURL(p.url)); setPreviews([]); }
 
   async function handleGenerate() {
     if (!upload.image) return;

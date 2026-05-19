@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import VideoUploader, { type VideoFile } from '@/components/ui/VideoUploader';
 import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 
@@ -33,15 +34,15 @@ export default function RecortarVideoTool() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   function handleFile(f: VideoFile) {
-    if (videoUrl) URL.revokeObjectURL(videoUrl);
+    if (videoUrl) revokeURL(videoUrl);
     setVideo(f);
     const url = URL.createObjectURL(f.file);
     setVideoUrl(url);
   }
 
   function handleClear() {
-    if (videoUrl) URL.revokeObjectURL(videoUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (videoUrl) revokeURL(videoUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setVideo(null);
     setVideoUrl(null);
     setResultUrl(null);
@@ -63,7 +64,7 @@ export default function RecortarVideoTool() {
     const start = toSeconds(startTime);
     const end = toSeconds(endTime);
     if (end <= start) { setError('El tiempo de fin debe ser mayor que el de inicio.'); return; }
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

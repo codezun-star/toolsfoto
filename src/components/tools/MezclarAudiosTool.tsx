@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import AudioUploader, { type AudioFile } from '@/components/ui/AudioUploader';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import Slider from '@/components/ui/Slider';
 import { Download, Loader2 } from 'lucide-react';
@@ -20,15 +21,15 @@ export default function MezclarAudiosTool() {
   const audio2InputRef = useRef<HTMLInputElement>(null);
 
   function handleFile1(f: AudioFile) {
-    if (audio1Url) URL.revokeObjectURL(audio1Url);
+    if (audio1Url) revokeURL(audio1Url);
     setAudio1(f);
     setAudio1Url(URL.createObjectURL(f.file));
-    if (resultUrl) { URL.revokeObjectURL(resultUrl); setResultUrl(null); }
+    if (resultUrl) { revokeURL(resultUrl); setResultUrl(null); }
     setError(null);
   }
 
   function handleClear1() {
-    if (audio1Url) URL.revokeObjectURL(audio1Url);
+    if (audio1Url) revokeURL(audio1Url);
     setAudio1(null);
     setAudio1Url(null);
   }
@@ -36,16 +37,16 @@ export default function MezclarAudiosTool() {
   function handleFile2(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (audio2Url) URL.revokeObjectURL(audio2Url);
-    const af: AudioFile = { file, name: file.name, size: file.size, type: file.type };
+    if (audio2Url) revokeURL(audio2Url);
+    const af: AudioFile = { file, name: file.name, size: file.size };
     setAudio2(af);
     setAudio2Url(URL.createObjectURL(file));
-    if (resultUrl) { URL.revokeObjectURL(resultUrl); setResultUrl(null); }
+    if (resultUrl) { revokeURL(resultUrl); setResultUrl(null); }
     setError(null);
   }
 
   function handleClear2() {
-    if (audio2Url) URL.revokeObjectURL(audio2Url);
+    if (audio2Url) revokeURL(audio2Url);
     setAudio2(null);
     setAudio2Url(null);
   }
@@ -53,7 +54,7 @@ export default function MezclarAudiosTool() {
   function handleClearAll() {
     handleClear1();
     handleClear2();
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
     setResultSize(0);
     setError(null);
@@ -61,19 +62,13 @@ export default function MezclarAudiosTool() {
 
   async function process() {
     if (!audio1 || !audio2) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);
     try {
-      const { FFmpeg } = await import('@ffmpeg/ffmpeg');
       const { fetchFile } = await import('@ffmpeg/util');
-      const ff = new FFmpeg();
-      ff.on('progress', ({ progress: p }) => setProgress(Math.round(p * 100)));
-      await ff.load({
-        coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-        wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
-      });
+      const ff = await createFFmpeg(setProgress);
       await ff.writeFile('input1.mp3', await fetchFile(audio1.file));
       await ff.writeFile('input2.mp3', await fetchFile(audio2.file));
       const filter = `[0:a]volume=${vol1 / 100}[a1];[1:a]volume=${vol2 / 100}[a2];[a1][a2]amix=inputs=2:duration=longest[out]`;

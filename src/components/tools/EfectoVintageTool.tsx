@@ -57,10 +57,11 @@ function applyBrightnessContrast(data: Uint8ClampedArray, brightness: number, co
 
 export default function EfectoVintageTool() {
   const upload = useImageUpload();
-  const { download } = useDownload();
+  const { download } = useDownload(upload.image?.file.name);
   const [effect, setEffect] = useState<Effect>('sepia');
   const [intensity, setIntensity] = useState(80);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [resultSize, setResultSize] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -68,18 +69,19 @@ export default function EfectoVintageTool() {
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
+    setResultBlob(null);
     setResultSize(0);
-    upload.clear();
+    upload.clearImage();
     setError(null);
   }
 
   async function process() {
-    if (!upload.file) return;
+    if (!upload.image) return;
     if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {
-      const img = await loadImage(upload.previewUrl!);
+      const img = await loadImage(upload.image.url);
       const canvas = createCanvas(img.naturalWidth, img.naturalHeight);
       const ctx = getContext(canvas);
       ctx.drawImage(img, 0, 0);
@@ -119,6 +121,7 @@ export default function EfectoVintageTool() {
 
       const blob = await canvasToBlob(canvas, 'image/jpeg', 0.92);
       setResultSize(blob.size);
+      setResultBlob(blob);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
       setError('Error al aplicar el efecto. Por favor, inténtalo de nuevo.');
@@ -129,9 +132,18 @@ export default function EfectoVintageTool() {
 
   return (
     <div className="space-y-6">
-      <ImageUploader state={upload} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {upload.file && !resultUrl && (
+      {upload.image && !resultUrl && (
         <div className="space-y-5">
           <div>
             <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Efecto</p>
@@ -164,12 +176,12 @@ export default function EfectoVintageTool() {
         </div>
       )}
 
-      {resultUrl && upload.file && (
+      {resultUrl && upload.image && (
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs text-[var(--color-text-muted)] mb-1 text-center">Original</p>
-              <img src={upload.previewUrl!} alt="Original" className="w-full rounded-xl border border-[var(--color-border)]" />
+              <img src={upload.image.url} alt="Original" className="w-full rounded-xl border border-[var(--color-border)]" />
             </div>
             <div>
               <p className="text-xs text-[var(--color-text-muted)] mb-1 text-center">Con efecto</p>
@@ -177,10 +189,15 @@ export default function EfectoVintageTool() {
             </div>
           </div>
           <div className="flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
-            <span>Original: <strong className="text-[var(--color-text)]">{formatBytes(upload.file.size)}</strong></span>
+            <span>Original: <strong className="text-[var(--color-text)]">{formatBytes(upload.image.file.size)}</strong></span>
             <span>Resultado: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></span>
           </div>
-          <DownloadButton url={resultUrl} filename={download(upload.file.name, 'jpg')} label="Descargar imagen" />
+          <DownloadButton
+            onClick={() => { if (resultBlob) download(resultBlob, 'vintage', 'jpg'); }}
+            disabled={!resultBlob}
+            label="Descargar imagen"
+            className="w-full"
+          />
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Procesar otra imagen
           </button>

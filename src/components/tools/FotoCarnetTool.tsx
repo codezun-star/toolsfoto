@@ -18,9 +18,10 @@ const PHOTO_SIZES: PhotoSize[] = [
 
 export default function FotoCarnetTool() {
   const upload = useImageUpload();
-  const { download } = useDownload();
+  const { download } = useDownload(upload.image?.file.name);
   const [sizeId, setSizeId] = useState('pasaporte');
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bgColor, setBgColor] = useState('#FFFFFF');
@@ -28,26 +29,25 @@ export default function FotoCarnetTool() {
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
     setResultUrl(null);
-    upload.clear();
+    setResultBlob(null);
+    upload.clearImage();
     setError(null);
   }
 
   async function process() {
-    if (!upload.file) return;
+    if (!upload.image) return;
     if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {
       const size = PHOTO_SIZES.find((s) => s.id === sizeId)!;
-      const img = await loadImage(upload.previewUrl!);
+      const img = await loadImage(upload.image.url);
       const canvas = createCanvas(size.w, size.h);
       const ctx = getContext(canvas);
 
-      // Fill background
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, size.w, size.h);
 
-      // Center-crop the image to fill target dimensions
       const srcAspect = img.naturalWidth / img.naturalHeight;
       const dstAspect = size.w / size.h;
       let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
@@ -61,6 +61,7 @@ export default function FotoCarnetTool() {
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, size.w, size.h);
 
       const blob = await canvasToBlob(canvas, 'image/jpeg', 0.95);
+      setResultBlob(blob);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
       setError('Error al procesar la imagen. Por favor, inténtalo de nuevo.');
@@ -73,9 +74,18 @@ export default function FotoCarnetTool() {
 
   return (
     <div className="space-y-6">
-      <ImageUploader state={upload} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {upload.file && !resultUrl && (
+      {upload.image && !resultUrl && (
         <div className="space-y-5">
           <div>
             <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Tipo de foto</p>
@@ -129,7 +139,12 @@ export default function FotoCarnetTool() {
           <p className="text-center text-sm text-[var(--color-text-secondary)]">
             {selected.label} — {selected.w} × {selected.h} px
           </p>
-          <DownloadButton url={resultUrl} filename={download(upload.file!.name, 'jpg')} label="Descargar foto carnet" />
+          <DownloadButton
+            onClick={() => { if (resultBlob) download(resultBlob, 'carnet', 'jpg'); }}
+            disabled={!resultBlob}
+            label="Descargar foto carnet"
+            className="w-full"
+          />
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Procesar otra imagen
           </button>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 type Position = 'bottom-center' | 'bottom-right' | 'top-right';
 type Format = 'number' | 'page-n' | 'n-of-total';
@@ -24,7 +25,7 @@ export default function NumerarPaginasPDFTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setFile(null);
     setResultUrl(null);
     setResultSize(0);
@@ -33,7 +34,7 @@ export default function NumerarPaginasPDFTool() {
 
   async function process() {
     if (!file) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {
@@ -50,7 +51,7 @@ export default function NumerarPaginasPDFTool() {
         let label = '';
         if (format === 'number') label = String(num);
         else if (format === 'page-n') label = `Página ${num}`;
-        else label = `${num} / ${total + startNum - 1}`;
+        else label = `${num} / ${total}`;
 
         const { width, height } = page.getSize();
         const textWidth = font.widthOfTextAtSize(label, fontSize);

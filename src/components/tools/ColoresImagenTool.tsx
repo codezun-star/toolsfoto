@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import ImageUploader from '@/components/ui/ImageUploader';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { loadImage } from '@/lib/utils/canvas';
+import { loadImage, revokeURL } from '@/lib/utils/canvas';
 import { Copy, Check, Download } from 'lucide-react';
 
 interface ColorEntry {
@@ -103,7 +103,7 @@ export default function ColoresImagenTool() {
       if (!b) return;
       const url = URL.createObjectURL(b);
       const a = document.createElement('a'); a.href = url; a.download = 'paleta.png'; a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     }, 'image/png');
   }
 

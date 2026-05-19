@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes, formatReduction } from '@/lib/utils/format';
 import { TrendingDown } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 interface Result { blob: Blob; size: number }
@@ -45,7 +46,7 @@ export default function ComprimirPDFTool() {
     a.href = url;
     a.download = pdf.name.replace(/\.pdf$/i, '_comprimido.pdf');
     a.click();
-    URL.revokeObjectURL(url);
+    revokeURL(url);
   }
 
   const reduction = pdf && result ? formatReduction(pdf.size, result.size) : null;

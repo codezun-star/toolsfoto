@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 const MM_TO_PT = 2.8346;
 
@@ -17,7 +18,7 @@ export default function RecortarPDFTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setFile(null);
     setResultUrl(null);
     setResultSize(0);
@@ -26,7 +27,7 @@ export default function RecortarPDFTool() {
 
   async function process() {
     if (!file) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setError(null);
     try {

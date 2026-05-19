@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { Copy, Download, Check } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -58,7 +59,7 @@ export default function ExtraerTextoPDFTool() {
     a.href = url;
     a.download = pdf.name.replace(/\.pdf$/i, '_texto.txt');
     a.click();
-    URL.revokeObjectURL(url);
+    revokeURL(url);
   }
 
   return (

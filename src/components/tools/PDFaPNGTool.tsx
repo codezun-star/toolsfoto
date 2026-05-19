@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -15,7 +16,7 @@ export default function PDFaPNGTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    results.forEach((r) => URL.revokeObjectURL(r.url));
+    results.forEach((r) => revokeURL(r.url));
     setFile(null);
     setResults([]);
     setError(null);
@@ -23,7 +24,7 @@ export default function PDFaPNGTool() {
 
   async function process() {
     if (!file) return;
-    results.forEach((r) => URL.revokeObjectURL(r.url));
+    results.forEach((r) => revokeURL(r.url));
     setProcessing(true);
     setResults([]);
     setError(null);

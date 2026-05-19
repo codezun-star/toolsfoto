@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Trash2, Plus } from 'lucide-react';
 
@@ -27,14 +28,14 @@ export default function UnirVideosTool() {
   function removeVideo(id: number) {
     setVideos((prev) => {
       const item = prev.find((v) => v.id === id);
-      if (item) URL.revokeObjectURL(item.url);
+      if (item) revokeURL(item.url);
       return prev.filter((v) => v.id !== id);
     });
   }
 
   function handleClear() {
-    videos.forEach((v) => URL.revokeObjectURL(v.url));
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    videos.forEach((v) => revokeURL(v.url));
+    if (resultUrl) revokeURL(resultUrl);
     setVideos([]);
     setResultUrl(null);
     setResultSize(0);
@@ -44,7 +45,7 @@ export default function UnirVideosTool() {
 
   async function process() {
     if (videos.length < 2) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

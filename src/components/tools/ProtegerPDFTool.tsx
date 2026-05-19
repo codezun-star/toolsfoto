@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { Eye, EyeOff } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -47,7 +48,7 @@ export default function ProtegerPDFTool() {
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_protegido.pdf');
       a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al proteger el PDF. Es posible que tu versión del navegador no soporte este cifrado.');
     } finally {

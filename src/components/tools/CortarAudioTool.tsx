@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import AudioUploader, { type AudioFile } from '@/components/ui/AudioUploader';
 import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 
@@ -37,14 +38,14 @@ export default function CortarAudioTool() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   function handleFile(f: AudioFile) {
-    if (audioUrl) URL.revokeObjectURL(audioUrl);
+    if (audioUrl) revokeURL(audioUrl);
     setAudio(f);
     setAudioUrl(URL.createObjectURL(f.file));
   }
 
   function handleClear() {
-    if (audioUrl) URL.revokeObjectURL(audioUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (audioUrl) revokeURL(audioUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setAudio(null);
     setAudioUrl(null);
     setResultUrl(null);
@@ -66,7 +67,7 @@ export default function CortarAudioTool() {
     const start = toSeconds(startTime);
     const end = toSeconds(endTime);
     if (end <= start) { setError('El tiempo de fin debe ser mayor que el de inicio.'); return; }
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

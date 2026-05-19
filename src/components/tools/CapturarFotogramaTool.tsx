@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import VideoUploader, { type VideoFile } from '@/components/ui/VideoUploader';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { Download, Loader2 } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
 
@@ -23,8 +24,8 @@ export default function CapturarFotogramaTool() {
   }
 
   function handleClear() {
-    if (videoUrl) URL.revokeObjectURL(videoUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (videoUrl) revokeURL(videoUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setVideo(null);
     setVideoUrl(null);
     setResultUrl(null);
@@ -37,7 +38,7 @@ export default function CapturarFotogramaTool() {
 
   async function process() {
     if (!video) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

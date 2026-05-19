@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, Upload, Files } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfEntry { id: number; file: File }
 
@@ -46,7 +47,7 @@ export default function UnirPDFsTool() {
       const out = await merged.save({ useObjectStreams: true });
       const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
       const a = document.createElement('a'); a.href = url; a.download = 'union.pdf'; a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al unir los PDFs. Comprueba que no estén protegidos con contraseña.');
     } finally {

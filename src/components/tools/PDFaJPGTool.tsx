@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 interface PagePreview { num: number; url: string }
@@ -17,14 +18,14 @@ export default function PDFaJPGTool() {
   const [progress, setProgress] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  function handleClear() { pages.forEach(p => URL.revokeObjectURL(p.url)); setPdf(null); setPages([]); setError(null); setProgress(''); }
+  function handleClear() { pages.forEach(p => revokeURL(p.url)); setPdf(null); setPages([]); setError(null); setProgress(''); }
 
   async function handleConvert() {
     if (!pdf) return;
     setLoading(true);
     setError(null);
     setProgress('Cargando PDF…');
-    pages.forEach(p => URL.revokeObjectURL(p.url));
+    pages.forEach(p => revokeURL(p.url));
     setPages([]);
     try {
       const pdfjsLib = await import('pdfjs-dist');

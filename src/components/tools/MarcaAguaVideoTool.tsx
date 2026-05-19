@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import VideoUploader, { type VideoFile } from '@/components/ui/VideoUploader';
 import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import Slider from '@/components/ui/Slider';
 import { Download, Loader2 } from 'lucide-react';
@@ -26,7 +27,7 @@ export default function MarcaAguaVideoTool() {
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setVideo(null);
     setResultUrl(null);
     setResultSize(0);
@@ -36,7 +37,7 @@ export default function MarcaAguaVideoTool() {
 
   async function process() {
     if (!video || !text.trim()) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);

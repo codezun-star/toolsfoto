@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Copy, Download, CheckCircle2 } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 export default function FormatearJSONTool() {
   const [input, setInput] = useState('');
@@ -54,7 +55,7 @@ export default function FormatearJSONTool() {
     a.href = url;
     a.download = 'resultado.json';
     a.click();
-    URL.revokeObjectURL(url);
+    revokeURL(url);
   }
 
   const isValid = error?.startsWith('✓');

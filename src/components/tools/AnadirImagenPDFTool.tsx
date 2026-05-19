@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
 import { ImagePlus } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -41,7 +42,7 @@ export default function AnadirImagenPDFTool() {
   function handleImgChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (imgPreview) URL.revokeObjectURL(imgPreview);
+    if (imgPreview) revokeURL(imgPreview);
     setImgFile(file);
     setImgPreview(URL.createObjectURL(file));
   }
@@ -78,7 +79,7 @@ export default function AnadirImagenPDFTool() {
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_con_imagen.pdf');
       a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al insertar la imagen. Usa JPG o PNG y comprueba que el PDF no esté protegido.');
     } finally {
@@ -102,7 +103,7 @@ export default function AnadirImagenPDFTool() {
             <div className="relative">
               <img src={imgPreview} alt="Imagen" className="w-full max-h-40 object-contain rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)]" />
               <button
-                onClick={() => { if (imgPreview) URL.revokeObjectURL(imgPreview); setImgFile(null); setImgPreview(null); }}
+                onClick={() => { if (imgPreview) revokeURL(imgPreview); setImgFile(null); setImgPreview(null); }}
                 className="absolute top-2 right-2 w-6 h-6 bg-white rounded-full shadow text-[var(--color-text-muted)] hover:text-red-600 text-xs font-bold"
               >
                 ×

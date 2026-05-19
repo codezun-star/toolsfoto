@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -59,7 +60,7 @@ export default function ExtraerPaginasPDFTool() {
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, `_paginas_${range.replace(/\s/g, '')}.pdf`);
       a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al extraer las páginas. Comprueba que el PDF no esté protegido.');
     } finally {

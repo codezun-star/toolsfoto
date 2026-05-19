@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Upload, X, GripVertical, Download, Loader2 } from 'lucide-react';
 import { createFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 
 interface AudioItem {
@@ -55,7 +56,7 @@ export default function UnirAudiosTool() {
 
   async function process() {
     if (items.length < 2) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);
@@ -110,7 +111,7 @@ export default function UnirAudiosTool() {
   }
 
   function reset() {
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setItems([]);
     setResultUrl(null);
     setResultSize(0);

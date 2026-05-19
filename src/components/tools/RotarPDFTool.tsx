@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { RotateCcw } from 'lucide-react';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 type Rotation = 90 | 180 | 270;
@@ -33,7 +34,7 @@ export default function RotarPDFTool() {
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, `_rotado${rotation}.pdf`);
       a.click();
-      URL.revokeObjectURL(url);
+      revokeURL(url);
     } catch {
       setError('Error al rotar el PDF. Asegúrate de que no esté protegido.');
     } finally {

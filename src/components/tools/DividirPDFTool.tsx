@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
+import { revokeURL } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -76,7 +77,7 @@ export default function DividirPDFTool() {
         a.href = url;
         a.download = mode === 'all' ? `${baseName}_pagina${pageNum}.pdf` : `${baseName}_paginas_${pagesToExtract[0]}-${pagesToExtract[pagesToExtract.length - 1]}.pdf`;
         a.click();
-        URL.revokeObjectURL(url);
+        revokeURL(url);
         if (mode === 'range') break; // range mode → single output
         await new Promise(r => setTimeout(r, 150));
       }

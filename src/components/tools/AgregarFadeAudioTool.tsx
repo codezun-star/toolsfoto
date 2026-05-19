@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import AudioUploader, { type AudioFile } from '@/components/ui/AudioUploader';
 import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
+import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import Slider from '@/components/ui/Slider';
 import { Download, Loader2 } from 'lucide-react';
@@ -27,8 +28,8 @@ export default function AgregarFadeAudioTool() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   function handleFile(f: AudioFile) {
-    if (audioUrl) URL.revokeObjectURL(audioUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (audioUrl) revokeURL(audioUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setAudio(f);
     setAudioUrl(URL.createObjectURL(f.file));
     setResultUrl(null);
@@ -37,8 +38,8 @@ export default function AgregarFadeAudioTool() {
   }
 
   function handleClear() {
-    if (audioUrl) URL.revokeObjectURL(audioUrl);
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (audioUrl) revokeURL(audioUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setAudio(null);
     setAudioUrl(null);
     setResultUrl(null);
@@ -49,7 +50,7 @@ export default function AgregarFadeAudioTool() {
 
   async function process() {
     if (!audio || (!applyFadeIn && !applyFadeOut)) return;
-    if (resultUrl) URL.revokeObjectURL(resultUrl);
+    if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
     setError(null);
