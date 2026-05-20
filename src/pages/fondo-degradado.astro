@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FondoDegradadoTool from '@/components/tools/FondoDegradadoTool';
+
+const faqs = [
+  { q: '¿Para qué sirve añadir un fondo degradado a una imagen?', a: 'Es especialmente útil para PNGs con fondo transparente: logos, iconos, ilustraciones o imágenes con fondo eliminado. Añadir un degradado personalizado las hace listas para publicar en redes sociales, presentaciones o como portadas de contenido.' },
+  { q: '¿Qué tipos de degradado están disponibles?', a: 'La herramienta ofrece gradientes lineales (de un punto a otro en línea recta, con control de dirección) y radiales (desde el centro hacia los bordes en forma de círculo). Los lineales tienen 6 direcciones predefinidas.' },
+  { q: '¿Cuántos colores puedo usar en el degradado?', a: 'Cada degradado usa exactamente dos colores: un color de inicio (color 1) y un color de fin (color 2). Puedes elegir cualquier color con el selector o usar uno de los 5 presets incluidos como punto de partida.' },
+  { q: '¿La imagen original se modifica?', a: 'No. La herramienta crea un canvas nuevo con el degradado como fondo y dibuja tu imagen original encima. Si tu imagen tiene áreas transparentes, el degradado será visible a través de ellas. El resultado se descarga como PNG.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento usa la Canvas API del navegador. El degradado se genera y aplica localmente, y ningún archivo sale de tu dispositivo en ningún momento.' },
+];
+---
+<ToolLayout slug="fondo-degradado" faqs={faqs}>
+  <FondoDegradadoTool client:load />
+</ToolLayout>

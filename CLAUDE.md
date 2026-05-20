@@ -127,7 +127,7 @@ toolsfoto-v2/
 │   │   │   ├── Footer.astro          # 5 columnas: Imágenes, PDF, Vídeo, Audio, ToolsFoto
 │   │   │   ├── ToolLayout.astro      # Wrapper: SEO + breadcrumb + relacionadas + FAQs
 │   │   │   └── LegalLayout.astro     # Wrapper páginas legales: SEO + breadcrumb + prose
-│   │   ├── tools/               # Un componente React por herramienta (76 total)
+│   │   ├── tools/               # Un componente React por herramienta (86 total)
 │   │   └── ui/
 │   │       ├── HomeTools.tsx       # Tabs del home (imagen/pdf/video/audio/developer)
 │   │       ├── ImageUploader.tsx   # Dropzone para imágenes (drag & drop + click)
@@ -161,9 +161,9 @@ toolsfoto-v2/
 
 ---
 
-## Las 76 herramientas
+## Las 86 herramientas
 
-### Imagen (28)
+### Imagen (30)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -200,8 +200,10 @@ toolsfoto-v2/
 | `/cambiar-fondo` | `CambiarFondoTool.tsx` | Básicas | Canvas `fillRect` con color + `drawImage` |
 | `/mosaico` | `MosaicoTool.tsx` | Creativas | Canvas `drawImage` en bucle NxM tiles |
 | `/efecto-duotono` | `EfectoDuotonoTool.tsx` | Creativas | `getImageData` + mapeo luminosidad → dos colores |
+| `/comprimir-objetivo` | `ComprimirObjetivoTool.tsx` | Básicas | Canvas API — búsqueda binaria de calidad JPEG hasta 15 iteraciones para alcanzar tamaño objetivo |
+| `/fondo-degradado` | `FondoDegradadoTool.tsx` | Creativas | Canvas `createLinearGradient`/`createRadialGradient` — dibuja gradiente y superpone imagen (ideal para PNGs con transparencia) |
 
-### PDF (20)
+### PDF (21)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -225,6 +227,7 @@ toolsfoto-v2/
 | `/eliminar-paginas-pdf` | `EliminarPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` conservando solo páginas no eliminadas |
 | `/anadir-imagen-pdf` | `AnadirImagenPDFTool.tsx` | Básicas | pdf-lib `embedJpg/embedPng` + `page.drawImage()` con posición % |
 | `/pdf-en-blanco` | `PDFEnBlancoTool.tsx` | Básicas | pdf-lib `addPage([w, h])` con tamaños estándar y orientación |
+| `/metadatos-pdf` | `MetadatosPDFTool.tsx` | Básicas | pdf-lib `getTitle/setTitle/getAuthor/setAuthor/getSubject/setSubject/getKeywords/setKeywords` — lectura y edición de metadatos |
 
 ### Vídeo (15)
 
@@ -246,7 +249,7 @@ toolsfoto-v2/
 | `/cambiar-resolucion-video` | `CambiarResolucionVideoTool.tsx` | Básicas | FFmpeg.wasm — `scale=w:h:force_original_aspect_ratio=decrease,pad` |
 | `/marca-agua-video` | `MarcaAguaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `drawtext` con posición y opacidad |
 
-### Audio (10)
+### Audio (12)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -260,8 +263,10 @@ toolsfoto-v2/
 | `/agregar-fade-audio` | `AgregarFadeAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `afade=t=in/out:st:d` encadenado |
 | `/mezclar-audios` | `MezclarAudiosTool.tsx` | Básicas | FFmpeg.wasm — `amix=inputs=2:duration=longest` con volume por pista |
 | `/cambiar-tono` | `CambiarTonoTool.tsx` | Básicas | FFmpeg.wasm — `asetrate=44100*2^(s/12),aresample=44100` |
+| `/anadir-silencio` | `AnadirSilencioTool.tsx` | Básicas | FFmpeg.wasm — `adelay=${ms}|${ms}` (inicio) + `apad=pad_dur=${s}` (final), preserva formato original |
+| `/convertir-a-mono` | `ConvertirAMonoTool.tsx` | Básicas | FFmpeg.wasm — `-ac 1` mezcla canales estéreo a mono, preserva formato original |
 
-### Developer (18)
+### Developer (23)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -283,6 +288,11 @@ toolsfoto-v2/
 | `/contador-palabras` | `ContadorPalabrasTool.tsx` | Básicas | JS puro — palabras, chars, frases, párrafos, tiempo de lectura |
 | `/convertir-timestamp` | `ConvertirTimestampTool.tsx` | Básicas | `Date` nativo — Unix↔fecha local/UTC/ISO 8601 bidireccional |
 | `/minificador-html` | `MinificadorHTMLTool.tsx` | Básicas | JS puro regex — elimina comments, colapsa whitespace, formatea |
+| `/generador-contrasenas` | `GeneradorContrasenasTool.tsx` | Básicas | `crypto.getRandomValues(Uint32Array)` — passwords criptográficamente seguros, longitud 6-64, opciones de charset, indicador de fortaleza |
+| `/conversor-unidades` | `ConversorUnidadesTool.tsx` | Básicas | JS puro — 8 categorías (longitud, masa, temperatura, área, velocidad, volumen, datos, tiempo), conversión vía base unit, formato científico para extremos |
+| `/lorem-ipsum` | `LoremIpsumTool.tsx` | Básicas | JS puro — 3 modos (párrafos/frases/palabras), corpus de 100+ palabras latinas, opción de inicio clásico, descarga como .txt |
+| `/gradiente-css` | `GradienteCssTool.tsx` | Básicas | CSS gradient builder — lineal/radial, hasta 5 stops, ángulo configurable, 5 presets, genera declaración CSS lista para copiar |
+| `/minificador-js` | `MinificadorJSTool.tsx` | Básicas | JS puro regex — elimina comentarios de bloque y línea, colapsa whitespace, muestra reducción en bytes; modo formateador básico |
 
 ### Páginas legales (5)
 
@@ -392,6 +402,35 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 - **UnirAudios:** re-encodifica cada archivo a mp3 individualmente antes del concat demuxer, para evitar errores de formato mixto.
 - **RecortarVideo / CortarAudio:** usar `-c copy` para evitar re-encode y preservar calidad.
 
+#### Herramientas developer sin input de archivo
+Algunas herramientas developer no reciben archivos: trabajan solo con texto o generan contenido. Patrón:
+- Estado local (`useState`) para el input de texto y el output.
+- Descarga vía `new Blob([text], { type: 'text/plain' })` → `URL.createObjectURL` → `<a>.click()` → `URL.revokeObjectURL`.
+- Sin `useImageUpload`, sin `useDownload`, sin `PdfUploader`.
+
+#### Generación de contraseñas seguras
+- Usar `crypto.getRandomValues(new Uint32Array(length))` — nunca `Math.random()`.
+- Patrón: `Array.from(uint32arr, n => pool[n % pool.length]).join('')`.
+- Pools separados: `UPPER`, `LOWER`, `NUMS`, `SYMS` — al menos uno activo siempre.
+
+#### Conversor de unidades con base unit
+- Cada unidad define `{ label, toBase: (v: number) => number, fromBase: (v: number) => number }`.
+- Conversión: `fromBase(toBase(value))` — siempre a través de la unidad base.
+- Temperatura requiere fórmulas no lineales (Celsius = base; Fahrenheit = `(v-32)*5/9`; Kelvin = `v-273.15`).
+- Valores extremos: usar `toExponential(6)` cuando `|n| >= 1e12` o `|n| < 1e-6`.
+
+#### Búsqueda binaria de calidad JPEG (ComprimirObjetivo)
+- `lo=0.01, hi=1.0`, hasta `ITERS=15` iteraciones, converge en ±0.003 de calidad.
+- `const mid = (lo + hi) / 2; const blob = await canvasToBlob(canvas, 'image/jpeg', mid);`
+- Si `blob.size <= targetBytes` → guardar como `best`, subir `lo`; si no → bajar `hi`.
+- Siempre exporta JPEG (transparencia → fondo blanco).
+
+#### Gradiente CSS con Canvas API (FondoDegradado)
+- Gradiente lineal: convertir dirección string → ángulo radián, usar vectores `sin/cos` para los puntos de inicio y fin del gradiente desde el centro.
+- Gradiente radial: `createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.sqrt(w*w+h*h)/2)`.
+- Siempre dibujar el gradiente primero, luego `ctx.drawImage(img, 0, 0)` encima.
+- Exportar como PNG (`image/png`) para preservar transparencia de la imagen original.
+
 ### Patrones de color picker en tools
 1. Array de colores preset como botones circulares `w-7 h-7 rounded-full`.
 2. Un `<label>` con `<input type="color">` invisible como selector custom.
@@ -442,7 +481,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 102 páginas HTML estáticas** (33 imagen + 20 PDF + 15 vídeo + 10 audio + 18 developer + home + 5 legales).
+**El build genera actualmente 112 páginas HTML estáticas** (35 imagen + 21 PDF + 15 vídeo + 12 audio + 23 developer + home + 5 legales).
 
 ---
 

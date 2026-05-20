@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GradienteCssTool from '@/components/tools/GradienteCssTool';
+
+const faqs = [
+  { q: '¿Qué tipos de gradiente puedo crear?', a: 'La herramienta soporta gradientes lineales (linear-gradient) y radiales (radial-gradient). Los lineales permiten controlar el ángulo de dirección; los radiales crean un efecto de círculo desde el centro.' },
+  { q: '¿Cómo añado más colores al gradiente?', a: 'Pulsa el botón "Añadir color" para insertar hasta 5 puntos de color (stops). Cada stop tiene un selector de color y un slider para ajustar su posición porcentual en el gradiente (0% = inicio, 100% = final).' },
+  { q: '¿Cómo uso el código CSS generado?', a: 'Copia el código con el botón "Copiar" y pégalo en tu hoja de estilos CSS. El código incluye la propiedad `background` completa. Por compatibilidad máxima, considera añadir también los prefijos `-webkit-` para navegadores antiguos.' },
+  { q: '¿Los gradientes funcionan en todos los navegadores?', a: 'Sí. Los gradientes CSS lineales y radiales son compatibles con todos los navegadores modernos (Chrome, Firefox, Safari, Edge) sin necesidad de prefijos. Solo los navegadores muy antiguos (IE9 y anteriores) requieren una sintaxis diferente.' },
+  { q: '¿Puedo usar los presets como punto de partida?', a: 'Sí. Los presets (Atardecer, Océano, Bosque, Morado, Noche) aplican colores y configuración predefinidos que puedes personalizar libremente. Son un punto de partida rápido, no una limitación.' },
+];
+---
+<ToolLayout slug="gradiente-css" faqs={faqs}>
+  <GradienteCssTool client:load />
+</ToolLayout>

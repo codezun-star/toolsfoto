@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MetadatosPDFTool from '@/components/tools/MetadatosPDFTool';
+
+const faqs = [
+  { q: '¿Qué metadatos de un PDF puedo ver y editar?', a: 'Puedes ver y editar el Título, Autor, Asunto y Palabras clave del PDF. Además, si el PDF los contiene, se muestran en modo de solo lectura el Creador (la aplicación que lo generó) y la Fecha de creación.' },
+  { q: '¿Para qué sirven los metadatos de un PDF?', a: 'Los metadatos ayudan a identificar y organizar documentos. Los motores de búsqueda como Google los utilizan para indexar PDFs. También son importantes para accesibilidad (lectores de pantalla), gestión documental en empresas y para que los PDFs aparezcan correctamente en visores y gestores de archivos.' },
+  { q: '¿Puedo editar los metadatos de un PDF protegido con contraseña?', a: 'No directamente. Para editar los metadatos de un PDF protegido, primero debes eliminar la contraseña con la herramienta "Eliminar contraseña PDF" de ToolsFoto, luego editar los metadatos, y finalmente volver a protegerlo si es necesario.' },
+  { q: '¿El PDF modificado mantiene todas las páginas y el formato original?', a: 'Sí. La herramienta solo modifica los metadatos del documento usando pdf-lib. Las páginas, imágenes, fuentes, formularios y todo el contenido del PDF permanecen intactos.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza en tu navegador con pdf-lib. El PDF nunca sale de tu dispositivo. La lectura y escritura de metadatos ocurre completamente de forma local.' },
+];
+---
+<ToolLayout slug="metadatos-pdf" faqs={faqs}>
+  <MetadatosPDFTool client:load />
+</ToolLayout>

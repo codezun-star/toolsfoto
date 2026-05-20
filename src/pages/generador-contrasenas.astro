@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GeneradorContrasenasTool from '@/components/tools/GeneradorContrasenasTool';
+
+const faqs = [
+  { q: '¿Son seguras las contraseñas generadas?', a: 'Sí. El generador usa la API Web Crypto del navegador (`crypto.getRandomValues()`), que es criptográficamente segura. Ningún dato sale de tu dispositivo: las contraseñas se generan y muestran solo en tu navegador.' },
+  { q: '¿Cuántos caracteres debe tener una contraseña segura?', a: 'Se recomienda un mínimo de 12-16 caracteres combinando mayúsculas, minúsculas, números y símbolos. A partir de 20 caracteres con todos los tipos, la contraseña es prácticamente imposible de romper por fuerza bruta.' },
+  { q: '¿Qué significa la fortaleza de la contraseña?', a: 'El indicador de fortaleza evalúa la longitud y la variedad de caracteres usados. "Débil" significa contraseña corta o con pocos tipos de caracteres; "Excelente" indica una contraseña larga con todos los tipos. Es una orientación visual, no una métrica de seguridad absoluta.' },
+  { q: '¿Puedo generar varias contraseñas a la vez?', a: 'Sí. Puedes generar hasta 20 contraseñas en una sola acción. Cada una puede copiarse individualmente o puedes copiarlas todas juntas con el botón "Copiar todas". También puedes regenerar una contraseña individual sin afectar al resto.' },
+  { q: '¿Dónde debo guardar las contraseñas generadas?', a: 'Usa un gestor de contraseñas como Bitwarden (gratuito y de código abierto), 1Password, Dashlane o el gestor integrado en tu navegador. Nunca las guardes en un archivo de texto plano ni las reutilices en múltiples servicios.' },
+];
+---
+<ToolLayout slug="generador-contrasenas" faqs={faqs}>
+  <GeneradorContrasenasTool client:load />
+</ToolLayout>

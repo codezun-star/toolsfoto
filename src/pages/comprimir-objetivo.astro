@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirObjetivoTool from '@/components/tools/ComprimirObjetivoTool';
+
+const faqs = [
+  { q: '¿Cómo funciona la compresión por objetivo de tamaño?', a: 'La herramienta realiza una búsqueda binaria: prueba distintos niveles de calidad JPEG y mide el tamaño del resultado hasta encontrar el ajuste que produce el archivo más grande posible sin superar el tamaño objetivo. Típicamente necesita 10-15 iteraciones para converger.' },
+  { q: '¿Qué formatos de salida genera?', a: 'El resultado siempre es JPEG, que es el formato con mejor control de calidad para compresión con pérdida. Si tu imagen de entrada es PNG con transparencia, el fondo transparente se rellenará con blanco.' },
+  { q: '¿Qué pasa si el objetivo es más grande que la imagen original?', a: 'Si el tamaño objetivo es mayor que la imagen original, la herramienta aplica la mínima compresión posible. El resultado puede seguir siendo más grande que el objetivo si la imagen ya estaba muy optimizada.' },
+  { q: '¿Qué pasa si el objetivo es demasiado pequeño?', a: 'Si el objetivo es muy pequeño (por ejemplo 10 KB para una imagen de 2000×2000 px), la herramienta usará la calidad mínima (1%) para llegar lo más cerca posible. El resultado puede seguir siendo más grande que el objetivo si la imagen no puede comprimirse tanto.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento usa la Canvas API del navegador. La búsqueda binaria de calidad se ejecuta completamente en tu dispositivo, y ningún archivo sale de él en ningún momento.' },
+];
+---
+<ToolLayout slug="comprimir-objetivo" faqs={faqs}>
+  <ComprimirObjetivoTool client:load />
+</ToolLayout>

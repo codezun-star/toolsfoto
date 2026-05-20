@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConversorUnidadesTool from '@/components/tools/ConversorUnidadesTool';
+
+const faqs = [
+  { q: '¿Qué categorías de unidades están disponibles?', a: 'El conversor incluye 8 categorías: Longitud (m, km, millas, pies, pulgadas…), Masa (kg, g, libras, onzas…), Temperatura (Celsius, Fahrenheit, Kelvin), Área, Velocidad, Volumen, Datos (bytes, KB, MB, GB…) y Tiempo (segundos, minutos, horas, días…).' },
+  { q: '¿Cómo convierto una temperatura de Celsius a Fahrenheit?', a: 'Selecciona la categoría "Temperatura", elige "Celsius (°C)" como unidad de origen, introduce el valor, y selecciona "Fahrenheit (°F)" como unidad de destino. El resultado aparece al instante.' },
+  { q: '¿Qué precisión tienen las conversiones?', a: 'Las conversiones usan los factores de conversión estándar con alta precisión. Para resultados muy pequeños o muy grandes, el conversor muestra la notación científica (por ejemplo, 3.048e-4). La precisión es de hasta 10 dígitos significativos.' },
+  { q: '¿Puedo intercambiar las unidades de origen y destino?', a: 'Sí. El botón "Intercambiar" permuta instantáneamente las unidades de origen y destino para que puedas hacer la conversión inversa sin tener que seleccionarlas de nuevo.' },
+  { q: '¿Por qué los datos se miden en base 1024 y no en base 1000?', a: 'El conversor usa la convención binaria (1 KB = 1024 bytes) que es el estándar de los sistemas operativos y la memoria RAM. Nota que algunos fabricantes de discos duros usan la convención decimal (1 KB = 1000 bytes), lo que explica la diferencia de capacidad "perdida" que ves en el explorador de archivos.' },
+];
+---
+<ToolLayout slug="conversor-unidades" faqs={faqs}>
+  <ConversorUnidadesTool client:load />
+</ToolLayout>

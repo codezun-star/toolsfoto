@@ -551,4 +551,56 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Minifica HTML eliminando comentarios, espacios y saltos de línea. También formatea HTML comprimido. Muestra el porcentaje de reducción. Sin registro, 100% en el navegador. Gratis.',
     canonical: 'https://toolsfoto.com/minificador-html',
   },
+
+  // ── 10 nuevas herramientas ────────────────────────────────────
+  'generador-contrasenas': {
+    title: 'Generador de contraseñas seguras online gratis | ToolsFoto',
+    description: 'Genera contraseñas seguras con la Web Crypto API. Longitud, mayúsculas, minúsculas, números y símbolos configurables. Hasta 20 contraseñas a la vez. Sin registro, sin subir datos. 100% gratis.',
+    canonical: 'https://toolsfoto.com/generador-contrasenas',
+  },
+  'conversor-unidades': {
+    title: 'Conversor de unidades online gratis — longitud, masa, temperatura | ToolsFoto',
+    description: 'Convierte entre unidades de longitud, masa, temperatura, área, velocidad, volumen, datos y tiempo al instante. 8 categorías, resultado en tiempo real. Sin registro, sin subir datos. 100% gratis.',
+    canonical: 'https://toolsfoto.com/conversor-unidades',
+  },
+  'lorem-ipsum': {
+    title: 'Generador de Lorem Ipsum online gratis — párrafos y palabras | ToolsFoto',
+    description: 'Genera texto Lorem Ipsum en párrafos, frases o palabras. Cantidad ajustable, descarga como .txt. Perfecto para maquetas y prototipos. Sin registro, sin subir datos. 100% gratis en el navegador.',
+    canonical: 'https://toolsfoto.com/lorem-ipsum',
+  },
+  'gradiente-css': {
+    title: 'Generador de gradientes CSS online gratis | ToolsFoto',
+    description: 'Crea gradientes CSS lineales y radiales con preview en tiempo real. Hasta 5 colores, control de ángulo y posición. Copia el código CSS listo para usar. Sin registro, sin subir datos. 100% gratis.',
+    canonical: 'https://toolsfoto.com/gradiente-css',
+  },
+  'minificador-js': {
+    title: 'Minificador JavaScript online gratis — comprimir JS al instante | ToolsFoto',
+    description: 'Minifica JavaScript eliminando comentarios y espacios. También formatea código comprimido. Muestra el porcentaje de reducción. Sin registro, 100% en el navegador. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/minificador-js',
+  },
+  'anadir-silencio': {
+    title: 'Añadir silencio a audio online gratis | ToolsFoto',
+    description: 'Añade segundos de silencio al inicio y/o al final de cualquier archivo de audio. Configurable hasta 10 segundos en cada extremo. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/anadir-silencio',
+  },
+  'convertir-a-mono': {
+    title: 'Convertir audio estéreo a mono online gratis | ToolsFoto',
+    description: 'Mezcla los canales estéreo de cualquier audio en uno solo (mono). Reduce el tamaño del archivo a la mitad. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/convertir-a-mono',
+  },
+  'comprimir-objetivo': {
+    title: 'Comprimir imagen a tamaño objetivo en KB online gratis | ToolsFoto',
+    description: 'Comprime tu imagen hasta alcanzar un tamaño de archivo específico en KB. Búsqueda automática del nivel de calidad óptimo. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-objetivo',
+  },
+  'fondo-degradado': {
+    title: 'Añadir fondo degradado a imagen online gratis | ToolsFoto',
+    description: 'Añade un fondo con degradado lineal o radial a tu imagen o PNG transparente. 5 presets y colores personalizables. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/fondo-degradado',
+  },
+  'metadatos-pdf': {
+    title: 'Ver y editar metadatos de PDF online gratis | ToolsFoto',
+    description: 'Lee y modifica el título, autor, asunto y palabras clave de cualquier PDF. Guarda el PDF con los nuevos metadatos. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/metadatos-pdf',
+  },
 };

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import LoremIpsumTool from '@/components/tools/LoremIpsumTool';
+
+const faqs = [
+  { q: '¿Qué es el Lorem Ipsum?', a: 'Lorem ipsum es un texto estándar de la industria tipográfica y del diseño gráfico usado como texto de relleno (placeholder) desde los años 1500. Proviene de un pasaje del libro "De finibus bonorum et malorum" del filósofo romano Cicerón, aunque la versión moderna está alterada.' },
+  { q: '¿Para qué se usa el Lorem Ipsum?', a: 'Se usa para rellenar maquetas de diseño web, presentaciones, prototipos de aplicaciones y plantillas de documentos. Al ser texto sin significado, el lector se enfoca en el diseño visual en lugar del contenido, lo que es útil en fases tempranas de diseño.' },
+  { q: '¿Puedo generar párrafos, frases o palabras sueltas?', a: 'Sí. La herramienta ofrece tres modos: Párrafos (bloques de texto de 4-8 frases cada uno), Frases (frases individuales de longitud variable) y Palabras (palabras sueltas del corpus lorem ipsum). Ajusta la cantidad con el slider.' },
+  { q: '¿El texto generado siempre empieza con "Lorem ipsum"?', a: 'Por defecto sí, ya que es lo que los diseñadores esperan al revisar una maqueta. Puedes desactivar la opción "Empezar con Lorem ipsum" para obtener texto completamente aleatorio desde la primera palabra.' },
+  { q: '¿Puedo descargar el texto generado?', a: 'Sí. El botón "Descargar .txt" guarda el texto como un archivo de texto plano que puedes abrir con cualquier editor. También puedes copiarlo al portapapeles con el botón "Copiar".' },
+];
+---
+<ToolLayout slug="lorem-ipsum" faqs={faqs}>
+  <LoremIpsumTool client:load />
+</ToolLayout>

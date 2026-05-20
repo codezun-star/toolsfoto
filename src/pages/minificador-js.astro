@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MinificadorJSTool from '@/components/tools/MinificadorJSTool';
+
+const faqs = [
+  { q: '¿Qué hace el minificador de JavaScript?', a: 'El minificador elimina los comentarios de bloque (/* */) y de línea (//), y colapsa los espacios en blanco, saltos de línea y tabulaciones en un único espacio donde sea posible. El resultado es un archivo más pequeño que el navegador carga más rápido.' },
+  { q: '¿Es seguro usar este minificador en código de producción?', a: 'El minificador es "básico" y no usa un AST (árbol sintáctico abstracto), por lo que puede alterar código con strings que contengan // o /* */. Para producción real, usa herramientas especializadas como Terser, esbuild o el minificador de Vite/Webpack, que entienden la sintaxis JS al completo.' },
+  { q: '¿Qué hace el modo "Formatear"?', a: 'El modo formateo aplica una indentación básica y separa el código con saltos de línea después de ; y { }. Es útil para hacer legible un código minificado o compacto, aunque no es tan completo como Prettier.' },
+  { q: '¿Puedo descargar el resultado?', a: 'Sí. El botón "Descargar .js" guarda el resultado en un archivo JavaScript. En modo minificar el archivo se llama script.min.js; en modo formatear, script.formatted.js.' },
+  { q: '¿Se muestra cuánto se ha reducido el archivo?', a: 'Sí. Junto al tamaño del resultado se muestra el porcentaje de reducción (por ejemplo, "-35%") en verde. Los tamaños se calculan en bytes reales usando Blob.' },
+];
+---
+<ToolLayout slug="minificador-js" faqs={faqs}>
+  <MinificadorJSTool client:load />
+</ToolLayout>

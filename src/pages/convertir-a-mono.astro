@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirAMonoTool from '@/components/tools/ConvertirAMonoTool';
+
+const faqs = [
+  { q: '¿Qué diferencia hay entre audio estéreo y mono?', a: 'El audio estéreo usa dos canales (izquierdo y derecho) para crear sensación de espacio y dirección. El audio mono usa un único canal mezclado. El mono ocupa aproximadamente la mitad de espacio que el estéreo al mismo bitrate.' },
+  { q: '¿Cuándo conviene usar audio mono?', a: 'El mono es ideal para podcasts, audiolibros, llamadas de voz, efectos de sonido simples y archivos donde el tamaño importa más que la experiencia estéreo. También en instalaciones con un solo altavoz, el mono asegura que se escuche todo el contenido.' },
+  { q: '¿Se pierde calidad al convertir a mono?', a: 'Se pierde la espacialidad estéreo (izquierda/derecha), pero el contenido sonoro se mezcla en un solo canal sin reducción de frecuencias. Si el audio original era mono disfrazado de estéreo, no percibirás diferencia alguna.' },
+  { q: '¿Qué formatos de entrada acepta la herramienta?', a: 'La herramienta acepta los formatos de audio más comunes: MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el de entrada.' },
+  { q: '¿El procesamiento sube mis archivos a algún servidor?', a: 'No. El procesamiento se realiza 100% en tu navegador con FFmpeg.wasm usando el flag "-ac 1" que mezcla los canales. Tus archivos de audio nunca salen de tu dispositivo.' },
+];
+---
+<ToolLayout slug="convertir-a-mono" faqs={faqs}>
+  <ConvertirAMonoTool client:load />
+</ToolLayout>
