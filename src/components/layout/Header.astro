@@ -2,24 +2,77 @@
 const currentPath = Astro.url.pathname;
 ---
 <header class="sticky top-0 z-50 bg-white border-b border-[var(--color-border)]">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-extrabold text-lg tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors">
-      <img src="/favicon.png" alt="" width="36" height="36" class="rounded-md" />
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-3 font-extrabold text-lg tracking-tight text-[var(--color-text)] hover:text-[var(--color-accent)] transition-colors shrink-0">
+      <img src="/favicon.png" alt="" width="48" height="48" class="rounded-xl" />
       ToolsFoto
     </a>
-    <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-[var(--color-text-secondary)]">
-      <a href="/" class={currentPath === '/' ? 'text-[var(--color-accent)]' : 'hover:text-[var(--color-text)] transition-colors'}>Inicio</a>
-      <a href="/#imagen" class="hover:text-[var(--color-text)] transition-colors">Imágenes</a>
-      <a href="/#pdf" class="hover:text-[var(--color-text)] transition-colors">PDF</a>
-      <a href="/#video" class="hover:text-[var(--color-text)] transition-colors">Vídeo</a>
-      <a href="/#audio" class="hover:text-[var(--color-text)] transition-colors">Audio</a>
-      <a href="/#developer" class="hover:text-[var(--color-text)] transition-colors">Dev</a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]">
+      <a href="/" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Inicio</a>
+      <a href="/#imagen" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
+      <a href="/#pdf" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
+      <a href="/#video" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
+      <a href="/#audio" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
+      <a href="/#developer" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
     </nav>
-    <a
-      href="/comprimir"
-      class="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
-    >
-      Usar gratis
-    </a>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="/comprimir"
+        class="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
+      >
+        Usar gratis
+      </a>
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
+        aria-label="Abrir menú"
+      >
+        <svg id="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+        <svg id="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] bg-white">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1 text-sm font-medium">
+      <a href="/" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Inicio</a>
+      <a href="/#imagen" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
+      <a href="/#pdf" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
+      <a href="/#video" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
+      <a href="/#audio" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
+      <a href="/#developer" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
+    </nav>
   </div>
 </header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconMenu?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+  });
+
+  // Close menu when a nav link is clicked
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      iconMenu?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

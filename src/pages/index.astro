@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import HomeTools from '@/components/HomeTools';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
-import { Shield, Zap, Gift, Wifi } from 'lucide-react';
+import { Shield, Gift } from 'lucide-react';
 import '@/styles/global.css';
 
 const seo = PAGE_SEO.home;
@@ -60,8 +60,7 @@ const seo = PAGE_SEO.home;
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-white text-sm font-medium mb-6 backdrop-blur-sm">
-                <Zap size={14} className="inline" client:load />
-                46 herramientas · 100% gratis · Sin registro
+                100% gratis · Sin registro · Sin límites
               </div>
               <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-[1.1] tracking-tight">
                 Herramientas para<br />
@@ -80,11 +79,11 @@ const seo = PAGE_SEO.home;
                 </a>
               </div>
               <div class="mt-8 flex flex-wrap gap-5 text-sm font-medium text-white/65">
-                <span><strong class="text-white">21</strong> imagen</span>
-                <span><strong class="text-white">10</strong> PDF</span>
-                <span><strong class="text-white">5</strong> vídeo</span>
-                <span><strong class="text-white">5</strong> audio</span>
-                <span><strong class="text-white">0 MB</strong> enviados</span>
+                <span><strong class="text-white">30</strong> imagen</span>
+                <span><strong class="text-white">21</strong> PDF</span>
+                <span><strong class="text-white">15</strong> vídeo</span>
+                <span><strong class="text-white">12</strong> audio</span>
+                <span><strong class="text-white">23</strong> developer</span>
               </div>
             </div>
 
@@ -139,10 +138,6 @@ const seo = PAGE_SEO.home;
             <div class="flex items-center gap-2">
               <Gift size={16} className="text-[var(--color-tools-icon)]" client:load />
               Gratis para siempre
-            </div>
-            <div class="flex items-center gap-2">
-              <Wifi size={16} className="text-[var(--color-tools-icon)]" client:load />
-              Funciona offline
             </div>
           </div>
         </div>

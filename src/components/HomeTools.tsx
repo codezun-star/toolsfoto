@@ -87,10 +87,8 @@ export default function HomeTools() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {active === 'imagen' && (
-            <div className="space-y-10">
-              <Section label="Básicas" tools={imageTools.filter(t => t.category === 'Básicas')} cols={3} />
-              <Section label="Creativas" tools={imageTools.filter(t => t.category === 'Creativas')} cols={3} />
-              <Section label="Avanzadas" tools={imageTools.filter(t => t.category === 'Avanzadas')} cols={4} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {imageTools.map(t => <ToolCard key={t.slug} tool={t} />)}
             </div>
           )}
 
@@ -123,17 +121,3 @@ export default function HomeTools() {
   );
 }
 
-function Section({ label, tools, cols }: { label: string; tools: typeof TOOLS; cols: 3 | 4 }) {
-  const gridClass = cols === 4
-    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'
-    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
-
-  return (
-    <div>
-      <h3 className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)] mb-4">{label}</h3>
-      <div className={gridClass}>
-        {tools.map(t => <ToolCard key={t.slug} tool={t} />)}
-      </div>
-    </div>
-  );
-}

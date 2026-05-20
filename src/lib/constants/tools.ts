@@ -896,7 +896,7 @@ export const TOOLS: ToolMeta[] = [
     longDescription: 'Crea un mosaico repitiendo tu imagen en una cuadrícula configurable de hasta 6 columnas × 6 filas. Perfecto para fondos de pantalla, papeles de pared, packaging y efectos de diseño gráfico.',
     category: 'Creativas',
     domain: 'imagen',
-    icon: 'Grid2X2',
+    icon: 'Grid2x2',
     color: 'purple',
     related: ['collage', 'redimensionar', 'marco'],
   },

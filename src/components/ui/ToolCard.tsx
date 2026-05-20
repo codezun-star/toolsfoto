@@ -15,6 +15,7 @@ import {
   FileX, ImagePlus, FilePlus, FlipHorizontal, Monitor,
   TrendingUp, Combine, Music4, TestTube2, Fingerprint,
   AlignLeft, Clock, FileCode, ScanSearch,
+  KeyRound, ArrowLeftRight, AlignJustify, Zap, Volume, Info, Sunset, Target,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -111,6 +112,14 @@ const ICONS: Record<string, React.ReactNode> = {
   Clock: <Clock size={20} />,
   FileCode: <FileCode size={20} />,
   ScanSearch: <ScanSearch size={20} />,
+  KeyRound: <KeyRound size={20} />,
+  ArrowLeftRight: <ArrowLeftRight size={20} />,
+  AlignJustify: <AlignJustify size={20} />,
+  Zap: <Zap size={20} />,
+  Volume: <Volume size={20} />,
+  Info: <Info size={20} />,
+  Sunset: <Sunset size={20} />,
+  Target: <Target size={20} />,
 };
 
 interface Props {
