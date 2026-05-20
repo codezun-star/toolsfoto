@@ -1,4 +1,4 @@
-const _BASE = 'https://ffmpeg-proxy.TU_SUBDOMINIO.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/';
+const _BASE = 'https://ffmpeg-proxy.jose-zuniga1145.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/';
 const CORE_URL = `${_BASE}ffmpeg-core.js`;
 const WASM_URL = `${_BASE}ffmpeg-core.wasm`;
 
