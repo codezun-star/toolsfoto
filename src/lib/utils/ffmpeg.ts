@@ -1,5 +1,6 @@
-const CORE_URL = 'https://github.com/codezun-star/toolsfoto/releases/download/ffmpeg-assets/ffmpeg-core.js';
-const WASM_URL = 'https://github.com/codezun-star/toolsfoto/releases/download/ffmpeg-assets/ffmpeg-core.wasm';
+const _BASE = 'https://ffmpeg-proxy.TU_SUBDOMINIO.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/';
+const CORE_URL = `${_BASE}ffmpeg-core.js`;
+const WASM_URL = `${_BASE}ffmpeg-core.wasm`;
 
 export async function createFFmpeg(onProgress?: (pct: number) => void) {
   const { FFmpeg } = await import('@ffmpeg/ffmpeg');
