@@ -64,12 +64,13 @@ export default function VelocidadAudioTool() {
       await ff.deleteFile(`input.${ext}`);
       await ff.deleteFile(`output.${ext}`);
 
-      const mime = ext === 'mp3' ? 'audio/mpeg' : ext === 'wav' ? 'audio/wav' : ext === 'ogg' ? 'audio/ogg' : 'audio/aac';
-      const blob = new Blob([data], { type: mime });
+      const mimeMap: Record<string, string> = { mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', aac: 'audio/aac', flac: 'audio/flac' };
+      const blob = new Blob([data], { type: mimeMap[ext] ?? 'audio/mpeg' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[VelocidadAudio] Error FFmpeg:', err);
       setError('Error al cambiar la velocidad del audio. Asegúrate de que el archivo es un formato de audio válido.');
     } finally {
       setProcessing(false);

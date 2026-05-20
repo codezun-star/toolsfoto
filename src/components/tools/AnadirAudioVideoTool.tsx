@@ -75,7 +75,8 @@ export default function AnadirAudioVideoTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[AnadirAudioVideo] Error FFmpeg:', err);
       setError('Error al procesar. Verifica que los archivos son válidos y compatibles.');
     } finally {
       setProcessing(false);

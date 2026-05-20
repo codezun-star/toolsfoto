@@ -68,7 +68,9 @@ export default function UnirVideosTool() {
       const blob = new Blob([data], { type: 'video/mp4' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
-    } catch {
+      setProgress(100);
+    } catch (err) {
+      console.error('[UnirVideos] Error FFmpeg:', err);
       setError('Error al unir los vídeos. Asegúrate de que todos los archivos son vídeos válidos.');
     } finally {
       setProcessing(false);

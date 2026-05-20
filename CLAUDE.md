@@ -49,13 +49,59 @@
 | Canvas API nativa | Todas las herramientas de imagen y la mayoría de developer | — |
 
 #### FFmpeg.wasm — detalles de integración
-- Core de un solo hilo: `@ffmpeg/core@0.12.6` — no requiere SharedArrayBuffer ni headers COOP/COEP.
-- Se carga desde CDN unpkg (~30 MB). El navegador lo cachea tras la primera carga.
-- CDN URLs:
-  - `https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js`
-  - `https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm`
-- Utilidad compartida en `src/lib/utils/ffmpeg.ts`: `createFFmpeg(onProgress?)` y `runFFmpeg(ff, inputFile, inputName, args, outputName)`.
-- Todos los componentes de vídeo y audio usan estas funciones — **nunca duplicar la lógica de carga**.
+
+**Arquitectura de carga (crítico — leer antes de tocar ffmpeg.ts):**
+
+`@ffmpeg/ffmpeg@0.12.15` crea un Web Worker clásico internamente. Ese Worker carga el core con esta lógica:
+```js
+try { importScripts(coreURL) }         // intenta UMD/classic
+catch {
+  self.createFFmpegCore = (await import(coreURL)).default  // fallback ESM
+  if (!self.createFFmpegCore) throw error                  // UMD no tiene export default → undefined → falla
+}
+```
+**Por eso `coreURL` DEBE apuntar a la build ESM (`/dist/esm/ffmpeg-core.js`), no a UMD.**
+Usar `/dist/umd/ffmpeg-core.js` hace que `import().default === undefined` y lanza "failed to import ffmpeg-core.js".
+El WASM es binario (sin exports), por lo que puede venir de cualquier build (se usa `umd/ffmpeg-core.wasm`).
+
+**Por qué no se auto-hospeda el WASM en Cloudflare Pages:**
+`ffmpeg-core.wasm` pesa 30.64 MiB. Cloudflare Pages tiene un límite de 25 MiB por archivo. Es imposible servirlo como asset estático.
+
+**Cloudflare Worker proxy (ya desplegado):**
+- URL: `https://ffmpeg-proxy.jose-zuniga1145.workers.dev`
+- Código en `worker/worker.js`, config en `worker/wrangler.toml`
+- Proxea únicamente requests a `https://unpkg.com` (allowlist hardcodeada)
+- Añade `CORS: *`, `Cross-Origin-Resource-Policy: cross-origin` y `Cache-Control: immutable`
+- Para desplegar cambios: `cd worker && npx wrangler deploy --config wrangler.toml`
+
+**URLs actuales en `src/lib/utils/ffmpeg.ts`:**
+```ts
+const _PROXY = 'https://ffmpeg-proxy.jose-zuniga1145.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/';
+const CORE_URL = `${_PROXY}esm/ffmpeg-core.js`;   // ESM — obligatorio
+const WASM_URL = `${_PROXY}umd/ffmpeg-core.wasm`; // binario — da igual la build
+```
+
+**Headers COOP/COEP (`public/_headers`):**
+El sitio sirve estos headers en todas las rutas para habilitar SharedArrayBuffer (aunque el core de 1 hilo no lo requiere, los headers son necesarios para que `toBlobURL` funcione en todos los contextos):
+```
+/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: cross-origin
+```
+
+**Compatibilidad verificada de CDNs externos con `require-corp`:**
+- `unpkg.com` → devuelve `CORP: cross-origin` ✓
+- `cdnjs.cloudflare.com` → devuelve `CORP: cross-origin` ✓
+- `staticimgly.com` (`@imgly`) → devuelve `CORP: cross-origin` ✓
+
+**Limitación conocida — filtro `drawtext` de FFmpeg:**
+El filtro `drawtext` requiere fontconfig y fuentes del sistema. En el entorno WASM del navegador no existen. **Nunca usar `drawtext`.** Para superponer texto en vídeo usar canvas overlay + filtro `overlay=0:0` (ver `MarcaAguaVideoTool.tsx`).
+
+**Utilidades en `src/lib/utils/ffmpeg.ts`:**
+- `createFFmpeg(onProgress?)` — instancia y carga FFmpeg. Llama siempre a esta función, nunca `new FFmpeg()` directamente.
+- `runFFmpeg(ff, inputFile, inputName, args, outputName)` — escribe el archivo, ejecuta, lee el resultado, limpia. Usar para herramientas de **1 input, 1 output**.
+- Para herramientas con múltiples inputs/outputs (unir, mezclar, GIF…), usar `ff.exec()` directamente pero gestionar manualmente `writeFile`/`readFile`/`deleteFile` y el bloque try/catch con `console.error`.
 
 #### PDF.js worker CDN
 ```
@@ -306,11 +352,27 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 
 #### Herramientas de vídeo y audio
 - Usar `VideoUploader.tsx` (vídeo) o `AudioUploader.tsx` (audio) para la subida.
-- Usar `createFFmpeg(onProgress?)` de `ffmpeg.ts` — nunca instanciar `FFmpeg` directamente.
-- Usar `runFFmpeg(ff, file, inputName, args, outputName)` — maneja escritura, ejecución, lectura y limpieza.
+- Usar `createFFmpeg(onProgress?)` de `ffmpeg.ts` — **nunca instanciar `FFmpeg` directamente**.
+- **1 input, 1 output simple:** usar `runFFmpeg(ff, file, inputName, args, outputName)` — gestiona write/exec/read/cleanup automáticamente.
+- **Múltiples inputs u outputs** (unir, mezclar, GIF desde imágenes…): usar `ff.exec()` directamente. Patrón obligatorio:
+  ```ts
+  const ff = await createFFmpeg(setProgress);
+  // writeFile de cada input
+  try {
+    await ff.exec([...args]);
+  } catch (err) {
+    console.error('[NombreTool] Error FFmpeg:', err);
+    throw err;
+  }
+  // readFile del output → Blob
+  // deleteFile de todos los archivos (inputs + outputs) en bloques try/catch ignorados
+  // llamar setProgress(100) antes de salir
+  ```
 - Mostrar estado "Cargando procesador…" cuando `progress === 0` y aún no ha terminado.
-- Mostrar nota sobre la primera carga: *"La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo."*
-- Gestionar descarga igual que PDF: `URL.createObjectURL` → `<a>.click()` → `URL.revokeObjectURL`.
+- Mostrar siempre la nota: *"La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo."*
+- Gestionar descarga igual que PDF: `URL.createObjectURL` → `<a>.click()` → `revokeURL()` (de `canvas.ts`).
+- MIME types de audio: `{ mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', aac: 'audio/aac', flac: 'audio/flac' }` — usar siempre un objeto/map, no cadena de ternarios, para no olvidar formatos.
+- **NO usar el filtro `drawtext` de FFmpeg** — falla en WASM (sin fontconfig). Para texto en vídeo: renderizar en canvas → exportar PNG → `overlay=0:0` (ver `MarcaAguaVideoTool.tsx`).
 
 #### Herramientas developer
 - Canvas API directamente cuando el input es imagen.

@@ -87,7 +87,8 @@ export default function ImagenesAGifTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[ImagenesAGif] Error FFmpeg:', err);
       setError('Error al generar el GIF. Asegúrate de que las imágenes sean JPG o PNG válidos.');
     } finally {
       setProcessing(false);

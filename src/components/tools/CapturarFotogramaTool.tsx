@@ -53,7 +53,9 @@ export default function CapturarFotogramaTool() {
       const blob = new Blob([data], { type: 'image/png' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
-    } catch {
+      setProgress(100);
+    } catch (err) {
+      console.error('[CapturarFotograma] Error FFmpeg:', err);
       setError('Error al capturar el fotograma. Comprueba el formato del vídeo.');
     } finally {
       setProcessing(false);
