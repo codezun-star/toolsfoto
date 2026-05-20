@@ -50,7 +50,7 @@ export default function HomeTools() {
   return (
     <div>
       {/* Tab bar */}
-      <div className="sticky top-14 z-40 bg-white border-b border-[var(--color-border)] shadow-sm">
+      <div className="sticky top-20 z-40 bg-white border-b border-[var(--color-border)] shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex gap-1 py-2 overflow-x-auto scrollbar-none">
             {TABS.map(({ id, label, Icon }) => (

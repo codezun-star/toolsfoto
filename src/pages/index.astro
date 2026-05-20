@@ -78,13 +78,6 @@ const seo = PAGE_SEO.home;
                   Comprimir imagen
                 </a>
               </div>
-              <div class="mt-8 flex flex-wrap gap-5 text-sm font-medium text-white/65">
-                <span><strong class="text-white">30</strong> imagen</span>
-                <span><strong class="text-white">21</strong> PDF</span>
-                <span><strong class="text-white">15</strong> vídeo</span>
-                <span><strong class="text-white">12</strong> audio</span>
-                <span><strong class="text-white">23</strong> developer</span>
-              </div>
             </div>
 
             <div class="hidden lg:flex items-center justify-center">
@@ -144,7 +137,9 @@ const seo = PAGE_SEO.home;
       </div>
 
       <!-- TOOLS TABS -->
-      <HomeTools client:load />
+      <div id="herramientas">
+        <HomeTools client:load />
+      </div>
 
       <!-- CTA bottom -->
       <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 text-center">
@@ -159,5 +154,30 @@ const seo = PAGE_SEO.home;
     </main>
 
     <Footer />
+
+    <script is:inline>
+      const DOMAINS = ['imagen', 'pdf', 'video', 'audio', 'developer'];
+
+      function scrollToTools() {
+        const hash = location.hash.slice(1);
+        if (DOMAINS.includes(hash)) {
+          const el = document.getElementById('herramientas');
+          if (el) {
+            // account for sticky header (~64px) + tab bar (~52px)
+            const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }
+      }
+
+      // When user clicks a nav link while already on this page
+      window.addEventListener('hashchange', scrollToTools);
+
+      // When page loads with a domain hash (coming from another page)
+      if (DOMAINS.includes(location.hash.slice(1))) {
+        // Wait for React to mount HomeTools before scrolling
+        window.addEventListener('load', () => setTimeout(scrollToTools, 120));
+      }
+    </script>
   </body>
 </html>
