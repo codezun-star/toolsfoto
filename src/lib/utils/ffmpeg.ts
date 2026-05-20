@@ -1,6 +1,8 @@
-const _BASE = 'https://ffmpeg-proxy.jose-zuniga1145.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/';
-const CORE_URL = `${_BASE}ffmpeg-core.js`;
-const WASM_URL = `${_BASE}ffmpeg-core.wasm`;
+const _PROXY = 'https://ffmpeg-proxy.jose-zuniga1145.workers.dev/?url=https://unpkg.com/@ffmpeg/core@0.12.6/dist/';
+// Core must be ESM: @ffmpeg/ffmpeg Worker falls back to import() when importScripts fails,
+// and import().default is undefined for UMD builds, causing "failed to import ffmpeg-core.js"
+const CORE_URL = `${_PROXY}esm/ffmpeg-core.js`;
+const WASM_URL = `${_PROXY}umd/ffmpeg-core.wasm`;
 
 export async function createFFmpeg(onProgress?: (pct: number) => void) {
   const { FFmpeg } = await import('@ffmpeg/ffmpeg');
