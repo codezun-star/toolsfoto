@@ -95,7 +95,8 @@ export default function UnirAudiosTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[UnirAudios] Error FFmpeg:', err);
       setError('Error al unir los audios. Asegúrate de que todos los archivos son formatos válidos.');
     } finally {
       setProcessing(false);

@@ -84,7 +84,8 @@ export default function CambiarVelocidadTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[CambiarVelocidad] Error FFmpeg:', err);
       setError('Error al cambiar la velocidad del vídeo. Asegúrate de que es un MP4 o WebM válido.');
     } finally {
       setProcessing(false);

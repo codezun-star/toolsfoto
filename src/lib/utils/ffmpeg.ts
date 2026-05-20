@@ -10,10 +10,15 @@ export async function createFFmpeg(onProgress?: (pct: number) => void) {
       onProgress(Math.min(99, Math.round(progress * 100))),
     );
   }
-  await ff.load({
-    coreURL: await toBlobURL(CORE_URL, 'text/javascript'),
-    wasmURL: await toBlobURL(WASM_URL, 'application/wasm'),
-  });
+  try {
+    await ff.load({
+      coreURL: await toBlobURL(CORE_URL, 'text/javascript'),
+      wasmURL: await toBlobURL(WASM_URL, 'application/wasm'),
+    });
+  } catch (err) {
+    console.error('[FFmpeg] Error al cargar el motor WASM desde', CORE_URL, err);
+    throw err;
+  }
   return ff;
 }
 
@@ -37,7 +42,12 @@ export async function runFFmpeg(
 ): Promise<Blob> {
   const { fetchFile } = await import('@ffmpeg/util');
   await ff.writeFile(inputName, await fetchFile(inputFile));
-  await ff.exec(['-i', inputName, ...args, outputName]);
+  try {
+    await ff.exec(['-i', inputName, ...args, outputName]);
+  } catch (err) {
+    console.error('[FFmpeg] exec falló. Comando:', ['-i', inputName, ...args, outputName], err);
+    throw err;
+  }
   const data = (await ff.readFile(outputName)) as Uint8Array;
   try { await ff.deleteFile(inputName); } catch { /* ignore */ }
   try { await ff.deleteFile(outputName); } catch { /* ignore */ }

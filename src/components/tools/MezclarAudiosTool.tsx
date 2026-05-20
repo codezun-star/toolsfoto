@@ -78,7 +78,8 @@ export default function MezclarAudiosTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
-    } catch {
+    } catch (err) {
+      console.error('[MezclarAudios] Error FFmpeg:', err);
       setError('Error al mezclar los audios. Comprueba que los formatos son compatibles.');
     } finally {
       setProcessing(false);
