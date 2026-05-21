@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompararTextoTool from '@/components/tools/CompararTextoTool';
+---
+<ToolLayout slug="comparar-texto" faqs={[
+  { q: '¿Cómo funciona la comparación de texto?', a: 'La herramienta usa el algoritmo LCS (Longest Common Subsequence) para encontrar la secuencia más larga de líneas iguales entre los dos textos. Las líneas que no forman parte de esa secuencia se marcan como añadidas o eliminadas.' },
+  { q: '¿La comparación distingue mayúsculas de minúsculas?', a: 'Sí. "Hola" y "hola" se tratan como líneas diferentes. Si quieres comparar sin tener en cuenta mayúsculas, convierte ambos textos a minúsculas antes de pegar.' },
+  { q: '¿Qué significa cada color en el resultado?', a: 'Verde (+) indica líneas presentes en el Texto B pero no en el A (líneas añadidas). Rojo (-) indica líneas del Texto A que no están en el B (líneas eliminadas). Sin color indica líneas idénticas en ambos textos.' },
+  { q: '¿Para qué casos de uso es útil?', a: 'Comparar versiones de archivos de configuración, detectar cambios entre dos versiones de un contrato o documento, revisar modificaciones en código fuente, o verificar diferencias entre traducciones.' },
+  { q: '¿Hay límite en el tamaño de los textos a comparar?', a: 'No hay un límite explícito, pero el algoritmo LCS tiene complejidad cuadrática. Para textos muy largos (miles de líneas), la comparación puede tardar varios segundos. Todo el procesamiento es 100% local en tu navegador.' },
+]}>
+  <CompararTextoTool client:load />
+</ToolLayout>

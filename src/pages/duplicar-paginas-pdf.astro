@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DuplicarPaginasPDFTool from '@/components/tools/DuplicarPaginasPDFTool';
+---
+<ToolLayout slug="duplicar-paginas-pdf" faqs={[
+  { q: '¿Cómo indico qué páginas duplicar?', a: 'Escribe los números de página separados por comas: "1, 3, 5" duplica las páginas 1, 3 y 5. Puedes usar rangos con guión: "2-4" duplica las páginas 2, 3 y 4. También puedes combinar ambos: "1, 3-5, 7".' },
+  { q: '¿Dónde se insertan las copias duplicadas?', a: 'Cada copia se inserta justo después de la página original. Si duplicas la página 2 con 2 copias adicionales, el resultado será: p1, p2, p2-copia1, p2-copia2, p3…' },
+  { q: '¿Cuántas copias puedo añadir?', a: 'Puedes añadir entre 1 y 10 copias adicionales por página. El límite es para mantener el rendimiento del procesamiento en el navegador.' },
+  { q: '¿Se mantiene la calidad del PDF?', a: 'Sí. Las copias son referencias exactas a las páginas originales, copiadas con pdf-lib sin ninguna re-compresión ni pérdida de calidad.' },
+  { q: '¿Para qué sirve duplicar páginas de un PDF?', a: 'Es útil para formularios que necesitan triplicado, plantillas donde ciertas páginas se repiten, crear PDFs de muestra con páginas de relleno, o preparar documentos para impresión dúplex donde se necesita una página en blanco intercalada.' },
+]}>
+  <DuplicarPaginasPDFTool client:load />
+</ToolLayout>

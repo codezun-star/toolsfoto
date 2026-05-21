@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EsquemaColoresTool from '@/components/tools/EsquemaColoresTool';
+---
+<ToolLayout slug="esquema-colores" faqs={[
+  { q: '¿Qué es un esquema de colores complementario?', a: 'Un esquema complementario usa dos colores opuestos en el círculo cromático (separados 180°). Crean alto contraste y son ideales para llamadas a la acción y diseños que necesiten impacto visual.' },
+  { q: '¿Qué es un esquema análogo?', a: 'Los colores análogos están adyacentes en el círculo cromático (separados 30°). Crean armonías suaves y naturales, muy usadas en diseño de interiores, fotografía y branding que busca serenidad.' },
+  { q: '¿Qué diferencia hay entre triádico y tetrádico?', a: 'El esquema triádico usa 3 colores equidistantes en el círculo (120° entre sí). El tetrádico usa 4 colores en dos pares complementarios (90° entre sí). El tetrádico ofrece más variedad pero es más difícil de equilibrar.' },
+  { q: '¿Qué es el esquema split-complementario?', a: 'Es una variante del complementario que usa el color base más los dos colores adyacentes al complementario (150° y 210°). Ofrece contraste similar al complementario pero con mayor suavidad y flexibilidad.' },
+  { q: '¿Puedo copiar los códigos de color?', a: 'Sí. Cada tarjeta de color tiene un botón de copia. Al pulsarlo copias el código HEX al portapapeles. También se muestran los valores RGB y HSL de cada color.' },
+]}>
+  <EsquemaColoresTool client:load />
+</ToolLayout>

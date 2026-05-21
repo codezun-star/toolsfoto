@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FormateadorSQLTool from '@/components/tools/FormateadorSQLTool';
+---
+<ToolLayout slug="formateador-sql" faqs={[
+  { q: '¿Qué dialectos de SQL soporta el formateador?', a: 'El formateador funciona con los keywords estándar de SQL (SELECT, FROM, WHERE, JOIN, GROUP BY, ORDER BY, etc.) y es compatible con MySQL, PostgreSQL, SQLite y SQL Server. No interpreta funciones específicas de cada motor.' },
+  { q: '¿Qué hace el modo "Minificar SQL"?', a: 'El modo minificar elimina todos los espacios extra, saltos de línea y tabulaciones, dejando la consulta en una sola línea compacta. Es útil cuando necesitas incrustar SQL en código o variables de entorno.' },
+  { q: '¿Puedo formatear consultas con subconsultas?', a: 'Sí. Las subconsultas (subqueries) se formatean como parte de la consulta principal. Los paréntesis de las subconsultas se preservan y los keywords internos también se ponen en mayúsculas.' },
+  { q: '¿Los datos de mi consulta son seguros?', a: 'Todo el procesamiento se realiza 100% en tu navegador con JavaScript puro. El texto de tu consulta nunca se envía a ningún servidor. Puedes formatear consultas con datos sensibles con total seguridad.' },
+  { q: '¿Puedo descargar el SQL formateado?', a: 'Sí. Usa el botón ".sql" para descargar el resultado como archivo con extensión .sql, listo para importar en tu cliente de base de datos o guardar como documentación.' },
+]}>
+  <FormateadorSQLTool client:load />
+</ToolLayout>

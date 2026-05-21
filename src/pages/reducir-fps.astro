@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ReducirFPSTool from '@/components/tools/ReducirFPSTool';
+---
+<ToolLayout slug="reducir-fps" faqs={[
+  { q: '¿Qué son los FPS y por qué reducirlos?', a: 'Los FPS (fotogramas por segundo) determinan la fluidez del vídeo. Reducirlos disminuye el tamaño del archivo de forma proporcional al número de frames eliminados. Por ejemplo, pasar de 60 a 30 FPS puede reducir el peso hasta un 40-50%.' },
+  { q: '¿Puedo aumentar los FPS con esta herramienta?', a: 'No. Esta herramienta está diseñada para reducir los FPS. Si el vídeo ya tiene menos FPS del objetivo, el resultado no cambiará. Para aumentar FPS necesitarías interpolación de frames, que no está disponible en esta versión.' },
+  { q: '¿Qué FPS es el recomendado para vídeos web?', a: '24-30 FPS es el estándar para la mayoría de contenidos web y redes sociales. 60 FPS es adecuado para deportes y gaming. 15 FPS se usa para GIFs y vídeos de muy bajo peso.' },
+  { q: '¿Se mantiene la duración del vídeo?', a: 'Sí. Al reducir los FPS solo se eliminan fotogramas, pero la duración total del vídeo no cambia. El movimiento puede verse ligeramente menos fluido.' },
+  { q: '¿En qué formato se descarga el resultado?', a: 'Siempre en MP4 con codificación H.264. El audio se copia sin re-codificar para preservar la calidad sonora.' },
+]}>
+  <ReducirFPSTool client:load />
+</ToolLayout>

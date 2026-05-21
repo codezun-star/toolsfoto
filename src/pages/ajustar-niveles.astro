@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AjustarNivelesTool from '@/components/tools/AjustarNivelesTool';
+---
+<ToolLayout slug="ajustar-niveles" faqs={[
+  { q: '¿Qué es el punto negro en los niveles?', a: 'El punto negro define qué valor de píxel se trata como negro puro. Subir el punto negro hace que los tonos medios-oscuros se vuelvan completamente negros, aumentando el contraste y eliminando detalles en las sombras.' },
+  { q: '¿Qué es el punto blanco?', a: 'El punto blanco define qué valor se considera blanco puro. Bajarlo hace que los tonos medios-claros se quemen a blanco, incrementando el brillo general de la imagen.' },
+  { q: '¿Qué hace la corrección gamma?', a: 'La gamma actúa sobre los tonos medios sin afectar negros ni blancos. Un gamma inferior al 100% aclara los medios tonos; superior al 100% los oscurece.' },
+  { q: '¿Para qué sirve ajustar los niveles?', a: 'Es ideal para corregir imágenes subexpuestas (oscuras) o sobreexpuestas (lavadas). También ayuda a aumentar el contraste sin reventar sombras o luces.' },
+  { q: '¿Se puede deshacer la operación?', a: 'No se modifica el archivo original; el resultado se descarga como un nuevo JPG. Puedes probar distintos valores antes de descargar.' },
+]}>
+  <AjustarNivelesTool client:load />
+</ToolLayout>

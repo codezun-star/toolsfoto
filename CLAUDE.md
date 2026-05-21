@@ -161,9 +161,9 @@ toolsfoto-v2/
 
 ---
 
-## Las 86 herramientas
+## Las 106 herramientas
 
-### Imagen (30)
+### Imagen (39)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -202,8 +202,12 @@ toolsfoto-v2/
 | `/efecto-duotono` | `EfectoDuotonoTool.tsx` | Creativas | `getImageData` + mapeo luminosidad → dos colores |
 | `/comprimir-objetivo` | `ComprimirObjetivoTool.tsx` | Básicas | Canvas API — búsqueda binaria de calidad JPEG hasta 15 iteraciones para alcanzar tamaño objetivo |
 | `/fondo-degradado` | `FondoDegradadoTool.tsx` | Creativas | Canvas `createLinearGradient`/`createRadialGradient` — dibuja gradiente y superpone imagen (ideal para PNGs con transparencia) |
+| `/nitidez` | `NitidezTool.tsx` | Básicas | Canvas API — unsharp mask con getImageData: out = orig + factor × (orig − blurred) |
+| `/ajustar-niveles` | `AjustarNivelesTool.tsx` | Básicas | Canvas `getImageData` — punto negro, punto blanco y corrección gamma sobre cada canal |
+| `/efecto-oleo` | `EfectoOleoTool.tsx` | Creativas | Canvas `getImageData` — oil painting por vecindad de píxeles (histograma de intensidades por bins) |
+| `/desvanecer-bordes` | `DesvanecerBordesTool.tsx` | Creativas | Canvas `destination-in` con gradiente radial o lineal — exporta PNG con transparencia |
 
-### PDF (21)
+### PDF (25)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -228,8 +232,12 @@ toolsfoto-v2/
 | `/anadir-imagen-pdf` | `AnadirImagenPDFTool.tsx` | Básicas | pdf-lib `embedJpg/embedPng` + `page.drawImage()` con posición % |
 | `/pdf-en-blanco` | `PDFEnBlancoTool.tsx` | Básicas | pdf-lib `addPage([w, h])` con tamaños estándar y orientación |
 | `/metadatos-pdf` | `MetadatosPDFTool.tsx` | Básicas | pdf-lib `getTitle/setTitle/getAuthor/setAuthor/getSubject/setSubject/getKeywords/setKeywords` — lectura y edición de metadatos |
+| `/intercalar-pdfs` | `IntercalarPDFsTool.tsx` | Básicas | pdf-lib `copyPages` alternando páginas A1, B1, A2, B2… de dos PDFs |
+| `/escalar-pdf` | `EscalarPDFTool.tsx` | Básicas | pdf-lib `embedPage` + `drawPage` — fit to page manteniendo proporción |
+| `/encabezado-pie-pdf` | `EncabezadoPiePDFTool.tsx` | Básicas | pdf-lib `page.drawText()` centrado en cabecera y pie — soporta `{n}` y `{total}` |
+| `/duplicar-paginas-pdf` | `DuplicarPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` — inserta N copias tras la página original |
 
-### Vídeo (15)
+### Vídeo (19)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -248,8 +256,12 @@ toolsfoto-v2/
 | `/recortar-area-video` | `RecortarAreaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `crop=w:h:x:y` |
 | `/cambiar-resolucion-video` | `CambiarResolucionVideoTool.tsx` | Básicas | FFmpeg.wasm — `scale=w:h:force_original_aspect_ratio=decrease,pad` |
 | `/marca-agua-video` | `MarcaAguaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `drawtext` con posición y opacidad |
+| `/bucle-video` | `BucleVideoTool.tsx` | Básicas | FFmpeg.wasm — concat demuxer con `list.txt` repitiendo el clip N veces |
+| `/audio-a-video` | `AudioAVideoTool.tsx` | Básicas | FFmpeg.wasm — `-loop 1 -i img` o `lavfi color` + audio → MP4 libx264/aac |
+| `/revertir-video` | `RevertirVideoTool.tsx` | Básicas | FFmpeg.wasm — filtros `reverse` + `areverse` (carga el vídeo entero en RAM) |
+| `/reducir-fps` | `ReducirFPSTool.tsx` | Básicas | FFmpeg.wasm — `-vf fps=N`, copia el audio sin re-encode |
 
-### Audio (12)
+### Audio (16)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -265,8 +277,12 @@ toolsfoto-v2/
 | `/cambiar-tono` | `CambiarTonoTool.tsx` | Básicas | FFmpeg.wasm — `asetrate=44100*2^(s/12),aresample=44100` |
 | `/anadir-silencio` | `AnadirSilencioTool.tsx` | Básicas | FFmpeg.wasm — `adelay=${ms}|${ms}` (inicio) + `apad=pad_dur=${s}` (final), preserva formato original |
 | `/convertir-a-mono` | `ConvertirAMonoTool.tsx` | Básicas | FFmpeg.wasm — `-ac 1` mezcla canales estéreo a mono, preserva formato original |
+| `/eco-audio` | `EcoAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `aecho=0.8:0.9:delay:decay` con presets (Sutil/Sala/Caverna/Estadio) |
+| `/convertir-a-estereo` | `ConvertirAEstereoTool.tsx` | Básicas | FFmpeg.wasm — `-ac 2` duplica canal mono en ambos canales estéreo |
+| `/eliminar-silencio` | `EliminarSilencioTool.tsx` | Básicas | FFmpeg.wasm — `silenceremove=stop_periods=-1:stop_duration:stop_threshold` |
+| `/normalizar-audio` | `NormalizarAudioTool.tsx` | Básicas | FFmpeg.wasm — `loudnorm=I=target:TP=-1:LRA=7` — presets -14/-16/-23 LUFS |
 
-### Developer (23)
+### Developer (27)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -293,6 +309,10 @@ toolsfoto-v2/
 | `/lorem-ipsum` | `LoremIpsumTool.tsx` | Básicas | JS puro — 3 modos (párrafos/frases/palabras), corpus de 100+ palabras latinas, opción de inicio clásico, descarga como .txt |
 | `/gradiente-css` | `GradienteCssTool.tsx` | Básicas | CSS gradient builder — lineal/radial, hasta 5 stops, ángulo configurable, 5 presets, genera declaración CSS lista para copiar |
 | `/minificador-js` | `MinificadorJSTool.tsx` | Básicas | JS puro regex — elimina comentarios de bloque y línea, colapsa whitespace, muestra reducción en bytes; modo formateador básico |
+| `/formateador-sql` | `FormateadorSQLTool.tsx` | Básicas | JS puro — keywords en mayúsculas, saltos de línea por cláusula, indentación AND/OR; modo minificar |
+| `/jwt-decoder` | `JwtDecoderTool.tsx` | Básicas | `atob` + base64url decode — muestra header, payload y signature; detecta expiración por campo `exp` |
+| `/esquema-colores` | `EsquemaColoresTool.tsx` | Básicas | JS puro HSL — 6 esquemas: complementario, análogo, triádico, split-complementario, tetrádico, tonos |
+| `/comparar-texto` | `CompararTextoTool.tsx` | Básicas | Algoritmo LCS en JS puro — diff línea a línea con resaltado verde/rojo; tabla con números de línea |
 
 ### Páginas legales (5)
 
@@ -481,7 +501,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 112 páginas HTML estáticas** (35 imagen + 21 PDF + 15 vídeo + 12 audio + 23 developer + home + 5 legales).
+**El build genera actualmente 132 páginas HTML estáticas** (39 imagen + 25 PDF + 19 vídeo + 16 audio + 27 developer + home + 5 legales).
 
 ---
 

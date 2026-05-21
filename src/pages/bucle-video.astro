@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BucleVideoTool from '@/components/tools/BucleVideoTool';
+---
+<ToolLayout slug="bucle-video" faqs={[
+  { q: '¿Qué formatos de vídeo acepta la herramienta?', a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4 con codificación H.264, que es compatible con todas las plataformas.' },
+  { q: '¿Cuántas veces puedo repetir el vídeo?', a: 'Puedes repetirlo entre 2 y 20 veces. Los presets rápidos son ×2, ×3, ×4, ×5, ×8 y ×10, pero puedes escribir cualquier número entre 2 y 20.' },
+  { q: '¿El audio también se repite?', a: 'Sí. Tanto el vídeo como el audio se repiten el mismo número de veces. El resultado es un archivo continuo sin silencios ni cortes entre repeticiones.' },
+  { q: '¿Para qué sirve crear un vídeo en bucle?', a: 'Es ideal para vídeos de fondo en webs, contenido para pantallas de tiendas o eventos, loops para redes sociales (Instagram, TikTok), y para cumplir con los requisitos mínimos de duración de algunas plataformas.' },
+  { q: '¿El tamaño del archivo se multiplica por el número de bucles?', a: 'Aproximadamente sí. El vídeo se recodifica con H.264, por lo que el tamaño resultante es similar al original multiplicado por el número de repeticiones.' },
+]}>
+  <BucleVideoTool client:load />
+</ToolLayout>

@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import NitidezTool from '@/components/tools/NitidezTool';
+---
+<ToolLayout slug="nitidez" faqs={[
+  { q: '¿Qué es el unsharp mask?', a: 'El unsharp mask es una técnica de enfoque que realza los bordes de una imagen restando una versión desenfocada de la misma. Aumenta el contraste local en los bordes para dar sensación de mayor nitidez.' },
+  { q: '¿En qué formato se descarga la imagen enfocada?', a: 'La imagen se descarga en formato JPG con calidad 92%. Para mantener transparencia usa otras herramientas del editor.' },
+  { q: '¿Cuánto radio de desenfoque debo usar?', a: 'Un radio de 1 px es ideal para imágenes pequeñas o con mucho detalle. Para imágenes grandes o muy borrosas prueba con 2-3 px.' },
+  { q: '¿La nitidez se aplica solo a los bordes?', a: 'El unsharp mask actúa sobre toda la imagen pero el efecto es más visible en zonas de alto contraste como bordes y texturas. Las zonas planas cambian muy poco.' },
+  { q: '¿Puedo combinar esta herramienta con otras?', a: 'Sí. Puedes primero redimensionar o comprimir tu imagen y luego aplicar nitidez para recuperar la definición perdida en el proceso.' },
+]}>
+  <NitidezTool client:load />
+</ToolLayout>

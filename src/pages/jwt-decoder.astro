@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JwtDecoderTool from '@/components/tools/JwtDecoderTool';
+---
+<ToolLayout slug="jwt-decoder" faqs={[
+  { q: '¿Qué es un token JWT?', a: 'JWT (JSON Web Token) es un estándar abierto para transmitir información de forma segura entre partes como un objeto JSON. Se usa habitualmente para autenticación en APIs REST. Tiene tres partes separadas por puntos: header.payload.signature.' },
+  { q: '¿Es seguro pegar mi token aquí?', a: 'Todo el procesamiento es 100% local en tu navegador. El token nunca sale de tu dispositivo. Dicho esto, los JWT de producción son credenciales sensibles; úsalos solo en entornos seguros y evita compartirlos.' },
+  { q: '¿Puedo verificar la firma del token?', a: 'No. Para verificar la firma se necesita la clave secreta (HMAC) o la clave pública (RSA/ECDSA), que nunca debes compartir. Esta herramienta solo decodifica el header y el payload, que son datos públicos en Base64url.' },
+  { q: '¿Cómo sé si mi token ha expirado?', a: 'Si el payload contiene el campo "exp" (Unix timestamp de expiración), la herramienta lo detecta automáticamente y muestra si el token está vigente o expirado, junto con la fecha y hora exacta de vencimiento.' },
+  { q: '¿Qué algoritmos de firma muestra la herramienta?', a: 'El algoritmo de firma (HS256, RS256, ES256, etc.) está en el header del token, en el campo "alg". La herramienta lo muestra junto con el tipo de token (typ). Solo se muestra, no se verifica.' },
+]}>
+  <JwtDecoderTool client:load />
+</ToolLayout>

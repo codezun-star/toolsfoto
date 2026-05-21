@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EcoAudioTool from '@/components/tools/EcoAudioTool';
+---
+<ToolLayout slug="eco-audio" faqs={[
+  { q: '¿Qué diferencia hay entre eco y reverb?', a: 'El eco es una repetición discreta y audible del sonido original después de un retardo notable (generalmente más de 50 ms). El reverb es una serie de reflexiones muy rápidas que crean la sensación de espacio acústico. Esta herramienta aplica un eco con retardo configurable.' },
+  { q: '¿Qué hace el parámetro de retardo?', a: 'El retardo (en milisegundos) determina cuánto tiempo pasa entre el sonido original y su eco. Un retardo de 60 ms da un efecto sutil de sala pequeña; 500-1000 ms crea el efecto de eco en cueva o cañón.' },
+  { q: '¿Qué hace el parámetro de decaimiento?', a: 'El decaimiento controla cuánto volumen pierde cada repetición del eco. Con decaimiento 0.9 el eco es muy persistente; con 0.3 desaparece rápidamente después de la primera repetición.' },
+  { q: '¿Se modifica el formato del archivo original?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato de entrada no está en la lista compatible, se exporta como MP3.' },
+  { q: '¿Puedo usar esta herramienta para podcasts y voz?', a: 'Sí, aunque para voz se recomienda usar presets sutiles como "Sala" con bajo decaimiento. Los efectos de eco muy pronunciados pueden dificultar la intelligibilidad del habla.' },
+]}>
+  <EcoAudioTool client:load />
+</ToolLayout>

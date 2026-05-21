@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EfectoOleoTool from '@/components/tools/EfectoOleoTool';
+---
+<ToolLayout slug="efecto-oleo" faqs={[
+  { q: '¿Cómo funciona el efecto óleo en el navegador?', a: 'El algoritmo analiza una vecindad de píxeles alrededor de cada punto, agrupa los colores por intensidad en niveles y devuelve el color del grupo más frecuente. Esto crea trazos de pintura similares a los de un óleo artístico.' },
+  { q: '¿Por qué se reduce la resolución de las imágenes grandes?', a: 'El efecto óleo es un algoritmo computacionalmente intensivo. Para que el procesamiento sea viable en el navegador, las imágenes de más de 1200 px se escalan antes de procesarse.' },
+  { q: '¿Qué hace el parámetro "radio del pincel"?', a: 'Un radio mayor crea trazos más gruesos y un efecto más abstracto. Un radio pequeño produce trazos finos que preservan más detalle de la imagen original.' },
+  { q: '¿En qué formato se descarga el resultado?', a: 'La imagen se descarga en formato JPG con calidad 92%. El efecto óleo no genera transparencias, por lo que JPG es el formato más adecuado.' },
+  { q: '¿Puedo usar el efecto óleo para miniaturas o redes sociales?', a: 'Sí, es perfecto para crear contenido artístico diferenciado para Instagram, portadas de álbumes, fondos de pantalla o ilustraciones para blogs y presentaciones.' },
+]}>
+  <EfectoOleoTool client:load />
+</ToolLayout>

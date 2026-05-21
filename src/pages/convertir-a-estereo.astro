@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirAEstereoTool from '@/components/tools/ConvertirAEstereoTool';
+---
+<ToolLayout slug="convertir-a-estereo" faqs={[
+  { q: '¿Qué diferencia hay entre mono y estéreo?', a: 'Un audio mono tiene un solo canal de audio que suena igual por ambos altavoces. Un audio estéreo tiene dos canales (izquierdo y derecho) que pueden contener información diferente, creando una sensación de amplitud y posición espacial del sonido.' },
+  { q: '¿El audio resultante sonará diferente al original?', a: 'Si el original es mono, el resultado estéreo sonará igual en ambos altavoces (izquierdo = derecho). No se añade espacialización artificial; simplemente se duplica el canal mono en ambos canales estéreo.' },
+  { q: '¿Para qué sirve convertir mono a estéreo?', a: 'Muchas plataformas de distribución de música y podcasting requieren archivos estéreo. También es útil para mezclar un audio mono con efectos estéreo en un DAW o cuando una aplicación solo acepta archivos de dos canales.' },
+  { q: '¿Aumenta el tamaño del archivo al convertir a estéreo?', a: 'Generalmente sí, ya que el archivo pasa de contener un canal a dos. El incremento de tamaño depende del formato: en MP3 puede ser del 50-100%; en WAV PCM casi exactamente el doble.' },
+  { q: '¿Qué formatos de audio acepta la herramienta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se guarda en el mismo formato que el archivo de entrada.' },
+]}>
+  <ConvertirAEstereoTool client:load />
+</ToolLayout>

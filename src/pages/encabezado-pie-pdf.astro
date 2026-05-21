@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EncabezadoPiePDFTool from '@/components/tools/EncabezadoPiePDFTool';
+---
+<ToolLayout slug="encabezado-pie-pdf" faqs={[
+  { q: '¿Puedo añadir número de página automático?', a: 'Sí. Usa la variable {n} para el número de página actual y {total} para el total de páginas. Por ejemplo: "Página {n} de {total}" se convierte en "Página 3 de 10" en la tercera página.' },
+  { q: '¿En qué posición aparece el texto?', a: 'El encabezado se centra horizontalmente en la parte superior de la página. El pie de página se centra en la parte inferior. El margen controla la distancia al borde.' },
+  { q: '¿Qué fuente se usa para el texto?', a: 'Se usa Helvetica, una de las fuentes estándar incorporadas en todos los visores de PDF. No es necesario incrustar ninguna fuente externa.' },
+  { q: '¿Puedo añadir solo encabezado o solo pie de página?', a: 'Sí. Deja en blanco el campo que no quieras usar. Solo se añade el texto de los campos que tengan contenido.' },
+  { q: '¿Se modifica el contenido original del PDF?', a: 'El texto se superpone sobre el contenido existente. Si hay contenido en las zonas del margen (encabezado o pie), el texto añadido podría solaparse. Ajusta el margen para evitarlo.' },
+]}>
+  <EncabezadoPiePDFTool client:load />
+</ToolLayout>

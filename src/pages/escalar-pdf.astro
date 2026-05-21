@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EscalarPDFTool from '@/components/tools/EscalarPDFTool';
+---
+<ToolLayout slug="escalar-pdf" faqs={[
+  { q: '¿Qué tamaños de página están disponibles?', a: 'Puedes escalar a A3 (297×420 mm), A4 (210×297 mm), A5 (148×210 mm), Carta (216×279 mm) y Legal (216×356 mm). También puedes elegir orientación vertical u horizontal.' },
+  { q: '¿Se mantiene la proporción del contenido original?', a: 'Sí. El contenido se ajusta con la escala máxima que cabe en el nuevo tamaño sin distorsión (fit to page). Si la proporción del PDF original no coincide con el destino, se añaden márgenes en blanco.' },
+  { q: '¿Sirve para estandarizar documentos de distintas impresoras o escáneres?', a: 'Exactamente. Si tienes PDFs con páginas de tamaños mezclados (mezcla de A4 y Carta por ejemplo), puedes estandarizarlos todos a A4 con esta herramienta.' },
+  { q: '¿La calidad del texto y las imágenes se mantiene?', a: 'Sí. Los contenidos se incrustan como formas vectoriales (usando el mecanismo de XObject de pdf-lib), por lo que texto e imágenes vectoriales mantienen su calidad. Las imágenes rasterizadas pueden aparecer ligeramente escaladas.' },
+  { q: '¿Cuánto tarda en procesarse?', a: 'El procesamiento es casi inmediato para la mayoría de documentos. PDFs con muchas páginas o imágenes de alta resolución pueden tardar unos segundos más.' },
+]}>
+  <EscalarPDFTool client:load />
+</ToolLayout>

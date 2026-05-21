@@ -598,6 +598,108 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Añade un fondo con degradado lineal o radial a tu imagen o PNG transparente. 5 presets y colores personalizables. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
     canonical: 'https://toolsfoto.com/fondo-degradado',
   },
+  // ── Nuevas 20 herramientas ────────────────────────────────────
+  nitidez: {
+    title: 'Aumentar nitidez de imagen online gratis — unsharp mask | ToolsFoto',
+    description: 'Enfoca y aumenta la nitidez de tus imágenes con el algoritmo unsharp mask. Intensidad ajustable con slider. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/nitidez',
+  },
+  'ajustar-niveles': {
+    title: 'Ajustar niveles de imagen online gratis — punto negro, blanco y gamma | ToolsFoto',
+    description: 'Corrige la exposición de tus imágenes ajustando los niveles de entrada: punto negro, punto blanco y gamma. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/ajustar-niveles',
+  },
+  'efecto-oleo': {
+    title: 'Efecto pintura al óleo en imagen online gratis | ToolsFoto',
+    description: 'Transforma tus fotos en pinturas al óleo artísticas. Radio de pincel ajustable. Canvas API con análisis de vecindades de píxeles, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/efecto-oleo',
+  },
+  'desvanecer-bordes': {
+    title: 'Desvanecer bordes de imagen online gratis — fade edges PNG | ToolsFoto',
+    description: 'Aplica un desvanecimiento gradual en los bordes de tu imagen. Exporta como PNG transparente. Intensidad ajustable. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/desvanecer-bordes',
+  },
+  'intercalar-pdfs': {
+    title: 'Intercalar páginas de dos PDFs online gratis | ToolsFoto',
+    description: 'Combina dos PDFs alternando sus páginas (A1, B1, A2, B2…). Ideal para escaneos de anverso y reverso. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/intercalar-pdfs',
+  },
+  'escalar-pdf': {
+    title: 'Escalar PDF a A4, Carta o tamaño estándar online gratis | ToolsFoto',
+    description: 'Redimensiona todas las páginas de tu PDF a un tamaño estándar (A4, A3, Carta, Legal) manteniendo las proporciones. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/escalar-pdf',
+  },
+  'encabezado-pie-pdf': {
+    title: 'Añadir encabezado y pie de página a PDF online gratis | ToolsFoto',
+    description: 'Inserta texto personalizado en la cabecera y el pie de cada página de tu PDF. Tamaño de fuente y márgenes configurables. pdf-lib, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/encabezado-pie-pdf',
+  },
+  'duplicar-paginas-pdf': {
+    title: 'Duplicar páginas de PDF online gratis | ToolsFoto',
+    description: 'Duplica páginas específicas de tu PDF el número de veces que necesites. Las copias se insertan tras la página original. pdf-lib, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/duplicar-paginas-pdf',
+  },
+  'bucle-video': {
+    title: 'Bucle de vídeo online gratis — repetir vídeo N veces | ToolsFoto',
+    description: 'Crea un vídeo en bucle repitiendo tu clip el número de veces que quieras en un único MP4. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/bucle-video',
+  },
+  'audio-a-video': {
+    title: 'Convertir audio a vídeo online gratis — audio a MP4 | ToolsFoto',
+    description: 'Convierte cualquier audio en vídeo MP4 con imagen de fondo o color sólido. Perfecto para subir podcasts y música a YouTube. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/audio-a-video',
+  },
+  'revertir-video': {
+    title: 'Revertir vídeo online gratis — reproducir vídeo al revés | ToolsFoto',
+    description: 'Invierte el orden de los fotogramas de tu vídeo para reproducirlo al revés. El audio también se invierte. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/revertir-video',
+  },
+  'reducir-fps': {
+    title: 'Reducir FPS de vídeo online gratis — cambiar fotogramas por segundo | ToolsFoto',
+    description: 'Reduce los fotogramas por segundo de tu vídeo para disminuir el tamaño. Presets: 60, 30, 25, 24, 15 FPS. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/reducir-fps',
+  },
+  'eco-audio': {
+    title: 'Añadir eco a audio online gratis — efecto echo y reverb | ToolsFoto',
+    description: 'Aplica efecto de eco configurable a tu audio. Controla el retardo y decaimiento. FFmpeg aecho, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/eco-audio',
+  },
+  'convertir-a-estereo': {
+    title: 'Convertir audio mono a estéreo online gratis | ToolsFoto',
+    description: 'Convierte cualquier audio mono en estéreo duplicando el canal. Compatible con MP3, WAV, OGG, AAC y FLAC. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/convertir-a-estereo',
+  },
+  'eliminar-silencio': {
+    title: 'Eliminar silencios de audio online gratis — silence removal | ToolsFoto',
+    description: 'Recorta automáticamente los silencios de tu audio. Configura el umbral en dB y la duración mínima. FFmpeg silenceremove, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/eliminar-silencio',
+  },
+  'normalizar-audio': {
+    title: 'Normalizar audio online gratis — EBU R128 loudnorm | ToolsFoto',
+    description: 'Normaliza el volumen de tu audio al estándar EBU R128. Presets: streaming (-14 LUFS), podcast (-16 LUFS), broadcast (-23 LUFS). FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/normalizar-audio',
+  },
+  'formateador-sql': {
+    title: 'Formateador SQL online gratis — formatear y minificar SQL | ToolsFoto',
+    description: 'Formatea consultas SQL con indentación automática y palabras clave en mayúsculas. También minifica SQL a una línea. Sin dependencias externas. Sin registro, sin subir datos. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/formateador-sql',
+  },
+  'jwt-decoder': {
+    title: 'Decodificador JWT online gratis — leer tokens JSON Web Token | ToolsFoto',
+    description: 'Decodifica y visualiza el header y payload de cualquier token JWT. Decodificación base64url con soporte Unicode. Sin necesidad de clave privada. Sin registro, sin subir datos. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/jwt-decoder',
+  },
+  'esquema-colores': {
+    title: 'Generador de esquemas de colores online gratis — paletas armoniosas | ToolsFoto',
+    description: 'Genera esquemas de colores complementario, análogo, triádico, split-complementario y tetrádico desde un color base. Códigos HEX, RGB y HSL. Sin registro, sin subir datos. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/esquema-colores',
+  },
+  'comparar-texto': {
+    title: 'Comparar texto online gratis — diff de texto línea a línea | ToolsFoto',
+    description: 'Compara dos textos línea a línea y resalta las diferencias con colores. Algoritmo LCS. Muestra líneas añadidas, eliminadas e iguales. Sin registro, sin subir datos. 100% gratuito en el navegador.',
+    canonical: 'https://toolsfoto.com/comparar-texto',
+  },
+
   'metadatos-pdf': {
     title: 'Ver y editar metadatos de PDF online gratis | ToolsFoto',
     description: 'Lee y modifica el título, autor, asunto y palabras clave de cualquier PDF. Guarda el PDF con los nuevos metadatos. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',

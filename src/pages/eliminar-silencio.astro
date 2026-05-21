@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EliminarSilencioTool from '@/components/tools/EliminarSilencioTool';
+---
+<ToolLayout slug="eliminar-silencio" faqs={[
+  { q: '¿Qué es el umbral de silencio en decibelios?', a: 'El umbral define a partir de qué nivel de volumen el audio se considera "silencio". Un valor de -40 dB elimina silencios casi perfectos; -25 dB también elimina fragmentos con ruido de fondo bajo como el ruido de sala.' },
+  { q: '¿Qué es la duración mínima de silencio?', a: 'Solo se eliminan los fragmentos de silencio que duren más que este valor. Con 0.5 segundos se eliminan pausas largas pero se conservan las pausas naturales entre palabras al hablar.' },
+  { q: '¿Para qué tipo de contenido es más útil?', a: 'Es ideal para podcasts, entrevistas, clases online y grabaciones de reuniones. Elimina los tiempos muertos entre intervenciones y reduce la duración total del audio de forma automática.' },
+  { q: '¿Se modifica el formato del archivo?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada. El procesamiento lo realiza FFmpeg.wasm, 100% en tu navegador, sin enviar el archivo a ningún servidor.' },
+  { q: '¿Puede cortar palabras o frases si el umbral es muy alto?', a: 'Sí. Si el umbral de silencio es demasiado alto (por ejemplo -20 dB) puede interpretar pausas normales del habla como silencio y cortarlas. Comienza con -40 dB y ajusta gradualmente si no se eliminan suficientes silencios.' },
+]}>
+  <EliminarSilencioTool client:load />
+</ToolLayout>

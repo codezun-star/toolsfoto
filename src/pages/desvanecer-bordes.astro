@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DesvanecerBordesTool from '@/components/tools/DesvanecerBordesTool';
+---
+<ToolLayout slug="desvanecer-bordes" faqs={[
+  { q: '¿Por qué el resultado se exporta como PNG?', a: 'El desvanecimiento de bordes genera píxeles semitransparentes en los extremos de la imagen. El formato PNG soporta canal alfa (transparencia), mientras que JPG no. Por eso el resultado siempre se descarga como PNG.' },
+  { q: '¿Qué diferencia hay entre el modo elipse y rectangular?', a: 'El modo elipse crea un desvanecimiento radial desde el centro hacia los bordes, ideal para efectos de viñeta. El modo rectangular aplica fades independientes en los cuatro lados de la imagen.' },
+  { q: '¿Puedo usar esta herramienta para crear viñetas fotográficas?', a: 'Sí, ese es uno de los usos más habituales. Con el modo elipse y un tamaño de fade del 20-30% obtienes una viñeta clásica que oscurece los bordes suavemente.' },
+  { q: '¿Cómo se usa el resultado en una presentación o web?', a: 'Al ser un PNG transparente, puedes colocarlo sobre cualquier fondo de color o imagen sin bordes duros. Es ideal para composiciones en PowerPoint, Canva, Figma o cualquier editor web.' },
+  { q: '¿El tamaño del fade se mide en píxeles o en porcentaje?', a: 'Se mide como porcentaje del lado más corto de la imagen, lo que garantiza que el efecto sea proporcional independientemente del tamaño de la imagen original.' },
+]}>
+  <DesvanecerBordesTool client:load />
+</ToolLayout>

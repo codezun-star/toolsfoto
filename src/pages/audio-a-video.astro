@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AudioAVideoTool from '@/components/tools/AudioAVideoTool';
+---
+<ToolLayout slug="audio-a-video" faqs={[
+  { q: '¿Para qué sirve convertir audio a vídeo?', a: 'Muchas plataformas como YouTube, Instagram o TikTok solo aceptan subidas de vídeo, no audio directamente. Esta herramienta crea un MP4 con el audio y una imagen o color de fondo estático para poder subir tu podcast, música o locución.' },
+  { q: '¿Qué formatos de audio acepta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado siempre se descarga como MP4 con codificación H.264 y audio AAC 192 kbps.' },
+  { q: '¿Qué pasa si no subo ninguna imagen de fondo?', a: 'Si eliges el modo "Color sólido", el fondo será del color que selecciones. El vídeo tendrá una resolución de 1280×720 píxeles con ese color de fondo uniformemente.' },
+  { q: '¿Qué resolución tiene el vídeo si subo una imagen?', a: 'Si subes una imagen de fondo, FFmpeg usa esa imagen como frame estático en bucle con la resolución original de la imagen. Recomendamos imágenes de 1280×720 o 1920×1080 para mejor compatibilidad.' },
+  { q: '¿Cuánto tarda el procesamiento?', a: 'La primera vez descarga el procesador FFmpeg.wasm (~30 MB). Después, la velocidad depende de la duración del audio: aproximadamente 1 minuto de audio tarda entre 30 y 90 segundos en procesarse.' },
+]}>
+  <AudioAVideoTool client:load />
+</ToolLayout>
