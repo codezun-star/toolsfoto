@@ -1432,7 +1432,7 @@ export const TOOLS: ToolMeta[] = [
     longDescription: 'A partir de un color base, genera automáticamente esquemas de colores armoniosos: complementario, análogo, triádico, split-complementario y tetrádico. Muestra los colores con sus códigos HEX, RGB y HSL. Sin dependencias externas.',
     category: 'Básicas',
     domain: 'developer',
-    icon: 'Swatch',
+    icon: 'Pipette',
     color: 'blue',
     related: ['convertir-color', 'colores-imagen', 'gradiente-css'],
   },

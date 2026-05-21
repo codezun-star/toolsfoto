@@ -16,6 +16,8 @@ import {
   TrendingUp, Combine, Music4, TestTube2, Fingerprint,
   AlignLeft, Clock, FileCode, ScanSearch,
   KeyRound, ArrowLeftRight, AlignJustify, Zap, Volume, Info, Sunset, Target,
+  Focus, BarChart2, Brush, Blend, Shuffle, PanelTop, CopyPlus, Repeat,
+  Timer, Waves, Speaker, Activity, Database, KeySquare, GitCompare,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -120,6 +122,21 @@ const ICONS: Record<string, React.ReactNode> = {
   Info: <Info size={20} />,
   Sunset: <Sunset size={20} />,
   Target: <Target size={20} />,
+  Focus: <Focus size={20} />,
+  BarChart2: <BarChart2 size={20} />,
+  Brush: <Brush size={20} />,
+  Blend: <Blend size={20} />,
+  Shuffle: <Shuffle size={20} />,
+  PanelTop: <PanelTop size={20} />,
+  CopyPlus: <CopyPlus size={20} />,
+  Repeat: <Repeat size={20} />,
+  Timer: <Timer size={20} />,
+  Waves: <Waves size={20} />,
+  Speaker: <Speaker size={20} />,
+  Activity: <Activity size={20} />,
+  Database: <Database size={20} />,
+  KeySquare: <KeySquare size={20} />,
+  GitCompare: <GitCompare size={20} />,
 };
 
 interface Props {
