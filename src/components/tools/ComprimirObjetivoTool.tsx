@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
-import { loadImage, canvasToBlob } from '@/lib/utils/canvas';
+import { loadImage, canvasToBlob, createCanvas, getContext } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
-import { Upload, Download, Loader2 } from 'lucide-react';
+import ImageUploader from '@/components/ui/ImageUploader';
+import { Download, Loader2 } from 'lucide-react';
 
 const PRESETS = [
   { label: '100 KB', value: 100 },
@@ -13,8 +14,8 @@ const PRESETS = [
 ];
 
 export default function ComprimirObjetivoTool() {
-  const { file, previewUrl, isDragging, inputRef, handleDrop, handleDragOver, handleDragLeave, handleFileChange, reset: resetUpload } = useImageUpload();
-  const { download } = useDownload();
+  const upload = useImageUpload();
+  const { download } = useDownload(upload.image?.file.name);
   const [targetKB, setTargetKB] = useState(200);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -23,18 +24,16 @@ export default function ComprimirObjetivoTool() {
   const [error, setError] = useState<string | null>(null);
 
   const process = useCallback(async () => {
-    if (!file) return;
+    if (!upload.image) return;
     setProcessing(true);
     setProgress(0);
     setError(null);
     setResultBlob(null);
     setFinalQuality(null);
     try {
-      const img = await loadImage(file);
-      const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext('2d')!;
+      const img = await loadImage(upload.image.url);
+      const canvas = createCanvas(img.naturalWidth, img.naturalHeight);
+      const ctx = getContext(canvas);
       ctx.drawImage(img, 0, 0);
 
       const targetBytes = targetKB * 1024;
@@ -56,7 +55,6 @@ export default function ComprimirObjetivoTool() {
       }
 
       if (!best) {
-        // Even at lowest quality, file is bigger — use minimum quality result
         best = await canvasToBlob(canvas, 'image/jpeg', 0.01);
         bestQ = 0.01;
       }
@@ -70,16 +68,15 @@ export default function ComprimirObjetivoTool() {
     } finally {
       setProcessing(false);
     }
-  }, [file, targetKB]);
+  }, [upload.image, targetKB]);
 
   function handleDownload() {
-    if (!resultBlob || !file) return;
-    const outputName = file.name.replace(/\.[^.]+$/, '_comprimida.jpg');
-    download(resultBlob, outputName);
+    if (!resultBlob) return;
+    download(resultBlob, 'comprimida', 'jpg');
   }
 
   function reset() {
-    resetUpload();
+    upload.clearImage();
     setResultBlob(null);
     setFinalQuality(null);
     setError(null);
@@ -88,39 +85,34 @@ export default function ComprimirObjetivoTool() {
 
   return (
     <div className="space-y-6">
-      {!file && (
-        <label
-          className={['flex flex-col items-center justify-center gap-3 p-8 rounded-xl border-2 border-dashed cursor-pointer transition-colors', isDragging ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'border-[var(--color-border)] bg-white hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-bg)]'].join(' ')}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-        >
-          <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]">
-            <Upload size={24} />
-          </div>
-          <div className="text-center">
-            <p className="font-semibold text-[var(--color-text)]">Sube una imagen</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP · Arrastra o haz clic</p>
-          </div>
-          <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-        </label>
+      {!upload.image && (
+        <ImageUploader
+          image={upload.image}
+          error={upload.error}
+          isDragging={upload.isDragging}
+          onDrop={upload.onDrop}
+          onDragOver={upload.onDragOver}
+          onDragLeave={upload.onDragLeave}
+          onFileChange={upload.onFileChange}
+          onClear={upload.clearImage}
+        />
       )}
 
-      {previewUrl && file && (
+      {upload.image && (
         <div className="relative rounded-xl overflow-hidden border border-[var(--color-border)]">
-          <img src={previewUrl} alt="Preview" className="w-full max-h-64 object-contain bg-[var(--color-bg)]" />
+          <img src={upload.image.url} alt="Preview" className="w-full max-h-64 object-contain bg-[var(--color-bg)]" />
           <div className="absolute top-2 right-2">
             <button onClick={reset} className="px-3 py-1.5 bg-white rounded-lg border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-red-600 transition-colors">
               Quitar
             </button>
           </div>
           <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded-lg">
-            {formatBytes(file.size)}
+            {formatBytes(upload.image.file.size)}
           </div>
         </div>
       )}
 
-      {file && !processing && !resultBlob && (
+      {upload.image && !processing && !resultBlob && (
         <div className="space-y-5">
           <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-4">
             <h2 className="font-bold text-[var(--color-text)]">Tamaño objetivo</h2>
@@ -143,8 +135,8 @@ export default function ComprimirObjetivoTool() {
               <input type="range" min={10} max={5000} step={10} value={targetKB} onChange={(e) => setTargetKB(Number(e.target.value))} className="w-full accent-[var(--color-accent)]" />
               <div className="flex justify-between text-xs text-[var(--color-text-muted)] mt-1"><span>10 KB</span><span>5 MB</span></div>
             </div>
-            {file.size <= targetKB * 1024 && (
-              <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-xl p-3">La imagen ya es más pequeña que el objetivo ({formatBytes(file.size)}). Se aplicará la mínima compresión posible.</p>
+            {upload.image.file.size <= targetKB * 1024 && (
+              <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-xl p-3">La imagen ya es más pequeña que el objetivo ({formatBytes(upload.image.file.size)}). Se aplicará la mínima compresión posible.</p>
             )}
           </div>
           <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
@@ -163,12 +155,12 @@ export default function ComprimirObjetivoTool() {
         </div>
       )}
 
-      {resultBlob && file && (
+      {resultBlob && upload.image && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
           <div className="grid grid-cols-3 gap-3 text-center">
             <div className="p-3 bg-[var(--color-bg)] rounded-xl">
               <p className="text-xs text-[var(--color-text-muted)] mb-1">Original</p>
-              <p className="text-sm font-bold text-[var(--color-text)]">{formatBytes(file.size)}</p>
+              <p className="text-sm font-bold text-[var(--color-text)]">{formatBytes(upload.image.file.size)}</p>
             </div>
             <div className="p-3 bg-[var(--color-tools-bg)] rounded-xl">
               <p className="text-xs text-[var(--color-text-muted)] mb-1">Resultado</p>

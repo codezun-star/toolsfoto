@@ -4,7 +4,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
-import { canvasToBlob } from '@/lib/utils/canvas';
+import { canvasToBlob, loadImage, createCanvas, getContext } from '@/lib/utils/canvas';
 import { RotateCcw } from 'lucide-react';
 
 interface Adjustments {
@@ -28,11 +28,15 @@ const PRESETS: { name: string; values: Adjustments }[] = [
 ];
 
 function buildFilter(a: Adjustments): string {
-  return [
+  const parts = [
     `brightness(${a.brightness}%)`,
     `contrast(${a.contrast}%)`,
     `saturate(${a.saturation}%)`,
-  ].join(' ');
+  ];
+  if (a.sharpness > 0) parts.push(`contrast(${1 + a.sharpness / 200})`);
+  if (a.temperature > 0) parts.push(`sepia(${(a.temperature / 50) * 0.4})`);
+  if (a.temperature < 0) parts.push(`hue-rotate(${a.temperature * 1.5}deg)`);
+  return parts.join(' ');
 }
 
 export default function EditorTool() {
@@ -54,22 +58,61 @@ export default function EditorTool() {
     setLoading(true);
     setError(null);
     try {
-      const img = new Image();
-      await new Promise<void>((res, rej) => {
-        img.onload = () => res();
-        img.onerror = () => rej(new Error('No se pudo cargar la imagen'));
-        img.src = upload.image!.url;
-      });
-
+      const img = await loadImage(upload.image.url);
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
       const canvas = canvasRef.current;
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Error de canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = getContext(canvas);
 
       ctx.filter = filterStr;
       ctx.drawImage(img, 0, 0);
       ctx.filter = 'none';
+
+      if (adj.temperature !== 0) {
+        const tempShift = (adj.temperature / 50) * 30;
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const d = imgData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          d[i] = Math.min(255, Math.max(0, d[i] + tempShift));
+          d[i + 2] = Math.min(255, Math.max(0, d[i + 2] - tempShift));
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      if (adj.shadows !== 0 || adj.highlights !== 0) {
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const d = imgData.data;
+        const shadowAdj = (adj.shadows / 50) * 40;
+        const highlightAdj = (adj.highlights / 50) * 40;
+        for (let i = 0; i < d.length; i += 4) {
+          const lum = (d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114) / 255;
+          const shadowWeight = Math.max(0, 1 - lum * 3);
+          const highlightWeight = Math.max(0, lum * 3 - 2);
+          const shift = shadowAdj * shadowWeight + highlightAdj * highlightWeight;
+          d[i] = Math.min(255, Math.max(0, d[i] + shift));
+          d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + shift));
+          d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + shift));
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      if (adj.sharpness > 0) {
+        const blurCanvas = createCanvas(w, h);
+        const blurCtx = getContext(blurCanvas);
+        blurCtx.filter = `blur(${Math.max(1, Math.round(adj.sharpness / 5))}px)`;
+        blurCtx.drawImage(canvas, 0, 0);
+        const blurData = blurCtx.getImageData(0, 0, w, h);
+        const sharpData = ctx.getImageData(0, 0, w, h);
+        const factor = adj.sharpness / 100;
+        for (let i = 0; i < sharpData.data.length; i += 4) {
+          for (let c = 0; c < 3; c++) {
+            sharpData.data[i + c] = Math.min(255, Math.max(0, sharpData.data[i + c] + factor * (sharpData.data[i + c] - blurData.data[i + c])));
+          }
+        }
+        ctx.putImageData(sharpData, 0, 0);
+      }
 
       const blob = await canvasToBlob(canvas, upload.image.file.type, 0.92);
       const ext = upload.image.file.name.split('.').pop() ?? 'jpg';

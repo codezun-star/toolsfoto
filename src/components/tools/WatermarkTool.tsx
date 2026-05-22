@@ -40,11 +40,9 @@ export default function WatermarkTool() {
   useEffect(() => {
     if (!upload.image || !previewRef.current) return;
     const canvas = previewRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.onload = async () => {
+    async function render() {
+      const img = await loadImage(upload.image!.url);
+      const ctx = getContext(canvas);
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
@@ -64,21 +62,18 @@ export default function WatermarkTool() {
         ctx.lineWidth = Math.max(2, fs / 20);
         ctx.strokeText(text, x, y);
         ctx.fillText(text, x, y);
+        ctx.globalAlpha = 1;
       } else if (wmUrl) {
-        const wmImg = new Image();
-        wmImg.onload = () => {
-          const ww = Math.round(img.naturalWidth * (wmSize / 100));
-          const wh = Math.round((wmImg.naturalHeight / wmImg.naturalWidth) * ww);
-          const margin = Math.round(img.naturalWidth * 0.02);
-          const { x, y } = getXY(position, canvas.width, canvas.height, ww, wh, margin);
-          ctx.drawImage(wmImg, x, y, ww, wh);
-        };
-        wmImg.src = wmUrl;
+        const wmImg = await loadImage(wmUrl);
+        const ww = Math.round(img.naturalWidth * (wmSize / 100));
+        const wh = Math.round((wmImg.naturalHeight / wmImg.naturalWidth) * ww);
+        const margin = Math.round(img.naturalWidth * 0.02);
+        const { x, y } = getXY(position, canvas.width, canvas.height, ww, wh, margin);
+        ctx.drawImage(wmImg, x, y, ww, wh);
+        ctx.globalAlpha = 1;
       }
-
-      ctx.globalAlpha = 1;
-    };
-    img.src = upload.image.url;
+    }
+    render().catch(() => {});
   }, [upload.image, type, text, fontSize, opacity, position, color, wmUrl, wmSize]);
 
   function handleWmFileChange(e: React.ChangeEvent<HTMLInputElement>) {

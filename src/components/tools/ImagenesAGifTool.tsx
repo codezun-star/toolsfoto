@@ -61,8 +61,8 @@ export default function ImagenesAGifTool() {
       }
 
       // concat list: each frame repeated for the delay
-      const fps = Math.max(1, Math.round(1000 / delay));
-      const framesPerImage = Math.max(1, Math.round(fps * delay / 1000));
+      const fps = 10;
+      const framesPerImage = Math.max(1, Math.round(delay / 1000 * fps));
 
       let concat = '';
       for (let i = 0; i < frames.length; i++) {

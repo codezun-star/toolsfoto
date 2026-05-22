@@ -69,11 +69,16 @@ export default function MezclarAudiosTool() {
     try {
       const { fetchFile } = await import('@ffmpeg/util');
       const ff = await createFFmpeg(setProgress);
-      await ff.writeFile('input1.mp3', await fetchFile(audio1.file));
-      await ff.writeFile('input2.mp3', await fetchFile(audio2.file));
+      const ext1 = audio1.name.split('.').pop()?.toLowerCase() ?? 'mp3';
+      const ext2 = audio2.name.split('.').pop()?.toLowerCase() ?? 'mp3';
+      await ff.writeFile(`input1.${ext1}`, await fetchFile(audio1.file));
+      await ff.writeFile(`input2.${ext2}`, await fetchFile(audio2.file));
       const filter = `[0:a]volume=${vol1 / 100}[a1];[1:a]volume=${vol2 / 100}[a2];[a1][a2]amix=inputs=2:duration=longest[out]`;
-      await ff.exec(['-i', 'input1.mp3', '-i', 'input2.mp3', '-filter_complex', filter, '-map', '[out]', 'output.mp3']);
-      const data = await ff.readFile('output.mp3');
+      await ff.exec(['-i', `input1.${ext1}`, '-i', `input2.${ext2}`, '-filter_complex', filter, '-map', '[out]', 'output.mp3']);
+      const data = await ff.readFile('output.mp3') as Uint8Array;
+      try { await ff.deleteFile(`input1.${ext1}`); } catch { /* ignore */ }
+      try { await ff.deleteFile(`input2.${ext2}`); } catch { /* ignore */ }
+      try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }
       const blob = new Blob([data], { type: 'audio/mpeg' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));

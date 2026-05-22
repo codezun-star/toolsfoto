@@ -4,7 +4,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
-import { canvasToBlob } from '@/lib/utils/canvas';
+import { canvasToBlob, loadImage, getContext } from '@/lib/utils/canvas';
 
 function drawMemeText(
   ctx: CanvasRenderingContext2D,
@@ -62,11 +62,9 @@ export default function MemeTool() {
   useEffect(() => {
     if (!upload.image || !canvasRef.current) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.onload = () => {
+    async function render() {
+      const img = await loadImage(upload.image!.url);
+      const ctx = getContext(canvas);
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
@@ -74,8 +72,8 @@ export default function MemeTool() {
       const margin = Math.round(img.naturalWidth * 0.03);
       drawMemeText(ctx, topText, canvas.width / 2, margin, canvas.width - margin * 2, fs, 'top');
       drawMemeText(ctx, bottomText, canvas.width / 2, canvas.height - margin, canvas.width - margin * 2, fs, 'bottom');
-    };
-    img.src = upload.image.url;
+    }
+    render().catch(() => {});
   }, [upload.image, topText, bottomText, fontSize]);
 
   async function handleDownload() {

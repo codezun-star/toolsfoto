@@ -62,7 +62,7 @@ export default function EncabezadoPiePDFTool() {
           const textW = font.widthOfTextAtSize(text, size);
           page.drawText(text, {
             x: (width - textW) / 2,
-            y: marginPt - size,
+            y: Math.max(0, marginPt - size),
             size,
             font,
             color,

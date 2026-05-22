@@ -19,11 +19,9 @@ export default function RotatorTool() {
   useEffect(() => {
     if (!upload.image || !previewRef.current) return;
     const canvas = previewRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const img = new Image();
-    img.onload = () => {
+    async function render() {
+      const img = await loadImage(upload.image!.url);
+      const ctx = getContext(canvas);
       const rad = (rotation * Math.PI) / 180;
       const rotated90 = rotation % 180 !== 0;
       const w = rotated90 ? img.naturalHeight : img.naturalWidth;
@@ -37,8 +35,8 @@ export default function RotatorTool() {
       ctx.scale(flipH ? -1 : 1, flipV ? -1 : 1);
       ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
       ctx.restore();
-    };
-    img.src = upload.image.url;
+    }
+    render().catch(() => {});
   }, [upload.image, rotation, flipH, flipV]);
 
   async function handleApply() {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
-import { revokeURL } from '@/lib/utils/canvas';
+import { revokeURL, getContext } from '@/lib/utils/canvas';
 
 interface PdfFile { file: File; name: string; size: number }
 interface PagePreview { num: number; url: string }
@@ -40,7 +40,7 @@ export default function PDFaJPGTool() {
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        const ctx = canvas.getContext('2d')!;
+        const ctx = getContext(canvas);
         await page.render({ canvasContext: ctx, viewport }).promise;
         const url = await new Promise<string>((res, rej) => {
           canvas.toBlob(b => { if (b) res(URL.createObjectURL(b)); else rej(); }, 'image/jpeg', quality / 100);

@@ -47,29 +47,29 @@ export default function DesvanecerBordesTool() {
       } else {
         mCtx.fillStyle = 'black';
         mCtx.fillRect(0, 0, w, h);
+        mCtx.globalCompositeOperation = 'destination-out';
         // Fade left edge
         const gL = mCtx.createLinearGradient(0, 0, fade, 0);
-        gL.addColorStop(0, 'rgba(0,0,0,0)');
-        gL.addColorStop(1, 'rgba(0,0,0,1)');
-        mCtx.globalCompositeOperation = 'destination-in';
+        gL.addColorStop(0, 'rgba(0,0,0,1)');
+        gL.addColorStop(1, 'rgba(0,0,0,0)');
         mCtx.fillStyle = gL;
         mCtx.fillRect(0, 0, fade, h);
         // Fade right edge
         const gR = mCtx.createLinearGradient(w - fade, 0, w, 0);
-        gR.addColorStop(0, 'rgba(0,0,0,1)');
-        gR.addColorStop(1, 'rgba(0,0,0,0)');
+        gR.addColorStop(0, 'rgba(0,0,0,0)');
+        gR.addColorStop(1, 'rgba(0,0,0,1)');
         mCtx.fillStyle = gR;
         mCtx.fillRect(w - fade, 0, fade, h);
         // Fade top edge
         const gT = mCtx.createLinearGradient(0, 0, 0, fade);
-        gT.addColorStop(0, 'rgba(0,0,0,0)');
-        gT.addColorStop(1, 'rgba(0,0,0,1)');
+        gT.addColorStop(0, 'rgba(0,0,0,1)');
+        gT.addColorStop(1, 'rgba(0,0,0,0)');
         mCtx.fillStyle = gT;
         mCtx.fillRect(0, 0, w, fade);
         // Fade bottom edge
         const gB = mCtx.createLinearGradient(0, h - fade, 0, h);
-        gB.addColorStop(0, 'rgba(0,0,0,1)');
-        gB.addColorStop(1, 'rgba(0,0,0,0)');
+        gB.addColorStop(0, 'rgba(0,0,0,0)');
+        gB.addColorStop(1, 'rgba(0,0,0,1)');
         mCtx.fillStyle = gB;
         mCtx.fillRect(0, h - fade, w, fade);
       }

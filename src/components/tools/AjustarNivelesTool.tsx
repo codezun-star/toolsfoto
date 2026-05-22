@@ -28,7 +28,7 @@ export default function AjustarNivelesTool() {
       ctx.drawImage(img, 0, 0);
       const imgData = ctx.getImageData(0, 0, w, h);
       const d = imgData.data;
-      const g = 100 / gamma; // gamma < 100 → brighten midtones, > 100 → darken
+      const g = gamma / 100; // gamma < 100 → brighten midtones, > 100 → darken
       const range = Math.max(1, inWhite - inBlack);
 
       for (let i = 0; i < d.length; i += 4) {

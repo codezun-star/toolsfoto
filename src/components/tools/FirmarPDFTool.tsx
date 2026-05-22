@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Trash2 } from 'lucide-react';
-import { revokeURL } from '@/lib/utils/canvas';
+import { revokeURL, getContext } from '@/lib/utils/canvas';
 
 export default function FirmarPDFTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,7 +21,7 @@ export default function FirmarPDFTool() {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    const ctx = canvasRef.current.getContext('2d')!;
+    const ctx = getContext(canvasRef.current);
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     ctx.strokeStyle = '#1a1a2e';
@@ -42,7 +42,7 @@ export default function FirmarPDFTool() {
   function startDraw(e: React.MouseEvent | React.TouchEvent) {
     if (!canvasRef.current) return;
     setDrawing(true);
-    const ctx = canvasRef.current.getContext('2d')!;
+    const ctx = getContext(canvasRef.current);
     const { x, y } = getPos(e, canvasRef.current);
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -51,7 +51,7 @@ export default function FirmarPDFTool() {
   function draw(e: React.MouseEvent | React.TouchEvent) {
     if (!drawing || !canvasRef.current) return;
     e.preventDefault();
-    const ctx = canvasRef.current.getContext('2d')!;
+    const ctx = getContext(canvasRef.current);
     const { x, y } = getPos(e, canvasRef.current);
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -62,7 +62,7 @@ export default function FirmarPDFTool() {
 
   function clearCanvas() {
     if (!canvasRef.current) return;
-    const ctx = canvasRef.current.getContext('2d')!;
+    const ctx = getContext(canvasRef.current);
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     setHasSignature(false);
