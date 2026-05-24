@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SepararVozTool from '@/components/tools/SepararVozTool';
+
+const faqs = [
+  { q: '¿Cómo funciona la separación de voz e instrumental?', a: 'Utiliza la técnica de extracción de canal central: en la mayoría de grabaciones comerciales, la voz principal está mezclada en el centro del estéreo. La pista vocal es la suma (L+R)/2 y la instrumental es la diferencia (L-R)/2.' },
+  { q: '¿Con qué tipo de música funciona mejor?', a: 'Funciona mejor con grabaciones estéreo donde la voz está centrada (común en pop, rock y R&B comercial). En música donde la voz está panoramizada o tiene mucho reverb, los resultados serán más imperfectos.' },
+  { q: '¿El audio de salida tiene perfecta calidad?', a: 'Es una aproximación basada en la posición estéreo, no un aislamiento perfecto. La pista vocal puede contener instrumentos centrados (como bajo o bombo), y la pista instrumental puede tener restos de voz.' },
+  { q: '¿En qué formato se descargan las pistas separadas?', a: 'Ambas pistas se generan en MP3 con calidad alta (VBR Q3), que ofrece un buen equilibrio entre calidad y tamaño de archivo.' },
+  { q: '¿Funciona con archivos mono?', a: 'No. La separación requiere un archivo estéreo (2 canales). Los archivos mono son iguales en ambos canales, por lo que la diferencia sería silencio. Usa archivos estéreo para obtener resultados útiles.' },
+];
+---
+<ToolLayout slug="separar-voz" faqs={faqs}>
+  <SepararVozTool client:load />
+</ToolLayout>

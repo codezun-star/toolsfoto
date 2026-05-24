@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AfinarAudioTool from '@/components/tools/AfinarAudioTool';
+
+const faqs = [
+  { q: '¿En qué se diferencia de "Cambiar tono"?', a: '"Afinar audio" incluye la opción de preservar la velocidad (time-stretching) para que el audio afinado mantenga la misma duración que el original. "Cambiar tono" usa solo asetrate, que también cambia la velocidad.' },
+  { q: '¿Qué es el time-stretching?', a: 'El time-stretching compensa el cambio de velocidad producido al desplazar el tono. Cuando subes el tono, el audio se acelera; la herramienta añade un filtro atempo que ralentiza el audio para restaurar la duración original.' },
+  { q: '¿Qué es el efecto vibrato?', a: 'El vibrato añade una modulación periódica del tono (oscilación de 5 Hz con profundidad 30%). Da un efecto parecido al autotune suave o a una voz procesada electrónicamente.' },
+  { q: '¿Cuántos semitonos puedo ajustar?', a: 'El rango va de -12 semitonos (una octava abajo) a +12 semitonos (una octava arriba). Cada semitono corresponde a una nota musical en la escala cromática.' },
+  { q: '¿Qué formato tiene el audio de salida?', a: 'El formato de salida es el mismo que el de entrada cuando es posible (MP3, OGG, AAC). Para otros formatos de entrada (FLAC, WAV, M4A), el resultado se convierte a MP3 para máxima compatibilidad.' },
+];
+---
+<ToolLayout slug="afinar-audio" faqs={faqs}>
+  <AfinarAudioTool client:load />
+</ToolLayout>

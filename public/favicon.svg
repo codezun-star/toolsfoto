@@ -1,4 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#FFFFFF" rx="12"/>
-  <text x="32" y="44" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="28" font-weight="700" fill="#111110">T<tspan fill="#0BBFB0">F</tspan></text>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C2D8E"/>
+      <stop offset="55%" stop-color="#C0392B"/>
+      <stop offset="100%" stop-color="#F9E0E0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" fill="url(#g)" rx="12"/>
+  <text x="32" y="44" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF">T<tspan fill="#0BBFB0">F</tspan></text>
 </svg>

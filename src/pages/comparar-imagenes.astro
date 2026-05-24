@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompararImagenesTool from '@/components/tools/CompararImagenesTool';
+
+const faqs = [
+  { q: '¿Qué tipos de imagen puedo comparar?', a: 'Puedes comparar cualquier formato de imagen que soporte tu navegador: JPG, PNG, WebP, AVIF, GIF y más. Sube las dos imágenes en los slots "Antes" y "Después".' },
+  { q: '¿Cómo funciona el slider de comparación?', a: 'El slider divide la pantalla verticalmente. La parte izquierda muestra la imagen A y la derecha la imagen B. Puedes arrastrar el divisor o usar el slider inferior para mover la línea de corte.' },
+  { q: '¿Las imágenes se suben a algún servidor?', a: 'No. Todo el procesamiento ocurre en tu navegador. Las imágenes nunca salen de tu dispositivo, lo que garantiza privacidad total.' },
+  { q: '¿Puedo comparar imágenes de distintas dimensiones?', a: 'Sí. Ambas imágenes se escalan para ocupar el mismo espacio en el visor. Si tienen proporciones distintas, se usará la proporción de la imagen B como referencia de contenedor.' },
+  { q: '¿Para qué sirve esta herramienta?', a: 'Es ideal para comparar resultados de edición de fotos (antes/después), comparar versiones de diseño, evaluar la calidad de compresión, o revisar diferencias entre capturas de pantalla.' },
+];
+---
+<ToolLayout slug="comparar-imagenes" faqs={faqs}>
+  <CompararImagenesTool client:load />
+</ToolLayout>

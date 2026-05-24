@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import TranscribirAudioTool from '@/components/tools/TranscribirAudioTool';
+
+const faqs = [
+  { q: '¿Qué tecnología usa esta herramienta para transcribir?', a: 'Utiliza la Web Speech API del navegador, que proporciona reconocimiento de voz en tiempo real usando los servidores de reconocimiento del proveedor del navegador (Google en Chrome). No es necesario instalar nada.' },
+  { q: '¿Con qué navegadores funciona?', a: 'Funciona principalmente en Google Chrome y Microsoft Edge, que son los navegadores con mejor soporte de la Web Speech API. Firefox y Safari tienen soporte limitado o nulo.' },
+  { q: '¿Cómo transcribo un archivo de audio existente?', a: 'Reproduce el archivo de audio en altavoz o auriculares con micrófono activado, e inicia la transcripción. La herramienta capturará el audio a través del micrófono de tu dispositivo.' },
+  { q: '¿Qué idiomas soporta?', a: 'Soporta español, inglés, francés, alemán, italiano, portugués y catalán. La precisión varía según el idioma y la claridad del habla.' },
+  { q: '¿La transcripción se guarda en algún servidor?', a: 'El texto transcrito se procesa localmente en tu sesión del navegador y no se envía a nuestros servidores. Sin embargo, ten en cuenta que la Web Speech API de Chrome envía el audio a Google para el reconocimiento.' },
+];
+---
+<ToolLayout slug="transcribir-audio" faqs={faqs}>
+  <TranscribirAudioTool client:load />
+</ToolLayout>

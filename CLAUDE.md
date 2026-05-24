@@ -14,7 +14,7 @@
 ## Regla obligatoria: documentar cada herramienta nueva
 
 **Cada vez que se añada una herramienta nueva, se DEBE actualizar:**
-1. Añadir fila en `calculadoras.md` (dominio correspondiente) y actualizar el contador total.
+1. Añadir fila en `HERRAMIENTAS.md` (dominio correspondiente) y actualizar el contador total.
 2. Actualizar el contador de páginas en la sección "Comandos" de este CLAUDE.md.
 3. Actualizar `src/lib/constants/tools.ts` — entrada con `domain` correcto.
 4. Actualizar `src/lib/constants/seo.ts` — título, descripción y canonical.
@@ -164,10 +164,10 @@ toolsfoto-v2/
 
 ## Las 121 herramientas
 
-> Las tablas completas están en [`calculadoras.md`](./calculadoras.md) para no sobrecargar este archivo.
+> Las tablas completas están en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md) para no sobrecargar este archivo.
 > **Total: 121 herramientas — 43 imagen · 28 PDF · 21 vídeo · 19 audio · 30 developer + 5 legales**
 
-Al añadir una herramienta nueva, actualizar también `calculadoras.md` con la fila correspondiente.
+Al añadir una herramienta nueva, actualizar también `HERRAMIENTAS.md` con la fila correspondiente.
 
 ---
 

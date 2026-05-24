@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import TiltShiftTool from '@/components/tools/TiltShiftTool';
+
+const faqs = [
+  { q: '¿Qué es el efecto tilt-shift?', a: 'El tilt-shift es una técnica fotográfica que aplica desenfoque selectivo en las zonas superior e inferior de la imagen, dejando nítida solo una banda central. El resultado hace que las escenas reales parezcan maquetas en miniatura.' },
+  { q: '¿Por qué las fotos parecen miniaturas con tilt-shift?', a: 'Nuestro cerebro asocia el desenfoque selectivo con la profundidad de campo de la fotografía macro (objetos muy pequeños vistos de cerca). Al aplicar este efecto a fotos aéreas o de paisajes, el cerebro las interpreta como miniaturas.' },
+  { q: '¿Puedo controlar dónde queda la zona nítida?', a: 'Sí. El control "Centro del foco" mueve la banda nítida hacia arriba o hacia abajo de la imagen (expresado en porcentaje de la altura). El control "Tamaño de la banda nítida" ajusta cuánta zona permanece en foco.' },
+  { q: '¿Qué hace el control de saturación?', a: 'La saturación aumentada potencia los colores para reforzar el efecto miniatura. Los objetos pequeños reales suelen verse más saturados que los objetos lejanos, por lo que aumentar la saturación refuerza la ilusión.' },
+  { q: '¿En qué formato se descarga la imagen?', a: 'El resultado se descarga en JPG con calidad 92%, optimizando el balance entre calidad visual y tamaño de archivo.' },
+];
+---
+<ToolLayout slug="tilt-shift" faqs={faqs}>
+  <TiltShiftTool client:load />
+</ToolLayout>

@@ -2,11 +2,11 @@
 
 > Este archivo documenta todas las herramientas de ToolsFoto organizadas por dominio.
 > Se usa como referencia de control para no sobrecargar CLAUDE.md.
-> **Total: 121 herramientas · 147 páginas HTML estáticas**
+> **Total: 160 herramientas · 166 páginas HTML estáticas**
 
 ---
 
-## Imagen (43)
+## Imagen (48)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -53,10 +53,15 @@
 | `/posterizar` | `PosterizarTool.tsx` | Creativas | Canvas `getImageData` — cuantización de niveles de color |
 | `/vigneta` | `VignetaTool.tsx` | Creativas | Canvas gradiente radial superpuesto sobre imagen |
 | `/solarizar` | `SolarizarTool.tsx` | Creativas | Canvas `getImageData` — efecto Sabattier por umbral |
+| `/comparar-imagenes` | `CompararImagenesTool.tsx` | Básicas | CSS `clip-path: inset()` + pointer events — slider antes/después |
+| `/placeholder` | `PlaceholderTool.tsx` | Básicas | Canvas API — color, texto y presets de proporción |
+| `/efecto-glitch` | `EfectoGlitchTool.tsx` | Creativas | Canvas `getImageData` — desplazamiento RGB + cortes aleatorios |
+| `/tilt-shift` | `TiltShiftTool.tsx` | Creativas | Canvas blur con padding + gradient mask `destination-in` |
+| `/imagen-a-ico` | `ImagenAICOTool.tsx` | Básicas | Binary ICO builder — PNG embebido, múltiples tamaños |
 
 ---
 
-## PDF (28)
+## PDF (32)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -88,10 +93,14 @@
 | `/insertar-pagina-pdf` | `InsertarPaginaPDFTool.tsx` | Básicas | pdf-lib — inserta páginas en blanco en posición elegida |
 | `/fondo-color-pdf` | `FondoColorPDFTool.tsx` | Básicas | pdf-lib `drawRectangle` + `embedPage` — fondo de color |
 | `/aplanar-pdf` | `AplanarPDFTool.tsx` | Básicas | pdf-lib `doc.getForm().flatten()` — aplana formularios |
+| `/sellar-pdf` | `SellarPDFTool.tsx` | Básicas | pdf-lib `page.drawText()` — sello diagonal con `rotate: degrees(35)` |
+| `/pdf-a-svg` | `PDFaSVGTool.tsx` | Básicas | pdfjs-dist → canvas → SVG con PNG embebido + ZIP builder puro |
+| `/comparar-pdfs` | `CompararPDFsTool.tsx` | Básicas | pdfjs-dist — renderizado paralelo sincronizado, escala ajustable |
+| `/indice-pdf` | `IndicePDFTool.tsx` | Básicas | pdfjs-dist `getOutline()` + detección por tamaño de fuente fallback |
 
 ---
 
-## Vídeo (21)
+## Vídeo (26)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -117,10 +126,14 @@
 | `/convertir-vertical` | `ConvertirVerticalTool.tsx` | Básicas | FFmpeg.wasm — `scale+pad` filtro 9:16 y 1:1 |
 | `/boomerang-video` | `BoomerangVideoTool.tsx` | Creativas | FFmpeg.wasm — `reverse+areverse` → concat orig+reversed |
 | `/ajustar-volumen-video` | `AjustarVolumenVideoTool.tsx` | Básicas | FFmpeg.wasm — `-af volume=${db}dB -c:v copy` |
+| `/anadir-subtitulos` | `AnadirSubtitulosTool.tsx` | Básicas | FFmpeg.wasm — canvas SRT overlay + filtro `overlay=0:0:enable='between(t,...)'` |
+| `/extraer-fotogramas` | `ExtraerFotogramasTool.tsx` | Avanzadas | FFmpeg.wasm — `-vf fps=N` + ZIP builder puro (CRC32 inline) |
+| `/ajuste-color-video` | `AjusteColorVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `eq=brightness:contrast:saturation:gamma` |
+| `/miniatura-video` | `MiniaturaVideoTool.tsx` | Básicas | HTML5 `<video>` + Canvas `drawImage` — sin FFmpeg, instantáneo |
 
 ---
 
-## Audio (19)
+## Audio (23)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -143,10 +156,14 @@
 | `/ecualizador-audio` | `EcualizadorAudioTool.tsx` | Básicas | FFmpeg.wasm — filtros `bass`, `treble`, `equalizer` (3 bandas) |
 | `/reducir-ruido-audio` | `ReducirRuidoAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `anlmdn` adaptativo |
 | `/generar-tono` | `GenerarTonoTool.tsx` | Básicas | FFmpeg.wasm lavfi — `sine`, formas de onda configurables |
+| `/detector-bpm` | `DetectorBPMTool.tsx` | Avanzadas | Web Audio API — análisis de energía + detección de onsets, sin IA |
+| `/separar-voz` | `SepararVozTool.tsx` | Avanzadas | FFmpeg.wasm — `pan` filter cancelación canal central → vocals + instrumental |
+| `/transcribir-audio` | `TranscribirAudioTool.tsx` | Básicas | Web Speech API — `SpeechRecognition` continuo, 7 idiomas |
+| `/afinar-audio` | `AfinarAudioTool.tsx` | Básicas | FFmpeg.wasm — `asetrate + aresample + atempo` chaining + vibrato |
 
 ---
 
-## Developer (30)
+## Developer (31)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -169,7 +186,6 @@
 | `/convertir-timestamp` | `ConvertirTimestampTool.tsx` | Básicas | `Date` nativo — Unix↔fecha local/UTC/ISO 8601 |
 | `/minificador-html` | `MinificadorHTMLTool.tsx` | Básicas | JS puro regex — elimina comments y whitespace |
 | `/generador-contrasenas` | `GeneradorContrasenasTool.tsx` | Básicas | `crypto.getRandomValues(Uint32Array)` |
-| `/conversor-unidades` | `ConversorUnidadesTool.tsx` | Básicas | JS puro — 8 categorías, conversión vía base unit |
 | `/lorem-ipsum` | `LoremIpsumTool.tsx` | Básicas | JS puro — párrafos/frases/palabras, corpus latino |
 | `/gradiente-css` | `GradienteCssTool.tsx` | Básicas | CSS gradient builder — lineal/radial, hasta 5 stops |
 | `/minificador-js` | `MinificadorJSTool.tsx` | Básicas | JS puro regex — elimina comentarios y espacios |
@@ -179,6 +195,9 @@
 | `/comparar-texto` | `CompararTextoTool.tsx` | Básicas | Algoritmo LCS — diff línea a línea con resaltado |
 | `/conversor-base` | `ConversorBaseTool.tsx` | Básicas | `parseInt/toString` nativo — dec/bin/hex/oct + nibbles |
 | `/entidades-html` | `EntidadesHTMLTool.tsx` | Básicas | JS puro + `textarea.innerHTML` — codificar/decodificar |
+| `/minificador-svg` | `MinificadorSVGTool.tsx` | Básicas | JS regex puro — elimina metadatos, comentarios, attrs Inkscape/RDF |
+| `/og-image` | `OGImageTool.tsx` | Básicas | Canvas API 1200×630 — título, subtítulo, colores, logo opcional |
+| `/convertir-fuente` | `ConvertirFuenteTool.tsx` | Básicas | Binary SFNT parser — TTF/OTF ↔ WOFF sin pérdida, sin librería |
 
 ---
 
@@ -194,4 +213,4 @@
 
 ---
 
-*Última actualización: 2026-05-23 — 121 herramientas, 147 páginas HTML estáticas*
+*Última actualización: 2026-05-24 — 160 herramientas, 166 páginas HTML estáticas*

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PDFaSVGTool from '@/components/tools/PDFaSVGTool';
+
+const faqs = [
+  { q: '¿Qué tipo de SVG genera esta herramienta?', a: 'Genera archivos SVG que contienen la página del PDF renderizada como imagen PNG embebida en base64. El resultado es un SVG válido que muestra el contenido del PDF de forma fiel, aunque no es SVG vectorial puro.' },
+  { q: '¿Por qué no genera SVG vectorial?', a: 'Convertir un PDF a SVG vectorial real requiere interpretar completamente el lenguaje PostScript/PDF y reconstruir todos los paths, fuentes y curvas. Esta herramienta utiliza el renderizado de PDF.js para obtener un resultado fiel y rápido.' },
+  { q: '¿Puedo descargar todas las páginas a la vez?', a: 'Sí. Si el PDF tiene más de una página, aparece el botón "Descargar todas en ZIP" que empaqueta todos los archivos SVG en un archivo ZIP descargable.' },
+  { q: '¿En qué escala se rinde el PDF?', a: 'Cada página se renderiza a 1.5x de su tamaño original (puntos tipográficos × 1.5), lo que produce imágenes de alta resolución adecuadas para uso web y presentaciones.' },
+  { q: '¿Cuántas páginas puede procesar?', a: 'No hay un límite estricto por número de páginas, pero PDFs muy largos pueden tardar más tiempo en procesarse ya que cada página se renderiza individualmente en el navegador.' },
+];
+---
+<ToolLayout slug="pdf-a-svg" faqs={faqs}>
+  <PDFaSVGTool client:load />
+</ToolLayout>

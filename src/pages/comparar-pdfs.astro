@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompararPDFsTool from '@/components/tools/CompararPDFsTool';
+
+const faqs = [
+  { q: '¿Cómo funciona la comparación sincronizada?', a: 'Una vez cargados ambos PDFs, puedes navegar página a página con los botones de anterior/siguiente. Ambos PDFs avanzan al mismo tiempo para que puedas comparar las mismas páginas en paralelo.' },
+  { q: '¿Qué ocurre si los PDFs tienen distinto número de páginas?', a: 'El navegador se limita al número de páginas del PDF con menos páginas. Las páginas adicionales del PDF más largo no se muestran en la comparación sincronizada.' },
+  { q: '¿Puedo ajustar el zoom de las páginas?', a: 'Sí. El selector de escala permite ver las páginas al 80%, 100%, 120% o 150% de su tamaño original para ajustar el nivel de detalle visible.' },
+  { q: '¿Se pueden comparar PDFs protegidos?', a: 'No. Los PDFs deben estar sin protección de lectura para poder renderizarlos en el navegador. Si están encriptados, primero usa la herramienta "Eliminar contraseña PDF".' },
+  { q: '¿Para qué casos de uso es útil la comparación de PDFs?', a: 'Es ideal para revisar revisiones de contratos, comparar versiones de un documento, verificar cambios entre presupuestos, o revisar diferencias en planos técnicos o formularios.' },
+];
+---
+<ToolLayout slug="comparar-pdfs" faqs={faqs}>
+  <CompararPDFsTool client:load />
+</ToolLayout>

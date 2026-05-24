@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import IndicePDFTool from '@/components/tools/IndicePDFTool';
+
+const faqs = [
+  { q: '¿Cómo extrae el índice esta herramienta?', a: 'Primero intenta leer el índice de marcadores interno del PDF (bookmarks/outline). Si el PDF no tiene marcadores, analiza el contenido de texto buscando líneas con fuente más grande que el cuerpo del texto para detectar encabezados.' },
+  { q: '¿Qué son los marcadores de PDF?', a: 'Los marcadores (bookmarks) son un índice navegable que los autores pueden añadir al crear el PDF en Word, InDesign u otros programas. No todos los PDFs los incluyen.' },
+  { q: '¿Funciona si el PDF no tiene marcadores?', a: 'Sí. En ese caso, la herramienta analiza el texto buscando líneas con tamaño de fuente mayor que el promedio, que suelen corresponder a títulos y encabezados de sección.' },
+  { q: '¿El índice incluye los números de página?', a: 'Si el PDF tiene marcadores internos, el índice incluye el número de página de cada entrada. Si se extrae por análisis de texto, también se indica la página donde aparece cada encabezado detectado.' },
+  { q: '¿En qué formato se descarga el índice?', a: 'El índice se descarga como archivo de texto plano (.txt) con la jerarquía de niveles indicada mediante sangría y los números de página alineados a la derecha, listo para copiar o imprimir.' },
+];
+---
+<ToolLayout slug="indice-pdf" faqs={faqs}>
+  <IndicePDFTool client:load />
+</ToolLayout>

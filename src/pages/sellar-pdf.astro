@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SellarPDFTool from '@/components/tools/SellarPDFTool';
+
+const faqs = [
+  { q: '¿Qué es un sello en un PDF?', a: 'Un sello de PDF es un texto rotado (generalmente en diagonal) que se superpone sobre todas las páginas del documento con cierta transparencia. Se usa para indicar el estado del documento: borrador, confidencial, aprobado, etc.' },
+  { q: '¿El sello queda incrustado permanentemente?', a: 'Sí. El sello se añade como texto superpuesto dentro del PDF. No es eliminable con herramientas básicas, aunque un editor avanzado de PDFs podría quitarlo.' },
+  { q: '¿Puedo poner mi propio texto personalizado?', a: 'Sí. Además de los presets (BORRADOR, CONFIDENCIAL, APROBADO, RECHAZADO, COPIA, URGENTE), puedes escribir cualquier texto en el campo de texto personalizado.' },
+  { q: '¿Funciona con PDFs protegidos por contraseña?', a: 'No. El PDF debe estar sin protección de escritura para poder añadirle el sello. Si el PDF está encriptado, primero debes quitarle la contraseña con la herramienta "Eliminar contraseña PDF".' },
+  { q: '¿Afecta el sello a la calidad o contenido del PDF?', a: 'No afecta al contenido original. Solo añade una capa de texto transparente encima. El texto, imágenes y formato originales del PDF no se modifican.' },
+];
+---
+<ToolLayout slug="sellar-pdf" faqs={faqs}>
+  <SellarPDFTool client:load />
+</ToolLayout>

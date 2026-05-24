@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MinificadorSVGTool from '@/components/tools/MinificadorSVGTool';
+
+const faqs = [
+  { q: '¿Qué elimina el minificador de un SVG?', a: 'Elimina comentarios XML, metadatos, elementos title y desc, atributos de namespaces de edición (inkscape:*, sodipodi:*, dc:*, cc:*, rdf:*), bloques defs vacíos, la declaración XML y espacios en blanco redundantes.' },
+  { q: '¿Se puede abrir el SVG minificado en un editor gráfico?', a: 'Sí, los SVG minificados siguen siendo archivos SVG válidos que se abren correctamente en Inkscape, Illustrator, navegadores y cualquier visor de SVG. Solo se eliminan datos irrelevantes para el renderizado.' },
+  { q: '¿Cuánto se reduce el tamaño típicamente?', a: 'Depende de cuántos metadatos tenga el SVG original. Los SVG exportados desde Inkscape suelen reducirse un 20-50% porque incluyen muchos atributos de edición propios de Inkscape que no son necesarios para su visualización.' },
+  { q: '¿Se pierden animaciones o efectos al minificar?', a: 'No. Solo se eliminan atributos y metadatos que no afectan al renderizado ni las animaciones. Los paths, formas, colores, gradientes y animaciones CSS/SMIL se conservan intactos.' },
+  { q: '¿Puedo pegar el SVG directamente o debo subir un archivo?', a: 'Puedes hacer ambas cosas. Pega el código SVG directamente en el área de texto, o arrastra y suelta (o sube) un archivo .svg. El resultado aparece en el área inferior con el porcentaje de reducción.' },
+];
+---
+<ToolLayout slug="minificador-svg" faqs={faqs}>
+  <MinificadorSVGTool client:load />
+</ToolLayout>

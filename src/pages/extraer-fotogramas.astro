@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ExtraerFotogramasTool from '@/components/tools/ExtraerFotogramasTool';
+
+const faqs = [
+  { q: '¿Qué frecuencias de extracción están disponibles?', a: 'Puedes elegir entre 0.5 fps (un frame cada 2 segundos), 1 fps (un frame por segundo), 2 fps o 5 fps. Para vídeos cortos con mucho movimiento, usa 2-5 fps. Para vídeos largos, 0.5-1 fps es suficiente.' },
+  { q: '¿Cuántos fotogramas se pueden extraer?', a: 'El límite es de 500 fotogramas por procesamiento. Para vídeos muy largos, combina una frecuencia baja (0.5 fps) o recorta el vídeo antes de extraer los frames.' },
+  { q: '¿En qué formato se descargan los fotogramas?', a: 'Puedes elegir entre JPG (menor tamaño de archivo, ideal para fotos) o PNG (sin pérdida, ideal para capturas con texto o gráficos). Todos los frames se empaquetan en un único archivo ZIP.' },
+  { q: '¿Qué formatos de vídeo admite la herramienta?', a: 'Admite MP4, WebM, MOV, AVI y MKV. Para mayor compatibilidad, usa MP4 con codec H.264.' },
+  { q: '¿Para qué sirve extraer fotogramas de un vídeo?', a: 'Es útil para crear storyboards, analizar movimiento frame a frame, generar datasets de imágenes para machine learning, crear GIFs o animaciones, o extraer capturas específicas de grabaciones.' },
+];
+---
+<ToolLayout slug="extraer-fotogramas" faqs={faqs}>
+  <ExtraerFotogramasTool client:load />
+</ToolLayout>

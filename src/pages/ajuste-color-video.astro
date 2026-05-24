@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AjusteColorVideoTool from '@/components/tools/AjusteColorVideoTool';
+
+const faqs = [
+  { q: '¿Qué parámetros de color puedo ajustar?', a: 'Puedes ajustar brillo (-0.5 a +0.5), contraste (0.5x a 2.0x), saturación (0 a 3.0x) y gamma (0.1 a 3.0). El valor 0 en brillo, 1 en contraste, 1 en saturación y 1 en gamma corresponden al original sin cambios.' },
+  { q: '¿Qué son los presets de color?', a: 'Los presets (Original, Vivid, Cine, Vintage, B&N) aplican combinaciones preconfiguradas de los cuatro parámetros para conseguir estilos cinematográficos populares con un solo clic.' },
+  { q: '¿Cómo afecta el parámetro gamma al vídeo?', a: 'El gamma controla la respuesta tonal del vídeo. Un gamma menor de 1 aclara los medios tonos, un gamma mayor de 1 los oscurece. Es útil para corregir vídeos que parecen demasiado oscuros o lavados.' },
+  { q: '¿El audio se preserva en el vídeo de salida?', a: 'Sí. El audio se copia sin recodificar (stream copy), por lo que se preserva la calidad original del sonido y el procesamiento es más rápido.' },
+  { q: '¿Cuánto tiempo tarda el procesamiento?', a: 'Depende de la duración y resolución del vídeo, y del hardware del dispositivo. La primera vez puede tardar más porque descarga el motor FFmpeg.wasm (~30 MB). Las siguientes veces es más rápido.' },
+];
+---
+<ToolLayout slug="ajuste-color-video" faqs={faqs}>
+  <AjusteColorVideoTool client:load />
+</ToolLayout>

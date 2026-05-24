@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EfectoGlitchTool from '@/components/tools/EfectoGlitchTool';
+
+const faqs = [
+  { q: '¿Qué es el efecto glitch?', a: 'El efecto glitch simula una distorsión digital al desplazar los canales de color RGB de forma independiente y añadir cortes horizontales aleatorios en la imagen, imitando los fallos típicos de pantallas digitales.' },
+  { q: '¿Cómo funciona técnicamente?', a: 'La herramienta desplaza el canal rojo (R) hacia la derecha y el canal azul (B) hacia la izquierda por un número de píxeles proporcional a la intensidad elegida. Luego añade cortes horizontales aleatorios para un efecto más auténtico.' },
+  { q: '¿Puedo generar múltiples variaciones del efecto?', a: 'Sí. El botón "Nueva variación" genera un nuevo efecto glitch con semilla aleatoria diferente, produciendo un resultado distinto cada vez con la misma imagen y configuración.' },
+  { q: '¿En qué formato se exporta el resultado?', a: 'El resultado se exporta en PNG para preservar todos los canales de color sin pérdida adicional de calidad.' },
+  { q: '¿Para qué usos creativos sirve el efecto glitch?', a: 'Es popular en diseño gráfico, portadas de música, arte digital, thumbnails de YouTube y publicaciones en redes sociales con estética retro-futurista o cyberpunk.' },
+];
+---
+<ToolLayout slug="efecto-glitch" faqs={faqs}>
+  <EfectoGlitchTool client:load />
+</ToolLayout>

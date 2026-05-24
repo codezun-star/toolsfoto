@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import OGImageTool from '@/components/tools/OGImageTool';
+
+const faqs = [
+  { q: '¿Qué es una imagen Open Graph?', a: 'Las imágenes Open Graph (OG) son las imágenes que se muestran al compartir un enlace en redes sociales como Twitter/X, LinkedIn, WhatsApp o Facebook. Se especifican en el meta tag og:image de la página web.' },
+  { q: '¿Cuál es el tamaño recomendado para OG images?', a: 'El tamaño estándar recomendado es 1200×630 píxeles. Esta herramienta genera exactamente esas dimensiones. La relación de aspecto es aproximadamente 1.91:1.' },
+  { q: '¿Puedo añadir mi logo a la imagen?', a: 'Sí. El botón "Subir logo" permite añadir una imagen (PNG con transparencia recomendado) que aparecerá en la esquina superior izquierda de la OG image.' },
+  { q: '¿Qué formato es mejor para las OG images, JPG o PNG?', a: 'JPG genera archivos más pequeños y es suficiente para la mayoría de casos. PNG es mejor si el logo o elementos gráficos requieren transparencia. La mayoría de redes sociales aceptan ambos formatos.' },
+  { q: '¿Las imágenes generadas se suben a algún servidor?', a: 'No. Todo el proceso ocurre en tu navegador mediante Canvas API. Las imágenes se generan y descargan localmente sin pasar por ningún servidor.' },
+];
+---
+<ToolLayout slug="og-image" faqs={faqs}>
+  <OGImageTool client:load />
+</ToolLayout>

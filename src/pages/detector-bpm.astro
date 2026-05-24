@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DetectorBPMTool from '@/components/tools/DetectorBPMTool';
+
+const faqs = [
+  { q: '¿Cómo detecta el BPM esta herramienta?', a: 'La herramienta utiliza la Web Audio API para analizar la energía de la señal en ventanas de tiempo y detectar picos de onset (ataques de sonido). A partir de los intervalos entre picos calcula el BPM más probable.' },
+  { q: '¿Qué géneros musicales funcionan mejor?', a: 'Funciona especialmente bien con música que tiene un ritmo marcado: electrónica, hip-hop, rock, pop y reggaetón. Géneros con ritmo libre o muy complejo (jazz improvisado, música clásica) pueden dar resultados menos precisos.' },
+  { q: '¿Qué formatos de audio admite?', a: 'Admite todos los formatos de audio que soporte el navegador: MP3, WAV, OGG, AAC, FLAC y M4A.' },
+  { q: '¿El análisis es preciso?', a: 'La precisión depende de la claridad del ritmo en la grabación. Para pistas con ritmo claro, el resultado suele estar dentro de ±2 BPM. También se muestran las equivalencias al doble y la mitad de velocidad.' },
+  { q: '¿Cuánto tiempo analiza del audio?', a: 'Para optimizar el rendimiento, la herramienta analiza los primeros 3 minutos del audio. Esto es suficiente para la mayoría de canciones. La detección tarda pocos segundos incluso para archivos grandes.' },
+];
+---
+<ToolLayout slug="detector-bpm" faqs={faqs}>
+  <DetectorBPMTool client:load />
+</ToolLayout>

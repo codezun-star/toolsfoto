@@ -20,6 +20,9 @@ import {
   Timer, Waves, Speaker, Activity, Database, KeySquare, GitCompare,
   Wand2, PenTool, Eye, Sun, FileDiff, Square, Pin, Smartphone, Repeat2, Volume1,
   BarChart3, Filter, Bell, Terminal, Tag,
+  Columns2, LayoutTemplate, Tv, AppWindow, Spline, ListTree, Subtitles,
+  GalleryHorizontal, Settings2, MonitorPlay, Drum, Mic, MessageSquare,
+  PackageMinus, Share2, ALargeSmall,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -154,6 +157,22 @@ const ICONS: Record<string, React.ReactNode> = {
   Bell: <Bell size={20} />,
   Terminal: <Terminal size={20} />,
   Tag: <Tag size={20} />,
+  Columns2: <Columns2 size={20} />,
+  LayoutTemplate: <LayoutTemplate size={20} />,
+  Tv: <Tv size={20} />,
+  AppWindow: <AppWindow size={20} />,
+  Spline: <Spline size={20} />,
+  ListTree: <ListTree size={20} />,
+  Subtitles: <Subtitles size={20} />,
+  GalleryHorizontal: <GalleryHorizontal size={20} />,
+  Settings2: <Settings2 size={20} />,
+  MonitorPlay: <MonitorPlay size={20} />,
+  Drum: <Drum size={20} />,
+  Mic: <Mic size={20} />,
+  MessageSquare: <MessageSquare size={20} />,
+  PackageMinus: <PackageMinus size={20} />,
+  Share2: <Share2 size={20} />,
+  ALargeSmall: <ALargeSmall size={20} />,
 };
 
 interface Props {

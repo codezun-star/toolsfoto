@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirFuenteTool from '@/components/tools/ConvertirFuenteTool';
+
+const faqs = [
+  { q: '¿Qué formatos de fuente soporta la conversión?', a: 'La herramienta soporta TTF (TrueType), OTF (OpenType CFF) y WOFF (Web Open Font Format). Puedes convertir TTF/OTF a WOFF, y WOFF a TTF.' },
+  { q: '¿Por qué no está disponible WOFF2?', a: 'WOFF2 utiliza compresión Brotli, que no está disponible de forma nativa en las APIs web del navegador (CompressionStream solo soporta deflate y gzip). Se necesita una librería externa o herramienta de escritorio como fonttools.' },
+  { q: '¿Cuándo necesito un WOFF en lugar de TTF?', a: 'WOFF es el formato preferido para web. Está soportado por todos los navegadores modernos desde IE9, tiene meta-información adicional y opcionalmente compresión de tablas, lo que reduce el tamaño de descarga de fuentes en web.' },
+  { q: '¿Se pierden datos al convertir entre formatos?', a: 'No. La conversión TTF/OTF ↔ WOFF es reversible y sin pérdida de información tipográfica. Todas las tablas de la fuente se preservan íntegras. El WOFF generado usa tablas sin compresión para máxima compatibilidad.' },
+  { q: '¿Puedo usar las fuentes convertidas en proyectos comerciales?', a: 'La herramienta solo convierte el formato del archivo. Los derechos de uso de la fuente (licencia) no cambian con la conversión. Verifica siempre la licencia de la fuente que estás convirtiendo.' },
+];
+---
+<ToolLayout slug="convertir-fuente" faqs={faqs}>
+  <ConvertirFuenteTool client:load />
+</ToolLayout>

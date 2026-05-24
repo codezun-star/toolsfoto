@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AnadirSubtitulosTool from '@/components/tools/AnadirSubtitulosTool';
+
+const faqs = [
+  { q: '¿Qué es el formato SRT?', a: 'SRT (SubRip Text) es el formato de subtítulos más extendido. Consiste en bloques numerados con marcas de tiempo de inicio y fin, y el texto del subtítulo. Prácticamente todos los editores de vídeo y reproductores lo soportan.' },
+  { q: '¿Los subtítulos quedan permanentemente en el vídeo?', a: 'Sí. Esta herramienta incrusta los subtítulos "quemados" directamente en el stream de vídeo (hardcoded subtitles). No se pueden desactivar ni seleccionar en la reproducción posterior.' },
+  { q: '¿Cuántos subtítulos soporta?', a: 'La herramienta soporta hasta 30 entradas del archivo SRT. Archivos con más subtítulos procesarán solo los primeros 30. Para vídeos con muchos subtítulos se recomienda usar herramientas de escritorio como HandBrake.' },
+  { q: '¿Cómo se ve el texto de los subtítulos?', a: 'Los subtítulos se muestran en blanco con contorno negro en la parte inferior del vídeo, estilo broadcast clásico. El tamaño de fuente es ajustable antes del procesamiento.' },
+  { q: '¿Qué formato tiene el vídeo de salida?', a: 'El vídeo de salida es MP4 con codec H.264 (libx264), que es el formato más compatible con reproductores, redes sociales y dispositivos móviles.' },
+];
+---
+<ToolLayout slug="anadir-subtitulos" faqs={faqs}>
+  <AnadirSubtitulosTool client:load />
+</ToolLayout>

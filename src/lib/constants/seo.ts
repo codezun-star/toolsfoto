@@ -558,11 +558,6 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Genera contraseñas seguras con la Web Crypto API. Longitud, mayúsculas, minúsculas, números y símbolos configurables. Hasta 20 contraseñas a la vez. Sin registro, sin subir datos. 100% gratis.',
     canonical: 'https://toolsfoto.com/generador-contrasenas',
   },
-  'conversor-unidades': {
-    title: 'Conversor de unidades online gratis — longitud, masa, temperatura | ToolsFoto',
-    description: 'Convierte entre unidades de longitud, masa, temperatura, área, velocidad, volumen, datos y tiempo al instante. 8 categorías, resultado en tiempo real. Sin registro, sin subir datos. 100% gratis.',
-    canonical: 'https://toolsfoto.com/conversor-unidades',
-  },
   'lorem-ipsum': {
     title: 'Generador de Lorem Ipsum online gratis — párrafos y palabras | ToolsFoto',
     description: 'Genera texto Lorem Ipsum en párrafos, frases o palabras. Cantidad ajustable, descarga como .txt. Perfecto para maquetas y prototipos. Sin registro, sin subir datos. 100% gratis en el navegador.',
@@ -781,5 +776,107 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     title: 'Ver y editar metadatos de PDF online gratis | ToolsFoto',
     description: 'Lee y modifica el título, autor, asunto y palabras clave de cualquier PDF. Guarda el PDF con los nuevos metadatos. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
     canonical: 'https://toolsfoto.com/metadatos-pdf',
+  },
+
+  // ── 20 herramientas nuevas (3ª tanda) ─────────────────────────
+  'comparar-imagenes': {
+    title: 'Comparar imágenes online gratis — slider antes/después | ToolsFoto',
+    description: 'Compara dos imágenes con un slider interactivo de antes/después. Arrastra la línea para revelar cada imagen. Canvas API, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/comparar-imagenes',
+  },
+  placeholder: {
+    title: 'Generador de imágenes placeholder online gratis | ToolsFoto',
+    description: 'Crea imágenes placeholder con el tamaño, color y texto que necesites. Presets 16:9, 1:1, 4:3, OG y Banner. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/placeholder',
+  },
+  'efecto-glitch': {
+    title: 'Efecto glitch en imagen online gratis — RGB shift | ToolsFoto',
+    description: 'Aplica un efecto glitch artístico con desplazamiento de canales RGB y cortes aleatorios. Genera variaciones únicas. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/efecto-glitch',
+  },
+  'tilt-shift': {
+    title: 'Efecto tilt-shift online gratis — miniatura fotográfica | ToolsFoto',
+    description: 'Simula el efecto tilt-shift de maqueta miniatura con desenfoque gaussiano fuera de la banda de enfoque. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/tilt-shift',
+  },
+  'imagen-a-ico': {
+    title: 'Convertir imagen a ICO online gratis — favicon .ico | ToolsFoto',
+    description: 'Convierte cualquier imagen a formato .ico con múltiples tamaños (16, 32, 48, 64, 128, 256 px). ICO moderno con PNG embebido. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/imagen-a-ico',
+  },
+  'sellar-pdf': {
+    title: 'Sellar PDF online gratis — añadir sello de texto | ToolsFoto',
+    description: 'Estampa un sello de texto diagonal (BORRADOR, CONFIDENCIAL, APROBADO…) en todas las páginas de tu PDF. Color y opacidad ajustables. pdf-lib, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/sellar-pdf',
+  },
+  'pdf-a-svg': {
+    title: 'Convertir PDF a SVG online gratis | ToolsFoto',
+    description: 'Convierte cada página de tu PDF a un archivo SVG. Descarga páginas individuales o todas en un ZIP. pdfjs-dist, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/pdf-a-svg',
+  },
+  'comparar-pdfs': {
+    title: 'Comparar dos PDFs online gratis — vista en paralelo | ToolsFoto',
+    description: 'Compara dos PDFs página a página en una vista sincronizada. Navegación paralela y escala ajustable. pdfjs-dist, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/comparar-pdfs',
+  },
+  'indice-pdf': {
+    title: 'Extraer índice de PDF online gratis — tabla de contenidos | ToolsFoto',
+    description: 'Obtén el índice o tabla de contenidos de cualquier PDF con sus números de página. Usa los marcadores integrados o detecta encabezados automáticamente. pdfjs-dist, 100% local. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/indice-pdf',
+  },
+  'anadir-subtitulos': {
+    title: 'Añadir subtítulos a vídeo online gratis — incrustar SRT | ToolsFoto',
+    description: 'Incrusta subtítulos de un archivo .SRT en tu vídeo permanentemente. Los subtítulos se renderizan en canvas y se superponen con FFmpeg.wasm. 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/anadir-subtitulos',
+  },
+  'extraer-fotogramas': {
+    title: 'Extraer fotogramas de vídeo online gratis — frames a ZIP | ToolsFoto',
+    description: 'Exporta fotogramas de tu vídeo en JPG o PNG a la tasa de FPS elegida. Se descargan en un archivo ZIP. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/extraer-fotogramas',
+  },
+  'ajuste-color-video': {
+    title: 'Ajuste de color de vídeo online gratis — brillo contraste saturación | ToolsFoto',
+    description: 'Ajusta brillo, contraste, saturación y gamma de tu vídeo con presets Vivid, Cine, Vintage y B&N. FFmpeg.wasm eq filter, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/ajuste-color-video',
+  },
+  'miniatura-video': {
+    title: 'Capturar miniatura de vídeo online gratis — frame a imagen | ToolsFoto',
+    description: 'Captura cualquier fotograma de tu vídeo como imagen PNG o JPG con un slider de tiempo. HTML5 Video + Canvas API, sin FFmpeg. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/miniatura-video',
+  },
+  'detector-bpm': {
+    title: 'Detector de BPM online gratis — calcular tempo de audio | ToolsFoto',
+    description: 'Detecta automáticamente los BPM (beats per minute) de tu música o audio. Análisis de energía con Web Audio API, sin IA ni servidores. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/detector-bpm',
+  },
+  'separar-voz': {
+    title: 'Separar voz de música online gratis — vocal remover | ToolsFoto',
+    description: 'Extrae la voz y el instrumental de cualquier audio estéreo con el algoritmo de cancelación de canal central. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/separar-voz',
+  },
+  'transcribir-audio': {
+    title: 'Transcribir audio a texto online gratis — voz a texto | ToolsFoto',
+    description: 'Convierte voz a texto en tiempo real con la Web Speech API. Soporta español, inglés, francés, alemán, italiano, portugués y catalán. Sin registro, sin subir archivos. 100% gratuito en el navegador.',
+    canonical: 'https://toolsfoto.com/transcribir-audio',
+  },
+  'afinar-audio': {
+    title: 'Afinar audio online gratis — pitch shift con time-stretching | ToolsFoto',
+    description: 'Desplaza el tono de tu audio en semitonos (-12 a +12) preservando la velocidad original. Vibrato opcional. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/afinar-audio',
+  },
+  'minificador-svg': {
+    title: 'Minificador SVG online gratis — comprimir SVG | ToolsFoto',
+    description: 'Reduce el tamaño de tus SVGs eliminando metadatos, comentarios y atributos de Inkscape/Sodipodi. Pega código o sube un archivo. Sin dependencias. Sin registro, sin subir archivos. 100% gratuito.',
+    canonical: 'https://toolsfoto.com/minificador-svg',
+  },
+  'og-image': {
+    title: 'Generador de imágenes Open Graph online gratis — OG Image 1200×630 | ToolsFoto',
+    description: 'Crea imágenes Open Graph 1200×630 px para redes sociales con título, subtítulo, colores y logo opcional. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/og-image',
+  },
+  'convertir-fuente': {
+    title: 'Convertir fuentes TTF OTF WOFF online gratis | ToolsFoto',
+    description: 'Convierte fuentes tipográficas entre TTF, OTF y WOFF directamente en el navegador. Conversión sin pérdida: todas las tablas SFNT se preservan. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/convertir-fuente',
   },
 };

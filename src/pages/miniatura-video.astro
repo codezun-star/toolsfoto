@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MiniaturaVideoTool from '@/components/tools/MiniaturaVideoTool';
+
+const faqs = [
+  { q: '¿En qué se diferencia de "Capturar fotograma"?', a: 'Esta herramienta usa directamente el elemento de vídeo del navegador para capturar el frame visible en pantalla, sin necesitar FFmpeg. Es más rápida para obtener thumbnails y permite elegir el formato de salida (PNG o JPG).' },
+  { q: '¿Cómo selecciono el frame exacto que quiero?', a: 'Usa el slider de tiempo para navegar al segundo exacto. El vídeo reproduce el frame en tiempo real mientras mueves el slider. La imagen capturada corresponde exactamente al frame visible.' },
+  { q: '¿Qué formato es mejor para miniaturas de YouTube?', a: 'YouTube recomienda JPG para miniaturas (peso reducido). PNG es mejor si la miniatura incluye texto o gráficos nítidos que no deben comprimirse con artefactos.' },
+  { q: '¿La miniatura se captura en la resolución original del vídeo?', a: 'Sí. La resolución del frame capturado es la misma que la resolución nativa del vídeo. Si el vídeo es 1920×1080, la miniatura será 1920×1080.' },
+  { q: '¿Qué formatos de vídeo admite la herramienta?', a: 'Admite cualquier formato que tu navegador pueda reproducir: MP4 (H.264), WebM (VP8/VP9) y MOV. Los formatos AVI y MKV pueden no ser soportados dependiendo del navegador.' },
+];
+---
+<ToolLayout slug="miniatura-video" faqs={faqs}>
+  <MiniaturaVideoTool client:load />
+</ToolLayout>
