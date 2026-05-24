@@ -18,6 +18,8 @@ import {
   KeyRound, ArrowLeftRight, AlignJustify, Zap, Volume, Info, Sunset, Target,
   Focus, BarChart2, Brush, Blend, Shuffle, PanelTop, CopyPlus, Repeat,
   Timer, Waves, Speaker, Activity, Database, KeySquare, GitCompare,
+  Wand2, PenTool, Eye, Sun, FileDiff, Square, Pin, Smartphone, Repeat2, Volume1,
+  BarChart3, Filter, Bell, Terminal, Tag,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -137,6 +139,21 @@ const ICONS: Record<string, React.ReactNode> = {
   Database: <Database size={20} />,
   KeySquare: <KeySquare size={20} />,
   GitCompare: <GitCompare size={20} />,
+  Wand2: <Wand2 size={20} />,
+  PenTool: <PenTool size={20} />,
+  Eye: <Eye size={20} />,
+  Sun: <Sun size={20} />,
+  FileDiff: <FileDiff size={20} />,
+  Square: <Square size={20} />,
+  Pin: <Pin size={20} />,
+  Smartphone: <Smartphone size={20} />,
+  Repeat2: <Repeat2 size={20} />,
+  Volume1: <Volume1 size={20} />,
+  BarChart3: <BarChart3 size={20} />,
+  Filter: <Filter size={20} />,
+  Bell: <Bell size={20} />,
+  Terminal: <Terminal size={20} />,
+  Tag: <Tag size={20} />,
 };
 
 interface Props {

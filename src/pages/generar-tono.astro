@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GenerarTonoTool from '@/components/tools/GenerarTonoTool';
+---
+<ToolLayout slug="generar-tono" faqs={[
+  { q: '¿Para qué sirve un generador de tonos de audio?', a: 'Es útil para calibrar altavoces y auriculares, probar la respuesta en frecuencia de un sistema de audio, crear efectos de sonido, generar señales de prueba para equipos de grabación, hacer experimentos de psicoacústica, o crear tonos de meditación y binaural beats.' },
+  { q: '¿Qué formas de onda están disponibles?', a: 'La herramienta genera cuatro formas de onda: sinusoidal (tono puro, el más suave), cuadrada (rica en armónicos impares, sonido electrónico), triangular (armónicos impares con caída más suave) y diente de sierra (todos los armónicos, el más brillante y agresivo).' },
+  { q: '¿Qué frecuencias puedo generar?', a: 'Puedes generar tonos entre 20 Hz (límite inferior del oído humano) y 20.000 Hz (límite superior). El La estándar es 440 Hz. Para binaural beats se usan diferencias de frecuencia entre 1 y 40 Hz.' },
+  { q: '¿En qué formato se descarga el tono generado?', a: 'El tono se descarga como archivo WAV (audio sin compresión), lo que garantiza máxima fidelidad para la frecuencia generada.' },
+  { q: '¿Se procesan los archivos en el servidor?', a: 'No. Los tonos se generan 100% en tu navegador usando FFmpeg.wasm con la fuente lavfi (generador de señal interno). Ningún dato sale de tu dispositivo. La primera vez descarga el procesador (~30 MB).' },
+]}>
+  <GenerarTonoTool client:load />
+</ToolLayout>

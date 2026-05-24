@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConversorBaseTool from '@/components/tools/ConversorBaseTool';
+---
+<ToolLayout slug="conversor-base" faqs={[
+  { q: '¿Qué es el sistema de bases numéricas?', a: 'Un sistema de bases es una forma de representar números usando un conjunto de dígitos. El decimal (base 10) usa 0-9 y es el que usamos cotidianamente. El binario (base 2) usa solo 0 y 1 y es el que usa el hardware. El hexadecimal (base 16) usa 0-9 y A-F y es común en programación. El octal (base 8) usa 0-7.' },
+  { q: '¿Para qué se usa el sistema hexadecimal?', a: 'El hexadecimal es muy usado en programación: colores CSS (#FF5733), direcciones de memoria, valores de bytes en depuración, representación compacta de datos binarios y protocolos de red. Un byte (8 bits) se representa con exactamente 2 dígitos hexadecimales.' },
+  { q: '¿Por qué el binario se muestra agrupado en grupos de 4?', a: 'Los grupos de 4 bits se llaman nibbles y corresponden exactamente a un dígito hexadecimal. Agrupar el binario en nibbles (ej: 1111 0011 en lugar de 11110011) facilita la lectura y la conversión mental a hexadecimal.' },
+  { q: '¿Hay un límite en el tamaño del número que puedo convertir?', a: 'La herramienta usa el tipo Number de JavaScript, que puede representar enteros exactamente hasta 2^53 - 1 (Number.MAX_SAFE_INTEGER). Para la mayoría de los usos prácticos en programación esto es más que suficiente.' },
+  { q: '¿Los cálculos se hacen en el servidor?', a: 'No. Todas las conversiones se realizan localmente en tu navegador con JavaScript nativo (parseInt y toString con base). Ningún dato sale de tu dispositivo.' },
+]}>
+  <ConversorBaseTool client:load />
+</ToolLayout>

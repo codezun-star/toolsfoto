@@ -13,14 +13,15 @@
 
 ## Regla obligatoria: documentar cada herramienta nueva
 
-**Cada vez que se añada una herramienta nueva, se DEBE actualizar este CLAUDE.md:**
-1. Añadir fila en la tabla del dominio correspondiente (Imagen / PDF / Vídeo / Audio / Developer).
-2. Actualizar el contador de herramientas en la sección "Comandos" (páginas del build).
+**Cada vez que se añada una herramienta nueva, se DEBE actualizar:**
+1. Añadir fila en `calculadoras.md` (dominio correspondiente) y actualizar el contador total.
+2. Actualizar el contador de páginas en la sección "Comandos" de este CLAUDE.md.
 3. Actualizar `src/lib/constants/tools.ts` — entrada con `domain` correcto.
 4. Actualizar `src/lib/constants/seo.ts` — título, descripción y canonical.
 5. Añadir el componente `src/components/tools/NombreTool.tsx`.
 6. Añadir la página `src/pages/slug.astro` con al menos 5 `faqs`.
-7. Si la herramienta usa un uploader nuevo, documentarlo en la sección de UI.
+7. Registrar el icono Lucide en `src/components/ui/ToolCard.tsx` (import + ICONS record).
+8. Si la herramienta usa un uploader nuevo, documentarlo en la sección de UI.
 
 ---
 
@@ -161,170 +162,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 106 herramientas
+## Las 121 herramientas
 
-### Imagen (39)
+> Las tablas completas están en [`calculadoras.md`](./calculadoras.md) para no sobrecargar este archivo.
+> **Total: 121 herramientas — 43 imagen · 28 PDF · 21 vídeo · 19 audio · 30 developer + 5 legales**
 
-| Slug | Componente | Categoría | Tecnología |
-|---|---|---|---|
-| `/comprimir` | `CompressorTool.tsx` | Básicas | `browser-image-compression` + Web Worker |
-| `/redimensionar` | `ResizerTool.tsx` | Básicas | Canvas API |
-| `/recortar` | `CropperTool.tsx` | Básicas | Canvas API (área arrastrable manual) |
-| `/convertir` | `ConverterTool.tsx` | Básicas | Canvas API (`toBlob` con MIME type) |
-| `/girar` | `RotatorTool.tsx` | Básicas | Canvas API + `ctx.rotate` + `ctx.scale` |
-| `/redondear` | `RoundCornersTool.tsx` | Básicas | Canvas clip path (quadraticCurveTo) |
-| `/recorte-circular` | `CircularCropTool.tsx` | Básicas | Canvas `ctx.ellipse()` clip |
-| `/marco` | `FrameTool.tsx` | Básicas | Canvas `fillRect` + `drawImage` offset |
-| `/desenfoque` | `BlurTool.tsx` | Básicas | Canvas `filter: blur()` + padding bordes |
-| `/marca-de-agua` | `WatermarkTool.tsx` | Creativas | Canvas API (texto e imagen overlay) |
-| `/meme` | `MemeTool.tsx` | Creativas | Canvas API (fuente Impact, word-wrap manual) |
-| `/blancoynegro` | `GrayscaleTool.tsx` | Creativas | Canvas `filter: grayscale(1)` + brillo/contraste |
-| `/invertir` | `InvertTool.tsx` | Creativas | `getImageData` + inversión byte a byte |
-| `/paleta` | `PaletteTool.tsx` | Creativas | Sampleo de píxeles + cuantización por frecuencia |
-| `/collage` | `CollageTool.tsx` | Creativas | Canvas multi-imagen con 5 layouts, gap y color de fondo |
-| `/texto` | `TextOverlayTool.tsx` | Creativas | Canvas `fillText` con 7 posiciones, 4 fuentes, contorno |
-| `/editor` | `EditorTool.tsx` | Avanzadas | CSS `filter` para preview, Canvas para export |
-| `/eliminar-fondo` | `BackgroundRemoverTool.tsx` | Avanzadas | `@imgly/background-removal` (import dinámico) |
-| `/html-a-imagen` | `HtmlToImageTool.tsx` | Avanzadas | `html2canvas` (import dinámico) + iframe sandbox |
-| `/pixelar` | `PixelateTool.tsx` | Avanzadas | Canvas API (selección de regiones + pixelado por bloques) |
-| `/sombra` | `ShadowTool.tsx` | Avanzadas | Canvas `shadowBlur/shadowOffsetX/Y` con padding |
-| `/espejo` | `EspejoTool.tsx` | Básicas | Canvas `ctx.scale(-1,1)` / `ctx.scale(1,-1)` — PNG |
-| `/foto-carnet` | `FotoCarnetTool.tsx` | Básicas | Canvas center-crop a tamaños oficiales (DNI, pasaporte, visa…) |
-| `/redimensionar-redes` | `RedimensionarRedesTool.tsx` | Básicas | 12 presets sociales — modo recortar o contener con fondo |
-| `/efecto-vintage` | `EfectoVintageTool.tsx` | Creativas | 5 efectos: sepia, vintage (viñeta), cine (grano), polaroid, noir |
-| `/thumbnail-youtube` | `ThumbnailYoutubeTool.tsx` | Creativas | Canvas 1280×720 JPEG — overlay + texto con word-wrap |
-| `/imagenes-a-gif` | `ImagenesAGifTool.tsx` | Creativas | FFmpeg.wasm concat demuxer + palettegen/paletteuse |
-| `/imagen-a-webp` | `ImagenAWebpTool.tsx` | Básicas | Canvas API `toBlob('image/webp', quality)` |
-| `/ajustar-hsb` | `AjustarHSBTool.tsx` | Creativas | Canvas `ctx.filter` hue-rotate/saturate/brightness/contrast |
-| `/efecto-boceto` | `EfectoBocetoTool.tsx` | Creativas | Canvas grayscale + invert + blur → color dodge blend manual |
-| `/cambiar-fondo` | `CambiarFondoTool.tsx` | Básicas | Canvas `fillRect` con color + `drawImage` |
-| `/mosaico` | `MosaicoTool.tsx` | Creativas | Canvas `drawImage` en bucle NxM tiles |
-| `/efecto-duotono` | `EfectoDuotonoTool.tsx` | Creativas | `getImageData` + mapeo luminosidad → dos colores |
-| `/comprimir-objetivo` | `ComprimirObjetivoTool.tsx` | Básicas | Canvas API — búsqueda binaria de calidad JPEG hasta 15 iteraciones para alcanzar tamaño objetivo |
-| `/fondo-degradado` | `FondoDegradadoTool.tsx` | Creativas | Canvas `createLinearGradient`/`createRadialGradient` — dibuja gradiente y superpone imagen (ideal para PNGs con transparencia) |
-| `/nitidez` | `NitidezTool.tsx` | Básicas | Canvas API — unsharp mask con getImageData: out = orig + factor × (orig − blurred) |
-| `/ajustar-niveles` | `AjustarNivelesTool.tsx` | Básicas | Canvas `getImageData` — punto negro, punto blanco y corrección gamma sobre cada canal |
-| `/efecto-oleo` | `EfectoOleoTool.tsx` | Creativas | Canvas `getImageData` — oil painting por vecindad de píxeles (histograma de intensidades por bins) |
-| `/desvanecer-bordes` | `DesvanecerBordesTool.tsx` | Creativas | Canvas `destination-in` con gradiente radial o lineal — exporta PNG con transparencia |
-
-### PDF (25)
-
-| Slug | Componente | Categoría | Tecnología |
-|---|---|---|---|
-| `/comprimir-pdf` | `ComprimirPDFTool.tsx` | Básicas | pdf-lib `save({ useObjectStreams: true })` |
-| `/unir-pdfs` | `UnirPDFsTool.tsx` | Básicas | pdf-lib `copyPages` multi-doc |
-| `/dividir-pdf` | `DividirPDFTool.tsx` | Básicas | pdf-lib `copyPages` por página o rango |
-| `/pdf-a-jpg` | `PDFaJPGTool.tsx` | Básicas | pdfjs-dist `getPage().render()` + canvas + CDN worker |
-| `/jpg-a-pdf` | `JPGaPDFTool.tsx` | Básicas | pdf-lib `embedJpg/embedPng` + `addPage` |
-| `/rotar-pdf` | `RotarPDFTool.tsx` | Básicas | pdf-lib `page.setRotation(degrees(n))` |
-| `/extraer-paginas-pdf` | `ExtraerPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` con rango personalizado |
-| `/extraer-texto-pdf` | `ExtraerTextoPDFTool.tsx` | Avanzadas | pdfjs-dist `getTextContent()` + CDN worker |
-| `/proteger-pdf` | `ProtegerPDFTool.tsx` | Avanzadas | pdf-lib `doc.encrypt({ userPassword, ownerPassword })` |
-| `/eliminar-password-pdf` | `EliminarPasswordPDFTool.tsx` | Avanzadas | pdf-lib `PDFDocument.load(bytes, { password })` + save |
-| `/marca-agua-pdf` | `MarcaAguaPDFTool.tsx` | Básicas | pdf-lib `page.drawText()` con `rotate: degrees(45)` + opacity |
-| `/numerar-paginas-pdf` | `NumerarPaginasPDFTool.tsx` | Básicas | pdf-lib `page.drawText()` — posición, formato y número inicial |
-| `/firmar-pdf` | `FirmarPDFTool.tsx` | Avanzadas | Canvas drawing pad → `embedPng` → `page.drawImage()` |
-| `/pdf-a-png` | `PDFaPNGTool.tsx` | Básicas | pdfjs-dist `render()` + `canvas.toBlob('image/png')` |
-| `/reordenar-paginas-pdf` | `ReordenarPaginasPDFTool.tsx` | Básicas | pdfjs-dist thumbnails + pdf-lib `copyPages(src, order)` |
-| `/recortar-pdf` | `RecortarPDFTool.tsx` | Básicas | pdf-lib `page.setCropBox()` — márgenes en mm → pt (×2.8346) |
-| `/anadir-texto-pdf` | `AnadirTextoPDFTool.tsx` | Básicas | pdf-lib `page.drawText()` — hasta 5 bloques, posición X/Y%, color |
-| `/eliminar-paginas-pdf` | `EliminarPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` conservando solo páginas no eliminadas |
-| `/anadir-imagen-pdf` | `AnadirImagenPDFTool.tsx` | Básicas | pdf-lib `embedJpg/embedPng` + `page.drawImage()` con posición % |
-| `/pdf-en-blanco` | `PDFEnBlancoTool.tsx` | Básicas | pdf-lib `addPage([w, h])` con tamaños estándar y orientación |
-| `/metadatos-pdf` | `MetadatosPDFTool.tsx` | Básicas | pdf-lib `getTitle/setTitle/getAuthor/setAuthor/getSubject/setSubject/getKeywords/setKeywords` — lectura y edición de metadatos |
-| `/intercalar-pdfs` | `IntercalarPDFsTool.tsx` | Básicas | pdf-lib `copyPages` alternando páginas A1, B1, A2, B2… de dos PDFs |
-| `/escalar-pdf` | `EscalarPDFTool.tsx` | Básicas | pdf-lib `embedPage` + `drawPage` — fit to page manteniendo proporción |
-| `/encabezado-pie-pdf` | `EncabezadoPiePDFTool.tsx` | Básicas | pdf-lib `page.drawText()` centrado en cabecera y pie — soporta `{n}` y `{total}` |
-| `/duplicar-paginas-pdf` | `DuplicarPaginasPDFTool.tsx` | Básicas | pdf-lib `copyPages` — inserta N copias tras la página original |
-
-### Vídeo (19)
-
-| Slug | Componente | Categoría | Tecnología |
-|---|---|---|---|
-| `/comprimir-video` | `ComprimirVideoTool.tsx` | Básicas | FFmpeg.wasm — libx264 CRF (20/28/36), acodec aac |
-| `/convertir-video` | `ConvertirVideoTool.tsx` | Básicas | FFmpeg.wasm — MP4 (libx264/aac) o WebM (libvpx/libvorbis) |
-| `/extraer-audio` | `ExtraerAudioTool.tsx` | Básicas | FFmpeg.wasm — `-vn` + libmp3lame / pcm_s16le / aac |
-| `/video-a-gif` | `VideoAGifTool.tsx` | Básicas | FFmpeg.wasm — palettegen+paletteuse, FPS y ancho configurables |
-| `/recortar-video` | `RecortarVideoTool.tsx` | Básicas | FFmpeg.wasm — `-ss … -to … -c copy` (sin re-encode) |
-| `/cambiar-velocidad` | `CambiarVelocidadTool.tsx` | Básicas | FFmpeg.wasm — `setpts` + `atempo` (chaining para 0.25x) |
-| `/anadir-audio-video` | `AnadirAudioVideoTool.tsx` | Básicas | FFmpeg.wasm — reemplazar (`-map 0:v:0 -map 1:a:0`) o mezclar (`amix`) |
-| `/rotar-video` | `RotarVideoTool.tsx` | Básicas | FFmpeg.wasm — `transpose=1/2` (90° CW/CCW), `transpose=1,transpose=1` (180°) |
-| `/unir-videos` | `UnirVideosTool.tsx` | Básicas | FFmpeg.wasm — concat demuxer + re-encode libx264, hasta 10 clips |
-| `/silenciar-video` | `SilenciarVideoTool.tsx` | Básicas | FFmpeg.wasm — `-an -c:v copy` (stream copy, sin re-encode) |
-| `/capturar-fotograma` | `CapturarFotogramaTool.tsx` | Básicas | FFmpeg.wasm — `-ss {t} -frames:v 1` → PNG |
-| `/voltear-video` | `VoltearVideoTool.tsx` | Básicas | FFmpeg.wasm — `hflip`, `vflip` o ambos |
-| `/recortar-area-video` | `RecortarAreaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `crop=w:h:x:y` |
-| `/cambiar-resolucion-video` | `CambiarResolucionVideoTool.tsx` | Básicas | FFmpeg.wasm — `scale=w:h:force_original_aspect_ratio=decrease,pad` |
-| `/marca-agua-video` | `MarcaAguaVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `drawtext` con posición y opacidad |
-| `/bucle-video` | `BucleVideoTool.tsx` | Básicas | FFmpeg.wasm — concat demuxer con `list.txt` repitiendo el clip N veces |
-| `/audio-a-video` | `AudioAVideoTool.tsx` | Básicas | FFmpeg.wasm — `-loop 1 -i img` o `lavfi color` + audio → MP4 libx264/aac |
-| `/revertir-video` | `RevertirVideoTool.tsx` | Básicas | FFmpeg.wasm — filtros `reverse` + `areverse` (carga el vídeo entero en RAM) |
-| `/reducir-fps` | `ReducirFPSTool.tsx` | Básicas | FFmpeg.wasm — `-vf fps=N`, copia el audio sin re-encode |
-
-### Audio (16)
-
-| Slug | Componente | Categoría | Tecnología |
-|---|---|---|---|
-| `/comprimir-audio` | `ComprimirAudioTool.tsx` | Básicas | FFmpeg.wasm — libmp3lame, bitrate configurable (64k–320k) |
-| `/convertir-audio` | `ConvertirAudioTool.tsx` | Básicas | FFmpeg.wasm — MP3 / WAV / OGG / AAC |
-| `/cortar-audio` | `CortarAudioTool.tsx` | Básicas | FFmpeg.wasm — `-ss … -to … -c copy`, preserva formato original |
-| `/unir-audios` | `UnirAudiosTool.tsx` | Básicas | FFmpeg.wasm — re-encode a mp3 + concat demuxer (`list.txt`) |
-| `/cambiar-volumen` | `CambiarVolumenTool.tsx` | Básicas | FFmpeg.wasm — `volume=${db}dB` o filtro `loudnorm` para normalizar |
-| `/velocidad-audio` | `VelocidadAudioTool.tsx` | Básicas | FFmpeg.wasm — `atempo` con chaining para <0.5× o >2× |
-| `/revertir-audio` | `RevertirAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `areverse`, preserva formato original |
-| `/agregar-fade-audio` | `AgregarFadeAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `afade=t=in/out:st:d` encadenado |
-| `/mezclar-audios` | `MezclarAudiosTool.tsx` | Básicas | FFmpeg.wasm — `amix=inputs=2:duration=longest` con volume por pista |
-| `/cambiar-tono` | `CambiarTonoTool.tsx` | Básicas | FFmpeg.wasm — `asetrate=44100*2^(s/12),aresample=44100` |
-| `/anadir-silencio` | `AnadirSilencioTool.tsx` | Básicas | FFmpeg.wasm — `adelay=${ms}|${ms}` (inicio) + `apad=pad_dur=${s}` (final), preserva formato original |
-| `/convertir-a-mono` | `ConvertirAMonoTool.tsx` | Básicas | FFmpeg.wasm — `-ac 1` mezcla canales estéreo a mono, preserva formato original |
-| `/eco-audio` | `EcoAudioTool.tsx` | Básicas | FFmpeg.wasm — filtro `aecho=0.8:0.9:delay:decay` con presets (Sutil/Sala/Caverna/Estadio) |
-| `/convertir-a-estereo` | `ConvertirAEstereoTool.tsx` | Básicas | FFmpeg.wasm — `-ac 2` duplica canal mono en ambos canales estéreo |
-| `/eliminar-silencio` | `EliminarSilencioTool.tsx` | Básicas | FFmpeg.wasm — `silenceremove=stop_periods=-1:stop_duration:stop_threshold` |
-| `/normalizar-audio` | `NormalizarAudioTool.tsx` | Básicas | FFmpeg.wasm — `loudnorm=I=target:TP=-1:LRA=7` — presets -14/-16/-23 LUFS |
-
-### Developer (27)
-
-| Slug | Componente | Categoría | Tecnología |
-|---|---|---|---|
-| `/svg-a-png` | `SvgAPngTool.tsx` | Básicas | Canvas API + `new Image()` con blob URL SVG |
-| `/colores-imagen` | `ColoresImagenTool.tsx` | Básicas | Canvas 200×200 sampleo + cuantización 4-bit |
-| `/eliminar-exif` | `EliminarExifTool.tsx` | Básicas | Canvas API re-export (strips all metadata) |
-| `/imagen-a-base64` | `ImagenABase64Tool.tsx` | Básicas | `FileReader.readAsArrayBuffer` + `btoa` |
-| `/generar-favicon` | `GenerarFaviconTool.tsx` | Básicas | Canvas múltiples tamaños + HTML tags generator |
-| `/generar-qr` | `GenerarQRTool.tsx` | Básicas | `qrcode` (import dinámico) — `QRCode.toCanvas()`, colores y corrección de errores |
-| `/formatear-json` | `FormatearJSONTool.tsx` | Básicas | `JSON.parse/stringify` nativo — format (2/4 espacios), minify, validate |
-| `/codificar-url` | `CodificarURLTool.tsx` | Básicas | `encodeURIComponent/decodeURIComponent/encodeURI/decodeURI` — live output |
-| `/convertir-color` | `ConvertirColorTool.tsx` | Básicas | Conversión pura HEX↔RGB↔HSL↔HSB sin librerías |
-| `/base64-texto` | `Base64TextoTool.tsx` | Básicas | `btoa/atob` con TextEncoder para Unicode — encode/decode live |
-| `/minificador-css` | `MinificadorCSSTool.tsx` | Básicas | Minificación y formateo CSS puro en JS — sin dependencias |
-| `/csv-a-json` | `CsvAJsonTool.tsx` | Básicas | Parser CSV propio con soporte de comillas — CSV↔JSON bidireccional |
-| `/calcular-hash` | `CalcularHashTool.tsx` | Básicas | Web Crypto API — SHA-1/256/384/512 sobre texto o archivo |
-| `/regex-tester` | `RegexTesterTool.tsx` | Básicas | `RegExp` nativo JS — resaltado de coincidencias + grupos de captura |
-| `/generador-uuid` | `GeneradorUUIDTool.tsx` | Básicas | `crypto.randomUUID()` — UUID v4 hasta 100 de una vez |
-| `/contador-palabras` | `ContadorPalabrasTool.tsx` | Básicas | JS puro — palabras, chars, frases, párrafos, tiempo de lectura |
-| `/convertir-timestamp` | `ConvertirTimestampTool.tsx` | Básicas | `Date` nativo — Unix↔fecha local/UTC/ISO 8601 bidireccional |
-| `/minificador-html` | `MinificadorHTMLTool.tsx` | Básicas | JS puro regex — elimina comments, colapsa whitespace, formatea |
-| `/generador-contrasenas` | `GeneradorContrasenasTool.tsx` | Básicas | `crypto.getRandomValues(Uint32Array)` — passwords criptográficamente seguros, longitud 6-64, opciones de charset, indicador de fortaleza |
-| `/conversor-unidades` | `ConversorUnidadesTool.tsx` | Básicas | JS puro — 8 categorías (longitud, masa, temperatura, área, velocidad, volumen, datos, tiempo), conversión vía base unit, formato científico para extremos |
-| `/lorem-ipsum` | `LoremIpsumTool.tsx` | Básicas | JS puro — 3 modos (párrafos/frases/palabras), corpus de 100+ palabras latinas, opción de inicio clásico, descarga como .txt |
-| `/gradiente-css` | `GradienteCssTool.tsx` | Básicas | CSS gradient builder — lineal/radial, hasta 5 stops, ángulo configurable, 5 presets, genera declaración CSS lista para copiar |
-| `/minificador-js` | `MinificadorJSTool.tsx` | Básicas | JS puro regex — elimina comentarios de bloque y línea, colapsa whitespace, muestra reducción en bytes; modo formateador básico |
-| `/formateador-sql` | `FormateadorSQLTool.tsx` | Básicas | JS puro — keywords en mayúsculas, saltos de línea por cláusula, indentación AND/OR; modo minificar |
-| `/jwt-decoder` | `JwtDecoderTool.tsx` | Básicas | `atob` + base64url decode — muestra header, payload y signature; detecta expiración por campo `exp` |
-| `/esquema-colores` | `EsquemaColoresTool.tsx` | Básicas | JS puro HSL — 6 esquemas: complementario, análogo, triádico, split-complementario, tetrádico, tonos |
-| `/comparar-texto` | `CompararTextoTool.tsx` | Básicas | Algoritmo LCS en JS puro — diff línea a línea con resaltado verde/rojo; tabla con números de línea |
-
-### Páginas legales (5)
-
-| Ruta | Descripción |
-|---|---|
-| `/privacidad` | Política de privacidad — sin recopilación de datos |
-| `/terminos` | Términos de uso |
-| `/cookies` | Política de cookies — no se usan cookies de seguimiento |
-| `/aviso-legal` | Aviso legal LSSI/RGPD |
-| `/contacto` | Solo email, sin formulario |
-
-Todas las páginas legales usan `LegalLayout.astro` y tienen `noindex, follow`.
+Al añadir una herramienta nueva, actualizar también `calculadoras.md` con la fila correspondiente.
 
 ---
 
@@ -501,7 +344,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 132 páginas HTML estáticas** (39 imagen + 25 PDF + 19 vídeo + 16 audio + 27 developer + home + 5 legales).
+**El build genera actualmente 147 páginas HTML estáticas** (43 imagen + 28 PDF + 21 vídeo + 19 audio + 30 developer + home + 5 legales).
 
 ---
 

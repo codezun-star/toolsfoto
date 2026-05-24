@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FondoColorPDFTool from '@/components/tools/FondoColorPDFTool';
+---
+<ToolLayout slug="fondo-color-pdf" faqs={[
+  { q: '¿Para qué sirve añadir un fondo de color a un PDF?', a: 'Es útil para PDFs que tienen fondo transparente o blanco y quieres añadir un color corporativo, para documentos que necesitan un color de fondo diferente al blanco para impresión, o para añadir identidad visual a presentaciones.' },
+  { q: '¿Se altera el contenido original del PDF?', a: 'No. Se usa la técnica embedPage de pdf-lib: cada página original se incrusta como objeto en una nueva página que primero dibuja el color de fondo y luego superpone el contenido original encima. El texto e imágenes quedan intactos.' },
+  { q: '¿El color de fondo se aplica a todas las páginas?', a: 'Sí. El color elegido se aplica uniformemente a todas las páginas del documento.' },
+  { q: '¿Puedo usar cualquier color de fondo?', a: 'Sí. Dispones de una selección de colores predefinidos y un selector de color personalizado para elegir cualquier tono HEX.' },
+  { q: '¿Se procesan mis PDFs en el servidor?', a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib (carga dinámica). Ningún archivo sale de tu dispositivo.' },
+]}>
+  <FondoColorPDFTool client:load />
+</ToolLayout>

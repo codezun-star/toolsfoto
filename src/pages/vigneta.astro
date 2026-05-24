@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VignetaTool from '@/components/tools/VignetaTool';
+---
+<ToolLayout slug="vigneta" faqs={[
+  { q: '¿Qué es el efecto viñeta en fotografía?', a: 'La viñeta (vignette) es un oscurecimiento o aclarado gradual de los bordes de la imagen hacia el centro. En fotografía analógica ocurría de forma natural por limitaciones ópticas de los objetivos; hoy se usa de forma creativa para centrar la atención en el sujeto.' },
+  { q: '¿Puedo elegir el color de la viñeta?', a: 'Sí. La herramienta permite elegir cualquier color para la viñeta mediante un selector de color. El clásico es negro, pero también puedes usar blanco para un efecto de sobreexposición en los bordes, o cualquier otro tono.' },
+  { q: '¿Cómo se implementa técnicamente la viñeta?', a: 'Se crea un gradiente radial desde transparente en el centro hasta el color elegido en los bordes, que se superpone sobre la imagen original. La intensidad del efecto se controla con el slider de opacidad.' },
+  { q: '¿La viñeta afecta a la calidad de la imagen?', a: 'Solo altera los píxeles de los bordes mediante una superposición semitransparente. El centro de la imagen queda completamente intacto. El resultado se exporta en PNG para máxima calidad.' },
+  { q: '¿Funciona con imágenes PNG con transparencia?', a: 'Sí. La herramienta preserva la transparencia de la imagen original. La viñeta se aplica solo sobre los píxeles existentes y el canal alpha original se mantiene.' },
+]}>
+  <VignetaTool client:load />
+</ToolLayout>

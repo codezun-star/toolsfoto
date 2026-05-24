@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ReducirRuidoAudioTool from '@/components/tools/ReducirRuidoAudioTool';
+---
+<ToolLayout slug="reducir-ruido-audio" faqs={[
+  { q: '¿Qué tipo de ruido puede eliminar esta herramienta?', a: 'El filtro anlmdn de FFmpeg es efectivo contra ruido estacionario de fondo: ventiladores de PC o aire acondicionado, hiss de grabaciones analógicas, zumbido eléctrico, y ruido ambiente constante. No es tan efectivo contra ruidos impulsivos o voces de fondo.' },
+  { q: '¿Cuáles son los niveles de reducción disponibles?', a: 'Hay tres niveles: Suave (intensidad 0.02), adecuado para grabaciones con poco ruido; Medio (0.05), para ruido moderado de ventiladores o ambiente; e Intenso (0.1), para grabaciones con mucho ruido de fondo. A mayor intensidad, mayor riesgo de afectar la calidad del audio deseado.' },
+  { q: '¿Puede afectar la calidad de la voz o música?', a: 'Sí. Una reducción de ruido agresiva puede producir artefactos sonoros o suavizar excesivamente el audio. Recomendamos empezar con el nivel Suave y subir solo si es necesario. El nivel Intenso puede alterar la naturalidad del audio en grabaciones limpias.' },
+  { q: '¿En qué formato se descarga el audio?', a: 'El audio se descarga en el mismo formato que el original (MP3, WAV, OGG, AAC). La herramienta mapea el formato de entrada al codec adecuado de salida.' },
+  { q: '¿Se procesan mis archivos en el servidor?', a: 'No. La reducción de ruido se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
+]}>
+  <ReducirRuidoAudioTool client:load />
+</ToolLayout>

@@ -700,6 +700,83 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/comparar-texto',
   },
 
+  // ── 20 herramientas nuevas (2ª tanda) ────────────────────────
+  ruido: {
+    title: 'Añadir efecto ruido a imagen online gratis — film grain | ToolsFoto',
+    description: 'Aplica ruido aleatorio y efecto de grano fotográfico a tus imágenes. Intensidad y modo monocromático configurables. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/ruido',
+  },
+  posterizar: {
+    title: 'Posterizar imagen online gratis — efecto póster artístico | ToolsFoto',
+    description: 'Reduce los niveles de color de tu imagen con efecto posterización. De 2 a 8 niveles ajustables. Canvas API, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/posterizar',
+  },
+  vigneta: {
+    title: 'Añadir viñeta a imagen online gratis — vignette effect | ToolsFoto',
+    description: 'Aplica efecto de viñeteado en los bordes de tu imagen. Intensidad y color ajustables. Canvas API, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/vigneta',
+  },
+  solarizar: {
+    title: 'Solarizar imagen online gratis — efecto Sabattier | ToolsFoto',
+    description: 'Aplica el efecto de solarización fotográfica (Sabattier) a tu imagen. Umbral ajustable con 3 presets. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/solarizar',
+  },
+  'insertar-pagina-pdf': {
+    title: 'Insertar páginas en blanco en PDF online gratis | ToolsFoto',
+    description: 'Añade una o varias páginas en blanco dentro de tu PDF en la posición que elijas. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/insertar-pagina-pdf',
+  },
+  'fondo-color-pdf': {
+    title: 'Añadir fondo de color a PDF online gratis | ToolsFoto',
+    description: 'Aplica un color de fondo sólido a todas las páginas de tu PDF conservando el contenido original. pdf-lib embedPage, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/fondo-color-pdf',
+  },
+  'aplanar-pdf': {
+    title: 'Aplanar formulario PDF online gratis — flatten PDF form | ToolsFoto',
+    description: 'Convierte los campos interactivos de formularios PDF en texto estático no editable. pdf-lib form.flatten(), 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/aplanar-pdf',
+  },
+  'convertir-vertical': {
+    title: 'Convertir vídeo a vertical 9:16 online gratis — Reels TikTok | ToolsFoto',
+    description: 'Convierte vídeos horizontales al formato vertical 9:16 o cuadrado 1:1 para Instagram Reels, TikTok y YouTube Shorts. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/convertir-vertical',
+  },
+  'boomerang-video': {
+    title: 'Efecto boomerang de vídeo online gratis | ToolsFoto',
+    description: 'Crea el clásico efecto boomerang: el vídeo avanza y retrocede en un bucle continuo. Configura el número de ciclos. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/boomerang-video',
+  },
+  'ajustar-volumen-video': {
+    title: 'Ajustar volumen de vídeo online gratis | ToolsFoto',
+    description: 'Sube o baja el volumen del audio de un vídeo en dB sin re-codificar el stream de vídeo. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/ajustar-volumen-video',
+  },
+  'ecualizador-audio': {
+    title: 'Ecualizador de audio online gratis — EQ 3 bandas | ToolsFoto',
+    description: 'Ajusta graves, medios y agudos de tu audio con un ecualizador de 3 bandas. Presets Rock, Pop, Voz y Clásica. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/ecualizador-audio',
+  },
+  'reducir-ruido-audio': {
+    title: 'Reducir ruido de audio online gratis — noise reduction | ToolsFoto',
+    description: 'Elimina el ruido de fondo de tus grabaciones con el filtro anlmdn de FFmpeg. Tres niveles de reducción. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/reducir-ruido-audio',
+  },
+  'generar-tono': {
+    title: 'Generador de tonos de audio online gratis — sine square triangle | ToolsFoto',
+    description: 'Genera tonos de audio puro (sinusoidal, cuadrado, triangular, diente de sierra) con frecuencia y duración configurables. FFmpeg.wasm lavfi, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/generar-tono',
+  },
+  'conversor-base': {
+    title: 'Conversor de bases numéricas online gratis — decimal binario hex | ToolsFoto',
+    description: 'Convierte números entre decimal, binario, hexadecimal y octal al instante. El binario se agrupa en nibbles. Sin registro, sin instalar nada. 100% gratuito en el navegador.',
+    canonical: 'https://toolsfoto.com/conversor-base',
+  },
+  'entidades-html': {
+    title: 'Codificar y decodificar entidades HTML online gratis | ToolsFoto',
+    description: 'Convierte texto plano a entidades HTML y viceversa. Tabla de las 23 entidades más frecuentes. Sin registro, sin instalar nada. 100% gratuito en el navegador.',
+    canonical: 'https://toolsfoto.com/entidades-html',
+  },
+
   'metadatos-pdf': {
     title: 'Ver y editar metadatos de PDF online gratis | ToolsFoto',
     description: 'Lee y modifica el título, autor, asunto y palabras clave de cualquier PDF. Guarda el PDF con los nuevos metadatos. pdf-lib, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',

@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EntidadesHTMLTool from '@/components/tools/EntidadesHTMLTool';
+---
+<ToolLayout slug="entidades-html" faqs={[
+  { q: '¿Qué son las entidades HTML?', a: 'Las entidades HTML son secuencias de caracteres especiales que representan símbolos que de otro modo podrían confundirse con código HTML. Por ejemplo, &lt; representa el símbolo < que de otro modo se interpretaría como inicio de una etiqueta HTML.' },
+  { q: '¿Cuándo necesito codificar entidades HTML?', a: 'Siempre que incluyas contenido generado por el usuario o texto externo en HTML, debes codificar los caracteres especiales para evitar inyecciones XSS. También cuando quieras mostrar literalmente los caracteres <, >, & o " en una página web.' },
+  { q: '¿Cuál es la diferencia entre codificar y decodificar?', a: 'Codificar convierte texto plano en entidades HTML: el carácter < se convierte en &lt;. Decodificar hace el proceso inverso: &lt; vuelve a ser <. El modo codificar es el más útil para preparar texto para insertar en HTML.' },
+  { q: '¿Qué entidades incluye la tabla de referencia?', a: 'La tabla incluye las 23 entidades más frecuentes: caracteres de control (&amp;, &lt;, &gt;, &quot;, &apos;), símbolos de moneda (€, £, ¥), símbolos matemáticos (±, ×, ÷), tipografía (—, –, …, &nbsp;), flechas y símbolos legales (©, ®, ™).' },
+  { q: '¿Los datos se envían al servidor?', a: 'No. La codificación y decodificación se realiza completamente en tu navegador con JavaScript puro y la API DOM nativa. Ningún texto sale de tu dispositivo.' },
+]}>
+  <EntidadesHTMLTool client:load />
+</ToolLayout>

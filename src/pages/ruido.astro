@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RuidoTool from '@/components/tools/RuidoTool';
+---
+<ToolLayout slug="ruido" faqs={[
+  { q: '¿Qué es el efecto ruido en una imagen?', a: 'El ruido o grano es una variación aleatoria en el brillo o color de los píxeles. En fotografía analógica ocurre de forma natural; en digital se puede añadir artificialmente para lograr efectos estéticos como el film grain o el vintage.' },
+  { q: '¿Se pierde calidad al añadir ruido?', a: 'Técnicamente sí, ya que se alteran los valores de los píxeles. Sin embargo, a intensidades bajas el efecto es sutil y estéticamente deseable. Puedes controlar la intensidad con el slider para encontrar el balance que buscas.' },
+  { q: '¿Cuál es la diferencia entre ruido monocromático y en color?', a: 'El ruido monocromático aplica la misma variación a los tres canales RGB, produciendo un grano neutro similar al de una película en blanco y negro. El ruido en color aplica variaciones independientes a cada canal, dando un aspecto más similar al ruido de sensor de cámara digital.' },
+  { q: '¿En qué formato se descarga la imagen resultante?', a: 'La imagen se descarga en formato PNG para preservar toda la información de color. Si tu imagen original era JPG, el resultado también se descargará con fondo sólido sin pérdidas adicionales de compresión.' },
+  { q: '¿Funciona con imágenes de alta resolución?', a: 'Sí, la herramienta procesa la imagen en su resolución original usando la Canvas API del navegador. Para imágenes muy grandes (más de 20 megapíxeles) el procesamiento puede tardar unos segundos.' },
+]}>
+  <RuidoTool client:load />
+</ToolLayout>

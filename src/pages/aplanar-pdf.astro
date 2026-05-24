@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AplanarPDFTool from '@/components/tools/AplanarPDFTool';
+---
+<ToolLayout slug="aplanar-pdf" faqs={[
+  { q: '¿Qué significa aplanar un PDF?', a: 'Aplanar (flatten) un PDF convierte todos los campos interactivos del formulario (campos de texto, checkboxes, botones de radio, listas desplegables) en contenido estático no editable. El resultado visual es idéntico, pero ya no se pueden modificar los campos.' },
+  { q: '¿Por qué querría aplanar un PDF?', a: 'Para enviar un formulario relleno sin que el destinatario pueda modificar los valores, para archivar documentos de forma permanente, para reducir el tamaño del archivo, o para asegurar que el PDF se visualice correctamente en lectores que no soportan formularios interactivos.' },
+  { q: '¿Se pierde información al aplanar el PDF?', a: 'Los valores introducidos en los campos se convierten en texto estático, por lo que visualmente no hay pérdida. Sin embargo, los campos ya no son editables: la operación es irreversible sin el documento original.' },
+  { q: '¿Funciona con todos los formularios PDF?', a: 'Funciona con formularios creados con las especificaciones AcroForm de PDF (el estándar). Los formularios XFA (usados en Adobe LiveCycle) no son soportados por pdf-lib y pueden no aplanarse correctamente.' },
+  { q: '¿Se procesan mis PDFs en el servidor?', a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib (carga dinámica). Ningún archivo sale de tu dispositivo.' },
+]}>
+  <AplanarPDFTool client:load />
+</ToolLayout>

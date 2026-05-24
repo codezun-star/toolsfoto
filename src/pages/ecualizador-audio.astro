@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EcualizadorAudioTool from '@/components/tools/EcualizadorAudioTool';
+---
+<ToolLayout slug="ecualizador-audio" faqs={[
+  { q: '¿Qué es un ecualizador de audio?', a: 'Un ecualizador (EQ) permite ajustar el volumen de diferentes rangos de frecuencia del audio de forma independiente. Un EQ de 3 bandas controla los graves (bajos), medios y agudos (altos), permitiendo dar más o menos presencia a cada rango.' },
+  { q: '¿Qué rango de frecuencias controla cada banda?', a: 'La banda de graves controla frecuencias bajas (alrededor de 100 Hz) que dan peso y cuerpo al sonido. Los medios (alrededor de 1 kHz) afectan a la presencia y calidez. Los agudos (alrededor de 8-10 kHz) controlan el brillo y la definición.' },
+  { q: '¿Qué presets están disponibles?', a: 'Los presets incluyen: Normal (sin cambios), Bajos potenciados, Pop, Rock, Voz y Clásica. Cada uno aplica una configuración específica de las tres bandas optimizada para ese tipo de contenido.' },
+  { q: '¿En qué formato se descarga el audio procesado?', a: 'El audio se descarga en el mismo formato que el original (MP3, WAV, OGG, AAC). El codec y la calidad se mantienen en lo posible.' },
+  { q: '¿Se procesan mis archivos en el servidor?', a: 'No. El ecualizador funciona 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
+]}>
+  <EcualizadorAudioTool client:load />
+</ToolLayout>
