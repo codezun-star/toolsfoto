@@ -1,0 +1,318 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import '@/styles/global.css';
+import { SITE } from '@/lib/constants/seo';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (e) => e.data.publicado !== false);
+  return posts.map((p) => ({ params: { slug: p.id } }));
+}
+
+const { slug } = Astro.params;
+const post = await getEntry('blog', slug as string);
+
+if (!post || post.data.publicado === false) return Astro.redirect('/blog');
+
+const { Content } = await render(post);
+
+const categorias: Record<string, string> = {
+  herramientas:    'Herramientas',
+  tips:            'Tips',
+  tutoriales:      'Tutoriales',
+  actualizaciones: 'Novedades',
+  general:         'General',
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.titulo,
+  description: post.data.descripcion ?? '',
+  author: {
+    '@type': 'Organization',
+    name: post.data.autor,
+    url: 'https://toolsfoto.com',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'ToolsFoto',
+    url: 'https://toolsfoto.com',
+    logo: { '@type': 'ImageObject', url: 'https://toolsfoto.com/favicon.svg' },
+  },
+  datePublished: post.data.fecha + 'T00:00:00Z',
+  url: 'https://toolsfoto.com/blog/' + post.id,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://toolsfoto.com/blog/' + post.id },
+  keywords: post.data.keywords.join(', '),
+};
+
+const pageTitle = `${post.data.titulo} — ToolsFoto`;
+const pageDesc  = post.data.descripcion ?? '';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    {post.data.keywords.length > 0 && (
+      <meta name="keywords" content={post.data.keywords.join(', ')} />
+    )}
+    <link rel="canonical" href={`https://toolsfoto.com/blog/${post.id}`} />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={`https://toolsfoto.com/blog/${post.id}`} />
+    <meta property="article:published_time" content={post.data.fecha + 'T00:00:00Z'} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDesc} />
+    <meta name="twitter:image" content={SITE.ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon-192.png" />
+  </head>
+  <body>
+    <Header />
+
+    <!-- Article header -->
+    <div class="bg-[var(--color-text)] pt-14">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+        <nav class="flex items-center gap-2 text-xs text-[#888] mb-6 font-mono flex-wrap">
+          <a href="/" class="hover:text-white transition-colors">Inicio</a>
+          <span>/</span>
+          <a href="/blog" class="hover:text-white transition-colors">Blog</a>
+          <span>/</span>
+          <span class="truncate max-w-[200px]" style="color: #0BBFB0;">{post.data.titulo}</span>
+        </nav>
+
+        {post.data.categoria && (
+          <span class="inline-block text-[10px] font-semibold uppercase tracking-widest bg-[var(--color-accent)] text-white px-2.5 py-1 mb-4 font-mono">
+            {categorias[post.data.categoria] ?? post.data.categoria}
+          </span>
+        )}
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-4" style="letter-spacing: -0.3px;">
+          {post.data.titulo}
+        </h1>
+
+        {post.data.descripcion && (
+          <p class="text-[#aaa] text-base leading-relaxed mb-5">
+            {post.data.descripcion}
+          </p>
+        )}
+
+        <div class="flex items-center gap-4 flex-wrap">
+          <span class="text-xs text-[#888] font-mono">{post.data.autor}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article content -->
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 py-10 min-h-[50vh]">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <!-- Share section -->
+      <div class="mt-12 pt-8 border-t border-[var(--color-border)]">
+        <p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-text-muted)] mb-3 font-mono">
+          Compartir artículo
+        </p>
+        <div class="flex items-center gap-3 flex-wrap">
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(post.data.titulo + ' — https://toolsfoto.com/blog/' + post.id)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] bg-white text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:border-[#25D366] transition-colors rounded-lg"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.titulo)}&url=${encodeURIComponent('https://toolsfoto.com/blog/' + post.id)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] bg-white text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:border-[#111110] transition-colors rounded-lg"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+          <button
+            id="copy-link-btn"
+            class="flex items-center gap-2 px-4 py-2.5 border border-[var(--color-border)] bg-white text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors rounded-lg cursor-pointer"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span id="copy-label">Copiar enlace</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CTA tools -->
+      <div class="mt-8 border border-[var(--color-text)] rounded-xl p-6">
+        <p class="text-lg font-extrabold text-[var(--color-text)] mb-1.5" style="letter-spacing: -0.3px;">
+          Prueba nuestras herramientas gratis
+        </p>
+        <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4">
+          179 herramientas de imagen, PDF, vídeo y audio. Sin registro, sin límites, tus archivos no salen de tu dispositivo.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors rounded-lg"
+        >
+          Ver todas las herramientas
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-6">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors font-mono uppercase tracking-wider"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Volver al blog
+        </a>
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  .prose h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .prose h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .prose p {
+    font-size: 15px;
+    color: #3a3830;
+    line-height: 1.78;
+    margin: 0 0 1rem;
+  }
+  .prose ul,
+  .prose ol {
+    font-size: 15px;
+    color: #3a3830;
+    line-height: 1.78;
+    padding-left: 1.4rem;
+    margin: 0 0 1rem;
+  }
+  .prose li { margin-bottom: 0.4rem; }
+  .prose strong { color: var(--color-text); font-weight: 700; }
+  .prose a {
+    color: var(--color-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+  }
+  .prose a:hover { color: var(--color-accent); }
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 14px;
+  }
+  .prose th {
+    background: var(--color-text);
+    color: white;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .prose td {
+    border-bottom: 1px solid var(--color-border);
+    padding: 8px 12px;
+    color: #3a3830;
+  }
+  .prose blockquote {
+    border-left: 3px solid var(--color-accent);
+    margin: 1.2rem 0;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-accent-bg);
+    color: var(--color-text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .prose code {
+    background: #F0EDE6;
+    color: var(--color-accent);
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+  }
+  .prose pre {
+    background: var(--color-text);
+    color: #F5F1E8;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 1.2rem 0;
+  }
+  .prose pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+  }
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 2rem 0;
+  }
+  .prose img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1.2rem 0;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('copy-link-btn');
+  const label = document.getElementById('copy-label');
+  btn?.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(window.location.href);
+    if (label) {
+      label.textContent = '¡Copiado!';
+      setTimeout(() => { label.textContent = 'Copiar enlace'; }, 2000);
+    }
+  });
+</script>

@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DetectarTonoTool from '@/components/tools/DetectarTonoTool';
+---
+<ToolLayout slug="detectar-tono" faqs={[
+  { q: '¿Cómo funciona la detección de tono?', a: 'La herramienta usa el algoritmo de autocorrelación sobre los datos de audio PCM para encontrar el período de la señal y calcular la frecuencia fundamental. Es el mismo enfoque que usan muchos afinadores de guitarra digitales.' },
+  { q: '¿Funciona bien con música o solo con instrumentos simples?', a: 'Funciona mejor con señales simples: voz solista, instrumentos monofónicos (flauta, violín, guitarra sola). Con música polifónica (varios instrumentos a la vez) el resultado será la frecuencia dominante, que puede no corresponder a la nota "principal".' },
+  { q: '¿Qué fragmento del audio se analiza?', a: 'Se analiza una ventana de 2048 muestras tomada del centro del audio. Si el audio tiene cambios de nota frecuentes, el resultado refleja solo el tono predominante en ese instante central.' },
+  { q: '¿Qué significan los "cents" en el resultado?', a: 'Los cents indican cuánto se desvía la frecuencia detectada de la nota temperada más cercana. 0 cents = perfectamente afinado. +50 cents = medio semitono por encima. Los afinadores profesionales muestran esta misma información.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. El análisis usa la Web Audio API del navegador para decodificar el audio y la autocorrelación se calcula en JavaScript. El archivo nunca sale de tu dispositivo.' },
+]}>
+  <DetectarTonoTool client:load />
+</ToolLayout>

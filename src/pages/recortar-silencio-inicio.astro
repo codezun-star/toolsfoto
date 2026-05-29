@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RecortarSilencioInicioTool from '@/components/tools/RecortarSilencioInicioTool';
+---
+<ToolLayout slug="recortar-silencio-inicio" faqs={[
+  { q: '¿Qué diferencia hay con la herramienta "Eliminar silencios"?', a: '"Eliminar silencios" detecta y elimina todos los fragmentos silenciosos a lo largo de todo el audio, lo que puede cortar también las pausas naturales del habla. Esta herramienta solo actúa en los extremos: recorta el silencio del principio y del final, dejando el interior intacto.' },
+  { q: '¿Qué es el umbral de silencio en dB?', a: 'El umbral define qué nivel de volumen se considera silencio. -40 dB es el valor habitual (silencio casi absoluto). Si tienes ruido de fondo, necesitas un umbral más alto como -30 dB para que lo detecte como silencio.' },
+  { q: '¿Qué es la duración mínima de silencio?', a: 'Solo se eliminarán los silencios que duren al menos ese tiempo. Con 0.3s, silencios brevísimos no serán eliminados. Aumenta este valor si el audio tiene clics o artefactos breves al inicio.' },
+  { q: '¿Se mantiene el formato del archivo original?', a: 'Sí, el resultado se exporta en el mismo formato que la entrada (MP3, WAV, OGG, AAC). Si el formato no está soportado, se exporta como MP3.' },
+  { q: '¿Para qué casos es útil esta herramienta?', a: 'Es ideal para grabaciones de voz o podcast donde el presentador tarda en empezar a hablar, para música que tiene silencio al principio generado al grabar, y para cualquier audio donde los extremos contienen silencio no deseado.' },
+]}>
+  <RecortarSilencioInicioTool client:load />
+</ToolLayout>

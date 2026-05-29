@@ -1,0 +1,75 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import BlogList from '@/components/blog/BlogList';
+import '@/styles/global.css';
+import { SITE } from '@/lib/constants/seo';
+import { getCollection } from 'astro:content';
+
+const todos = await getCollection('blog', (e) => e.data.publicado !== false);
+const sorted = todos
+  .sort((a, b) => b.data.fecha.localeCompare(a.data.fecha))
+  .map((art) => ({
+    id:          art.id,
+    titulo:      art.data.titulo,
+    descripcion: art.data.descripcion ?? '',
+    categoria:   art.data.categoria,
+  }));
+
+const title = 'Blog de ToolsFoto — Guías, Tips y Tutoriales de Imagen, PDF y Vídeo';
+const description = 'Tutoriales, guías y tips sobre compresión de imágenes, edición de PDF, conversión de vídeo y audio. Aprende a sacar el máximo partido a las herramientas gratuitas de ToolsFoto.';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://toolsfoto.com/blog" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://toolsfoto.com/blog" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={SITE.ogImage} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon-192.png" />
+  </head>
+  <body>
+    <Header />
+
+    <!-- Page header -->
+    <div class="bg-[var(--color-text)] pt-14">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+        <nav class="flex items-center gap-2 text-xs text-[#888] mb-6 font-mono">
+          <a href="/" class="hover:text-white transition-colors">Inicio</a>
+          <span>/</span>
+          <span style="color: #0BBFB0;">Blog</span>
+        </nav>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-3" style="letter-spacing: -0.5px;">
+          Blog
+        </h1>
+        <p class="text-[#999] text-base max-w-xl leading-relaxed">
+          Guías, tips y tutoriales sobre imagen, PDF, vídeo y audio. Sin rodeos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Article list -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10 min-h-[60vh]">
+      <BlogList articles={sorted} client:load />
+    </main>
+
+    <Footer />
+  </body>
+</html>

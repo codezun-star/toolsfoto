@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompresorAudioTool from '@/components/tools/CompresorAudioTool';
+---
+<ToolLayout slug="compresor-audio" faqs={[
+  { q: '¿Qué hace un compresor de audio?', a: 'Un compresor reduce la diferencia dinámica entre los momentos más altos y los más bajos de un audio. Cuando el volumen supera el umbral, lo baja según el ratio configurado. El resultado es un audio más "uniforme" y con menos picos bruscos.' },
+  { q: '¿Qué significan umbral, ratio, ataque y release?', a: 'El umbral (threshold) es el nivel en dB a partir del cual el compresor actúa. El ratio determina cuánto se reduce (4:1 = por cada 4 dB sobre el umbral, solo pasan 1 dB). Ataque es la rapidez con que el compresor reacciona a un pico. Release es cuánto tarda en dejar de comprimir.' },
+  { q: '¿Para qué sirve la ganancia de maquillaje (makeup)?', a: 'La compresión baja el nivel general del audio. El makeup gain lo sube de vuelta para compensar, de modo que el audio comprimido tenga un volumen similar al original pero con dinámica reducida.' },
+  { q: '¿Cuál es el preset más recomendado para podcast?', a: 'El preset "Podcast" (umbral: -12 dB, ratio: 4:1, ataque: 20ms, release: 250ms, makeup: +6dB) es el más adecuado para voces habladas. Nivela el volumen entre frases suaves y fuertes, haciendo la escucha más cómoda.' },
+  { q: '¿Qué diferencia hay entre compresor y normalizador de audio?', a: 'El normalizador sube o baja el volumen del audio completo para que el pico máximo llegue a un nivel determinado. El compresor actúa dinámicamente: baja los picos fuertes y sube el nivel general. El compresor da más control sobre la dinámica.' },
+]}>
+  <CompresorAudioTool client:load />
+</ToolLayout>

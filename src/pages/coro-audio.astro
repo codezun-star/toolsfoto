@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CoroAudioTool from '@/components/tools/CoroAudioTool';
+---
+<ToolLayout slug="coro-audio" faqs={[
+  { q: '¿Qué es el efecto de coro en audio?', a: 'El coro (chorus) es un efecto que duplica la señal, le aplica pequeñas variaciones de tiempo y pitch, y la mezcla con la original. El resultado suena como si varias voces o instrumentos tocasen al unísono, dando más amplitud y riqueza al sonido.' },
+  { q: '¿Qué diferencia hay entre los presets Sutil, Estándar y Rico?', a: '"Sutil" usa 2 voces adicionales con poca modulación, ideal para añadir amplitud sin que se note demasiado. "Estándar" usa 3 voces, el efecto clásico para voces y guitarras. "Rico" usa 4 voces con mayor modulación para un efecto coral más pronunciado y denso.' },
+  { q: '¿Para qué tipo de audio es más efectivo el efecto coro?', a: 'El coro es especialmente efectivo en voces (hace que suenen más grandes y llenas), guitarras limpias y sintetizadores. Para percusión o graves, el efecto es menos notorio. Es ampliamente usado en música de los años 80.' },
+  { q: '¿Cuál es la diferencia entre coro y eco?', a: 'El eco (aecho) repite el sonido con retardos largos y audibles (>50ms). El coro usa retardos muy cortos (30-100ms) con modulación de pitch que cambia continuamente, creando la sensación de amplitud y movimiento en lugar de repetición.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. El efecto se aplica usando FFmpeg.wasm, que se ejecuta completamente en tu navegador. El archivo de audio nunca sale de tu dispositivo.' },
+]}>
+  <CoroAudioTool client:load />
+</ToolLayout>

@@ -879,4 +879,128 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Convierte fuentes tipográficas entre TTF, OTF y WOFF directamente en el navegador. Conversión sin pérdida: todas las tablas SFNT se preservan. Sin registro, sin subir archivos al servidor. Completamente gratis.',
     canonical: 'https://toolsfoto.com/convertir-fuente',
   },
+
+  // ── 19 herramientas nuevas de audio ───────────────────────────
+  'visualizar-forma-onda': {
+    title: 'Visualizar forma de onda de audio online gratis — waveform PNG | ToolsFoto',
+    description: 'Genera una imagen PNG de la forma de onda de tu audio. Personaliza colores. Web Audio API + Canvas, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/visualizar-forma-onda',
+  },
+  'convertir-a-m4a': {
+    title: 'Convertir audio a M4A online gratis — audio AAC para iPhone | ToolsFoto',
+    description: 'Convierte cualquier audio a M4A (AAC) con calidad 128k, 192k o 320k. Compatible con iPhone e iTunes. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/convertir-a-m4a',
+  },
+  'robotizar-voz': {
+    title: 'Robotizar voz online gratis — efecto voz robótica | ToolsFoto',
+    description: 'Aplica efecto de voz robótica, metálica o alienígena a cualquier audio con 4 presets. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/robotizar-voz',
+  },
+  'dividir-audio': {
+    title: 'Dividir audio en dos partes online gratis | ToolsFoto',
+    description: 'Divide cualquier audio en dos partes en el punto de tiempo exacto que elijas. Descarga ambas partes. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/dividir-audio',
+  },
+  'audio-a-fragmentos': {
+    title: 'Dividir audio en fragmentos iguales online gratis | ToolsFoto',
+    description: 'Divide un audio en 2 a 10 fragmentos de igual duración automáticamente. Descarga cada fragmento por separado. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/audio-a-fragmentos',
+  },
+  'recortar-silencio-inicio': {
+    title: 'Recortar silencio del inicio y final de audio online gratis | ToolsFoto',
+    description: 'Elimina los silencios del principio y el final de tu audio, manteniendo el interior intacto. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/recortar-silencio-inicio',
+  },
+  'insertar-audio': {
+    title: 'Insertar audio dentro de otro audio online gratis | ToolsFoto',
+    description: 'Inserta un audio secundario en el interior de otro en el tiempo exacto que elijas. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/insertar-audio',
+  },
+  'reemplazar-segmento': {
+    title: 'Reemplazar segmento de audio con silencio online gratis | ToolsFoto',
+    description: 'Silencia un intervalo de tiempo de tu audio manteniendo la duración total. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/reemplazar-segmento',
+  },
+  'audio-a-base64': {
+    title: 'Convertir audio a Base64 online gratis — audio a data URI | ToolsFoto',
+    description: 'Codifica cualquier archivo de audio en Base64 o data URI. También decodifica Base64 a archivo. Sin servidores, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/audio-a-base64',
+  },
+  'convertir-a-flac': {
+    title: 'Convertir audio a FLAC online gratis — formato lossless | ToolsFoto',
+    description: 'Convierte cualquier audio a FLAC sin pérdida. Ideal para archivos máster y alta fidelidad. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/convertir-a-flac',
+  },
+  'analizar-espectro': {
+    title: 'Analizar espectro de audio online gratis — frecuencias PNG | ToolsFoto',
+    description: 'Visualiza el espectro de frecuencias de tu audio como gráfica de barras descargable en PNG. Web Audio API + Canvas, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/analizar-espectro',
+  },
+  'detectar-tono': {
+    title: 'Detectar tono y nota musical de audio online gratis | ToolsFoto',
+    description: 'Detecta la nota musical dominante y su frecuencia en Hz de cualquier audio. Algoritmo de autocorrelación. Web Audio API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/detectar-tono',
+  },
+  'medir-duracion': {
+    title: 'Medir duración y metadata de audio online gratis | ToolsFoto',
+    description: 'Obtén la duración, sample rate, canales y bitrate de cualquier archivo de audio. Web Audio API, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/medir-duracion',
+  },
+  'cambiar-pitch-sin-tempo': {
+    title: 'Cambiar pitch sin cambiar tempo online gratis — cents precisos | ToolsFoto',
+    description: 'Ajusta el tono de tu audio en centésimas de semitono (±1200 cents) sin cambiar la velocidad. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-pitch-sin-tempo',
+  },
+  'compresor-audio': {
+    title: 'Compresor de audio online gratis — compresión dinámica | ToolsFoto',
+    description: 'Aplica compresión dinámica con control de umbral, ratio, ataque y release. Presets Suave, Podcast, Máster y Heavy. FFmpeg acompressor, 100% local. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/compresor-audio',
+  },
+  'distorsion-audio': {
+    title: 'Distorsión de audio online gratis — overdrive y bitcrush | ToolsFoto',
+    description: 'Aplica distorsión, overdrive o bitcrush a tu audio con 4 presets. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/distorsion-audio',
+  },
+  'coro-audio': {
+    title: 'Efecto coro de audio online gratis — chorus effect | ToolsFoto',
+    description: 'Aplica efecto de coro (chorus) para dar profundidad y amplitud a voces e instrumentos con 3 presets. FFmpeg achorus, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/coro-audio',
+  },
+  'telefono-audio': {
+    title: 'Efecto teléfono en audio online gratis — telephone sound | ToolsFoto',
+    description: 'Simula el sonido de teléfono, radio AM o intercomunicador con filtros de banda estrecha. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/telefono-audio',
+  },
+  'generar-ruido-blanco': {
+    title: 'Generador de ruido blanco online gratis — white pink brown noise | ToolsFoto',
+    description: 'Genera ruido blanco, rosa o marrón de cualquier duración para masking, pruebas y sleep sounds. FFmpeg lavfi, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/generar-ruido-blanco',
+  },
+
+  // ── Páginas de categoría ──────────────────────────────────────
+  imagen: {
+    title: 'Herramientas de imagen online gratis — JPG, PNG, WebP | ToolsFoto',
+    description: 'Comprime, redimensiona, recorta, convierte y edita imágenes online gratis. 48 herramientas: JPG, PNG, WebP, AVIF. Elimina fondos con IA. Sin registro, todo en tu navegador.',
+    canonical: 'https://toolsfoto.com/imagen',
+  },
+  pdf: {
+    title: 'Herramientas de PDF online gratis — comprimir, unir, firmar | ToolsFoto',
+    description: 'Comprime, une, divide, convierte, firma y protege PDFs online gratis. 32 herramientas de PDF. Sin registro, sin subir archivos al servidor, todo en tu navegador.',
+    canonical: 'https://toolsfoto.com/pdf',
+  },
+  video: {
+    title: 'Herramientas de vídeo online gratis — MP4, WebM, GIF | ToolsFoto',
+    description: 'Comprime, convierte, recorta, rota y edita vídeos online gratis. 26 herramientas de vídeo: MP4, WebM, GIF. Sin registro, todo se procesa en tu navegador.',
+    canonical: 'https://toolsfoto.com/video',
+  },
+  audio: {
+    title: 'Herramientas de audio online gratis — MP3, WAV, OGG | ToolsFoto',
+    description: 'Comprime, convierte, corta, mezcla, normaliza y edita audio online gratis. 42 herramientas: MP3, WAV, OGG, AAC, FLAC. Sin registro, todo en tu navegador.',
+    canonical: 'https://toolsfoto.com/audio',
+  },
+  developer: {
+    title: 'Herramientas para developers online gratis — JSON, QR, Base64 | ToolsFoto',
+    description: 'Formatea JSON, genera QR, convierte colores, codifica URLs, calcula hashes y más. 31 herramientas para developers. Sin registro, todo en tu navegador.',
+    canonical: 'https://toolsfoto.com/developer',
+  },
 };

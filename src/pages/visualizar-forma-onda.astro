@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VisualizarFormaOndaTool from '@/components/tools/VisualizarFormaOndaTool';
+---
+<ToolLayout slug="visualizar-forma-onda" faqs={[
+  { q: '¿Qué es una forma de onda?', a: 'La forma de onda es la representación visual de la amplitud de un audio a lo largo del tiempo. Los picos representan los momentos de mayor volumen y los valles los de menor. Es la vista estándar en editores de audio como Audacity o Adobe Audition.' },
+  { q: '¿Qué tamaño tiene la imagen generada?', a: 'La imagen se genera en alta resolución: 1200 × 300 píxeles en formato PNG. Es suficiente para usarla en presentaciones, portadas de podcast, redes sociales o como miniatura.' },
+  { q: '¿Qué formatos de audio admite?', a: 'La herramienta acepta los formatos que tu navegador puede decodificar: MP3, WAV, OGG, AAC, FLAC y M4A. La decodificación se realiza con la Web Audio API del navegador, sin servidores externos.' },
+  { q: '¿Puedo cambiar los colores?', a: 'Sí. Puedes personalizar el color de la onda y el color de fondo antes de generar la imagen. Usa el selector de color para elegir cualquier valor HEX.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el procesamiento ocurre en tu navegador usando la Web Audio API y la Canvas API. El archivo de audio nunca sale de tu dispositivo.' },
+]}>
+  <VisualizarFormaOndaTool client:load />
+</ToolLayout>

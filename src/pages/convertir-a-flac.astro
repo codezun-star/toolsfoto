@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirAFlacTool from '@/components/tools/ConvertirAFlacTool';
+---
+<ToolLayout slug="convertir-a-flac" faqs={[
+  { q: '¿Qué es FLAC y por qué usarlo?', a: 'FLAC (Free Lossless Audio Codec) es un formato de audio sin pérdida: comprime los datos sin descartar ninguna información. El audio decodificado es bit a bit idéntico al original. Se usa para archivos máster, música de alta fidelidad y archivado permanente.' },
+  { q: '¿Cuánto más grande es un FLAC comparado con MP3?', a: 'Un FLAC típico ocupa entre 3 y 5 veces más que un MP3 al mismo contenido. Una canción de 4 minutos en MP3 a 128 kbps pesa ~4 MB; en FLAC puede pesar 20-30 MB.' },
+  { q: '¿Si convierto MP3 a FLAC recupero la calidad perdida?', a: 'No. FLAC preserva exactamente los datos que recibe, pero si el MP3 ya ha descartado información (lo que sucede con toda la música lossy), el FLAC resultante tendrá la misma calidad que el MP3, simplemente en un contenedor sin pérdida.' },
+  { q: '¿En qué situaciones tiene sentido convertir a FLAC?', a: 'Tiene sentido cuando el archivo de origen ya es sin pérdida (WAV grabado en estudio) o cuando quieres un archivo intermedio para editar sin degradar la calidad en cada pasada. También para compatibilidad con reproductores que solo admiten FLAC.' },
+  { q: '¿Es FLAC compatible con todos los dispositivos?', a: 'FLAC es compatible con Android, la mayoría de reproductores modernos y plataformas de streaming como Tidal. Apple lo soporta desde iOS 11/macOS High Sierra. Sin embargo, no es compatible con todos los reproductores DVD/Blu-ray o sistemas de audio antiguos.' },
+]}>
+  <ConvertirAFlacTool client:load />
+</ToolLayout>

@@ -17,6 +17,7 @@ const currentPath = Astro.url.pathname;
       <a href="/#video" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
       <a href="/#audio" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
       <a href="/#developer" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
+      <a href="/blog" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/blog') ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Blog</a>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -51,6 +52,7 @@ const currentPath = Astro.url.pathname;
       <a href="/#video" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
       <a href="/#audio" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
       <a href="/#developer" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
+      <a href="/blog" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Blog</a>
     </nav>
   </div>
 </header>

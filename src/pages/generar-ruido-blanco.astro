@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GenerarRuidoBlancTool from '@/components/tools/GenerarRuidoBlancTool';
+---
+<ToolLayout slug="generar-ruido-blanco" faqs={[
+  { q: '¿Cuál es la diferencia entre ruido blanco, rosa y marrón?', a: 'El ruido blanco tiene igual energía en todas las frecuencias (suena agudo y "estático"). El ruido rosa tiene más energía en las bajas frecuencias (suena más natural y suave, como una cascada). El ruido marrón (o rojo) tiene aún más energía en los graves (suena como lluvia fuerte o olas).' },
+  { q: '¿Para qué se usa el ruido blanco?', a: 'El ruido blanco se usa para enmascarar otros sonidos molestos (conversaciones, tráfico) en oficinas y dormitorios. También para pruebas técnicas de audio (calibración de sistemas), terapia del sueño, concentración al estudiar y diseño de sonido.' },
+  { q: '¿Cuál es el ruido más recomendado para dormir?', a: 'Muchos estudios sugieren que el ruido rosa es el más efectivo para dormir ya que imita patrones naturales como la lluvia o el viento. El ruido marrón también es popular por sus graves relajantes. El blanco puede resultar demasiado agudo para algunas personas.' },
+  { q: '¿Cuánto tiempo puedo generar como máximo?', a: 'El máximo es 1 hora (3600 segundos). Para sesiones más largas, genera el archivo y repítelo en bucle con tu reproductor de audio. Un archivo de 1 hora pesa aproximadamente 85 MB en MP3 a 192 kbps.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No hay archivos que subir: esta herramienta genera el audio desde cero usando FFmpeg.wasm con la fuente lavfi anoisesrc. Todo ocurre localmente en tu navegador sin conexión a servidores.' },
+]}>
+  <GenerarRuidoBlancTool client:load />
+</ToolLayout>

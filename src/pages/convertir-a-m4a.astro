@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirAM4ATool from '@/components/tools/ConvertirAM4ATool';
+---
+<ToolLayout slug="convertir-a-m4a" faqs={[
+  { q: '¿Qué es el formato M4A?', a: 'M4A es un contenedor de audio de Apple que usa el códec AAC (Advanced Audio Coding). Ofrece mejor calidad que MP3 al mismo bitrate y es el formato nativo de iPhone, iPad e iTunes. Es compatible con la mayoría de reproductores modernos.' },
+  { q: '¿Qué calidad debo elegir?', a: '128 kbps es suficiente para escuchar música de forma casual. 192 kbps ofrece un buen equilibrio entre calidad y tamaño, recomendado para la mayoría de usos. 320 kbps es la máxima calidad, ideal para archivos máster o cuando el tamaño no es una restricción.' },
+  { q: '¿Qué diferencia hay entre M4A y AAC?', a: 'AAC es el códec de audio. M4A es el contenedor de archivo (basado en MPEG-4) que aloja el audio AAC. Son esencialmente lo mismo; M4A es solo la extensión de archivo que Apple popularizó para distinguirlo de los vídeos MP4.' },
+  { q: '¿Qué formatos de audio de entrada acepta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC, M4A y cualquier formato que FFmpeg.wasm pueda decodificar. La conversión se realiza en tu navegador sin subir archivos al servidor.' },
+  { q: '¿Se pierde calidad al convertir?', a: 'Si el archivo original es lossy (MP3, AAC…), habrá una pequeña pérdida adicional por la recodificación. Para preservar la calidad máxima, parte siempre desde el archivo de mayor calidad disponible (WAV, FLAC) y elige 320 kbps.' },
+]}>
+  <ConvertirAM4ATool client:load />
+</ToolLayout>

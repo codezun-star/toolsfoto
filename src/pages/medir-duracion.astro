@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MedirDuracionTool from '@/components/tools/MedirDuracionTool';
+---
+<ToolLayout slug="medir-duracion" faqs={[
+  { q: '¿Qué información muestra esta herramienta?', a: 'Muestra la duración exacta del audio (en horas, minutos y segundos con milisegundos), la frecuencia de muestreo (sample rate en Hz), el número de canales (mono o estéreo), el bitrate estimado y el tamaño del archivo.' },
+  { q: '¿Por qué el bitrate es "estimado"?', a: 'El bitrate real de un archivo de audio codificado con bitrate variable (VBR) no puede conocerse exactamente sin analizar cada frame. La herramienta calcula una aproximación dividiendo el tamaño del archivo entre la duración, que es muy cercana al bitrate promedio real.' },
+  { q: '¿Se necesita internet para usar esta herramienta?', a: 'No. Todo el análisis se realiza con la Web Audio API del navegador. El archivo de audio nunca sale de tu dispositivo. Solo necesitas el navegador.' },
+  { q: '¿Qué formatos de audio admite?', a: 'Admite cualquier formato que el navegador pueda decodificar: MP3, WAV, OGG, AAC, FLAC, M4A. La disponibilidad de formatos puede variar ligeramente entre navegadores.' },
+  { q: '¿Es más precisa que el reproductor de Windows o macOS?', a: 'Para la duración, la precisión es equivalente ya que ambos usan la misma API de decodificación. Para el bitrate, los reproductores del sistema operativo pueden leer los metadatos del archivo (más preciso), mientras que esta herramienta lo calcula matemáticamente.' },
+]}>
+  <MedirDuracionTool client:load />
+</ToolLayout>

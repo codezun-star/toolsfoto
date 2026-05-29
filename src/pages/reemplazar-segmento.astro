@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ReemplazarSegmentoTool from '@/components/tools/ReemplazarSegmentoTool';
+---
+<ToolLayout slug="reemplazar-segmento" faqs={[
+  { q: '¿Qué hace exactamente esta herramienta?', a: 'Baja el volumen a cero durante el intervalo de tiempo especificado, sin eliminar ese fragmento. La duración total del audio no cambia: el segmento queda como silencio en lugar de la grabación original.' },
+  { q: '¿Para qué se usa principalmente?', a: 'Es muy útil para censurar palabras inapropiadas en grabaciones, eliminar ruidos puntuales (tos, click, teléfono sonando), o silenciar partes específicas de una entrevista antes de publicar.' },
+  { q: '¿Puedo reemplazar varios segmentos?', a: 'Actualmente la herramienta procesa un segmento a la vez. Para silenciar múltiples partes, descarga el resultado y vuelve a subir el archivo procesado tantas veces como necesites.' },
+  { q: '¿Afecta a la calidad del resto del audio?', a: 'El filtro de volumen solo afecta al segmento indicado. El resto del audio se recodifica al mismo bitrate y calidad que el original.' },
+  { q: '¿Cuál es la precisión de los tiempos?', a: 'Puedes especificar los tiempos con decimales (ej: 12.5 segundos). La precisión real depende del frame rate del formato de audio; para MP3, la resolución es de aproximadamente 26 ms (1152 muestras a 44100 Hz).' },
+]}>
+  <ReemplazarSegmentoTool client:load />
+</ToolLayout>

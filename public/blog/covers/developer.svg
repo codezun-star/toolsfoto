@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380">
+  <!-- Dark code editor background -->
+  <rect width="720" height="380" fill="#111110"/>
+
+  <!-- Editor window -->
+  <rect x="96" y="56" width="528" height="268" rx="10" fill="#1A1918"/>
+
+  <!-- Title bar -->
+  <rect x="96" y="56" width="528" height="36" rx="10" fill="#242322"/>
+  <rect x="96" y="74" width="528" height="18" fill="#242322"/>
+
+  <!-- Window dots -->
+  <circle cx="122" cy="74" r="7" fill="#E84827" opacity="0.85"/>
+  <circle cx="144" cy="74" r="7" fill="#F0A020" opacity="0.85"/>
+  <circle cx="166" cy="74" r="7" fill="#5A9E7A" opacity="0.85"/>
+
+  <!-- Filename tab -->
+  <rect x="188" y="60" width="100" height="32" rx="4" fill="#1A1918"/>
+  <line x1="188" y1="60" x2="288" y2="60" stroke="#E84827" stroke-width="2"/>
+  <text x="238" y="81" font-family="Courier New, monospace" font-size="12" fill="#A8A49E" text-anchor="middle">script.js</text>
+
+  <!-- Line numbers column -->
+  <rect x="96" y="92" width="44" height="232" fill="#161514"/>
+
+  <!-- Code content -->
+  <!-- Line 1 -->
+  <text x="110" y="114" font-family="Courier New, monospace" font-size="11" fill="#3A3938">1</text>
+  <text x="152" y="114" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">const</text>
+  <text x="198" y="114" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> compressImage</text>
+  <text x="326" y="114" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> =</text>
+  <text x="344" y="114" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0"> async</text>
+  <text x="390" y="114" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> (</text>
+  <text x="400" y="114" font-family="Courier New, monospace" font-size="12" fill="#E84827">file</text>
+  <text x="424" y="114" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">,</text>
+  <text x="432" y="114" font-family="Courier New, monospace" font-size="12" fill="#E84827"> opts</text>
+  <text x="460" y="114" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">) =&gt; {</text>
+
+  <!-- Line 2 -->
+  <text x="110" y="136" font-family="Courier New, monospace" font-size="11" fill="#3A3938">2</text>
+  <text x="152" y="136" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">  const</text>
+  <text x="202" y="136" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> quality</text>
+  <text x="262" y="136" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> =</text>
+  <text x="278" y="136" font-family="Courier New, monospace" font-size="12" fill="#E84827"> opts</text>
+  <text x="308" y="136" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">.</text>
+  <text x="316" y="136" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8">quality</text>
+  <text x="370" y="136" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> ??</text>
+  <text x="392" y="136" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0"> 80</text>
+  <text x="410" y="136" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">;</text>
+
+  <!-- Line 3 -->
+  <text x="110" y="158" font-family="Courier New, monospace" font-size="11" fill="#3A3938">3</text>
+  <text x="152" y="158" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">  const</text>
+  <text x="202" y="158" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> blob</text>
+  <text x="238" y="158" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> =</text>
+  <text x="254" y="158" font-family="Courier New, monospace" font-size="12" fill="#5A9E7A"> await</text>
+  <text x="296" y="158" font-family="Courier New, monospace" font-size="12" fill="#E84827"> processFile</text>
+  <text x="404" y="158" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">(file, quality);</text>
+
+  <!-- Line 4 (empty) -->
+  <text x="110" y="180" font-family="Courier New, monospace" font-size="11" fill="#3A3938">4</text>
+
+  <!-- Line 5 (highlighted) -->
+  <rect x="140" y="186" width="476" height="20" rx="2" fill="#242322"/>
+  <text x="110" y="200" font-family="Courier New, monospace" font-size="11" fill="#3A3938">5</text>
+  <text x="152" y="200" font-family="Courier New, monospace" font-size="12" fill="#5A9E7A">  console</text>
+  <text x="218" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">.</text>
+  <text x="226" y="200" font-family="Courier New, monospace" font-size="12" fill="#E84827">log</text>
+  <text x="248" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">(</text>
+  <text x="256" y="200" font-family="Courier New, monospace" font-size="12" fill="#5A9E7A">`Resultado:</text>
+  <text x="348" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> ${</text>
+  <text x="372" y="200" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8">blob</text>
+  <text x="402" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">.</text>
+  <text x="410" y="200" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">size</text>
+  <text x="436" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">}</text>
+  <text x="450" y="200" font-family="Courier New, monospace" font-size="12" fill="#5A9E7A"> bytes`</text>
+  <text x="506" y="200" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">);</text>
+
+  <!-- Line 6 -->
+  <text x="110" y="222" font-family="Courier New, monospace" font-size="11" fill="#3A3938">6</text>
+  <text x="152" y="222" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">  return</text>
+  <text x="202" y="222" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> {</text>
+  <text x="214" y="222" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> blob</text>
+  <text x="244" y="222" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">,</text>
+  <text x="252" y="222" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> size</text>
+  <text x="280" y="222" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">:</text>
+  <text x="288" y="222" font-family="Courier New, monospace" font-size="12" fill="#F5F1E8"> blob</text>
+  <text x="318" y="222" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">.</text>
+  <text x="326" y="222" font-family="Courier New, monospace" font-size="12" fill="#0BBFB0">size</text>
+  <text x="352" y="222" font-family="Courier New, monospace" font-size="12" fill="#A8A49E"> };</text>
+
+  <!-- Line 7 -->
+  <text x="110" y="244" font-family="Courier New, monospace" font-size="11" fill="#3A3938">7</text>
+  <text x="152" y="244" font-family="Courier New, monospace" font-size="12" fill="#A8A49E">};</text>
+
+  <!-- Line 8 (comment) -->
+  <text x="110" y="266" font-family="Courier New, monospace" font-size="11" fill="#3A3938">8</text>
+  <text x="152" y="266" font-family="Courier New, monospace" font-size="12" fill="#3A6B55">// Output: 258 bytes (94% reducción)</text>
+
+  <!-- Cursor blink -->
+  <rect x="152" y="276" width="8" height="14" rx="1" fill="#E84827" opacity="0.9"/>
+  <text x="110" y="288" font-family="Courier New, monospace" font-size="11" fill="#3A3938">9</text>
+</svg>

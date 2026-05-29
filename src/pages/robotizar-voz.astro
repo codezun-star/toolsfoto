@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import RobotizarVozTool from '@/components/tools/RobotizarVozTool';
+---
+<ToolLayout slug="robotizar-voz" faqs={[
+  { q: '¿Cómo funciona el efecto de voz robótica?', a: 'El efecto se consigue combinando filtros de FFmpeg: ecos muy cortos (5-30 ms) que crean una resonancia metálica, cambios sutiles de sample rate para modificar el timbre y, en algunos presets, modulación de vibrato para añadir una oscilación característica.' },
+  { q: '¿Cuál es la diferencia entre los 4 presets?', a: '"Robot estándar" aplica ecos muy cortos a velocidad normal. "Robot grave" baja el pitch un 15% antes de añadir el eco. "Alien" añade vibrato rápido (10 Hz) para una sensación extraterrestre. "Cibernético" usa múltiples capas de eco con decaimiento rápido para un sonido digital extremo.' },
+  { q: '¿Funciona con música o solo con voz?', a: 'Funciona con cualquier tipo de audio, aunque el efecto es más dramático en voces y tonos simples. Aplicado a música, puede sonar interessante pero difuminará los detalles melódicos.' },
+  { q: '¿En qué formato se descarga el resultado?', a: 'El resultado se descarga en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista compatible, se exporta como MP3.' },
+  { q: '¿Puedo usar el audio resultante en vídeos y proyectos?', a: 'Sí. El archivo descargado es un audio estándar compatible con cualquier editor de vídeo, DAW o plataforma. El procesamiento es completamente local en tu navegador.' },
+]}>
+  <RobotizarVozTool client:load />
+</ToolLayout>

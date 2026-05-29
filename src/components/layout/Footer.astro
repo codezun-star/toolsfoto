@@ -3,7 +3,7 @@ const year = new Date().getFullYear();
 ---
 <footer class="border-t border-[var(--color-border)] bg-white mt-20">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 text-sm">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 mb-8 text-sm">
       <div>
         <p class="font-bold text-[var(--color-text)] mb-3">Imágenes</p>
         <nav class="space-y-2 text-[var(--color-text-muted)]">
@@ -45,10 +45,20 @@ const year = new Date().getFullYear();
         </nav>
       </div>
       <div>
+        <p class="font-bold text-[var(--color-text)] mb-3">Developer</p>
+        <nav class="space-y-2 text-[var(--color-text-muted)]">
+          <a href="/generar-qr" class="block hover:text-[var(--color-text)] transition-colors">Generar QR</a>
+          <a href="/formatear-json" class="block hover:text-[var(--color-text)] transition-colors">Formatear JSON</a>
+          <a href="/generador-contrasenas" class="block hover:text-[var(--color-text)] transition-colors">Contraseñas</a>
+          <a href="/convertir-color" class="block hover:text-[var(--color-text)] transition-colors">Convertir color</a>
+          <a href="/developer" class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">Ver todas →</a>
+        </nav>
+      </div>
+      <div>
         <p class="font-bold text-[var(--color-text)] mb-3">ToolsFoto</p>
         <nav class="space-y-2 text-[var(--color-text-muted)]">
           <a href="/" class="block hover:text-[var(--color-text)] transition-colors">Inicio</a>
-          <a href="/#developer" class="block hover:text-[var(--color-text)] transition-colors">Developers</a>
+          <a href="/blog" class="block hover:text-[var(--color-text)] transition-colors">Blog</a>
           <a href="/contacto" class="block hover:text-[var(--color-text)] transition-colors">Contacto</a>
           <a href="/privacidad" class="block hover:text-[var(--color-text)] transition-colors">Privacidad</a>
           <a href="/terminos" class="block hover:text-[var(--color-text)] transition-colors">Términos</a>
@@ -56,7 +66,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--color-text-muted)]">
-      <p>© {year} ToolsFoto · 96 herramientas · Tus archivos nunca salen de tu dispositivo</p>
+      <p>© {year} ToolsFoto · 179 herramientas · Tus archivos nunca salen de tu dispositivo</p>
       <a href="/cookies" class="hover:text-[var(--color-text)] transition-colors">Política de cookies</a>
     </div>
   </div>

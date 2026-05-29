@@ -23,6 +23,7 @@ import {
   Columns2, LayoutTemplate, Tv, AppWindow, Spline, ListTree, Subtitles,
   GalleryHorizontal, Settings2, MonitorPlay, Drum, Mic, MessageSquare,
   PackageMinus, Share2, ALargeSmall,
+  Bot, Phone, Users2, ArrowDownToLine, ListPlus, Replace,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -173,6 +174,12 @@ const ICONS: Record<string, React.ReactNode> = {
   PackageMinus: <PackageMinus size={20} />,
   Share2: <Share2 size={20} />,
   ALargeSmall: <ALargeSmall size={20} />,
+  Bot: <Bot size={20} />,
+  Phone: <Phone size={20} />,
+  Users2: <Users2 size={20} />,
+  ArrowDownToLine: <ArrowDownToLine size={20} />,
+  ListPlus: <ListPlus size={20} />,
+  Replace: <Replace size={20} />,
 };
 
 interface Props {

@@ -14,7 +14,7 @@
 ## Regla obligatoria: documentar cada herramienta nueva
 
 **Cada vez que se añada una herramienta nueva, se DEBE actualizar:**
-1. Añadir fila en `HERRAMIENTAS.md` (dominio correspondiente) y actualizar el contador total.
+1. Añadir fila en el archivo de dominio correspondiente (`HERRAMIENTAS-IMAGEN.md`, `HERRAMIENTAS-PDF.md`, `HERRAMIENTAS-VIDEO.md`, `HERRAMIENTAS-AUDIO.md` o `HERRAMIENTAS-DEV.md`) y actualizar el contador total en `HERRAMIENTAS.md`.
 2. Actualizar el contador de páginas en la sección "Comandos" de este CLAUDE.md.
 3. Actualizar `src/lib/constants/tools.ts` — entrada con `domain` correcto.
 4. Actualizar `src/lib/constants/seo.ts` — título, descripción y canonical.
@@ -22,6 +22,14 @@
 6. Añadir la página `src/pages/slug.astro` con al menos 5 `faqs`.
 7. Registrar el icono Lucide en `src/components/ui/ToolCard.tsx` (import + ICONS record).
 8. Si la herramienta usa un uploader nuevo, documentarlo en la sección de UI.
+
+## Regla obligatoria: checklist al añadir un artículo al blog
+
+**Cada vez que se añada un artículo nuevo, se DEBE:**
+1. Crear `src/content/blog/[slug].md` con frontmatter válido (ver schema en la sección Blog).
+2. Verificar que el slug NO contiene año (`-2026`, `-2025`, etc.).
+3. Ejecutar `npm run build` — debe completar sin errores de schema.
+4. Actualizar el contador de páginas en la sección "Comandos" de este CLAUDE.md (+1).
 
 ---
 
@@ -117,20 +125,32 @@ Asignar antes de usar: `pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN`
 ```
 toolsfoto-v2/
 ├── src/
-│   ├── pages/                   # Páginas Astro (una por herramienta + legales)
+│   ├── content.config.ts        # Schema Zod del blog (Content Layer API, Astro 6)
+│   ├── content/
+│   │   └── blog/                # Artículos .md — el nombre del archivo ES la URL
+│   ├── pages/                   # Páginas Astro (una por herramienta + categorías + blog + legales)
 │   │   ├── index.astro          # Homepage con tabs por dominio
-│   │   ├── comprimir.astro      # (y el resto de slugs, uno por herramienta)
+│   │   ├── comprimir.astro      # (y el resto de slugs — NO MOVER NI RENOMBRAR, están indexados)
+│   │   ├── imagen.astro         # Categoría: todas las herramientas de imagen con paginación
+│   │   ├── pdf.astro            # Categoría: todas las herramientas de PDF con paginación
+│   │   ├── video.astro          # Categoría: todas las herramientas de vídeo con paginación
+│   │   ├── audio.astro          # Categoría: todas las herramientas de audio con paginación
+│   │   ├── developer.astro      # Categoría: todas las herramientas developer con paginación
+│   │   ├── blog/
+│   │   │   ├── index.astro      # Listado de artículos ordenados por fecha
+│   │   │   └── [slug].astro     # Artículo individual con JSON-LD Article + prose
 │   │   ├── privacidad.astro / terminos.astro / cookies.astro
 │   │   └── aviso-legal.astro / contacto.astro
 │   ├── components/
 │   │   ├── layout/
-│   │   │   ├── Header.astro          # Nav: Inicio, Imágenes, PDF, Vídeo, Audio, Dev
-│   │   │   ├── Footer.astro          # 5 columnas: Imágenes, PDF, Vídeo, Audio, ToolsFoto
+│   │   │   ├── Header.astro          # Nav: Inicio, Imágenes, PDF, Vídeo, Audio, Dev, Blog
+│   │   │   ├── Footer.astro          # 5 columnas: Imágenes, PDF, Vídeo, Audio, ToolsFoto (incluye Blog)
 │   │   │   ├── ToolLayout.astro      # Wrapper: SEO + breadcrumb + relacionadas + FAQs
 │   │   │   └── LegalLayout.astro     # Wrapper páginas legales: SEO + breadcrumb + prose
-│   │   ├── tools/               # Un componente React por herramienta (86 total)
+│   │   ├── HomeTools.tsx        # Tabs del home — 12 destacadas por categoría + botón Ver todas
+│   │   ├── tools/               # Un componente React por herramienta
 │   │   └── ui/
-│   │       ├── HomeTools.tsx       # Tabs del home (imagen/pdf/video/audio/developer)
+│   │       ├── CategoryGrid.tsx    # Grid paginado reutilizable para páginas de categoría
 │   │       ├── ImageUploader.tsx   # Dropzone para imágenes (drag & drop + click)
 │   │       ├── PdfUploader.tsx     # Dropzone para PDFs (drag & drop + click)
 │   │       ├── VideoUploader.tsx   # Dropzone para vídeo (mp4/webm/mov/avi/mkv, max 500 MB)
@@ -148,7 +168,7 @@ toolsfoto-v2/
 │   │   │   ├── ffmpeg.ts           # createFFmpeg(onProgress?), runFFmpeg(ff, file, name, args, out)
 │   │   │   └── format.ts           # formatBytes(), formatDimensions(), formatReduction(), mimeToExtension()
 │   │   └── constants/
-│   │       ├── tools.ts            # Metadata de las 76 herramientas — ToolMeta + ToolDomain
+│   │       ├── tools.ts            # Metadata de las herramientas — ToolMeta + ToolDomain
 │   │       └── seo.ts              # Títulos, descriptions, canonicals por página + SITE object
 │   └── styles/
 │       └── global.css             # @import "tailwindcss" + @theme con tokens de diseño
@@ -164,10 +184,86 @@ toolsfoto-v2/
 
 ## Las 121 herramientas
 
-> Las tablas completas están en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md) para no sobrecargar este archivo.
-> **Total: 121 herramientas — 43 imagen · 28 PDF · 21 vídeo · 19 audio · 30 developer + 5 legales**
+> Las tablas completas están divididas por categoría para no sobrecargar este archivo:
+> [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
+> El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
+> **Total: 179 herramientas — 48 imagen · 32 PDF · 26 vídeo · 42 audio · 31 developer + 5 legales**
 
-Al añadir una herramienta nueva, actualizar también `HERRAMIENTAS.md` con la fila correspondiente.
+Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
+
+---
+
+## Blog — Content Collections
+
+El blog usa el **Content Layer API de Astro 6** con archivos `.md` en `src/content/blog/`. Los artículos no llevan imágenes ni covers — solo texto Markdown.
+
+### Archivos del sistema
+
+| Archivo | Descripción |
+|---|---|
+| `src/content.config.ts` | Schema Zod con `glob` loader (Astro 6) |
+| `src/pages/blog/index.astro` | Listado de artículos ordenados por fecha |
+| `src/pages/blog/[slug].astro` | Template individual con JSON-LD Article, prose styles, compartir y CTA |
+| `src/content/blog/*.md` | Artículos — el nombre del archivo ES la URL |
+
+### Schema de artículo (`src/content.config.ts`)
+
+```ts
+{
+  titulo: string,                // obligatorio
+  descripcion?: string,          // para SEO y cards del listado
+  categoria: 'herramientas' | 'tips' | 'tutoriales' | 'actualizaciones' | 'general',
+  fecha: string,                 // ISO "YYYY-MM-DD" — solo para ordenación, no aparece en la URL
+  keywords: string[],            // para meta keywords y JSON-LD Article
+  autor: string,                 // default: 'Equipo ToolsFoto'
+  publicado: boolean,            // default: true — false oculta el artículo sin borrar el archivo
+}
+```
+
+### Cómo crear un artículo nuevo
+
+1. Crear `src/content/blog/[slug].md` — el nombre del archivo ES la URL final (`/blog/slug`).
+2. Completar el frontmatter con los campos del schema.
+3. El cuerpo puede ser Markdown estándar: H2, H3, listas, tablas, blockquotes, `código`.
+4. Ejecutar `npm run build` para verificar que no hay errores de schema.
+
+Ejemplo mínimo:
+```md
+---
+titulo: "Título del artículo"
+descripcion: "Descripción para SEO y cards (máx 160 chars)."
+categoria: "tutoriales"
+fecha: "2026-05-28"
+keywords: ["keyword 1", "keyword 2", "keyword 3"]
+---
+
+## Primera sección
+
+Contenido del artículo...
+```
+
+### Reglas evergreen (OBLIGATORIO)
+
+- **NUNCA incluir el año en el slug, título ni keywords.**
+  - Correcto: `como-comprimir-imagenes`, "Cómo comprimir imágenes"
+  - Incorrecto: `como-comprimir-imagenes-2026`, "Cómo comprimir imágenes 2026"
+- El campo `fecha` solo sirve para ordenar artículos — no sale en la URL ni en rutas generadas, y **no se muestra al usuario en ningún lugar de la UI** (ni en el listado `/blog` ni dentro del artículo). Se mantiene en el frontmatter y en el JSON-LD (`datePublished`) por SEO, pero nunca se renderiza como texto visible.
+- El slug viene del nombre del archivo `.md`, no de ningún campo del frontmatter.
+- Usar `publicado: false` para ocultar un artículo sin borrarlo.
+
+### Prose styles del artículo
+
+`src/pages/blog/[slug].astro` incluye un bloque `<style is:global>` con la clase `.prose` que estiliza el HTML generado por Markdown. Cubre: `h2`, `h3`, `p`, `ul`, `ol`, `strong`, `a`, `table` (th/td), `blockquote`, `code` (inline), `pre code` (bloques), `hr`, `img`. Los colores respetan el sistema de diseño de ToolsFoto (`var(--color-accent)` para links subrayados, `var(--color-text)` para headings).
+
+### Rutas del blog en la navegación
+
+El blog está enlazado desde:
+- **Header.astro** — link "Blog" en nav escritorio y menú móvil (activo con `bg-[var(--color-accent-bg)]` si `currentPath.startsWith('/blog')`)
+- **Footer.astro** — link "Blog" en la columna "ToolsFoto"
+
+### Sitemap
+
+El sitemap se genera automáticamente con `@astrojs/sitemap` — las rutas `/blog/*` quedan incluidas sin configuración adicional en cada build.
 
 ---
 
@@ -300,10 +396,34 @@ Algunas herramientas developer no reciben archivos: trabajan solo con texto o ge
 3. El borde cambia a `var(--color-accent)` cuando el color está seleccionado.
 
 ### HomeTools.tsx — tabs del home
-- `src/components/ui/HomeTools.tsx` — componente React montado con `client:load` en `index.astro`.
+- `src/components/HomeTools.tsx` — componente React montado con `client:load` en `index.astro`.
 - 5 tabs: `imagen | pdf | video | audio | developer`.
+- Cada tab muestra **12 herramientas destacadas** (las más populares/representativas), no todas.
+- El badge del tab muestra el **total real** de herramientas de esa categoría (no el 12).
+- Al final de cada tab hay un botón **"Ver todas las herramientas de X (N) →"** que enlaza a la página de categoría (`/imagen`, `/pdf`, `/video`, `/audio`, `/developer`).
+- Las 12 herramientas destacadas por categoría están definidas en constantes al inicio del archivo: `IMAGEN_FEATURED`, `PDF_FEATURED`, `VIDEO_FEATURED`, `AUDIO_FEATURED`, `DEV_FEATURED`.
 - Routing por hash: lee `window.location.hash` al montar, escucha `hashchange`, actualiza con `history.replaceState`.
 - Tab bar con `overflow-x-auto scrollbar-none` para scroll horizontal en móvil.
+
+### Páginas de categoría
+Cada dominio tiene una página estática que lista **todas** sus herramientas con paginación automática.
+
+| URL | Archivo | Herramientas |
+|---|---|---|
+| `/imagen` | `src/pages/imagen.astro` | 48 (2 páginas) |
+| `/pdf` | `src/pages/pdf.astro` | 32 (2 páginas) |
+| `/video` | `src/pages/video.astro` | 26 (1 página) |
+| `/audio` | `src/pages/audio.astro` | 23 (1 página) |
+| `/developer` | `src/pages/developer.astro` | 31 (2 páginas) |
+
+**`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
+- Recibe `domain: ToolDomain` como prop, filtra `TOOLS` internamente.
+- Muestra 24 herramientas por página (`PER_PAGE = 24`).
+- Los controles de paginación (Anterior / números / Siguiente) solo se renderizan si hay más de una página.
+- Al cambiar de página hace `window.scrollTo({ top: 0 })` para volver al inicio.
+- Se monta con `client:load` en cada página de categoría.
+
+**Regla de URLs:** las URLs de herramientas individuales (`/comprimir`, `/redimensionar`, etc.) están indexadas en Google y **no se tocan bajo ningún concepto**. Nunca mover ni renombrar archivos en `src/pages/` que correspondan a herramientas. Las páginas de categoría son archivos nuevos que no colisionan con ningún slug de herramienta.
 
 ### Lucide icons en .astro templates
 En archivos `.astro`, los componentes React (incluidos iconos Lucide) necesitan `className`, no `class`. También necesitan `client:load` si se usan en una zona interactiva.
@@ -344,7 +464,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 147 páginas HTML estáticas** (43 imagen + 28 PDF + 21 vídeo + 19 audio + 30 developer + home + 5 legales).
+**El build genera actualmente 223 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 

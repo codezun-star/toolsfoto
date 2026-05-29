@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DistorsionAudioTool from '@/components/tools/DistorsionAudioTool';
+---
+<ToolLayout slug="distorsion-audio" faqs={[
+  { q: '¿Qué es el overdrive en audio?', a: 'El overdrive es una forma suave de distorsión que simula la saturación analógica de amplificadores de tubo. Añade armónicos que hacen el sonido más "cálido" y con más presencia. El preset "Guitarra" usa un overdrive más intenso que el preset "Suave".' },
+  { q: '¿Qué es el efecto bitcrush?', a: 'El bitcrush reduce la resolución de bits del audio (de 16 o 24 bits a 8 bits), creando un efecto digital granulado y distorsionado que recuerda a los videojuegos retro de los años 80-90. Se usa mucho en música chiptune y lo-fi.' },
+  { q: '¿Qué tipo de audio responde mejor a la distorsión?', a: 'Las guitarras eléctricas, sintetizadores y voces procesadas responden muy bien. Aplicar distorsión a música polifónica o grabaciones orquestales suele producir resultados caóticos. El preset "Suave" puede funcionar bien con batería para añadir presencia.' },
+  { q: '¿El efecto se puede deshacer?', a: 'No: la distorsión modifica la señal de forma irreversible. Si no estás satisfecho con el resultado, simplemente vuelve a subir el archivo original y prueba otro preset.' },
+  { q: '¿En qué formato se descarga el resultado?', a: 'En el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista compatible, se exporta como MP3. Todo el procesamiento se realiza localmente con FFmpeg.wasm.' },
+]}>
+  <DistorsionAudioTool client:load />
+</ToolLayout>

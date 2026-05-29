@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarPitchSinTempoTool from '@/components/tools/CambiarPitchSinTempoTool';
+---
+<ToolLayout slug="cambiar-pitch-sin-tempo" faqs={[
+  { q: '¿Qué son los "cents" y por qué usar esa unidad?', a: 'Un cent es la centésima parte de un semitono. 100 cents = 1 semitono. 1200 cents = 1 octava. Los cents permiten afinar con mucha más precisión que los semitonos enteros, lo que es necesario para corrección de pitch fina en grabaciones vocales o instrumentales.' },
+  { q: '¿Cómo funciona la preservación del tempo?', a: 'La herramienta primero modifica la tasa de muestreo para cambiar el pitch (lo que también cambia la velocidad), luego aplica el filtro atempo de FFmpeg para compensar exactamente esa variación de velocidad. El resultado es el pitch deseado con la misma duración que el original.' },
+  { q: '¿Cuál es la diferencia con las herramientas "Cambiar tono" y "Afinar audio"?', a: '"Cambiar tono" usa semitonos enteros. "Afinar audio" usa semitonos y añade vibrato opcional. Esta herramienta usa cents (100× más precisión) y no añade efectos adicionales. Es ideal para corrección de pitch precisa.' },
+  { q: '¿Hay límite en el rango de desplazamiento?', a: 'El rango es de ±1200 cents (±1 octava). Para desplazamientos mayores, la calidad del filtro atempo puede degradarse. El filtro atempo de FFmpeg funciona mejor entre ±1 octava.' },
+  { q: '¿Qué formatos de audio se admiten?', a: 'MP3, WAV, OGG, AAC y cualquier otro que FFmpeg.wasm pueda procesar. El resultado se exporta en el mismo formato que la entrada.' },
+]}>
+  <CambiarPitchSinTempoTool client:load />
+</ToolLayout>

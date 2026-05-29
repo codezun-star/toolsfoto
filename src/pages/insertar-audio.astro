@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import InsertarAudioTool from '@/components/tools/InsertarAudioTool';
+---
+<ToolLayout slug="insertar-audio" faqs={[
+  { q: '¿Cómo funciona la inserción de audio?', a: 'La herramienta divide el audio principal en el punto de tiempo especificado. Luego concatena las tres partes: [inicio hasta el punto] + [audio insertado completo] + [desde el punto hasta el final]. El resultado tiene la duración del audio principal más la del audio insertado.' },
+  { q: '¿En qué formato se exporta el resultado?', a: 'El resultado se exporta en MP3 para garantizar la compatibilidad. Esto es necesario porque la concatenación de diferentes formatos requiere recodificación.' },
+  { q: '¿Puedo insertar un audio al principio o al final?', a: 'Sí. Con tiempo 0, el audio insertado quedará al inicio. Con un tiempo mayor a la duración del audio principal, se añadirá al final.' },
+  { q: '¿Hay límite de tamaño para los archivos?', a: 'El límite es el que impone el componente de subida de audio (200 MB por archivo). Para archivos muy grandes, la herramienta puede tardar varios minutos en procesarlos.' },
+  { q: '¿Se puede usar para añadir una intro o una jingle a un podcast?', a: 'Exacto, ese es uno de sus usos más habituales. Sube el episodio como audio principal, la intro como audio a insertar, y establece el tiempo en 0 para colocarla al inicio.' },
+]}>
+  <InsertarAudioTool client:load />
+</ToolLayout>

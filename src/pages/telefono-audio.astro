@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import TelefonoAudioTool from '@/components/tools/TelefonoAudioTool';
+---
+<ToolLayout slug="telefono-audio" faqs={[
+  { q: '¿Cómo funciona el efecto de teléfono?', a: 'El efecto se consigue aplicando filtros de paso alto y bajo que limitan el audio a la banda de frecuencia de los teléfonos analógicos (300-3400 Hz). Esto elimina los graves profundos y los agudos extremos, dejando solo el rango de voz humana estándar.' },
+  { q: '¿Qué diferencia hay entre los 4 presets?', a: '"Teléfono" aplica la banda clásica 300-3400 Hz. "Radio AM" usa una banda ligeramente más amplia con un leve eco. "Intercomunicador" aplica compresión agresiva para el sonido saturado típico de los walkie-talkies de interior. "Walkie-talkie" es la versión más agresiva con mayor compresión.' },
+  { q: '¿Para qué se usa este efecto?', a: 'Es muy útil en producción de audio y vídeo: para simular llamadas de teléfono en podcasts, doblajes o ficciones sonoras. También se usa en producción musical para añadir interés a partes vocales o crear contraste.' },
+  { q: '¿Funciona también con música o solo con voz?', a: 'Funciona con cualquier audio, pero es más efectivo y reconocible con voces. Aplicado a música, eliminará la mayor parte de los graves y los agudos brillantes, lo que puede sonar muy distorsionado.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El archivo de audio nunca sale de tu dispositivo.' },
+]}>
+  <TelefonoAudioTool client:load />
+</ToolLayout>

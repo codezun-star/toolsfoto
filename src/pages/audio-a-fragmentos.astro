@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AudioAFragmentosTool from '@/components/tools/AudioAFragmentosTool';
+---
+<ToolLayout slug="audio-a-fragmentos" faqs={[
+  { q: '¿Cómo se calcula la duración de cada fragmento?', a: 'La herramienta analiza la duración total del archivo con la Web Audio API y la divide entre el número de fragmentos elegido. Por ejemplo, un audio de 10 minutos dividido en 4 fragmentos producirá 4 archivos de 2m 30s cada uno.' },
+  { q: '¿Cuántos fragmentos puedo crear como máximo?', a: 'Puedes elegir entre 2 y 10 fragmentos. Para más fragmentos, considera usar la herramienta de dividir audio manualmente o encadenar varias operaciones.' },
+  { q: '¿Los fragmentos son exactamente iguales en duración?', a: 'Sí en teoría, pero puede haber una diferencia de unos pocos milisegundos en el último fragmento dependiendo del codec y los límites de frame del formato de audio.' },
+  { q: '¿Se pierde calidad al dividir?', a: 'Para formatos lossy (MP3, AAC…), hay una pequeña pérdida al recodificar. Para WAV, la calidad es perfecta. Si la calidad es crítica, trabaja con WAV como formato de entrada.' },
+  { q: '¿Puedo descargar todos los fragmentos a la vez?', a: 'Actualmente la herramienta ofrece un botón de descarga individual por cada fragmento. Los archivos se descargan uno a uno. En el futuro añadiremos descarga en ZIP.' },
+]}>
+  <AudioAFragmentosTool client:load />
+</ToolLayout>

@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AnalizarEspectroTool from '@/components/tools/AnalizarEspectroTool';
+---
+<ToolLayout slug="analizar-espectro" faqs={[
+  { q: '¿Qué muestra el espectro de frecuencias?', a: 'El espectro muestra la distribución de energía de un audio entre las distintas frecuencias, desde los graves (20 Hz, izquierda) hasta los agudos (20 kHz, derecha). Cada barra representa cuánta energía tiene esa frecuencia en el fragmento analizado.' },
+  { q: '¿Qué fragmento del audio se analiza?', a: 'Se analiza un fragmento de 2048 muestras tomado del centro del audio. Para audios de estructura uniforme (tonos, ruido, música continua) esto es representativo. Para audios con cambios bruscos, el resultado refleja solo ese instante central.' },
+  { q: '¿Para qué sirve analizar el espectro?', a: 'Es útil para diagnosticar la calidad de un audio (ver si le faltan agudos), identificar frecuencias problemáticas, comparar dos versiones del mismo audio o verificar si un archivo supuestamente de alta calidad realmente tiene información en las altas frecuencias.' },
+  { q: '¿Puedo personalizar la imagen?', a: 'Sí, puedes cambiar el color de las barras del espectro y el color de fondo antes de generar la imagen. El resultado se descarga como PNG de 1200 × 400 píxeles.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el análisis se realiza con la Web Audio API del navegador y la Canvas API. El archivo de audio nunca sale de tu dispositivo.' },
+]}>
+  <AnalizarEspectroTool client:load />
+</ToolLayout>

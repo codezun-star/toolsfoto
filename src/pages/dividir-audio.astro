@@ -1,0 +1,13 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DividirAudioTool from '@/components/tools/DividirAudioTool';
+---
+<ToolLayout slug="dividir-audio" faqs={[
+  { q: '¿Cómo especifico el punto de división?', a: 'Introduce el tiempo en segundos donde quieres dividir el audio. Por ejemplo, 90 dividirá el archivo en los primeros 1m 30s (Parte 1) y desde 1m 30s hasta el final (Parte 2). Puedes usar el slider o introducir el valor numérico exacto.' },
+  { q: '¿Qué pasa si el punto de división supera la duración del audio?', a: 'Si introduces un tiempo mayor que la duración del archivo, la Parte 1 contendrá el audio completo y la Parte 2 quedará vacía. Asegúrate de conocer la duración aproximada del archivo antes de cortar.' },
+  { q: '¿Se mantiene la calidad del audio original?', a: 'FFmpeg recodifica los fragmentos al mismo formato que el original. Para MP3 y otros formatos lossy, habrá una muy pequeña pérdida adicional al recodificar. Para WAV, la calidad es idéntica.' },
+  { q: '¿En qué formato se descargan las dos partes?', a: 'Cada parte se descarga en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista compatible, se exporta como MP3.' },
+  { q: '¿Qué diferencia hay con la herramienta de cortar audio?', a: 'La herramienta de cortar audio extrae un fragmento específico (entre dos tiempos). Dividir audio siempre genera dos partes: todo lo que va antes del punto de corte y todo lo que va después, sin descartar nada.' },
+]}>
+  <DividirAudioTool client:load />
+</ToolLayout>

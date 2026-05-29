@@ -1,7 +1,37 @@
 import { useState, useEffect } from 'react';
 import { TOOLS, type ToolDomain } from '@/lib/constants/tools';
 import ToolCard from '@/components/ui/ToolCard';
-import { Image, FileText, Code2, Video, Music } from 'lucide-react';
+import { Image, FileText, Code2, Video, Music, ArrowRight } from 'lucide-react';
+
+const IMAGEN_FEATURED = [
+  'comprimir', 'redimensionar', 'recortar', 'convertir',
+  'girar', 'eliminar-fondo', 'editor', 'marca-de-agua',
+  'blancoynegro', 'recorte-circular', 'collage', 'redimensionar-redes',
+];
+
+const PDF_FEATURED = [
+  'comprimir-pdf', 'unir-pdfs', 'dividir-pdf', 'pdf-a-jpg',
+  'jpg-a-pdf', 'rotar-pdf', 'extraer-paginas-pdf', 'extraer-texto-pdf',
+  'proteger-pdf', 'firmar-pdf', 'marca-agua-pdf', 'reordenar-paginas-pdf',
+];
+
+const VIDEO_FEATURED = [
+  'comprimir-video', 'convertir-video', 'recortar-video', 'extraer-audio',
+  'video-a-gif', 'cambiar-velocidad', 'rotar-video', 'silenciar-video',
+  'anadir-audio-video', 'marca-agua-video', 'unir-videos', 'capturar-fotograma',
+];
+
+const AUDIO_FEATURED = [
+  'comprimir-audio', 'convertir-audio', 'cortar-audio', 'cambiar-volumen',
+  'unir-audios', 'mezclar-audios', 'normalizar-audio', 'cambiar-tono',
+  'velocidad-audio', 'reducir-ruido-audio', 'ecualizador-audio', 'transcribir-audio',
+];
+
+const DEV_FEATURED = [
+  'formatear-json', 'generar-qr', 'convertir-color', 'codificar-url',
+  'imagen-a-base64', 'generar-favicon', 'calcular-hash', 'base64-texto',
+  'generador-contrasenas', 'generador-uuid', 'regex-tester', 'svg-a-png',
+];
 
 const TABS: { id: ToolDomain; label: string; Icon: typeof Image }[] = [
   { id: 'imagen', label: 'Imágenes', Icon: Image },
@@ -17,6 +47,12 @@ function getTabFromHash(): ToolDomain {
   if (typeof window === 'undefined') return 'imagen';
   const hash = window.location.hash.slice(1) as ToolDomain;
   return VALID_TABS.includes(hash) ? hash : 'imagen';
+}
+
+function featured(slugs: string[], pool: typeof TOOLS) {
+  return slugs
+    .map(slug => pool.find(t => t.slug === slug))
+    .filter((t): t is NonNullable<typeof t> => t !== undefined);
 }
 
 export default function HomeTools() {
@@ -46,6 +82,22 @@ export default function HomeTools() {
     audio: audioTools.length,
     developer: devTools.length,
   };
+
+  const GRID = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
+
+  function VerTodas({ href, count, label }: { href: string; count: number; label: string }) {
+    return (
+      <div className="mt-8 flex justify-center">
+        <a
+          href={href}
+          className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[var(--color-text)] text-[var(--color-text)] font-semibold text-sm hover:bg-[var(--color-text)] hover:text-white transition-colors rounded-xl"
+        >
+          Ver todas las herramientas de {label} ({count})
+          <ArrowRight size={16} />
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -87,37 +139,52 @@ export default function HomeTools() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
           {active === 'imagen' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {imageTools.map(t => <ToolCard key={t.slug} tool={t} />)}
-            </div>
+            <>
+              <div className={GRID}>
+                {featured(IMAGEN_FEATURED, imageTools).map(t => <ToolCard key={t.slug} tool={t} />)}
+              </div>
+              <VerTodas href="/imagen" count={imageTools.length} label="imágenes" />
+            </>
           )}
 
           {active === 'pdf' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {pdfTools.map(t => <ToolCard key={t.slug} tool={t} />)}
-            </div>
+            <>
+              <div className={GRID}>
+                {featured(PDF_FEATURED, pdfTools).map(t => <ToolCard key={t.slug} tool={t} />)}
+              </div>
+              <VerTodas href="/pdf" count={pdfTools.length} label="PDF" />
+            </>
           )}
 
           {active === 'video' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {videoTools.map(t => <ToolCard key={t.slug} tool={t} />)}
-            </div>
+            <>
+              <div className={GRID}>
+                {featured(VIDEO_FEATURED, videoTools).map(t => <ToolCard key={t.slug} tool={t} />)}
+              </div>
+              <VerTodas href="/video" count={videoTools.length} label="vídeo" />
+            </>
           )}
 
           {active === 'audio' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {audioTools.map(t => <ToolCard key={t.slug} tool={t} />)}
-            </div>
+            <>
+              <div className={GRID}>
+                {featured(AUDIO_FEATURED, audioTools).map(t => <ToolCard key={t.slug} tool={t} />)}
+              </div>
+              <VerTodas href="/audio" count={audioTools.length} label="audio" />
+            </>
           )}
 
           {active === 'developer' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              {devTools.map(t => <ToolCard key={t.slug} tool={t} />)}
-            </div>
+            <>
+              <div className={GRID}>
+                {featured(DEV_FEATURED, devTools).map(t => <ToolCard key={t.slug} tool={t} />)}
+              </div>
+              <VerTodas href="/developer" count={devTools.length} label="developers" />
+            </>
           )}
+
         </div>
       </div>
     </div>
   );
 }
-
