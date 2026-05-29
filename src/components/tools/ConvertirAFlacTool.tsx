@@ -35,6 +35,7 @@ export default function ConvertirAFlacTool() {
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       await ff.exec(['-i', `input.${ext}`, '-c:a', 'flac', 'output.flac']);
       const data = await ff.readFile('output.flac') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.flac'); } catch { /* ignore */ }
       const blob = new Blob([data], { type: 'audio/flac' });

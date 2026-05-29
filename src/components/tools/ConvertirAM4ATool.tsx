@@ -42,6 +42,7 @@ export default function ConvertirAM4ATool() {
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       await ff.exec(['-i', `input.${ext}`, '-c:a', 'aac', '-b:a', bitrate, 'output.m4a']);
       const data = await ff.readFile('output.m4a') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.m4a'); } catch { /* ignore */ }
       const blob = new Blob([data], { type: 'audio/mp4' });

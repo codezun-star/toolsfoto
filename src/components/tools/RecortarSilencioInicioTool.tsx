@@ -47,6 +47,7 @@ export default function RecortarSilencioInicioTool() {
       const filter = `silenceremove=start_periods=1:start_silence=${minDuration}:start_threshold=${threshold}dB:stop_periods=-1:stop_silence=${minDuration}:stop_threshold=${threshold}dB`;
       await ff.exec(['-i', `input.${ext}`, '-af', filter, `output.${ext}`]);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
       const blob = new Blob([data], { type: MIME[ext] ?? 'audio/mpeg' });

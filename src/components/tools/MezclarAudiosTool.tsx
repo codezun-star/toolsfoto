@@ -76,6 +76,7 @@ export default function MezclarAudiosTool() {
       const filter = `[0:a]volume=${vol1 / 100}[a1];[1:a]volume=${vol2 / 100}[a2];[a1][a2]amix=inputs=2:duration=longest[out]`;
       await ff.exec(['-i', `input1.${ext1}`, '-i', `input2.${ext2}`, '-filter_complex', filter, '-map', '[out]', 'output.mp3']);
       const data = await ff.readFile('output.mp3') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input1.${ext1}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`input2.${ext2}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }

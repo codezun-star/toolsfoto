@@ -117,6 +117,7 @@ export default function MarcaAguaVideoTool() {
       ]);
 
       const data = (await ff.readFile('output.mp4')) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       for (const name of ['input.mp4', 'watermark.png', 'output.mp4']) {
         try { await ff.deleteFile(name); } catch { /* ignore */ }
       }

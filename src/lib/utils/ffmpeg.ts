@@ -52,6 +52,7 @@ export async function runFFmpeg(
     throw err;
   }
   const data = (await ff.readFile(outputName)) as Uint8Array;
+  if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
   try { await ff.deleteFile(inputName); } catch { /* ignore */ }
   try { await ff.deleteFile(outputName); } catch { /* ignore */ }
   const ext = outputName.split('.').pop()!;

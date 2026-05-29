@@ -49,6 +49,7 @@ export default function BoomerangVideoTool() {
       await ff.exec(['-f', 'concat', '-safe', '0', '-i', 'list.txt', '-c', 'copy', 'output.mp4']);
 
       const data = await ff.readFile('output.mp4') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con un vídeo más corto.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('reversed.mp4'); } catch { /* ignore */ }
       try { await ff.deleteFile('orig_copy.mp4'); } catch { /* ignore */ }

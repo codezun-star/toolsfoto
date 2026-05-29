@@ -68,6 +68,7 @@ export default function EcualizadorAudioTool() {
 
       await ff.exec(['-i', `input.${ext}`, '-af', afFilter, `output.${ext}`]);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
 

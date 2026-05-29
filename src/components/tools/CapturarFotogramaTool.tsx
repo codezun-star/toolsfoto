@@ -48,6 +48,7 @@ export default function CapturarFotogramaTool() {
       await ff.writeFile('input.mp4', new Uint8Array(buf));
       await ff.exec(['-ss', String(time), '-i', 'input.mp4', '-frames:v', '1', '-q:v', '2', 'frame.png']);
       const data = await ff.readFile('frame.png') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo una imagen vacía. Prueba con otro fotograma.');
       await ff.deleteFile('input.mp4');
       await ff.deleteFile('frame.png');
       const blob = new Blob([data], { type: 'image/png' });

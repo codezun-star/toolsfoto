@@ -48,6 +48,7 @@ export default function BucleVideoTool() {
       ]);
 
       const data = await ff.readFile('output.mp4') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       try { await ff.deleteFile(inputName); } catch { /* ignore */ }
       try { await ff.deleteFile('list.txt'); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }

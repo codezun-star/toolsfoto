@@ -86,6 +86,7 @@ export default function UnirAudiosTool() {
       await ff.writeFile('list.txt', enc.encode(listContent));
       await ff.exec(['-f', 'concat', '-safe', '0', '-i', 'list.txt', '-c', 'copy', 'output.mp3']);
       const data = (await ff.readFile('output.mp3')) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
 
       for (const n of [...inputNames, ...reencoded]) { try { await ff.deleteFile(n); } catch { /* ignore */ } }
       try { await ff.deleteFile('list.txt'); } catch { /* ignore */ }

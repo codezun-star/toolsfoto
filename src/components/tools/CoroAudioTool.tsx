@@ -9,17 +9,17 @@ const PRESETS = [
   {
     label: 'Sutil',
     description: 'Toque suave de amplitud estéreo',
-    filter: 'achorus=0.5:0.9:30|40:0.3|0.25:0.15|0.2:2|2.5',
+    filter: 'chorus=0.5:0.9:30|40:0.3|0.25:0.15|0.2:2|2.5',
   },
   {
     label: 'Estándar',
     description: 'Coro clásico para voces e instrumentos',
-    filter: 'achorus=0.5:0.9:50|60|40:0.4|0.32|0.3:0.25|0.4|0.3:2|2.3|1.3',
+    filter: 'chorus=0.5:0.9:50|60|40:0.4|0.32|0.3:0.25|0.4|0.3:2|2.3|1.3',
   },
   {
     label: 'Rico',
     description: 'Efecto coral denso con 4 voces',
-    filter: 'achorus=0.6:0.9:60|80|100|70:0.4|0.35|0.3|0.32:0.25|0.3|0.35|0.28:2|2.3|2.8|2.1',
+    filter: 'chorus=0.6:0.9:60|80|100|70:0.4|0.35|0.3|0.32:0.25|0.3|0.35|0.28:2|2.3|2.8|2.1',
   },
 ];
 
@@ -62,6 +62,7 @@ export default function CoroAudioTool() {
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       await ff.exec(['-i', `input.${ext}`, '-af', PRESETS[preset]!.filter, `output.${ext}`]);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
       const blob = new Blob([data], { type: MIME[ext] ?? 'audio/mpeg' });

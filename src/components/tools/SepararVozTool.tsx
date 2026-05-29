@@ -63,7 +63,9 @@ export default function SepararVozTool() {
       }
 
       const vocalData = await ff.readFile('vocals.mp3') as Uint8Array;
+      if (!vocalData || vocalData.length === 0) throw new Error('El procesador produjo un archivo de voz vacío.');
       const instData = await ff.readFile('instrumental.mp3') as Uint8Array;
+      if (!instData || instData.length === 0) throw new Error('El procesador produjo un archivo instrumental vacío.');
       await ff.deleteFile(inputName).catch(() => {});
       await ff.deleteFile('vocals.mp3').catch(() => {});
       await ff.deleteFile('instrumental.mp3').catch(() => {});

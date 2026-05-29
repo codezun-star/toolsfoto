@@ -57,7 +57,8 @@ export default function AfinarAudioTool() {
       await ff.writeFile(inputName, new Uint8Array(buf));
 
       const pitchRatio = Math.pow(2, semitones / 12);
-      const filterParts: string[] = [`asetrate=44100*${pitchRatio.toFixed(8)}`, 'aresample=44100'];
+      const newRate = Math.round(44100 * pitchRatio);
+      const filterParts: string[] = [`asetrate=${newRate}`, 'aresample=44100'];
       if (preserveSpeed) filterParts.push(buildAtempo(1 / pitchRatio));
       if (vibrato) filterParts.push('vibrato=f=5:d=0.3');
 
@@ -65,6 +66,7 @@ export default function AfinarAudioTool() {
       try { await ff.exec(args); } catch (err) { console.error('[AfinarAudio] FFmpeg error:', err); throw err; }
 
       const data = await ff.readFile(outputName) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío.');
       await ff.deleteFile(inputName).catch(() => {});
       await ff.deleteFile(outputName).catch(() => {});
 

@@ -73,6 +73,7 @@ export default function AudioAVideoTool() {
       }
 
       const data = await ff.readFile('output.mp4') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`audio.${audioExt}`); } catch { /* ignore */ }
       if (useImage && bgImage) { try { await ff.deleteFile(`bg.${bgImage.name.split('.').pop()?.toLowerCase()}`); } catch { /* ignore */ } }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }

@@ -43,6 +43,7 @@ export default function AjustarVolumenVideoTool() {
       ]);
 
       const data = await ff.readFile('output.mp4') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }
 

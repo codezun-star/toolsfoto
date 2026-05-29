@@ -51,6 +51,7 @@ export default function EcoAudioTool() {
       // aecho=in_gain:out_gain:delay:decay
       await ff.exec(['-i', `input.${ext}`, '-af', `aecho=0.8:0.9:${delay}:${decay}`, `output.${ext}`]);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
       const mimeMap: Record<string, string> = { mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', aac: 'audio/aac', flac: 'audio/flac' };

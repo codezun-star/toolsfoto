@@ -8,23 +8,23 @@ import { Download, Loader2 } from 'lucide-react';
 const PRESETS = [
   {
     label: 'Robot estándar',
-    description: 'Voz metálica con ecos cortos',
-    filter: 'aecho=0.8:0.9:10:0.9|20:0.7|30:0.5,asetrate=44100*1.02,aresample=44100',
+    description: 'Voz metálica con eco corto',
+    filter: 'aecho=0.8:0.9:10:0.9,asetrate=44982,aresample=44100',
   },
   {
     label: 'Robot grave',
     description: 'Versión más profunda y grave',
-    filter: 'asetrate=44100*0.85,aresample=44100,aecho=0.8:0.9:8:0.8|16:0.6',
+    filter: 'asetrate=37485,aresample=44100,aecho=0.8:0.9:8:0.8',
   },
   {
     label: 'Alien',
     description: 'Tono extraterrestre con vibración',
-    filter: 'vibrato=f=10:d=0.9,aecho=0.8:0.88:5:0.8|12:0.5|20:0.3',
+    filter: 'vibrato=f=8:d=0.7,aecho=0.8:0.88:5:0.8',
   },
   {
     label: 'Cibernético',
     description: 'Procesado digital extremo',
-    filter: 'asetrate=44100*1.05,aresample=44100,aecho=0.9:0.9:5:0.95|10:0.8|15:0.6|20:0.4',
+    filter: 'asetrate=46305,aresample=44100,aecho=0.9:0.88:5:0.9',
   },
 ];
 
@@ -65,8 +65,10 @@ export default function RobotizarVozTool() {
       const ext = getOutputExt(audio.name);
       const buf = await audio.file.arrayBuffer();
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
-      await ff.exec(['-i', `input.${ext}`, '-af', PRESETS[preset]!.filter, `output.${ext}`]);
+      const exitCode = await ff.exec(['-i', `input.${ext}`, '-af', PRESETS[preset]!.filter, `output.${ext}`]);
+      if (exitCode !== 0) throw new Error(`FFmpeg terminó con error (código ${exitCode}).`);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato (WAV o MP3).');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
       const blob = new Blob([data], { type: MIME[ext] ?? 'audio/mpeg' });

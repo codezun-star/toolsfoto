@@ -42,6 +42,7 @@ export default function ConvertirAEstereoTool() {
       // -ac 2 converts to stereo by duplicating channels if mono
       await ff.exec(['-i', `input.${ext}`, '-ac', '2', `output.${ext}`]);
       const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }
       const mimeMap: Record<string, string> = { mp3: 'audio/mpeg', wav: 'audio/wav', ogg: 'audio/ogg', aac: 'audio/aac', flac: 'audio/flac' };

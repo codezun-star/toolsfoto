@@ -51,11 +51,13 @@ export default function DividirAudioTool() {
       // Part 1: from start to splitAt
       await ff.exec(['-i', `input.${ext}`, '-t', String(splitAt), `part1.${ext}`]);
       const data1 = await ff.readFile(`part1.${ext}`) as Uint8Array;
+      if (!data1 || data1.length === 0) throw new Error('La parte 1 quedó vacía. Prueba con otro punto de corte.');
       try { await ff.deleteFile(`part1.${ext}`); } catch { /* ignore */ }
 
       // Part 2: from splitAt to end
       await ff.exec(['-i', `input.${ext}`, '-ss', String(splitAt), `part2.${ext}`]);
       const data2 = await ff.readFile(`part2.${ext}`) as Uint8Array;
+      if (!data2 || data2.length === 0) throw new Error('La parte 2 quedó vacía. El punto de corte puede estar más allá de la duración del audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`part2.${ext}`); } catch { /* ignore */ }
 

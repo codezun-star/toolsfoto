@@ -52,6 +52,7 @@ export default function GenerarTonoTool() {
       ]);
 
       const data = await ff.readFile('output.mp3') as Uint8Array;
+      if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Inténtalo de nuevo.');
       try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }
 
       const blob = new Blob([data], { type: 'audio/mpeg' });
