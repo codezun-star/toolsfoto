@@ -306,6 +306,7 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 5. **Errores async con mensajes en español** visibles al usuario (no solo `console.error`).
 6. **Cada herramienta es un componente React independiente** en `src/components/tools/`. Se monta con `client:load` en la página Astro correspondiente.
 7. **Al añadir una herramienta nueva, actualizar CLAUDE.md** — tabla del dominio, contador del build, y cualquier patrón nuevo que introduzca.
+8. **Todas las URLs sin trailing slash.** Nunca crear rutas ni enlaces con `/` al final. El sitio usa `trailingSlash: 'never'` en `astro.config.mjs` y `build.format: 'file'` (genera `page.html`, no `page/index.html`). Cloudflare Pages redirige automáticamente `/page/` → `/page` (301) vía `public/_redirects`. Cualquier enlace interno con slash final romperá el canonical y generará un redirect innecesario.
 
 ### Patrones por tipo de herramienta
 
