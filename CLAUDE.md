@@ -477,3 +477,11 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 - La depreciación de `punycode` en los logs de build/dev es un warning de Node.js interno de las dependencias, no del código propio.
 - **ToolsFoto no usa cookies de seguimiento ni analíticas.** El único almacenamiento local es la caché del modelo de IA de `@imgly/background-removal`, que gestiona el propio navegador. No se necesita banner de consentimiento de cookies.
 - **Hero background:** `public/hero-bg.jpg` — gradiente full-spectrum (rosa/naranja/azul), 1920px, ~73 KB. Overlay `from-black/75 via-black/55 to-black/30` para legibilidad del texto.
+
+---
+
+## Registro de cambios
+
+| Fecha | Acción |
+|---|---|
+| 2026-05-29 | SEO/URLs: `trailingSlash: 'never'` en `astro.config.mjs`. Canonical del home corregida en `seo.ts` (`toolsfoto.com/` → `toolsfoto.com`). Redirect 301 `/*/→/:splat` en `public/_redirects` (Cloudflare Pages) para normalizar URLs con slash final. |

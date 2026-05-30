@@ -16,7 +16,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
   home: {
     title: 'ToolsFoto — Herramientas de imágenes online gratis',
     description: 'Comprime, redimensiona, recorta, convierte y edita imágenes online sin registro. 11 herramientas gratis. Tus imágenes nunca salen de tu dispositivo.',
-    canonical: 'https://toolsfoto.com/',
+    canonical: 'https://toolsfoto.com',
   },
   comprimir: {
     title: 'Comprimir imágenes online gratis | ToolsFoto',
