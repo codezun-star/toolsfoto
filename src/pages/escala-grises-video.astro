@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EscalaGrisesVideoTool from '@/components/tools/EscalaGrisesVideoTool';
+
+const faqs = [
+  { q: '¿Qué filtros de color incluye esta herramienta?', a: 'La herramienta ofrece tres efectos: Escala de grises (elimina todo el color), Sepia (tono marrón cálido vintage) y Negativo (invierte todos los colores). Todos procesan el vídeo en el navegador con FFmpeg.wasm.' },
+  { q: '¿Se pierde calidad al convertir a escala de grises?', a: 'El vídeo se mantiene en el mismo códec de vídeo (H.264 en el caso de MP4). El filtro de color se aplica a nivel de frame sin degradar la resolución. Solo el audio se copia sin cambios.' },
+  { q: '¿El audio se mantiene después del efecto?', a: 'Sí. El stream de audio se copia exactamente igual que en el vídeo original, sin re-codificar ni modificar.' },
+  { q: '¿Qué formatos admite como entrada?', a: 'Admite MP4, WebM, MOV y AVI. El resultado siempre se descarga como MP4, el formato más compatible con navegadores, redes sociales y reproductores.' },
+  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB) desde la CDN. El navegador lo guarda en caché para las siguientes sesiones. Tu vídeo nunca sale del dispositivo.' },
+];
+---
+<ToolLayout slug="escala-grises-video" faqs={faqs}>
+  <EscalaGrisesVideoTool client:load />
+</ToolLayout>

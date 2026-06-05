@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FundidoVideoTool from '@/components/tools/FundidoVideoTool';
+
+const faqs = [
+  { q: '¿Qué es un fundido a negro?', a: 'Un fundido a negro es una transición suave donde la imagen pasa gradualmente del negro al vídeo (fundido de entrada) o del vídeo al negro (fundido de salida). Se usa en cine, televisión y vídeos de redes sociales para dar un inicio o cierre elegante al clip.' },
+  { q: '¿Puedo aplicar solo fundido de entrada o solo de salida?', a: 'Sí. Selecciona "Sin fundido" en la opción que no necesites. Por ejemplo, puedes aplicar solo 1s de fundido de entrada dejando el fundido de salida en 0s, y viceversa.' },
+  { q: '¿Se pierde calidad con el fundido?', a: 'El vídeo se recodifica con H.264 para aplicar el efecto de fundido, lo que implica una leve pérdida de calidad respecto al original. El resultado tendrá una calidad alta (configuración por defecto de FFmpeg).' },
+  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). El navegador lo guarda en caché, así que las siguientes veces es instantáneo. Tu vídeo nunca sale de tu dispositivo.' },
+  { q: '¿Qué formatos de vídeo admite?', a: 'Admite MP4, WebM, MOV y AVI como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos.' },
+];
+---
+<ToolLayout slug="fundido-video" faqs={faqs}>
+  <FundidoVideoTool client:load />
+</ToolLayout>

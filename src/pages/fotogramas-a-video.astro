@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FotogramasAVideoTool from '@/components/tools/FotogramasAVideoTool';
+
+const faqs = [
+  { q: '¿Cuántas fotos puedo añadir al slideshow?', a: 'Puedes añadir hasta 30 imágenes por slideshow. Las fotos se procesan en el orden que elijas, que puedes cambiar arrastrando las miniaturas antes de crear el vídeo.' },
+  { q: '¿Qué formatos de imagen admite?', a: 'Admite JPG, PNG y WebP. Las imágenes se escalan automáticamente a la resolución elegida (720p o 1080p) con barras negras laterales si el aspecto no coincide, para evitar distorsión.' },
+  { q: '¿El vídeo resultante tiene audio?', a: 'No. Los slideshows creados con esta herramienta son vídeos sin audio. Si quieres añadir música, puedes usar la herramienta "Añadir audio a vídeo" después de descargar el slideshow.' },
+  { q: '¿Por qué tarda más que otras herramientas?', a: 'Con muchas fotos y duración larga, FFmpeg tiene que procesar cada imagen individualmente y concatenarlas. Con 10 fotos a 2s cada una y 1080p, el proceso puede tardar 1-2 minutos. Es normal.' },
+  { q: '¿Puedo reordenar las fotos antes de crear el vídeo?', a: 'Sí. Una vez subidas las imágenes, puedes arrastrarlas en la cuadrícula para cambiar el orden. Los números en la esquina inferior izquierda indican la posición en el vídeo final.' },
+];
+---
+<ToolLayout slug="fotogramas-a-video" faqs={faqs}>
+  <FotogramasAVideoTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DenoiseVideoTool from '@/components/tools/DenoiseVideoTool';
+
+const faqs = [
+  { q: '¿Qué es el ruido digital en vídeo?', a: 'El ruido digital es la variación aleatoria de brillo o color en los píxeles de un vídeo, perceptible como un efecto de grano. Aparece habitualmente en grabaciones con poca luz, cámaras de baja calidad o al usar sensibilidad ISO alta.' },
+  { q: '¿Qué filtro usa la herramienta?', a: 'Usa el filtro hqdn3d (High Quality 3D Denoiser) de FFmpeg, que analiza el ruido en tres dimensiones: espacio horizontal, espacio vertical y tiempo entre fotogramas. Es uno de los filtros de reducción de ruido más eficientes disponibles en FFmpeg.' },
+  { q: '¿Perderé detalle al aplicar el denoising?', a: 'Con la opción Suave o Medio, la pérdida de detalle es mínima. La opción Intenso puede suavizar ligeramente los bordes y texturas finas. Para vídeos con detalle importante (textura de piel, objetos pequeños), usa Suave o Medio.' },
+  { q: '¿El audio se ve afectado?', a: 'No. El stream de audio se copia exactamente igual, sin recodificación ni pérdida de calidad.' },
+  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). El navegador lo guarda en caché para las siguientes sesiones. Tu vídeo nunca sale del dispositivo.' },
+];
+---
+<ToolLayout slug="denoise-video" faqs={faqs}>
+  <DenoiseVideoTool client:load />
+</ToolLayout>

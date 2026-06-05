@@ -187,7 +187,7 @@ toolsfoto-v2/
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 179 herramientas — 48 imagen · 32 PDF · 26 vídeo · 42 audio · 31 developer + 5 legales**
+> **Total: 184 herramientas — 48 imagen · 32 PDF · 31 vídeo · 42 audio · 31 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -465,7 +465,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 223 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 233 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Vídeo (26)
+## Vídeo (31)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -31,3 +31,8 @@
 | `/extraer-fotogramas` | `ExtraerFotogramasTool.tsx` | Avanzadas | FFmpeg.wasm — `-vf fps=N` + ZIP builder puro (CRC32 inline) |
 | `/ajuste-color-video` | `AjusteColorVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `eq=brightness:contrast:saturation:gamma` |
 | `/miniatura-video` | `MiniaturaVideoTool.tsx` | Básicas | HTML5 `<video>` + Canvas `drawImage` — sin FFmpeg, instantáneo |
+| `/fundido-video` | `FundidoVideoTool.tsx` | Básicas | FFmpeg.wasm — filtros `fade` + `afade` (fade in/out configurable en seg) |
+| `/escala-grises-video` | `EscalaGrisesVideoTool.tsx` | Básicas | FFmpeg.wasm — `hue=s=0` (grises), `colorchannelmixer` (sepia), `negate` (negativo) |
+| `/fotogramas-a-video` | `FotogramasAVideoTool.tsx` | Básicas | FFmpeg.wasm — filter_complex `scale+pad+concat` multi-input; hasta 30 imágenes |
+| `/gif-a-video` | `GifAVideoTool.tsx` | Básicas | FFmpeg.wasm — `-f gif` → H.264 MP4 con `pix_fmt yuv420p` |
+| `/denoise-video` | `DenoiseVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `hqdn3d` (3 niveles: suave/medio/intenso) |

@@ -844,6 +844,31 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Captura cualquier fotograma de tu vídeo como imagen PNG o JPG con un slider de tiempo. HTML5 Video + Canvas API, sin FFmpeg. Sin registro, sin subir archivos al servidor. Completamente gratis.',
     canonical: 'https://toolsfoto.com/miniatura-video',
   },
+  'fundido-video': {
+    title: 'Fundido a negro en vídeo online gratis — fade in fade out | ToolsFoto',
+    description: 'Añade transiciones de fundido a negro (fade in y fade out) al inicio y final de tu vídeo. Configura la duración de cada efecto. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/fundido-video',
+  },
+  'escala-grises-video': {
+    title: 'Vídeo en escala de grises online gratis — sepia y negativo | ToolsFoto',
+    description: 'Convierte tu vídeo a escala de grises, sepia o negativo. Efectos de color clásicos aplicados con FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/escala-grises-video',
+  },
+  'fotogramas-a-video': {
+    title: 'Fotos a vídeo online gratis — crear slideshow MP4 | ToolsFoto',
+    description: 'Convierte tus fotos en un vídeo slideshow MP4. Configura la duración por imagen, la resolución y el orden. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/fotogramas-a-video',
+  },
+  'gif-a-video': {
+    title: 'GIF a MP4 online gratis — convertir GIF animado a vídeo | ToolsFoto',
+    description: 'Convierte GIFs animados a vídeo MP4 hasta 10 veces más ligero. H.264, compatible con todas las plataformas. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/gif-a-video',
+  },
+  'denoise-video': {
+    title: 'Reducir ruido de vídeo online gratis — eliminar grano digital | ToolsFoto',
+    description: 'Elimina el grano y ruido digital de tus vídeos con 3 niveles de intensidad. Filtro hqdn3d de FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    canonical: 'https://toolsfoto.com/denoise-video',
+  },
   'detector-bpm': {
     title: 'Detector de BPM online gratis — calcular tempo de audio | ToolsFoto',
     description: 'Detecta automáticamente los BPM (beats per minute) de tu música o audio. Análisis de energía con Web Audio API, sin IA ni servidores. Sin registro, sin subir archivos al servidor. Completamente gratis.',
