@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ImagenAICOTool from '@/components/tools/ImagenAICOTool';
 
 const faqs = [
-  { q: '¿Qué es un archivo ICO?', a: 'Un archivo ICO es el formato de icono estándar en Windows. Puede contener múltiples versiones de la misma imagen en distintos tamaños (16, 32, 48, 64, 128, 256px) dentro de un único archivo, y el sistema operativo usa el tamaño más apropiado según el contexto.' },
-  { q: '¿Qué tamaños debería incluir para un favicon?', a: 'Para un favicon web se recomiendan al menos 16×16, 32×32 y 48×48 px. Para iconos de aplicación de escritorio conviene añadir también 64×64 y 128×128 px.' },
-  { q: '¿Se conserva la transparencia del PNG original?', a: 'Sí. Los ICO modernos (generados por esta herramienta) contienen PNGs con canal alfa completo, por lo que la transparencia se preserva perfectamente en todos los tamaños.' },
-  { q: '¿Con qué navegadores y sistemas es compatible este ICO?', a: 'El formato ICO con PNGs embebidos es compatible con Windows Vista en adelante, todos los navegadores modernos (Chrome, Firefox, Safari, Edge), y la mayoría de lectores de correo.' },
-  { q: '¿Qué tipo de imagen es mejor para convertir a ICO?', a: 'Las imágenes cuadradas (1:1) con fondo transparente dan los mejores resultados. Si tu imagen no es cuadrada, el conversor la redimensionará manteniendo las proporciones dentro del marco cuadrado.' },
+  {
+    q: '¿Qué es un archivo ICO y cuándo lo necesito?',
+    a: 'Un archivo .ico es el formato estándar de icono en Windows. Puede contener múltiples versiones de la misma imagen en distintos tamaños (16, 32, 48, 64, 128, 256 px) dentro de un único archivo, y Windows usa el tamaño más apropiado según el contexto: 16 px en la barra de tareas, 32 px en el escritorio, 48 px en la vista de iconos medianos y 256 px en la vista de iconos extra grandes. Los navegadores también aceptan .ico para favicons clásicos.',
+  },
+  {
+    q: '¿Qué tamaños debería incluir para un favicon web?',
+    a: 'Para uso como favicon en la web, los tamaños recomendados son 16×16, 32×32 y 48×48 px. Para el favicon clásico que los navegadores buscan como `/favicon.ico`, con 16×16 y 32×32 es suficiente para la compatibilidad moderna. Si el ICO es para un ícono de aplicación de escritorio Windows, incluye también 64×64 y 128×128. Para iconos de alta resolución en pantallas HiDPI y 4K, añade el 256×256.',
+  },
+  {
+    q: '¿Se conserva la transparencia del PNG original?',
+    a: 'Sí. Los ICO modernos (generados por esta herramienta) contienen PNGs con canal alfa completo incrustados, por lo que la transparencia se preserva perfectamente en todos los tamaños. El formato ICO clásico antiguo usaba AND masks para la transparencia, pero los ICO con PNG embebidos (soportados desde Windows Vista) manejan la transparencia igual que cualquier PNG. Cualquier área transparente de tu imagen original quedará transparente en el ICO.',
+  },
+  {
+    q: '¿Con qué sistemas y navegadores es compatible el ICO generado?',
+    a: 'El formato ICO con PNGs embebidos es compatible con Windows Vista y versiones posteriores (Windows 7, 8, 10, 11), todos los navegadores modernos para favicons (Chrome, Firefox, Safari, Edge), Internet Explorer 9+ y la mayoría de lectores de correo electrónico. Para XP y sistemas muy antiguos se necesitaría un ICO con BMP interno, que esta herramienta no genera, ya que esa compatibilidad es irrelevante para más del 99.9% del tráfico actual.',
+  },
+  {
+    q: '¿Qué tipo de imagen produce los mejores resultados?',
+    a: 'Las imágenes cuadradas (proporción 1:1) con fondo transparente dan los mejores resultados. Si tu imagen no es cuadrada, se redimensionará rellenando el espacio sobrante, lo que puede distorsionar logos horizontales. Para favicons, usa el símbolo, isotipo o la inicial de tu marca, no el logo completo con texto. El tamaño fuente ideal es de al menos 256×256 px para que los tamaños pequeños se escalen con calidad óptima.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. La conversión a ICO ocurre completamente en tu navegador. La herramienta escala la imagen a cada tamaño usando la Canvas API, exporta cada tamaño como PNG binary, y construye el archivo .ico manualmente ensamblando el encabezado ICONDIR y los bloques de datos. Todo el proceso es local y el archivo resultante se descarga directamente desde tu dispositivo.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre generar un ICO y generar PNGs de favicon?',
+    a: 'Un archivo .ico es un contenedor que agrupa múltiples tamaños en un solo archivo. Los navegadores modernos prefieren las etiquetas `<link rel="icon" type="image/png">` apuntando a PNGs individuales, que ofrecen mejor calidad y son más fáciles de gestionar. El .ico es necesario cuando el navegador busca automáticamente `/favicon.ico` (solicitud automática sin etiqueta link en el HTML), que Chrome y Firefox siguen haciendo incluso si hay etiquetas link. Para máxima compatibilidad, sirve ambos: un `/favicon.ico` y etiquetas PNG.',
+  },
 ];
 ---
 <ToolLayout slug="imagen-a-ico" faqs={faqs}>
   <ImagenAICOTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Favicon .ico con multi-tamaño para máxima compatibilidad web</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Aunque los navegadores modernos aceptan PNG para favicons vía etiquetas `<link>`, todos siguen haciendo una petición automática a <strong class="text-[var(--color-text)]">/favicon.ico</strong> al cargar cualquier web, incluso cuando hay etiquetas PNG definidas. Servir un .ico válido en esa ruta evita un error 404 en los logs del servidor y garantiza que el favicon se muestre correctamente en navegadores legacy, lectores RSS, aplicaciones de marcadores y herramientas que extraen metadatos de URLs (como las previsualizaciones de WhatsApp y Telegram).
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Iconos de aplicación Windows y software de escritorio</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los archivos .ico con múltiples tamaños son el formato estándar para iconos de aplicaciones de escritorio en Windows. Si desarrollas software con <strong class="text-[var(--color-text)]">Electron, C#, Python (tkinter/PyQt), Java (Swing)</strong> u otro framework desktop, necesitas un .ico con los tamaños 16, 32, 48 y 256 px para que el icono se vea nítido en todos los contextos: barra de tareas, escritorio, menú inicio y ventanas. La herramienta genera el .ico con PNG embebido, el formato moderno compatible con Windows Vista y posterior.',
+      </p>
+    </div>
+  </section>
 </ToolLayout>

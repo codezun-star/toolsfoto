@@ -1,14 +1,12 @@
 import { useState, useCallback } from 'react';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { useDownload } from '@/hooks/useDownload';
 import { loadImage, canvasToBlob, revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, RefreshCw, Loader2 } from 'lucide-react';
 import ImageUploader from '@/components/ui/ImageUploader';
 
 export default function EfectoGlitchTool() {
-  const { file, preview, getRootProps, getInputProps, isDragActive, clearFile } = useImageUpload();
-  const { download } = useDownload();
+  const upload = useImageUpload();
   const [intensity, setIntensity] = useState(10);
   const [slices, setSlices] = useState(8);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
@@ -18,19 +16,19 @@ export default function EfectoGlitchTool() {
 
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
-    clearFile();
+    upload.clearImage();
     setResultUrl(null);
     setResultSize(0);
     setError(null);
   }
 
   const applyGlitch = useCallback(async (seed: number) => {
-    if (!file) return;
+    if (!upload.image) return;
     setProcessing(true);
     setError(null);
     if (resultUrl) revokeURL(resultUrl);
     try {
-      const img = await loadImage(file);
+      const img = await loadImage(upload.image.url);
       const w = img.naturalWidth;
       const h = img.naturalHeight;
       const canvas = document.createElement('canvas');
@@ -85,20 +83,32 @@ export default function EfectoGlitchTool() {
     } finally {
       setProcessing(false);
     }
-  }, [file, intensity, slices, resultUrl]);
+  }, [upload.image, intensity, slices, resultUrl]);
 
   async function process() { await applyGlitch(Date.now()); }
 
   function handleDownload() {
-    if (!resultUrl || !file) return;
-    download(resultUrl, file.name.replace(/\.[^.]+$/, '_glitch.png'));
+    if (!resultUrl || !upload.image) return;
+    const a = document.createElement('a');
+    a.href = resultUrl;
+    a.download = upload.image.file.name.replace(/\.[^.]+$/, '_glitch.png');
+    a.click();
   }
 
   return (
     <div className="space-y-6">
-      <ImageUploader getRootProps={getRootProps} getInputProps={getInputProps} isDragActive={isDragActive} preview={preview} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {file && !resultUrl && !processing && (
+      {upload.image && !resultUrl && !processing && (
         <div className="space-y-5">
           <div>
             <div className="flex justify-between mb-1.5">

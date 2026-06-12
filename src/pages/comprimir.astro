@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CompressorTool from '@/components/tools/CompressorTool';
+
+const faqs = [
+  {
+    q: '¿Cuánto puedo reducir el tamaño de una imagen sin perder calidad visual?',
+    a: 'Con una calidad del 75–85% la mayoría de imágenes JPG se reducen entre un 50% y un 80% sin diferencias apreciables a simple vista. Para fotos con muchos detalles finos usa 80–85%; para fondos planos o ilustraciones puedes bajar hasta 65% sin problemas.',
+  },
+  {
+    q: '¿Qué calidad debo usar para publicar en redes sociales o en mi web?',
+    a: 'Para redes sociales y páginas web se recomienda una calidad del 75–80%. Este rango ofrece el mejor equilibrio entre peso y nitidez: las imágenes cargan rápido, mejoran el SEO y el usuario no aprecia diferencia con el original.',
+  },
+  {
+    q: '¿Puedo comprimir imágenes PNG conservando la transparencia?',
+    a: 'Sí. La herramienta preserva el canal alfa de los PNG. Sin embargo, la compresión PNG tiene menos margen que JPG: puedes esperar ahorros del 20–40%. Si no necesitas transparencia, convierte a WebP o JPG primero para obtener resultados mucho mejores.',
+  },
+  {
+    q: '¿La herramienta sube mis imágenes a algún servidor?',
+    a: 'No. Toda la compresión ocurre directamente en tu navegador usando un Web Worker. Tus imágenes nunca abandonan tu dispositivo y ningún dato se envía a internet. Puedes incluso usarla sin conexión una vez cargada la página.',
+  },
+  {
+    q: '¿Por qué a veces la imagen comprimida pesa igual o más que la original?',
+    a: 'Ocurre cuando la imagen ya estaba muy optimizada previamente (por ejemplo, un JPG exportado con calidad 70% desde Photoshop). Al re-comprimir, el resultado puede ser igual de grande. En ese caso la imagen ya está suficientemente optimizada.',
+  },
+  {
+    q: '¿Cuál es el tamaño máximo de imagen que puedo comprimir?',
+    a: 'No hay límite definido porque el procesamiento es local. Sin embargo, imágenes muy grandes (más de 50 MP) pueden tardar varios segundos según la potencia del dispositivo. Para archivos de más de 20 MB, Chrome o Firefox ofrecen mejor rendimiento.',
+  },
+  {
+    q: '¿Qué formato se comprime mejor: JPG, PNG o WebP?',
+    a: 'JPG ofrece la mejor compresión para fotografías (60–80% de reducción). WebP supera a JPG manteniendo la misma calidad visual (10–30% menos peso adicional). PNG sin pérdida tiene la menor compresión relativa. Para máxima reducción de fotos convierte primero a WebP.',
+  },
+];
 ---
-<ToolLayout slug="comprimir">
+<ToolLayout slug="comprimir" faqs={faqs}>
   <CompressorTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Cuándo necesitas comprimir imágenes?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Comprimir imágenes es imprescindible para publicar en webs y tiendas online (Google penaliza las páginas lentas en el ranking), adjuntar fotos en emails con límite de tamaño, y subir contenido a redes sociales sin que la plataforma aplique su propia compresión agresiva. Una foto de 5 MB puede reducirse a 400 KB sin que el usuario note ninguna diferencia visual.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo elegir la calidad óptima</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para fotos con personas o paisajes usa 75–85%; para capturas de pantalla o imágenes con texto usa 85–90% para preservar la nitidez de los bordes. Si tu imagen es PNG y no necesita transparencia, conviértela primero a WebP con nuestra herramienta de conversión y luego comprime: obtendrás un 40–60% extra de reducción sobre el original.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

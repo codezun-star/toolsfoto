@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PixelateTool from '@/components/tools/PixelateTool';
+
+const faqs = [
+  {
+    q: '¿Cómo selecciono la zona que quiero pixelar?',
+    a: 'Haz clic y arrastra sobre la imagen de preview para dibujar un rectángulo de selección. Puedes añadir múltiples zonas: cada vez que arrastras se crea una nueva región pixelada. Las regiones se acumulan y todas se aplican a la imagen final.',
+  },
+  {
+    q: '¿Para qué se usa pixelar partes de una imagen?',
+    a: 'Pixelar regiones específicas se usa para: anonimizar personas (caras, matrículas, documentos), proteger información sensible antes de publicar capturas de pantalla, cumplir normativas de privacidad (RGPD) al publicar fotos con terceros, crear efectos artísticos de censura o estilo retro, y difuminar datos confidenciales en imágenes de trabajo.',
+  },
+  {
+    q: '¿Puedo pixelar varias zonas al mismo tiempo?',
+    a: 'Sí. Puedes seleccionar tantas regiones como necesites. Cada drag añade una nueva zona de pixelado independiente. Todas las zonas seleccionadas se aplican simultáneamente cuando descargas la imagen. Hay un botón para borrar todas las selecciones si quieres empezar de nuevo.',
+  },
+  {
+    q: '¿Cuánto se pixela la imagen?',
+    a: 'El nivel de pixelado es fijo y produce bloques de aproximadamente 16×16 píxeles, suficiente para hacer irreconocible cualquier texto o cara. Este nivel está calibrado para garantizar la anonimización efectiva cumpliendo con los estándares habituales de privacidad visual.',
+  },
+  {
+    q: '¿El pixelado puede revertirse para ver el contenido original?',
+    a: 'No. Una vez pixelada y descargada la imagen, el contenido original de esa zona no puede recuperarse. El pixelado destruye la información de los píxeles de forma irreversible, al contrario que el desenfoque gaussiano que en teoría puede revertirse. Para privacidad real, el pixelado es más seguro que el desenfoque.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen pixelada?',
+    a: 'La imagen se descarga en el mismo formato que subiste originalmente (JPG o PNG). Si la imagen era PNG con transparencia, el pixelado preserva la transparencia fuera de las zonas seleccionadas.',
+  },
+];
 ---
-<ToolLayout slug="pixelar">
+<ToolLayout slug="pixelar" faqs={faqs}>
   <PixelateTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Pixela caras y datos para proteger la privacidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El pixelado selectivo es la técnica estándar para anonimizar imágenes antes de publicarlas. El RGPD europeo exige que no publiques fotos de personas sin su consentimiento: pixelar las caras es una forma rápida y efectiva de cumplir con esta normativa. También es esencial al publicar capturas de pantalla con datos personales, correos, contraseñas o información bancaria visible.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Diferencia entre pixelar y desenfoque para privacidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        A diferencia del <strong class="text-[var(--color-text)]">desenfoque gaussiano</strong>, que difumina los píxeles pero puede revertirse algorítmicamente para recuperar contenido, el <strong class="text-[var(--color-text)]">pixelado</strong> promedia bloques de píxeles destruyendo la información original de forma irreversible. Por esta razón, los medios de comunicación y documentos legales usan pixelado para anonimización, no desenfoque. Para privacidad seria, siempre pixela.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -5,26 +5,48 @@ import ColoresImagenTool from '@/components/tools/ColoresImagenTool';
 const faqs = [
   {
     q: '¿Cómo se determinan los colores "dominantes"?',
-    a: 'La imagen se redimensiona a 200×200 px para una muestra representativa. Luego cada píxel se cuantiza a una paleta reducida de 16 bits por canal (4 bits), agrupando colores similares. Los grupos más frecuentes determinan los colores dominantes. Es un algoritmo de cuantización por frecuencia, eficiente y sin dependencias externas.',
+    a: 'La imagen se redimensiona a 200×200 px para obtener una muestra representativa. Cada píxel se cuantiza agrupando colores similares en cubos de 4 bits por canal. Los grupos más frecuentes determinan los colores dominantes. Es un algoritmo de cuantización por frecuencia, eficiente y sin dependencias externas, que se ejecuta completamente en tu navegador en menos de un segundo.',
   },
   {
-    q: '¿Para qué sirven los valores HSL?',
-    a: 'HSL (Hue, Saturation, Lightness) es la representación de color más intuitiva para diseñadores y developers front-end. Permite ajustar fácilmente el tono (hue), la saturación y la luminosidad en CSS. Por ejemplo, `hsl(210, 80%, 50%)` es más fácil de entender que su equivalente hexadecimal.',
+    q: '¿Para qué sirven los valores HSL en diseño?',
+    a: 'HSL (Hue, Saturation, Lightness) es la representación más intuitiva para diseñadores y desarrolladores front-end. Permite ajustar fácilmente el tono, la saturación y la luminosidad directamente en CSS. Por ejemplo, `hsl(210, 80%, 50%)` es más fácil de entender que su equivalente hexadecimal. También facilita crear variantes más claras u oscuras del mismo color para sistemas de diseño y brand guidelines.',
   },
   {
     q: '¿Cuántos colores debo extraer?',
-    a: 'Depende del uso. 5 colores es ideal para paletas de marca minimalistas. 8 colores es el equilibrio perfecto para la mayoría de proyectos de diseño. 12 colores es útil cuando quieres capturar matices más sutiles de fotografías complejas.',
+    a: '5 colores es ideal para paletas de marca minimalistas donde se necesita la esencia visual de la imagen. 8 colores es el equilibrio perfecto para la mayoría de proyectos de diseño, branding e identidad visual. 12 colores es útil cuando quieres capturar matices más sutiles de fotografías con alta variedad cromática o fondos complejos.',
   },
   {
-    q: '¿Por qué algunos colores aparecen desaturados o grises?',
-    a: 'Las fotografías suelen tener grandes áreas de cielo, fondo o sombras con colores neutros. Si los colores neutros dominan en la imagen, aparecerán en la paleta. Para obtener colores más vivos, usa imágenes con mayor contraste cromático o con sujetos de colores saturados.',
+    q: '¿Por qué aparecen colores grises o desaturados en la paleta?',
+    a: 'Las fotografías suelen tener grandes áreas de cielo, fondos neutros, paredes o sombras. Si esos tonos neutros dominan en la imagen, aparecerán en la paleta. Para obtener una paleta con colores más vivos, usa imágenes con sujetos de colores saturados, como productos, ilustraciones, logos o fotografías con fondos de color.',
   },
   {
     q: '¿Puedo descargar la paleta como imagen?',
-    a: 'Sí. El botón "Descargar paleta" genera una imagen PNG con todos los colores extraídos en formato de franja con sus códigos hexadecimales. Es útil para documentar paletas de marca en presentaciones o guías de estilo.',
+    a: 'Sí. El botón "Descargar paleta" genera una imagen PNG con todos los colores extraídos en franjas horizontales junto a sus códigos hexadecimales. Es útil para documentar paletas de marca en presentaciones de diseño, guías de estilo (brand book), propuestas creativas para clientes o para compartir en redes sociales.',
+  },
+  {
+    q: '¿Para qué se usa esta herramienta en proyectos reales?',
+    a: 'Los usos más frecuentes son: extraer la paleta de colores de un logotipo para garantizar coherencia visual en todos los diseños, analizar los colores dominantes de una foto de producto para elegir colores de fondo complementarios, generar design tokens para temas de sitios web basados en imágenes de marca, y crear guías de color para presentaciones y materiales de marketing digital.',
+  },
+  {
+    q: '¿Los colores se copian al portapapeles con un clic?',
+    a: 'Sí. Haz clic sobre cualquier valor HEX, RGB, HSL o la variable CSS en la tarjeta de color y se copia automáticamente al portapapeles, con un check verde de confirmación. Puedes pegarlo directamente en Figma, VS Code, Adobe XD, Canva, Tailwind CSS o cualquier hoja de estilos sin necesidad de escribirlo manualmente.',
   },
 ];
 ---
 <ToolLayout slug="colores-imagen" faqs={faqs}>
   <ColoresImagenTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Paletas de marca e identidad visual desde cualquier imagen</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Una de las formas más rápidas de crear una identidad visual coherente es extraer la paleta directamente de los activos existentes: el logo, una fotografía de producto o la imagen de portada de la marca. Esta herramienta devuelve los colores dominantes en <strong class="text-[var(--color-text)]">formato HEX, RGB y HSL</strong> listos para copiar con un clic y usar en Figma, Adobe XD, Canva, VS Code o directamente en CSS y Tailwind.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Design tokens y variables CSS generadas desde imágenes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada color extraído incluye también su valor como <strong class="text-[var(--color-text)]">variable CSS</strong> (<code class="text-xs bg-[var(--color-bg)] px-1 py-0.5 rounded">--color-1: #HEX;</code>), lo que agiliza la creación de design tokens para proyectos web. Descarga la paleta completa como imagen PNG para incluirla en brand books y presentaciones de cliente. Si trabajas con Tailwind CSS o cualquier sistema de diseño basado en tokens, puedes copiar las variables directamente en tu configuración.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

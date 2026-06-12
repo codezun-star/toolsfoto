@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import OGImageTool from '@/components/tools/OGImageTool';
 
 const faqs = [
-  { q: '¿Qué es una imagen Open Graph?', a: 'Las imágenes Open Graph (OG) son las imágenes que se muestran al compartir un enlace en redes sociales como Twitter/X, LinkedIn, WhatsApp o Facebook. Se especifican en el meta tag og:image de la página web.' },
-  { q: '¿Cuál es el tamaño recomendado para OG images?', a: 'El tamaño estándar recomendado es 1200×630 píxeles. Esta herramienta genera exactamente esas dimensiones. La relación de aspecto es aproximadamente 1.91:1.' },
-  { q: '¿Puedo añadir mi logo a la imagen?', a: 'Sí. El botón "Subir logo" permite añadir una imagen (PNG con transparencia recomendado) que aparecerá en la esquina superior izquierda de la OG image.' },
-  { q: '¿Qué formato es mejor para las OG images, JPG o PNG?', a: 'JPG genera archivos más pequeños y es suficiente para la mayoría de casos. PNG es mejor si el logo o elementos gráficos requieren transparencia. La mayoría de redes sociales aceptan ambos formatos.' },
-  { q: '¿Las imágenes generadas se suben a algún servidor?', a: 'No. Todo el proceso ocurre en tu navegador mediante Canvas API. Las imágenes se generan y descargan localmente sin pasar por ningún servidor.' },
+  {
+    q: '¿Qué es una imagen Open Graph y para qué sirve?',
+    a: 'Las imágenes Open Graph (OG) son las imágenes que aparecen cuando compartes un enlace en redes sociales: el recuadro de previsualización en Twitter/X, LinkedIn, Facebook, WhatsApp, Telegram y Slack muestra automáticamente la imagen especificada en el meta tag `<meta property="og:image">` de la página web. Una OG image bien diseñada puede duplicar el CTR (tasa de clics) de un enlace compartido frente a una página sin imagen o con imagen incorrecta.',
+  },
+  {
+    q: '¿Cuál es el tamaño estándar para OG images?',
+    a: 'El tamaño recomendado por todas las plataformas principales es 1200×630 px, que corresponde a una relación de aspecto de 1.91:1. Esta herramienta genera exactamente esas dimensiones. Twitter/X también acepta 800×418 px como mínimo, pero 1200×630 es el estándar que garantiza la mejor visualización en todas las plataformas simultáneamente.',
+  },
+  {
+    q: '¿Puedo añadir mi logo a la imagen OG?',
+    a: 'Sí. El botón "Subir logo" permite añadir una imagen (PNG con transparencia recomendado) que aparecerá en la esquina superior izquierda de la OG image. El logo se escala proporcionalmente a una altura de 60 px. Para mejor resultado, usa un logo PNG con fondo transparente y colores que contrasten bien con el fondo elegido.',
+  },
+  {
+    q: '¿Cómo se añade la imagen OG a mi web?',
+    a: 'Sube el archivo a tu servidor (o CDN) y añade en el `<head>` de tu HTML: `<meta property="og:image" content="https://tudominio.com/og-image.jpg">`. También añade `<meta property="og:image:width" content="1200">` y `<meta property="og:image:height" content="630">` para ayudar a las plataformas a cargarla más rápido. En WordPress usa un plugin SEO como Yoast o Rank Math. En Webflow, Squarespace y Wix hay opciones nativas en la configuración de SEO de cada página.',
+  },
+  {
+    q: '¿Con qué frecuencia se actualiza la imagen en redes sociales?',
+    a: 'Las redes sociales cachean las OG images durante 24–72 horas. Si cambias la imagen y quieres que los nuevos compartidos muestren la imagen actualizada, usa la herramienta de depuración de cada plataforma: Facebook/LinkedIn tiene el "Open Graph Debugger" (developers.facebook.com/tools/debug), Twitter/X tiene el "Card Validator". Esto fuerza el re-scraping de la imagen actualizada.',
+  },
+  {
+    q: '¿En qué formato es mejor generar la imagen OG?',
+    a: 'JPEG es el formato más recomendado para OG images: genera archivos más pequeños que cargan más rápido (importante para el rendimiento de la previsualización), y todas las plataformas lo soportan sin problemas. Usa PNG solo si el diseño incluye elementos con transparencia o texto con bordes muy nítidos que JPEG podría suavizar.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. La imagen se genera completamente en tu navegador usando la Canvas API. El fondo, el texto y el logo se renderizan localmente y el archivo se descarga directamente desde tu dispositivo sin pasar por ningún servidor externo. La herramienta funciona sin conexión a internet una vez cargada la página.',
+  },
 ];
 ---
 <ToolLayout slug="og-image" faqs={faqs}>
   <OGImageTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué una buena OG image multiplica el CTR de tus contenidos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cuando alguien comparte tu enlace en Twitter/X, LinkedIn o WhatsApp, la previsualización con imagen genera hasta un <strong class="text-[var(--color-text)]">3× más clics</strong> que un enlace sin imagen. El texto del título y la descripción tienen solo una fracción de segundo para captar la atención del usuario al hacer scroll; la imagen es el elemento que detiene el dedo. Una OG image con tu marca, un titular claro y un diseño limpio es una inversión de pocos minutos que mejora el rendimiento de todo tu contenido compartido.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Buenas prácticas de diseño para OG images</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para una OG image efectiva: usa <strong class="text-[var(--color-text)]">texto grande y legible</strong> (mínimo 48 px) que se lea bien en móvil donde la previsualización es pequeña; mantén un contraste alto entre texto y fondo; coloca tu logo o nombre de marca para que la fuente sea reconocible; usa colores de tu identidad de marca para consistencia; evita sobrecargar con demasiado texto (máximo 8–10 palabras en el titular); y deja márgenes generosos porque algunas plataformas recortan ligeramente los bordes.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

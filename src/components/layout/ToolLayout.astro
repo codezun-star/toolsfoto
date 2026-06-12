@@ -23,6 +23,14 @@ const domainLabel: Record<string, string> = {
   audio: 'Herramientas de audio',
   developer: 'Herramientas para developers',
 };
+
+const domainHref: Record<string, string> = {
+  imagen: `${SITE.url}/imagen`,
+  pdf: `${SITE.url}/pdf`,
+  video: `${SITE.url}/video`,
+  audio: `${SITE.url}/audio`,
+  developer: `${SITE.url}/developer`,
+};
 ---
 
 <!doctype html>
@@ -45,7 +53,7 @@ const domainLabel: Record<string, string> = {
     <meta name="twitter:description" content={seo.description} />
     <meta name="twitter:image" content={SITE.ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": tool.name,
@@ -53,11 +61,42 @@ const domainLabel: Record<string, string> = {
       "url": seo.canonical,
       "applicationCategory": "MultimediaApplication",
       "operatingSystem": "Web",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "inLanguage": "es",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ToolsFoto",
+        "url": SITE.url,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${SITE.url}/favicon-192.png`,
+        },
+      },
+    })} />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ToolsFoto",
+      "url": SITE.url,
+      "logo": `${SITE.url}/favicon-192.png`,
+      "description": "Herramientas online para imágenes, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "codezun@gmail.com",
+        "contactType": "customer support",
+        "availableLanguage": "Spanish",
+      },
     })} />
 
     {faqs && faqs.length > 0 && (
-      <script type="application/ld+json" set:html={JSON.stringify({
+      <script is:inline type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": faqs.map(faq => ({
@@ -67,6 +106,16 @@ const domainLabel: Record<string, string> = {
         })),
       })} />
     )}
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": domainLabel[tool.domain], "item": domainHref[tool.domain] },
+        { "@type": "ListItem", "position": 3, "name": tool.name, "item": seo.canonical },
+      ],
+    })} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -89,7 +138,7 @@ const domainLabel: Record<string, string> = {
       <nav class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
         <a href="/" class="hover:text-[var(--color-text)] transition-colors">Inicio</a>
         <span>/</span>
-        <a href={`/#${tool.domain}`} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
+        <a href={`/${tool.domain}`} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
         <span>/</span>
         <span class="text-[var(--color-text)]">{tool.name}</span>
       </nav>

@@ -5,11 +5,11 @@ import EfectoVintageTool from '@/components/tools/EfectoVintageTool';
 const faqs = [
   {
     q: '¿Qué efectos vintage están disponibles?',
-    a: 'Puedes elegir entre cinco efectos: Sepia (tono cálido marrón clásico), Vintage (sepia suavizado con viñeta oscura en los bordes), Cine (alto contraste con grano de película), Polaroid (colores cálidos lavados con reborde claro) y Noir (blanco y negro con alto contraste estilo película negra).',
+    a: 'Puedes elegir entre cinco efectos: Sepia (tono cálido marrón clásico), Vintage (sepia suavizado con viñeta oscura en los bordes), Cine (alto contraste con grano de película), Polaroid (colores cálidos lavados con sobreexposición) y Noir (blanco y negro con alto contraste estilo película negra).',
   },
   {
     q: '¿Qué hace el control de intensidad?',
-    a: 'El slider de intensidad (del 10% al 100%) controla qué tan fuerte se aplica el efecto. Con valores bajos, el efecto se mezcla sutilmente con la imagen original. Al 100% se aplica la versión completa del efecto.',
+    a: 'El slider de intensidad (del 10% al 100%) controla qué tan fuerte se aplica el efecto. Con valores bajos, el efecto se mezcla sutilmente con la imagen original. Al 100% se aplica la versión completa del efecto seleccionado.',
   },
   {
     q: '¿Se modifica la imagen original?',
@@ -21,10 +21,28 @@ const faqs = [
   },
   {
     q: '¿En qué formato se descarga la imagen con efecto?',
-    a: 'La imagen se descarga como PNG para preservar la máxima calidad, independientemente del formato original. El nombre del archivo incluye el nombre del efecto aplicado para identificarlo fácilmente.',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. El nombre del archivo incluye el nombre del efecto para identificarlo fácilmente. Si necesitas preservar transparencia, combina primero esta herramienta con la de eliminar fondo.',
+  },
+  {
+    q: '¿Cuál es el efecto más popular para Instagram?',
+    a: 'El efecto Vintage con intensidad al 60–80% es el más usado en Instagram para fotos de viajes y retratos. Da un tono cálido y nostálgico sin saturar demasiado. El Noir al 100% funciona muy bien para retratos dramáticos. El Cine (intensidad 70–80%) imita el look de las películas indie y es popular en fotografía urbana.',
   },
 ];
 ---
 <ToolLayout slug="efecto-vintage" faqs={faqs}>
   <EfectoVintageTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Filtros vintage y cinematográficos para tus fotos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los efectos vintage son los filtros más populares en fotografía digital porque añaden emoción y carácter a cualquier foto. El sepia evoca la fotografía del siglo XIX, el Polaroid recrea las fotos instantáneas de los 70, el grano cinematográfico simula el look de las películas en 35mm, y el Noir rinde homenaje al cine negro clásico. Con el slider de intensidad puedes mezclar el efecto con la imagen original para resultados más naturales.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Qué efecto usar según el tipo de fotografía</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Retratos:</strong> Vintage o Noir, intensidad 60–80%. <strong class="text-[var(--color-text)]">Paisajes y viajes:</strong> Sepia al 50% o Vintage al 70%, que calientan los tonos de forma natural. <strong class="text-[var(--color-text)]">Arquitectura urbana:</strong> Cine o Noir con intensidad alta para dramatismo. <strong class="text-[var(--color-text)]">Fotos de época:</strong> Sepia al 100% para el aspecto más auténtico de fotografía antigua. <strong class="text-[var(--color-text)]">Redes sociales:</strong> Polaroid a 70% para el look indie y nostálgico más viral.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

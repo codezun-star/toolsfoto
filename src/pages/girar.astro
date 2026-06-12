@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RotatorTool from '@/components/tools/RotatorTool';
+
+const faqs = [
+  {
+    q: '¿Cómo corrijo la orientación de una foto tomada en vertical que aparece horizontal?',
+    a: 'Haz clic en "90° derecha" o "90° izquierda" según necesites hasta que la imagen quede en la posición correcta. La herramienta aplica la rotación real a los píxeles (no solo a los metadatos EXIF), así el resultado final mostrará siempre la orientación correcta en cualquier plataforma.',
+  },
+  {
+    q: '¿Puedo aplicar rotación y volteo al mismo tiempo?',
+    a: 'Sí. Puedes combinar cualquier rotación (90°, 180°, 270°) con volteo horizontal y/o vertical de forma simultánea. El preview del canvas se actualiza en tiempo real para que veas el resultado exacto antes de descargar.',
+  },
+  {
+    q: '¿Se pierde calidad al girar una imagen?',
+    a: 'Las rotaciones de 90°, 180° y 270° son operaciones matemáticas exactas que no pierden calidad. Al girar 90° o 270° solo se intercambian las coordenadas de los píxeles sin interpolación. La única pérdida es la que introduce la compresión del formato de salida, que se aplica por igual que en cualquier otra operación.',
+  },
+  {
+    q: '¿Por qué mis fotos aparecen rotadas al subirlas a ciertas plataformas?',
+    a: 'Las cámaras de móvil guardan la orientación en los metadatos EXIF de la imagen, no en los píxeles. Algunas plataformas web y programas ignoran esos metadatos y muestran la imagen tal como está guardada en píxeles. Girar la imagen con esta herramienta aplica la rotación directamente a los píxeles, eliminando la dependencia de los metadatos EXIF.',
+  },
+  {
+    q: '¿Puedo girar una imagen a 45 grados?',
+    a: 'La herramienta soporta rotaciones de 90°, 180° y 270° (los incrementos más comunes). Las rotaciones a ángulos arbitrarios como 45° generan áreas transparentes en las esquinas y requieren un recorte adicional, algo que puedes hacer combinando esta herramienta con la de recorte.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen girada y se mantiene la transparencia?',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. Las rotaciones de 90° y 270° intercambian el ancho y el alto de la imagen (una foto de 1920×1080 girada 90° queda de 1080×1920). Si tu imagen original era un PNG con transparencia, las zonas transparentes se convierten en negro al exportar como JPEG. Para preservar la transparencia en imágenes con fondo transparente, usa primero la herramienta de cambiar fondo para añadir un color de fondo antes de girar.',
+  },
+  {
+    q: '¿El girado sirve para corregir fotos de Mercado Libre, Instagram o WhatsApp?',
+    a: 'Sí. Es uno de los usos más frecuentes en LATAM: fotos tomadas con el móvil en vertical que aparecen rotadas 90° al subirlas a Mercado Libre, OLX, Facebook Marketplace o al enviarlas por WhatsApp Business. El problema ocurre cuando la plataforma no lee los metadatos EXIF de orientación. Girar la imagen con esta herramienta fija la orientación a nivel de píxeles, garantizando que se vea correctamente en cualquier plataforma sin depender de los metadatos.',
+  },
+];
 ---
-<ToolLayout slug="girar">
+<ToolLayout slug="girar" faqs={faqs}>
   <RotatorTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué aparecen fotos rotadas al subirlas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los smartphones guardan la orientación de la cámara en los metadatos EXIF de la foto, no en los píxeles. Cuando subes la imagen a ciertas webs, redes sociales o programas que ignoran esos metadatos, la foto aparece girada. Esta herramienta soluciona el problema aplicando la rotación directamente a los píxeles, de modo que el resultado muestra la orientación correcta en cualquier plataforma.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Girar vs voltear: cuándo usar cada uno</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa <strong class="text-[var(--color-text)]">girar</strong> para corregir la orientación de fotos tomadas de lado o boca abajo. Usa <strong class="text-[var(--color-text)]">voltear horizontal</strong> para crear un efecto espejo, muy útil en diseño gráfico, redes sociales y para corregir selfis donde el texto aparece al revés. El <strong class="text-[var(--color-text)]">volteo vertical</strong> se usa en efectos artísticos y para simular reflexiones en agua.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

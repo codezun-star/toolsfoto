@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EsquemaColoresTool from '@/components/tools/EsquemaColoresTool';
+
+const faqs = [
+  {
+    q: '¿Qué es un esquema de colores y para qué sirve?',
+    a: 'Un esquema de colores es un conjunto de colores que se combinan armoniosamente basándose en su relación en el círculo cromático. Son fundamentales en diseño gráfico, branding, diseño web y UI/UX: garantizan que los colores de un proyecto visual sean coherentes y agradables al ojo. Los esquemas bien construidos evitan combinaciones que generen discordancia visual o problemas de accesibilidad.',
+  },
+  {
+    q: '¿Qué es un esquema de colores complementario?',
+    a: 'Un esquema complementario usa dos colores opuestos en el círculo cromático (separados 180°). El ejemplo más conocido es rojo–verde o azul–naranja. Crean alto contraste visual y son ideales para llamadas a la acción (botones CTA), logos con impacto, y diseños que necesiten destacar. El riesgo es que pueden resultar agresivos si se usan en proporciones iguales; lo ideal es usar uno como color dominante y el otro como acento.',
+  },
+  {
+    q: '¿Qué es un esquema análogo y cuándo usarlo?',
+    a: 'Los colores análogos están adyacentes en el círculo cromático (separados 30°). Crean armonías suaves y naturales porque se encuentran cerca entre sí en el espectro de luz. Son muy usados en diseño de interiores, moda, fotografía artística y branding que busca transmitir serenidad y cohesión. Una paleta análoga de azul–verde–turquesa transmite frescura y calma; una de naranja–rojo–amarillo transmite calidez y energía.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre triádico, split-complementario y tetrádico?',
+    a: 'El triádico usa 3 colores equidistantes (120° entre sí): versátil y equilibrado, como azul–rojo–amarillo. El split-complementario usa el color base más los dos colores adyacentes a su complementario (150° y 210°): ofrece contraste similar al complementario pero más suave y flexible, ideal para diseño web. El tetrádico usa 4 colores en dos pares complementarios (90° entre sí): máxima variedad cromática pero más difícil de equilibrar; funciona bien cuando uno de los cuatro colores domina y los otros son acentos.',
+  },
+  {
+    q: '¿Qué son los "Tonos" en el esquema de colores?',
+    a: 'El esquema de Tonos (shades) no es un esquema de relaciones en el círculo cromático sino una paleta monocromática del color base: genera 5 tonos del mismo matiz a diferentes niveles de luminosidad (20%, 35%, 50%, 65%, 80%). Es esencial para diseño de UI donde necesitas variantes de un color para estados hover, activo, desactivado, fondos y bordes de un mismo componente.',
+  },
+  {
+    q: '¿Puedo copiar los códigos de color en HEX, RGB y HSL?',
+    a: 'Sí. Cada tarjeta de color muestra el código HEX (ej: #E84827), el RGB (ej: rgb(232, 72, 39)) y el HSL (ej: hsl(14, 81%, 53%)). El botón de copia copia el HEX al portapapeles con un solo clic. El HEX es el formato más universal; el HSL es el más útil para ajustes en CSS y en Tailwind CSS; el RGB es necesario para aplicaciones de diseño como Figma.',
+  },
+  {
+    q: '¿Cómo uso un esquema de colores generado en mis proyectos de diseño web?',
+    a: 'Para Tailwind CSS v3 y v4: define los colores en el archivo de configuración o en `@theme {}`. Para CSS puro: usa variables CSS (`--color-primary: #E84827`). Para Figma: crea estilos de color (color styles) con los HEX generados. Para WordPress y Elementor: añade los colores en la paleta de colores del tema. Para Canva Business: agrega los colores a la paleta de marca. Documenta siempre tu esquema en un style guide para que todo el equipo use los mismos colores.',
+  },
+];
 ---
-<ToolLayout slug="esquema-colores" faqs={[
-  { q: '¿Qué es un esquema de colores complementario?', a: 'Un esquema complementario usa dos colores opuestos en el círculo cromático (separados 180°). Crean alto contraste y son ideales para llamadas a la acción y diseños que necesiten impacto visual.' },
-  { q: '¿Qué es un esquema análogo?', a: 'Los colores análogos están adyacentes en el círculo cromático (separados 30°). Crean armonías suaves y naturales, muy usadas en diseño de interiores, fotografía y branding que busca serenidad.' },
-  { q: '¿Qué diferencia hay entre triádico y tetrádico?', a: 'El esquema triádico usa 3 colores equidistantes en el círculo (120° entre sí). El tetrádico usa 4 colores en dos pares complementarios (90° entre sí). El tetrádico ofrece más variedad pero es más difícil de equilibrar.' },
-  { q: '¿Qué es el esquema split-complementario?', a: 'Es una variante del complementario que usa el color base más los dos colores adyacentes al complementario (150° y 210°). Ofrece contraste similar al complementario pero con mayor suavidad y flexibilidad.' },
-  { q: '¿Puedo copiar los códigos de color?', a: 'Sí. Cada tarjeta de color tiene un botón de copia. Al pulsarlo copias el código HEX al portapapeles. También se muestran los valores RGB y HSL de cada color.' },
-]}>
+<ToolLayout slug="esquema-colores" faqs={faqs}>
   <EsquemaColoresTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Teoría del color aplicada al diseño digital y branding</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los esquemas de colores son la base del branding visual. Cuando una empresa como Mercado Libre usa amarillo y azul, o cuando una startup de fintech LATAM elige azul marino y verde, esas elecciones están fundamentadas en la teoría del color: el azul transmite confianza y seguridad, el verde transmite prosperidad y crecimiento, el amarillo transmite energía y optimismo. <strong class="text-[var(--color-text)]">Un esquema complementario o análogo bien elegido garantiza que todos los colores de tu marca se comuniquen con coherencia</strong> en web, apps, redes sociales y materiales impresos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Del color base a la paleta completa para UI/UX</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En diseño de interfaces (UI), necesitas mucho más que un color: necesitas variantes para estados de hover, activo, desactivado, fondos, bordes y texto. El modo <strong class="text-[var(--color-text)]">Tonos</strong> genera 5 variantes de luminosidad del mismo matiz, perfectas para construir una escala de colores como las de Tailwind CSS (100–900). Comienza con tu color de acento principal, genera los tonos, y tendrás una paleta completa lista para usar en <strong class="text-[var(--color-text)]">Figma, Tailwind, Bootstrap o cualquier sistema de diseño</strong>.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

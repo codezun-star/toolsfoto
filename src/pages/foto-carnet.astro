@@ -5,15 +5,15 @@ import FotoCarnetTool from '@/components/tools/FotoCarnetTool';
 const faqs = [
   {
     q: '¿Qué tamaños de foto carnet están disponibles?',
-    a: 'Incluimos los formatos oficiales más utilizados: DNI/Carnet de conducir español (32×26 mm), Pasaporte España (35×45 mm), Pasaporte USA (51×51 mm), Visa Schengen (35×45 mm), formato cuadrado 4×4 cm y LinkedIn (400×400 px).',
+    a: 'Incluimos los formatos oficiales más utilizados: DNI/Carnet de conducir español (26×32 mm, 307×378 px), Pasaporte España/ICAO (35×45 mm, 413×531 px), Pasaporte USA (2×2 in, 600×600 px), Visa Schengen (35×45 mm), Carnet 4×4 cm (472×472 px) y Foto de perfil LinkedIn (400×400 px).',
   },
   {
     q: '¿Cómo se recorta la foto automáticamente?',
-    a: 'La herramienta centra la imagen en el recuadro del tamaño seleccionado con recorte por el centro. Para mejores resultados, sube una foto donde tu cara ocupe la mayor parte de la imagen y esté centrada.',
+    a: 'La herramienta centra la imagen en el recuadro del tamaño seleccionado con recorte inteligente desde el centro. Para mejores resultados, sube una foto donde tu cara ocupe la mayor parte de la imagen y esté centrada horizontalmente.',
   },
   {
     q: '¿Puedo elegir el color de fondo?',
-    a: 'Sí. Puedes elegir entre los colores más habituales (blanco, gris, azul claro) o seleccionar cualquier color con el selector de color personalizado. El fondo se aplica donde la imagen original tenga transparencia.',
+    a: 'Sí. Puedes elegir entre los colores más habituales (blanco, azul claro para DNI, verde suave) o seleccionar cualquier color con el selector de color personalizado. Los fondos claros son los más aceptados en documentos oficiales.',
   },
   {
     q: '¿Los archivos se suben a algún servidor?',
@@ -21,10 +21,28 @@ const faqs = [
   },
   {
     q: '¿Cumplen los requisitos oficiales las fotos generadas?',
-    a: 'Las dimensiones en píxeles siguen los estándares oficiales, pero para documentos oficiales como pasaportes o DNI, los organismos también exigen requisitos de impresión (calidad, fondo blanco uniforme, sin sombras) que debes verificar. Esta herramienta es ideal para uso digital y como guía de referencia.',
+    a: 'Las dimensiones en píxeles siguen los estándares oficiales, pero para documentos oficiales como pasaportes o DNI, los organismos también exigen requisitos de impresión (calidad mínima de 600 dpi, fondo blanco uniforme, sin sombras, cara centrada). Esta herramienta es ideal para uso digital y como guía de referencia.',
+  },
+  {
+    q: '¿En qué formato se descarga la foto carnet?',
+    a: 'La foto se descarga en formato JPEG con calidad 95%, que es el formato estándar para fotos de documentos. El JPEG produce archivos pequeños manteniendo la calidad fotográfica necesaria para impresión.',
   },
 ];
 ---
 <ToolLayout slug="foto-carnet" faqs={faqs}>
   <FotoCarnetTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera fotos carnet para DNI, pasaporte y visados</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las fotos de carnet tienen dimensiones estrictamente definidas por cada organismo oficial. El DNI español requiere 26×32 mm, el pasaporte ICAO 35×45 mm, y el pasaporte americano 2×2 pulgadas. Con esta herramienta puedes adaptar cualquier fotografía a las dimensiones exactas de cada documento sin ir a una copistería, útil para formularios online, solicitudes de visado digital y perfiles profesionales como LinkedIn.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Consejos para una foto carnet de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para que la foto carnet quede bien: usa una foto con <strong class="text-[var(--color-text)]">iluminación uniforme sin sombras en la cara</strong>, fondo liso claro o blanco, cara centrada y mirando de frente. Para documentos oficiales usa una foto tomada en el último mes. Si la foto tiene fondo complejo, combina esta herramienta con la de <strong class="text-[var(--color-text)]">eliminar fondo</strong> para crear primero un PNG con fondo transparente y luego generar la foto carnet con el color correcto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

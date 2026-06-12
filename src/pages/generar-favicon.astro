@@ -5,26 +5,48 @@ import GenerarFaviconTool from '@/components/tools/GenerarFaviconTool';
 const faqs = [
   {
     q: '¿Qué tamaños de favicon necesita mi web?',
-    a: 'Los tamaños esenciales son: 16×16 (barra de pestañas del navegador), 32×32 (atajos de escritorio en Windows), 48×48 (Windows Vista+), y 180×180 para el Apple Touch Icon (cuando se añade la web a la pantalla de inicio en iOS). Esta herramienta genera todos estos tamaños automáticamente.',
+    a: 'Los tamaños esenciales son: 16×16 px (pestaña del navegador y lista de favoritos), 32×32 px (acceso directo en escritorio Windows y barra de tareas), 48×48 px (Windows Vista y superior), y 180×180 px para el Apple Touch Icon (cuando el usuario añade la web a la pantalla de inicio en iOS/iPadOS). La herramienta genera los 5 tamaños automáticamente, incluyendo el de 96×96 px para Android y Chrome OS.',
   },
   {
     q: '¿Cómo añado los favicons a mi web?',
-    a: 'Descarga los archivos PNG, súbelos a la raíz de tu servidor web y añade las etiquetas HTML en el `<head>` de tu página. La herramienta genera las etiquetas listas para copiar. Solo necesitas añadirlas al HTML.',
+    a: 'Descarga los archivos PNG, súbelos a la raíz de tu dominio (carpeta pública) y copia las etiquetas HTML que genera la herramienta. Pégalas dentro del `<head>` de tu HTML. Para WordPress, añádelas en el archivo header.php o en un plugin de SEO. Para Wix, Squarespace o Shopify, usa la opción de "icono del sitio" o "favicon" en ajustes. La herramienta genera las etiquetas link exactas listas para copiar con un clic.',
   },
   {
     q: '¿Qué tipo de imagen debo usar como fuente?',
-    a: 'Lo ideal es una imagen cuadrada PNG con fondo transparente de al menos 180×180 px. Imágenes con fondo opaco también funcionan. Evita logos con mucho texto ya que a 16×16 px será ilegible; usa solo el símbolo o la inicial de tu marca.',
+    a: 'Lo ideal es una imagen cuadrada PNG con fondo transparente de al menos 180×180 px. Imágenes con fondo opaco también funcionan pero el favicon mostrará el fondo. Evita logos con texto pequeño: a 16×16 px el texto será completamente ilegible. Usa solo el símbolo, isotipo o la inicial de tu marca. Si tu logo solo existe en forma horizontal, crea una versión cuadrada solo con el símbolo antes de convertirlo.',
   },
   {
-    q: '¿Por qué no genero un archivo .ico?',
-    a: 'El formato .ico fue el estándar clásico, pero hoy todos los navegadores modernos aceptan PNG. Los PNG son más fáciles de generar, editar y tienen mejor calidad. Si necesitas compatibilidad con IE8 o inferior (uso &lt;0.5%), necesitarías un .ico.',
+    q: '¿Por qué generar PNG en lugar de un archivo .ico?',
+    a: 'Los navegadores modernos (Chrome, Firefox, Safari, Edge) aceptan PNG directamente como favicon a través de `<link rel="icon" type="image/png">`. Los PNG son más fáciles de generar, editar y tienen mejor calidad que el antiguo formato .ico. Solo necesitas .ico si requieres compatibilidad con Internet Explorer 8 o inferior (menos del 0.1% del tráfico global). Si necesitas .ico, usa la herramienta de convertir a ICO.',
   },
   {
-    q: '¿Necesito un favicon diferente para Android/Chrome?',
-    a: 'Para Progressive Web Apps (PWAs) Chrome recomienda un archivo `manifest.json` con iconos de 192×192 y 512×512. Esta herramienta genera los tamaños estándar de favicon. Para PWA puedes usar el tamaño 96×96 que generamos como punto de partida.',
+    q: '¿Necesito favicons diferentes para Android y Chrome?',
+    a: 'Para Progressive Web Apps (PWA) Chrome recomienda un archivo `manifest.json` con iconos de 192×192 y 512×512. Esta herramienta genera el tamaño 96×96, adecuado para uso básico en Chrome para Android. Para una PWA completa, usa los 96×96 como punto de partida y escálalos manualmente a 192 y 512 con la herramienta de redimensionar.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. La generación de favicons usa exclusivamente la Canvas API del navegador. La imagen original no se sube a ningún servidor; todo el procesamiento (escalado a cada tamaño, exportación como PNG) ocurre localmente en tu dispositivo. Puedes generar favicons para proyectos confidenciales con total seguridad.',
+  },
+  {
+    q: '¿Puedo descargar todos los favicons a la vez?',
+    a: 'Sí. El botón "Descargar todos" inicia la descarga de los 5 archivos PNG (favicon-16x16.png, favicon-32x32.png, favicon-48x48.png, favicon-96x96.png, apple-touch-icon.png) con un pequeño intervalo de 150ms entre cada uno para que el navegador pueda procesarlos. También puedes descargar cada tamaño individualmente haciendo clic en el nombre del archivo bajo cada preview. El HTML generado apunta a las rutas de archivo estándar.',
   },
 ];
 ---
 <ToolLayout slug="generar-favicon" faqs={faqs}>
   <GenerarFaviconTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Favicons para web, WordPress, Shopify y constructores online</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El favicon es la primera imagen que el usuario ve asociada a tu sitio web: aparece en las pestañas del navegador, los favoritos, la barra de tareas de Windows y la pantalla de inicio del móvil. Una web sin favicon o con el icono genérico del framework transmite descuido e impacta negativamente la confianza del usuario. La herramienta genera los <strong class="text-[var(--color-text)]">5 tamaños estándar</strong> (16, 32, 48, 96, 180 px) con las etiquetas HTML listas para copiar, compatibles con WordPress, Wix, Squarespace, Shopify y cualquier web estática.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Buenas prácticas para favicons que se ven bien en todos los dispositivos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para que tu favicon se vea bien en todos los contextos, usa una imagen cuadrada con tu <strong class="text-[var(--color-text)]">símbolo de marca sobre fondo transparente</strong>: el isotipo, la letra inicial o el ícono principal. Evita logos horizontales y texto pequeño: serán ilegibles a 16×16 px. El tamaño 180×180 (Apple Touch Icon) es el que se muestra cuando el usuario añade tu web al home de iPhone o iPad, por lo que debe ser reconocible y atractivo a ese tamaño. Una vez generados, verifica que los iconos se ven correctos en Google Chrome y Safari para confirmar compatibilidad completa.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -39,22 +39,21 @@ function buildICO(pngList: { size: number; data: Uint8Array }[]): Uint8Array {
   const dataBlocks = pngList.map((p) => p.data);
   const totalSize = dirSize + dataBlocks.reduce((s, d) => s + d.length, 0);
   const buf = new Uint8Array(totalSize);
-  // ICONDIR header
-  buf[0] = 0; buf[1] = 0;   // reserved
-  buf[2] = 1; buf[3] = 0;   // type: 1 = icon
-  uint16LE(n, buf, 4);        // count
+  buf[0] = 0; buf[1] = 0;
+  buf[2] = 1; buf[3] = 0;
+  uint16LE(n, buf, 4);
   let offset = dirSize;
   for (let i = 0; i < n; i++) {
     const { size, data } = pngList[i];
     const eOff = HEADER + i * ENTRY;
-    buf[eOff] = size === 256 ? 0 : size;  // width (0 means 256)
-    buf[eOff + 1] = size === 256 ? 0 : size; // height
-    buf[eOff + 2] = 0;  // color count
-    buf[eOff + 3] = 0;  // reserved
-    uint16LE(1, buf, eOff + 4);  // planes
-    uint16LE(32, buf, eOff + 6); // bit count
-    uint32LE(data.length, buf, eOff + 8); // bytes in res
-    uint32LE(offset, buf, eOff + 12);     // image offset
+    buf[eOff] = size === 256 ? 0 : size;
+    buf[eOff + 1] = size === 256 ? 0 : size;
+    buf[eOff + 2] = 0;
+    buf[eOff + 3] = 0;
+    uint16LE(1, buf, eOff + 4);
+    uint16LE(32, buf, eOff + 6);
+    uint32LE(data.length, buf, eOff + 8);
+    uint32LE(offset, buf, eOff + 12);
     buf.set(data, offset);
     offset += data.length;
   }
@@ -62,7 +61,7 @@ function buildICO(pngList: { size: number; data: Uint8Array }[]): Uint8Array {
 }
 
 export default function ImagenAICOTool() {
-  const { file, preview, getRootProps, getInputProps, isDragActive, clearFile } = useImageUpload();
+  const upload = useImageUpload();
   const [selectedSizes, setSelectedSizes] = useState<number[]>([16, 32, 48, 64]);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [resultSize, setResultSize] = useState(0);
@@ -71,7 +70,7 @@ export default function ImagenAICOTool() {
 
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
-    clearFile();
+    upload.clearImage();
     setResultUrl(null);
     setResultSize(0);
     setError(null);
@@ -84,12 +83,12 @@ export default function ImagenAICOTool() {
   }
 
   async function process() {
-    if (!file || !selectedSizes.length) return;
+    if (!upload.image || !selectedSizes.length) return;
     setProcessing(true);
     setError(null);
     if (resultUrl) revokeURL(resultUrl);
     try {
-      const img = await loadImage(file);
+      const img = await loadImage(upload.image.url);
       const pngList = await Promise.all(
         selectedSizes.map(async (size) => ({ size, data: await canvasToPngBytes(img, size) }))
       );
@@ -105,18 +104,27 @@ export default function ImagenAICOTool() {
   }
 
   function download() {
-    if (!resultUrl || !file) return;
+    if (!resultUrl || !upload.image) return;
     const a = document.createElement('a');
     a.href = resultUrl;
-    a.download = file.name.replace(/\.[^.]+$/, '.ico');
+    a.download = upload.image.file.name.replace(/\.[^.]+$/, '.ico');
     a.click();
   }
 
   return (
     <div className="space-y-6">
-      <ImageUploader getRootProps={getRootProps} getInputProps={getInputProps} isDragActive={isDragActive} preview={preview} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {file && !resultUrl && !processing && (
+      {upload.image && !resultUrl && !processing && (
         <div className="space-y-5">
           <div>
             <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">Tamaños a incluir en el ICO</label>

@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MemeTool from '@/components/tools/MemeTool';
+
+const faqs = [
+  {
+    q: '¿Qué fuente usan los memes clásicos de internet?',
+    a: 'Los memes clásicos de internet usan la tipografía Impact (o Arial Black como fallback), en negrita, con el texto en mayúsculas y un contorno negro grueso sobre relleno blanco. Este estilo surgió alrededor de 2010 en foros como 4chan y Reddit y sigue siendo el estándar reconocible de los memes de imagen macro.',
+  },
+  {
+    q: '¿Por qué el texto del meme aparece automáticamente en mayúsculas?',
+    a: 'Es parte del estilo estándar del formato meme. El texto en mayúsculas aumenta la legibilidad sobre cualquier fondo y es parte de la identidad visual del género. El canvas muestra el texto en mayúsculas aunque lo escribas en minúsculas, y el archivo descargado lo preserva así.',
+  },
+  {
+    q: '¿Puedo poner texto solo arriba o solo abajo?',
+    a: 'Sí. Simplemente deja vacío el campo que no quieres usar. Si dejas el "Texto superior" en blanco, solo aparecerá el texto inferior, y viceversa. Ambos textos son completamente opcionales.',
+  },
+  {
+    q: '¿El meme se descarga en alta calidad?',
+    a: 'El meme se descarga en JPG con calidad 92% y con las dimensiones originales de la imagen subida. Si subes una foto de 2000×1500 px, el meme descargado tendrá esa misma resolución. El tamaño de la fuente se escala automáticamente al tamaño de la imagen para que se vea bien.',
+  },
+  {
+    q: '¿Puedo usar cualquier imagen para crear un meme?',
+    a: 'Puedes usar cualquier imagen JPG, PNG o WebP. Para memes de mayor calidad, usa imágenes con buena resolución (mínimo 800 px de ancho) para que el texto quede nítido. Ten en cuenta las leyes de derechos de autor si publicas memes con imágenes de terceros.',
+  },
+  {
+    q: '¿El texto se ajusta automáticamente si es muy largo?',
+    a: 'Sí. La herramienta implementa salto de línea automático (word-wrap): si el texto es demasiado largo para caber en una línea, se divide en múltiples líneas automáticamente respetando las palabras completas.',
+  },
+];
 ---
-<ToolLayout slug="meme">
+<ToolLayout slug="meme" faqs={faqs}>
   <MemeTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">El formato meme clásico: Impact con contorno</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El meme de imagen macro es uno de los formatos de comunicación online más reconocibles: texto en Impact, blanco con contorno negro, en mayúsculas y colocado en la parte superior e inferior de la imagen. Este estilo surgió alrededor de 2010 y sigue dominando las redes sociales. La herramienta replica exactamente este estilo con escalado automático del texto según el tamaño de la imagen.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Crea memes virales en segundos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Sube cualquier foto o plantilla de meme popular, escribe el texto superior e inferior y descarga el resultado en alta resolución. El texto se adapta automáticamente al tamaño de la imagen y se ajusta con salto de línea automático cuando es muy largo. No necesitas instalar nada ni crear ninguna cuenta: todo ocurre en tu navegador.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

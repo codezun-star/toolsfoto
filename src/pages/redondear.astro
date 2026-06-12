@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RoundCornersTool from '@/components/tools/RoundCornersTool';
+
+const faqs = [
+  {
+    q: '¿Por qué la imagen con bordes redondeados se descarga como PNG y no como JPG?',
+    a: 'Las esquinas redondeadas crean áreas transparentes en las puntas de la imagen. JPG no soporta transparencia, por lo que si se guardara en JPG esas esquinas aparecerían con un fondo blanco u otro color sólido. PNG soporta transparencia total (canal alfa), lo que permite que las esquinas redondeadas se integren perfectamente sobre cualquier fondo.',
+  },
+  {
+    q: '¿Puedo crear una imagen circular perfecta con esta herramienta?',
+    a: 'Sí. Ajusta el radio al 50% y obtendrás una elipse que, si la imagen es cuadrada, será un círculo perfecto. Para fotos que no son cuadradas con radio 50% obtendrás una elipse. Si quieres un círculo perfecto a partir de una foto rectangular, usa primero la herramienta de recorte circular.',
+  },
+  {
+    q: '¿Cómo uso la imagen con bordes redondeados en PowerPoint o Keynote?',
+    a: 'Descarga el PNG y añádelo a tu presentación como imagen. Al ser PNG con transparencia, las esquinas se verán redondeadas sobre el fondo de la diapositiva, sin recuadro blanco alrededor. Asegúrate de que la opción "comprimir imagen" de PowerPoint no elimine la transparencia.',
+  },
+  {
+    q: '¿Se pierden detalles de las esquinas al redondear?',
+    a: 'Sí, los píxeles en las esquinas redondeadas se recortan (se vuelven transparentes). El radio controla cuánto se recorta: un radio del 5% afecta muy poco; un radio del 30% recorta más. Si la imagen tiene elementos importantes en las esquinas, usa un radio pequeño (5–15%).',
+  },
+  {
+    q: '¿Funciona con imágenes PNG que ya tienen transparencia?',
+    a: 'Sí. La herramienta respeta la transparencia existente y añade las esquinas redondeadas encima. El resultado final mantiene ambas capas de transparencia: la original y la nueva de las esquinas.',
+  },
+  {
+    q: '¿Para qué casos prácticos se usan los bordes redondeados?',
+    a: 'Son muy comunes en: miniaturas de apps y webs, fotos de productos en e-commerce, avatares con aspecto de tarjeta, imágenes para presentaciones, y capturas de pantalla de apps móviles que se quieren mostrar con el aspecto redondeado característico del sistema operativo.',
+  },
+];
 ---
-<ToolLayout slug="redondear">
+<ToolLayout slug="redondear" faqs={faqs}>
   <RoundCornersTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Usos de los bordes redondeados en diseño</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las esquinas redondeadas son un elemento clave del diseño moderno: transmiten suavidad, modernidad y profesionalidad. Se usan ampliamente en tarjetas de producto, miniaturas de aplicaciones, fotos para presentaciones, capturas de pantalla de apps móviles y portafolios fotográficos. Un radio entre el 10% y el 20% da un toque refinado sin alterar drásticamente la composición original.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué el resultado se exporta como PNG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las esquinas redondeadas generan píxeles transparentes en las puntas. Solo el formato PNG (y WebP) soporta esta transparencia. Si se exportara como JPG, las esquinas aparecerían con un fondo blanco o de color, arruinando el efecto. El PNG resultante se integra perfectamente sobre cualquier fondo: blanco, oscuro, con textura o degradado.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

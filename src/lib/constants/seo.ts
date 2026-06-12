@@ -262,23 +262,23 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/svg-a-png',
   },
   'colores-imagen': {
-    title: 'Extraer colores de imagen (hex, RGB, HSL) gratis | ToolsFoto',
-    description: 'Analiza cualquier imagen y obtén sus colores dominantes con hex, RGB y HSL. Copia los valores con un clic. Ideal para diseñadores y desarrolladores front-end.',
+    title: 'Extraer paleta de colores de imagen — HEX RGB HSL gratis | ToolsFoto',
+    description: 'Extrae los colores dominantes de cualquier imagen: códigos HEX, RGB y HSL listos para copiar. Genera paletas de marca desde logos o fotos. Variables CSS incluidas. Ideal para diseñadores y developers. Sin registro, gratis.',
     canonical: 'https://toolsfoto.com/colores-imagen',
   },
   'eliminar-exif': {
     title: 'Eliminar metadatos EXIF de imágenes gratis | ToolsFoto',
-    description: 'Borra GPS, modelo de cámara, fecha y todos los metadatos EXIF de tus fotos antes de publicarlas. Procesamiento 100% local, sin subir imágenes al servidor.',
+    description: 'Borra GPS, modelo de cámara, fecha y todos los metadatos EXIF de tus fotos antes de publicarlas en redes sociales, marketplaces o tu web. Protege tu privacidad. Canvas API, 100% local. Sin registro.',
     canonical: 'https://toolsfoto.com/eliminar-exif',
   },
   'imagen-a-base64': {
     title: 'Convertir imagen a Base64 online gratis | ToolsFoto',
-    description: 'Codifica cualquier imagen en Base64 para incrustarla en HTML, CSS o JSON. Copia la cadena con un clic y ve ejemplos de uso listos. Sin registro.',
+    description: 'Codifica cualquier imagen en Base64 para incrustarla en HTML, CSS, JSON o JavaScript. Genera Data URIs listos para usar en webs, correos HTML y APIs. Muestra HTML, CSS, JSON, JS y Base64 puro. Sin registro.',
     canonical: 'https://toolsfoto.com/imagen-a-base64',
   },
   'generar-favicon': {
-    title: 'Generar favicon online gratis | ToolsFoto',
-    description: 'Genera los tamaños estándar de favicon (16×16, 32×32, 48×48, 180×180) desde cualquier imagen. Descarga los PNG y copia las etiquetas HTML para tu web.',
+    title: 'Generar favicon PNG online gratis — todos los tamaños | ToolsFoto',
+    description: 'Genera los 5 tamaños estándar de favicon (16×16, 32×32, 48×48, 96×96, 180×180) desde cualquier imagen. Descarga todos los PNG y copia las etiquetas HTML listas para WordPress, Wix, Shopify o webs estáticas. Sin registro.',
     canonical: 'https://toolsfoto.com/generar-favicon',
   },
 
@@ -462,8 +462,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/efecto-boceto',
   },
   'cambiar-fondo': {
-    title: 'Cambiar fondo de imagen online gratis | ToolsFoto',
-    description: 'Reemplaza el fondo de tu imagen por cualquier color sólido. Especialmente útil para PNGs con transparencia. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    title: 'Cambiar fondo de imagen PNG online gratis — e-commerce y diseño | ToolsFoto',
+    description: 'Rellena el fondo de PNGs transparentes con cualquier color sólido: blanco para e-commerce (Amazon, Mercado Libre), color corporativo para presentaciones o el tono exacto de tu marca. Sin registro, sin subir archivos. Gratis.',
     canonical: 'https://toolsfoto.com/cambiar-fondo',
   },
   mosaico: {
@@ -584,8 +584,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/convertir-a-mono',
   },
   'comprimir-objetivo': {
-    title: 'Comprimir imagen a tamaño objetivo en KB online gratis | ToolsFoto',
-    description: 'Comprime tu imagen hasta alcanzar un tamaño de archivo específico en KB. Búsqueda automática del nivel de calidad óptimo. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Gratis.',
+    title: 'Comprimir imagen a tamaño máximo en KB online gratis | ToolsFoto',
+    description: 'Comprime tu imagen hasta un tamaño exacto en KB: 100 KB, 200 KB, 500 KB o el que necesites. Ideal para formularios, portales de empleo y trámites online con límite de peso. Búsqueda binaria automática. 100% gratis en el navegador.',
     canonical: 'https://toolsfoto.com/comprimir-objetivo',
   },
   'fondo-degradado': {
@@ -601,7 +601,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
   },
   'ajustar-niveles': {
     title: 'Ajustar niveles de imagen online gratis — punto negro, blanco y gamma | ToolsFoto',
-    description: 'Corrige la exposición de tus imágenes ajustando los niveles de entrada: punto negro, punto blanco y gamma. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    description: 'Corrige la exposición con precisión: ajusta punto negro, punto blanco y gamma para fotos oscuras, sobreexpuestas o con bajo contraste. Ideal para fotos escaneadas y fotografía de producto. Canvas API, 100% gratis en el navegador.',
     canonical: 'https://toolsfoto.com/ajustar-niveles',
   },
   'efecto-oleo': {
@@ -610,8 +610,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/efecto-oleo',
   },
   'desvanecer-bordes': {
-    title: 'Desvanecer bordes de imagen online gratis — fade edges PNG | ToolsFoto',
-    description: 'Aplica un desvanecimiento gradual en los bordes de tu imagen. Exporta como PNG transparente. Intensidad ajustable. Canvas API, 100% en el navegador. Sin registro, sin subir archivos. Completamente gratis.',
+    title: 'Desvanecer bordes de imagen online gratis — viñeta y fade edges | ToolsFoto',
+    description: 'Aplica desvanecimiento gradual en los bordes de tu imagen: modo elipse para viñeta fotográfica o modo rectangular para fundir con el fondo. Exporta como PNG transparente. Sin registro, sin subir archivos. Completamente gratis.',
     canonical: 'https://toolsfoto.com/desvanecer-bordes',
   },
   'intercalar-pdfs': {
@@ -781,7 +781,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
   // ── 20 herramientas nuevas (3ª tanda) ─────────────────────────
   'comparar-imagenes': {
     title: 'Comparar imágenes online gratis — slider antes/después | ToolsFoto',
-    description: 'Compara dos imágenes con un slider interactivo de antes/después. Arrastra la línea para revelar cada imagen. Canvas API, 100% en el navegador. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    description: 'Compara dos imágenes con un slider interactivo de antes/después: evalúa compresión, retoques, edición de color o cambios de diseño. Arrastra la línea para revelar cada zona. 100% en el navegador. Sin registro, gratis.',
     canonical: 'https://toolsfoto.com/comparar-imagenes',
   },
   placeholder: {

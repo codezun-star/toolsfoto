@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PlaceholderTool from '@/components/tools/PlaceholderTool';
 
 const faqs = [
-  { q: '¿Qué es una imagen placeholder?', a: 'Una imagen placeholder es una imagen genérica usada durante el desarrollo web para representar el espacio que ocupará una imagen real. Sirve para prototipar diseños sin necesitar imágenes definitivas.' },
-  { q: '¿Qué presets de dimensiones están disponibles?', a: 'Incluye presets para los formatos más comunes: 16:9 (1280×720), cuadrado 1:1 (800×800), 4:3 (1024×768), Open Graph (1200×630) y Banner (1500×500). También puedes introducir dimensiones personalizadas.' },
-  { q: '¿Puedo personalizar el texto que aparece en la imagen?', a: 'Sí. Por defecto muestra las dimensiones (ej: 800×600), pero puedes escribir cualquier texto personalizado en el campo correspondiente.' },
-  { q: '¿En qué formato se descarga la imagen?', a: 'Las imágenes placeholder se descargan en formato PNG para máxima compatibilidad y soporte de transparencia.' },
-  { q: '¿Puedo usar estas imágenes en proyectos comerciales?', a: 'Sí. Las imágenes se generan completamente en tu navegador y son de tu propiedad. No hay restricciones de uso.' },
+  {
+    q: '¿Qué es una imagen placeholder y para qué se usa?',
+    a: 'Una imagen placeholder es una imagen genérica que ocupa el espacio de una imagen real durante el desarrollo de una web o aplicación. Se usa cuando el diseño o prototipo está listo pero las imágenes definitivas aún no están disponibles: ayuda al equipo a visualizar el layout final, evita errores de imagen rota en el navegador, y mantiene las proporciones y jerarquía visual del diseño. También se usan en documentación, tutoriales y ejemplos de código.',
+  },
+  {
+    q: '¿Qué presets de dimensiones están disponibles?',
+    a: 'Incluye 5 presets para los formatos más comunes: 16:9 a 1280×720 px (formato video y banners web), 1:1 a 800×800 px (imágenes de producto e Instagram), 4:3 a 1024×768 px (formato clásico de fotografía y slides), Open Graph a 1200×630 px (previsualizaciones en redes sociales), y Banner a 1500×500 px (cabeceras web y Twitter). También puedes introducir dimensiones personalizadas hasta 5000×5000 px.',
+  },
+  {
+    q: '¿Puedo personalizar el texto de la imagen?',
+    a: 'Sí. Por defecto muestra las dimensiones exactas (ej: "1280×720") para que sea inmediatamente informativa durante el desarrollo. Puedes escribir cualquier texto personalizado: el nombre de la sección ("Hero image"), el tipo de contenido ("Foto del producto"), o cualquier etiqueta descriptiva. El texto se centra automáticamente y se escala proporcionalmente al tamaño de la imagen.',
+  },
+  {
+    q: '¿Puedo elegir el color de fondo y del texto?',
+    a: 'Sí. Hay presets de colores de fondo: gris claro (#CCC, el clásico de placeholders), gris muy claro, azul, verde, rojo y naranja. Puedes usar el selector de color para cualquier tono personalizado. Para el texto hay 4 presets: gris medio, gris oscuro, blanco y negro. Combinando fondo y texto puedes crear placeholders con la paleta de colores de tu proyecto.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen?',
+    a: 'Las imágenes placeholder se descargan en formato PNG para máxima compatibilidad y calidad. PNG es el formato correcto para imágenes sintéticas con colores planos y texto, ya que no introduce artefactos de compresión como JPEG. El nombre del archivo incluye las dimensiones automáticamente (ej: "placeholder_1280x720.png").',
+  },
+  {
+    q: '¿Puedo usar las imágenes en proyectos comerciales?',
+    a: 'Sí, sin restricciones. Las imágenes se generan en tu navegador usando la Canvas API y son completamente tuyas. No hay marcas de agua, derechos de autor ni términos de uso especiales. Puedes usarlas en proyectos personales y comerciales, wireframes, presentaciones a clientes, documentación técnica y cualquier otro uso.',
+  },
+  {
+    q: '¿Cómo se usan las placeholders en código HTML y CSS?',
+    a: 'Descarga la imagen y úsala en tu proyecto como cualquier imagen normal. En HTML: `<img src="placeholder_800x600.png" alt="placeholder">`. En CSS: `background-image: url(placeholder_800x600.png)`. En React o Vue: `<img src={placeholder} />`. También puedes usar servicios de placeholder online como `https://via.placeholder.com/800x600` directamente en el src sin descargar nada, pero esos servicios requieren conexión externa.',
+  },
 ];
 ---
 <ToolLayout slug="placeholder" faqs={faqs}>
   <PlaceholderTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Placeholders en diseño web y prototipado rápido</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el flujo de trabajo de diseño web y desarrollo frontend, las imágenes placeholder son esenciales en las etapas tempranas: permiten construir y revisar layouts completos antes de tener las imágenes definitivas. Herramientas como <strong class="text-[var(--color-text)]">Figma, Adobe XD y Sketch</strong> las usan internamente; frameworks como Bootstrap incluyen componentes placeholder por defecto. Generar tus propias en el tamaño exacto que necesitas es más preciso que usar servicios externos que pueden estar caídos o lentos.',
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Documentación técnica, mockups y presentaciones a clientes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las imágenes placeholder son muy útiles en <strong class="text-[var(--color-text)]">presentaciones a clientes</strong> para mostrar propuestas de diseño sin necesitar las imágenes finales; en documentación técnica de APIs y guías de integración donde se necesitan imágenes de ejemplo; en mockups de apps para App Store y Google Play; y en tutoriales y vídeos educativos sobre desarrollo web donde quieres imágenes neutras y consistentes. Personaliza el texto y los colores para que encajen con la identidad visual de cada proyecto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

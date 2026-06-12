@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CambiarFondoTool from '@/components/tools/CambiarFondoTool';
 
 const faqs = [
-  { q: '¿Para qué sirve cambiar el fondo de una imagen?', a: 'Es útil para preparar imágenes de productos con fondo blanco para e-commerce, hacer que las imágenes con fondo transparente (PNG) tengan un color sólido, o cambiar el fondo antes de imprimir.' },
-  { q: '¿Funciona con imágenes con fondo transparente?', a: 'Sí. Si subes un PNG con áreas transparentes, el color seleccionado rellenará esas áreas. Es la forma más efectiva de usar esta herramienta.' },
-  { q: '¿Qué pasa con imágenes sin transparencia?', a: 'Si la imagen original no tiene transparencia, el color de fondo se coloca detrás de la imagen pero no es visible (queda cubierto). Esta herramienta es más útil con PNGs transparentes.' },
-  { q: '¿Puedo usar un color personalizado?', a: 'Sí. Además de los colores preset, el selector circular con gradiente te permite elegir cualquier color del espectro.' },
-  { q: '¿En qué formato se descarga la imagen resultante?', a: 'El resultado se descarga en formato JPG. Si necesitas preservar la transparencia con un fondo diferente, usa la vista previa para verificar el resultado antes de descargar.' },
+  {
+    q: '¿Para qué sirve cambiar el fondo de una imagen?',
+    a: 'Los usos más habituales son: preparar imágenes de productos con fondo blanco para tiendas online como Mercado Libre, Amazon o Shopify, colocar un color sólido detrás de logos PNG para stickers o presentaciones, añadir fondos de color corporativo a fotos de perfil recortadas con IA, y crear variantes de color de una misma imagen para campañas en Instagram o WhatsApp Business.',
+  },
+  {
+    q: '¿Cómo funciona con imágenes con fondo transparente (PNG)?',
+    a: 'Si subes un PNG con áreas transparentes, el color seleccionado rellena perfectamente esas áreas. Es el flujo más efectivo: primero usa la herramienta de eliminar fondo para recortar tu imagen y obtener un PNG transparente, y luego aplica el color de fondo que necesites con esta herramienta. El resultado final en JPG es mucho más ligero que el PNG original.',
+  },
+  {
+    q: '¿Qué pasa si subo una imagen sin transparencia (JPG)?',
+    a: 'El color de fondo se coloca debajo de la imagen pero queda oculto detrás de los píxeles de la foto. Esta herramienta tiene utilidad práctica principalmente con PNGs que ya tienen transparencia. Si tu imagen es JPG, usa primero la herramienta de eliminar fondo y luego aplica el nuevo fondo aquí.',
+  },
+  {
+    q: '¿Puedo usar un color personalizado?',
+    a: 'Sí. Además de los 8 colores preset (blanco, negro, gris, crema, rojo, azul, verde y morado), el selector de color te permite elegir exactamente el tono hexadecimal que necesites, perfecto para hacer coincidir el fondo con la identidad visual de tu marca o con los colores exigidos por una plataforma específica.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen resultante?',
+    a: 'El resultado se descarga en formato JPG con calidad 92%. El fondo sólido no requiere transparencia, por lo que JPG es el formato más ligero y compatible. Para Amazon, Mercado Libre y la mayoría de marketplaces, JPG con fondo blanco es el estándar requerido.',
+  },
+  {
+    q: '¿Cuál es el mejor fondo para fotos de producto de e-commerce?',
+    a: 'El fondo blanco puro (#FFFFFF) es el estándar para marketplaces como Amazon, Mercado Libre, Linio y la mayoría de tiendas online en Latinoamérica y España. Para Instagram y Pinterest también se usan fondos pastel o neutros (gris claro #F5F5F5, crema). Para catálogos impresos, el blanco o gris muy claro dan el aspecto más profesional.',
+  },
+  {
+    q: '¿Puedo generar varias versiones del mismo logo con distintos fondos?',
+    a: 'Sí. Sube el PNG transparente de tu logo, selecciona el primer color y descarga. Luego selecciona otro color y vuelve a descargar. La imagen base no cambia al cambiar el color, por lo que puedes generar en segundos todas las variantes que necesites: versión para fondo oscuro, versión para fondo claro, versión para redes sociales, etc.',
+  },
 ];
 ---
 <ToolLayout slug="cambiar-fondo" faqs={faqs}>
   <CambiarFondoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fondos blancos para e-commerce y marketplaces</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Amazon, Mercado Libre, Linio, Falabella y la mayoría de marketplaces exigen <strong class="text-[var(--color-text)]">fondo blanco puro</strong> en las imágenes principales de producto. El flujo más rápido es: eliminar el fondo con IA (herramienta de eliminar fondo) y luego aplicar fondo blanco con esta herramienta. El JPG resultante es compatible con cualquier plataforma, pesa menos que el PNG con transparencia y cumple los requisitos de imagen de la mayoría de tiendas online.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Logos y variantes de color para presentaciones y redes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un logo o icono PNG transparente se ve diferente sobre cada fondo. Con esta herramienta puedes exportar tu logo sobre <strong class="text-[var(--color-text)]">cualquier color sólido</strong>: negro para presentaciones en dark mode, el color principal de tu marca para el perfil de LinkedIn o Instagram, blanco para documentos Word y PowerPoint, o colores temáticos para campañas estacionales. Genera todas las variantes que necesites sin instalar ningún programa.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,7 +1,44 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FrameTool from '@/components/tools/FrameTool';
+
+const faqs = [
+  {
+    q: '¿Qué tipo de marcos puedo añadir a mis fotos?',
+    a: 'Puedes añadir un marco sólido de color uniforme con grosor ajustable entre 2 y 150 píxeles. Elige entre los colores preset (blanco, negro, rojo, azul, verde, amarillo, morado, rosa) o selecciona cualquier color personalizado con el selector de color. El marco se añade por igual en los cuatro lados de la imagen.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con marco?',
+    a: 'La imagen se descarga en formato JPG con calidad 92%. Si necesitas conservar transparencia en la imagen original, ten en cuenta que JPG no soporta canal alfa. Si tu imagen original era PNG con transparencia, los píxeles transparentes se rellenarán con el color de fondo del marco.',
+  },
+  {
+    q: '¿Cuál es el grosor de marco recomendado para distintos usos?',
+    a: 'Para efecto polaroid o borde fotográfico clásico usa blanco con 20–40 px. Para un aspecto editorial o artístico usa negro con 40–80 px. Para webs y redes sociales donde solo quieres separar la imagen del fondo, 5–10 px es suficiente. El grosor se aplica al tamaño de la imagen en píxeles, no en pantalla.',
+  },
+  {
+    q: '¿Puedo añadir un marco de color personalizado?',
+    a: 'Sí. Además de los 8 colores preset, hay un selector de color avanzado (el último botón circular) que permite elegir cualquier color del espectro completo. El color seleccionado se previsualiza instantáneamente sobre la imagen.',
+  },
+  {
+    q: '¿Aumenta el tamaño de la imagen al añadir marco?',
+    a: 'Sí. El marco se añade alrededor de la imagen original, ampliando el canvas. Si el grosor del marco es de 20 px y la imagen original es de 1000×800 px, el resultado será de 1040×840 px (el marco se suma a los cuatro lados).',
+  },
+];
 ---
-<ToolLayout slug="marco">
+<ToolLayout slug="marco" faqs={faqs}>
   <FrameTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">El efecto polaroid y el marco fotográfico</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un marco blanco alrededor de una fotografía recrea el clásico aspecto polaroid que tanto éxito tiene en redes sociales. Un grosor de 20–40 px en blanco da una sensación de foto impresa. Un marco negro grueso (60–100 px) crea un efecto editorial o de galería de arte. Ambos estilos son populares en Instagram, Pinterest y para presentaciones de portafolio.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Marcos para productos e e-commerce</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En tiendas online, añadir un margen de color blanco alrededor de las fotos de producto unifica el aspecto del catálogo y mejora la presentación, especialmente cuando los productos tienen distintos tamaños o fondos. Un marco de 15–25 px en blanco añade espacio visual ("aire") alrededor del producto y hace que las imágenes se vean más limpias y profesionales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

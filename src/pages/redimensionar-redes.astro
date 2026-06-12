@@ -5,26 +5,44 @@ import RedimensionarRedesTool from '@/components/tools/RedimensionarRedesTool';
 const faqs = [
   {
     q: '¿Qué redes sociales están disponibles?',
-    a: 'Incluimos los tamaños oficiales de Instagram (post cuadrado, historia, portada), Twitter/X (post, cabecera), YouTube (miniatura, portada), Facebook (post, portada), LinkedIn, TikTok y WhatsApp. Los tamaños se actualizan con los estándares actuales de cada plataforma.',
+    a: 'Incluimos los tamaños oficiales de Instagram (post cuadrado 1080×1080, historia 1080×1920, post horizontal 1080×566), Twitter/X (post 1200×675, cabecera 1500×500), YouTube (miniatura 1280×720, banner 2560×1440), Facebook (post 1200×630), LinkedIn (post 1200×627), TikTok (1080×1920), Pinterest (1000×1500) y WhatsApp (512×512).',
   },
   {
-    q: '¿Qué diferencia hay entre los modos "Recortar" y "Contener"?',
-    a: 'El modo Recortar ajusta la imagen al tamaño exacto cortando los bordes sobrantes (ideal para que ocupe todo el espacio). El modo Contener encaja la imagen completa dentro del marco sin cortar nada, rellenando el espacio restante con el color de fondo que elijas.',
+    q: '¿Qué diferencia hay entre los modos Recortar y Contener?',
+    a: 'El modo Recortar ajusta la imagen al tamaño exacto cortando los bordes sobrantes para que llene todo el espacio. El modo Contener encaja la imagen completa dentro del marco sin cortar nada, rellenando el espacio restante con el color de fondo que elijas (útil para imágenes de producto o logos).',
   },
   {
     q: '¿Puedo elegir el color de fondo en el modo Contener?',
-    a: 'Sí. En el modo Contener puedes seleccionar cualquier color de fondo con el selector de color. El color blanco o negro son los más habituales para publicaciones de redes sociales.',
+    a: 'Sí. En el modo Contener puedes seleccionar cualquier color de fondo con el selector de color. Blanco o negro son los más habituales para publicaciones profesionales en redes sociales.',
   },
   {
     q: '¿Se pierde calidad al redimensionar?',
-    a: 'La herramienta usa el algoritmo de interpolación bicúbico nativo del navegador, que es el mejor disponible sin plugins. Si la imagen original tiene suficiente resolución para el tamaño destino, la calidad visual es excelente.',
+    a: 'La herramienta usa el algoritmo de interpolación nativo del navegador. Si la imagen original tiene suficiente resolución para el tamaño destino, la calidad visual es excelente. Para tamaños grandes como el banner de YouTube (2560×1440), necesitarás una imagen de alta resolución.',
   },
   {
     q: '¿Puedo procesar varias imágenes a la vez?',
-    a: 'Actualmente la herramienta procesa una imagen a la vez. Para procesar varias imágenes, puedes repetir el proceso. Si necesitas procesamiento por lotes, te recomendamos usar nuestra herramienta de redimensionado estándar con las medidas que necesitas.',
+    a: 'Actualmente la herramienta procesa una imagen a la vez. Para procesamiento por lotes de la misma imagen en varios formatos, puedes repetir el proceso eligiendo diferentes presets en cada ocasión.',
+  },
+  {
+    q: '¿Con qué frecuencia se actualizan los tamaños recomendados?',
+    a: 'Las plataformas actualizan sus especificaciones ocasionalmente. Los tamaños incluidos en esta herramienta son los estándares actuales (2025) de cada plataforma. Para formatos muy recientes o casos especiales, consulta la documentación oficial de cada red social.',
   },
 ];
 ---
 <ToolLayout slug="redimensionar-redes" faqs={faqs}>
   <RedimensionarRedesTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tamaños correctos para cada red social en un clic</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Publicar imágenes en el tamaño incorrecto causa recortes automáticos inesperados, pérdida de calidad por redimensionado forzado y menor engagement. Instagram recorta automáticamente posts que no cumplan su ratio; YouTube muestra tu miniatura borrosa si no es 1280×720. Con esta herramienta adaptas cualquier imagen al tamaño exacto de cada plataforma en segundos, sin Photoshop ni apps de escritorio.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Qué modo usar según el tipo de imagen</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa el modo <strong class="text-[var(--color-text)]">Recortar</strong> para fotos de personas, paisajes o imágenes donde puedes perder los bordes sin problema. Usa el modo <strong class="text-[var(--color-text)]">Contener con fondo blanco</strong> para logos, productos de e-commerce o imágenes donde no puedes cortar nada. Para banners de YouTube o cabeceras de Twitter, Recortar suele dar mejores resultados porque usa toda la superficie disponible.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

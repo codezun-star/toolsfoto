@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FondoDegradadoTool from '@/components/tools/FondoDegradadoTool';
 
 const faqs = [
-  { q: '¿Para qué sirve añadir un fondo degradado a una imagen?', a: 'Es especialmente útil para PNGs con fondo transparente: logos, iconos, ilustraciones o imágenes con fondo eliminado. Añadir un degradado personalizado las hace listas para publicar en redes sociales, presentaciones o como portadas de contenido.' },
-  { q: '¿Qué tipos de degradado están disponibles?', a: 'La herramienta ofrece gradientes lineales (de un punto a otro en línea recta, con control de dirección) y radiales (desde el centro hacia los bordes en forma de círculo). Los lineales tienen 6 direcciones predefinidas.' },
-  { q: '¿Cuántos colores puedo usar en el degradado?', a: 'Cada degradado usa exactamente dos colores: un color de inicio (color 1) y un color de fin (color 2). Puedes elegir cualquier color con el selector o usar uno de los 5 presets incluidos como punto de partida.' },
-  { q: '¿La imagen original se modifica?', a: 'No. La herramienta crea un canvas nuevo con el degradado como fondo y dibuja tu imagen original encima. Si tu imagen tiene áreas transparentes, el degradado será visible a través de ellas. El resultado se descarga como PNG.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento usa la Canvas API del navegador. El degradado se genera y aplica localmente, y ningún archivo sale de tu dispositivo en ningún momento.' },
+  {
+    q: '¿Para qué sirve añadir un fondo degradado a una imagen?',
+    a: 'Es especialmente útil para PNGs con fondo transparente: logos, iconos, stickers, ilustraciones o imágenes con fondo eliminado. Añadir un degradado personalizado las convierte en imágenes completas listas para publicar en redes sociales, presentaciones, portadas de contenido, banners y materiales de marketing. También funciona para añadir un degradado encima de cualquier foto, creando un efecto de superposición artístico.',
+  },
+  {
+    q: '¿Qué tipos de degradado están disponibles?',
+    a: 'La herramienta ofrece gradientes lineales y radiales. Los lineales van de un punto a otro en línea recta, con 6 direcciones: vertical (↓), horizontal (→), diagonal en cuatro ángulos (↘ ↙ ↗ ↖). Los radiales van desde el centro hacia los bordes en forma de círculo, ideales para efectos de spotlight o foco de luz. Para fotos, el radial crea un efecto viñeta cromática muy atractivo.',
+  },
+  {
+    q: '¿Cuántos colores puedo usar en el degradado?',
+    a: 'Cada degradado usa dos colores: un color de inicio y un color de fin. Puedes elegir cualquier color con el selector de color del navegador (que soporta toda la gama RGB en millones de combinaciones), o usar uno de los 5 presets incluidos: Amanecer, Océano, Bosque, Morado y Noche. Los presets son combinaciones probadas que funcionan bien para distintos tipos de contenido.',
+  },
+  {
+    q: '¿La imagen original se modifica o se sobreescribe?',
+    a: 'No. La herramienta crea un canvas nuevo con el degradado como capa de fondo y dibuja tu imagen original encima con ctx.drawImage(). Si tu imagen tiene áreas transparentes (PNG con alfa), el degradado será visible a través de ellas. Tu archivo original no se toca en ningún momento. El resultado se descarga como un nuevo archivo PNG con el sufijo "_degradado".',
+  },
+  {
+    q: '¿Qué pasa si mi imagen no tiene fondo transparente?',
+    a: 'Para imágenes sin transparencia (JPG o PNG opaco), el degradado queda completamente tapado por la imagen y el resultado es idéntico al original. Para aprovechar esta herramienta con imágenes JPG, primero usa la herramienta de eliminar fondo para crear transparencia, o usa la herramienta de cambiar fondo. Si quieres un efecto de superposición de degradado sobre la foto, actualmente la herramienta no soporta modos de fusión.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento usa la Canvas API del navegador de forma completamente local. El degradado se calcula y aplica en tu dispositivo, sin transmitir ningún dato a ningún servidor. La herramienta funciona incluso sin conexión a internet una vez cargada la página.',
+  },
+  {
+    q: '¿Para qué proyectos es útil el fondo degradado en LATAM?',
+    a: 'Es muy útil para: crear portadas para Instagram Stories y Reels con logos de marcas sobre fondos degradados; preparar banners para tiendas en Mercado Libre, Shopify o WooCommerce; hacer portadas para podcasts, playlists y canales de YouTube con identidad de color; diseñar stickers y memes con fondos coloridos para WhatsApp y Telegram; crear slides de presentaciones con fondos vibrantes; y dar vida a logos e iconos PNG descargados sin fondo, dándoles una identidad cromática personalizada.',
+  },
 ];
 ---
 <ToolLayout slug="fondo-degradado" faqs={faqs}>
   <FondoDegradadoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Logos y PNGs transparentes listos para publicar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La principal aplicación de esta herramienta es dotar de fondo a logos, iconos e ilustraciones con transparencia. Cuando tienes un logo en PNG transparente y necesitas publicarlo en una plataforma que no soporta transparencia (WhatsApp, LinkedIn, Mercado Libre), añadir un <strong class="text-[var(--color-text)]">fondo degradado corporativo</strong> en segundos es mucho más elegante que usar un fondo blanco plano. Elige los colores de tu marca, selecciona la dirección del gradiente, y tu logo queda listo con una identidad visual coherente y profesional.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Portadas y banners con gradientes para redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los degradados son uno de los recursos de diseño más versátiles para crear <strong class="text-[var(--color-text)]">portadas, banners y fondos</strong> con carácter propio. Un degradado bien elegido puede transformar una imagen simple en una pieza de diseño profesional. Usa el preset "Océano" para contenido de viajes y turismo, "Bosque" para contenido de sostenibilidad y naturaleza, o "Morado" para tech y gaming. Los 5 presets son combinaciones usadas en campañas publicitarias reales y funcionan bien en cualquier formato: cuadrado para Instagram, horizontal para YouTube y Twitter, vertical para Stories y TikTok.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

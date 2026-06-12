@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EditorTool from '@/components/tools/EditorTool';
+
+const faqs = [
+  {
+    q: '¿Qué ajustes puedo hacer con el editor de fotos online?',
+    a: 'El editor permite ajustar 7 parámetros: brillo, contraste, saturación, nitidez, temperatura de color, sombras y luces. Cada uno tiene un slider independiente y un preview en tiempo real para que veas los cambios antes de descargar.',
+  },
+  {
+    q: '¿Qué son los presets y para qué sirven?',
+    a: 'Los presets son combinaciones predefinidas de ajustes para lograr estilos fotográficos de un clic. Incluye: Original (sin cambios), Vintage (tonos desaturados cálidos), B&N (blanco y negro), Vívido (colores intensos), Fade (efecto lavado), Cinematic (contraste cinematográfico) y Cool (tonos fríos azulados).',
+  },
+  {
+    q: '¿Cómo funciona el ajuste de temperatura de color?',
+    a: 'La temperatura desplaza los tonos entre azul frío y naranja cálido. Valores negativos enfrían la imagen (tonos azulados, efecto días nublados), valores positivos calientan la imagen (tonos dorados, efecto amanecer/atardecer). Es un ajuste muy potente para cambiar el estado de ánimo de una foto.',
+  },
+  {
+    q: '¿El editor trabaja con la imagen completa o solo con partes?',
+    a: 'Los ajustes se aplican a la imagen completa. Si necesitas editar solo una zona específica, este editor global es ideal para corrección de exposición, color y nitidez generales. Para edición selectiva por regiones considera herramientas como pixelar o añadir texto.',
+  },
+  {
+    q: '¿Se pierde calidad al editar con esta herramienta?',
+    a: 'La vista previa usa filtros CSS sin pérdida de calidad. La exportación final aplica los ajustes sobre el canvas a resolución completa y guarda en JPG con calidad 92%, lo que introduce una mínima compresión prácticamente imperceptible.',
+  },
+  {
+    q: '¿Puedo deshacer los ajustes y empezar de nuevo?',
+    a: 'Sí. Selecciona el preset "Original" para volver a todos los valores por defecto (brillo 100%, contraste 100%, saturación 100%, etc.) sin necesidad de ajustar cada slider manualmente.',
+  },
+];
 ---
-<ToolLayout slug="editor">
+<ToolLayout slug="editor" faqs={faqs}>
   <EditorTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Edita tus fotos online con ajustes profesionales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El editor de fotos online elimina la necesidad de instalar Lightroom o Photoshop para ajustes básicos y medios. Corrige la exposición de fotos subexpuestas, aumenta la saturación de paisajes, aplica tonos cinematográficos a retratos o añade nitidez a imágenes ligeramente desenfocadas. Con 7 presets y 7 sliders independientes puedes lograr resultados profesionales en segundos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Flujo recomendado para editar una foto</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El orden óptimo de edición es: primero <strong class="text-[var(--color-text)]">exposición y contraste</strong> (brillo + contraste), luego <strong class="text-[var(--color-text)]">color</strong> (saturación + temperatura), después <strong class="text-[var(--color-text)]">rango tonal</strong> (sombras + luces) y por último <strong class="text-[var(--color-text)]">nitidez</strong>. Este orden evita que los ajustes de color afecten a los de exposición y viceversa. Empieza con un preset como base y luego afina con los sliders.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

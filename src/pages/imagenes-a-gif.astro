@@ -5,26 +5,44 @@ import ImagenesAGifTool from '@/components/tools/ImagenesAGifTool';
 const faqs = [
   {
     q: '¿Cuántas imágenes puedo usar para crear el GIF?',
-    a: 'Puedes usar entre 2 y 20 imágenes como fotogramas. Para crear GIFs animados fluidos recomendamos entre 5 y 15 frames. Con más frames el archivo GIF será más pesado pero la animación más suave.',
+    a: 'Puedes usar entre 2 y 20 imágenes como fotogramas. Para GIFs animados fluidos recomendamos entre 5 y 15 frames. Con más frames la animación es más suave pero el archivo GIF será más pesado.',
   },
   {
     q: '¿Cómo se controla la velocidad del GIF?',
-    a: 'Puedes ajustar el tiempo de pausa entre frames (delay) de 100 ms a 2000 ms. Un delay de 100 ms equivale a unos 10 fotogramas por segundo (animación fluida), mientras que 500 ms da una presentación de diapositivas más lenta.',
+    a: 'Ajusta el tiempo de pausa entre frames: 100 ms (muy rápido, ~10 fps), 200 ms (rápido), 500 ms (normal, tipo presentación), 1000 ms (lento) o 2000 ms (muy lento, una imagen cada 2 segundos). El delay de 200–300 ms da el aspecto de animación más natural.',
   },
   {
     q: '¿Qué formatos de imagen admite?',
-    a: 'Puedes usar imágenes JPG y PNG. Recomendamos que todas las imágenes tengan la misma relación de aspecto para que el GIF quede más uniforme. La herramienta redimensiona automáticamente al ancho que elijas.',
+    a: 'Admite imágenes JPG y PNG. Para mejores resultados, usa imágenes con la misma relación de aspecto y resolución. La herramienta redimensiona automáticamente todas las imágenes al ancho elegido (240, 320, 480 o 640 px) manteniendo las proporciones.',
   },
   {
     q: '¿Por qué tarda en procesarse?',
-    a: 'La creación de GIFs de calidad requiere calcular una paleta de colores óptima para todos los frames. Esta herramienta usa FFmpeg.wasm con optimización de paleta, lo que produce GIFs de mejor calidad a costa de algo más de tiempo de procesamiento. El proceso ocurre en tu navegador.',
+    a: 'La creación de GIFs de calidad requiere calcular una paleta de colores óptima para todos los frames (paso palettegen + paletteuse de FFmpeg). Este proceso produce GIFs más nítidos y con mejor color que métodos rápidos, a cambio de unos segundos adicionales de procesamiento en tu navegador.',
   },
   {
     q: '¿Se puede crear un GIF en bucle infinito?',
-    a: 'Sí. Por defecto los GIFs se generan en bucle infinito (loop = 0), que es el comportamiento estándar para animaciones web. Esto lo controla FFmpeg automáticamente con los parámetros de paleta optimizada.',
+    a: 'Sí. Todos los GIFs generados reproducen en bucle infinito por defecto (comportamiento estándar para animaciones web y redes sociales). No es posible generar GIFs de reproducción única con esta herramienta.',
+  },
+  {
+    q: '¿Puedo cambiar el orden de los fotogramas?',
+    a: 'Sí. Usa los botones de las esquinas de cada fotograma para moverlo hacia adelante o hacia atrás en la secuencia. También puedes eliminar fotogramas individuales con el botón X y añadir más imágenes en cualquier momento antes de generar el GIF.',
   },
 ];
 ---
 <ToolLayout slug="imagenes-a-gif" faqs={faqs}>
   <ImagenesAGifTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Crea GIFs animados desde imágenes JPG y PNG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los GIFs animados son el formato más universal para animaciones simples en la web: funcionan en cualquier navegador, red social y aplicación de mensajería sin plugins. Se usan para crear presentaciones de productos con múltiples ángulos, mostrar el antes/después de un retoque fotográfico, crear stickers animados personalizados, hacer tutoriales paso a paso visuales y generar animaciones de logotipos o banners publicitarios.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Consejos para un GIF de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para un GIF nítido y ligero: usa un <strong class="text-[var(--color-text)]">ancho de 320–480 px</strong> (el tamaño grande aumenta el peso exponencialmente), aplica un <strong class="text-[var(--color-text)]">delay de 200 ms</strong> para animaciones fluidas y <strong class="text-[var(--color-text)]">500 ms</strong> para presentaciones. Usa imágenes con <strong class="text-[var(--color-text)]">fondos simples y colores planos</strong> — el GIF solo soporta 256 colores por frame, y los gradientes o texturas complejas pueden verse con bandas. Menos colores = GIF más pequeño y nítido.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

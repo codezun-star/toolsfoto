@@ -1,38 +1,39 @@
 import { useState } from 'react';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { useDownload } from '@/hooks/useDownload';
 import { loadImage, canvasToBlob, revokeURL } from '@/lib/utils/canvas';
+import { triggerDownload } from '@/lib/utils/download';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import ImageUploader from '@/components/ui/ImageUploader';
 
 export default function TiltShiftTool() {
-  const { file, preview, getRootProps, getInputProps, isDragActive, clearFile } = useImageUpload();
-  const { download } = useDownload();
+  const upload = useImageUpload();
   const [blurAmount, setBlurAmount] = useState(12);
   const [focusCenter, setFocusCenter] = useState(50);
   const [focusSize, setFocusSize] = useState(30);
   const [saturation, setSaturation] = useState(140);
   const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [resultSize, setResultSize] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function handleClear() {
     if (resultUrl) revokeURL(resultUrl);
-    clearFile();
+    upload.clearImage();
     setResultUrl(null);
+    setResultBlob(null);
     setResultSize(0);
     setError(null);
   }
 
   async function process() {
-    if (!file) return;
+    if (!upload.image) return;
     setProcessing(true);
     setError(null);
     if (resultUrl) revokeURL(resultUrl);
     try {
-      const img = await loadImage(file);
+      const img = await loadImage(upload.image.url);
       const w = img.naturalWidth;
       const h = img.naturalHeight;
 
@@ -55,40 +56,20 @@ export default function TiltShiftTool() {
       blurCtx.drawImage(img, pad, pad);
       blurCtx.filter = 'none';
 
-      // Step 3: composite: paste blurred, then paint sharp band on top
+      // Step 3: composite — blurred base, sharp band on top
       const out = document.createElement('canvas');
       out.width = w;
       out.height = h;
       const ctx = out.getContext('2d')!;
 
-      // Draw full blurred image
       ctx.drawImage(blurCanvas, -pad, -pad, w + pad * 2, h + pad * 2, 0, 0, w, h);
 
-      // Focus band: centered at focusCenter% of height, half-size = focusSize% of height
       const focusY = (focusCenter / 100) * h;
       const halfBand = (focusSize / 100) * h * 0.5;
       const topEdge = focusY - halfBand;
       const botEdge = focusY + halfBand;
       const feather = Math.max(20, halfBand * 0.6);
 
-      // Use gradient mask to blend sharp image over blurred
-      const grad = ctx.createLinearGradient(0, topEdge - feather, 0, botEdge + feather);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(Math.min(1, (feather / ((botEdge + feather) - (topEdge - feather))), 1), 'rgba(0,0,0,1)');
-      grad.addColorStop(Math.min(1, ((focusY - topEdge + feather) / ((botEdge + feather) - (topEdge - feather)))), 'rgba(0,0,0,1)');
-      grad.addColorStop(1 - Math.min(0.5, feather / ((botEdge + feather) - (topEdge - feather))), 'rgba(0,0,0,1)');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-
-      ctx.save();
-      ctx.globalCompositeOperation = 'destination-in';
-      // First fill entirely to remove blur layer
-      ctx.restore();
-
-      // Re-do: draw blurred, then overlay sharp with mask
-      ctx.clearRect(0, 0, w, h);
-      ctx.drawImage(blurCanvas, -pad, -pad, w + pad * 2, h + pad * 2, 0, 0, w, h);
-
-      // Mask canvas for the sharp band
       const maskCanvas = document.createElement('canvas');
       maskCanvas.width = w;
       maskCanvas.height = h;
@@ -101,7 +82,6 @@ export default function TiltShiftTool() {
       maskCtx.fillStyle = maskGrad;
       maskCtx.fillRect(0, 0, w, h);
 
-      // Composite sharp band
       const sharpCanvas = document.createElement('canvas');
       sharpCanvas.width = w;
       sharpCanvas.height = h;
@@ -113,6 +93,7 @@ export default function TiltShiftTool() {
       ctx.drawImage(sharpCanvas, 0, 0);
 
       const blob = await canvasToBlob(out, 'image/jpeg', 0.92);
+      setResultBlob(blob);
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
@@ -123,15 +104,24 @@ export default function TiltShiftTool() {
   }
 
   function handleDownload() {
-    if (!resultUrl || !file) return;
-    download(resultUrl, file.name.replace(/\.[^.]+$/, '_tiltshift.jpg'));
+    if (!resultBlob || !upload.image) return;
+    triggerDownload(resultBlob, upload.image.file.name.replace(/\.[^.]+$/, '_tiltshift.jpg'));
   }
 
   return (
     <div className="space-y-6">
-      <ImageUploader getRootProps={getRootProps} getInputProps={getInputProps} isDragActive={isDragActive} preview={preview} onClear={handleClear} />
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={handleClear}
+      />
 
-      {file && !resultUrl && !processing && (
+      {upload.image && !resultUrl && !processing && (
         <div className="space-y-5">
           <div>
             <div className="flex justify-between mb-1.5">

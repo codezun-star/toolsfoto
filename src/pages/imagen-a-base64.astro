@@ -5,26 +5,48 @@ import ImagenABase64Tool from '@/components/tools/ImagenABase64Tool';
 const faqs = [
   {
     q: '¿Cuándo debo usar Base64 para imágenes?',
-    a: 'Base64 es útil para imágenes muy pequeñas (iconos, placeholders) que quieres incrustar directamente en HTML o CSS para evitar una petición HTTP adicional. No es recomendable para imágenes grandes: Base64 incrementa el tamaño un 33%, lo que aumenta el tiempo de carga y el peso del HTML.',
+    a: 'Base64 es útil para imágenes muy pequeñas (menos de 10 KB) que quieres incrustar directamente en HTML, CSS o JSON para evitar una petición HTTP adicional. Los casos más comunes son: favicons inline, placeholders de carga, iconos SVG incrustados en CSS, y Data URIs en correos HTML. No uses Base64 para imágenes grandes: el incremento de tamaño del 33% y el bloqueo del parsing del HTML superan el ahorro de la petición HTTP.',
   },
   {
-    q: '¿Cuál es el tamaño máximo recomendado para Base64?',
-    a: 'Como regla general, no superes los 10 KB para imágenes incrustadas en HTML/CSS. Para imágenes más grandes, es mucho más eficiente servirlas como archivos estáticos. La herramienta muestra el tamaño resultante en Base64 para que puedas valorarlo.',
+    q: '¿Cuánto aumenta el tamaño con Base64?',
+    a: 'Base64 codifica cada 3 bytes de datos binarios en 4 caracteres ASCII, lo que supone un incremento de tamaño de exactamente 33.3%. Una imagen de 10 KB se convierte en ~13.3 KB de texto Base64. La herramienta muestra el tamaño resultante antes y después de la conversión para que puedas evaluar si compensa. Para imágenes de más de 30 KB, el impacto en rendimiento web suele ser negativo.',
   },
   {
     q: '¿Funciona con todos los formatos de imagen?',
-    a: 'Sí. Acepta cualquier imagen que soporte tu navegador: JPG, PNG, WebP, GIF, AVIF, SVG, ICO, etc. El Data URI resultante incluye el tipo MIME correcto para que el navegador lo renderice correctamente.',
+    a: 'Sí. Acepta cualquier imagen que soporte tu navegador: JPG, PNG, WebP, GIF, AVIF, ICO, BMP, TIFF, etc. El Data URI resultante incluye el tipo MIME correcto (image/jpeg, image/png, image/webp…) para que el navegador lo renderice correctamente sin necesidad de inferir el formato.',
   },
   {
     q: '¿El código generado funciona en todos los navegadores?',
-    a: 'Los Data URIs Base64 tienen soporte universal en todos los navegadores modernos (Chrome, Firefox, Safari, Edge). El formato `data:image/jpeg;base64,...` es un estándar web definido en RFC 2397 y es compatible desde Internet Explorer 8.',
+    a: 'Los Data URIs Base64 tienen soporte universal en todos los navegadores modernos: Chrome, Firefox, Safari, Edge, Opera y sus versiones móviles. El formato `data:image/jpeg;base64,...` es un estándar web definido en RFC 2397 (1998) y es compatible desde Internet Explorer 8. Para email marketing, es compatible con Gmail, Outlook y la mayoría de clientes de correo modernos.',
+  },
+  {
+    q: '¿Puedo usar Base64 en correos electrónicos HTML?',
+    a: 'Sí. Las imágenes en Base64 se incrustan directamente en el HTML del correo, sin depender de servidores externos. Esto significa que la imagen se muestra aunque el cliente de correo bloquee imágenes externas, y el correo no pierde imágenes si el servidor de origen cae. Es una técnica común en email marketing y correos transaccionales para logotipos, firmas y banners críticos.',
   },
   {
     q: '¿Los archivos se envían a algún servidor?',
-    a: 'No. La conversión a Base64 usa la API FileReader del navegador, que opera completamente en local. Tu imagen nunca se envía a ningún servidor externo.',
+    a: 'No. La conversión a Base64 usa la API FileReader del navegador (readAsArrayBuffer + btoa), que opera completamente en local. Tu imagen nunca se envía a ningún servidor externo. Puedes convertir imágenes confidenciales, documentos escaneados o cualquier archivo privado con total seguridad.',
+  },
+  {
+    q: '¿Qué formatos de código genera la herramienta?',
+    a: 'La herramienta genera el Data URI en 5 formatos listos para usar: HTML (<img src="data:...">), CSS (background-image: url("data:...")), JSON ({"image": "data:..."}), JavaScript (const imgSrc = "data:..."), y Base64 puro (solo la cadena sin prefijo). Selecciona el formato que necesitas con los botones de la barra de formato y copia el resultado con un clic. Útil para developers que trabajan con React, Vue, Angular o cualquier framework frontend.',
   },
 ];
 ---
 <ToolLayout slug="imagen-a-base64" faqs={faqs}>
   <ImagenABase64Tool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Data URIs en HTML y CSS para imágenes inline sin peticiones HTTP</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En desarrollo web, cada imagen externa supone una petición HTTP que puede aumentar el tiempo de carga, especialmente en conexiones lentas o con alta latencia. Para imágenes pequeñas y críticas (logotipos en correos, placeholders, iconos en CSS), usar <strong class="text-[var(--color-text)]">Data URIs Base64</strong> elimina completamente esa petición: la imagen viaja incrustada en el propio HTML o CSS. La herramienta genera el código listo para pegar en React, Vue, Angular, HTML estático o cualquier template de email.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Uso en APIs, JSON y aplicaciones móviles multiplataforma</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Base64 es el estándar para transmitir imágenes en APIs REST y GraphQL cuando se prefiere un único payload JSON sin archivos adjuntos: útil para apps móviles en React Native o Flutter, integraciones con servicios de terceros que no aceptan URLs de imagen, y sistemas embebidos. También es el formato estándar para pasar imágenes a APIs de IA (como la API de visión de OpenAI o Google Vision). La herramienta genera el formato <strong class="text-[var(--color-text)]">JSON y JavaScript directamente</strong>, ahorrando el paso de construcción manual del Data URI.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

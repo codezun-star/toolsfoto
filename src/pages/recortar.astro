@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CropperTool from '@/components/tools/CropperTool';
+
+const faqs = [
+  {
+    q: '¿Cómo recorto una imagen en proporción 1:1 para Instagram?',
+    a: 'Selecciona el preset "1:1" en el selector de proporción y arrastra sobre la imagen para definir el área. La herramienta mantendrá automáticamente la proporción cuadrada independientemente de cómo arrastres. El área azul muestra exactamente qué quedará en la imagen final.',
+  },
+  {
+    q: '¿Puedo recortar a un tamaño exacto en píxeles?',
+    a: 'La herramienta trabaja con proporciones relativas, no con píxeles absolutos. Para obtener un tamaño exacto en píxeles, primero recorta con la proporción deseada y luego usa la herramienta de redimensionado para establecer las dimensiones exactas.',
+  },
+  {
+    q: '¿Se pierde calidad al recortar una imagen?',
+    a: 'No se pierde calidad durante el recorte; simplemente se elimina la parte de la imagen fuera del área seleccionada. El área seleccionada se exporta con la resolución original de esa zona, sin degradación.',
+  },
+  {
+    q: '¿Para qué sirve la proporción 16:9?',
+    a: 'La proporción 16:9 es el estándar para pantallas widescreen, vídeos de YouTube, presentaciones y televisores modernos. Úsala para thumbnails de YouTube (1280×720 px), fondos de escritorio o imágenes para presentaciones de PowerPoint.',
+  },
+  {
+    q: '¿Cómo selecciono el área de recorte con mayor precisión?',
+    a: 'Haz clic y arrastra lentamente desde la esquina o zona que quieres conservar. Para recortes muy precisos, aleja el zoom del navegador para que la imagen ocupe más espacio en pantalla y puedas hacer clic con más precisión.',
+  },
+  {
+    q: '¿Qué proporción debo usar para portadas de YouTube?',
+    a: 'Las portadas o thumbnails de YouTube requieren proporción 16:9 y un tamaño mínimo de 1280×720 px. Usa el preset 16:9 para recortar tu imagen y luego redimensiónala a 1280×720 px. El límite de YouTube es 2 MB por thumbnail.',
+  },
+];
 ---
-<ToolLayout slug="recortar">
+<ToolLayout slug="recortar" faqs={faqs}>
   <CropperTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Proporciones para cada red social</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada plataforma tiene una proporción óptima: <strong class="text-[var(--color-text)]">Instagram feed</strong> prefiere 4:5 (vertical) o 1:1 (cuadrado); <strong class="text-[var(--color-text)]">YouTube thumbnails</strong> usan 16:9; <strong class="text-[var(--color-text)]">TikTok y Stories</strong> requieren 9:16 vertical; <strong class="text-[var(--color-text)]">Twitter/X</strong> muestra mejor 16:9. Recortar con la proporción correcta antes de subir evita que la plataforma aplique su propio recorte automático.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recorte libre vs recorte con proporción fija</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El modo <strong class="text-[var(--color-text)]">Libre</strong> te permite seleccionar cualquier área rectangular sin restricciones, ideal para eliminar un objeto del borde o recortar una zona específica de la foto. Los presets <strong class="text-[var(--color-text)]">1:1, 4:3, 16:9, 9:16 y 3:2</strong> bloquean la proporción mientras arrastras, garantizando que el resultado encaje perfectamente en la plataforma de destino.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

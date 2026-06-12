@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ResizerTool from '@/components/tools/ResizerTool';
+
+const faqs = [
+  {
+    q: '¿Puedo ampliar una imagen sin que se vea pixelada?',
+    a: 'Ampliar una imagen siempre conlleva cierta pérdida de nitidez porque se inventa información de píxeles. Para ampliaciones moderadas (hasta el doble), el algoritmo de interpolación bilineal de Canvas API da resultados aceptables. Para ampliaciones grandes, herramientas de IA especializadas ofrecen mejores resultados.',
+  },
+  {
+    q: '¿Cómo mantengo la proporción al redimensionar?',
+    a: 'Activa el candado de proporción (icono de candado entre los campos Ancho y Alto). Con el candado activado, al modificar uno de los valores el otro se actualiza automáticamente para mantener la relación de aspecto original.',
+  },
+  {
+    q: '¿Qué diferencia hay entre redimensionar por píxeles y por porcentaje?',
+    a: 'Por píxeles introduces el tamaño exacto final (útil cuando necesitas un ancho específico como 1200 px para una web). Por porcentaje aplicas una escala relativa al tamaño original (útil para reducir una foto al 50% sin saber las dimensiones exactas).',
+  },
+  {
+    q: '¿Cuáles son los tamaños recomendados para redes sociales?',
+    a: 'Instagram post cuadrado: 1080×1080 px. Instagram stories/reels: 1080×1920 px. Twitter/X post: 1200×675 px. Facebook portada: 820×312 px. LinkedIn post: 1200×627 px. YouTube thumbnail: 1280×720 px.',
+  },
+  {
+    q: '¿Se pierde calidad al reducir el tamaño de una imagen?',
+    a: 'Al reducir el tamaño se descarta información de píxeles, lo cual es irreversible. La imagen resultante tendrá menos resolución que la original. Sin embargo, visualmente no se aprecia pérdida de calidad al reducir, al contrario, los detalles pueden verse más nítidos.',
+  },
+  {
+    q: '¿Qué formatos acepta la herramienta de redimensionado?',
+    a: 'Acepta JPG, PNG, WebP y GIF estático. El formato de salida es el mismo que el de entrada. Si subes un PNG, descargas un PNG redimensionado con la misma calidad.',
+  },
+];
 ---
-<ToolLayout slug="redimensionar">
+<ToolLayout slug="redimensionar" faqs={faqs}>
   <ResizerTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tamaños estándar para redes sociales y web</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada plataforma tiene sus dimensiones óptimas: Instagram recorta automáticamente las fotos que no son 1:1, 4:5 o 16:9; Twitter muestra mejor las imágenes en 1200×675 px; LinkedIn premia los posts con imágenes de 1200×627 px. Redimensionar antes de subir evita que la red social aplique su propia compresión y recorte automático.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Cuándo ampliar y cuándo reducir?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Reduce cuando necesites una imagen más ligera para web, email o redes sociales: una foto de 4000×3000 px raramente se necesita en más de 1200 px de ancho en pantalla. Amplía solo cuando necesites imprimir una imagen pequeña en gran formato; en ese caso trabaja siempre desde el archivo original más grande que tengas disponible.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConverterTool from '@/components/tools/ConverterTool';
+
+const faqs = [
+  {
+    q: '¿Cuándo debo usar WebP en lugar de JPG?',
+    a: 'Usa WebP siempre que puedas en webs y apps: produce entre un 25% y un 35% menos peso que JPG con la misma calidad visual perceptible. Es compatible con Chrome, Firefox, Safari 14+, Edge y Android. Solo evítalo si necesitas compatibilidad con navegadores muy antiguos (IE11 o Safari 13 y anteriores).',
+  },
+  {
+    q: '¿Qué ocurre con la transparencia al convertir PNG a JPG?',
+    a: 'JPG no soporta transparencia (canal alfa). Al convertir un PNG transparente a JPG, los píxeles transparentes se rellenan con el color de fondo que elijas en la herramienta (blanco por defecto). Si necesitas conservar la transparencia, usa PNG o WebP como formato de salida.',
+  },
+  {
+    q: '¿Es AVIF mejor que WebP para la web?',
+    a: 'AVIF ofrece una compresión un 20–30% superior a WebP, pero su soporte todavía no es universal (Safari añadió soporte en la versión 16.0). Para máxima compatibilidad, WebP es la opción más segura hoy en día. AVIF es ideal si tu audiencia usa navegadores modernos.',
+  },
+  {
+    q: '¿Pierdo información al convertir de PNG a JPG?',
+    a: 'Sí, JPG es un formato con pérdida (lossy). Al convertir de PNG (sin pérdida) a JPG, se aplica compresión que descarta algunos detalles de color imperceptibles al ojo. Si el original era un PNG de alta resolución y usas calidad 90%+, la diferencia visual es mínima.',
+  },
+  {
+    q: '¿Por qué convertir imágenes a WebP para mi web?',
+    a: 'Google PageSpeed Insights penaliza las webs que sirven imágenes en formatos legacy (JPG, PNG) cuando WebP o AVIF están disponibles. Convertir tus imágenes a WebP puede mejorar la puntuación de rendimiento de tu web, reducir el consumo de ancho de banda y mejorar el tiempo de carga, factores que Google considera en el posicionamiento SEO.',
+  },
+  {
+    q: '¿Qué calidad debo elegir al convertir a WebP?',
+    a: 'Para fotografías y contenido web usa 85–90%: la diferencia visual con el original es imperceptible pero el tamaño se reduce considerablemente. Para iconos, capturas de pantalla e imágenes con texto, usa 90–95% para preservar los bordes nítidos.',
+  },
+];
 ---
-<ToolLayout slug="convertir">
+<ToolLayout slug="convertir" faqs={faqs}>
   <ConverterTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Qué formato elegir para tu web?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">JPG</strong> es ideal para fotografías sin transparencia. <strong class="text-[var(--color-text)]">PNG</strong> es la opción cuando necesitas transparencia o imágenes sin pérdida de calidad (logos, capturas). <strong class="text-[var(--color-text)]">WebP</strong> combina lo mejor de ambos: soporta transparencia, comprime mejor que JPG y es compatible con todos los navegadores modernos. <strong class="text-[var(--color-text)]">AVIF</strong> es el más eficiente pero con soporte todavía en expansión.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte a WebP y acelera tu web</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Google PageSpeed Insights recomienda explícitamente servir imágenes en formatos de nueva generación como WebP o AVIF. Convertir las imágenes de tu web de JPG a WebP puede reducir el peso total de las imágenes entre un 25% y un 40%, lo que se traduce en tiempos de carga más rápidos, mejor experiencia de usuario y mejor posicionamiento en buscadores.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

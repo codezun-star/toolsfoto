@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import HtmlToImageTool from '@/components/tools/HtmlToImageTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve convertir HTML a imagen?',
+    a: 'Esta herramienta convierte código HTML y CSS a imagen PNG o JPEG. Es útil para: generar tarjetas de visita digitales desde HTML, capturar componentes de diseño web como imágenes, crear previsualizaciones de código sin capturas de pantalla, generar imágenes para redes sociales a partir de plantillas HTML, y hacer thumbnails de páginas web.',
+  },
+  {
+    q: '¿Qué tipo de HTML puedo usar?',
+    a: 'Puedes usar HTML estándar con estilos CSS inline o en etiquetas <style>. La herramienta renderiza el HTML en un iframe sandboxed y captura el resultado. Admite flexbox, grid, gradientes, bordes redondeados, sombras y la mayoría de propiedades CSS modernas.',
+  },
+  {
+    q: '¿Puedo usar fuentes externas (Google Fonts) en el HTML?',
+    a: 'Las fuentes externas dependen de la conexión de red en el momento del renderizado. Para resultados más consistentes, usa fuentes del sistema (system-ui, Arial, Georgia, etc.) o incluye las fuentes como base64 inline. Las fuentes web pueden no cargarse correctamente en el sandbox.',
+  },
+  {
+    q: '¿Cuál es la resolución de la imagen generada?',
+    a: 'La herramienta renderiza el HTML a doble resolución (escala ×2) para mayor nitidez en pantallas retina y de alta densidad. Si tu HTML mide 500×300 píxeles, el PNG resultante tendrá 1000×600 píxeles. Esto garantiza texto e iconos nítidos en cualquier dispositivo.',
+  },
+  {
+    q: '¿Puedo incluir imágenes en el HTML?',
+    a: 'Sí, pero las imágenes deben estar en formato data URI (base64) para que funcionen correctamente dentro del sandbox. Las imágenes con URLs externas pueden no cargarse por las restricciones de seguridad del sandbox de renderizado.',
+  },
+  {
+    q: '¿Se puede exportar como PNG o JPEG?',
+    a: 'Sí. Puedes elegir PNG para mayor calidad y soporte de transparencia, o JPEG para un archivo más ligero. El PNG es recomendado si tu HTML tiene fondos transparentes o si el resultado incluye texto fino que puede sufrir artefactos de compresión JPEG.',
+  },
+];
 ---
-<ToolLayout slug="html-a-imagen">
+<ToolLayout slug="html-a-imagen" faqs={faqs}>
   <HtmlToImageTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte HTML y CSS a imagen PNG o JPEG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los desarrolladores y diseñadores usan la conversión de HTML a imagen para generar gráficos dinámicos sin herramientas de diseño externas. Puedes crear tarjetas de Open Graph personalizadas, generar capturas de componentes para documentación, producir imágenes de certificados o diplomas desde plantillas HTML, y crear thumbnails de artículos de blog directamente desde código.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Plantilla HTML básica para empezar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para crear una tarjeta de redes sociales simple, prueba con un div de tamaño fijo (por ejemplo 600×315 px), fondo de color o degradado CSS, texto centrado en vertical y horizontal con flexbox, y bordes redondeados. La herramienta renderiza a doble resolución automáticamente, así que define las dimensiones a la mitad del tamaño final deseado para obtener una imagen nítida.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

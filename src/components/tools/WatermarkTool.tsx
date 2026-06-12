@@ -29,7 +29,6 @@ export default function WatermarkTool() {
   const [opacity, setOpacity] = useState(70);
   const [position, setPosition] = useState<Position>('br');
   const [color, setColor] = useState('#ffffff');
-  const [wmFile, setWmFile] = useState<File | null>(null);
   const [wmUrl, setWmUrl] = useState<string | null>(null);
   const [wmSize, setWmSize] = useState(25);
   const [loading, setLoading] = useState(false);
@@ -81,7 +80,6 @@ export default function WatermarkTool() {
     if (!file) return;
     if (wmUrl) URL.revokeObjectURL(wmUrl);
     const url = URL.createObjectURL(file);
-    setWmFile(file);
     setWmUrl(url);
   }
 

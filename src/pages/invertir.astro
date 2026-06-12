@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import InvertTool from '@/components/tools/InvertTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve invertir los colores de una imagen?',
+    a: 'Invertir colores tiene varios usos prácticos y creativos: crear el negativo fotográfico digital de una imagen (efecto analógico), generar versiones alternativas de iconos o ilustraciones para modo oscuro, detectar defectos o patrones ocultos en imágenes técnicas, crear efectos artísticos de alta energía visual, y preparar imágenes para serigrafía o impresión en negativo.',
+  },
+  {
+    q: '¿La inversión de colores afecta al canal alfa (transparencia)?',
+    a: 'No. La herramienta invierte únicamente los canales de color RGB (rojo, verde y azul) pero deja intacto el canal alfa. Esto significa que las zonas transparentes de un PNG permanecen transparentes después de la inversión. Solo los colores visibles se invierten.',
+  },
+  {
+    q: '¿Qué ocurre si invierto una imagen dos veces?',
+    a: 'La doble inversión devuelve la imagen a su estado original exacto, ya que (255 - (255 - valor)) = valor. Es una operación matemáticamente reversible. Esta propiedad se usa en criptografía visual básica y como verificación de que el proceso funciona correctamente.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con colores invertidos?',
+    a: 'El resultado se descarga en JPG con calidad 92%. Ten en cuenta que JPG no soporta transparencia: si tu imagen original era un PNG con canal alfa, las zonas transparentes aparecerán como negro en el JPG resultante (ya que 255 - 0 = 255 para RGB pero el alpha no se invierte).',
+  },
+  {
+    q: '¿Se pierde calidad al invertir los colores?',
+    a: 'La operación matemática de inversión no pierde calidad por sí misma. La única pérdida de calidad es la que introduce la compresión JPEG al guardar el resultado. Con calidad 92%, la diferencia es prácticamente imperceptible.',
+  },
+  {
+    q: '¿Para qué sirve invertir colores en diseño gráfico y redes sociales?',
+    a: 'En diseño gráfico, la inversión de colores se usa para: crear versiones "modo oscuro" de logotipos e iconos que funcionan sobre fondos oscuros; generar variantes de color alternativas sin rehacer el diseño desde cero; crear efectos visuales llamativos para stories de Instagram, TikTok y posts de impacto; y preparar diseños para impresión en negativo (serigrafía, grabado láser). En fotografía artística, el negativo digital recupera la estética de las películas analógicas en blanco y negro o color.',
+  },
+  {
+    q: '¿Puedo invertir colores de logos PNG con fondo transparente?',
+    a: 'Sí, y es uno de los usos más prácticos. Si tienes un logo en PNG con fondo transparente, al invertir los colores obtienes la versión complementaria del logo manteniendo la transparencia intacta. Por ejemplo, un logo negro sobre fondo transparente se convierte en un logo blanco sobre fondo transparente, listo para usar sobre fondos oscuros. El canal alfa no se modifica durante la inversión.',
+  },
+];
 ---
-<ToolLayout slug="invertir">
+<ToolLayout slug="invertir" faqs={faqs}>
   <InvertTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Usos creativos y técnicos de la inversión de colores</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La inversión de colores convierte cada píxel a su complementario: el blanco se vuelve negro, el negro blanco, el rojo cian, el azul amarillo. Esto es la base del negativo fotográfico analógico. En diseño digital se usa para generar iconos para modo oscuro, crear efectos psicadélicos, preparar imágenes para serigrafía o simplemente explorar una versión visualmente opuesta de una fotografía.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona la inversión a nivel de píxeles</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La fórmula es simple: para cada canal de color (R, G, B), el nuevo valor = 255 − valor original. Un píxel blanco (255, 255, 255) se convierte en negro (0, 0, 0). Un píxel rojo puro (255, 0, 0) se convierte en cian (0, 255, 255). El canal alfa permanece sin cambios, preservando la transparencia original de la imagen.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

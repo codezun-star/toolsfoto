@@ -1,7 +1,44 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import GrayscaleTool from '@/components/tools/GrayscaleTool';
+
+const faqs = [
+  {
+    q: '¿Cómo consigo un efecto blanco y negro profesional?',
+    a: 'Para un B&N con aspecto profesional, empieza con brillo en 100% y contraste en 110–120%. Si la foto tiene muchas sombras, sube el brillo a 105–110% para recuperar detalle. Si la foto está sobreexpuesta, baja el brillo a 90–95%. El secreto está en el contraste: fotos con más contraste generalmente se ven más dramáticas e impactantes en B&N.',
+  },
+  {
+    q: '¿Qué diferencia hay entre escala de grises y blanco y negro?',
+    a: 'Técnicamente son lo mismo en fotografía digital: ambos términos se refieren a una imagen donde cada píxel tiene solo un valor de luminosidad (sin información de color). La diferencia es de matiz: "escala de grises" es el término técnico, mientras que "blanco y negro" es el término artístico y fotográfico.',
+  },
+  {
+    q: '¿Por qué el brillo y el contraste afectan tanto al resultado en B&N?',
+    a: 'En una foto en color, el ojo percibe la información a través de color y luminosidad. Al eliminar el color, solo queda la luminosidad. Por eso el contraste se vuelve el elemento más importante: define la separación entre zonas claras y oscuras, que es lo que da drama y profundidad a la fotografía en B&N.',
+  },
+  {
+    q: '¿Se pierde calidad al convertir a blanco y negro?',
+    a: 'La conversión a escala de grises descarta la información de color de forma permanente. El archivo resultante en JPG no contiene información de color. Sin embargo, la resolución y nitidez de la imagen se mantienen intactas. No hay degradación de píxeles en la conversión.',
+  },
+  {
+    q: '¿Qué configuración recomiendan para retratos en B&N?',
+    a: 'Para retratos: brillo 100–105% y contraste 105–115%. Esta combinación preserva el detalle de la piel en las luces y da profundidad a las sombras. Evita contrastes muy altos (más de 140%) en retratos porque queman las altas luces (zonas blancas de la piel) y bloquean las sombras (zonas negras sin detalle).',
+  },
+];
 ---
-<ToolLayout slug="blancoynegro">
+<ToolLayout slug="blancoynegro" faqs={faqs}>
   <GrayscaleTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué la fotografía en blanco y negro sigue vigente</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El blanco y negro elimina la distracción del color y obliga al ojo a fijarse en la composición, la luz y las formas. Por eso sigue siendo el estándar en fotografía de retrato artístico, arquitectura, street photography y fotoperiodismo. La misma foto en color puede pasar desapercibida, pero en B&N con buen contraste puede volverse icónica.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ajusta brillo y contraste para el mejor resultado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        No todas las fotos quedan bien en B&N con la conversión directa. Usa el <strong class="text-[var(--color-text)]">slider de contraste</strong> para añadir dramatismo (110–130%) o suavizar la imagen (80–90%). Usa el <strong class="text-[var(--color-text)]">slider de brillo</strong> para recuperar detalle en las sombras (subir) o bajar la exposición general (bajar). El preview en tiempo real te permite ajustar hasta conseguir el resultado exacto que buscas.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

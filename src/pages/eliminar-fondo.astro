@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import BackgroundRemoverTool from '@/components/tools/BackgroundRemoverTool';
+
+const faqs = [
+  {
+    q: '¿Cómo funciona la eliminación de fondo con IA?',
+    a: 'La herramienta usa el modelo ISNet de inteligencia artificial, especializado en segmentación semántica de imágenes. Analiza la imagen píxel a píxel para distinguir el sujeto principal del fondo y genera una máscara de recorte precisa. El modelo se ejecuta completamente en tu navegador con WebAssembly.',
+  },
+  {
+    q: '¿Para qué tipo de imágenes funciona mejor?',
+    a: 'ISNet funciona especialmente bien con personas (retratos, fotos de perfil, fotos de cuerpo completo), productos sobre fondos simples, animales con contornos claros y objetos bien definidos. Es menos preciso con imágenes donde el sujeto tiene muchos detalles finos (pelo muy rizado, objetos muy pequeños) o cuando el sujeto y el fondo tienen colores muy similares.',
+  },
+  {
+    q: '¿Por qué tarda en cargarse la primera vez?',
+    a: 'La primera vez que usas la herramienta descarga el modelo ISNet (~50 MB). Este modelo contiene los pesos de la red neuronal y es necesario para el procesamiento local. Las veces siguientes el modelo se carga desde la caché del navegador y tarda pocos segundos.',
+  },
+  {
+    q: '¿Puedo elegir un color de fondo en lugar de transparencia?',
+    a: 'Sí. Por defecto el fondo se elimina y se exporta PNG con transparencia. Pero puedes elegir un color de fondo personalizado para que la herramienta lo sustituya directamente. Esto es útil para fotos de perfil o presentaciones donde necesitas un color específico como fondo.',
+  },
+  {
+    q: '¿Qué formato tiene el resultado?',
+    a: 'Si eliges fondo transparente, el resultado es PNG (el único formato que soporta canal alfa completo). Si eliges un color de fondo, puedes descargar como JPEG para un archivo más ligero. En ambos casos se mantiene la resolución original de la imagen.',
+  },
+  {
+    q: '¿Mis fotos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre localmente en tu navegador usando WebAssembly y la GPU de tu dispositivo cuando está disponible. Tu imagen nunca sale de tu dispositivo. Esto garantiza total privacidad, especialmente importante para fotos de personas.',
+  },
+];
 ---
-<ToolLayout slug="eliminar-fondo">
+<ToolLayout slug="eliminar-fondo" faqs={faqs}>
   <BackgroundRemoverTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina fondos de fotos con inteligencia artificial</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Eliminar el fondo de una foto era antes una tarea que requería Photoshop y habilidades de retoque manual. Con IA puede hacerse en segundos. Los casos de uso más comunes son: crear fotos de perfil profesionales con fondo de color corporativo, preparar imágenes de productos para tiendas online, aislar personas para montajes y composiciones, y generar stickers o imágenes PNG recortadas para presentaciones.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Consigue los mejores resultados con IA</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para mejores resultados, usa imágenes donde el sujeto tenga <strong class="text-[var(--color-text)]">buena iluminación y contraste claro con el fondo</strong>. Los fondos neutros (blanco, gris, verde pantalla) dan resultados perfectos. Si el recorte automático no es preciso en zonas de detalle, combina esta herramienta con la de <strong class="text-[var(--color-text)]">recorte manual</strong> para afinar bordes. Imágenes de alta resolución producen recortes más limpios.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

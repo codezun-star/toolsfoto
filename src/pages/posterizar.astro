@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PosterizarTool from '@/components/tools/PosterizarTool';
+
+const faqs = [
+  {
+    q: '¿Qué es la posterización de una imagen?',
+    a: 'La posterización es un efecto que reduce drásticamente la cantidad de tonos de color en una imagen, pasando de los millones de colores de una foto digital a solo 2–8 niveles por canal. El resultado son áreas de color planas y bien delimitadas con transiciones abruptas, similar a los carteles serigráficos de los años 60–70. El nombre viene del aspecto de póster o cartel impreso con tintas limitadas.',
+  },
+  {
+    q: '¿Cuántos niveles de posterización puedo elegir?',
+    a: 'Puedes elegir entre 2 y 8 niveles por canal de color. Con 2 niveles obtienes el efecto más extremo: cada canal solo tiene blanco o negro, resultando en una imagen con 8 colores posibles máximo (2³). Con 4 niveles (el más popular) obtienes el aspecto de serigrafía clásica con colores bien diferenciados. Con 8 niveles el efecto es sutil y la imagen sigue siendo reconociblemente fotográfica.',
+  },
+  {
+    q: '¿Cómo funciona el algoritmo de posterización?',
+    a: 'Para cada píxel, cada canal de color (R, G, B) se cuantiza al valor permitido más cercano. Por ejemplo, con 4 niveles los valores posibles son 0, 85, 170 y 255. Un canal con valor 100 se redondea a 85 (el más cercano); uno con valor 130 se redondea a 170. La fórmula es: `valor_posterior = round(canal / paso) * paso` donde `paso = 255 / (niveles - 1)`. Es una operación de cuantización por redondeo.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen?',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. Las imágenes posterizadas con pocos niveles tienen grandes áreas de color plano que comprimen muy eficientemente con JPEG. Si tu imagen original tenía transparencia (PNG con canal alfa), esta se pierde al exportar como JPEG. Para preservar transparencia, usa el resultado como base y aplica la herramienta de eliminar fondo.',
+  },
+  {
+    q: '¿Se procesan mis imágenes en el servidor?',
+    a: 'No. El efecto de posterización se realiza íntegramente en tu navegador usando la Canvas API. Ningún archivo sale de tu dispositivo en ningún momento. El procesamiento es instantáneo incluso para imágenes de alta resolución, ya que la operación de cuantización es muy eficiente.',
+  },
+  {
+    q: '¿Funciona bien con cualquier tipo de imagen?',
+    a: 'Funciona con cualquier imagen, pero los resultados más impactantes se obtienen con fotos de alto contraste, retratos, imágenes de arquitectura y naturaleza con colores saturados. Las imágenes muy oscuras, muy claras o con poca saturación producen efectos menos visibles. Para mejores resultados, aumenta el contraste y la saturación de la imagen original antes de posterizar.',
+  },
+  {
+    q: '¿Para qué proyectos artísticos y creativos se usa la posterización?',
+    a: 'La posterización es un recurso fundamental en arte pop, diseño retro y estética streetwear. Se usa para: crear ilustraciones vectorizables con áreas planas de color; diseñar stickers y pegatinas con aspecto de serigrafía; crear portadas de álbumes con estética vintage o neo-pop; diseñar camisetas y merchandise con menos colores (que se imprimen más barato en serigrafía); producir contenido artístico para Instagram y TikTok con estética retro; y crear avatares con aspecto de ilustración.',
+  },
+];
 ---
-<ToolLayout slug="posterizar" faqs={[
-  { q: '¿Qué es la posterización de una imagen?', a: 'La posterización es un efecto que reduce la cantidad de niveles de color en una imagen. En lugar de un gradiente suave con miles de tonos, la imagen queda con áreas planas de color bien delimitadas, similar a un cartel o serigrafía.' },
-  { q: '¿Cuántos niveles de posterización puedo elegir?', a: 'Puedes elegir entre 2 y 8 niveles. Con 2 niveles obtienes una imagen casi en blanco y negro con alto contraste; con 8 niveles el efecto es más sutil y los colores originales se reconocen mejor.' },
-  { q: '¿Cómo funciona el algoritmo de posterización?', a: 'Para cada píxel, cada canal de color (R, G, B) se cuantiza al nivel más cercano de los disponibles. Por ejemplo, con 4 niveles, los valores posibles son 0, 85, 170 y 255. Todos los tonos intermedios se redondean al más próximo.' },
-  { q: '¿En qué formato se descarga la imagen?', a: 'La imagen se descarga en formato PNG. Si la imagen original tenía transparencia (PNG con canal alpha), esta se preserva en el resultado.' },
-  { q: '¿Se procesan mis imágenes en el servidor?', a: 'No. El efecto de posterización se realiza íntegramente en tu navegador usando la Canvas API. Ningún archivo sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="posterizar" faqs={faqs}>
   <PosterizarTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Arte pop, serigrafía y estética retro</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La posterización es la base técnica del arte pop de Andy Warhol: la reducción a colores planos y atrevidos transforma fotografías ordinarias en iconos visuales. En diseño contemporáneo, la estética de póster con colores limitados es muy popular para <strong class="text-[var(--color-text)]">merchandising, camisetas y stickers</strong> porque los diseños con pocos colores son más baratos de imprimir en serigrafía (una tinta por color) y tienen mayor impacto visual. Con 3–4 niveles obtienes el equilibrio perfecto entre efecto artístico y reconocibilidad de la imagen original.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De foto a ilustración: base para vectorización</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La posterización es el primer paso para convertir una fotografía en una ilustración vectorial. Al reducir la imagen a áreas de color plano bien delimitadas, facilita enormemente el proceso de <strong class="text-[var(--color-text)]">vectorización</strong> en herramientas como Illustrator, Inkscape o Adobe Capture: cada zona de color se convierte en un camino vectorial limpio. Posteriza con 3–5 niveles, luego vectoriza con "Image Trace" en Illustrator o "Trace Bitmap" en Inkscape para obtener un SVG de alta calidad escalable a cualquier tamaño.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

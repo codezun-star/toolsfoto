@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EfectoOleoTool from '@/components/tools/EfectoOleoTool';
+
+const faqs = [
+  {
+    q: '¿Cómo funciona el efecto óleo en el navegador?',
+    a: 'El algoritmo analiza una vecindad de píxeles (radio × radio) alrededor de cada punto de la imagen. Agrupa todos los píxeles vecinos en "cubos" según su intensidad de brillo, dividida en niveles. Luego devuelve el color promedio del cubo con más píxeles. Esto crea la apariencia de trazos de pincel uniformes característica de la pintura al óleo, sin usar ninguna librería externa: solo la Canvas API del navegador.',
+  },
+  {
+    q: '¿Por qué se limita la resolución a 1200 px?',
+    a: 'El algoritmo de óleo tiene complejidad O(n²·r²), donde n es el número de píxeles y r el radio. Para una imagen de 4000×3000 px con radio 4, se realizan millones de operaciones. El límite de 1200 px hace el procesamiento viable en el navegador en pocos segundos. La imagen se escala antes de procesar y el resultado mantiene excelente calidad visual para uso digital y redes sociales.',
+  },
+  {
+    q: '¿Qué hace el parámetro "radio del pincel"?',
+    a: 'Un radio pequeño (1–2 px) crea trazos muy finos que preservan bastante detalle de la original, con un efecto suave que recuerda a la acuarela. Un radio medio (3–4 px) produce el clásico óleo con trazos definidos. Un radio grande (5–6 px) crea trazos muy gruesos y un aspecto más abstracto y pictórico. Para retratos, 3–4 suele dar el resultado más equilibrado.',
+  },
+  {
+    q: '¿Qué son los "niveles de intensidad"?',
+    a: 'Los niveles controlan en cuántos grupos de brillo se dividen los píxeles vecinos. Con pocos niveles (4–6) los colores se agrupan en menos cubos, creando una apariencia más plana y abstracta, similar a la pintura expresionista. Con muchos niveles (12–16) hay más gradación de color y el resultado es más fotorrealista. El valor 8 suele ser el equilibrio óptimo para la mayoría de imágenes.',
+  },
+  {
+    q: '¿En qué formato se descarga el resultado?',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. El efecto óleo no genera áreas transparentes, por lo que JPEG es el formato más adecuado: ofrece archivos más pequeños que PNG manteniendo una calidad visual excelente. Si necesitas transparencia en el resultado, usa la herramienta de eliminar fondo después de aplicar el óleo.',
+  },
+  {
+    q: '¿Cuánto tiempo tarda el procesamiento?',
+    a: 'Con el límite de 1200 px, el procesamiento suele tardar entre 2 y 8 segundos según el dispositivo, el radio y los niveles elegidos. Dispositivos móviles de gama media pueden tardar hasta 15 segundos. El navegador puede mostrar el aviso "script lento" en algún caso: es normal, solo espera a que termine. El algoritmo está implementado de forma síncrona en el hilo principal para simplicidad.',
+  },
+  {
+    q: '¿Para qué proyectos creativos es útil el efecto óleo?',
+    a: 'Es ideal para: convertir fotos familiares en regalos personalizados con aspecto de cuadro; crear contenido artístico diferenciado para Instagram, Pinterest y blogs de arte; generar ilustraciones para portadas de libros, revistas y playlists; decorar eventos como bodas y quinceañeras en LATAM con fondos y portadas artísticas; crear fondos de pantalla únicos; y producir material visual para tiendas online en Mercado Libre o Amazon que quieran destacar con un estilo artístico.',
+  },
+];
 ---
-<ToolLayout slug="efecto-oleo" faqs={[
-  { q: '¿Cómo funciona el efecto óleo en el navegador?', a: 'El algoritmo analiza una vecindad de píxeles alrededor de cada punto, agrupa los colores por intensidad en niveles y devuelve el color del grupo más frecuente. Esto crea trazos de pintura similares a los de un óleo artístico.' },
-  { q: '¿Por qué se reduce la resolución de las imágenes grandes?', a: 'El efecto óleo es un algoritmo computacionalmente intensivo. Para que el procesamiento sea viable en el navegador, las imágenes de más de 1200 px se escalan antes de procesarse.' },
-  { q: '¿Qué hace el parámetro "radio del pincel"?', a: 'Un radio mayor crea trazos más gruesos y un efecto más abstracto. Un radio pequeño produce trazos finos que preservan más detalle de la imagen original.' },
-  { q: '¿En qué formato se descarga el resultado?', a: 'La imagen se descarga en formato JPG con calidad 92%. El efecto óleo no genera transparencias, por lo que JPG es el formato más adecuado.' },
-  { q: '¿Puedo usar el efecto óleo para miniaturas o redes sociales?', a: 'Sí, es perfecto para crear contenido artístico diferenciado para Instagram, portadas de álbumes, fondos de pantalla o ilustraciones para blogs y presentaciones.' },
-]}>
+<ToolLayout slug="efecto-oleo" faqs={faqs}>
   <EfectoOleoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De fotografía a pintura artística con un solo clic</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Transformar una fotografía en una pintura al óleo digital es uno de los efectos más solicitados en diseño gráfico y fotografía artística. El algoritmo de análisis de vecindades de píxeles imita la técnica del óleo real: agrupa colores similares en trazos homogéneos, suavizando los detalles finos pero preservando las formas y contornos principales. El resultado tiene una <strong class="text-[var(--color-text)]">textura pictórica</strong> que ningún filtro Instagram puede replicar. Ajusta el radio del pincel para controlar el tamaño de los trazos y los niveles para la cantidad de gradación de color.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Regalos personalizados, decoración y arte digital para venta</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto óleo es muy popular para crear <strong class="text-[var(--color-text)]">regalos personalizados</strong>: convierte una foto familiar, de mascota o de pareja en un cuadro artístico listo para imprimir en canvas o lienzo. En LATAM es un servicio muy demandado para bodas, quinceañeras y bautizos, donde los "cuadros digitales" se imprimen como recuerdo. También es un recurso para artistas digitales que venden ilustraciones en plataformas como Redbubble, Society6 o Etsy, donde el estilo pictórico de las obras tiene mucha demanda. Usa radio 4–5 para resultados de alta calidad artística.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

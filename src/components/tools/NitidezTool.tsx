@@ -29,12 +29,13 @@ export default function NitidezTool() {
       origCtx.drawImage(img, 0, 0);
       const origData = origCtx.getImageData(0, 0, w, h);
 
-      // Draw blurred version
-      const blurCanvas = createCanvas(w, h);
+      // Draw blurred version with padding to avoid edge darkening
+      const pad = radius * 3;
+      const blurCanvas = createCanvas(w + 2 * pad, h + 2 * pad);
       const blurCtx = getContext(blurCanvas);
       blurCtx.filter = `blur(${radius}px)`;
-      blurCtx.drawImage(img, 0, 0);
-      const blurData = blurCtx.getImageData(0, 0, w, h);
+      blurCtx.drawImage(img, pad, pad);
+      const blurData = blurCtx.getImageData(pad, pad, w, h);
 
       // Unsharp mask: out = orig + amount * (orig - blurred)
       const factor = amount / 100;

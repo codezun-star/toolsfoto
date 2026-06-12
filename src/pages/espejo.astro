@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: '¿En qué formato se descarga la imagen volteada?',
-    a: 'La imagen se descarga en el mismo formato que subiste: JPG, PNG, WebP o GIF. Si subiste un PNG con transparencia, la transparencia se preserva en el resultado.',
+    a: 'La imagen se descarga como PNG, preservando la transparencia si la imagen original tenía canal alfa. Si subiste un JPG, el resultado será un PNG de igual resolución.',
   },
   {
     q: '¿Se pierde calidad al voltear la imagen?',
@@ -27,4 +27,18 @@ const faqs = [
 ---
 <ToolLayout slug="espejo" faqs={faqs}>
   <EspejoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Voltea imágenes en horizontal, vertical o ambos ejes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El volteo horizontal es uno de los ajustes más frecuentes en fotografía y diseño. Los smartphones con cámara frontal guardan selfies en espejo (invertidas horizontalmente), y esta herramienta las corrige en un clic. En diseño gráfico, voltear elementos permite crear composiciones simétricas, reflexiones de agua, y efectos de duplicado especular muy populares en portadas musicales y diseño editorial.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Casos de uso del efecto espejo en diseño</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El <strong class="text-[var(--color-text)]">volteo horizontal</strong> sirve para corregir selfies, reflejar logos para crear versiones alternativas y diseñar elementos simétricos. El <strong class="text-[var(--color-text)]">volteo vertical</strong> crea efectos de reflexión en agua o superficies, y se usa mucho en fotomontajes para simular superficies reflectantes. Voltear en <strong class="text-[var(--color-text)]">ambos ejes</strong> es equivalente a rotar 180° pero con espejo, útil para crear patrones repetitivos y texturales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

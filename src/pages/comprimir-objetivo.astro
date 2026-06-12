@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ComprimirObjetivoTool from '@/components/tools/ComprimirObjetivoTool';
 
 const faqs = [
-  { q: '¿Cómo funciona la compresión por objetivo de tamaño?', a: 'La herramienta realiza una búsqueda binaria: prueba distintos niveles de calidad JPEG y mide el tamaño del resultado hasta encontrar el ajuste que produce el archivo más grande posible sin superar el tamaño objetivo. Típicamente necesita 10-15 iteraciones para converger.' },
-  { q: '¿Qué formatos de salida genera?', a: 'El resultado siempre es JPEG, que es el formato con mejor control de calidad para compresión con pérdida. Si tu imagen de entrada es PNG con transparencia, el fondo transparente se rellenará con blanco.' },
-  { q: '¿Qué pasa si el objetivo es más grande que la imagen original?', a: 'Si el tamaño objetivo es mayor que la imagen original, la herramienta aplica la mínima compresión posible. El resultado puede seguir siendo más grande que el objetivo si la imagen ya estaba muy optimizada.' },
-  { q: '¿Qué pasa si el objetivo es demasiado pequeño?', a: 'Si el objetivo es muy pequeño (por ejemplo 10 KB para una imagen de 2000×2000 px), la herramienta usará la calidad mínima (1%) para llegar lo más cerca posible. El resultado puede seguir siendo más grande que el objetivo si la imagen no puede comprimirse tanto.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento usa la Canvas API del navegador. La búsqueda binaria de calidad se ejecuta completamente en tu dispositivo, y ningún archivo sale de él en ningún momento.' },
+  {
+    q: '¿Cómo funciona la compresión por objetivo de tamaño?',
+    a: 'La herramienta realiza una búsqueda binaria: prueba distintos niveles de calidad JPEG automáticamente y mide el tamaño del resultado en cada iteración. Empieza desde la mitad del rango de calidad, ajusta hacia arriba o hacia abajo según el resultado, y repite hasta converger. Típicamente necesita 10–15 iteraciones para encontrar la calidad óptima que produce el archivo más cercano al objetivo sin superarlo.',
+  },
+  {
+    q: '¿Qué formatos de salida genera?',
+    a: 'El resultado siempre es JPEG, el formato con mejor relación tamaño-calidad para fotografías. Si tu imagen de entrada es PNG con transparencia, los píxeles transparentes se rellenan con blanco antes de comprimir. Para imágenes con logotipos o transparencias importantes, usa primero la herramienta de cambiar fondo para elegir el color de relleno.',
+  },
+  {
+    q: '¿Qué pasa si el objetivo es más grande que la imagen original?',
+    a: 'Si el tamaño objetivo supera el tamaño del archivo original, la herramienta aplica la mínima compresión posible (calidad 100%). El resultado puede ser igual de grande o ligeramente diferente al original. En ese caso, tu imagen ya es suficientemente pequeña y no necesita compresión adicional.',
+  },
+  {
+    q: '¿Qué pasa si el objetivo es demasiado pequeño para la resolución de la imagen?',
+    a: 'Si el objetivo es muy bajo para la resolución (por ejemplo, 10 KB para una foto de 4000×3000 px), la herramienta aplicará la calidad mínima posible (1%) y el resultado puede seguir superando el objetivo. En ese caso, reduce primero la resolución con la herramienta de redimensionado y luego aplica la compresión por objetivo.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento usa la Canvas API del navegador de forma completamente local. La búsqueda binaria de calidad se ejecuta en tu dispositivo sin enviar ningún dato a ningún servidor. Ningún archivo ni fragmento de imagen sale de tu dispositivo en ningún momento, lo que garantiza privacidad total.',
+  },
+  {
+    q: '¿Para qué plataformas y formularios es útil esta herramienta?',
+    a: 'Es muy útil para: portales de empleo y sistemas de RRHH con límite de tamaño en la foto de perfil (100 KB, 200 KB), formularios de solicitud de visa o trámites gubernamentales online que piden foto menor a 300 KB, plataformas educativas y universidades con restricciones en adjuntos, apps móviles con límite de peso para imágenes de usuario, y campañas de email marketing con límite de peso en imágenes.',
+  },
+  {
+    q: '¿Puedo usarlo para cumplir el límite de peso de WhatsApp o Telegram?',
+    a: 'Sí. Establece el objetivo en 2000 KB para el límite estándar de WhatsApp, en 5000 KB para WhatsApp Business, o en 8000 KB para Telegram. La herramienta comprimirá la imagen hasta ese límite manteniendo la mejor calidad posible. También es útil para adjuntos de correo electrónico en servicios que limitan el tamaño de los archivos adjuntos individuales.',
+  },
 ];
 ---
 <ToolLayout slug="comprimir-objetivo" faqs={faqs}>
   <ComprimirObjetivoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cumple límites de tamaño en formularios y plataformas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchos sistemas piden imágenes con un tamaño máximo específico: formularios de solicitud de empleo, portales gubernamentales, plataformas de e-learning y sistemas universitarios suelen pedir fotos de menos de <strong class="text-[var(--color-text)]">200 KB, 500 KB o 1 MB</strong>. La compresión por objetivo elimina el proceso de prueba y error manual: establecer el tamaño máximo y la herramienta encontrar automáticamente la mejor calidad posible dentro de ese límite, en segundos y sin instalar nada.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona la búsqueda binaria de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa una técnica llamada <strong class="text-[var(--color-text)]">búsqueda binaria</strong>: empieza desde la calidad media (50%), mide el tamaño resultante, sube o baja la calidad según el resultado, y repite hasta converger. En 10–15 iteraciones encuentra la calidad exacta que maximiza la nitidez sin superar el objetivo. Es mucho más preciso que comprimir manualmente con distintos valores y comparar los tamaños a ojo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ShadowTool from '@/components/tools/ShadowTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve añadir sombra a una imagen?',
+    a: 'Añadir sombra proyectada es una técnica de diseño que da profundidad y sensación tridimensional a objetos, iconos, logos y fotos de productos. Se usa en diseño web para separar visualmente elementos del fondo, en presentaciones para destacar imágenes, y en e-commerce para dar volumen a fotos de productos sobre fondo blanco.',
+  },
+  {
+    q: '¿Qué controles de sombra están disponibles?',
+    a: 'Puedes ajustar cuatro parámetros: desenfoque (suavidad de la sombra de 0 a 50 px), desplazamiento horizontal y vertical (de -40 a 40 px para controlar la dirección de la luz), opacidad (del 10 al 100%) y color de sombra (6 presets + selector de color personalizado).',
+  },
+  {
+    q: '¿Qué formato tiene el resultado?',
+    a: 'La imagen se descarga como PNG. Este formato es el único que soporta el canal alfa necesario para preservar la transparencia alrededor de la imagen con la sombra, especialmente cuando el fondo del resultado es transparente.',
+  },
+  {
+    q: '¿Funciona mejor con imágenes PNG transparentes?',
+    a: 'Sí. Para el mejor efecto, usa imágenes PNG con fondo transparente (por ejemplo iconos o logos sin fondo). La sombra se aplicará solo al contorno del objeto visible. Si tu imagen tiene fondo sólido, la sombra se aplicará alrededor del rectángulo completo de la imagen.',
+  },
+  {
+    q: '¿Por qué la imagen resultante es más grande que la original?',
+    a: 'Para que la sombra sea visible fuera del contorno de la imagen, la herramienta añade un padding alrededor. El tamaño del padding es proporcional al desenfoque más el desplazamiento. Esto garantiza que ninguna parte de la sombra quede cortada.',
+  },
+  {
+    q: '¿Puedo hacer una sombra de colores para efectos creativos?',
+    a: 'Sí. Aunque la sombra negra es la más natural, puedes seleccionar cualquier color: una sombra azul da efecto neón, una sombra roja da sensación de peligro, una sombra verde crea efecto de retroiluminación. El selector de color personalizado permite elegir cualquier tono del espectro.',
+  },
+  {
+    q: '¿Para qué plataformas y usos es más útil esta herramienta?',
+    a: 'Es especialmente útil para: fotógrafos y diseñadores que venden en mercados de stock y necesitan que sus fotos de producto sobre fondo blanco tengan profundidad; diseñadores web que preparan assets para presentaciones y no tienen acceso a Photoshop; negocios locales y tiendas en línea de Mercado Libre, Etsy o Shopify que quieren dar volumen a las fotos de sus productos; y creadores de contenido que diseñan posts para Instagram con logos o stickers que necesitan separarse visualmente del fondo.',
+  },
+];
 ---
-<ToolLayout slug="sombra">
+<ToolLayout slug="sombra" faqs={faqs}>
   <ShadowTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade sombras realistas a iconos, logos y productos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La sombra proyectada es uno de los recursos visuales más efectivos para separar un objeto de su fondo y crear sensación de profundidad. En diseño web y de apps se usa siguiendo la Material Design de Google (sombra suave, desplazamiento sutil) o el estilo "neumorphism" (sombra doble, clara y oscura). Para e-commerce, las sombras en fotos de producto aumentan la percepción de calidad del artículo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Configuraciones de sombra por caso de uso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para <strong class="text-[var(--color-text)]">diseño web moderno</strong>: desenfoque 20 px, desplazamiento X=0 Y=8, opacidad 25%, color negro. Para <strong class="text-[var(--color-text)]">producto de e-commerce</strong>: desenfoque 15 px, X=6 Y=6, opacidad 40%, color gris oscuro. Para <strong class="text-[var(--color-text)]">efecto dramático</strong>: desenfoque 5 px, X=10 Y=10, opacidad 80%, color negro puro. Para <strong class="text-[var(--color-text)]">efecto neón</strong>: desenfoque 30 px, X=0 Y=0, opacidad 90%, color de acento brillante.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

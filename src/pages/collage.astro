@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CollageTool from '@/components/tools/CollageTool';
+
+const faqs = [
+  {
+    q: '¿Cuántas fotos puedo combinar en un collage?',
+    a: 'Depende del diseño seleccionado: el diseño 1×2 admite 2 fotos, el 1×3 admite 3 fotos, el 2×2 admite 4 fotos, y los diseños 1+2 y 2+1 admiten 3 fotos. Puedes añadir y eliminar fotos libremente hasta alcanzar el número requerido por el diseño activo.',
+  },
+  {
+    q: '¿En qué resolución se exporta el collage?',
+    a: 'El collage se exporta a 800×800 píxeles en formato JPG con calidad 92%. Esta resolución es óptima para redes sociales, especialmente Instagram. La previsualización en pantalla usa 400×400 px para mayor velocidad, pero el archivo descargado es siempre a 800×800 px.',
+  },
+  {
+    q: '¿Puedo cambiar el espaciado y el color de fondo del collage?',
+    a: 'Sí. El slider de espaciado controla los márgenes entre fotos y el borde exterior (de 0 a 30 px). El selector de color de fondo permite elegir entre 6 colores preset (blanco, negro, gris claro, negro profundo, rojo y azul) o cualquier color personalizado. El fondo se ve en los espacios entre fotos y en los bordes.',
+  },
+  {
+    q: '¿Qué diseños de collage están disponibles?',
+    a: 'Hay 5 diseños: 1×2 (dos fotos lado a lado), 1×3 (tres fotos horizontales), 2×2 (cuadrícula de 4 fotos), 1+2 (una foto grande arriba y dos pequeñas abajo) y 2+1 (dos fotos pequeñas arriba y una grande abajo). Todos generan un canvas cuadrado final.',
+  },
+  {
+    q: '¿Puedo hacer un collage cuadrado para Instagram?',
+    a: 'Sí. Todos los diseños producen un collage cuadrado (relación 1:1), que es el formato óptimo para el feed de Instagram. El resultado de 800×800 px cumple las especificaciones mínimas de Instagram (612×612 px) con amplio margen de calidad.',
+  },
+  {
+    q: '¿Se pueden reordenar las imágenes del collage?',
+    a: 'Actualmente las imágenes se muestran en el orden en que fueron añadidas. Para cambiar el orden, elimina las imágenes con el botón X y vuelve a añadirlas en el orden deseado. La previsualización se actualiza automáticamente al añadir o eliminar imágenes.',
+  },
+];
 ---
-<ToolLayout slug="collage">
+<ToolLayout slug="collage" faqs={faqs}>
   <CollageTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Combina tus fotos en un collage profesional</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los collages de fotos son perfectos para Instagram (mostrar varias perspectivas de un mismo tema), álbumes de recuerdos de viajes y eventos, presentaciones de proyectos creativos, y catálogos de productos donde quieres mostrar varias imágenes en un solo post. La herramienta genera collages cuadrados de 800×800 px con previsualización en tiempo real.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Consejos para un collage visualmente equilibrado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa fotos con <strong class="text-[var(--color-text)]">tonos similares o complementarios</strong> para mayor armonía visual. Un <strong class="text-[var(--color-text)]">espaciado en blanco</strong> (8–15 px) da un aspecto limpio y minimalista; un <strong class="text-[var(--color-text)]">espaciado en negro</strong> da un toque editorial tipo revista. Para collages con 4 fotos de distinto tamaño, el diseño 1+2 o 2+1 es más dinámico visualmente que la cuadrícula 2×2.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

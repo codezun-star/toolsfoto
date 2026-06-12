@@ -3,13 +3,46 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AjustarHSBTool from '@/components/tools/AjustarHSBTool';
 
 const faqs = [
-  { q: '¿Qué es el tono (Hue) en una imagen?', a: 'El tono es el ángulo en la rueda de colores que define el color percibido: rojo, naranja, amarillo, verde, azul, etc. Rotarlo 180° invierte los colores al complementario.' },
-  { q: '¿Cuál es la diferencia entre brillo y contraste?', a: 'El brillo sube o baja la luminosidad de todos los píxeles por igual. El contraste amplía o reduce la diferencia entre píxeles claros y oscuros, haciendo la imagen más vívida o más plana.' },
-  { q: '¿La herramienta modifica el archivo original?', a: 'No. Todo el procesamiento ocurre en el navegador. Tu archivo original permanece intacto y el resultado se descarga como un archivo nuevo.' },
-  { q: '¿Qué formatos de imagen acepta?', a: 'Acepta JPG, PNG, WebP y AVIF. El resultado siempre se descarga como JPG, que es el formato más compatible y compacto para fotografías con color.' },
-  { q: '¿Puedo restablecer los ajustes a los valores originales?', a: 'Sí. Usa el botón "Restablecer" para volver a los valores por defecto: tono 0°, saturación 100%, brillo 100% y contraste 100%.' },
+  {
+    q: '¿Qué es el tono (Hue) en una imagen?',
+    a: 'El tono es el ángulo en la rueda de colores que define el color percibido: rojo, naranja, amarillo, verde, azul, morado, etc. Rotarlo positivamente desplaza todos los colores hacia el siguiente en la rueda (por ejemplo, el rojo se vuelve naranja). Rotarlo -180° o +180° invierte al color complementario.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre brillo y contraste?',
+    a: 'El brillo sube o baja la luminosidad de todos los píxeles por igual (como si añadieras una capa blanca o negra semitransparente). El contraste amplía o reduce la diferencia entre píxeles claros y oscuros: más contraste hace las luces más claras y las sombras más oscuras; menos contraste aplana y suaviza la imagen.',
+  },
+  {
+    q: '¿La herramienta modifica el archivo original?',
+    a: 'No. Todo el procesamiento ocurre en el navegador usando filtros CSS para el preview y Canvas API para la exportación. Tu archivo original permanece intacto y el resultado se descarga como un archivo nuevo independiente.',
+  },
+  {
+    q: '¿Qué formatos de imagen acepta?',
+    a: 'Acepta JPG, PNG, WebP, AVIF y la mayoría de formatos de imagen que soporta tu navegador. El resultado siempre se descarga como JPEG con calidad 92%, que es el formato más compatible y compacto para fotografías con color.',
+  },
+  {
+    q: '¿Puedo restablecer los ajustes a los valores originales?',
+    a: 'Sí. Usa el botón "Restablecer" para volver a todos los valores por defecto: tono 0°, saturación 100%, brillo 100% y contraste 100%, que corresponden a la imagen sin ningún cambio aplicado.',
+  },
+  {
+    q: '¿Para qué sirve reducir la saturación a 0%?',
+    a: 'Llevar la saturación al 0% convierte la imagen a escala de grises (blanco y negro), eliminando toda la información de color. Es una forma rápida de ver cómo quedaría una foto en B&N. Valores intermedios (50–80%) crean el efecto "faded" o decolorado muy popular en fotografía de moda y lifestyle.',
+  },
 ];
 ---
 <ToolLayout slug="ajustar-hsb" faqs={faqs}>
   <AjustarHSBTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ajusta el tono, saturación y brillo de tus fotos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los cuatro controles de esta herramienta (tono, saturación, brillo, contraste) son los mismos que usan los editores profesionales como Lightroom o Photoshop en sus ajustes básicos. Con solo estos cuatro parámetros puedes corregir el balance de color de fotos tomadas con iluminación artificial, dar un estilo cohesivo a una galería de fotos, crear efectos de temperatura cálida o fría, y ajustar la exposición de imágenes subexpuestas o sobreexpuestas.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recetas de ajuste para estilos populares</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Look cálido y golden:</strong> tono +15°, saturación 120%, brillo 105%, contraste 110%. <strong class="text-[var(--color-text)]">Look frío y nórdico:</strong> tono -20°, saturación 85%, brillo 100%, contraste 95%. <strong class="text-[var(--color-text)]">Efecto faded/vintage:</strong> saturación 65%, brillo 110%, contraste 85%. <strong class="text-[var(--color-text)]">Máximo drama:</strong> saturación 130%, brillo 95%, contraste 145%. <strong class="text-[var(--color-text)]">Blanco y negro:</strong> saturación 0%, contraste 120%.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import TiltShiftTool from '@/components/tools/TiltShiftTool';
 
 const faqs = [
-  { q: '¿Qué es el efecto tilt-shift?', a: 'El tilt-shift es una técnica fotográfica que aplica desenfoque selectivo en las zonas superior e inferior de la imagen, dejando nítida solo una banda central. El resultado hace que las escenas reales parezcan maquetas en miniatura.' },
-  { q: '¿Por qué las fotos parecen miniaturas con tilt-shift?', a: 'Nuestro cerebro asocia el desenfoque selectivo con la profundidad de campo de la fotografía macro (objetos muy pequeños vistos de cerca). Al aplicar este efecto a fotos aéreas o de paisajes, el cerebro las interpreta como miniaturas.' },
-  { q: '¿Puedo controlar dónde queda la zona nítida?', a: 'Sí. El control "Centro del foco" mueve la banda nítida hacia arriba o hacia abajo de la imagen (expresado en porcentaje de la altura). El control "Tamaño de la banda nítida" ajusta cuánta zona permanece en foco.' },
-  { q: '¿Qué hace el control de saturación?', a: 'La saturación aumentada potencia los colores para reforzar el efecto miniatura. Los objetos pequeños reales suelen verse más saturados que los objetos lejanos, por lo que aumentar la saturación refuerza la ilusión.' },
-  { q: '¿En qué formato se descarga la imagen?', a: 'El resultado se descarga en JPG con calidad 92%, optimizando el balance entre calidad visual y tamaño de archivo.' },
+  {
+    q: '¿Qué es el efecto tilt-shift y por qué las fotos parecen miniaturas?',
+    a: 'El tilt-shift es una técnica fotográfica que aplica desenfoque selectivo en las zonas superior e inferior de la imagen, dejando nítida solo una banda horizontal central. El resultado hace que escenas reales parezcan maquetas en miniatura. Esto ocurre porque nuestro cerebro asocia el desenfoque selectivo con la profundidad de campo extremadamente corta de la fotografía macro: cuando vemos un objeto muy pequeño de cerca, solo una pequeña zona queda enfocada, y el cerebro extrapola esa señal visual a "objeto pequeño".',
+  },
+  {
+    q: '¿Cómo controlo la zona nítida de la imagen?',
+    a: '"Centro del foco" mueve la banda nítida hacia arriba o abajo de la imagen (expresado en porcentaje de la altura, de 10% a 90%). Al 50% la banda nítida está en el centro de la imagen. "Tamaño de la banda nítida" controla qué tan ancha es la zona enfocada: valores pequeños (5–15%) crean un efecto de profundidad de campo muy estrecho como una lente macro; valores mayores (40–60%) mantienen una banda más amplia con transición gradual hacia el desenfoque.',
+  },
+  {
+    q: '¿Qué hace el control de saturación?',
+    a: 'La saturación aumentada potencia los colores para reforzar el efecto miniatura. Los objetos pequeños vistos de cerca suelen percibirse con más saturación que los objetos lejanos (por la dispersión atmosférica que desatura los colores a distancia). Aumentar la saturación al 140–160% hace que los colores de la escena sean más vivos y "de juguete", completando la ilusión de miniatura. Redúcela si prefieres un tilt-shift más natural sin efecto de maqueta exagerado.',
+  },
+  {
+    q: '¿Qué tipo de fotos funcionan mejor con el efecto tilt-shift?',
+    a: 'Las fotos tomadas desde ángulos elevados son las que mejor resultado dan: vistas aéreas de ciudades y playas, fotos de estadios o conciertos desde tribunas, imágenes de calles tomadas desde un edificio, o paisajes con horizon bajo. Las fotos tomadas a nivel del suelo o desde la altura de los ojos rara vez producen la ilusión de miniatura convincente. El efecto funciona especialmente bien con escenas donde hay objetos reconocibles que el cerebro puede reescalar (personas, coches, edificios).',
+  },
+  {
+    q: '¿El desenfoque evita el oscurecimiento de los bordes?',
+    a: 'Sí. La herramienta aplica el desenfoque sobre un canvas con padding de 3× el radio de desenfoque para evitar el artefacto de oscurecimiento en los bordes que ocurre cuando el blur CSS se aplica sobre un canvas del mismo tamaño que la imagen. Esto garantiza que los bordes de la imagen no queden más oscuros que el resto.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen?',
+    a: 'El resultado se descarga en formato JPEG con calidad 92%. El efecto tilt-shift no requiere transparencia (se aplica sobre toda la imagen), por lo que JPEG es el formato más eficiente. Para imágenes de alta resolución, el archivo resultante tiene el mismo tamaño en píxeles que el original.',
+  },
+  {
+    q: '¿Para qué usos creativos se usa el efecto tilt-shift?',
+    a: 'El tilt-shift tiene múltiples aplicaciones: fotografía artística y proyectos visuales con estética de maqueta o diorama; vídeos de stop-motion o timelapses (el efecto tilt-shift aplicado a cada frame convierte un vídeo de ciudad en movimiento en un video de maqueta animada); portadas de álbumes y singles musicales; materiales de presentación para arquitectura y urbanismo donde se quiere mostrar una ciudad como modelo; y contenido diferencial para redes sociales donde la estética de miniatura genera conversación e interacción.',
+  },
 ];
 ---
 <ToolLayout slug="tilt-shift" faqs={faqs}>
   <TiltShiftTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte ciudades reales en maquetas con efecto miniatura</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto tilt-shift convierte fotografías de ciudades, playas, estadios y paisajes en lo que parecen <strong class="text-[var(--color-text)]">dioramas o maquetas en miniatura</strong>. La técnica explota un mecanismo del sistema visual: cuando el cerebro ve desenfoque selectivo en una zona estrecha, interpreta la escena como si se estuviera viendo desde muy cerca un objeto pequeño. Las vistas aéreas de ciudades como Buenos Aires, Ciudad de México, Lima o Bogotá quedan especialmente bien con este efecto aplicado.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona el algoritmo en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El proceso tiene tres pasos: primero aplica un boost de saturación a la imagen base para el efecto de color vivo. Luego crea una versión completamente desenfocada usando blur con padding extra para evitar artefactos en bordes. Por último, compone ambas versiones con una máscara de gradiente lineal: la banda central es <strong class="text-[var(--color-text)]">100% nítida</strong>, y las zonas superior e inferior se disuelven hacia el completamente desenfocado con una transición suave de feathering.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
 import { useImageUpload } from '@/hooks/useImageUpload';
-import { useDownload } from '@/hooks/useDownload';
 import { loadImage, canvasToBlob } from '@/lib/utils/canvas';
-import { Upload, Download } from 'lucide-react';
+import { triggerDownload } from '@/lib/utils/download';
+import { Download } from 'lucide-react';
+import ImageUploader from '@/components/ui/ImageUploader';
 
 type GradType = 'linear' | 'radial';
 type Direction = 'to bottom' | 'to right' | 'to bottom right' | 'to bottom left' | '45deg' | '135deg';
@@ -25,8 +26,7 @@ const PRESETS: { name: string; c1: string; c2: string }[] = [
 ];
 
 export default function FondoDegradadoTool() {
-  const { file, previewUrl, isDragging, inputRef, handleDrop, handleDragOver, handleDragLeave, handleFileChange, reset: resetUpload } = useImageUpload();
-  const { download } = useDownload();
+  const upload = useImageUpload();
   const [gradType, setGradType] = useState<GradType>('linear');
   const [color1, setColor1] = useState('#E84827');
   const [color2, setColor2] = useState('#FFB347');
@@ -36,12 +36,13 @@ export default function FondoDegradadoTool() {
   const [error, setError] = useState<string | null>(null);
 
   const process = useCallback(async () => {
-    if (!file) return;
+    if (!upload.image) return;
     setError(null);
+    if (resultUrl) URL.revokeObjectURL(resultUrl);
     setResultUrl(null);
     setResultBlob(null);
     try {
-      const img = await loadImage(file);
+      const img = await loadImage(upload.image.url);
       const w = img.naturalWidth, h = img.naturalHeight;
       const canvas = document.createElement('canvas');
       canvas.width = w;
@@ -72,15 +73,15 @@ export default function FondoDegradadoTool() {
       console.error('[FondoDegradado] Error:', err);
       setError('Error al aplicar el fondo degradado. Asegúrate de que el archivo es una imagen válida.');
     }
-  }, [file, gradType, color1, color2, direction]);
+  }, [upload.image, gradType, color1, color2, direction, resultUrl]);
 
   function handleDownload() {
-    if (!resultBlob || !file) return;
-    download(resultBlob, file.name.replace(/\.[^.]+$/, '_degradado.png'));
+    if (!resultBlob || !upload.image) return;
+    triggerDownload(resultBlob, upload.image.file.name.replace(/\.[^.]+$/, '_degradado.png'));
   }
 
   function reset() {
-    resetUpload();
+    upload.clearImage();
     if (resultUrl) URL.revokeObjectURL(resultUrl);
     setResultUrl(null);
     setResultBlob(null);
@@ -89,28 +90,18 @@ export default function FondoDegradadoTool() {
 
   return (
     <div className="space-y-6">
-      {!file && (
-        <label
-          className={['flex flex-col items-center justify-center gap-3 p-8 rounded-xl border-2 border-dashed cursor-pointer transition-colors', isDragging ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'border-[var(--color-border)] bg-white hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-bg)]'].join(' ')}
-          onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave}
-        >
-          <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
-          <div className="text-center">
-            <p className="font-semibold text-[var(--color-text)]">Sube una imagen</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">PNG, JPG, WebP — ideal para imágenes con transparencia</p>
-          </div>
-          <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-        </label>
-      )}
+      <ImageUploader
+        image={upload.image}
+        error={upload.error}
+        isDragging={upload.isDragging}
+        onDrop={upload.onDrop}
+        onDragOver={upload.onDragOver}
+        onDragLeave={upload.onDragLeave}
+        onFileChange={upload.onFileChange}
+        onClear={reset}
+      />
 
-      {previewUrl && file && !resultUrl && (
-        <div className="relative rounded-xl overflow-hidden border border-[var(--color-border)]">
-          <img src={previewUrl} alt="Preview" className="w-full max-h-56 object-contain bg-[var(--color-bg)]" />
-          <button onClick={reset} className="absolute top-2 right-2 px-3 py-1.5 bg-white rounded-lg border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-red-600 transition-colors">Quitar</button>
-        </div>
-      )}
-
-      {file && (
+      {upload.image && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-5">
           <div className="grid grid-cols-2 gap-2">
             {(['linear', 'radial'] as const).map((t) => (
@@ -164,7 +155,7 @@ export default function FondoDegradadoTool() {
         </div>
       )}
 
-      {file && !resultUrl && (
+      {upload.image && !resultUrl && (
         <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
           Aplicar fondo degradado
         </button>

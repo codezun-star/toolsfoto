@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RuidoTool from '@/components/tools/RuidoTool';
+
+const faqs = [
+  {
+    q: '¿Qué es el efecto ruido o grano en una imagen?',
+    a: 'El ruido o grano es una variación aleatoria en el brillo o color de los píxeles. En fotografía analógica ocurría de forma natural por las emulsiones de plata del film; en digital se puede añadir artificialmente para lograr efectos estéticos como el film grain vintage, la estética de los años 70–80, o el grano cinematográfico de las películas de cine analógico. Es uno de los recursos más usados en fotografía artística y edición móvil actual.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre ruido monocromático y ruido en color?',
+    a: 'El ruido monocromático aplica la misma variación aleatoria a los tres canales RGB simultáneamente, produciendo un grano neutro similar al de una película en blanco y negro o al grain de Lightroom. El resultado es más natural y cinematográfico. El ruido en color aplica variaciones independientes a cada canal (R, G y B por separado), dando un aspecto más similar al ruido de sensor de cámara digital en ISO alto, con pequeños píxeles rojos, verdes y azules visibles.',
+  },
+  {
+    q: '¿Qué intensidad de ruido es la adecuada para cada uso?',
+    a: 'Para un efecto sutil de textura (estética analógica suave): 10–20%. Para grano cinematográfico visible al estilo película de los 70: 30–50%. Para efecto artístico con ruido muy pronunciado o aesthetic lo-fi: 60–100%. Para fotografía de producto donde solo quieres añadir textura sin degradar la legibilidad: mantén por debajo del 15%.',
+  },
+  {
+    q: '¿Se pierde calidad al añadir ruido a una imagen?',
+    a: 'La operación modifica los valores de los píxeles, lo que técnicamente altera la imagen original. Sin embargo, el efecto es el buscado estéticamente. Nota importante: el resultado se descarga en formato JPEG (calidad 92%), lo que introduce una compresión adicional. Si partes de un JPEG ya comprimido, el ruido puede interactuar con los artefactos de compresión existentes. Para mejores resultados, trabaja con originales de alta calidad (RAW exportado a JPEG, PNG, o JPEG sin comprimir).',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con ruido?',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. El ruido monocromático especialmente comprime bien con JPEG porque el grano neutro no introduce colores extra. Si necesitas la imagen sin pérdidas (para seguir editando), usa primero la herramienta de convertir a PNG y aplica el ruido sobre la versión PNG.',
+  },
+  {
+    q: '¿Funciona con imágenes de alta resolución?',
+    a: 'Sí. La herramienta procesa la imagen píxel a píxel en su resolución original usando la Canvas API del navegador. Para imágenes de más de 20 megapíxeles (por ejemplo fotos de cámara a máxima resolución), el procesamiento puede tardar 2–5 segundos porque el bucle itera sobre millones de píxeles. No hay límite de resolución, pero imágenes mayores de 50 MP pueden tardar más o consumir mucha RAM.',
+  },
+  {
+    q: '¿Puedo usar el ruido para estética lo-fi, aesthetic o vaporwave en redes sociales?',
+    a: 'Sí, es uno de los usos más populares. La estética lo-fi y vintage en Instagram, TikTok y Pinterest está muy marcada por el grano fotográfico. Añade ruido monocromático del 25–40% a fotos desaturadas o con filtros vintage para conseguir ese aspecto de foto analógica. Combínalo con el efecto viñeta o el ajuste de brillo y contraste para un look más completo.',
+  },
+];
 ---
-<ToolLayout slug="ruido" faqs={[
-  { q: '¿Qué es el efecto ruido en una imagen?', a: 'El ruido o grano es una variación aleatoria en el brillo o color de los píxeles. En fotografía analógica ocurre de forma natural; en digital se puede añadir artificialmente para lograr efectos estéticos como el film grain o el vintage.' },
-  { q: '¿Se pierde calidad al añadir ruido?', a: 'Técnicamente sí, ya que se alteran los valores de los píxeles. Sin embargo, a intensidades bajas el efecto es sutil y estéticamente deseable. Puedes controlar la intensidad con el slider para encontrar el balance que buscas.' },
-  { q: '¿Cuál es la diferencia entre ruido monocromático y en color?', a: 'El ruido monocromático aplica la misma variación a los tres canales RGB, produciendo un grano neutro similar al de una película en blanco y negro. El ruido en color aplica variaciones independientes a cada canal, dando un aspecto más similar al ruido de sensor de cámara digital.' },
-  { q: '¿En qué formato se descarga la imagen resultante?', a: 'La imagen se descarga en formato PNG para preservar toda la información de color. Si tu imagen original era JPG, el resultado también se descargará con fondo sólido sin pérdidas adicionales de compresión.' },
-  { q: '¿Funciona con imágenes de alta resolución?', a: 'Sí, la herramienta procesa la imagen en su resolución original usando la Canvas API del navegador. Para imágenes muy grandes (más de 20 megapíxeles) el procesamiento puede tardar unos segundos.' },
-]}>
+<ToolLayout slug="ruido" faqs={faqs}>
   <RuidoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Grano cinematográfico y estética analógica</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El grano fotográfico es una de las texturas visuales más reconocibles del siglo XX. Las películas de cine de 35 mm y las fotos de carrete generan este ruido de forma natural; en la era digital se perdió hasta que la estética analógica volvió con fuerza en redes sociales. El <strong class="text-[var(--color-text)]">ruido monocromático</strong> (mismo valor en R, G y B) es el más cercano al grain real del film: neutro, orgánico, y que añade textura sin distorsionar los colores. Úsalo para dar carácter vintage a fotos de moda, bodas, viajes o retratos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Usos creativos del ruido en diseño y redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Más allá de la fotografía, el grano tiene aplicaciones en diseño gráfico: añade textura a gradientes y fondos planos para romper la monotonía del digital; crea carteles con estética risográfica o de fanzine; y es parte fundamental de la estética <strong class="text-[var(--color-text)]">lo-fi, vaporwave y dark academia</strong> que triunfa en Instagram y Pinterest. Combina el ruido con viñeta oscura y colores desaturados para el look analógico completo que genera engagement en plataformas visuales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

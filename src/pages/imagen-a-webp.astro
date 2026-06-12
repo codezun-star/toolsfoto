@@ -5,26 +5,44 @@ import ImagenAWebpTool from '@/components/tools/ImagenAWebpTool';
 const faqs = [
   {
     q: '¿Qué ventajas tiene WebP sobre JPG y PNG?',
-    a: 'WebP ofrece hasta un 25-34% menos de tamaño que JPG con la misma calidad visual, y hasta un 26% menos que PNG. Además admite transparencia (como PNG) y animación (como GIF). Es el formato recomendado por Google para imágenes web y está soportado por todos los navegadores modernos.',
+    a: 'WebP ofrece hasta un 25–34% menos de tamaño que JPG con la misma calidad visual, y hasta un 26% menos que PNG con transparencia. Además admite transparencia (como PNG) y animación. Es el formato recomendado por Google para imágenes web y está soportado por todos los navegadores modernos desde 2020.',
   },
   {
     q: '¿Qué calidad debo elegir?',
-    a: 'Para fotografías e imágenes con gradientes, el rango 75-85% ofrece un excelente equilibrio entre calidad y tamaño. Para imágenes con texto o gráficos simples, 85-95% preserva mejor la nitidez. Para el máximo ahorro de espacio con cierta pérdida de calidad, prueba 60-70%.',
+    a: 'Para fotografías, 75–85% es el equilibrio óptimo entre calidad y tamaño. Para imágenes con texto, gráficos o bordes nítidos, 85–95% preserva mejor la definición. Para máximo ahorro de espacio (landing pages, apps móviles), prueba 60–70%. Para máxima calidad sin pérdidas, usa 100%.',
   },
   {
     q: '¿Puedo convertir imágenes con fondo transparente a WebP?',
-    a: 'Sí. Si la imagen original es un PNG con canal alpha (transparencia), el WebP resultante también preservará la transparencia. WebP soporta transparencia de forma nativa, a diferencia de JPG.',
+    a: 'Sí. Los PNG con canal alfa (transparencia) se convierten a WebP preservando la transparencia. WebP soporta transparencia nativa con canal alfa de 8 bits, igual que PNG pero con menor tamaño de archivo.',
   },
   {
     q: '¿Todos los navegadores soportan WebP?',
-    a: 'Sí. WebP es compatible con Chrome, Firefox, Safari (desde v14), Edge y Opera. Actualmente cubre el 97%+ de los usuarios de navegadores modernos. Para sitios web, WebP es el formato recomendado para imágenes.',
+    a: 'Sí. WebP es compatible con Chrome, Firefox, Safari (desde v14, 2020), Edge y Opera. Cubre el 97%+ de los usuarios de navegadores modernos. Para sitios web de nueva creación, WebP es el formato recomendado por defecto.',
   },
   {
     q: '¿La conversión se hace en mi dispositivo?',
     a: 'Sí, completamente. La herramienta usa la Canvas API nativa del navegador para convertir la imagen. El archivo nunca se envía a ningún servidor. La conversión es instantánea en la mayoría de imágenes.',
   },
+  {
+    q: '¿Puedo usar WebP en mi web WordPress o Shopify?',
+    a: 'Sí. WordPress desde la versión 5.8 soporta WebP nativamente y lo muestra en los medios. Shopify también soporta WebP en imágenes de producto. Convertir tus imágenes a WebP antes de subirlas reduce el tamaño de página y mejora el Core Web Vitals (especialmente LCP), lo que beneficia directamente el SEO.',
+  },
 ];
 ---
 <ToolLayout slug="imagen-a-webp" faqs={faqs}>
   <ImagenAWebpTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué WebP es el formato estándar para la web</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Google desarrolló WebP para mejorar el rendimiento de la web: imágenes más pequeñas se traducen en páginas que cargan más rápido, lo que mejora la experiencia de usuario y el posicionamiento SEO. Las métricas de Core Web Vitals de Google (especialmente LCP — Largest Contentful Paint) penalizan páginas con imágenes pesadas. Convertir tu biblioteca de imágenes a WebP puede reducir el peso total de una página entre un 25% y un 40%.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cuándo convertir a WebP y cuándo no</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Convierte a WebP siempre para: imágenes de productos en e-commerce, fotos de blog, banners y imágenes de fondo web, galerías fotográficas, y cualquier imagen que se cargue en una página web. <strong class="text-[var(--color-text)]">No uses WebP</strong> para: imágenes que se vayan a imprimir (mantén PNG/TIFF de alta calidad), archivos de trabajo en Photoshop o Lightroom (usa formatos nativos), o cuando el destinatario use software antiguo incompatible con WebP.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

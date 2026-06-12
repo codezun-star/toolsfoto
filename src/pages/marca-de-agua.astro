@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import WatermarkTool from '@/components/tools/WatermarkTool';
+
+const faqs = [
+  {
+    q: '¿Qué opacidad es la correcta para una marca de agua?',
+    a: 'Para marcas de agua discretas que no distraigan del contenido usa 30–50% de opacidad. Para marcas de agua visibles que protejan eficazmente la imagen usa 60–80%. Las marcas de agua al 100% de opacidad suelen ser demasiado intrusivas para uso profesional. La posición esquina inferior derecha con 40–60% es el estándar más usado por fotógrafos.',
+  },
+  {
+    q: '¿Puedo usar mi logo PNG como marca de agua?',
+    a: 'Sí. Selecciona el tipo "Imagen" y sube tu logo. Funciona mejor con logos en PNG con fondo transparente: la transparencia del PNG se respeta y el logo se integra limpiamente sobre la foto. Ajusta el tamaño (porcentaje del ancho de la imagen) y la opacidad para encontrar el equilibrio adecuado.',
+  },
+  {
+    q: '¿Dónde es más efectivo colocar la marca de agua?',
+    a: 'La esquina inferior derecha es el estándar de la industria fotográfica: no tapa los elementos principales de la composición y es difícil de recortar sin que se note. La marca de agua central con baja opacidad (30–40%) se usa cuando se quiere proteger imágenes de alta resolución que no se deben recortar.',
+  },
+  {
+    q: '¿La herramienta añade su propia marca de agua al resultado?',
+    a: 'No. ToolsFoto no añade ninguna marca de agua propia. El resultado descargado contiene únicamente la marca de agua que tú hayas configurado. La herramienta es gratuita y sin marcas de terceros.',
+  },
+  {
+    q: '¿Puedo añadir marca de agua a varias imágenes a la vez?',
+    a: 'Actualmente la herramienta procesa una imagen por vez. Para procesar múltiples imágenes de forma eficiente, mantén la misma configuración (texto, posición, opacidad) entre imágenes; solo necesitas subir la siguiente foto y descargar el resultado.',
+  },
+  {
+    q: '¿Funciona con logos PNG que tienen fondo transparente?',
+    a: 'Sí, es la configuración recomendada. Al subir un PNG transparente como marca de agua imagen, solo se renderiza el logotipo sin ningún fondo rectangular. Asegúrate de que tu logo está en PNG con canal alfa para obtener el mejor resultado.',
+  },
+  {
+    q: '¿Cómo protejo mis fotos antes de publicarlas en Mercado Libre, Instagram o portfolios?',
+    a: 'Para Mercado Libre y marketplaces: coloca la marca de agua en la esquina inferior derecha al 50% de opacidad para que no tape el producto pero sí identifique la fuente. Para Instagram y portafolio online: usa tu nombre o web en la esquina inferior derecha al 40–60% de opacidad. Para fotos de arquitectura y fotografía de arte que no quieres que se usen sin permiso: usa una marca de agua central semitransparente (30–40% opacidad) que cubra la imagen y sea difícil de recortar. Procesa cada foto individualmente configurando la marca de agua una sola vez.',
+  },
+];
 ---
-<ToolLayout slug="marca-de-agua">
+<ToolLayout slug="marca-de-agua" faqs={faqs}>
   <WatermarkTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Protege tu trabajo con marca de agua</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Fotógrafos, ilustradores, diseñadores y creadores de contenido usan marcas de agua para evitar el uso no autorizado de su trabajo. Una marca de agua visible desincentiva la copia y permite reclamar la autoría de imágenes que se comparten en redes sociales. Colócala en una esquina con 50–70% de opacidad para que sea visible sin arruinar la composición.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Texto o logo: cuándo usar cada uno</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El <strong class="text-[var(--color-text)]">texto</strong> es más rápido: escribe tu nombre, web o Copyright y tendrás una marca de agua profesional en segundos. El <strong class="text-[var(--color-text)]">logo PNG</strong> es más reconocible y construye marca: usa tu isotipo o logotipo en PNG transparente para un resultado más visual y difícil de ignorar. Ambas opciones se aplican al instante en el navegador, sin subir la imagen a ningún servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

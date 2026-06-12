@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import DesvanecerBordesTool from '@/components/tools/DesvanecerBordesTool';
+
+const faqs = [
+  {
+    q: '¿Por qué el resultado se exporta como PNG y no como JPG?',
+    a: 'El desvanecimiento de bordes genera píxeles semitransparentes en los extremos de la imagen. Solo el formato PNG soporta canal alfa completo (transparencia con degradado suave), mientras que JPG no admite transparencia. El PNG resultante puede colocarse sobre cualquier fondo de color o imagen sin bordes duros ni halos blancos.',
+  },
+  {
+    q: '¿Qué diferencia hay entre el modo elipse y el modo rectangular?',
+    a: 'El modo elipse crea un desvanecimiento radial desde el centro hacia los bordes, produciendo una forma ovalada que oscurece el contorno de forma suave. Es ideal para el efecto viñeta clásico en fotografía de retrato y paisaje. El modo rectangular aplica fades lineales independientes en los cuatro lados, perfecto para banners, piezas de diseño editorial y fondos de presentaciones donde quieres que la imagen se funda con el fondo.',
+  },
+  {
+    q: '¿Puedo usar esta herramienta para crear viñetas fotográficas?',
+    a: 'Sí, ese es uno de los usos más habituales. Con el modo elipse y un tamaño de fade del 15–25% obtienes una viñeta suave similar a la de objetivos fotográficos luminosos. Con un 30–40% la viñeta es muy pronunciada, con efecto analógico marcado. Para retratos, un 15–20% añade profundidad y centra la atención en el sujeto sin distraer.',
+  },
+  {
+    q: '¿Cómo se usa el resultado en presentaciones, webs y redes sociales?',
+    a: 'Al ser un PNG transparente, puedes colocarlo sobre cualquier fondo de color, imagen o patrón en PowerPoint, Canva, Figma, páginas web o collages para Instagram. El resultado encaja perfectamente porque los bordes se funden de forma gradual con cualquier superficie sin bordes duros visibles. Es un recurso muy usado en diseño editorial, sitios de viajes y portafolios de fotografía.',
+  },
+  {
+    q: '¿El tamaño del fade se mide en píxeles o en porcentaje?',
+    a: 'Se mide como porcentaje del lado más corto de la imagen, lo que garantiza que el efecto sea proporcional independientemente del tamaño del original. Un 15% en una imagen de 400 px equivale a 60 px de fade; el mismo 15% en una imagen de 2000 px equivale a 300 px, manteniendo la misma apariencia visual relativa en ambos casos.',
+  },
+  {
+    q: '¿Puedo usar el resultado como imagen de fondo en una web?',
+    a: 'Sí. Las imágenes con bordes desvanecidos son un recurso habitual en diseño web para que las imágenes fluyan visualmente con el fondo de la página. Coloca el PNG transparente sobre un color de fondo CSS con background-color o sobre una imagen de fondo con background-image y los bordes se fusionarán sin máscaras CSS adicionales. Funciona perfectamente en HTML, WordPress, Wix y cualquier constructor web.',
+  },
+  {
+    q: '¿Se puede aplicar el efecto solo a algunos bordes?',
+    a: 'En el modo rectangular, el efecto se aplica a los cuatro lados con la misma intensidad. Si necesitas desvanecer únicamente uno o dos lados (por ejemplo solo la parte inferior para un banner), considera usar un editor de imágenes con soporte de capas como Photopea (gratuito y online), que permite aplicar gradientes de transparencia selectivos por borde.',
+  },
+];
 ---
-<ToolLayout slug="desvanecer-bordes" faqs={[
-  { q: '¿Por qué el resultado se exporta como PNG?', a: 'El desvanecimiento de bordes genera píxeles semitransparentes en los extremos de la imagen. El formato PNG soporta canal alfa (transparencia), mientras que JPG no. Por eso el resultado siempre se descarga como PNG.' },
-  { q: '¿Qué diferencia hay entre el modo elipse y rectangular?', a: 'El modo elipse crea un desvanecimiento radial desde el centro hacia los bordes, ideal para efectos de viñeta. El modo rectangular aplica fades independientes en los cuatro lados de la imagen.' },
-  { q: '¿Puedo usar esta herramienta para crear viñetas fotográficas?', a: 'Sí, ese es uno de los usos más habituales. Con el modo elipse y un tamaño de fade del 20-30% obtienes una viñeta clásica que oscurece los bordes suavemente.' },
-  { q: '¿Cómo se usa el resultado en una presentación o web?', a: 'Al ser un PNG transparente, puedes colocarlo sobre cualquier fondo de color o imagen sin bordes duros. Es ideal para composiciones en PowerPoint, Canva, Figma o cualquier editor web.' },
-  { q: '¿El tamaño del fade se mide en píxeles o en porcentaje?', a: 'Se mide como porcentaje del lado más corto de la imagen, lo que garantiza que el efecto sea proporcional independientemente del tamaño de la imagen original.' },
-]}>
+<ToolLayout slug="desvanecer-bordes" faqs={faqs}>
   <DesvanecerBordesTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Viñetas fotográficas y efecto fade para retratos y paisajes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El desvanecimiento de bordes dirige la atención hacia el centro de la imagen oscureciendo gradualmente los extremos, un recurso clásico del diseño editorial y la fotografía analógica. El modo <strong class="text-[var(--color-text)]">elipse</strong> replica la viñeta fotográfica que producían los objetivos luminosos de las cámaras analógicas. El modo <strong class="text-[var(--color-text)]">rectangular</strong> crea bordes que se funden con cualquier fondo, perfecto para banners, portadas de presentaciones y composiciones de diseño.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">PNG transparente listo para colocar sobre cualquier fondo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Al exportar como <strong class="text-[var(--color-text)]">PNG con canal alfa</strong>, el resultado se integra perfectamente sobre cualquier superficie: fondo blanco para documentos, negro para presentaciones dark mode, color corporativo para materiales de marca, o imágenes de fondo en webs y redes sociales. Es un recurso muy usado en sitios de turismo, portafolios de fotografía, landing pages y presentaciones corporativas donde las imágenes deben fluir visualmente con el diseño sin bordes duros visibles.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

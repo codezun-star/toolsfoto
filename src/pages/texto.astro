@@ -1,7 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import TextOverlayTool from '@/components/tools/TextOverlayTool';
+
+const faqs = [
+  {
+    q: '¿Cómo añado texto a una foto sin programas?',
+    a: 'Sube tu imagen, escribe el texto en el campo de la herramienta y ajusta fuente, tamaño, color y posición. Haz clic en "Aplicar y descargar" para obtener la imagen con el texto integrado. Todo ocurre en el navegador, sin instalar nada.',
+  },
+  {
+    q: '¿Qué fuentes están disponibles para el texto?',
+    a: 'Puedes elegir entre cuatro familias tipográficas: sans-serif (moderna y limpia), serif (clásica y elegante), monospace (estilo código o máquina de escribir) e Impact (impactante, muy usada en memes). Cada fuente tiene un aspecto diferente sobre la imagen.',
+  },
+  {
+    q: '¿Puedo controlar la posición del texto en la imagen?',
+    a: 'Sí. Hay 7 posiciones disponibles: arriba a la izquierda, arriba al centro, arriba a la derecha, centro izquierda, centro, centro derecha y abajo al centro. Elige la posición que mejor encaje con tu composición.',
+  },
+  {
+    q: '¿El texto tiene borde o contorno automático?',
+    a: 'Sí. La herramienta aplica automáticamente un contorno oscuro alrededor de cada letra para que el texto sea legible sobre cualquier fondo, claro u oscuro. Puedes ajustar el grosor del contorno con el slider correspondiente.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con texto?',
+    a: 'El resultado se descarga como JPEG con calidad alta. Si tu imagen original era PNG con transparencia, la transparencia se convierte a blanco en el JPEG final. Si necesitas preservar la transparencia, convierte primero tu imagen a fondo blanco.',
+  },
+  {
+    q: '¿Puedo poner texto semitransparente sobre la imagen?',
+    a: 'Sí. El slider de opacidad controla la transparencia del texto del 10% al 100%. Con opacidad baja el texto se integra sutilmente en la imagen; con opacidad alta destaca más. Úsalo para crear marcas de agua o títulos integrados.',
+  },
+  {
+    q: '¿Qué usos tiene esta herramienta en e-commerce y redes sociales en LATAM?',
+    a: 'Para e-commerce en Mercado Libre, OLX o Falabella: añade el precio, descuento o "Nuevo" sobre las fotos de producto directamente sin usar Canva o Photoshop. Para Instagram y TikTok: crea posts con citas motivacionales, frases virales o textos de marca en segundos. Para WhatsApp Business: personaliza imágenes de catálogo con el nombre del producto o promoción. Para tiendas de Shopify y WooCommerce: genera banners rápidos con texto de oferta o temporada directamente desde el navegador.',
+  },
+];
 ---
-<ToolLayout slug="texto">
+<ToolLayout slug="texto" faqs={faqs}>
   <TextOverlayTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade texto a fotos para redes sociales y diseño</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Superponer texto sobre imágenes es una de las tareas más frecuentes en diseño digital: crear posts para Instagram con citas o títulos, añadir subtítulos a fotografías, generar miniaturas para YouTube, diseñar banners promocionales o personalizar tarjetas de felicitación. Esta herramienta te permite hacerlo directamente en el navegador, sin Photoshop ni aplicaciones de pago.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Consejos para texto legible sobre cualquier fondo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para máxima legibilidad usa <strong class="text-[var(--color-text)]">texto blanco con contorno oscuro</strong> sobre fondos oscuros, y texto oscuro sobre fondos claros. La fuente <strong class="text-[var(--color-text)]">Impact</strong> es la más legible en tamaños grandes y es el estándar de facto para memes y thumbnails. Reduce la opacidad al 60–80% para un efecto de marca de agua sutil. Para textos largos usa sans-serif que es más legible en tamaños pequeños.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

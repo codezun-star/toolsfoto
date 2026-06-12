@@ -3,11 +3,27 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AjustarNivelesTool from '@/components/tools/AjustarNivelesTool';
 ---
 <ToolLayout slug="ajustar-niveles" faqs={[
-  { q: '¿Qué es el punto negro en los niveles?', a: 'El punto negro define qué valor de píxel se trata como negro puro. Subir el punto negro hace que los tonos medios-oscuros se vuelvan completamente negros, aumentando el contraste y eliminando detalles en las sombras.' },
-  { q: '¿Qué es el punto blanco?', a: 'El punto blanco define qué valor se considera blanco puro. Bajarlo hace que los tonos medios-claros se quemen a blanco, incrementando el brillo general de la imagen.' },
-  { q: '¿Qué hace la corrección gamma?', a: 'La gamma actúa sobre los tonos medios sin afectar negros ni blancos. Un gamma inferior al 100% aclara los medios tonos; superior al 100% los oscurece.' },
-  { q: '¿Para qué sirve ajustar los niveles?', a: 'Es ideal para corregir imágenes subexpuestas (oscuras) o sobreexpuestas (lavadas). También ayuda a aumentar el contraste sin reventar sombras o luces.' },
-  { q: '¿Se puede deshacer la operación?', a: 'No se modifica el archivo original; el resultado se descarga como un nuevo JPG. Puedes probar distintos valores antes de descargar.' },
+  { q: '¿Qué es el punto negro en los niveles?', a: 'El punto negro define qué valor de píxel se trata como negro puro. Subir el punto negro (por ejemplo a 30–50) hace que los tonos medios-oscuros se vuelvan completamente negros, aumentando el contraste y eliminando detalles en las sombras. Es la corrección más común en fotos tomadas bajo luz artificial tenue o en interiores con poca iluminación.' },
+  { q: '¿Qué es el punto blanco en los niveles?', a: 'El punto blanco define qué valor se considera blanco puro. Bajarlo (por ejemplo a 200–220) hace que los tonos medios-claros se quemen a blanco, incrementando el brillo general de la imagen. Ideal para rescatar fotos subexpuestas, imágenes con velo gris por exceso de niebla o contraluz, y fotos escaneadas de documentos o fotografías antiguas.' },
+  { q: '¿Qué hace la corrección gamma?', a: 'La gamma actúa sobre los tonos medios sin afectar negros ni blancos. Un gamma inferior al 100% (por ejemplo 70%) aclara los medios tonos sin quemar las luces, perfecto para fotos oscuras en interiores. Un gamma superior al 100% (por ejemplo 150%) oscurece los medios tonos sin bloquear las sombras, útil para imágenes sobreexpuestas o lavadas.' },
+  { q: '¿Para qué sirve ajustar los niveles?', a: 'Los niveles son la herramienta más precisa para corregir exposición sin afectar la saturación de color. Es ideal para fotos subexpuestas (oscuras), sobreexpuestas (lavadas), imágenes con bajo contraste y fotos escaneadas donde el negro no es negro puro ni el blanco es blanco puro. Fotógrafos profesionales lo aplican como primer ajuste antes de cualquier corrección de color.' },
+  { q: '¿Cuál es la diferencia entre ajustar niveles y ajustar brillo/contraste?', a: 'El brillo/contraste ajusta todos los tonos por igual, lo que puede quemar luces o bloquear sombras. Los niveles permiten definir exactamente qué valor se trata como negro puro, blanco puro, y cómo se distribuyen los medios tonos, dando mucho más control sin perder detalles en las zonas extremas de la imagen.' },
+  { q: '¿Se puede deshacer la operación?', a: 'No se modifica el archivo original. El resultado se descarga como un nuevo JPG y la imagen subida permanece intacta en todo momento. Puedes probar distintos valores de punto negro, punto blanco y gamma antes de descargar hasta obtener el resultado que buscas.' },
+  { q: '¿Qué valores son buenos para empezar a corregir una foto?', a: 'Para fotos con bajo contraste: sube el punto negro a 20–40 y baja el punto blanco a 210–240. Para fotos oscuras en interiores: deja negro en 0, blanco en 255 y baja la gamma a 60–80%. Para fotos lavadas con exceso de luz: sube el punto negro a 30 y sube el gamma a 120–140%. Para fotos escaneadas antiguas: sube punto negro a 10–30 para que el fondo sea blanco puro.' },
 ]}>
   <AjustarNivelesTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corregir exposición sin perder detalles en sombras ni luces</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El ajuste de niveles es la técnica más precisa para corregir fotos mal expuestas. A diferencia del slider de brillo, que sube o baja toda la imagen por igual, los niveles permiten definir exactamente qué tono se convierte en negro puro y cuál en blanco puro. El resultado es un <strong class="text-[var(--color-text)]">contraste natural</strong> sin que las sombras se bloqueen ni las luces se quemen. Es el primer ajuste que aplican los fotógrafos profesionales antes de cualquier corrección de color.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cuándo usar niveles vs. HSB vs. brillo/contraste</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa <strong class="text-[var(--color-text)]">niveles</strong> cuando la imagen tiene bajo contraste o un velo gris (fotos escaneadas, capturas antiguas, fotos con niebla). Usa <strong class="text-[var(--color-text)]">ajuste HSB</strong> cuando quieras cambiar el color, la saturación o dar un estilo creativo. Usa <strong class="text-[var(--color-text)]">brillo/contraste</strong> solo para ajustes rápidos donde la precisión no es crítica. Para fotografía de producto, portafolios y fotos de redes sociales, los niveles dan el resultado más natural y profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

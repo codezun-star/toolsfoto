@@ -5,26 +5,48 @@ import EliminarExifTool from '@/components/tools/EliminarExifTool';
 const faqs = [
   {
     q: '¿Qué es EXIF y por qué debo eliminarlo?',
-    a: 'EXIF (Exchangeable Image File Format) son metadatos que las cámaras y móviles añaden automáticamente a las fotos. Incluyen la ubicación GPS exacta donde se tomó la foto, el modelo del dispositivo, la fecha y hora, y configuraciones técnicas de la cámara. Eliminarlos protege tu privacidad antes de publicar imágenes online.',
+    a: 'EXIF (Exchangeable Image File Format) son metadatos que las cámaras y smartphones añaden automáticamente a cada foto: la ubicación GPS exacta donde se tomó, el modelo y número de serie del dispositivo, la fecha y hora, el software de edición y los parámetros técnicos de la cámara. Al publicar fotos con EXIF intacto, cualquier persona puede extraer tu localización, identificar tu dispositivo o saber cuándo y dónde estabas. Eliminarlos es una práctica de privacidad esencial.',
   },
   {
     q: '¿Qué método se usa para eliminar los metadatos?',
-    a: 'La imagen se redibuja en un canvas HTML5 y se exporta de nuevo. Este proceso reconstruye el archivo desde cero sin metadatos, lo que garantiza que se eliminan todos los datos EXIF, IPTC y XMP. Es el mismo método que usan aplicaciones profesionales.',
+    a: 'La imagen se redibuja en un canvas HTML5 usando ctx.drawImage() y luego se exporta de nuevo como imagen limpia. Este proceso reconstruye el archivo desde cero: los píxeles se copian al nuevo lienzo pero los metadatos (EXIF, IPTC, XMP) no forman parte de los datos de imagen y no se transfieren. Es exactamente el mismo principio que usan aplicaciones profesionales de fotografía para limpiar metadatos.',
   },
   {
     q: '¿Se pierde calidad de imagen al eliminar el EXIF?',
-    a: 'Hay una leve recompresión si el archivo original es JPEG. La herramienta exporta a calidad 95, que es prácticamente indistinguible del original. Para archivos PNG, no hay pérdida de calidad porque PNG es sin pérdida.',
+    a: 'Para JPEG hay una leve recompresión inevitable, ya que los datos de imagen se decodifican y vuelven a codificar. La herramienta exporta a calidad 95, que es prácticamente indistinguible del original a simple vista y muy difícil de detectar incluso comparando píxel a píxel. Para PNG no hay pérdida alguna, ya que PNG es un formato sin pérdida y la reexportación regenera el archivo comprimido exactamente.',
   },
   {
-    q: '¿La ubicación GPS también se elimina?',
-    a: 'Sí. Las coordenadas GPS son parte de los metadatos EXIF y se eliminan completamente junto con el resto. Después de procesar la imagen, ningún servicio ni usuario podrá extraer la localización de donde se tomó la foto.',
+    q: '¿La ubicación GPS también se elimina completamente?',
+    a: 'Sí. Las coordenadas GPS son parte del bloque de metadatos EXIF y se eliminan por completo. Después de procesar la imagen, ninguna herramienta online ni aplicación de escritorio podrá extraer la localización de donde se tomó la foto. Verifica el resultado con herramientas como Jeffrey\'s Exif Viewer o ExifTool si necesitas confirmación técnica.',
   },
   {
     q: '¿Los archivos se envían a algún servidor?',
-    a: 'No. La imagen se procesa completamente en tu navegador usando la Canvas API. Ningún archivo sale de tu dispositivo en ningún momento.',
+    a: 'No. La imagen se procesa completamente en tu navegador usando la Canvas API. Ningún archivo sale de tu dispositivo en ningún momento. La herramienta funciona incluso sin conexión a internet una vez cargada la página, lo que la hace ideal para imágenes confidenciales, documentos privados o fotos personales.',
+  },
+  {
+    q: '¿Qué formatos de imagen acepta y cuáles exporta?',
+    a: 'Acepta JPG, PNG, WebP y otros formatos soportados por el navegador. La exportación conserva el formato original: JPEG en produce JPEG limpio (calidad 95), PNG produce PNG limpio. Para imágenes WebP, se exporta como JPEG o PNG según la compatibilidad del navegador. Los archivos resultantes son completamente estándar y compatibles con cualquier plataforma.',
+  },
+  {
+    q: '¿Cuándo es especialmente importante eliminar los metadatos EXIF?',
+    a: 'Es crítico al publicar fotos en: redes sociales si no quieres revelar tu ubicación (aunque Instagram y WhatsApp eliminan EXIF automáticamente, muchas otras plataformas no lo hacen), sitios de venta de fotografía como Shutterstock o Adobe Stock si quieres proteger tu privacidad, foros y comunidades online, imágenes adjuntas en correos profesionales, portafolios web propios, y cualquier plataforma que permita descargar la imagen original. En LATAM es especialmente relevante para periodistas, abogados y profesionales que manejan imágenes sensibles.',
   },
 ];
 ---
 <ToolLayout slug="eliminar-exif" faqs={faqs}>
   <EliminarExifTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Protege tu privacidad antes de publicar imágenes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada foto tomada con un smartphone o cámara moderna puede revelar más información de la que imaginas: la <strong class="text-[var(--color-text)]">ubicación GPS exacta</strong> con precisión de metros, el modelo y número de serie del dispositivo, la fecha y hora exactas, y el software de edición usado. Cuando publicas una foto en un foro, blog, marketplace o grupo de WhatsApp sin limpiar estos datos, cualquier persona puede descargar la imagen y extraer toda esta información. La herramienta elimina todos estos datos en segundos, sin subir nada a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Imprescindible para marketplaces, periodismo y uso profesional</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para vendedores en <strong class="text-[var(--color-text)]">Mercado Libre, Linio, OLX</strong> o cualquier marketplace online, publicar fotos de productos sin limpiar el EXIF puede revelar la dirección exacta de tu domicilio o negocio. Para periodistas y fotógrafos que trabajan en zonas sensibles, los metadatos GPS son un riesgo de seguridad real. Para abogados, contadores y profesionales que intercambian documentos escaneados o fotografiados, eliminar EXIF garantiza que no se filtre información contextual no deseada. Limpia tus imágenes antes de publicarlas como práctica estándar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

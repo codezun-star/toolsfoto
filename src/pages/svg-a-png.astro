@@ -5,26 +5,48 @@ import SvgAPngTool from '@/components/tools/SvgAPngTool';
 const faqs = [
   {
     q: '¿Por qué convertir SVG a PNG?',
-    a: 'Aunque SVG es el mejor formato para la web por su escalabilidad, muchas plataformas y aplicaciones no lo admiten: apps de mensajería, editores de presentaciones, redes sociales, documentos Word/PDF y sistemas de diseño como Figma en ciertos contextos requieren imágenes rasterizadas. PNG mantiene la transparencia que los SVG suelen tener.',
+    a: 'Aunque SVG es el mejor formato para la web por su escalabilidad sin pérdida, muchas plataformas y aplicaciones no lo admiten: apps de mensajería como WhatsApp y Telegram, redes sociales como Instagram y TikTok, editores de presentaciones como PowerPoint y Google Slides, marketplaces como Mercado Libre y Amazon, documentos Word y Excel, y herramientas de diseño como Canva solo aceptan formatos rasterizados. PNG mantiene la transparencia que los SVG suelen tener y es universalmente compatible.',
   },
   {
     q: '¿Cuál es el tamaño recomendado para exportar?',
-    a: 'Depende del uso. Para favicon: 512×512. Para iconos web (2x): el doble del tamaño de display. Para OG images: 1200×630. Para impresión a 300 dpi: multiplica las dimensiones en cm por 118 (por ejemplo, 10 cm → 1180 px). La herramienta muestra las dimensiones originales del SVG como punto de partida.',
+    a: 'Depende del uso: para favicon usa 512×512 px (las plataformas lo reducen automáticamente). Para iconos web en pantallas Retina (2x): el doble del tamaño de display (ej. 128×128 para un icono de 64×64). Para OG images: 1200×630 px. Para impresión a 300 dpi: multiplica las dimensiones en cm por 118 (10 cm → 1180 px). Para presentaciones: el tamaño de display real de la imagen en la diapositiva multiplicado por 2.',
   },
   {
-    q: '¿Se mantiene la transparencia del SVG en el PNG?',
-    a: 'Sí, si seleccionas "Transparente" como fondo. El PNG resultante tendrá canal alfa y conservará la transparencia del SVG original. Si seleccionas "Color sólido", el fondo se rellena con el color elegido.',
+    q: '¿Se mantiene la transparencia del SVG en el PNG resultante?',
+    a: 'Sí, si seleccionas "Transparente" como fondo. El PNG resultante tendrá canal alfa y conservará la transparencia del SVG original. Esta opción es esencial para logos, iconos y cualquier elemento que se use sobre fondos de color. Si seleccionas "Color sólido", el fondo se rellena con el color elegido, útil cuando quieres el PNG con fondo blanco para usar en documentos Word, PowerPoint o como foto de perfil.',
   },
   {
-    q: '¿Funciona con SVGs que usan fuentes externas o referencias externas?',
-    a: 'El renderizado del SVG usa el motor del navegador, por lo que las fuentes del sistema disponibles en tu equipo sí se renderizan. Las referencias a URLs externas (imágenes, fuentes de CDN) pueden no cargarse por restricciones de seguridad del navegador (CORS).',
+    q: '¿Funciona con cualquier SVG, incluidos iconos de Lucide, Font Awesome o Material Icons?',
+    a: 'Sí, en la mayoría de casos. Los SVGs bien formados con viewBox y sin dependencias externas se convierten perfectamente. Los iconos de Lucide, Heroicons y Phosphor Icons funcionan sin problemas. Algunos SVGs con fuentes externas, filtros CSS avanzados o elementos `<use>` con referencias externas pueden no renderizarse correctamente por las restricciones de seguridad CORS del navegador.',
   },
   {
-    q: '¿Puedo convertir un SVG animado a PNG?',
-    a: 'Sí, pero el PNG capturará solo el estado inicial de la animación (el primer fotograma). Si necesitas capturar un frame específico, edita el SVG para eliminar las animaciones o ajustar el estado que quieres exportar.',
+    q: '¿Puedo convertir SVGs animados a PNG?',
+    a: 'Sí, pero el PNG capturará solo el estado inicial de la animación (el primer fotograma). Si necesitas capturar un frame específico, edita el SVG para pausar la animación o ajusta el estado que quieres exportar. Para convertir SVGs animados a GIF o video necesitarías herramientas especializadas en animación.',
+  },
+  {
+    q: '¿Puedo exportar el SVG a resoluciones muy altas como 4K o para impresión?',
+    a: 'Sí, esa es la gran ventaja del SVG: puedes exportarlo a cualquier resolución sin pérdida de calidad. Para impresión en alta resolución, usa dimensiones de 3000–6000 px o más. El navegador renderizará el SVG a la resolución exacta que especifiques, aprovechando la naturaleza vectorial del formato. Verifica que no excedes la memoria disponible del navegador con resoluciones extremas (8000+ px).',
+  },
+  {
+    q: '¿Los archivos se suben a algún servidor durante la conversión?',
+    a: 'No. El SVG se lee localmente con FileReader, se crea un Blob URL temporal en el navegador, y el canvas renderiza la imagen sin ninguna comunicación de red. Todo el proceso ocurre en tu dispositivo. Ningún archivo SVG, ni ningún PNG generado, sale de tu navegador.',
   },
 ];
 ---
 <ToolLayout slug="svg-a-png" faqs={faqs}>
   <SvgAPngTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">SVG a PNG para redes sociales, apps y marketplaces</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los diseñadores trabajan en SVG pero los clientes y plataformas piden PNG. <strong class="text-[var(--color-text)]">Instagram, TikTok, WhatsApp Business, Mercado Libre, Shopify y Amazon</strong> no aceptan SVG directamente. Convierte tu logo, icono o ilustración vectorial al tamaño exacto que necesita cada plataforma: 1080×1080 para Instagram, 400×400 para perfil de WhatsApp Business, o el tamaño que especifique cada marketplace. La conversión en el navegador preserva la nitidez perfecta del vector a cualquier resolución.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Exportar iconos y logos para apps y documentos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En desarrollo de apps móviles, los iconos de la interfaz necesitan PNGs en múltiples resoluciones (@1x, @2x, @3x). En documentos de Word, PowerPoint y PDF, los SVGs a veces no se renderizan correctamente en todos los visores. Un PNG transparente de alta resolución garantiza <strong class="text-[var(--color-text)]">compatibilidad universal</strong>. Para Figma, exporta el SVG a PNG cuando entregues assets a desarrolladores que trabajen con React Native, Flutter o Swift, donde el SVG requiere librerías adicionales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

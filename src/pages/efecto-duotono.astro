@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EfectoDuotonoTool from '@/components/tools/EfectoDuotonoTool';
 
 const faqs = [
-  { q: '¿Qué es el efecto duotono?', a: 'El duotono es un proceso de impresión y diseño que usa dos colores en lugar del espectro completo. Las zonas oscuras de la imagen se mapean al color de sombras y las zonas claras al color de luces, creando un efecto gráfico y contemporáneo.' },
-  { q: '¿Qué tipos de imágenes funcionan mejor?', a: 'Los retratos y fotos con alto contraste producen los mejores resultados. Imágenes con áreas claramente diferenciadas entre luces y sombras muestran mejor el efecto duotono.' },
-  { q: '¿Cómo funciona el mapeo de colores?', a: 'El algoritmo calcula la luminosidad de cada píxel (entre 0 y 1) y lo interpola linealmente entre el color de sombras (luminosidad 0) y el color de luces (luminosidad 1), aplicando los mismos canales R, G, B.' },
-  { q: '¿Puedo crear combinaciones de colores propias?', a: 'Sí. Usa los selectores de color para elegir cualquier combinación. Los presets incluidos son combinaciones populares: azul/naranja, púrpura/amarillo, verde/rosa, rojo/cian y marrón/crema.' },
-  { q: '¿Se puede aplicar duotono a imágenes a color?', a: 'Sí. La herramienta funciona con cualquier imagen independientemente de su color original, ya que el cálculo de luminosidad extrae la información de brillo de todos los canales.' },
+  {
+    q: '¿Qué es el efecto duotono?',
+    a: 'El duotono es una técnica de impresión y diseño gráfico que sustituye el espectro completo de colores de una imagen por solo dos tonos: uno para las zonas oscuras (sombras) y otro para las zonas claras (luces). El resultado es una imagen con fuerte carácter gráfico, usada ampliamente en carteles, portadas de libros, identidades de marca y contenido para redes sociales.',
+  },
+  {
+    q: '¿Cómo funciona el mapeo de colores internamente?',
+    a: 'El algoritmo calcula la luminosidad de cada píxel usando la fórmula de luminancia perceptual (0.299·R + 0.587·G + 0.114·B), que refleja cómo el ojo humano percibe el brillo. El valor resultante, entre 0 y 1, se interpola linealmente entre el color de sombras (luminosidad 0) y el color de luces (luminosidad 1). Todo ocurre en tu navegador con la Canvas API.',
+  },
+  {
+    q: '¿Qué tipos de imágenes funcionan mejor con duotono?',
+    a: 'Los retratos con buen contraste y fotografías en blanco y negro producen los resultados más impactantes. Imágenes con luces y sombras bien definidas revelan mejor la transición entre los dos colores. Las fotos con alto contraste y poca textura media muestran el duotono de forma más dramática. Evita imágenes muy planas (sin contrastes) ya que el efecto apenas se apreciará.',
+  },
+  {
+    q: '¿Puedo usar colores personalizados además de los presets?',
+    a: 'Sí. Los selectores de color permiten elegir cualquier combinación. Los 5 presets (Azul/Naranja, Púrpura/Amarillo, Verde/Rosa, Rojo/Cian, Marrón/Crema) son puntos de partida populares en diseño gráfico contemporáneo. Para identidades de marca, introduce los colores corporativos exactos con sus valores HEX.',
+  },
+  {
+    q: '¿Se puede aplicar duotono a imágenes a color?',
+    a: 'Sí. La herramienta funciona con cualquier imagen, en color o en blanco y negro. Para fotos en color, el algoritmo extrae primero la luminosidad descartando la información de color original, y después aplica los dos colores duotono. El resultado visual es independiente del color original de la imagen.',
+  },
+  {
+    q: '¿En qué formato se exporta y qué calidad tiene?',
+    a: 'El resultado se exporta como JPEG con calidad 92%, lo que ofrece excelente relación entre peso y nitidez. Los duotonos al ser imágenes sin transparencias y con gradaciones de color suaves comprimen muy bien. Si necesitas PNG (por ejemplo para transparencias), usa la herramienta de formato después del duotono.',
+  },
+  {
+    q: '¿Para qué se usa el duotono en diseño LATAM y redes sociales?',
+    a: 'El efecto duotono es muy popular para portadas de álbumes de música urbana y reggaetón, miniaturas de YouTube con estética llamativa, publicaciones de Instagram y TikTok, banners para tiendas en Mercado Libre, materiales de eventos y festivales, y branding de startups tech en México, Argentina, Colombia y Chile. Su aspecto moderno y la gran variedad de combinaciones de color lo convierten en un recurso versátil para cualquier proyecto visual.',
+  },
 ];
 ---
 <ToolLayout slug="efecto-duotono" faqs={faqs}>
   <EfectoDuotonoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Identidades de marca y diseño editorial con dos colores</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El duotono es una herramienta fundamental en diseño de marca moderno. Empresas como Spotify popularizaron su uso masivo para crear campañas con cohesión visual fuerte aplicando sus dos colores corporativos a cualquier fotografía. Puedes replicar esta técnica para crear materiales de marca consistentes: portadas para podcasts y playlists, banners para campañas en redes sociales, material de prensa y dossiers, y presentaciones corporativas donde todas las imágenes comparten la misma paleta. Con <strong class="text-[var(--color-text)]">ToolsFoto</strong> puedes aplicar tus colores exactos (por código HEX) a cualquier foto en segundos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Arte urbano y contenido para redes sociales y YouTube</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto duotono es uno de los recursos más usados para crear miniaturas de YouTube y portadas de álbumes con <strong class="text-[var(--color-text)]">estética contemporánea</strong>. La combinación Azul/Naranja transmite energía y contraste; Púrpura/Amarillo tiene un carácter muy gráfico y futurista; Verde/Rosa funciona muy bien para contenido de moda, belleza y lifestyle. Aplica el efecto a retratos para publicaciones en Instagram, TikTok y redes sociales latinoamericanas: la imagen resultante destaca inmediatamente sobre el feed por su aspecto diferenciado frente a las fotos sin editar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

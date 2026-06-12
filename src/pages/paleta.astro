@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PaletteTool from '@/components/tools/PaletteTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve extraer la paleta de colores de una imagen?',
+    a: 'Los diseñadores y desarrolladores extraen paletas de imágenes para: crear una identidad visual coherente basada en una fotografía inspiradora, hacer que una web o app use los mismos colores que una imagen de marca, identificar los colores dominantes de una foto para usarlos en diseño gráfico, y verificar que una imagen encaja con la paleta de colores de un proyecto.',
+  },
+  {
+    q: '¿Cuántos colores puedo extraer de una imagen?',
+    a: 'Puedes extraer entre 3 y 12 colores con el slider de configuración. Para la mayoría de usos de diseño, 5–8 colores representan bien la paleta de la imagen sin incluir variaciones muy similares. Para análisis más detallado, usa 10–12 colores.',
+  },
+  {
+    q: '¿Cómo copio los códigos de color HEX extraídos?',
+    a: 'Haz clic sobre cualquier muestra de color en la paleta: el código HEX se copia automáticamente al portapapeles y aparece un icono de confirmación. Puedes pegar el color directamente en Figma, CSS, Photoshop, Illustrator o cualquier herramienta de diseño.',
+  },
+  {
+    q: '¿Puedo descargar la paleta como imagen?',
+    a: 'Sí. El botón "Descargar PNG" genera una imagen con las muestras de color alineadas horizontalmente, cada una con su código HEX debajo. Es ideal para documentar la paleta de un proyecto, incluirla en una presentación o compartirla con un equipo.',
+  },
+  {
+    q: '¿Funciona con imágenes PNG con fondo transparente?',
+    a: 'Sí. Los píxeles con transparencia (canal alfa < 128) se excluyen del análisis de color. Esto significa que el fondo transparente de un PNG no contamina los colores extraídos: solo se analizan los píxeles visibles de la imagen.',
+  },
+  {
+    q: '¿Qué hace la herramienta con colores muy similares entre sí?',
+    a: 'La herramienta aplica una cuantización de 4 bits por canal para agrupar colores similares. Dos píxeles muy parecidos (por ejemplo #FF3322 y #FF3320) se agrupan y se cuenta como un solo color. Esto evita que la paleta se llene de variaciones prácticamente idénticas.',
+  },
+];
 ---
-<ToolLayout slug="paleta">
+<ToolLayout slug="paleta" faqs={faqs}>
   <PaletteTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae los colores dominantes de cualquier imagen</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La extracción de paleta es una técnica clave en diseño: permite identificar los colores que definen visualmente una fotografía o ilustración. Diseñadores de identidad visual la usan para construir paletas de marca a partir de imágenes inspiradoras; desarrolladores front-end la usan para crear temas de color coherentes; y fotógrafos la usan para verificar la armonía cromática de sus composiciones.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De la imagen al código: HEX listo para usar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada color extraído muestra su código HEX (por ejemplo, <code class="text-xs bg-[var(--color-bg)] px-1 py-0.5 rounded">#3A7BD5</code>) listo para copiar con un clic. Pégalo directamente en tu CSS como valor de color, en Figma como fill, en Tailwind como color personalizado, o en cualquier paleta de diseño. También puedes descargar la paleta completa como imagen PNG para documentarla.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

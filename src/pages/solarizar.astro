@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import SolarizarTool from '@/components/tools/SolarizarTool';
+
+const faqs = [
+  {
+    q: '¿Qué es la solarización o efecto Sabattier?',
+    a: 'La solarización fotográfica, también llamada efecto Sabattier, es una técnica del cuarto oscuro donde parte de la imagen se invierte por sobreexposición durante el revelado. Fue descubierta accidentalmente por Armand Sabattier en 1862 y popularizada por Man Ray en el surrealismo de los años 20–30. El resultado es una imagen con zonas invertidas y contornos muy marcados llamados "líneas de Mackie", que separan las zonas invertidas de las no invertidas.',
+  },
+  {
+    q: '¿Qué controla el umbral de solarización?',
+    a: 'El umbral (0–255) determina qué píxeles se invierten: los que tienen un valor de luminosidad superior al umbral se invierten (255 − valor); los que están por debajo quedan sin cambios. Con umbral 64, casi toda la imagen se ve afectada (solo las zonas más oscuras permanecen). Con umbral 128 (el clásico), se invierte la mitad luminosa. Con umbral 192, solo las zonas más brillantes se invierten. Ajusta el slider para obtener efectos intermedios.',
+  },
+  {
+    q: '¿Cuáles son los tres presets disponibles?',
+    a: '"Intenso" (umbral 64) invierte la mayor parte de la imagen, creando un efecto muy dramático con alto contraste. "Clásico" (umbral 128) es el efecto Sabattier tradicional, equilibrado y artístico. "Suave" (umbral 192) solo afecta a las zonas más brillantes, produciendo un cambio sutil que mantiene la imagen reconocible con un toque artístico. Puedes usar el slider para explorar valores intermedios o extremos (umbral 0 invierte toda la imagen, igual que la herramienta de invertir colores; umbral 255 no cambia nada).',
+  },
+  {
+    q: '¿Qué tipos de imágenes funcionan mejor con la solarización?',
+    a: 'Las imágenes con alto contraste y áreas bien definidas producen los resultados más impactantes: retratos con iluminación dramática, arquitectura con zonas de luz y sombra marcadas, flores y naturaleza con colores vivos, y fotos en blanco y negro que ya tienen contraste fuerte. Las imágenes planas con poco contraste o gradientes suaves producen efectos menos visibles.',
+  },
+  {
+    q: '¿En qué formato se descarga el resultado?',
+    a: 'La imagen se descarga en formato JPEG con calidad 92%. Si el original era PNG con transparencia, las áreas transparentes se convierten en negro al exportar como JPEG (ya que JPEG no soporta el canal alfa). Para preservar la transparencia, usa primero la herramienta de cambiar fondo para añadir un color de fondo a la imagen antes de solarizar.',
+  },
+  {
+    q: '¿Se procesan las imágenes en algún servidor?',
+    a: 'No. Toda la solarización se realiza localmente en tu navegador mediante la Canvas API y `getImageData`. El algoritmo itera sobre cada píxel directamente en tu dispositivo, sin subir ningún archivo a ningún servidor externo. Tu privacidad está completamente protegida.',
+  },
+  {
+    q: '¿Puedo usar la solarización para crear arte digital y diseño gráfico?',
+    a: 'Sí, es un recurso artístico muy versátil. Se usa en carteles de música electrónica y arte psicodélico, diseño de portadas de álbumes con estética retro, fotografía artística surrealista, creación de texturas para fondos de diseño, y generación de imágenes para proyectos de arte digital y NFTs. La combinación de solarización con otros efectos (viñeta, ruido, duotono) abre un amplio espacio creativo.',
+  },
+];
 ---
-<ToolLayout slug="solarizar" faqs={[
-  { q: '¿Qué es la solarización o efecto Sabattier?', a: 'La solarización fotográfica, también llamada efecto Sabattier, es una técnica del cuarto oscuro donde parte de la imagen se invierte. En fotografía analógica ocurría al exponer el papel fotográfico a la luz durante el revelado. El resultado es una imagen con zonas invertidas y contornos muy marcados.' },
-  { q: '¿Qué hace el umbral de solarización?', a: 'El umbral determina qué píxeles se invierten. Los píxeles con luminosidad superior al umbral se invierten (255 - valor); los que están por debajo quedan sin cambios. Un umbral bajo invierte más zonas; uno alto, menos.' },
-  { q: '¿Cuáles son los presets disponibles?', a: 'Hay tres presets: Intenso (umbral 64, invierte las zonas más luminosas), Clásico (umbral 128, efecto equilibrado) y Suave (umbral 192, solo afecta a las zonas más brillantes). Puedes ajustar el slider libremente para valores intermedios.' },
-  { q: '¿En qué formato se descarga el resultado?', a: 'La imagen se descarga en formato PNG. Si el original tenía canal alpha (transparencia), este se preserva en el resultado.' },
-  { q: '¿Se procesan mis imágenes en el servidor?', a: 'No. Toda la solarización se realiza localmente en tu navegador mediante la Canvas API y getImageData. Ningún archivo se sube a ningún servidor.' },
-]}>
+<ToolLayout slug="solarizar" faqs={faqs}>
   <SolarizarTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Del cuarto oscuro al navegador: el efecto Sabattier digital</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto Sabattier fue uno de los secretos más apreciados de la fotografía surrealista. Man Ray lo usó en sus retratos para crear imágenes entre lo real y lo onírico, con ese inconfundible halo de luz alrededor de los contornos. En digital, el algoritmo replica fielmente el proceso analógico: aplica la fórmula <code class="text-xs bg-[var(--color-bg)] px-1 rounded">255 − valor</code> a todos los píxeles por encima del umbral, creando las <strong class="text-[var(--color-text)]">líneas de Mackie</strong> que separan visualmente las zonas invertidas de las normales.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Arte digital, carteles y estética retro-futurista</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La solarización es muy usada hoy en día en <strong class="text-[var(--color-text)]">diseño gráfico y arte digital</strong>: portadas de álbumes de música electrónica y darkwave, carteles de festivales con estética retro-futurista, arte generativo y procesado de imágenes para NFTs. Aplicada a fotos de arquitectura o naturaleza crea texturas abstractas que sirven como fondos para diseños en Canva, Adobe Express o Photoshop. Exporta el resultado y combínalo con capas de color en tu herramienta favorita.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

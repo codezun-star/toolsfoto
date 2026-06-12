@@ -3,13 +3,46 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EfectoBocetoTool from '@/components/tools/EfectoBocetoTool';
 
 const faqs = [
-  { q: '¿Cómo funciona el efecto de boceto?', a: 'El algoritmo convierte la imagen a escala de grises, crea una versión invertida y desenfocada, y luego aplica la mezcla "color dodge" entre ambas. Este proceso simula el efecto de un dibujo a lápiz.' },
-  { q: '¿Qué controla el slider de suavidad?', a: 'El slider controla el radio del desenfoque aplicado a la capa invertida. Valores bajos (1-4) generan trazos más finos y detallados. Valores altos (10-20) crean un boceto más suave y artístico.' },
-  { q: '¿Qué tipo de imágenes funcionan mejor?', a: 'Las fotos con buena iluminación y bordes bien definidos producen los mejores resultados. Retratos, arquitectura y objetos con contornos claros son los más adecuados para este efecto.' },
-  { q: '¿El resultado es en blanco y negro?', a: 'Sí. El efecto boceto produce una imagen en escala de grises que simula un dibujo a lápiz. No se conserva el color original de la imagen.' },
-  { q: '¿En qué formato se descarga el resultado?', a: 'El boceto se descarga en formato JPG de alta calidad (92% de compresión). Si necesitas fondo transparente, convierte primero la imagen a PNG.' },
+  {
+    q: '¿Cómo funciona el efecto de boceto?',
+    a: 'El algoritmo convierte la imagen a escala de grises, crea una copia invertida y desenfocada (la "capa de papel"), y aplica la mezcla "color dodge" entre ambas capas. Este proceso matemático simula el trazo a lápiz porque el color dodge produce blanco donde hay luz y trazos oscuros donde hay bordes.',
+  },
+  {
+    q: '¿Qué controla el slider de suavidad?',
+    a: 'El slider controla el radio del desenfoque aplicado a la capa invertida. Valores bajos (1–4) generan trazos muy finos y detallados, ideales para fotografías con muchos detalles. Valores altos (10–20) crean un boceto más suave y artístico con menos detalles, de aspecto más ilustrativo.',
+  },
+  {
+    q: '¿Qué tipo de imágenes funcionan mejor con el efecto boceto?',
+    a: 'Las fotos con buena iluminación y bordes definidos producen los mejores resultados. Retratos bien iluminados, arquitectura, objetos con contornos claros y animales con buen contraste. Evita fotos muy oscuras, con mucho ruido o baja resolución, ya que el efecto amplifica el grano.',
+  },
+  {
+    q: '¿El resultado es en blanco y negro?',
+    a: 'Sí. El efecto boceto produce una imagen en escala de grises que simula un dibujo a lápiz sobre papel blanco. No se conserva el color original. El resultado tiene fondo blanco con trazos en grises y negros.',
+  },
+  {
+    q: '¿En qué formato se descarga el resultado?',
+    a: 'El boceto se descarga en formato JPEG con calidad 92%. Si necesitas fondo transparente para usar el boceto como overlay, primero genera el boceto y luego usa la herramienta de fondo blanco a transparente.',
+  },
+  {
+    q: '¿Puedo usar el boceto como overlay semitransparente?',
+    a: 'No directamente desde esta herramienta: el boceto se exporta como JPEG opaco. Para combinarlo con otra imagen como capa semitransparente, puedes usar la herramienta de marca de agua: sube la imagen base, usa el boceto como imagen de marca de agua y ajusta la opacidad.',
+  },
 ];
 ---
 <ToolLayout slug="efecto-boceto" faqs={faqs}>
   <EfectoBocetoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte fotos en bocetos a lápiz con un clic</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto boceto convierte fotografías en ilustraciones estilo dibujo a lápiz usando el algoritmo de color dodge, una técnica clásica de tratamiento de imagen. Es muy popular para: crear ilustraciones artísticas a partir de fotos de personas o arquitectura, generar retratos al estilo sketch para perfiles creativos, producir materiales gráficos con estética de storyboard, y crear efectos para portadas, carteles y presentaciones de diseño.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Técnica color dodge: la base del efecto boceto digital</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La técnica se basa en una fórmula matemática: para cada píxel, el resultado = min(255, (gris × 255) ÷ (255 − desenfocado-invertido)). Cuando el valor invertido-desenfocado es alto (zona clara en la foto), el resultado tiende a blanco (papel). Cuando hay un borde brusco (cambio de tono), el denominador es pequeño y el resultado es oscuro (trazo de lápiz). El slider de suavidad controla cuántos bordes detecta el algoritmo, de muy fino a muy suave.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

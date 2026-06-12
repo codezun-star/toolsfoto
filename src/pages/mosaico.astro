@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MosaicoTool from '@/components/tools/MosaicoTool';
 
 const faqs = [
-  { q: '¿Para qué se usa un mosaico de imágenes?', a: 'Los mosaicos son populares en diseño gráfico, papeles de pared, fondos de pantalla, packaging y proyectos de arte. También se usan en redes sociales para crear posts "puzzle".' },
-  { q: '¿Cuál es el tamaño máximo del mosaico resultante?', a: 'El tamaño final es el ancho de la imagen original multiplicado por las columnas, y el alto multiplicado por las filas. Para 4 columnas × 4 filas, la imagen resultante tiene 16 veces más píxeles que la original.' },
-  { q: '¿Hay límite en el número de filas y columnas?', a: 'Puedes configurar hasta 6 columnas y 6 filas, lo que produce un mosaico de 36 copias. Para imágenes grandes esto puede generar archivos muy pesados.' },
-  { q: '¿Se pierde calidad al crear el mosaico?', a: 'No. Cada copia de la imagen se dibuja en el canvas a su resolución original sin ningún redimensionado. La calidad es idéntica a la imagen original.' },
-  { q: '¿En qué formato se descarga el mosaico?', a: 'El mosaico se descarga en formato JPG de alta calidad (92% de compresión). Si la imagen original tiene transparencia y quieres preservarla, convierte primero a PNG.' },
+  {
+    q: '¿Para qué se usa un mosaico de imágenes?',
+    a: 'Los mosaicos de imagen tienen múltiples usos creativos y comerciales: crear fondos de pantalla con patrón repetitivo, diseñar papeles de pared o texturas para impresión, hacer "puzzle posts" en Instagram donde varias fotos forman una imagen cuando se ven juntas en el perfil, crear banners con repetición de un logo o elemento gráfico, diseñar packaging con estampado, y generar fondos para presentaciones y diseño editorial.',
+  },
+  {
+    q: '¿Cuál es el tamaño máximo del mosaico resultante?',
+    a: 'El tamaño final es proporcional a la imagen original: para un mosaico de 4×4 (16 tiles), la imagen resultante tiene 4 veces el ancho y 4 veces el alto original. Una imagen de 500×500 px con 4×4 tiles genera un mosaico de 2000×2000 px. Para imágenes de alta resolución, el archivo resultante puede ser muy pesado. Considera comprimir la imagen original antes si necesitas un mosaico grande.',
+  },
+  {
+    q: '¿Cuántas filas y columnas puedo usar?',
+    a: 'Puedes configurar entre 1 y 6 columnas y entre 1 y 6 filas, lo que permite crear mosaicos de hasta 6×6 (36 tiles). Un mosaico de 1×1 es simplemente la imagen original sin cambios. El preset de 2×2 (4 tiles) es el más popular para efectos decorativos en redes sociales.',
+  },
+  {
+    q: '¿Se pierde calidad al crear el mosaico?',
+    a: 'No. Cada copia de la imagen se dibuja a su resolución original sin redimensionado ni interpolación. Los píxeles se copian directamente. La única transformación es la compresión JPEG al descargar (calidad 92%), que es prácticamente imperceptible. Si quieres el resultado sin pérdidas, usa la herramienta de convertir a PNG después.',
+  },
+  {
+    q: '¿Puedo hacer mosaicos con imágenes PNG transparentes?',
+    a: 'Sí, puedes subir PNGs con transparencia. Sin embargo, el mosaico se exporta como JPEG (calidad 92%), que no soporta transparencia. Las zonas transparentes aparecerán como negro en el resultado. Para preservar la transparencia, usa una imagen con fondo sólido, o convierte el mosaico resultante a PNG con otra herramienta.',
+  },
+  {
+    q: '¿En qué formato se descarga el mosaico?',
+    a: 'El mosaico se descarga en formato JPEG con calidad 92%. Es el formato más eficiente para archivos grandes con muchos tiles. Si la imagen original tiene transparencia y necesitas preservarla en el mosaico, primero añade un fondo de color usando la herramienta de cambiar fondo y luego crea el mosaico.',
+  },
+  {
+    q: '¿Cómo se usa el mosaico para crear "puzzle posts" en Instagram?',
+    a: 'Los "puzzle posts" de Instagram son perfiles donde las imágenes del feed forman un diseño continuo al verse juntas. Para crearlos: diseña una imagen grande (ej. 3240×3240 px para 9 posts de 1080×1080), aplica el mosaico 3×3 en ToolsFoto, luego separa manualmente los 9 tiles. Sube los posts de derecha a izquierda y de abajo a arriba para que el feed muestre la imagen completa correctamente.',
+  },
 ];
 ---
 <ToolLayout slug="mosaico" faqs={faqs}>
   <MosaicoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fondos, texturas y diseño gráfico con patrones repetidos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La repetición de un motivo visual es uno de los recursos más versátiles del diseño gráfico. Con un mosaico de 3×3 o 4×4 tiles puedes crear <strong class="text-[var(--color-text)]">texturas de fondo</strong> para webs, presentaciones de PowerPoint y Google Slides, fondos de pantalla para móvil y escritorio, papeles de pared y materiales impresos, y banners publicitarios con repetición de un logotipo o elemento de marca. El resultado mantiene la resolución original de cada tile, lo que garantiza calidad de impresión incluso en formatos grandes.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Puzzle posts para Instagram y contenido viral en redes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El mosaico de imágenes es la base técnica del popular efecto <strong class="text-[var(--color-text)]">"puzzle feed"</strong> de Instagram, donde el perfil de una cuenta muestra un diseño continuo que se extiende por múltiples posts al verse desde el grid del perfil. Marcas y artistas usan esta técnica para lanzamientos de productos, álbumes de música y campañas de marca. Configura un mosaico 3×3 o 3×6 para obtener los tiles individuales y sube los posts en el orden correcto para crear el efecto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

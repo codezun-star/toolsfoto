@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CircularCropTool from '@/components/tools/CircularCropTool';
+
+const faqs = [
+  {
+    q: '¿Cómo crear una foto de perfil circular para LinkedIn, WhatsApp o Twitter?',
+    a: 'Sube tu foto, selecciona la forma "Círculo" y descarga el PNG resultante. El archivo tendrá fondo transparente, de modo que al subirlo a cualquier plataforma se verá como un círculo sobre el fondo que use esa red. LinkedIn, WhatsApp y Twitter muestran los avatares circulares automáticamente, pero partir de un PNG circular evita recortes inesperados.',
+  },
+  {
+    q: '¿La imagen circular tiene fondo transparente?',
+    a: 'Sí. La imagen se exporta como PNG con canal alfa. Todo lo que queda fuera del círculo se vuelve transparente, no blanco. Esto permite que la imagen se adapte a cualquier fondo sin mostrar un cuadrado blanco alrededor del círculo.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre círculo y elipse?',
+    a: 'El modo "Círculo" usa el lado más corto de la imagen como diámetro y centra el recorte, produciendo un círculo perfecto. El modo "Elipse" ajusta la elipse a las proporciones originales de la imagen, resultando en una forma ovalada si la foto no es cuadrada.',
+  },
+  {
+    q: '¿Qué parte de la imagen queda dentro del círculo?',
+    a: 'En modo Círculo, el recorte se centra en el centro de la imagen usando el lado más corto como diámetro. Si tienes una foto apaisada (más ancha que alta), los extremos laterales quedarán fuera del círculo. Para que un elemento específico quede centrado, recorta primero la imagen con la herramienta de recorte.',
+  },
+  {
+    q: '¿Puedo usar la imagen circular en documentos Word o PowerPoint?',
+    a: 'Sí. Inserta el PNG descargado como imagen en tu documento. En PowerPoint y Word, selecciona la imagen, ve a "Formato de imagen" y verifica que "Transparencia" está activada. La imagen se mostrará circular sobre el fondo de la diapositiva o página.',
+  },
+  {
+    q: '¿Qué tamaño tiene la imagen circular resultante?',
+    a: 'En modo Círculo, el canvas resultante es cuadrado con el lado igual al lado más corto de la imagen original. Por ejemplo, una foto de 1200×800 px producirá un PNG de 800×800 px. En modo Elipse, las dimensiones son las mismas que la imagen original.',
+  },
+];
 ---
-<ToolLayout slug="recorte-circular">
+<ToolLayout slug="recorte-circular" faqs={faqs}>
   <CircularCropTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">La foto de perfil perfecta para redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Todas las redes sociales principales —LinkedIn, Twitter/X, Instagram, WhatsApp, Facebook— muestran los avatares de usuario en formato circular. Subir directamente un PNG con recorte circular y fondo transparente garantiza que tu foto se vea exactamente como quieres, sin que el algoritmo de la plataforma aplique su propio recorte automático que puede cortar caras o elementos importantes.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Círculo vs elipse: elige según tu imagen</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa el <strong class="text-[var(--color-text)]">círculo</strong> para fotos de perfil y avatares: produce un resultado limpio y simétrico ideal para cualquier plataforma. Usa la <strong class="text-[var(--color-text)]">elipse</strong> cuando quieras mantener las proporciones originales de la imagen con un borde ovalado, perfecto para efectos artísticos, marcos decorativos o presentaciones con un estilo más clásico.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

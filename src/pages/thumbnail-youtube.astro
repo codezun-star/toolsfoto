@@ -5,26 +5,48 @@ import ThumbnailYoutubeTool from '@/components/tools/ThumbnailYoutubeTool';
 const faqs = [
   {
     q: '¿Cuál es el tamaño oficial de una miniatura de YouTube?',
-    a: 'YouTube recomienda 1280×720 píxeles (16:9) con un peso máximo de 2 MB. Esta herramienta genera miniaturas exactamente en ese tamaño. El formato JPG que usa está optimizado para que el archivo resultante sea pequeño y apto para subir directamente a YouTube.',
+    a: 'YouTube recomienda 1280×720 píxeles (ratio 16:9) con un peso máximo de 2 MB. Esta herramienta genera miniaturas exactamente en ese tamaño en formato JPEG optimizado para subir directamente a YouTube.',
   },
   {
     q: '¿Puedo añadir texto sobre la miniatura?',
-    a: 'Sí. Puedes añadir un título con texto personalizado, eligiendo la fuente (Impact, Arial Bold, Bebas, Georgia), el tamaño, el color y la posición (6 opciones de posicionamiento: esquinas, centros de bordes y centro). El texto tiene contorno automático para mejorar la legibilidad sobre cualquier fondo.',
+    a: 'Sí. Puedes añadir un título con fuente personalizada (Impact, Arial Black, Georgia, Montserrat), tamaño de 40 a 140 px, color libre y 6 posiciones: arriba izquierda, arriba centro, centro, abajo izquierda, abajo centro y abajo derecha. El texto incluye contorno automático para legibilidad sobre cualquier fondo.',
   },
   {
     q: '¿Es obligatorio subir una imagen de fondo?',
-    a: 'No. Puedes generar una miniatura solo con texto sobre un fondo de color sólido. Si subes una imagen de fondo, puedes controlar la opacidad del overlay de color para oscurecer o aclarar la imagen según necesites.',
+    a: 'No. Puedes generar una miniatura con texto sobre un fondo de color sólido. Si subes una imagen, puedes oscurecerla con el slider de overlay (0–90%) para que el texto destaque mejor.',
   },
   {
     q: '¿Necesito cuenta de Google para usar esta herramienta?',
-    a: 'No se necesita ningún registro ni cuenta. La herramienta funciona completamente en tu navegador sin conexión a YouTube ni a ningún servicio externo. Genera la miniatura y la descargas en tu dispositivo.',
+    a: 'No se necesita ningún registro ni cuenta. La herramienta funciona completamente en tu navegador. Genera la miniatura y descárgala directamente a tu dispositivo.',
   },
   {
     q: '¿Cómo consigo que el texto sea legible sobre cualquier fondo?',
-    a: 'Usa el slider de opacidad del overlay para oscurecer la imagen de fondo y añadir contraste. También puedes elegir un color de texto claro (blanco) con el contorno automático que añade la herramienta. Estos dos recursos combinados garantizan legibilidad en casi cualquier imagen de fondo.',
+    a: 'Oscurece la imagen de fondo con el slider de overlay (30–50%), usa texto blanco con la fuente Impact y tamaño grande. El contorno automático negro añade separación visual adicional. Esta combinación garantiza legibilidad en miniaturas de cualquier color.',
+  },
+  {
+    q: '¿Por qué las miniaturas de YouTube son tan importantes?',
+    a: 'El 90% de los videos con más visualizaciones en YouTube tienen miniaturas personalizadas. Una buena miniatura aumenta el CTR (tasa de clics) entre un 30% y 150% respecto a capturas de pantalla automáticas. YouTube usa el CTR como señal de relevancia para el algoritmo de recomendación, lo que afecta directamente el alcance del video.',
+  },
+  {
+    q: '¿Qué tamaño máximo de archivo acepta YouTube para miniaturas?',
+    a: 'YouTube acepta miniaturas de máximo 2 MB en formatos JPG, PNG, GIF o BMP, con resolución mínima de 640×360 px y recomendada de 1280×720 px. Esta herramienta genera la miniatura exactamente en 1280×720 px en JPEG de calidad 92%, que ocupa aproximadamente 200–400 KB según el contenido — muy por debajo del límite de 2 MB. Para subir la miniatura: ve a YouTube Studio → Editar vídeo → Miniatura personalizada.',
   },
 ];
 ---
 <ToolLayout slug="thumbnail-youtube" faqs={faqs}>
   <ThumbnailYoutubeTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Crea miniaturas de YouTube que aumentan el CTR</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La miniatura es lo primero que ve el usuario antes de decidir si hace clic en tu video. Los canales grandes de YouTube dedican tiempo y recursos a miniaturas porque impactan directamente en las visualizaciones. Los elementos que hacen efectiva una miniatura son: imagen de alto contraste, texto grande y legible en 2–4 palabras, colores llamativos que destaquen en el feed, y cara o expresión emocional cuando sea posible.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fórmula de miniatura de alta conversión</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El estilo de miniatura más efectivo según los datos de YouTube es: <strong class="text-[var(--color-text)]">fondo de imagen con cara visible</strong> (personas generan más clics que objetos), <strong class="text-[var(--color-text)]">overlay oscuro al 30–40%</strong> para contrastar el texto, <strong class="text-[var(--color-text)]">título en Impact blanco</strong> tamaño 80–100 px en la parte inferior izquierda o centro-abajo, y colores vibrantes (rojo, amarillo, azul eléctrico) que contrasten con el rojo de YouTube.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

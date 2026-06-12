@@ -1,7 +1,48 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import BlurTool from '@/components/tools/BlurTool';
+
+const faqs = [
+  {
+    q: '¿Para qué se usa el efecto de desenfoque en imágenes?',
+    a: 'Los usos más comunes son: censurar información sensible (caras, matrículas, DNI, contraseñas en capturas de pantalla), crear un efecto de fondo difuminado tipo bokeh para aislar un sujeto, suavizar el fondo de imágenes de productos, y generar efectos artísticos o atmosféricos en fotografía.',
+  },
+  {
+    q: '¿Qué intensidad de desenfoque debo usar para censurar texto o caras?',
+    a: 'Para censurar información de forma efectiva, usa una intensidad de 20–40 px. Con 20 px el contenido queda ilegible aunque podría intuirse la forma general. Con 30–40 px la información es completamente irreconocible incluso con técnicas de zoom o aumento digital.',
+  },
+  {
+    q: '¿Puedo desenfoque solo una zona específica de la imagen?',
+    a: 'Esta herramienta aplica el desenfoque a toda la imagen. Para desenfoque selectivo de una zona, usa nuestra herramienta de pixelado (/pixelar) que permite seleccionar el área exacta a censurar o difuminar.',
+  },
+  {
+    q: '¿El desenfoque afecta a imágenes PNG con transparencia?',
+    a: 'La herramienta exporta el resultado como JPG, lo que elimina la transparencia. Si necesitas desenfoque en una imagen PNG preservando el canal alfa, considera que el efecto blur en los bordes del área transparente puede generar halos. Para preservar transparencia, usa software especializado.',
+  },
+  {
+    q: '¿Cómo conseguir el efecto bokeh de cámara profesional?',
+    a: 'El bokeh auténtico requiere separar el sujeto del fondo (usa nuestra herramienta de eliminar fondo para aislar el sujeto). Para simular bokeh en la imagen completa, una intensidad de 15–25 px crea un desenfoque suave similar al de un objetivo fotográfico con apertura amplia.',
+  },
+  {
+    q: '¿Por qué el resultado se guarda como JPG y no como PNG?',
+    a: 'El desenfoque gaussiano se aplica y el resultado se guarda en JPG con calidad 92%. Es el formato más eficiente para imágenes fotográficas con desenfoque. Si tu imagen original era PNG con transparencia y necesitas conservarla, actualmente la herramienta no preserva la transparencia en la exportación.',
+  },
+];
 ---
-<ToolLayout slug="desenfoque">
+<ToolLayout slug="desenfoque" faqs={faqs}>
   <BlurTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Censurar información sensible con desenfoque</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El desenfoque gaussiano es la forma más rápida de proteger datos personales en capturas de pantalla, fotos y documentos digitales: caras, matrículas de vehículos, números de DNI o pasaporte, contraseñas visibles, datos bancarios y cualquier información que no debas compartir públicamente. Una intensidad de 25–40 px hace la información completamente irreconocible sin perjudicar el resto de la imagen.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Intensidades recomendadas por caso de uso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">3–8 px:</strong> desenfoque sutil, efecto de suavizado de piel o fondo levemente difuminado. <strong class="text-[var(--color-text)]">10–20 px:</strong> fondo tipo bokeh, producto destacado sobre fondo borroso. <strong class="text-[var(--color-text)]">25–35 px:</strong> censura efectiva de texto y rostros. <strong class="text-[var(--color-text)]">38–40 px:</strong> desenfoque máximo, información completamente irreconocible.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

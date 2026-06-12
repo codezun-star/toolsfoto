@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CompararImagenesTool from '@/components/tools/CompararImagenesTool';
 
 const faqs = [
-  { q: '¿Qué tipos de imagen puedo comparar?', a: 'Puedes comparar cualquier formato de imagen que soporte tu navegador: JPG, PNG, WebP, AVIF, GIF y más. Sube las dos imágenes en los slots "Antes" y "Después".' },
-  { q: '¿Cómo funciona el slider de comparación?', a: 'El slider divide la pantalla verticalmente. La parte izquierda muestra la imagen A y la derecha la imagen B. Puedes arrastrar el divisor o usar el slider inferior para mover la línea de corte.' },
-  { q: '¿Las imágenes se suben a algún servidor?', a: 'No. Todo el procesamiento ocurre en tu navegador. Las imágenes nunca salen de tu dispositivo, lo que garantiza privacidad total.' },
-  { q: '¿Puedo comparar imágenes de distintas dimensiones?', a: 'Sí. Ambas imágenes se escalan para ocupar el mismo espacio en el visor. Si tienen proporciones distintas, se usará la proporción de la imagen B como referencia de contenedor.' },
-  { q: '¿Para qué sirve esta herramienta?', a: 'Es ideal para comparar resultados de edición de fotos (antes/después), comparar versiones de diseño, evaluar la calidad de compresión, o revisar diferencias entre capturas de pantalla.' },
+  {
+    q: '¿Qué tipos de imagen puedo comparar?',
+    a: 'Puedes comparar cualquier combinación de formatos que soporte tu navegador: JPG, PNG, WebP, AVIF, GIF y más. No es necesario que ambas imágenes tengan el mismo formato ni el mismo tamaño, la herramienta las adapta automáticamente al mismo contenedor de visualización.',
+  },
+  {
+    q: '¿Cómo funciona el slider de comparación?',
+    a: 'El slider divide la pantalla verticalmente. La parte izquierda muestra la imagen A (Antes) y la derecha la imagen B (Después). Puedes arrastrar directamente el divisor con el ratón o el dedo, o usar el control deslizante inferior para mover la línea de corte con precisión. Las etiquetas "Antes" y "Después" en las esquinas te recuerdan en todo momento cuál es cada imagen.',
+  },
+  {
+    q: '¿Las imágenes se suben a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre en tu navegador usando URLs de objeto locales. Las imágenes nunca salen de tu dispositivo, lo que garantiza privacidad total. Puedes incluso usar la herramienta sin conexión a internet una vez cargada la página, y es completamente segura para imágenes con contenido confidencial.',
+  },
+  {
+    q: '¿Puedo comparar imágenes de distintas dimensiones?',
+    a: 'Sí. Ambas imágenes se ajustan para ocupar el mismo espacio en el visor. Si tienen proporciones distintas, el visor usa el ancho completo y escala cada imagen por separado. Esto permite comparar, por ejemplo, un original de alta resolución con una versión comprimida o redimensionada.',
+  },
+  {
+    q: '¿Para qué sirve esta herramienta en fotografía y diseño?',
+    a: 'Es ideal para: comparar la calidad de compresión de un JPG original vs. su versión comprimida para detectar artefactos, evaluar el antes/después de edición fotográfica (brillo, contraste, eliminación de fondo, nitidez), revisar diferencias entre versiones de un diseño o mockup, y mostrar comparativas visuales de forma interactiva a clientes o equipos de trabajo.',
+  },
+  {
+    q: '¿Funciona en móvil y tablet con pantalla táctil?',
+    a: 'Sí. El divisor acepta eventos táctiles, por lo que puedes arrastrarlo con el dedo en smartphones y tablets. El visor se adapta al ancho de la pantalla automáticamente. Es especialmente útil para mostrar comparativas a clientes en dispositivos móviles durante reuniones o presentaciones.',
+  },
+  {
+    q: '¿Puedo cambiar las imágenes después de subirlas?',
+    a: 'Sí. Cuando ambas imágenes están cargadas y el visor está activo, los botones "Cambiar imagen A" y "Cambiar imagen B" aparecen debajo del visor. Al hacer clic, esa imagen se elimina y se muestra el formulario de subida para reemplazarla sin necesidad de recargar la página. La URL del objeto anterior se libera automáticamente para no consumir memoria.',
+  },
 ];
 ---
 <ToolLayout slug="comparar-imagenes" faqs={faqs}>
   <CompararImagenesTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Evalúa compresión, edición y diseño con slider antes/después</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El comparador de imágenes es la herramienta perfecta para evaluar si la compresión de una foto ha introducido artefactos visibles, o para mostrar a un cliente el resultado de una edición fotográfica. Sube el <strong class="text-[var(--color-text)]">original a la izquierda</strong> y la <strong class="text-[var(--color-text)]">versión procesada a la derecha</strong> y arrastra el divisor para revelar las diferencias zona a zona. Ideal para comparar JPG original vs. WebP comprimido, foto sin editar vs. retocada, o diseño v1 vs. v2.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Comparativas visuales para fotógrafos, diseñadores y clientes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Fotógrafos, retocadores y diseñadores gráficos pueden usar esta herramienta para hacer comparativas visuales impactantes en reuniones con clientes o en redes sociales. La interfaz de <strong class="text-[var(--color-text)]">slider interactivo</strong> es intuitiva para cualquier usuario sin conocimientos técnicos. También es útil para comparar fondos eliminados, correcciones de color, cambios de nitidez, y cualquier modificación donde el ojo humano es el mejor juez de la calidad.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

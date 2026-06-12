@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EfectoGlitchTool from '@/components/tools/EfectoGlitchTool';
 
 const faqs = [
-  { q: '¿Qué es el efecto glitch?', a: 'El efecto glitch simula una distorsión digital al desplazar los canales de color RGB de forma independiente y añadir cortes horizontales aleatorios en la imagen, imitando los fallos típicos de pantallas digitales.' },
-  { q: '¿Cómo funciona técnicamente?', a: 'La herramienta desplaza el canal rojo (R) hacia la derecha y el canal azul (B) hacia la izquierda por un número de píxeles proporcional a la intensidad elegida. Luego añade cortes horizontales aleatorios para un efecto más auténtico.' },
-  { q: '¿Puedo generar múltiples variaciones del efecto?', a: 'Sí. El botón "Nueva variación" genera un nuevo efecto glitch con semilla aleatoria diferente, produciendo un resultado distinto cada vez con la misma imagen y configuración.' },
-  { q: '¿En qué formato se exporta el resultado?', a: 'El resultado se exporta en PNG para preservar todos los canales de color sin pérdida adicional de calidad.' },
-  { q: '¿Para qué usos creativos sirve el efecto glitch?', a: 'Es popular en diseño gráfico, portadas de música, arte digital, thumbnails de YouTube y publicaciones en redes sociales con estética retro-futurista o cyberpunk.' },
+  {
+    q: '¿Qué es el efecto glitch y de dónde viene?',
+    a: 'El glitch art nació a finales de los años 80 y se popularizó en los 90 con la cultura digital y los errores de pantallas CRT. Simula fallos técnicos reales: corrupción de datos de imagen, desincronización de señal de vídeo y errores de transmisión digital. Hoy es un estilo visual muy buscado en diseño, portadas de música electrónica, arte digital y contenido con estética retro-futurista o cyberpunk.',
+  },
+  {
+    q: '¿Cómo funciona técnicamente el desplazamiento de canales RGB?',
+    a: 'La herramienta desplaza el canal rojo (R) hacia la derecha y el canal azul (B) hacia la izquierda un número de píxeles determinado por la intensidad seleccionada. El canal verde (G) permanece en su posición original. Este desalineamiento crea el efecto "fantasma" de colores característico del glitch. Después se aplican cortes horizontales aleatorios usando una función de ruido determinista seeded por timestamp.',
+  },
+  {
+    q: '¿Puedo generar múltiples variaciones del mismo efecto?',
+    a: 'Sí. El botón "Nueva variación" genera una nueva semilla aleatoria, produciendo cortes en posiciones y tamaños distintos cada vez. Puedes generar decenas de variaciones de la misma imagen con la misma configuración de intensidad y elegir la que más te guste. Los parámetros de intensidad y número de cortes se mantienen entre variaciones.',
+  },
+  {
+    q: '¿Qué controlan los dos parámetros ajustables?',
+    a: 'La "Intensidad del desplazamiento" (2%–30%) controla cuántos píxeles se desplazan los canales R y B. Con valores bajos (2%–5%) el efecto es sutil, con halos de color apenas visibles. Con valores altos (20%–30%) el resultado es muy dramático. Los "Cortes horizontales" (0–20) añaden franjas desplazadas en posiciones aleatorias: 0 solo aplica el RGB shift, 20 crea muchos cortes para un efecto más caótico.',
+  },
+  {
+    q: '¿En qué formato se exporta el resultado?',
+    a: 'El resultado se exporta en PNG para preservar todos los canales de color sin pérdida adicional de calidad. El efecto glitch incluye variaciones de color muy específicas en los bordes de los desplazamientos que la compresión JPEG podría suavizar o alterar con artefactos no deseados.',
+  },
+  {
+    q: '¿Los archivos se suben a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre 100% en tu navegador usando la Canvas API y operaciones directas sobre los datos de píxeles (ImageData). La imagen nunca sale de tu dispositivo. Puedes incluso usar la herramienta en modo avión después de cargar la página, lo que la hace completamente segura para imágenes de uso privado o comercial.',
+  },
+  {
+    q: '¿Para qué proyectos creativos sirve el efecto glitch?',
+    a: 'Es muy popular para: portadas de álbumes de música electrónica, EDM, trap y reggaetón con estética digital; thumbnails de YouTube para gaming, tecnología y contenido urbano; arte digital para venta en plataformas como Redbubble o Society6; publicaciones en Instagram con estética retro-futurista o lo-fi; identidades visuales de marcas tech y startups; pósteres para eventos, festivales y fiestas con temática futurista o cyberpunk. En LATAM es especialmente popular para contenido de gamers y creadores de contenido de Colombia, México y Argentina.',
+  },
 ];
 ---
 <ToolLayout slug="efecto-glitch" faqs={faqs}>
   <EfectoGlitchTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Glitch art para música, gaming y contenido digital</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto glitch se ha convertido en un lenguaje visual propio de la cultura digital contemporánea. Para portadas de álbumes de música electrónica, trap y géneros urbanos, el glitch transmite inmediatamente una estética de <strong class="text-[var(--color-text)]">error digital intencional</strong> que conecta con la audiencia joven. En YouTube, thumbnails con glitch destacan visualmente en feeds de gaming, tecnología y contenido de entretenimiento digital. Usa una intensidad baja (3%–8%) para un efecto sutil y elegante, o alta (20%–30%) para un resultado agresivo y llamativo. El botón "Nueva variación" te permite explorar versiones distintas en segundos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Identidades visuales retro-futuristas y pósteres de eventos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El glitch art es un recurso poderoso para diseñadores que buscan una estética <strong class="text-[var(--color-text)]">cyberpunk, lo-fi o vaporwave</strong> en sus proyectos. Úsalo en retratos para carteles de eventos, festivales y raves; en fotos de producto para marcas con identidad tecnológica; o en imágenes de paisajes urbanos para proyectos artísticos. Al exportarse como PNG, el resultado conserva la máxima calidad para impresión o uso digital. La herramienta genera variaciones con semilla aleatoria para que cada aplicación sea única, ideal para series de arte digital o sticker packs para Telegram y WhatsApp.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

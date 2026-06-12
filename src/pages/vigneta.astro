@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import VignetaTool from '@/components/tools/VignetaTool';
+
+const faqs = [
+  {
+    q: '¿Qué es el efecto viñeta en fotografía?',
+    a: 'La viñeta (vignette en inglés) es un oscurecimiento o aclarado gradual de los bordes de la imagen hacia el centro. En fotografía analógica ocurría de forma natural por las limitaciones ópticas de los objetivos (especialmente a máxima apertura); hoy se añade de forma creativa en posproducción para centrar la atención del espectador en el sujeto principal, dar una sensación de profundidad, y añadir un acabado fotográfico clásico.',
+  },
+  {
+    q: '¿Qué controlan los sliders de Intensidad y Suavidad?',
+    a: 'La "Intensidad" (10%–100%) controla qué tan oscuros (o claros si usas color blanco) quedan los bordes: con 100% los bordes quedan completamente negros; con 30% obtienes un efecto sutil que casi no se nota. La "Suavidad" (10%–90%) controla el tamaño del área central no afectada: con suavidad alta la viñeta empieza desde más lejos del borde y cubre una mayor proporción de la imagen; con suavidad baja la viñeta está más contenida en los extremos.',
+  },
+  {
+    q: '¿Puedo elegir el color de la viñeta?',
+    a: 'Sí. Hay 5 presets: negro clásico (el más fotográfico), dos grises oscuros (para viñetas más neutras), azul muy oscuro (para mood de atardecer), y blanco (para viñeta luminosa, efecto sobreexposición en bordes). El selector de color personalizado permite elegir cualquier tono: una viñeta burdeos da un look vintage cálido, una viñeta azul marino crea atmósfera nocturna.',
+  },
+  {
+    q: '¿Cómo se implementa técnicamente la viñeta?',
+    a: 'Se crea un gradiente radial en el Canvas API desde transparente en el centro hasta el color elegido en los bordes (radio exterior = 1.5 × la diagonal del centro). La intensidad controla la opacidad del color final del gradiente. El gradiente se superpone directamente sobre la imagen original con `fillRect`. El proceso es instantáneo porque no requiere manipulación píxel a píxel.',
+  },
+  {
+    q: '¿En qué formato se descarga la imagen con viñeta?',
+    a: 'La imagen se descarga en formato JPEG con calidad 93%. La viñeta negra clásica comprime muy bien con JPEG porque las zonas oscuras de los bordes tienen poca variación de color. Si usas viñeta de color blanco sobre PNG transparente, el resultado se convierte a JPEG (pérdida de transparencia), así que aplica la viñeta sobre imágenes con fondo sólido.',
+  },
+  {
+    q: '¿La viñeta afecta la calidad del área central de la imagen?',
+    a: 'No. El gradiente comienza desde el centro con opacidad 0% (completamente transparente), lo que significa que los píxeles centrales no se modifican en absoluto. La afectación es gradual y solo se nota visualmente hacia los bordes. El único efecto en el centro es la compresión JPEG al guardar.',
+  },
+  {
+    q: '¿Para qué estilos fotográficos es más adecuada la viñeta?',
+    a: 'La viñeta es especialmente efectiva en: fotografía de retrato donde quieres enfocar la atención en el rostro y difuminar el fondo; fotografía de producto donde el fondo blanco o neutro se beneficia de un cierre oscuro en los bordes; fotografía de bodas y quinceañeras con estética clásica o romántica; fotografía fine art y artística donde la viñeta aporta composición; y cualquier foto que se comparta en Instagram donde la viñeta añade una firma visual reconocible.',
+  },
+];
 ---
-<ToolLayout slug="vigneta" faqs={[
-  { q: '¿Qué es el efecto viñeta en fotografía?', a: 'La viñeta (vignette) es un oscurecimiento o aclarado gradual de los bordes de la imagen hacia el centro. En fotografía analógica ocurría de forma natural por limitaciones ópticas de los objetivos; hoy se usa de forma creativa para centrar la atención en el sujeto.' },
-  { q: '¿Puedo elegir el color de la viñeta?', a: 'Sí. La herramienta permite elegir cualquier color para la viñeta mediante un selector de color. El clásico es negro, pero también puedes usar blanco para un efecto de sobreexposición en los bordes, o cualquier otro tono.' },
-  { q: '¿Cómo se implementa técnicamente la viñeta?', a: 'Se crea un gradiente radial desde transparente en el centro hasta el color elegido en los bordes, que se superpone sobre la imagen original. La intensidad del efecto se controla con el slider de opacidad.' },
-  { q: '¿La viñeta afecta a la calidad de la imagen?', a: 'Solo altera los píxeles de los bordes mediante una superposición semitransparente. El centro de la imagen queda completamente intacto. El resultado se exporta en PNG para máxima calidad.' },
-  { q: '¿Funciona con imágenes PNG con transparencia?', a: 'Sí. La herramienta preserva la transparencia de la imagen original. La viñeta se aplica solo sobre los píxeles existentes y el canal alpha original se mantiene.' },
-]}>
+<ToolLayout slug="vigneta" faqs={faqs}>
   <VignetaTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Por qué la viñeta mejora la composición fotográfica</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El ojo humano sigue de forma natural los caminos de mayor brillo en una imagen. Al oscurecer los bordes con una viñeta, el camino de menor resistencia para la mirada se convierte en el centro: el sujeto principal. Esta técnica es tan efectiva que la mayoría de las aplicaciones de edición populares —<strong class="text-[var(--color-text)]">Lightroom, VSCO, Snapseed y A Color Story</strong>— incluyen el control de viñeta como uno de sus ajustes básicos. Una viñeta sutil (15–30%) no se nota como efecto, pero mejora la sensación general de la foto.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Viñeta en fotografía de bodas, quinceañeras y retratos LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En la fotografía social latinoamericana —bodas, quinceañeras, bautizos, graduaciones— la viñeta es una firma estética muy reconocida. Los fotógrafos de eventos en México, Colombia, Argentina y Perú la usan para dar un acabado cinematográfico a sus reportajes. Aplica una viñeta negra suave (intensidad 40%, suavidad 60%) a fotos de retratos para dar ese aspecto de <strong class="text-[var(--color-text)]">fotografía de estudio</strong> que los clientes valoran. Funciona especialmente bien en fotos de grupo donde quieres guiar la vista al centro.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
