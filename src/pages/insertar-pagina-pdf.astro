@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import InsertarPaginaPDFTool from '@/components/tools/InsertarPaginaPDFTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve insertar páginas en blanco en un PDF?',
+    a: 'Es útil para añadir separadores entre secciones, espacios para anotaciones manuales, hojas de portada intermedia o para cumplir requisitos de paginación de documentos oficiales. También es necesario para preparar PDFs para impresión a doble cara, donde a veces se necesita una página en blanco para que una sección nueva empiece en página impar.',
+  },
+  {
+    q: '¿Puedo elegir exactamente dónde insertar las páginas?',
+    a: 'Sí. Especifica el número de página de referencia y si quieres insertar antes o después de ella. También puedes elegir cuántas páginas en blanco insertar: 1, 2, 3 o 5.',
+  },
+  {
+    q: '¿Las páginas en blanco tienen el mismo tamaño que el resto del PDF?',
+    a: 'Sí. La herramienta detecta automáticamente el tamaño de la primera página del PDF y crea las páginas en blanco con las mismas dimensiones. Si tu PDF tiene páginas de distintos tamaños, las nuevas páginas tendrán el tamaño de la primera página.',
+  },
+  {
+    q: '¿Se modifican los contenidos del PDF original?',
+    a: 'No. Solo se añaden páginas nuevas en la posición indicada. El texto, imágenes y formato de las páginas existentes no se alteran en ningún momento. La herramienta genera un nuevo PDF descargable sin tocar el archivo original.',
+  },
+  {
+    q: '¿Se procesan mis PDFs en el servidor?',
+    a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib mediante carga dinámica. Ningún archivo sale de tu dispositivo.',
+  },
+  {
+    q: '¿Puedo insertar páginas en blanco en un PDF protegido con contraseña?',
+    a: 'No. Los PDFs con protección de escritura no permiten modificaciones. Primero usa la herramienta "Eliminar contraseña PDF" para desprotegerlo y luego inserta las páginas en blanco.',
+  },
+  {
+    q: '¿En qué casos profesionales se usa insertar páginas en blanco?',
+    a: 'Los usos más frecuentes son: preparar documentos para impresión en doble cara donde ciertas secciones deben comenzar en página impar; añadir páginas de "separador" entre capítulos de un manual o informe; insertar páginas de firma al final de un contrato sin regenerar todo el documento; y añadir hojas en blanco entre páginas escaneadas para estructurar expedientes y dossiers.',
+  },
+];
 ---
-<ToolLayout slug="insertar-pagina-pdf" faqs={[
-  { q: '¿Para qué sirve insertar páginas en blanco en un PDF?', a: 'Es útil para añadir separadores entre secciones, espacios para anotaciones manuales, hojas de portada intermedia o simplemente para cumplir requisitos de paginación de documentos oficiales o impresión a doble cara.' },
-  { q: '¿Puedo elegir dónde insertar las páginas?', a: 'Sí. Especifica el número de página de referencia y si quieres insertar antes o después de ella. También puedes elegir cuántas páginas en blanco insertar (1, 2, 3 o 5).' },
-  { q: '¿Las páginas en blanco tienen el mismo tamaño que el resto del PDF?', a: 'Sí. La herramienta detecta automáticamente el tamaño de la primera página del PDF y crea las páginas en blanco con las mismas dimensiones.' },
-  { q: '¿Se modifican los contenidos del PDF original?', a: 'No. Solo se añaden páginas nuevas en la posición indicada. El texto, imágenes y formato de las páginas existentes no se alteran.' },
-  { q: '¿Se procesan mis PDFs en el servidor?', a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib. Ningún archivo sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="insertar-pagina-pdf" faqs={faqs}>
   <InsertarPaginaPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Inserta páginas en blanco donde las necesites</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añadir páginas en blanco a un PDF existente es un requisito habitual en flujos de trabajo documentales: preparar documentos para impresión dúplex, insertar separadores entre capítulos, o dejar espacio para firmas y anotaciones manuales. Esta herramienta lo hace en segundos directamente en el navegador, sin necesidad de Adobe Acrobat y sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Control total: posición, cantidad y modo de inserción</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elige si insertar <strong class="text-[var(--color-text)]">antes o después</strong> de la página de referencia, el número exacto de páginas (1, 2, 3 o 5) y la página objetivo. Las páginas en blanco se crean automáticamente con el mismo tamaño que el documento original. El contenido de todas las páginas existentes permanece intacto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

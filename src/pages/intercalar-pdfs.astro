@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import IntercalarPDFsTool from '@/components/tools/IntercalarPDFsTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve intercalar PDFs?',
+    a: 'Es la técnica estándar para combinar escaneos de documentos de doble cara. Si escaneas las páginas impares por un lado y las pares por otro (común en escáneres sin alimentador automático duplex), esta herramienta las une en el orden correcto automáticamente.',
+  },
+  {
+    q: '¿Qué orden siguen las páginas resultantes?',
+    a: 'El orden es A1, B1, A2, B2, A3, B3… donde A es el primer PDF y B el segundo. Si uno de los PDFs tiene más páginas, las páginas extra se añaden al final del documento resultante.',
+  },
+  {
+    q: '¿Puedo intercalar PDFs con distinto número de páginas?',
+    a: 'Sí. Si el PDF A tiene 5 páginas y el B tiene 3, el resultado tendrá 8 páginas: A1, B1, A2, B2, A3, B3, A4, A5. Las páginas del PDF más largo sin par correspondiente se añaden al final.',
+  },
+  {
+    q: '¿Se modifica la calidad del PDF original al intercalar?',
+    a: 'No. Los contenidos se copian directamente con pdf-lib sin re-renderizar ni comprimir. La calidad de texto, imágenes y vectores es idéntica al original.',
+  },
+  {
+    q: '¿Hay límite de tamaño para los archivos PDF?',
+    a: 'No hay límite de páginas. El límite práctico depende de la memoria RAM disponible en el navegador. PDFs de hasta 100 MB por archivo se procesan sin problema en equipos con 8 GB o más de RAM.',
+  },
+  {
+    q: '¿Se puede intercalar más de dos PDFs?',
+    a: 'Esta herramienta intercala exactamente dos PDFs (A y B) en el patrón A1-B1-A2-B2. Para intercalar tres o más PDFs en patrones más complejos, necesitarías una herramienta de edición PDF avanzada como Adobe Acrobat.',
+  },
+  {
+    q: '¿Por qué necesito intercalar PDFs en lugar de simplemente unirlos?',
+    a: 'Unir PDFs añade todos los documentos en secuencia: primero todas las páginas del PDF A y luego todas las del PDF B. Intercalar alterna página a página: A1, B1, A2, B2… Esto es imprescindible cuando tienes un escáner que no soporta duplex: escaneas todas las páginas impares, das vuelta al documento, escaneas las pares, y esta herramienta las combina en el orden de lectura correcto.',
+  },
+];
 ---
-<ToolLayout slug="intercalar-pdfs" faqs={[
-  { q: '¿Para qué sirve intercalar PDFs?', a: 'Es la técnica estándar para combinar escaneos de documentos de doble cara. Si escaneas las páginas impares por un lado y las pares por otro, esta herramienta las une en el orden correcto automáticamente.' },
-  { q: '¿Qué orden siguen las páginas resultantes?', a: 'El orden es A1, B1, A2, B2, A3, B3… donde A es el primer PDF y B el segundo. Si uno de los PDFs tiene más páginas, las páginas extra se añaden al final del documento.' },
-  { q: '¿Puedo intercalar PDFs con distinto número de páginas?', a: 'Sí. Si el PDF A tiene 5 páginas y el B tiene 3, el resultado tendrá 8 páginas: A1, B1, A2, B2, A3, B3, A4, A5.' },
-  { q: '¿Se modifica la calidad del PDF original?', a: 'No. Los contenidos se copian directamente con pdf-lib sin re-renderizar ni comprimir. La calidad de texto, imágenes y vectores es idéntica al original.' },
-  { q: '¿Hay límite de tamaño para los archivos PDF?', a: 'La herramienta soporta hasta 100 MB por archivo. El procesamiento se realiza 100% en tu navegador, sin enviar los archivos a ningún servidor.' },
-]}>
+<ToolLayout slug="intercalar-pdfs" faqs={faqs}>
   <IntercalarPDFsTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Combina páginas de dos PDFs alternando una a una</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Intercalar PDFs es diferente a unirlos: en lugar de poner todos los del primero y luego todos los del segundo, alterna página a página (A1, B1, A2, B2…). Es la solución perfecta para combinar escaneos duplex realizados en escáneres sin alimentador automático, donde se escanean primero todas las caras impares y luego todas las pares.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin pérdida de calidad, 100% en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        pdf-lib copia las páginas como <strong class="text-[var(--color-text)]">objetos nativos PDF</strong> sin recomprimir ni re-renderizar. El texto permanece seleccionable, las imágenes mantienen su resolución y los vectores su precisión. El archivo no sale de tu dispositivo en ningún momento: todo el intercalado ocurre localmente en el navegador.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

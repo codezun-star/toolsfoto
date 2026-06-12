@@ -5,26 +5,48 @@ import NumerarPaginasPDFTool from '@/components/tools/NumerarPaginasPDFTool';
 const faqs = [
   {
     q: '¿En qué posiciones puedo colocar los números de página?',
-    a: 'Tienes tres opciones de posición: inferior centro (la más habitual en documentos académicos y libros), inferior derecho (común en informes y presentaciones) y superior derecho (usado en documentos legales y contratos). El margen desde el borde es de 30 puntos.',
+    a: 'Tienes tres opciones: inferior centro (la más habitual en documentos académicos y libros), inferior derecho (común en informes y presentaciones) y superior derecho (usado en documentos legales y contratos). El margen desde el borde es de 30 puntos tipográficos.',
   },
   {
     q: '¿Puedo elegir el formato de numeración?',
-    a: 'Sí. Puedes elegir entre tres formatos: solo el número (1, 2, 3…), el número con la palabra "Página" (Página 1, Página 2…) o el formato fraccionario que muestra el total de páginas (1/10, 2/10…). Este último es muy útil para documentos donde importa saber el total.',
+    a: 'Sí. Hay tres formatos: solo el número (1, 2, 3…), el número con la palabra "Página" (Página 1, Página 2…) o el formato fraccionario que muestra el total de páginas (1/10, 2/10…). El formato fraccionario es muy útil para documentos donde importa saber cuántas páginas tiene el documento total.',
   },
   {
     q: '¿Desde qué número puedo empezar a numerar?',
-    a: 'Puedes configurar el número inicial desde cualquier valor mayor que 1. Esto es útil cuando el PDF forma parte de un documento más grande y las páginas anteriores ya están numeradas en otro archivo.',
+    a: 'Puedes configurar el número inicial desde cualquier valor. Esto es útil cuando el PDF forma parte de un documento más grande y las páginas anteriores ya están numeradas en otro archivo: si el primer archivo termina en la página 20, puedes comenzar este desde la página 21.',
   },
   {
     q: '¿Se puede cambiar el tamaño del texto de los números?',
-    a: 'Sí. Puedes elegir entre 10, 12, 14 y 16 puntos tipográficos. El color es gris neutro (RGB 0.3, 0.3, 0.3) para que sea legible pero no distraiga del contenido principal.',
+    a: 'Sí. Puedes elegir entre 10, 12, 14 y 16 puntos tipográficos. El color es gris neutro (RGB 0.3, 0.3, 0.3) para que sea legible pero no distraiga del contenido principal del documento.',
   },
   {
     q: '¿Funciona con PDFs de cualquier tamaño de página?',
-    a: 'Sí. La herramienta detecta el tamaño de cada página individualmente y calcula la posición del número en consecuencia. Funciona con A4, Letter, A3, presentaciones en 16:9 y cualquier otro tamaño.',
+    a: 'Sí. La herramienta detecta el tamaño de cada página individualmente y calcula la posición del número en consecuencia. Funciona con A4, Carta, A3, presentaciones en 16:9 y cualquier otro tamaño de página.',
+  },
+  {
+    q: '¿En qué se diferencia esta herramienta de "Encabezado y pie de página PDF"?',
+    a: '"Numerar páginas" está optimizada para añadir únicamente la numeración con opciones claras de posición, formato y número inicial. "Encabezado y pie de página" es más flexible: permite añadir cualquier texto (no solo números) en encabezado y pie simultáneamente, con variables {n} y {total} para numeración. Si solo necesitas numerar, usa esta herramienta; si necesitas también texto fijo, usa la de encabezado y pie.',
+  },
+  {
+    q: '¿Por qué necesito añadir números de página a un PDF?',
+    a: 'Los números de página son un requisito básico en muchos contextos profesionales: documentos legales y contratos que deben entregarse paginados para su validez, expedientes administrativos donde cada página debe poder referenciarse de forma inequívoca, tesis y trabajos académicos donde el formato exige numeración específica, informes corporativos enviados a clientes o juntas directivas, y manuales técnicos donde el índice referencia páginas concretas.',
   },
 ];
 ---
 <ToolLayout slug="numerar-paginas-pdf" faqs={faqs}>
   <NumerarPaginasPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade numeración de páginas a cualquier PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los números de página son un requisito básico en documentos legales, contratos, expedientes académicos e informes corporativos. Muchos PDFs generados desde Word, Canva o plataformas de facturación no incluyen numeración visible. Esta herramienta los añade directamente en el navegador con pdf-lib, en tres posiciones y tres formatos distintos, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Continúa la numeración desde cualquier número</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La opción de <strong class="text-[var(--color-text)]">número inicial</strong> permite continuar la paginación de documentos en múltiples partes: si el primer PDF termina en la página 35, comienza la numeración de este desde 36. El formato <strong class="text-[var(--color-text)]">fraccionario</strong> (1/45, 2/45…) es especialmente útil para contratos y expedientes donde el destinatario necesita saber el total de páginas del documento desde cualquier página.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

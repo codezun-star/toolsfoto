@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CompararPDFsTool from '@/components/tools/CompararPDFsTool';
 
 const faqs = [
-  { q: '¿Cómo funciona la comparación sincronizada?', a: 'Una vez cargados ambos PDFs, puedes navegar página a página con los botones de anterior/siguiente. Ambos PDFs avanzan al mismo tiempo para que puedas comparar las mismas páginas en paralelo.' },
-  { q: '¿Qué ocurre si los PDFs tienen distinto número de páginas?', a: 'El navegador se limita al número de páginas del PDF con menos páginas. Las páginas adicionales del PDF más largo no se muestran en la comparación sincronizada.' },
-  { q: '¿Puedo ajustar el zoom de las páginas?', a: 'Sí. El selector de escala permite ver las páginas al 80%, 100%, 120% o 150% de su tamaño original para ajustar el nivel de detalle visible.' },
-  { q: '¿Se pueden comparar PDFs protegidos?', a: 'No. Los PDFs deben estar sin protección de lectura para poder renderizarlos en el navegador. Si están encriptados, primero usa la herramienta "Eliminar contraseña PDF".' },
-  { q: '¿Para qué casos de uso es útil la comparación de PDFs?', a: 'Es ideal para revisar revisiones de contratos, comparar versiones de un documento, verificar cambios entre presupuestos, o revisar diferencias en planos técnicos o formularios.' },
+  {
+    q: '¿Cómo funciona la comparación sincronizada de PDFs?',
+    a: 'Una vez cargados ambos PDFs, puedes navegar página a página con los botones de anterior/siguiente. Ambos PDFs avanzan simultáneamente para que puedas comparar las mismas páginas en paralelo, lado a lado, en tiempo real.',
+  },
+  {
+    q: '¿Qué ocurre si los PDFs tienen distinto número de páginas?',
+    a: 'La navegación sincronizada se limita al número de páginas del PDF con menos páginas. Las páginas adicionales del PDF más largo no se muestran en la comparación sincronizada. El contador indica en todo momento en qué página te encuentras.',
+  },
+  {
+    q: '¿Puedo ajustar el zoom de las páginas para ver más detalle?',
+    a: 'Sí. El selector de escala permite ver las páginas al 80%, 100%, 120% o 150% de su tamaño original. Aumentar el zoom es útil para comparar texto fino, números en tablas o detalles de imágenes entre versiones.',
+  },
+  {
+    q: '¿Se pueden comparar PDFs protegidos con contraseña?',
+    a: 'No. Los PDFs deben estar sin protección de lectura para poder renderizarlos en el navegador con PDF.js. Si están encriptados, primero usa la herramienta "Eliminar contraseña PDF" y luego compáralos.',
+  },
+  {
+    q: '¿Para qué casos de uso es más útil la comparación de PDFs?',
+    a: 'Es ideal para: revisar revisiones de contratos y detectar cambios entre versiones, comparar dos presupuestos de proveedores lado a lado, verificar diferencias entre la versión borrador y la final de un informe, revisar cambios en planos técnicos o formularios antes de aprobarlos, y auditar que un documento recibido coincide con el enviado.',
+  },
+  {
+    q: '¿Los PDFs se envían a algún servidor?',
+    a: 'No. PDF.js renderiza ambos PDFs completamente en tu navegador. Ningún archivo sale de tu dispositivo. Ambos PDFs se procesan en local y las páginas se muestran como canvas en el navegador.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre comparar PDFs visualmente y usar una herramienta de diff de texto?',
+    a: 'La comparación visual muestra el aspecto real de cada página, lo que permite detectar cambios de formato, maquetación, imágenes añadidas o eliminadas, y diferencias en tablas con rapidez. Una herramienta de diff de texto solo compara el contenido textual extraído, sin el contexto visual. Para contratos y documentos legales, la comparación visual es más fiable porque detecta cambios incluso en elementos no textuales.',
+  },
 ];
 ---
 <ToolLayout slug="comparar-pdfs" faqs={faqs}>
   <CompararPDFsTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Compara dos PDFs en paralelo con scroll sincronizado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Revisar diferencias entre versiones de un contrato, comparar dos presupuestos o verificar que un documento recibido coincide con el enviado son tareas habituales en entornos profesionales. Esta herramienta muestra ambos PDFs en paralelo con navegación sincronizada: al pasar a la siguiente página en uno, el otro avanza automáticamente. Todo ocurre en el navegador con PDF.js; tus documentos nunca salen de tu dispositivo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Comparación visual para detectar cualquier tipo de cambio</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        A diferencia de las herramientas de diff de texto, la comparación visual permite detectar <strong class="text-[var(--color-text)]">cambios de formato, imágenes modificadas, tablas alteradas y variaciones de maquetación</strong> que un diff textual pasaría por alto. Usa el zoom al 120% o 150% para examinar detalles finos: texto pequeño, números en tablas, fechas en contratos o firmas en documentos legales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

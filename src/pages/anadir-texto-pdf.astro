@@ -4,27 +4,49 @@ import AnadirTextoPDFTool from '@/components/tools/AnadirTextoPDFTool';
 
 const faqs = [
   {
-    q: '¿Cuántos bloques de texto puedo añadir?',
-    a: 'Puedes añadir hasta 5 bloques de texto independientes en una sola operación. Cada bloque puede ir en una página diferente y tener su propio tamaño de fuente, posición y color. Si necesitas más bloques, puedes procesar el PDF resultante de nuevo.',
+    q: '¿Cuántos bloques de texto puedo añadir a la vez?',
+    a: 'Puedes añadir hasta 5 bloques de texto independientes en una sola operación. Cada bloque puede ir en una página diferente y tener su propio tamaño de fuente, posición y color. Si necesitas más de 5 bloques, procesa el PDF resultante de nuevo con la misma herramienta.',
   },
   {
     q: '¿Cómo funciona el sistema de posicionamiento X/Y?',
-    a: 'La posición X e Y se define como porcentaje del ancho y alto de la página. X=0% es el borde izquierdo, X=50% es el centro horizontal. Y=0% es la parte superior, Y=50% es el centro vertical. Esto funciona independientemente del tamaño de la página (A4, Letter, etc.).',
+    a: 'La posición X e Y se define como porcentaje del ancho y alto de la página. X=0% es el borde izquierdo, X=50% es el centro horizontal. Y=0% es la parte superior, Y=50% es el centro vertical. Este sistema funciona independientemente del tamaño de la página (A4, Letter, Legal, etc.).',
   },
   {
-    q: '¿Puedo añadir texto a PDFs escaneados (imágenes)?',
-    a: 'Sí. Los PDFs escaneados son imágenes incrustadas en un contenedor PDF. La herramienta añade el texto como una capa de texto encima de la imagen, igual que en un PDF con texto nativo. El resultado es un PDF con la imagen del escáner más el texto añadido.',
+    q: '¿Puedo añadir texto a PDFs escaneados que son imágenes?',
+    a: 'Sí. Los PDFs escaneados contienen imágenes incrustadas en un contenedor PDF. La herramienta añade el texto como una capa encima de la imagen, igual que en un PDF nativo. El resultado es un PDF con el escaneado más el texto superpuesto, listo para enviar o imprimir.',
   },
   {
-    q: '¿Qué fuentes están disponibles?',
-    a: 'Actualmente la herramienta usa Helvetica, que es una fuente estándar incluida en la especificación PDF (no requiere incrustar el archivo de fuente). Esto garantiza compatibilidad universal con todos los lectores de PDF.',
+    q: '¿Qué fuentes están disponibles para el texto?',
+    a: 'La herramienta usa Helvetica, que es una fuente estándar incluida en la especificación PDF (PDF Standard Type 1 Fonts). No requiere incrustar el archivo de fuente, lo que garantiza compatibilidad universal con todos los lectores de PDF: Adobe Reader, Foxit, Preview de macOS y visores integrados de navegadores.',
   },
   {
-    q: '¿Funciona con PDFs protegidos con contraseña?',
-    a: 'No. Los PDFs con contraseña de escritura no permiten modificaciones. Usa primero la herramienta "Eliminar contraseña PDF" para desprotegerlo y luego añade el texto.',
+    q: '¿Funciona con PDFs protegidos con contraseña de escritura?',
+    a: 'No. Los PDFs con contraseña de modificación no permiten cambios. Usa primero la herramienta "Eliminar contraseña PDF" para desprotegerlo y luego añade el texto. Los PDFs con contraseña solo de apertura (lectura) tampoco son compatibles directamente.',
+  },
+  {
+    q: '¿Puedo cambiar el color del texto?',
+    a: 'Sí. Cada bloque de texto tiene su propio selector de color. El color se convierte al espacio RGB que entiende pdf-lib, por lo que puedes usar cualquier color HEX del selector. Útil para añadir texto en rojo (marcas de revisión), azul corporativo o cualquier color de tu identidad visual.',
+  },
+  {
+    q: '¿Para qué se usa esta herramienta en entornos de trabajo reales?',
+    a: 'Los casos de uso más frecuentes son: rellenar PDFs de formularios que no tienen campos interactivos (declaraciones, formularios de impuestos escaneados, solicitudes), añadir números de referencia o fechas a facturas ya generadas, superponer marcas de "BORRADOR", "APROBADO" o "CONFIDENCIAL" sobre documentos, y personalizar contratos con datos del cliente sin necesidad de regenerar el PDF completo.',
   },
 ];
 ---
 <ToolLayout slug="anadir-texto-pdf" faqs={faqs}>
   <AnadirTextoPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade texto a cualquier PDF sin Acrobat</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Rellenar formularios PDF que no tienen campos interactivos, añadir una nota o fecha a un contrato escaneado, superponer una marca de agua de texto como "CONFIDENCIAL" o "BORRADOR": estos son los flujos de trabajo más comunes para esta herramienta. Todo ocurre en el navegador con pdf-lib, sin instalar software y sin subir documentos a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Hasta 5 bloques independientes en un solo paso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cada bloque de texto es independiente: puede ir en una página diferente, con distinto tamaño de fuente, color y posición. Usa el primero para el número de expediente en la portada, el segundo para la fecha en el margen superior de la segunda página, y el tercero para el sello en la última. <strong class="text-[var(--color-text)]">El sistema de coordenadas en porcentaje garantiza que el texto quede en el lugar correcto</strong> independientemente del tamaño de página del PDF.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import IndicePDFTool from '@/components/tools/IndicePDFTool';
 
 const faqs = [
-  { q: '¿Cómo extrae el índice esta herramienta?', a: 'Primero intenta leer el índice de marcadores interno del PDF (bookmarks/outline). Si el PDF no tiene marcadores, analiza el contenido de texto buscando líneas con fuente más grande que el cuerpo del texto para detectar encabezados.' },
-  { q: '¿Qué son los marcadores de PDF?', a: 'Los marcadores (bookmarks) son un índice navegable que los autores pueden añadir al crear el PDF en Word, InDesign u otros programas. No todos los PDFs los incluyen.' },
-  { q: '¿Funciona si el PDF no tiene marcadores?', a: 'Sí. En ese caso, la herramienta analiza el texto buscando líneas con tamaño de fuente mayor que el promedio, que suelen corresponder a títulos y encabezados de sección.' },
-  { q: '¿El índice incluye los números de página?', a: 'Si el PDF tiene marcadores internos, el índice incluye el número de página de cada entrada. Si se extrae por análisis de texto, también se indica la página donde aparece cada encabezado detectado.' },
-  { q: '¿En qué formato se descarga el índice?', a: 'El índice se descarga como archivo de texto plano (.txt) con la jerarquía de niveles indicada mediante sangría y los números de página alineados a la derecha, listo para copiar o imprimir.' },
+  {
+    q: '¿Cómo extrae el índice esta herramienta?',
+    a: 'Primero intenta leer el índice de marcadores interno del PDF (bookmarks/outline). Si el PDF no tiene marcadores, analiza el contenido de texto buscando líneas con fuente más grande que el cuerpo para detectar encabezados automáticamente.',
+  },
+  {
+    q: '¿Qué son los marcadores de PDF?',
+    a: 'Los marcadores (bookmarks) son un índice navegable que los autores añaden al crear el PDF en Word, InDesign, LaTeX u otros programas. Aparecen en el panel lateral de Adobe Reader y permiten saltar a cualquier sección con un clic. No todos los PDFs los incluyen.',
+  },
+  {
+    q: '¿Funciona si el PDF no tiene marcadores internos?',
+    a: 'Sí. En ese caso la herramienta analiza el texto de hasta 100 páginas buscando líneas con tamaño de fuente mayor a 14 pt (las líneas más pequeñas suelen ser cuerpo de texto). Los encabezados detectados se clasifican en niveles según su tamaño.',
+  },
+  {
+    q: '¿El índice incluye los números de página?',
+    a: 'Sí. Si el PDF tiene marcadores internos, cada entrada muestra el número de página exacto. Si se extrae por análisis de texto, también se indica la página donde aparece cada encabezado detectado.',
+  },
+  {
+    q: '¿En qué formato se descarga el índice?',
+    a: 'El índice se descarga como archivo de texto plano (.txt) con la jerarquía de niveles indicada mediante sangría y los números de página alineados a la derecha con puntos, listo para copiar o imprimir como tabla de contenidos.',
+  },
+  {
+    q: '¿Hay límite de páginas que puede analizar?',
+    a: 'El modo de análisis automático de texto escanea hasta 100 páginas y extrae hasta 80 entradas de índice. Para PDFs más largos con marcadores internos, no hay límite: se extrae todo el árbol de marcadores completo.',
+  },
+  {
+    q: '¿Para qué casos reales se usa extraer el índice de un PDF?',
+    a: 'Los usos más frecuentes son: crear un índice de contenidos para compartir antes de una reunión sin enviar el PDF completo, verificar la estructura de un informe o manual antes de revisarlo, extraer el esquema de un libro técnico o académico para estudiar, generar una lista de capítulos de un PDF legal o normativo para referencia rápida, y comprobar que un documento exportado desde Word o InDesign tiene los marcadores correctamente configurados.',
+  },
 ];
 ---
 <ToolLayout slug="indice-pdf" faqs={faqs}>
   <IndicePDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae la tabla de contenidos de cualquier PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchos PDFs profesionales incluyen marcadores internos (bookmarks) que definen su estructura de capítulos y secciones. Esta herramienta los extrae y genera un archivo .txt con la tabla de contenidos completa, incluyendo número de página por entrada. Si el PDF no tiene marcadores, el análisis automático de texto detecta los encabezados por tamaño de fuente.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Dos modos de extracción: marcadores y análisis de texto</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El modo <strong class="text-[var(--color-text)]">marcadores</strong> extrae el árbol de bookmarks exacto que definió el autor del PDF: es preciso, jerárquico y fiable. El modo <strong class="text-[var(--color-text)]">análisis de texto</strong> actúa automáticamente cuando no hay marcadores: detecta líneas con fuente grande y las clasifica como H1, H2 o H3 según el tamaño. Todo el procesamiento ocurre en el navegador con PDF.js; el archivo nunca sale de tu dispositivo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

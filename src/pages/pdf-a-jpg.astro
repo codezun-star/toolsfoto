@@ -5,26 +5,48 @@ import PDFaJPGTool from '@/components/tools/PDFaJPGTool';
 const faqs = [
   {
     q: '¿Qué resolución tienen las imágenes resultantes?',
-    a: 'Puedes elegir entre tres resoluciones: Normal (escala ×1, resolución estándar de pantalla), Alta (×2, apta para imprimir) y Muy alta (×3, para uso profesional o detalle fino). La escala ×2 es la mejor opción para la mayoría de usos.',
+    a: 'Puedes elegir entre tres resoluciones: Normal (escala ×1, resolución estándar de pantalla ~72 dpi), Alta (×2, apta para impresión básica) y Muy alta (×3, para uso profesional o detalle fino). La escala ×2 es la mejor opción para la mayoría de usos.',
   },
   {
     q: '¿Se convierte cada página en una imagen separada?',
-    a: 'Sí. Cada página del PDF genera un archivo JPG individual. Puedes descargar las imágenes una a una haciendo clic en "Descargar página X" o usar el botón "Descargar X JPG" para descargarlas todas con un pequeño intervalo entre cada una.',
+    a: 'Sí. Cada página del PDF genera un archivo JPG individual. Puedes descargar las imágenes una a una haciendo clic en "Descargar página X" o usar el botón "Descargar X JPG" para obtenerlas todas con un pequeño intervalo entre descargas.',
   },
   {
-    q: '¿Por qué se usa PDF.js de un CDN externo?',
-    a: 'PDF.js necesita un archivo "worker" para renderizar en segundo plano. Lo cargamos desde la CDN de Cloudflare, que es pública y segura. El renderizado real ocurre en tu navegador; los datos del PDF no se envían al servidor de la CDN.',
+    q: '¿Por qué se carga PDF.js desde un CDN externo?',
+    a: 'PDF.js necesita un archivo worker para renderizar en segundo plano. Lo cargamos desde la CDN de Cloudflare, que sirve el worker con los headers CORS correctos. El renderizado real ocurre íntegramente en tu navegador; el contenido del PDF no se envía al servidor de la CDN.',
   },
   {
     q: '¿Funciona con PDFs que contienen solo imágenes escaneadas?',
-    a: 'Sí. La conversión renderiza visualmente cada página independientemente de si contiene texto nativo o imágenes escaneadas. El resultado será una imagen JPG fiel a lo que se ve en el PDF.',
+    a: 'Sí. La conversión renderiza visualmente cada página independientemente de si contiene texto nativo o imágenes escaneadas. El resultado es un JPG fiel a lo que se ve en el visor de PDF.',
   },
   {
     q: '¿Puedo convertir solo algunas páginas?',
-    a: 'Actualmente la herramienta convierte todas las páginas del PDF. Si solo necesitas ciertas páginas, primero extrae las que quieres con nuestra herramienta "Extraer páginas PDF" y luego conviérte ese PDF reducido.',
+    a: 'Actualmente la herramienta convierte todas las páginas del PDF. Si solo necesitas ciertas páginas, extrae primero las que quieres con la herramienta "Extraer páginas PDF" y luego convierte ese PDF reducido.',
+  },
+  {
+    q: '¿Cuándo usar PDF a JPG en lugar de PDF a PNG?',
+    a: 'JPG es mejor para PDFs con fotografías o contenido con muchos gradientes de color donde el tamaño del archivo importa: los JPG son significativamente más pequeños que los PNG para este tipo de contenido. PNG es mejor para PDFs con texto, gráficos vectoriales o logos donde necesitas bordes nítidos sin artefactos de compresión. Si vas a imprimir o publicar en redes sociales, JPG suele ser suficiente.',
+  },
+  {
+    q: '¿Para qué se usa convertir PDF a JPG en la práctica?',
+    a: 'Los usos más frecuentes son: publicar páginas de catálogos o folletos en redes sociales (Instagram, Facebook) o en plataformas de e-commerce como Mercado Libre, que solo aceptan imágenes; extraer gráficos, tablas o figuras de informes PDF para usarlos en presentaciones o documentos de Word; compartir una sola página de un contrato o documento oficial sin enviar el PDF completo; y convertir portadas de libros o revistas en PDF a imagen para miniaturas en tiendas online.',
   },
 ];
 ---
 <ToolLayout slug="pdf-a-jpg" faqs={faqs}>
   <PDFaJPGTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte páginas de PDF a imágenes JPG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Convertir un PDF a imágenes JPG es necesario cuando necesitas usar el contenido en plataformas que solo aceptan imágenes: redes sociales, marketplaces como Mercado Libre, presentaciones de PowerPoint o WhatsApp Business. Esta herramienta renderiza cada página del PDF como un JPG independiente usando PDF.js directamente en el navegador, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tres niveles de resolución para cada caso de uso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Normal (×1)</strong>: resolución de pantalla, ideal para previsualización y web ligera. <strong class="text-[var(--color-text)]">Alta (×2)</strong>: doble resolución, apta para impresión básica y redes sociales. <strong class="text-[var(--color-text)]">Muy alta (×3)</strong>: triple resolución, para impresión de calidad, impresión a gran formato o detalle fino en gráficos técnicos. La previsualización integrada muestra el resultado antes de descargar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

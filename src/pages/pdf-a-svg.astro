@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PDFaSVGTool from '@/components/tools/PDFaSVGTool';
 
 const faqs = [
-  { q: '¿Qué tipo de SVG genera esta herramienta?', a: 'Genera archivos SVG que contienen la página del PDF renderizada como imagen PNG embebida en base64. El resultado es un SVG válido que muestra el contenido del PDF de forma fiel, aunque no es SVG vectorial puro.' },
-  { q: '¿Por qué no genera SVG vectorial?', a: 'Convertir un PDF a SVG vectorial real requiere interpretar completamente el lenguaje PostScript/PDF y reconstruir todos los paths, fuentes y curvas. Esta herramienta utiliza el renderizado de PDF.js para obtener un resultado fiel y rápido.' },
-  { q: '¿Puedo descargar todas las páginas a la vez?', a: 'Sí. Si el PDF tiene más de una página, aparece el botón "Descargar todas en ZIP" que empaqueta todos los archivos SVG en un archivo ZIP descargable.' },
-  { q: '¿En qué escala se rinde el PDF?', a: 'Cada página se renderiza a 1.5x de su tamaño original (puntos tipográficos × 1.5), lo que produce imágenes de alta resolución adecuadas para uso web y presentaciones.' },
-  { q: '¿Cuántas páginas puede procesar?', a: 'No hay un límite estricto por número de páginas, pero PDFs muy largos pueden tardar más tiempo en procesarse ya que cada página se renderiza individualmente en el navegador.' },
+  {
+    q: '¿El SVG resultante es vectorial puro o contiene imágenes incrustadas?',
+    a: 'El SVG es un contenedor vectorial (archivo .svg) que embebe una imagen PNG en formato base64. El tamaño y la resolución del SVG son mayores que los PNG separados, pero se puede insertar directamente en HTML o en editores SVG. No es SVG vectorial puro con trayectorias editables.',
+  },
+  {
+    q: '¿Cómo se descargan los SVG de múltiples páginas?',
+    a: 'Si el PDF tiene una sola página, el SVG se descarga directamente. Si tiene múltiples páginas, todos los SVG se empaquetan automáticamente en un archivo ZIP que contiene un SVG por página.',
+  },
+  {
+    q: '¿A qué escala se renderiza el SVG?',
+    a: 'El PDF se renderiza a escala 1.5× respecto a la resolución estándar (~108 dpi). Esto ofrece un buen equilibrio entre calidad visual y tamaño del archivo. El SVG resultante tiene las mismas dimensiones que el PDF original pero con mayor detalle de píxeles.',
+  },
+  {
+    q: '¿Hay un límite de páginas para la conversión?',
+    a: 'No hay un límite estricto impuesto por la herramienta, pero PDFs con muchas páginas generarán archivos SVG muy pesados (especialmente en el ZIP). Para PDFs de más de 20 páginas, considera convertir a JPG o PNG que son formatos más eficientes para contenido fotorrealista.',
+  },
+  {
+    q: '¿Para qué sirve convertir un PDF a SVG?',
+    a: 'SVG es el formato estándar para gráficos en la web. Convertir páginas de PDF a SVG es útil para: incrustar páginas de catálogos o folletos directamente en HTML sin convertirlos a JPG; usar páginas de PDF como recursos en diseño web donde se necesita el formato SVG (Figma, Adobe XD, Inkscape); y compatibilidad con sistemas CMS que aceptan SVG pero no PDF.',
+  },
+  {
+    q: '¿Se envía el PDF a algún servidor?',
+    a: 'No. PDF.js renderiza el documento íntegramente en tu navegador. Ni el PDF ni los SVG resultantes salen de tu dispositivo. El único CDN externo que se usa es el worker de PDF.js alojado en Cloudflare CDN, que solo sirve el código JavaScript del worker, no procesa tus datos.',
+  },
+  {
+    q: '¿Puedo editar el SVG resultante en Inkscape o Illustrator?',
+    a: 'Puedes abrirlo, pero el "contenido" del SVG es una imagen PNG incrustada (no trayectorias editables). Podrías añadir elementos vectoriales encima (texto, formas, flechas) en Inkscape o Illustrator, pero el contenido original del PDF aparece como un bloque de imagen, no como objetos vectoriales independientes.',
+  },
 ];
 ---
 <ToolLayout slug="pdf-a-svg" faqs={faqs}>
   <PDFaSVGTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte páginas de PDF al formato SVG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        SVG es el formato nativo de gráficos para la web: los archivos .svg se insertan directamente en HTML, son escalables sin pérdida de nitidez y son compatibles con todos los navegadores modernos. Convertir páginas de PDF a SVG permite usarlas como recursos en proyectos web, diseño UI/UX o editores vectoriales. El procesamiento ocurre completamente en el navegador con PDF.js, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Descarga individual o en ZIP para múltiples páginas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para PDFs de una sola página, la descarga es directa. Para PDFs con múltiples páginas, todos los SVG se empaquetan automáticamente en un <strong class="text-[var(--color-text)]">archivo ZIP</strong> listo para descomprimir. La escala de renderizado 1.5× garantiza la nitidez suficiente para visualización en pantalla y uso en proyectos web.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

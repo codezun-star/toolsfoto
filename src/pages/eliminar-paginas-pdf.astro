@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EliminarPaginasPDFTool from '@/components/tools/EliminarPaginasPDFTool';
 
 const faqs = [
-  { q: '¿Cómo indico qué páginas quiero eliminar?', a: 'Escribe los números de página separados por comas. Para rangos continuos usa un guión. Por ejemplo: "1, 3, 5-7" elimina las páginas 1, 3, 5, 6 y 7.' },
-  { q: '¿Se puede deshacer la eliminación?', a: 'No directamente, pero el archivo original no se modifica. La herramienta crea un nuevo PDF con las páginas que se conservan. Siempre guarda el original antes de descargar el resultado.' },
-  { q: '¿Funciona con PDFs protegidos con contraseña?', a: 'No. Los PDFs cifrados no pueden procesarse sin la contraseña. Usa primero la herramienta "Eliminar contraseña PDF" para desbloquear el archivo.' },
-  { q: '¿Se pueden eliminar todas las páginas?', a: 'No. La herramienta impide generar un PDF vacío. Debe quedar al menos una página en el documento resultante.' },
-  { q: '¿Se conservan los metadatos, marcadores e hipervínculos?', a: 'Los metadatos básicos se conservan. Sin embargo, los marcadores (bookmarks) y algunos hipervínculos pueden quedar rotos si las páginas a las que apuntaban fueron eliminadas.' },
+  {
+    q: '¿Cómo indico qué páginas quiero eliminar?',
+    a: 'Escribe los números de página separados por comas. Para rangos continuos usa un guión. Por ejemplo: "1, 3, 5-7" elimina las páginas 1, 3, 5, 6 y 7. La numeración comienza en 1.',
+  },
+  {
+    q: '¿Se puede deshacer la eliminación de páginas?',
+    a: 'No directamente. Sin embargo, el archivo original en tu dispositivo no se modifica en ningún momento: la herramienta crea un nuevo PDF con las páginas que se conservan. Siempre guarda el original antes de trabajar con el resultado.',
+  },
+  {
+    q: '¿Funciona con PDFs protegidos con contraseña?',
+    a: 'No. Los PDFs cifrados no pueden procesarse sin la contraseña de modificación. Usa primero la herramienta "Eliminar contraseña PDF" para desbloquear el archivo y luego elimina las páginas.',
+  },
+  {
+    q: '¿Se pueden eliminar todas las páginas del PDF?',
+    a: 'No. La herramienta impide generar un PDF vacío: debe quedar al menos una página en el documento resultante. Si intentas eliminar todas las páginas, se mostrará un mensaje de error.',
+  },
+  {
+    q: '¿Se conservan los marcadores e hipervínculos internos?',
+    a: 'Los metadatos básicos del documento se conservan. Sin embargo, los marcadores (bookmarks/tabla de contenidos) y los hipervínculos que apuntaban a páginas eliminadas quedarán rotos en el PDF resultante. Es una limitación estructural de la modificación de PDFs sin reconstruir el índice completo.',
+  },
+  {
+    q: '¿Puedo ver cuántas páginas quedarán antes de procesar?',
+    a: 'Sí. La herramienta calcula y muestra en tiempo real cuántas páginas se van a conservar y cuántas se van a eliminar a medida que escribes el rango. Esto te permite verificar que la selección es correcta antes de descargar el resultado.',
+  },
+  {
+    q: '¿Para qué casos reales se usa eliminar páginas de un PDF?',
+    a: 'Los flujos de trabajo más frecuentes son: eliminar páginas en blanco que generan algunos escáneres al final del documento, quitar la portada o las páginas de aviso legal antes de distribuir un informe, eliminar páginas con información confidencial antes de compartir un contrato, suprimir páginas de publicidad en catálogos de producto descargados de proveedores, y reducir el tamaño de expedientes y dossiers antes de enviarlos por correo electrónico.',
+  },
 ];
 ---
 <ToolLayout slug="eliminar-paginas-pdf" faqs={faqs}>
   <EliminarPaginasPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina páginas innecesarias de cualquier PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Páginas en blanco generadas por el escáner, portadas genéricas de informes, páginas de aviso legal, secciones confidenciales que no deben compartirse: hay muchas razones para necesitar eliminar páginas de un PDF sin tener que regenerar el documento completo. Esta herramienta lo hace en segundos directamente en el navegador, sin instalar nada y sin subir tus documentos a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sintaxis flexible para cualquier selección de páginas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La sintaxis de rangos te permite seleccionar cualquier combinación de páginas con precisión: <strong class="text-[var(--color-text)]">"1, 5-8, 12"</strong> elimina la página 1, las páginas 5 a 8 y la página 12 en un solo paso. La herramienta muestra en tiempo real cuántas páginas quedarán en el documento resultante para que puedas verificar la selección antes de descargar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

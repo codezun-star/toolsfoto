@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EscalarPDFTool from '@/components/tools/EscalarPDFTool';
+
+const faqs = [
+  {
+    q: '¿Qué tamaños de página están disponibles?',
+    a: 'Puedes escalar a A3 (297×420 mm), A4 (210×297 mm), A5 (148×210 mm), Carta (216×279 mm) y Legal (216×356 mm). Para cada tamaño puedes elegir orientación vertical (portrait) u horizontal (landscape).',
+  },
+  {
+    q: '¿Se mantiene la proporción del contenido original al escalar?',
+    a: 'Sí. El contenido se ajusta con la escala máxima que cabe en el nuevo tamaño sin distorsión (fit to page). Si la proporción del PDF original no coincide exactamente con el destino, se añaden márgenes en blanco en los lados donde no llega el contenido.',
+  },
+  {
+    q: '¿Sirve para estandarizar documentos de distintas impresoras o escáneres?',
+    a: 'Exactamente. Si tienes PDFs con páginas de tamaños mezclados (mezcla de A4 y Carta, por ejemplo, al combinar documentos de distintos países), puedes estandarizarlos todos a A4 o Carta con esta herramienta para que se impriman uniformemente.',
+  },
+  {
+    q: '¿La calidad del texto e imágenes se mantiene al cambiar el tamaño de página?',
+    a: 'Sí. Los contenidos se incrustan como formas vectoriales usando el mecanismo de XObject de pdf-lib (embedPage/drawPage), por lo que texto e imágenes vectoriales mantienen su calidad a cualquier escala. Las imágenes rasterizadas (fotografías) pueden aparecer ligeramente pixeladas si se escala muy por encima de su resolución original.',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'El procesamiento es casi inmediato para la mayoría de documentos. PDFs con muchas páginas o imágenes de alta resolución pueden tardar unos segundos más. El tiempo principal es la carga inicial de pdf-lib (primera vez que se usa la herramienta en la sesión).',
+  },
+  {
+    q: '¿El proceso es privado y seguro?',
+    a: 'Sí. pdf-lib carga dinámicamente en tu navegador y procesa el archivo localmente. Ningún archivo sale de tu dispositivo. No se necesita cuenta ni registro para usar la herramienta.',
+  },
+  {
+    q: '¿Para qué se usa escalar PDFs en la práctica?',
+    a: 'Los flujos de trabajo más comunes son: convertir documentos en tamaño Carta (estándar en EE.UU., México, Colombia, Perú) a A4 (estándar ISO en España, Argentina, Chile y Europa) para imprimirlos o enviarlos a clientes internacionales; reducir un PDF A3 (planos, pósters) a A4 para enviarlo por correo sin que aparezca recortado; y preparar presentaciones en proporción 16:9 exportadas como PDF para que se ajusten correctamente a una impresora de papel A4 o Carta.',
+  },
+];
 ---
-<ToolLayout slug="escalar-pdf" faqs={[
-  { q: '¿Qué tamaños de página están disponibles?', a: 'Puedes escalar a A3 (297×420 mm), A4 (210×297 mm), A5 (148×210 mm), Carta (216×279 mm) y Legal (216×356 mm). También puedes elegir orientación vertical u horizontal.' },
-  { q: '¿Se mantiene la proporción del contenido original?', a: 'Sí. El contenido se ajusta con la escala máxima que cabe en el nuevo tamaño sin distorsión (fit to page). Si la proporción del PDF original no coincide con el destino, se añaden márgenes en blanco.' },
-  { q: '¿Sirve para estandarizar documentos de distintas impresoras o escáneres?', a: 'Exactamente. Si tienes PDFs con páginas de tamaños mezclados (mezcla de A4 y Carta por ejemplo), puedes estandarizarlos todos a A4 con esta herramienta.' },
-  { q: '¿La calidad del texto y las imágenes se mantiene?', a: 'Sí. Los contenidos se incrustan como formas vectoriales (usando el mecanismo de XObject de pdf-lib), por lo que texto e imágenes vectoriales mantienen su calidad. Las imágenes rasterizadas pueden aparecer ligeramente escaladas.' },
-  { q: '¿Cuánto tarda en procesarse?', a: 'El procesamiento es casi inmediato para la mayoría de documentos. PDFs con muchas páginas o imágenes de alta resolución pueden tardar unos segundos más.' },
-]}>
+<ToolLayout slug="escalar-pdf" faqs={faqs}>
   <EscalarPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cambia el tamaño de página de un PDF a A4, Carta y más</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Estandarizar el tamaño de página de un PDF es necesario cuando se trabaja con documentos de distintos orígenes: formularios generados en tamaño Carta en México o Colombia, planos en A3, presentaciones en formato 16:9. Esta herramienta convierte el tamaño de todas las páginas del PDF al estándar que necesitas (A4, A5, A3, Carta o Legal) manteniendo el contenido sin distorsión.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Carta vs. A4: diferencia clave para LATAM y España</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El tamaño <strong class="text-[var(--color-text)]">Carta</strong> (216×279 mm) es el estándar en EE.UU., México, Colombia, Venezuela y otros países de América Latina. El tamaño <strong class="text-[var(--color-text)]">A4</strong> (210×297 mm) es el estándar ISO usado en España, Argentina, Chile y la mayoría de Europa. Al intercambiar documentos entre estos contextos, escalar el PDF garantiza que se imprima sin márgenes incorrectos ni contenido recortado.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

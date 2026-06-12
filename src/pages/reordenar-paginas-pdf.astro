@@ -13,18 +13,40 @@ const faqs = [
   },
   {
     q: '¿Se puede eliminar una página con esta herramienta?',
-    a: 'No directamente. Esta herramienta solo reordena páginas. Para eliminar páginas específicas, usa primero la herramienta "Extraer páginas PDF" para quedarte solo con las que necesitas, y luego reordénalas si es necesario.',
+    a: 'No directamente. Esta herramienta solo reordena páginas. Para eliminar páginas específicas, usa primero la herramienta "Eliminar páginas PDF" para quedarte solo con las que necesitas, y luego reordénalas si es necesario.',
   },
   {
     q: '¿Cuántas páginas puede tener el PDF?',
-    a: 'No hay un límite estricto, pero a partir de 50-60 páginas la carga de miniaturas puede tardar unos segundos ya que se renderiza cada página en el navegador. El reordenado en sí es siempre rápido independientemente del número de páginas.',
+    a: 'No hay un límite estricto, pero a partir de 50-60 páginas la carga de miniaturas puede tardar unos segundos ya que se renderiza cada página en el navegador con PDF.js. El reordenado en sí es siempre rápido independientemente del número de páginas.',
   },
   {
     q: '¿El PDF resultante mantiene toda la calidad del original?',
-    a: 'Sí. El reordenado se realiza copiando las páginas originales sin modificar su contenido. No hay re-renderizado ni compresión adicional, por lo que la calidad del texto, imágenes y vectores es idéntica a la del PDF original.',
+    a: 'Sí. El reordenado se realiza copiando las páginas originales sin modificar su contenido con pdf-lib. No hay re-renderizado ni compresión adicional, por lo que la calidad del texto, imágenes y vectores es idéntica a la del PDF original.',
+  },
+  {
+    q: '¿Puedo reordenar y eliminar páginas en la misma operación?',
+    a: 'No. Esta herramienta está especializada en reordenar. Si necesitas primero eliminar algunas páginas y luego reordenar las restantes, usa "Eliminar páginas PDF" primero y luego aplica esta herramienta al PDF resultante.',
+  },
+  {
+    q: '¿Para qué se reordena un PDF en la práctica profesional?',
+    a: 'Los casos más frecuentes son: corregir el orden de páginas de un escaneado donde las hojas se introdujeron en orden incorrecto; reorganizar capítulos o secciones de un informe o propuesta para presentarlos en un orden diferente al destinatario; mover la portada o contraportada a la posición correcta después de unir varios PDFs; reordenar páginas de un contrato para que las cláusulas más importantes aparezcan primero; y organizar un expediente digital cuyas páginas se añadieron en orden cronológico pero necesitas presentarlas temáticamente.',
   },
 ];
 ---
 <ToolLayout slug="reordenar-paginas-pdf" faqs={faqs}>
   <ReordenarPaginasPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reorganiza las páginas de un PDF con previsualización</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La cuadrícula de miniaturas muestra todas las páginas del PDF antes de confirmar cualquier cambio. Usa las flechas para mover cada página arriba o abajo y visualiza el nuevo orden antes de generar el PDF final. La calidad del documento se conserva íntegramente: pdf-lib copia las páginas originales sin recomprimir ni modificar el contenido.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin pérdida de calidad: operación sobre metadatos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El reordenado de páginas es una operación sobre la <strong class="text-[var(--color-text)]">estructura interna del PDF</strong>, no sobre los píxeles. No hay rasterización, ni recompresión de imágenes, ni re-renderizado de texto. El texto vectorial, las fuentes incrustadas y las imágenes del PDF original permanecen exactamente igual en el PDF reordenado.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MetadatosPDFTool from '@/components/tools/MetadatosPDFTool';
 
 const faqs = [
-  { q: '¿Qué metadatos de un PDF puedo ver y editar?', a: 'Puedes ver y editar el Título, Autor, Asunto y Palabras clave del PDF. Además, si el PDF los contiene, se muestran en modo de solo lectura el Creador (la aplicación que lo generó) y la Fecha de creación.' },
-  { q: '¿Para qué sirven los metadatos de un PDF?', a: 'Los metadatos ayudan a identificar y organizar documentos. Los motores de búsqueda como Google los utilizan para indexar PDFs. También son importantes para accesibilidad (lectores de pantalla), gestión documental en empresas y para que los PDFs aparezcan correctamente en visores y gestores de archivos.' },
-  { q: '¿Puedo editar los metadatos de un PDF protegido con contraseña?', a: 'No directamente. Para editar los metadatos de un PDF protegido, primero debes eliminar la contraseña con la herramienta "Eliminar contraseña PDF" de ToolsFoto, luego editar los metadatos, y finalmente volver a protegerlo si es necesario.' },
-  { q: '¿El PDF modificado mantiene todas las páginas y el formato original?', a: 'Sí. La herramienta solo modifica los metadatos del documento usando pdf-lib. Las páginas, imágenes, fuentes, formularios y todo el contenido del PDF permanecen intactos.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza en tu navegador con pdf-lib. El PDF nunca sale de tu dispositivo. La lectura y escritura de metadatos ocurre completamente de forma local.' },
+  {
+    q: '¿Qué metadatos de un PDF puedo ver y editar?',
+    a: 'Puedes ver y editar el Título, Autor, Asunto y Palabras clave del PDF. Además, si el PDF los contiene, se muestran en modo de solo lectura el Creador (la aplicación que lo generó) y la Fecha de creación.',
+  },
+  {
+    q: '¿Para qué sirven los metadatos de un PDF?',
+    a: 'Los metadatos ayudan a identificar y organizar documentos. Los motores de búsqueda como Google los utilizan para indexar PDFs públicos. También son importantes para accesibilidad (lectores de pantalla), gestión documental en empresas y para que los PDFs aparezcan correctamente en buscadores de gestores de archivos.',
+  },
+  {
+    q: '¿Puedo editar los metadatos de un PDF protegido con contraseña?',
+    a: 'No directamente. Para editar los metadatos de un PDF protegido, primero elimina la contraseña con la herramienta "Eliminar contraseña PDF", luego edita los metadatos, y finalmente vuelve a protegerlo si es necesario con "Proteger PDF".',
+  },
+  {
+    q: '¿El PDF modificado mantiene todas las páginas y el formato original?',
+    a: 'Sí. La herramienta solo modifica los metadatos del documento usando pdf-lib. Las páginas, imágenes, fuentes, formularios y todo el contenido del PDF permanecen completamente intactos.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza en tu navegador con pdf-lib. El PDF nunca sale de tu dispositivo. La lectura y escritura de metadatos ocurre completamente de forma local.',
+  },
+  {
+    q: '¿Por qué aparece el campo "Creador" vacío o con el nombre de un programa?',
+    a: 'El campo "Creador" registra automáticamente la aplicación que generó el PDF: "Microsoft Word", "Canva", "Adobe InDesign", "LaTeX"... Si el PDF se creó desde una aplicación que no especifica ese campo, aparece vacío. Este campo es de solo lectura porque es un dato técnico de origen, no de contenido.',
+  },
+  {
+    q: '¿Cómo afectan los metadatos al SEO de un PDF?',
+    a: 'Google indexa los PDFs públicos y usa los metadatos para determinar de qué trata el documento. El campo "Título" aparece en los resultados de búsqueda en lugar del nombre del archivo, igual que el tag <title> en HTML. El campo "Descripción/Asunto" puede usarse como meta description. Las "Palabras clave" tienen menos impacto SEO directo pero ayudan en búsquedas internas de gestores documentales. Para PDFs publicados en webs de empresas, ONGs o administraciones públicas, completar estos metadatos mejora su visibilidad en Google.',
+  },
 ];
 ---
 <ToolLayout slug="metadatos-pdf" faqs={faqs}>
   <MetadatosPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Edita el título, autor y palabras clave del PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los metadatos de un PDF son invisibles en la vista normal pero determinan cómo lo identifican los buscadores, gestores documentales y lectores de pantalla. Editar el título, autor, asunto y palabras clave de un PDF es esencial para organización interna, accesibilidad y SEO de PDFs publicados en sitios web. Todo el proceso ocurre en el navegador; el archivo nunca sale de tu dispositivo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">PDFs bien etiquetados: mejor SEO y gestión documental</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Google indexa los PDFs públicos y usa el campo <strong class="text-[var(--color-text)]">Título</strong> como título del resultado de búsqueda. Si el título está vacío, muestra el nombre del archivo (ej: "documento_final_v3.pdf") en lugar de algo descriptivo. Completar los metadatos antes de publicar un PDF en tu web mejora su indexación. Para gestión documental interna, los metadatos permiten buscar PDFs por autor o palabras clave en gestores como SharePoint, Google Drive o Alfresco.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

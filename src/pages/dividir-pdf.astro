@@ -5,26 +5,48 @@ import DividirPDFTool from '@/components/tools/DividirPDFTool';
 const faqs = [
   {
     q: '¿Cómo especifico el rango de páginas a extraer?',
-    a: 'Usa la sintaxis estándar: separa páginas individuales con comas y rangos con guión. Por ejemplo, "1-3, 5, 8-10" extraerá las páginas 1, 2, 3, 5, 8, 9 y 10. El orden en la cadena de texto determina el orden en el PDF resultante.',
+    a: 'Usa la sintaxis estándar: separa páginas individuales con comas y rangos continuos con guión. Por ejemplo, "1-3, 5, 8-10" extraerá las páginas 1, 2, 3, 5, 8, 9 y 10. El orden en la cadena determina el orden en el PDF resultante.',
   },
   {
-    q: '¿Qué diferencia hay entre "Página por página" y "Extraer rango"?',
-    a: 'En el modo "Página por página" se descarga un PDF separado por cada página del documento. En "Extraer rango" introduces las páginas que quieres y se genera un único PDF con solo esas páginas.',
+    q: '¿Qué diferencia hay entre los modos "Página por página" y "Extraer rango"?',
+    a: 'En el modo "Página por página" se genera y descarga automáticamente un PDF separado por cada página del documento: ideal para separar un PDF de 50 páginas en 50 archivos individuales. En "Extraer rango" introduces las páginas que quieres y se genera un único PDF con solo esas páginas.',
   },
   {
     q: '¿Se mantiene la calidad de las imágenes al dividir?',
-    a: 'Sí, completamente. Dividir un PDF no rasteriza ni recomprime las imágenes; simplemente reubica los objetos existentes en nuevos documentos. La calidad es idéntica a la del original.',
+    a: 'Sí, completamente. Dividir un PDF no rasteriza ni recomprime las imágenes: simplemente reubica los objetos internos existentes en nuevos documentos PDF. La calidad del texto, las imágenes y los vectores es idéntica a la del original.',
   },
   {
-    q: '¿Puedo dividir PDFs con varias páginas por hoja (2 en 1)?',
-    a: 'Esta herramienta divide el PDF a nivel de página lógica. Si el PDF ya tiene 2 páginas físicas por hoja, cada "página" resultante tendrá esas 2 físicas. Para separar páginas físicas dentro de una hoja necesitarías herramientas de edición avanzada.',
+    q: '¿Puedo dividir un PDF y reordenar las páginas al mismo tiempo?',
+    a: 'Sí. En el modo "Extraer rango", el orden en que escribes los números de página determina el orden en el PDF resultante. Escribir "5, 1, 3" genera un PDF con la página 5 primero, luego la 1 y finalmente la 3. Esto permite dividir y reorganizar en un solo paso.',
   },
   {
-    q: '¿El proceso es privado?',
-    a: 'Completamente. Todo ocurre en el navegador con pdf-lib. Ningún archivo sale de tu dispositivo.',
+    q: '¿Cuál es la diferencia entre "Dividir PDF" y "Extraer páginas PDF"?',
+    a: '"Dividir PDF" en modo página por página genera automáticamente múltiples archivos, uno por página. "Extraer páginas" es más flexible: seleccionas páginas concretas en cualquier orden y las consolidas en un único PDF nuevo. Usa Dividir para separar un documento masivo, y Extraer cuando necesites un subconjunto específico de páginas.',
+  },
+  {
+    q: '¿El proceso es privado y seguro?',
+    a: 'Completamente. Todo ocurre en el navegador con pdf-lib mediante carga dinámica (import dinámico). Ningún archivo sale de tu dispositivo. No se requiere registro ni cuenta para usar la herramienta.',
+  },
+  {
+    q: '¿Para qué casos reales se usa dividir PDFs?',
+    a: 'Los flujos de trabajo más frecuentes son: separar páginas de un contrato de múltiples partes para que cada sección llegue solo al firmante correspondiente, dividir un catálogo de productos para distribuir categorías por separado, separar páginas de un informe largo para enviarlo por secciones a distintos departamentos, extraer una sola página de un PDF grande (póliza, escritura, expediente) para adjuntarla a un correo sin enviar el documento completo.',
   },
 ];
 ---
 <ToolLayout slug="dividir-pdf" faqs={faqs}>
   <DividirPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Separa un PDF en partes en segundos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Dividir un PDF es necesario en docenas de situaciones cotidianas: separar un contrato de 30 páginas para que cada departamento reciba solo su sección, extraer una página de un expediente de 200 páginas para adjuntarla a un correo, o separar un catálogo de productos por categorías. Esta herramienta ofrece dos modos: página por página (genera un archivo por cada página automáticamente) y extracción de rango (seleccionas las páginas que quieres).
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin pérdida de calidad ni metadatos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Al dividir con pdf-lib, los contenidos se reubican como objetos nativos del PDF: <strong class="text-[var(--color-text)]">texto, imágenes vectoriales y rasterizadas mantienen exactamente la misma calidad que el original</strong>. No hay re-renderizado ni recompresión. El proceso es tan rápido como leer el archivo: la mayor parte del tiempo es la descarga de los archivos resultantes, no el procesamiento.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

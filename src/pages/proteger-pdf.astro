@@ -4,27 +4,49 @@ import ProtegerPDFTool from '@/components/tools/ProtegerPDFTool';
 
 const faqs = [
   {
-    q: '¿La contraseña se envía a algún servidor?',
-    a: 'Nunca. El cifrado se aplica completamente en tu navegador con la librería pdf-lib. Ni el PDF ni la contraseña se envían a ningún servidor externo. Todo ocurre en tu dispositivo.',
+    q: '¿El cifrado del PDF se realiza en mi dispositivo o en un servidor?',
+    a: 'Todo el cifrado se realiza íntegramente en tu navegador con pdf-lib. El PDF nunca sale de tu dispositivo. Esto lo hace especialmente seguro para documentos que contienen información confidencial como contratos, nóminas, datos personales o información financiera.',
   },
   {
-    q: '¿Qué diferencia hay entre contraseña de usuario y de propietario?',
-    a: 'La contraseña de usuario es necesaria para abrir y ver el PDF. La contraseña de propietario controla los permisos del documento: si alguien la conoce, puede imprimir en alta resolución, copiar texto o editar el archivo. Si no estableces contraseña de propietario, se usará la misma que la de usuario.',
+    q: '¿Cuál es la diferencia entre la contraseña de usuario y la de propietario?',
+    a: 'La contraseña de usuario (también llamada contraseña de apertura) es la que se le pide al destinatario para abrir el PDF. La contraseña de propietario es una capa adicional que restringe acciones sobre el PDF (impresión, edición, copia de texto) sin necesidad de pedirla al abrir el documento. Puedes establecer solo una de las dos o ambas.',
   },
   {
-    q: '¿Qué permisos tiene el PDF protegido resultante?',
-    a: 'El PDF protegido permite impresión en alta resolución y cumplimentar formularios, pero no permite copiar texto, editar el contenido ni ensamblar el documento. Estos permisos están definidos por la contraseña de propietario.',
+    q: '¿Qué permisos puedo restringir con la contraseña de propietario?',
+    a: 'Puedes desactivar la impresión del PDF, la copia de texto e imágenes, y la edición del documento. Estas restricciones las respetan los visores PDF estándar (Adobe Acrobat, visor de Chrome, macOS Vista Previa). Las herramientas de edición avanzadas podrían ignorarlas si el atacante conoce la contraseña de propietario.',
   },
   {
-    q: '¿Puedo quitar la contraseña más adelante?',
-    a: 'Sí. Si conoces la contraseña de usuario, puedes usar nuestra herramienta "Eliminar contraseña PDF" para obtener una versión desbloqueada del documento.',
+    q: '¿Puedo quitar la contraseña de un PDF que yo mismo protegí?',
+    a: 'Sí. Usa la herramienta "Eliminar contraseña PDF" e introduce la contraseña de usuario cuando se te solicite. El PDF resultante estará completamente desbloqueado.',
   },
   {
-    q: '¿Qué nivel de cifrado se aplica?',
-    a: 'pdf-lib aplica cifrado RC4 de 128 bits, compatible con la mayoría de lectores de PDF (Acrobat Reader, Preview de macOS, navegadores modernos). Para cifrado AES-256 necesitarías Adobe Acrobat o herramientas especializadas.',
+    q: '¿Qué algoritmo de cifrado se usa?',
+    a: 'La herramienta usa RC4 de 128 bits, que es el algoritmo de cifrado estándar PDF compatible con todos los visores. Si necesitas cifrado AES-256 (más moderno), necesitarías una herramienta de escritorio como Adobe Acrobat Pro o qpdf.',
+  },
+  {
+    q: '¿El PDF protegido mantiene todas las páginas y el formato original?',
+    a: 'Sí. La protección con contraseña solo añade la capa de cifrado y los permisos al PDF. El contenido (páginas, imágenes, fuentes, formularios, anotaciones) permanece completamente intacto.',
+  },
+  {
+    q: '¿Para qué proteger un PDF con contraseña en el entorno profesional de LATAM?',
+    a: 'Los casos más frecuentes son: enviar contratos por correo o WhatsApp con una contraseña que se comunica por otro canal (llamada, SMS); proteger PDFs con datos personales (nóminas, resoluciones de AFIP/SAT/DIAN) antes de subirlos a portales de empleados o clientes; evitar que facturas en PDF se modifiquen antes de ser archivadas; proteger presupuestos con precios confidenciales enviados a clientes; y cumplir políticas internas de seguridad documental en empresas con auditorías ISO o SOX.',
   },
 ];
 ---
 <ToolLayout slug="proteger-pdf" faqs={faqs}>
   <ProtegerPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cifra tu PDF con contraseña directamente en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Proteger un PDF con contraseña impide que personas no autorizadas lo abran o modifiquen. El cifrado RC4 de 128 bits se aplica íntegramente en tu navegador con pdf-lib: el documento nunca viaja a ningún servidor, lo que garantiza que información sensible como contratos, nóminas, datos fiscales o acuerdos de confidencialidad permanezca privada durante todo el proceso.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Contraseña de apertura y permisos de propietario</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Puedes establecer una <strong class="text-[var(--color-text)]">contraseña de usuario</strong> que se solicita al abrir el PDF, y una <strong class="text-[var(--color-text)]">contraseña de propietario</strong> que restringe la impresión, la copia de texto y la edición sin necesidad de introducirla al abrir. Ambas son opcionales e independientes: puedes usar una, la otra o las dos según el nivel de protección que necesites.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

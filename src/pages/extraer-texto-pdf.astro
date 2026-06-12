@@ -5,26 +5,48 @@ import ExtraerTextoPDFTool from '@/components/tools/ExtraerTextoPDFTool';
 const faqs = [
   {
     q: '¿Por qué no obtengo texto de mi PDF escaneado?',
-    a: 'Un PDF escaneado es básicamente una imagen fotográfica de un documento físico. No contiene texto digital, por lo que es necesario un OCR (reconocimiento óptico de caracteres) para leerlo. Esta herramienta extrae texto de PDFs nativos (generados digitalmente). Para PDFs escaneados necesitas una solución OCR.',
+    a: 'Un PDF escaneado es básicamente una imagen fotográfica de un documento físico. No contiene texto digital, por lo que es necesario un OCR (reconocimiento óptico de caracteres) para leerlo. Esta herramienta extrae texto de PDFs nativos generados digitalmente. Para PDFs escaneados necesitas una solución OCR.',
   },
   {
     q: '¿Se mantiene el formato y el orden del texto?',
-    a: 'El texto se extrae en orden de aparición en el PDF, página por página. El formato visual (columnas, tablas, estilos) no se conserva en el texto plano resultante, aunque se añade una cabecera "--- Página X ---" para indicar los saltos de página.',
+    a: 'El texto se extrae en orden de aparición en el PDF, página por página. El formato visual (columnas, tablas, negritas, estilos) no se conserva en el texto plano resultante, aunque se añade una cabecera "--- Página X ---" para identificar los saltos de página en el archivo .txt.',
   },
   {
-    q: '¿Puedo extraer texto de PDFs protegidos?',
-    a: 'No si el PDF tiene una contraseña de usuario que restringe la apertura. Si el PDF tiene restricciones de copia pero no de apertura, la extracción puede funcionar dependiendo del nivel de cifrado.',
+    q: '¿Puedo extraer texto de PDFs protegidos con contraseña?',
+    a: 'No si el PDF tiene una contraseña de usuario que restringe la apertura. Si el PDF tiene restricciones de copia pero no de apertura (protección de modificación), la extracción puede funcionar dependiendo del nivel de cifrado implementado.',
   },
   {
-    q: '¿Qué hago después de extraer el texto?',
-    a: 'Puedes copiarlo al portapapeles con el botón "Copiar todo" o descargarlo como archivo .txt. El texto es compatible con cualquier editor de texto, procesador de palabras o herramienta de IA como ChatGPT.',
+    q: '¿Qué hago con el texto extraído?',
+    a: 'Puedes copiarlo al portapapeles con el botón "Copiar todo" o descargarlo como archivo .txt. El texto es compatible con cualquier editor de texto, procesador de palabras como Word o Google Docs, o herramientas de IA como ChatGPT, Gemini o Claude para resumir, traducir o analizar el contenido.',
   },
   {
     q: '¿Los archivos se envían al servidor?',
-    a: 'No. PDF.js procesa el archivo completamente en tu navegador. El PDF y el texto extraído nunca se envían a ningún servidor externo.',
+    a: 'No. PDF.js procesa el archivo completamente en tu navegador. El PDF y el texto extraído nunca se envían a ningún servidor externo. Todo el proceso es local y privado.',
+  },
+  {
+    q: '¿Se puede extraer texto de todas las páginas o solo de algunas?',
+    a: 'La herramienta extrae el texto de todas las páginas del PDF en un solo paso, organizando el resultado con separadores por página. Si solo necesitas el texto de páginas concretas, extrae primero esas páginas con la herramienta "Extraer páginas PDF" y luego extrae el texto de ese PDF reducido.',
+  },
+  {
+    q: '¿Para qué flujos de trabajo es más útil extraer texto de un PDF?',
+    a: 'Los casos de uso más habituales son: extraer el contenido de contratos, informes o facturas para procesarlos en hojas de cálculo o bases de datos sin reescribir manualmente; alimentar herramientas de IA con el contenido de documentos PDF para generar resúmenes o análisis; reutilizar textos de presentaciones, catálogos o dossiers en nuevos documentos; indexar documentos para búsqueda en sistemas de gestión documental; y traducir el contenido de documentos PDF usando herramientas de traducción automática.',
   },
 ];
 ---
 <ToolLayout slug="extraer-texto-pdf" faqs={faqs}>
   <ExtraerTextoPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Obtén el texto de cualquier PDF en formato editable</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchos flujos de trabajo necesitan el texto de un PDF en formato editable: para resumirlo con IA, para importarlo a una hoja de cálculo, para traducirlo o para reutilizarlo en un nuevo documento. Esta herramienta extrae el texto de PDFs nativos (generados digitalmente, no escaneados) directamente en el navegador usando PDF.js, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Texto extraído listo para IA y procesamiento automatizado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El archivo .txt generado incluye <strong class="text-[var(--color-text)]">separadores de página</strong> ("--- Página X ---") para mantener la estructura del documento. Puedes pegarlo directamente en ChatGPT, Claude o Gemini para generar resúmenes, extraer información clave o traducirlo. También es el formato ideal para importar a Google Sheets o Excel cuando el PDF contiene tablas de datos que necesitas analizar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

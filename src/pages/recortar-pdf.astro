@@ -4,27 +4,49 @@ import RecortarPDFTool from '@/components/tools/RecortarPDFTool';
 
 const faqs = [
   {
-    q: '¿Qué hace exactamente "recortar márgenes" en un PDF?',
-    a: 'Ajusta el "crop box" de cada página del PDF, que es el área visible al abrir el documento. Los márgenes que definas quedan ocultos pero el contenido original no se elimina. Esto es útil para eliminar bordes blancos excesivos en documentos escaneados o reducir márgenes grandes.',
+    q: '¿Qué es el crop box de un PDF?',
+    a: 'El crop box es el área visible de una página PDF. Todos los visores de PDF (Chrome, Adobe, macOS) muestran únicamente el área definida por el crop box, ocultando el contenido fuera de ese rectángulo. Esta herramienta modifica el crop box para eliminar márgenes, bordes blancos, encabezados repetidos o áreas no deseadas de todas las páginas del PDF.',
   },
   {
-    q: '¿Los márgenes se definen en milímetros o píxeles?',
-    a: 'En milímetros, que es la unidad estándar para documentos de texto. La herramienta convierte automáticamente a puntos tipográficos (1 mm ≈ 2.835 pt), que es la unidad interna que usa el formato PDF.',
+    q: '¿Los márgenes se especifican en milímetros o píxeles?',
+    a: 'Los márgenes se especifican en milímetros. La herramienta los convierte internamente a puntos tipográficos (pt), que es la unidad interna de la especificación PDF (1 mm = 2,8346 pt). Esto permite definir márgenes precisos independientemente de la resolución de visualización.',
   },
   {
-    q: '¿Se aplica el recorte a todas las páginas?',
-    a: 'Sí. Los mismos márgenes se aplican a todas las páginas del documento. Si tus páginas tienen márgenes distintos, te recomendamos usar la herramienta "Dividir PDF" para separar las páginas y recortar cada grupo por separado.',
+    q: '¿El recorte se aplica a todas las páginas del PDF?',
+    a: 'Sí. El mismo recorte (mismos márgenes superior, inferior, izquierdo y derecho) se aplica a todas las páginas del documento. Si necesitas recortar páginas diferentes con valores distintos, tendrías que dividir primero el PDF por secciones.',
   },
   {
-    q: '¿Puedo deshacer el recorte?',
-    a: 'El recorte usando crop box no elimina el contenido original, solo lo oculta. Sin embargo, con esta herramienta no es posible deshacer directamente. Para restaurar los márgenes originales necesitarías una herramienta de edición PDF que permita modificar el crop box.',
+    q: '¿Se puede deshacer el recorte después de guardarlo?',
+    a: 'No directamente desde esta herramienta. El PDF recortado tiene el nuevo crop box definido. Sin embargo, la especificación PDF guarda el contenido original fuera del crop box (no lo elimina físicamente). Herramientas avanzadas como Adobe Acrobat pueden recuperar el área recortada. Para revertir desde ToolsFoto, tendrías que volver a la versión original del PDF que guardaste antes de recortar.',
   },
   {
-    q: '¿Qué pasa si los márgenes de recorte son mayores que la página?',
-    a: 'La herramienta mostrará un error si los valores combinados (izquierda + derecha o superior + inferior) son mayores que las dimensiones de la página. Por ejemplo, si la página tiene 210 mm de ancho, no puedes recortar más de 209 mm en total entre los márgenes izquierdo y derecho.',
+    q: '¿Qué pasa si los márgenes son mayores que el tamaño de la página?',
+    a: 'La herramienta valida que los márgenes sean menores que las dimensiones de la página antes de aplicar el recorte. Si los valores introducidos generarían una página de tamaño cero o negativo, se mostrará un error antes de procesar el PDF.',
+  },
+  {
+    q: '¿Se envía el PDF a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza con pdf-lib en tu navegador. El PDF nunca sale de tu dispositivo.',
+  },
+  {
+    q: '¿Para qué se usa recortar PDF en la práctica?',
+    a: 'Los usos más comunes son: eliminar los márgenes blancos excesivos de PDFs generados desde Word o LibreOffice para que quepan mejor al imprimir; quitar cabeceras o pies de página redundantes de PDFs escaneados; preparar páginas de catálogos para publicación en e-commerce donde necesitas la imagen del producto sin márgenes; ajustar el tamaño visible de PDFs de facturas para que se impriman en formato específico de impresoras fiscales; y eliminar bordes negros de PDFs escaneados en fotocopiadoras que dejan un margen oscuro alrededor de la página.',
   },
 ];
 ---
 <ToolLayout slug="recortar-pdf" faqs={faqs}>
   <RecortarPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina márgenes y bordes de todas las páginas del PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Recortar un PDF significa definir el área visible de cada página eliminando los márgenes no deseados: bordes blancos excesivos, encabezados repetidos, franjas negras de escaneado o zonas vacías. Los márgenes se especifican en milímetros y se aplican a todas las páginas del documento con pdf-lib, directamente en el navegador, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ajusta márgenes con precisión en milímetros</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Introduce el margen en mm para cada lado de la página: <strong class="text-[var(--color-text)]">superior</strong>, <strong class="text-[var(--color-text)]">inferior</strong>, <strong class="text-[var(--color-text)]">izquierdo</strong> y <strong class="text-[var(--color-text)]">derecho</strong>. La herramienta convierte los mm a puntos tipográficos (la unidad interna del PDF) y modifica el crop box de cada página. El contenido original no se elimina del PDF, solo se oculta fuera del nuevo área visible.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

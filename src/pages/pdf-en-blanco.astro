@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import PDFEnBlancoTool from '@/components/tools/PDFEnBlancoTool';
 
 const faqs = [
-  { q: '¿Para qué sirve crear un PDF en blanco?', a: 'Un PDF en blanco es útil como plantilla para rellenar manualmente, como soporte para añadir imágenes o firmas con otras herramientas, o para crear documentos base para presentaciones.' },
-  { q: '¿Cuáles son los tamaños disponibles?', a: 'Puedes crear PDFs en A4, A3, A5, Carta y Legal. Todos son los tamaños estándar internacionales. A4 es el más común en Europa y América Latina.' },
-  { q: '¿Hay límite en el número de páginas?', a: 'Puedes crear hasta 100 páginas en blanco de una sola vez. Para documentos más largos, puedes crear múltiples archivos y unirlos con la herramienta "Unir PDFs".' },
-  { q: '¿Puedo elegir orientación horizontal?', a: 'Sí. La opción "Horizontal" crea el PDF en formato apaisado, donde el ancho es mayor que el alto. Es ideal para presentaciones, hojas de cálculo e infografías.' },
-  { q: '¿El PDF creado es compatible con todos los lectores?', a: 'Sí. El PDF generado cumple con el estándar PDF 1.4 y es compatible con Adobe Acrobat, Vista previa de macOS, navegadores web y cualquier lector de PDF estándar.' },
+  {
+    q: '¿Para qué sirve crear un PDF en blanco?',
+    a: 'Los usos principales son: crear plantillas para rellenar a mano o con herramientas de anotación; generar documentos base para añadir texto o imágenes con otras herramientas (como "Añadir texto al PDF" o "Añadir imagen al PDF"); crear páginas de separación entre secciones de un documento; y tener un PDF vacío del tamaño exacto que necesitas para combinar con otros usando "Unir PDFs".',
+  },
+  {
+    q: '¿Qué tamaños de página están disponibles?',
+    a: 'Puedes elegir entre los tamaños más usados: A4 (21×29,7 cm, estándar en Europa y la mayoría de LATAM), A3 (29,7×42 cm, para planos e impresiones grandes), A5 (14,8×21 cm, para cuadernos y notas), Carta (21,6×27,9 cm, estándar en México, Colombia y EE.UU.) y Legal (21,6×35,6 cm, para documentos legales en México y EE.UU.).',
+  },
+  {
+    q: '¿Puedo elegir la orientación horizontal (apaisada)?',
+    a: 'Sí. Cada tamaño de página puede crearse en orientación vertical (portrait) u horizontal (landscape). La orientación horizontal es útil para presentaciones, hojas de cálculo impresas o planos en formato apaisado.',
+  },
+  {
+    q: '¿Cuántas páginas puede tener el PDF?',
+    a: 'Puedes generar hasta 100 páginas en blanco en un solo PDF. Introduce el número de páginas entre 1 y 100 antes de generar el PDF.',
+  },
+  {
+    q: '¿Con qué versión de PDF se genera el archivo?',
+    a: 'El PDF se genera con la versión 1.4, que es compatible con cualquier visor de PDF: Adobe Acrobat, Foxit, la Vista Previa de macOS, los visores de iOS y Android, y los lectores integrados de Chrome y Firefox.',
+  },
+  {
+    q: '¿Se necesita conexión a internet para generar el PDF?',
+    a: 'Solo en la primera carga para descargar la librería pdf-lib, que se cachea en el navegador. Una vez cargada, la generación del PDF es completamente offline y no requiere conexión.',
+  },
+  {
+    q: '¿Cómo uso un PDF en blanco como base para una plantilla?',
+    a: 'Genera el PDF en blanco con el tamaño y número de páginas que necesitas. Luego usa la herramienta "Añadir texto al PDF" para insertar textos fijos (títulos, etiquetas, cuadros de texto vacíos) o "Añadir imagen al PDF" para incluir tu logo. El resultado es una plantilla PDF personalizada lista para distribuir.',
+  },
 ];
 ---
 <ToolLayout slug="pdf-en-blanco" faqs={faqs}>
   <PDFEnBlancoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera un PDF vacío en el tamaño que necesitas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un PDF en blanco es la base para crear plantillas, añadir separadores entre secciones de documentos o tener una página del tamaño exacto que necesitas para combinarlo con otros PDFs. Elige el tamaño (A4, A3, A5, Carta o Legal), la orientación y el número de páginas: el archivo se genera instantáneamente en el navegador con pdf-lib, sin conexión a servidores externos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Carta o A4: el tamaño correcto según tu región</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En México, Colombia, Chile, Argentina y gran parte de LATAM el formato <strong class="text-[var(--color-text)]">Carta</strong> (21,6×27,9 cm) es el estándar para documentos administrativos y de oficina, mientras que en España y Europa se usa <strong class="text-[var(--color-text)]">A4</strong>. Usar el tamaño correcto evita márgenes incorrectos al imprimir y garantiza que el documento cumpla los requisitos de los organismos oficiales de tu país.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

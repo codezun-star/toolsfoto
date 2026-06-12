@@ -5,7 +5,7 @@ import PDFaPNGTool from '@/components/tools/PDFaPNGTool';
 const faqs = [
   {
     q: '¿Qué diferencia hay entre PDF a PNG y PDF a JPG?',
-    a: 'PNG es un formato sin pérdida que admite transparencia. Es ideal para PDFs con texto, gráficos vectoriales o logos donde necesitas bordes nítidos y sin artefactos. JPG tiene compresión con pérdida y es mejor para PDFs con fotografías donde el tamaño del archivo importa más.',
+    a: 'PNG es un formato sin pérdida que admite transparencia. Es ideal para PDFs con texto, gráficos vectoriales o logos donde necesitas bordes nítidos y sin artefactos de compresión. JPG tiene compresión con pérdida y es mejor para PDFs con fotografías donde el tamaño del archivo importa más que la precisión de los bordes.',
   },
   {
     q: '¿Qué resoluciones están disponibles?',
@@ -13,18 +13,40 @@ const faqs = [
   },
   {
     q: '¿Cada página del PDF se convierte en un PNG separado?',
-    a: 'Sí. Cada página genera un archivo PNG individual. Puedes descargar cada imagen por separado o usar el botón "Descargar todas" para obtenerlas todas de una vez.',
+    a: 'Sí. Cada página genera un archivo PNG individual. Puedes descargar cada imagen por separado desde la cuadrícula de resultados o usar el botón "Descargar todas" para obtenerlas en un solo paso.',
   },
   {
     q: '¿Funciona con PDFs protegidos con contraseña?',
-    a: 'No. Los PDFs con contraseña no se pueden convertir directamente. Primero debes eliminar la protección con nuestra herramienta "Eliminar contraseña PDF" y luego convertir el PDF resultante.',
+    a: 'No. Los PDFs con contraseña de apertura no se pueden renderizar con PDF.js. Primero elimina la protección con la herramienta "Eliminar contraseña PDF" y luego convierte el PDF resultante.',
   },
   {
     q: '¿Por qué la conversión usa PDF.js de un CDN externo?',
-    a: 'PDF.js necesita un archivo worker para el renderizado en segundo plano. Se carga desde la CDN de Cloudflare, que es pública y de alta disponibilidad. El renderizado de tu PDF ocurre íntegramente en tu navegador; el contenido del PDF no se envía a ningún servidor.',
+    a: 'PDF.js necesita un archivo worker para el renderizado en segundo plano. Se carga desde la CDN de Cloudflare con los headers CORS correctos. El renderizado de tu PDF ocurre íntegramente en tu navegador; el contenido del PDF no se envía a ningún servidor.',
+  },
+  {
+    q: '¿Los PNGs resultantes tienen fondo transparente?',
+    a: 'No. Los PDFs tienen fondo blanco por definición de la especificación. El PNG resultante tiene fondo blanco sólido, no transparente. Si necesitas un PNG con fondo transparente, el PDF tendría que tener páginas con fondo explícitamente transparente, lo cual no es estándar en la mayoría de PDFs.',
+  },
+  {
+    q: '¿Para qué se usa convertir PDF a PNG en el trabajo diario?',
+    a: 'Los usos más frecuentes son: extraer gráficos, diagramas o tablas de informes PDF para insertarlos en presentaciones de PowerPoint o Google Slides sin pérdida de calidad; publicar infografías o páginas de catálogos en redes sociales donde la nitidez del texto importa; usar logos o elementos de diseño guardados en PDF como imágenes PNG de alta resolución; capturar páginas de manuales técnicos o patentes para usarlas como referencia visual en documentos; y convertir páginas de planos a imagen para adjuntarlas en correos o sistemas de gestión de proyectos.',
   },
 ];
 ---
 <ToolLayout slug="pdf-a-png" faqs={faqs}>
   <PDFaPNGTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte páginas de PDF a PNG sin pérdida de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        PNG es el formato ideal para convertir PDFs con texto, gráficos vectoriales, diagramas e infografías: la compresión sin pérdida garantiza que los bordes del texto y las líneas finas queden perfectamente nítidos, sin los artefactos de compresión que aparecen en JPG. Cada página del PDF se convierte en un PNG independiente directamente en el navegador, sin enviar nada a servidores externos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cuatro resoluciones: de pantalla a impresión profesional</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">72 dpi</strong>: resolución de pantalla, peso mínimo. <strong class="text-[var(--color-text)]">108 dpi</strong>: equilibrio entre calidad y peso. <strong class="text-[var(--color-text)]">144 dpi</strong>: apta para impresión básica y presentaciones. <strong class="text-[var(--color-text)]">216 dpi</strong>: calidad profesional para impresión y detalle fino. La previsualización integrada muestra el resultado de cada página antes de descargar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

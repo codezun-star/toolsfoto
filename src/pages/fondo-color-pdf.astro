@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FondoColorPDFTool from '@/components/tools/FondoColorPDFTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve añadir un fondo de color a un PDF?',
+    a: 'Es útil para PDFs que tienen fondo transparente o blanco y quieres añadir un color corporativo, para documentos que necesitan un color de fondo diferente al blanco para impresión (ahorro de tinta o identidad visual), o para añadir identidad visual a presentaciones, catálogos y dossiers.',
+  },
+  {
+    q: '¿Se altera el contenido original del PDF?',
+    a: 'No. Se usa la técnica embedPage de pdf-lib: cada página original se incrusta como objeto en una nueva página que primero dibuja el rectángulo de color de fondo y luego superpone el contenido original encima. El texto, imágenes y vectores quedan completamente intactos.',
+  },
+  {
+    q: '¿El color de fondo se aplica a todas las páginas?',
+    a: 'Sí. El color elegido se aplica uniformemente a todas las páginas del documento. No es posible asignar colores diferentes a páginas individuales en un solo paso.',
+  },
+  {
+    q: '¿Puedo usar cualquier color de fondo personalizado?',
+    a: 'Sí. Dispones de una selección de colores predefinidos (blanco, crema, azul claro, verde claro, gris claro, negro) y un selector de color personalizado para elegir cualquier tono HEX. El color se convierte automáticamente al espacio RGB que requiere pdf-lib.',
+  },
+  {
+    q: '¿Se procesan mis PDFs en el servidor?',
+    a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib mediante carga dinámica (import dinámico). Ningún archivo sale de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿El fondo de color aumenta el tamaño del archivo PDF?',
+    a: 'Ligeramente. Se añade un objeto de rectángulo por página, que ocupa muy poco espacio comparado con imágenes o texto. El incremento de tamaño es mínimo (típicamente menos del 5% del tamaño original) para documentos estándar.',
+  },
+  {
+    q: '¿Qué pasa si el PDF ya tiene un fondo blanco o de color?',
+    a: 'El color de fondo se añade debajo del contenido existente. Si el PDF ya tiene un fondo de color sólido en sus páginas, el nuevo fondo quedará cubierto por el existente y no será visible. Esta herramienta es más efectiva con PDFs que tienen fondo transparente o blanco puro.',
+  },
+];
 ---
-<ToolLayout slug="fondo-color-pdf" faqs={[
-  { q: '¿Para qué sirve añadir un fondo de color a un PDF?', a: 'Es útil para PDFs que tienen fondo transparente o blanco y quieres añadir un color corporativo, para documentos que necesitan un color de fondo diferente al blanco para impresión, o para añadir identidad visual a presentaciones.' },
-  { q: '¿Se altera el contenido original del PDF?', a: 'No. Se usa la técnica embedPage de pdf-lib: cada página original se incrusta como objeto en una nueva página que primero dibuja el color de fondo y luego superpone el contenido original encima. El texto e imágenes quedan intactos.' },
-  { q: '¿El color de fondo se aplica a todas las páginas?', a: 'Sí. El color elegido se aplica uniformemente a todas las páginas del documento.' },
-  { q: '¿Puedo usar cualquier color de fondo?', a: 'Sí. Dispones de una selección de colores predefinidos y un selector de color personalizado para elegir cualquier tono HEX.' },
-  { q: '¿Se procesan mis PDFs en el servidor?', a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib (carga dinámica). Ningún archivo sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="fondo-color-pdf" faqs={faqs}>
   <FondoColorPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade un fondo de color corporativo a tus PDFs</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchas plantillas de presupuestos, catálogos y presentaciones tienen fondo blanco por defecto. Si quieres darle un toque de identidad visual (crema para un look editorial, azul corporativo, negro para un dossier premium) esta herramienta lo añade en segundos. El contenido original no se toca: el color se agrega como una capa de fondo usando pdf-lib, directamente en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Color personalizado para cualquier necesidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los presets cubren los usos más frecuentes: <strong class="text-[var(--color-text)]">crema</strong> para documentos con estética editorial o portfolios de fotografía, <strong class="text-[var(--color-text)]">azul claro</strong> para informes corporativos, <strong class="text-[var(--color-text)]">negro</strong> para dossiers de lujo o presentaciones de moda. El selector personalizado permite introducir cualquier código HEX de tu paleta de marca. El resultado se descarga inmediatamente sin esperas.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

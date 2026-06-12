@@ -9,22 +9,44 @@ const faqs = [
   },
   {
     q: '¿Puedo reordenar las páginas al extraerlas?',
-    a: 'Sí. El orden en que escribes los números de página en el campo de texto determina el orden en el PDF resultante. Por ejemplo, "5, 1, 3" extraerá la página 5 primero, luego la 1 y finalmente la 3.',
+    a: 'Sí. El orden en que escribes los números de página en el campo de texto determina el orden en el PDF resultante. Por ejemplo, "5, 1, 3" extraerá la página 5 primero, luego la 1 y finalmente la 3. Esto permite reorganizar páginas y extraer en un solo paso.',
   },
   {
     q: '¿Se mantiene la calidad de las páginas extraídas?',
-    a: 'Completamente. La extracción no rasteriza ni recomprime el contenido. Las páginas extraídas son idénticas en calidad al original, con todo su texto nativo, imágenes y vectores.',
+    a: 'Completamente. La extracción no rasteriza ni recomprime el contenido. Las páginas extraídas son idénticas en calidad al original: texto nativo seleccionable, imágenes a su resolución original y vectores escalables.',
   },
   {
     q: '¿Puedo extraer páginas de un PDF con muchas páginas?',
-    a: 'Sí, no hay límite de páginas. La herramienta carga el PDF completo en memoria para procesar la extracción, por lo que PDFs muy grandes pueden requerir más tiempo y memoria del navegador.',
+    a: 'Sí, no hay límite de páginas en el documento de origen. La herramienta carga el PDF completo en memoria del navegador para procesar la extracción, por lo que PDFs muy grandes (más de 200 páginas o varios MB) pueden requerir más tiempo y memoria disponible.',
   },
   {
     q: '¿Cuál es la diferencia con "Dividir PDF"?',
-    a: '"Dividir PDF" crea un archivo separado por cada página o por rangos predefinidos. "Extraer páginas" permite seleccionar páginas concretas en cualquier orden y exportarlas como un único documento nuevo.',
+    a: '"Dividir PDF" en modo página por página genera automáticamente un archivo separado por cada página. "Extraer páginas" te permite seleccionar páginas concretas en cualquier orden y consolidarlas en un único PDF nuevo. Usa Extraer cuando necesites un subconjunto específico de páginas en un solo documento.',
+  },
+  {
+    q: '¿El proceso es privado y seguro?',
+    a: 'Sí. pdf-lib carga dinámicamente en tu navegador y procesa el archivo localmente. Ningún archivo sale de tu dispositivo. No se necesita cuenta ni registro.',
+  },
+  {
+    q: '¿Para qué se usa la extracción de páginas PDF en la práctica?',
+    a: 'Los usos más comunes son: extraer el resumen ejecutivo de un informe de 100 páginas para enviárselo a un cliente sin el detalle técnico; sacar las páginas de firma de un contrato para enviárselas solo al firmante; extraer las páginas de resultados de un análisis de laboratorio de un expediente médico completo; obtener las páginas de un plano específico de un proyecto de construcción sin compartir el dossier completo; y reordenar y reorganizar páginas de presentaciones exportadas a PDF.',
   },
 ];
 ---
 <ToolLayout slug="extraer-paginas-pdf" faqs={faqs}>
   <ExtraerPaginasPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae páginas concretas de un PDF sin perder calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        A diferencia de dividir un PDF en todos sus archivos individuales, la extracción de páginas te permite elegir exactamente qué páginas necesitas y consolidarlas en un único documento nuevo. Es la herramienta perfecta cuando tienes un expediente o informe largo y necesitas compartir solo una parte específica sin reenviar el documento completo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reorganiza páginas al extraerlas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El campo de páginas acepta cualquier combinación: <strong class="text-[var(--color-text)]">"5, 1, 3"</strong> crea un PDF donde la página 5 del original aparece primero, seguida de la 1 y la 3. Esta característica permite <strong class="text-[var(--color-text)]">reorganizar el orden de páginas</strong> de un PDF sin herramientas adicionales. Útil para reordenar capítulos, cambiar el orden de diapositivas exportadas o mover el anexo al principio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

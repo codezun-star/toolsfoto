@@ -5,15 +5,15 @@ import JPGaPDFTool from '@/components/tools/JPGaPDFTool';
 const faqs = [
   {
     q: '¿Qué formatos de imagen puedo usar?',
-    a: 'Puedes usar imágenes en formato JPG, PNG y WebP. Si subes un PNG o WebP, la herramienta lo convierte internamente antes de incrustrarlo en el PDF, por lo que el resultado siempre es compatible con cualquier lector de PDFs.',
+    a: 'Puedes subir imágenes en formato JPG, PNG y WebP. Si subes un PNG o WebP, la herramienta los convierte internamente antes de incrustarlos en el PDF, por lo que el resultado es siempre compatible con cualquier lector de PDFs.',
   },
   {
     q: '¿Cuál es la diferencia entre tamaño A4, Carta y Automático?',
-    a: 'A4 (210×297 mm) y Carta (216×279 mm) son los tamaños de papel estándar más usados. Con estas opciones, cada imagen se escala para caber en el tamaño de página seleccionado, manteniedo la proporción y centrando la imagen. Con "Automático" la página tiene exactamente el tamaño de la imagen.',
+    a: 'A4 (210×297 mm) es el estándar en España, Argentina, Chile y Europa. Carta (216×279 mm) es el estándar en México, Colombia, EE.UU. y otros países de América Latina. Con estas opciones, cada imagen se escala para caber en el tamaño de página seleccionado manteniendo la proporción y centrándola. Con "Automático" la página tiene exactamente el tamaño de la imagen.',
   },
   {
     q: '¿Cómo ordeno las imágenes antes de crear el PDF?',
-    a: 'Usa las flechas de arriba y abajo que aparecen sobre cada imagen en la cuadrícula para cambiar el orden. El primer elemento de la cuadrícula será la primera página del PDF.',
+    a: 'Usa las flechas de arriba y abajo que aparecen sobre cada imagen en la cuadrícula para cambiar el orden. El primer elemento de la cuadrícula será la primera página del PDF y así sucesivamente.',
   },
   {
     q: '¿Se comprimen las imágenes al incrustarlas en el PDF?',
@@ -21,10 +21,32 @@ const faqs = [
   },
   {
     q: '¿Los archivos se envían a algún servidor?',
-    a: 'No. Todo el proceso usa la librería pdf-lib y ocurre completamente en tu navegador. Tus imágenes nunca salen de tu dispositivo.',
+    a: 'No. Todo el proceso usa la librería pdf-lib con carga dinámica y ocurre completamente en tu navegador. Tus imágenes nunca salen de tu dispositivo.',
+  },
+  {
+    q: '¿Puedo crear un PDF de una sola imagen o necesito subir múltiples?',
+    a: 'Puedes crear un PDF con una sola imagen: sube el archivo y haz clic en "Crear PDF (1 página)". No hay un mínimo de imágenes. El botón muestra el número de páginas que tendrá el PDF resultante.',
+  },
+  {
+    q: '¿Para qué se usa convertir imágenes a PDF en el trabajo diario?',
+    a: 'Los casos más comunes son: enviar fotos de documentos escaneados con el móvil como un único PDF adjunto por correo electrónico, consolidar capturas de pantalla o imágenes de recibos para reportes de gastos, crear un catálogo de productos en PDF a partir de fotos de artículos para WhatsApp Business o Mercado Libre, convertir fotografías de planos o croquis a PDF para compartirlos con proveedores, y crear un portafolio visual en PDF a partir de imágenes de trabajos.',
   },
 ];
 ---
 <ToolLayout slug="jpg-a-pdf" faqs={faqs}>
   <JPGaPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte imágenes a PDF en segundos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Combinar varias imágenes en un único PDF es una de las tareas más frecuentes en entornos de trabajo: enviar fotos de documentos escaneados, crear catálogos de producto, consolidar capturas de pantalla para un informe. Esta herramienta acepta JPG, PNG y WebP, permite reordenarlas con flechas, elegir el tamaño de página (A4, Carta o automático) y genera el PDF directamente en el navegador sin subir nada a servidores externos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">A4 o Carta: elige el estándar de tu región</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">A4</strong> (210×297 mm) es el estándar ISO en España, Argentina, Chile y la mayoría de Europa. <strong class="text-[var(--color-text)]">Carta</strong> (216×279 mm) es el estándar en México, Colombia, Venezuela y EE.UU. Elegir el tamaño correcto garantiza que el PDF se imprima sin márgenes incorrectos. El modo <strong class="text-[var(--color-text)]">Automático</strong> crea cada página con exactamente el tamaño de la imagen, ideal para preservar la resolución exacta.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

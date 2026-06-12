@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AnadirImagenPDFTool from '@/components/tools/AnadirImagenPDFTool';
 
 const faqs = [
-  { q: '¿Qué formatos de imagen acepta?', a: 'Acepta JPG y PNG. No se admiten otros formatos como WebP, GIF o SVG. Si tienes una imagen en otro formato, conviértela primero a JPG o PNG.' },
-  { q: '¿Cómo funciona el sistema de posición en porcentaje?', a: 'La posición X al 0% coloca la imagen en el borde izquierdo, y al 100% en el extremo derecho. La posición Y al 0% es el borde superior y al 100% el inferior. El 10% es un buen margen por defecto.' },
-  { q: '¿Se puede insertar la imagen en una página específica?', a: 'Sí. El campo "Página de destino" te permite indicar en qué página del PDF insertar la imagen. El primer número es la página 1.' },
-  { q: '¿Se mantiene la proporción de la imagen?', a: 'Sí. Solo defines el ancho deseado (como porcentaje del ancho de la página) y la altura se calcula automáticamente para mantener la relación de aspecto original.' },
-  { q: '¿Puedo insertar una firma o sello?', a: 'Sí. Esta herramienta es perfecta para insertar firmas escaneadas, sellos, logos o cualquier imagen en una posición específica del PDF.' },
+  {
+    q: '¿Qué formatos de imagen acepta la herramienta?',
+    a: 'Acepta JPG y PNG. No se admiten WebP, GIF ni SVG. Si tienes una imagen en otro formato, conviértela primero a JPG o PNG con nuestra herramienta "Convertir imagen".',
+  },
+  {
+    q: '¿Cómo funciona el sistema de posición en porcentaje?',
+    a: 'La posición X al 0% coloca la imagen en el borde izquierdo y al 100% en el extremo derecho. La posición Y al 0% es el borde superior y al 100% el inferior. El 10% es un buen margen por defecto para que la imagen no quede cortada en los bordes.',
+  },
+  {
+    q: '¿Se puede insertar la imagen en una página específica?',
+    a: 'Sí. El campo "Página de destino" te permite indicar exactamente en qué página del PDF insertar la imagen. La numeración comienza en 1. Si tienes un PDF de 10 páginas y quieres insertar la imagen en la última, escribe 10.',
+  },
+  {
+    q: '¿Se mantiene la proporción de la imagen al insertarla?',
+    a: 'Sí. Solo defines el ancho deseado como porcentaje del ancho de la página y la altura se calcula automáticamente para mantener la relación de aspecto original. Esto evita que logos y firmas aparezcan distorsionados.',
+  },
+  {
+    q: '¿Puedo insertar una firma escaneada o un sello oficial?',
+    a: 'Sí, es uno de los usos más comunes. Escanea tu firma en papel, guárdala como PNG con fondo blanco, y úsala como imagen a insertar. Para sellos y logos con fondo transparente usa PNG con canal alfa para que se integren limpiamente en el documento.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Tanto el PDF como la imagen se procesan completamente en tu navegador usando pdf-lib con carga dinámica. Ningún archivo sale de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿Qué diferencia hay entre esta herramienta y "Firmar PDF"?',
+    a: '"Firmar PDF" genera la firma directamente en el navegador dibujándola con el dedo o el ratón. "Añadir imagen a PDF" permite usar una imagen existente: una firma escaneada, el logo de tu empresa, un sello oficial en JPG o PNG, o cualquier imagen que ya tengas guardada. Usa "Firmar PDF" si necesitas crear la firma en el momento y esta herramienta si ya tienes la imagen preparada.',
+  },
 ];
 ---
 <ToolLayout slug="anadir-imagen-pdf" faqs={faqs}>
   <AnadirImagenPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Inserta logos, firmas y sellos en cualquier PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añadir una imagen a un PDF es imprescindible en múltiples flujos de trabajo: insertar el logo corporativo en contratos y presupuestos, añadir una firma escaneada a un documento oficial, colocar un sello de "Aprobado" o "Confidencial" sobre páginas concretas. Con esta herramienta lo haces directamente desde el navegador, sin Adobe Acrobat y sin enviar tus archivos a ningún servidor externo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Control preciso de posición y tamaño</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El sistema de coordenadas en porcentaje garantiza que la imagen se coloque correctamente en cualquier tamaño de página: A4, Carta, Legal o cualquier otro. Define el <strong class="text-[var(--color-text)]">ancho como % de la página</strong> (la altura se calcula automáticamente), y la posición X/Y para colocarla exactamente donde necesitas. Para firmas en el margen inferior derecho: X=70%, Y=80%, ancho=25% es un punto de partida habitual.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

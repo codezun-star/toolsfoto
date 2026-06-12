@@ -5,26 +5,48 @@ import MarcaAguaPDFTool from '@/components/tools/MarcaAguaPDFTool';
 const faqs = [
   {
     q: '¿En qué páginas se aplica la marca de agua?',
-    a: 'La marca de agua se aplica automáticamente a todas las páginas del PDF. No es posible seleccionar páginas individuales en esta versión; si necesitas marcar solo algunas páginas, usa primero la herramienta "Extraer páginas PDF" para separar el documento.',
+    a: 'La marca de agua se aplica automáticamente a todas las páginas del PDF. Si necesitas marcar solo algunas páginas, usa primero la herramienta "Extraer páginas PDF" para separar el documento, marca las páginas deseadas y luego vuelve a unirlas con "Unir PDFs".',
   },
   {
     q: '¿Puedo elegir el color y la opacidad de la marca de agua?',
-    a: 'Sí. Dispones de un selector de color para elegir cualquier tono (gris, rojo, azul, negro, etc.) y un control de opacidad entre el 10% y el 60%. Una opacidad baja (10-20%) es ideal para marcas sutiles que no dificulten la lectura del contenido.',
+    a: 'Sí. Dispones de un selector de color para elegir cualquier tono (gris, rojo, azul, negro, etc.) y un control de opacidad entre el 10% y el 60%. Una opacidad baja (10-20%) es ideal para marcas sutiles que no dificulten la lectura del contenido principal.',
   },
   {
     q: '¿Qué tamaños de texto están disponibles?',
-    a: 'Puedes elegir entre 40, 60, 80 y 100 puntos tipográficos. Para documentos A4 estándar, 60 pt suele ser el equilibrio ideal entre visibilidad y discreción. El texto se coloca en diagonal cruzando la página.',
+    a: 'Puedes elegir entre 40, 60, 80 y 100 puntos tipográficos. Para documentos A4 estándar, 60 pt suele ser el equilibrio ideal entre visibilidad y discreción. El texto se coloca en diagonal cruzando el centro de cada página.',
   },
   {
     q: '¿La marca de agua es permanente o se puede eliminar?',
-    a: 'La marca de agua se incrusta directamente en el contenido del PDF usando pdf-lib. Es una marca de baja seguridad: alguien con herramientas de edición PDF avanzadas podría intentar eliminarla. Para protección de alto nivel, combínala con la herramienta "Proteger PDF con contraseña".',
+    a: 'La marca de agua se incrusta directamente en el contenido del PDF usando pdf-lib. Es una marca de seguridad básica: alguien con herramientas de edición PDF avanzadas podría intentar eliminarla. Para protección de nivel más alto, combínala con la herramienta "Proteger PDF" con contraseña de propietario.',
   },
   {
     q: '¿Se envía el PDF a algún servidor?',
-    a: 'No. Todo el procesamiento ocurre 100% en tu navegador. El PDF nunca sale de tu dispositivo. Esto lo hace seguro para documentos confidenciales como contratos, facturas o documentos legales.',
+    a: 'No. Todo el procesamiento ocurre 100% en tu navegador con pdf-lib mediante carga dinámica. El PDF nunca sale de tu dispositivo. Esto lo hace seguro para documentos confidenciales como contratos, facturas o documentos legales.',
+  },
+  {
+    q: '¿La marca de agua de texto usa alguna fuente especial?',
+    a: 'Usa Helvetica Bold, que es una de las fuentes estándar de la especificación PDF (Standard Type 1 Fonts). No requiere incrustar ningún archivo de fuente, lo que garantiza compatibilidad con todos los visores de PDF y mantiene el tamaño del archivo mínimo.',
+  },
+  {
+    q: '¿Para qué se usa la marca de agua en PDF en el entorno profesional de LATAM?',
+    a: 'Los casos más frecuentes son: añadir "BORRADOR" o "DRAFT" a versiones preliminares de contratos o propuestas antes de la firma final; marcar documentos con "CONFIDENCIAL" antes de compartirlos por correo electrónico o WhatsApp Business; añadir el nombre o RUT/CUIT de la empresa como marca de propiedad en reportes y dossiers enviados a clientes; marcar cotizaciones y presupuestos con "COPIA" para diferenciar la copia del cliente de la copia del vendedor; y proteger planos, diseños o bocetos enviados a proveedores para que no puedan ser redistribuidos sin autorización.',
   },
 ];
 ---
 <ToolLayout slug="marca-agua-pdf" faqs={faqs}>
   <MarcaAguaPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade texto en diagonal a todas las páginas del PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La marca de agua en PDF es una capa de texto semitransparente en diagonal que identifica el estado o la confidencialidad de un documento. "CONFIDENCIAL", "BORRADOR", "COPIA" o el nombre de tu empresa se incrustan en todas las páginas directamente con pdf-lib, sin necesidad de Adobe Acrobat y sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Controla opacidad, color y tamaño para cada uso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para marcas <strong class="text-[var(--color-text)]">discretas</strong> que no tapen el contenido: opacidad 10-15%, color gris, tamaño 60 pt. Para marcas <strong class="text-[var(--color-text)]">visibles</strong> que comuniquen claramente el estado del documento: opacidad 30-40%, color rojo, tamaño 80-100 pt. El selector de color personalizado permite usar el color exacto de tu identidad corporativa.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

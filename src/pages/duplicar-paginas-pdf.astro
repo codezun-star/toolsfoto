@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import DuplicarPaginasPDFTool from '@/components/tools/DuplicarPaginasPDFTool';
+
+const faqs = [
+  {
+    q: '¿Cómo indico qué páginas quiero duplicar?',
+    a: 'Escribe los números de página separados por comas: "1, 3, 5" duplica las páginas 1, 3 y 5. Puedes usar rangos con guión: "2-4" duplica las páginas 2, 3 y 4. También puedes combinar ambos formatos: "1, 3-5, 7".',
+  },
+  {
+    q: '¿Dónde se insertan las copias duplicadas?',
+    a: 'Cada copia se inserta justo después de la página original. Si duplicas la página 2 con 2 copias adicionales, el resultado será: p1, p2, p2-copia1, p2-copia2, p3… Las páginas restantes mantienen su orden original.',
+  },
+  {
+    q: '¿Cuántas copias puedo añadir por página?',
+    a: 'Puedes añadir entre 1 y 10 copias adicionales por página. El límite es para mantener el rendimiento del procesamiento en el navegador y garantizar que el PDF resultante sea manejable en términos de tamaño.',
+  },
+  {
+    q: '¿Se mantiene la calidad del PDF al duplicar páginas?',
+    a: 'Sí. Las copias son referencias exactas a las páginas originales, copiadas con pdf-lib sin ninguna re-compresión ni pérdida de calidad. El tamaño del archivo aumenta proporcionalmente al número de copias añadidas.',
+  },
+  {
+    q: '¿Para qué sirve duplicar páginas de un PDF?',
+    a: 'Es útil para formularios que necesitan triplicado (copias para cliente, empresa y administración), plantillas donde ciertas páginas se repiten (guarda de libro, página de instrucciones al final de cada sección), crear PDFs de muestra con páginas de relleno, y preparar documentos para impresión dúplex donde se necesita una página en blanco intercalada.',
+  },
+  {
+    q: '¿Puedo duplicar la misma página varias veces con rangos?',
+    a: 'Sí. Puedes duplicar la misma página mencionándola múltiples veces en el campo de páginas: "1, 1, 1" duplicará la página 1 tres veces, resultando en cuatro apariciones consecutivas de esa página en el documento.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Toda la operación se realiza localmente en tu navegador con pdf-lib mediante carga dinámica. Ningún archivo sale de tu dispositivo. No se necesita cuenta ni registro.',
+  },
+];
 ---
-<ToolLayout slug="duplicar-paginas-pdf" faqs={[
-  { q: '¿Cómo indico qué páginas duplicar?', a: 'Escribe los números de página separados por comas: "1, 3, 5" duplica las páginas 1, 3 y 5. Puedes usar rangos con guión: "2-4" duplica las páginas 2, 3 y 4. También puedes combinar ambos: "1, 3-5, 7".' },
-  { q: '¿Dónde se insertan las copias duplicadas?', a: 'Cada copia se inserta justo después de la página original. Si duplicas la página 2 con 2 copias adicionales, el resultado será: p1, p2, p2-copia1, p2-copia2, p3…' },
-  { q: '¿Cuántas copias puedo añadir?', a: 'Puedes añadir entre 1 y 10 copias adicionales por página. El límite es para mantener el rendimiento del procesamiento en el navegador.' },
-  { q: '¿Se mantiene la calidad del PDF?', a: 'Sí. Las copias son referencias exactas a las páginas originales, copiadas con pdf-lib sin ninguna re-compresión ni pérdida de calidad.' },
-  { q: '¿Para qué sirve duplicar páginas de un PDF?', a: 'Es útil para formularios que necesitan triplicado, plantillas donde ciertas páginas se repiten, crear PDFs de muestra con páginas de relleno, o preparar documentos para impresión dúplex donde se necesita una página en blanco intercalada.' },
-]}>
+<ToolLayout slug="duplicar-paginas-pdf" faqs={faqs}>
   <DuplicarPaginasPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Multiplica páginas de PDF para formularios y plantillas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchos flujos de trabajo documentales requieren copias de páginas específicas: formularios en triplicado, secciones que se repiten, o páginas en blanco intercaladas para impresión dúplex. En lugar de generar el documento desde cero o copiar manualmente con Acrobat, esta herramienta te permite duplicar cualquier página (o rango de páginas) directamente en el navegador, sin instalar software y sin enviar tus archivos a servidores externos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cero pérdida de calidad en las copias</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        pdf-lib copia las páginas como <strong class="text-[var(--color-text)]">objetos nativos PDF</strong>, sin renderizar ni recomprimir. El texto mantiene su seleccionabilidad, las imágenes mantienen su resolución original y los vectores mantienen su escalabilidad. El tamaño del archivo crece proporcionalmente al número de páginas añadidas, lo que es normal y esperado.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

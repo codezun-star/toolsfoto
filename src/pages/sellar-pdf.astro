@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import SellarPDFTool from '@/components/tools/SellarPDFTool';
 
 const faqs = [
-  { q: '¿Qué es un sello en un PDF?', a: 'Un sello de PDF es un texto rotado (generalmente en diagonal) que se superpone sobre todas las páginas del documento con cierta transparencia. Se usa para indicar el estado del documento: borrador, confidencial, aprobado, etc.' },
-  { q: '¿El sello queda incrustado permanentemente?', a: 'Sí. El sello se añade como texto superpuesto dentro del PDF. No es eliminable con herramientas básicas, aunque un editor avanzado de PDFs podría quitarlo.' },
-  { q: '¿Puedo poner mi propio texto personalizado?', a: 'Sí. Además de los presets (BORRADOR, CONFIDENCIAL, APROBADO, RECHAZADO, COPIA, URGENTE), puedes escribir cualquier texto en el campo de texto personalizado.' },
-  { q: '¿Funciona con PDFs protegidos por contraseña?', a: 'No. El PDF debe estar sin protección de escritura para poder añadirle el sello. Si el PDF está encriptado, primero debes quitarle la contraseña con la herramienta "Eliminar contraseña PDF".' },
-  { q: '¿Afecta el sello a la calidad o contenido del PDF?', a: 'No afecta al contenido original. Solo añade una capa de texto transparente encima. El texto, imágenes y formato originales del PDF no se modifican.' },
+  {
+    q: '¿Qué es un sello en un PDF?',
+    a: 'Un sello de PDF es un texto rotado en diagonal que se superpone sobre todas las páginas del documento con cierta transparencia. A diferencia de una marca de agua de imagen, el sello está optimizado para textos de estado estándar: BORRADOR, CONFIDENCIAL, APROBADO, RECHAZADO, COPIA, URGENTE.',
+  },
+  {
+    q: '¿El sello queda incrustado permanentemente?',
+    a: 'Sí. El sello se añade como texto superpuesto dentro de la estructura del PDF con pdf-lib. Es una medida de seguridad básica: alguien con herramientas de edición PDF avanzadas podría intentar eliminarlo. Para mayor seguridad, combina el sello con la herramienta "Proteger PDF" con contraseña de propietario que restringe la edición.',
+  },
+  {
+    q: '¿Puedo poner mi propio texto personalizado?',
+    a: 'Sí. Además de los presets estándar (BORRADOR, CONFIDENCIAL, APROBADO, RECHAZADO, COPIA, URGENTE), puedes escribir cualquier texto en el campo de texto personalizado: el nombre de tu empresa, un número de expediente, "NO VÁLIDO", "MUESTRA" o cualquier otro.',
+  },
+  {
+    q: '¿En qué se diferencia el sello de la marca de agua?',
+    a: 'La funcionalidad es similar, pero el sello está pensado para textos cortos de estado estándar con un estilo visual predefinido (rotación 35°, fuente grande en negrita). La marca de agua es más flexible: permite elegir el texto, el color exacto, el tamaño tipográfico y la opacidad de forma más granular. Usa el sello para flujos de trabajo rápidos con textos predefinidos; usa la marca de agua para personalización completa.',
+  },
+  {
+    q: '¿Funciona con PDFs protegidos por contraseña?',
+    a: 'No. El PDF debe estar sin protección de escritura para poder añadirle el sello. Si el PDF está cifrado, primero elimina la contraseña con la herramienta "Eliminar contraseña PDF" y luego aplica el sello.',
+  },
+  {
+    q: '¿Afecta el sello a la calidad o contenido del PDF?',
+    a: 'No. Solo añade una capa de texto semitransparente encima del contenido original. El texto, las imágenes y el formato del PDF no se modifican.',
+  },
+  {
+    q: '¿Para qué se usan los sellos de PDF en el entorno profesional de LATAM?',
+    a: 'Los sellos son esenciales en flujos documentales donde el estado del documento cambia durante su ciclo de vida: marcar con "BORRADOR" las versiones previas de contratos y propuestas enviadas a revisión; estampar "APROBADO" o "RECHAZADO" en presupuestos y solicitudes de compra; sellar facturas con "COPIA" para diferenciarlas del original en contabilidad; añadir "CONFIDENCIAL" a informes financieros y legales antes de compartirlos por correo o WhatsApp Business; y marcar planos con "MUESTRA" o "SIN VALIDEZ LEGAL" para presentaciones a clientes.',
+  },
 ];
 ---
 <ToolLayout slug="sellar-pdf" faqs={faqs}>
   <SellarPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Stampa BORRADOR, CONFIDENCIAL o cualquier texto en tu PDF</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los sellos de estado son una forma estándar de comunicar la situación de un documento en flujos de trabajo profesionales. BORRADOR, APROBADO, RECHAZADO, COPIA y CONFIDENCIAL se incrusta directamente en todas las páginas del PDF con pdf-lib, en diagonal y con transparencia configurable, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Presets rápidos y texto personalizado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los <strong class="text-[var(--color-text)]">presets estándar</strong> permiten sellar con un solo clic para los estados más habituales en oficinas y empresas de LATAM. El campo de <strong class="text-[var(--color-text)]">texto personalizado</strong> permite usar el nombre de tu empresa, un número de expediente, "MUESTRA", "SIN VALIDEZ LEGAL" o cualquier texto que necesites para tu flujo documental.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EncabezadoPiePDFTool from '@/components/tools/EncabezadoPiePDFTool';
+
+const faqs = [
+  {
+    q: '¿Puedo añadir número de página automático al encabezado o pie?',
+    a: 'Sí. Usa la variable {n} para el número de página actual y {total} para el total de páginas. Por ejemplo: "Página {n} de {total}" se convierte en "Página 3 de 10" en la tercera página de un documento de 10 páginas.',
+  },
+  {
+    q: '¿En qué posición aparece el texto del encabezado y del pie?',
+    a: 'El encabezado se centra horizontalmente en la parte superior de la página. El pie de página se centra en la parte inferior. El parámetro de margen controla la distancia al borde superior e inferior respectivamente.',
+  },
+  {
+    q: '¿Qué fuente se usa para el texto del encabezado y pie?',
+    a: 'Se usa Helvetica, una de las fuentes estándar incorporadas en la especificación PDF. No es necesario incrustar ningún archivo de fuente externo, lo que garantiza compatibilidad con todos los visores de PDF: Adobe Reader, Foxit, Preview de macOS y navegadores web.',
+  },
+  {
+    q: '¿Puedo añadir solo encabezado o solo pie de página?',
+    a: 'Sí. Deja en blanco el campo que no quieras usar. Solo se añade el texto de los campos que tengan contenido. Puedes tener encabezado sin pie, pie sin encabezado, o ambos simultáneamente.',
+  },
+  {
+    q: '¿Se modifica el contenido original del PDF?',
+    a: 'El texto se superpone sobre el contenido existente como una capa adicional. Si ya hay contenido en las zonas del margen (encabezados o pies previos), el texto añadido podría solaparse. Ajusta el margen para evitarlo o verifica que las zonas de encabezado y pie están libres en el PDF original.',
+  },
+  {
+    q: '¿El proceso es privado y seguro?',
+    a: 'Sí. Todo el procesamiento ocurre en tu navegador con pdf-lib mediante carga dinámica (import dinámico). Ningún archivo sale de tu dispositivo. No se requiere registro ni cuenta para usar la herramienta.',
+  },
+  {
+    q: '¿Para qué tipos de documentos es más útil añadir encabezados y pies de página?',
+    a: 'Los casos de uso más frecuentes son: añadir numeración a documentos legales, contratos y expedientes que deben entregarse paginados; añadir el nombre de la empresa o número de referencia del proyecto en el encabezado de todos los documentos; insertar avisos de confidencialidad como "Documento confidencial – uso interno" en el pie de todos los informes; y añadir la fecha de emisión o número de versión en documentos técnicos con muchas revisiones.',
+  },
+];
 ---
-<ToolLayout slug="encabezado-pie-pdf" faqs={[
-  { q: '¿Puedo añadir número de página automático?', a: 'Sí. Usa la variable {n} para el número de página actual y {total} para el total de páginas. Por ejemplo: "Página {n} de {total}" se convierte en "Página 3 de 10" en la tercera página.' },
-  { q: '¿En qué posición aparece el texto?', a: 'El encabezado se centra horizontalmente en la parte superior de la página. El pie de página se centra en la parte inferior. El margen controla la distancia al borde.' },
-  { q: '¿Qué fuente se usa para el texto?', a: 'Se usa Helvetica, una de las fuentes estándar incorporadas en todos los visores de PDF. No es necesario incrustar ninguna fuente externa.' },
-  { q: '¿Puedo añadir solo encabezado o solo pie de página?', a: 'Sí. Deja en blanco el campo que no quieras usar. Solo se añade el texto de los campos que tengan contenido.' },
-  { q: '¿Se modifica el contenido original del PDF?', a: 'El texto se superpone sobre el contenido existente. Si hay contenido en las zonas del margen (encabezado o pie), el texto añadido podría solaparse. Ajusta el margen para evitarlo.' },
-]}>
+<ToolLayout slug="encabezado-pie-pdf" faqs={faqs}>
   <EncabezadoPiePDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Numera y personaliza documentos PDF con encabezados y pies</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añadir encabezados y pies de página es un requisito habitual en documentación legal, informes corporativos y expedientes administrativos. La numeración automática con variables dinámicas, el nombre de la empresa en el encabezado, o el aviso de confidencialidad en el pie son elementos que profesionalizan cualquier documento. Esta herramienta los añade en segundos directamente en el navegador, sin Acrobat.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Variables dinámicas para numeración automática</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Usa <strong class="text-[var(--color-text)]">{'{n}'}</strong> para la página actual y <strong class="text-[var(--color-text)]">{'{total}'}</strong> para el total de páginas: se sustituyen automáticamente en cada hoja sin editar el texto manualmente. Ejemplos: <em>"Página {'{n}'} de {'{total}'}"</em> para numeración estándar, <em>"Ref. EXP-2024 | Pág. {'{n}'}"</em> para expedientes, o <em>"Confidencial – Pág. {'{n}'}/{'{total}'}"</em> para documentos internos.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

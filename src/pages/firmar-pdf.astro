@@ -4,27 +4,49 @@ import FirmarPDFTool from '@/components/tools/FirmarPDFTool';
 
 const faqs = [
   {
-    q: '¿Es válida legalmente la firma digital generada con esta herramienta?',
-    a: 'Esta herramienta crea una firma manuscrita visual (imagen de tu trazo dibujado) incrustada en el PDF. No genera una firma digital criptográfica con certificado. Para documentos con validez legal plena en España (eIDAS), se necesita una firma electrónica cualificada con certificado reconocido como el DNI electrónico.',
+    q: '¿Es válida legalmente la firma generada con esta herramienta?',
+    a: 'Esta herramienta crea una firma manuscrita visual (imagen de tu trazo dibujado) incrustada en el PDF. No genera una firma digital criptográfica con certificado. Para documentos con validez legal plena en España (eIDAS) o LATAM, se necesita una firma electrónica cualificada con certificado reconocido. Para acuerdos internos, presupuestos aceptados y documentos de baja criticidad legal, la firma manuscrita visual es suficiente.',
   },
   {
-    q: '¿Puedo usar el dedo en móvil para dibujar la firma?',
-    a: 'Sí. El área de firma admite tanto mouse como eventos táctiles. En móviles y tablets puedes dibujar directamente con el dedo. Recomendamos usar el dedo índice y trazar despacio para obtener una firma más precisa.',
+    q: '¿Puedo usar el dedo en el móvil para dibujar la firma?',
+    a: 'Sí. El área de firma admite tanto mouse como eventos táctiles. En móviles y tablets puedes dibujar directamente con el dedo. Se recomienda usar el índice y trazar despacio para obtener una firma más precisa y legible.',
   },
   {
     q: '¿En qué página se inserta la firma?',
-    a: 'Puedes elegir el número de página donde insertar la firma. La herramienta carga automáticamente el número total de páginas del PDF para que sepas el rango disponible.',
+    a: 'Puedes elegir el número de página donde insertar la firma. La herramienta carga automáticamente el número total de páginas del PDF para que sepas el rango disponible. Para contratos de varias páginas, normalmente se firma la última.',
   },
   {
     q: '¿Cómo funciona el posicionamiento de la firma?',
-    a: 'La posición se define como porcentaje del ancho y alto de la página (ejes X e Y). Esto hace que funcione correctamente independientemente del tamaño de la página. El 0% es la esquina superior izquierda. Puedes también ajustar el ancho en puntos para hacer la firma más grande o más pequeña.',
+    a: 'La posición se define como porcentaje del ancho y alto de la página (ejes X e Y). X=0% es el borde izquierdo, Y=0% es el borde superior. Esto garantiza que el posicionamiento funcione correctamente independientemente del tamaño de página del PDF. Puedes también ajustar el ancho en puntos para hacer la firma más grande o más pequeña.',
   },
   {
     q: '¿El PDF original se modifica?',
-    a: 'No. La herramienta carga el PDF original en memoria, añade la firma como imagen incrustada y genera un nuevo PDF descargable. El archivo original en tu dispositivo no se toca.',
+    a: 'No. La herramienta carga el PDF original en memoria del navegador, añade la firma como imagen PNG incrustada y genera un nuevo PDF descargable. El archivo original en tu dispositivo no se toca en ningún momento.',
+  },
+  {
+    q: '¿Puedo borrar la firma y volver a dibujarla?',
+    a: 'Sí. El botón "Limpiar" borra el área de dibujo y te permite volver a trazar la firma desde cero antes de insertarla en el PDF. Puedes repetir el proceso tantas veces como necesites hasta estar satisfecho con el resultado.',
+  },
+  {
+    q: '¿Cuándo usar esta herramienta frente a "Añadir imagen a PDF"?',
+    a: '"Firmar PDF" es ideal cuando necesitas crear la firma en el momento: dibujas directamente en el navegador y la insertas. "Añadir imagen a PDF" es mejor cuando ya tienes una firma guardada como PNG (escaneada de papel o guardada de otro documento). Para flujos de trabajo recurrentes donde siempre usas la misma firma, guarda una copia del PNG de tu firma y usa "Añadir imagen a PDF" para mayor eficiencia.',
   },
 ];
 ---
 <ToolLayout slug="firmar-pdf" faqs={faqs}>
   <FirmarPDFTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Firma PDFs directamente en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Imprimir, firmar y escanear un PDF es un proceso lento y arcaico. Con esta herramienta puedes dibujar tu firma con el ratón o el dedo, elegir la página y la posición, y descargar el PDF firmado en segundos. Es perfecta para presupuestos, contratos de baja criticidad, autorizaciones internas y cualquier documento donde una firma visual manuscrita es suficiente.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Firma en cualquier dispositivo, sin instalar nada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El área de firma admite <strong class="text-[var(--color-text)]">ratón en escritorio y dedo en móvil o tablet</strong>. La firma se exporta como PNG con fondo transparente y se incrusta en la página elegida del PDF usando pdf-lib. El proceso es completamente local: el PDF y la firma nunca salen de tu dispositivo. Compatible con cualquier navegador moderno: Chrome, Firefox, Safari, Edge.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
