@@ -8,6 +8,22 @@ import EliminarSilencioTool from '@/components/tools/EliminarSilencioTool';
   { q: '¿Para qué tipo de contenido es más útil?', a: 'Es ideal para podcasts, entrevistas, clases online y grabaciones de reuniones. Elimina los tiempos muertos entre intervenciones y reduce la duración total del audio de forma automática.' },
   { q: '¿Se modifica el formato del archivo?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada. El procesamiento lo realiza FFmpeg.wasm, 100% en tu navegador, sin enviar el archivo a ningún servidor.' },
   { q: '¿Puede cortar palabras o frases si el umbral es muy alto?', a: 'Sí. Si el umbral de silencio es demasiado alto (por ejemplo -20 dB) puede interpretar pausas normales del habla como silencio y cortarlas. Comienza con -40 dB y ajusta gradualmente si no se eliminan suficientes silencios.' },
+  { q: '¿Cómo funciona internamente el filtro silenceremove de FFmpeg?', a: 'FFmpeg usa el filtro <strong>silenceremove=stop_periods=-1:stop_duration=N:stop_threshold=NdB</strong>. El parámetro <em>stop_periods=-1</em> indica que debe eliminar todos los períodos de silencio (no solo el primero). <em>stop_duration</em> es la duración mínima que debe tener el silencio para ser eliminado. <em>stop_threshold</em> es el nivel por debajo del cual el audio se considera silencio.' },
+  { q: '¿Para qué se usa eliminar silencio en la práctica en LATAM?', a: 'Los usos más habituales son: reducir la duración de episodios de podcast grabados con muchas pausas entre frases en Colombia, México y Argentina; eliminar los silencios largos de webinars o clases en Zoom antes de subirlos a Hotmart o YouTube; limpiar grabaciones de entrevistas telefónicas para reducir los momentos muertos; comprimir audiolibros o cursos grabados reduciendo los silencios entre secciones para mejorar la experiencia del oyente; y preparar locuciones profesionales eliminando las pausas innecesarias antes de entregar a clientes o distribuidoras.' },
 ]}>
   <EliminarSilencioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Eliminación de silencios con el filtro silenceremove de FFmpeg: umbral y duración configurables</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el filtro <strong class="text-[var(--color-text)]">silenceremove=stop_periods=-1:stop_duration=N:stop_threshold=NdB</strong> para detectar y eliminar todos los fragmentos por debajo del umbral durante más de la duración mínima configurada. El umbral va de −60 a −20 dB y la duración mínima de 0.1 a 3 segundos. El formato de salida es el mismo que el de entrada.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast, clases en Hotmart y webinars con menos tiempos muertos en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Reduce automáticamente la duración de episodios de podcast eliminando pausas largas, mejora la experiencia de <strong class="text-[var(--color-text)]">clases grabadas en Hotmart</strong> eliminando silencios entre secciones, o limpia grabaciones de reuniones de Zoom antes de compartirlas. Muy usado por creadores de contenido en Colombia, México y Argentina que producen audio sin acceso a software de edición profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

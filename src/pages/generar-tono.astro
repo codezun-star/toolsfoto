@@ -6,8 +6,24 @@ import GenerarTonoTool from '@/components/tools/GenerarTonoTool';
   { q: '¿Para qué sirve un generador de tonos de audio?', a: 'Es útil para calibrar altavoces y auriculares, probar la respuesta en frecuencia de un sistema de audio, crear efectos de sonido, generar señales de prueba para equipos de grabación, hacer experimentos de psicoacústica, o crear tonos de meditación y binaural beats.' },
   { q: '¿Qué formas de onda están disponibles?', a: 'La herramienta genera cuatro formas de onda: sinusoidal (tono puro, el más suave), cuadrada (rica en armónicos impares, sonido electrónico), triangular (armónicos impares con caída más suave) y diente de sierra (todos los armónicos, el más brillante y agresivo).' },
   { q: '¿Qué frecuencias puedo generar?', a: 'Puedes generar tonos entre 20 Hz (límite inferior del oído humano) y 20.000 Hz (límite superior). El La estándar es 440 Hz. Para binaural beats se usan diferencias de frecuencia entre 1 y 40 Hz.' },
-  { q: '¿En qué formato se descarga el tono generado?', a: 'El tono se descarga como archivo WAV (audio sin compresión), lo que garantiza máxima fidelidad para la frecuencia generada.' },
+  { q: '¿En qué formato se descarga el tono generado?', a: 'El tono se descarga como archivo MP3. Para uso técnico que requiera máxima fidelidad (calibración de laboratorio) se recomienda usar el tono directamente desde el reproductor sin re-comprimir.' },
+  { q: '¿Qué son los binaural beats y cómo se generan?', a: 'Los binaural beats son una técnica que consiste en reproducir un tono a frecuencia ligeramente diferente en cada oído (por ejemplo, 200 Hz en el oído izquierdo y 210 Hz en el derecho). El cerebro percibe una oscilación de 10 Hz entre ambos tonos. Para generarlos, usa esta herramienta dos veces: un tono para cada canal, y mezcla los dos archivos con la herramienta "Mezclar audios" ajustando el panorama (si tu DAW lo permite) o usando auriculares.' },
+  { q: '¿Para qué se usa el generador de tonos en la práctica en LATAM?', a: 'Los usos más habituales son: verificar que los altavoces y auriculares reproducen correctamente el rango de frecuencias antes de mezclar música en home studios de Colombia, México y Argentina; crear efectos de sonido sintéticos (pitidos, alarmas, notificaciones) para videojuegos indie o apps móviles; generar tonos de calibración para sistemas de sonido en eventos en vivo; crear señales de prueba para probar equipos de grabación nuevos; y generar tonos base para producción de música electrónica o chiptune.' },
   { q: '¿Se procesan los archivos en el servidor?', a: 'No. Los tonos se generan 100% en tu navegador usando FFmpeg.wasm con la fuente lavfi (generador de señal interno). Ningún dato sale de tu dispositivo. La primera vez descarga el procesador (~30 MB).' },
 ]}>
   <GenerarTonoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera tonos sinusoidales, cuadrados, triangulares y diente de sierra con la fuente lavfi de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa la fuente <strong class="text-[var(--color-text)]">lavfi sine/square/triangle/sawtooth=FREQ:sample_rate=44100</strong> sin archivo de entrada para sintetizar la forma de onda seleccionada a la frecuencia y duración configuradas (20 Hz–20 kHz, 1–60 segundos). El resultado se descarga en MP3. No se requiere ningún archivo de audio como entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Calibración de audio, efectos para videojuegos y producción electrónica en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Genera tonos de prueba para verificar la respuesta en frecuencia de tus <strong class="text-[var(--color-text)]">altavoces o auriculares</strong> antes de mezclar música, crea efectos de sonido sintéticos (pitidos, alarmas) para videojuegos indie o apps móviles, o genera señales base para producción de música electrónica. Muy usado en home studios de Colombia, México y Argentina sin acceso a generadores de señal físicos.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

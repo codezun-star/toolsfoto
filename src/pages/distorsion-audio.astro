@@ -7,7 +7,23 @@ import DistorsionAudioTool from '@/components/tools/DistorsionAudioTool';
   { q: '¿Qué es el efecto bitcrush?', a: 'El bitcrush reduce la resolución de bits del audio (de 16 o 24 bits a 8 bits), creando un efecto digital granulado y distorsionado que recuerda a los videojuegos retro de los años 80-90. Se usa mucho en música chiptune y lo-fi.' },
   { q: '¿Qué tipo de audio responde mejor a la distorsión?', a: 'Las guitarras eléctricas, sintetizadores y voces procesadas responden muy bien. Aplicar distorsión a música polifónica o grabaciones orquestales suele producir resultados caóticos. El preset "Suave" puede funcionar bien con batería para añadir presencia.' },
   { q: '¿El efecto se puede deshacer?', a: 'No: la distorsión modifica la señal de forma irreversible. Si no estás satisfecho con el resultado, simplemente vuelve a subir el archivo original y prueba otro preset.' },
+  { q: '¿Cuáles son los cuatro presets disponibles?', a: 'La herramienta ofrece: "Overdrive suave" (saturación leve, ideal para voz y guitarra limpia), "Guitarra" (overdrive más pronunciado, clásico del rock y blues), "Bitcrush 8-bit" (acrusher que simula audio retro de videojuegos) y "Heavy" (distorsión intensa para metal y sonidos agresivos). El filtro de FFmpeg cambia entre overdrive y acrusher según el preset elegido.' },
+  { q: '¿Para qué se usa la distorsión de audio en la práctica en LATAM?', a: 'Los usos más habituales son: añadir textura lo-fi a samples para producción de trap o hip-hop en Colombia, México y Argentina; crear efectos de sonido retro (8-bit) para videojuegos indie publicados en itch.io o App Store; procesar la voz para efectos especiales en podcasts o narraciones; añadir presencia a guitarras eléctricas grabadas en casa con equipos de baja ganancia; y crear samples distorsionados para música urbana sin necesidad de amplificadores físicos ni plugins de pago.' },
   { q: '¿En qué formato se descarga el resultado?', a: 'En el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista compatible, se exporta como MP3. Todo el procesamiento se realiza localmente con FFmpeg.wasm.' },
 ]}>
   <DistorsionAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Distorsión y bitcrush con los filtros overdrive y acrusher de FFmpeg en 4 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica distorsión usando el filtro <strong class="text-[var(--color-text)]">overdrive</strong> (saturación de tubo analógica) o <strong class="text-[var(--color-text)]">acrusher</strong> (reducción de bits al estilo retro). Los 4 presets —Overdrive suave, Guitarra, Bitcrush 8-bit y Heavy— controlan la intensidad y el tipo de distorsión. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Producción de trap, música lo-fi y efectos retro para creadores digitales en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El preset <strong class="text-[var(--color-text)]">Bitcrush 8-bit</strong> es muy popular entre productores de trap y música lo-fi en Colombia, México y Argentina para añadir textura retro a samples sin plugins de pago. El preset Guitarra es ideal para guitarras eléctricas grabadas en home studio. Sin necesidad de pedales físicos, amplificadores ni software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

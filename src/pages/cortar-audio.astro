@@ -7,9 +7,25 @@ const faqs = [
   { q: '¿Cómo identifico el tiempo exacto de corte?', a: 'Usa el reproductor de audio integrado para escuchar y localizar el punto de inicio y fin que quieres. Anota los tiempos e introdúcelos en los campos correspondientes. El formato es mm:ss (por ejemplo, "02:30" para 2 minutos y 30 segundos).' },
   { q: '¿Qué formatos admite?', a: 'MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el formato de entrada, preservando así las características originales del audio.' },
   { q: '¿Puedo usarlo para crear un tono de llamada?', a: 'Sí. Un tono de llamada suele durar entre 20 y 30 segundos. Selecciona el fragmento de la canción que quieras, descárgalo como MP3 y transfiérelo a tu móvil. En iOS deberás renombrarlo a .m4r para que el sistema lo reconozca como tono.' },
+  { q: '¿Qué ocurre si el tiempo de inicio y fin son iguales o el inicio es mayor que el fin?', a: 'FFmpeg genera un fragmento vacío o de duración cero. Antes de procesar, la herramienta valida que el tiempo de inicio sea menor que el de fin. Si introduces valores incorrectos verás un mensaje de error en español indicando que debes corregirlos.' },
+  { q: '¿Cuál es la diferencia entre cortar y dividir audio?', a: 'Cortar extrae un fragmento específico entre dos puntos de tiempo (inicio y fin), descartando el resto. Dividir siempre genera dos partes: todo lo anterior al punto de corte y todo lo posterior, sin perder ningún fragmento del archivo original.' },
   { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
 ];
 ---
 <ToolLayout slug="cortar-audio" faqs={faqs}>
   <CortarAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corte de audio sin recodificar con los flags -ss, -to y -c copy de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa <strong class="text-[var(--color-text)]">-ss</strong> (inicio), <strong class="text-[var(--color-text)]">-to</strong> (fin) y <strong class="text-[var(--color-text)]">-c copy</strong> para extraer el fragmento sin recodificar el audio. Esto garantiza calidad idéntica al original y procesamiento muy rápido incluso para archivos grandes. El formato de salida es el mismo que el de entrada: MP3, WAV, OGG, AAC o FLAC.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Clips para WhatsApp, TikTok, tonos de llamada y fragmentos de podcast en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Corta fragmentos de canciones para <strong class="text-[var(--color-text)]">tonos de llamada en iPhone y Android</strong>, extrae clips de 15-60 segundos para publicar en TikTok o Reels, recorta el fragmento destacado de un episodio de podcast para promoverlo en WhatsApp, o elimina silencios del inicio y final de una grabación. Ideal para creadores de contenido en Colombia, México y Argentina sin acceso a Audacity o Adobe Audition.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

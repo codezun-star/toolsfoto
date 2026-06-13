@@ -8,8 +8,24 @@ const faqs = [
   { q: '¿Qué formatos de audio admite?', a: 'Admite todos los formatos de audio que soporte el navegador: MP3, WAV, OGG, AAC, FLAC y M4A.' },
   { q: '¿El análisis es preciso?', a: 'La precisión depende de la claridad del ritmo en la grabación. Para pistas con ritmo claro, el resultado suele estar dentro de ±2 BPM. También se muestran las equivalencias al doble y la mitad de velocidad.' },
   { q: '¿Cuánto tiempo analiza del audio?', a: 'Para optimizar el rendimiento, la herramienta analiza los primeros 3 minutos del audio. Esto es suficiente para la mayoría de canciones. La detección tarda pocos segundos incluso para archivos grandes.' },
+  { q: '¿Qué etiquetas de tempo muestra el resultado?', a: 'Además del número de BPM, la herramienta muestra la etiqueta musical correspondiente: Larghetto (<60 BPM), Andante (60-75 BPM), Moderato (76-108 BPM), Allegro (109-132 BPM), Vivace (133-160 BPM) y Presto (>160 BPM). También se muestran los BPM al doble y a la mitad, útiles para DJ y remezcla.' },
+  { q: '¿Para qué se usa detectar el BPM en la práctica en LATAM?', a: 'Los usos más habituales son: encontrar el BPM de una pista antes de hacer un remix o mashup en producción de música urbana (reggaetón, trap, cumbia beat) en Colombia, México y Argentina; sincronizar la música de fondo de un vídeo con las transiciones; programar una sesión de DJ con pistas del mismo BPM para hacer transiciones suaves; añadir la etiqueta BPM a la biblioteca de samples; y verificar que una grabación de batería está en el tempo correcto antes de mezclarla con otras pistas.' },
 ];
 ---
 <ToolLayout slug="detector-bpm" faqs={faqs}>
   <DetectorBPMTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Detección de BPM con la Web Audio API mediante análisis de energía y onset detection</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta decodifica el audio con la <strong class="text-[var(--color-text)]">Web Audio API</strong> y analiza los primeros 3 minutos usando detección de onset basada en picos de energía. Calcula el BPM más probable, muestra la etiqueta de tempo musical (Andante, Allegro, Presto…) y las equivalencias al doble y la mitad. No usa FFmpeg ni envía el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">DJs, productores de reggaetón y TikTok creators que necesitan sincronizar el tempo en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Detecta el BPM de tus pistas antes de hacer un <strong class="text-[var(--color-text)]">remix o mashup</strong>, sincroniza la música de fondo de un vídeo de TikTok o Reels con las transiciones, o etiqueta tu biblioteca de samples con el tempo exacto. Muy usado por productores de reggaetón, trap y música urbana en Colombia, México y Argentina que trabajan sin acceso a Mixed In Key o Rekordbox.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -7,7 +7,23 @@ import GenerarRuidoBlancTool from '@/components/tools/GenerarRuidoBlancTool';
   { q: '¿Para qué se usa el ruido blanco?', a: 'El ruido blanco se usa para enmascarar otros sonidos molestos (conversaciones, tráfico) en oficinas y dormitorios. También para pruebas técnicas de audio (calibración de sistemas), terapia del sueño, concentración al estudiar y diseño de sonido.' },
   { q: '¿Cuál es el ruido más recomendado para dormir?', a: 'Muchos estudios sugieren que el ruido rosa es el más efectivo para dormir ya que imita patrones naturales como la lluvia o el viento. El ruido marrón también es popular por sus graves relajantes. El blanco puede resultar demasiado agudo para algunas personas.' },
   { q: '¿Cuánto tiempo puedo generar como máximo?', a: 'El máximo es 1 hora (3600 segundos). Para sesiones más largas, genera el archivo y repítelo en bucle con tu reproductor de audio. Un archivo de 1 hora pesa aproximadamente 85 MB en MP3 a 192 kbps.' },
+  { q: '¿Se puede usar el ruido rosa o marrón para mejorar la concentración?', a: 'Sí. Estudios de productividad sugieren que el ruido rosa puede reducir las distracciones en entornos ruidosos. El ruido marrón, con sus frecuencias graves prominentes, se asocia con mayor concentración en tareas creativas. Ambos enmascaran sonidos de conversación mejor que el ruido blanco en espacios de trabajo abiertos.' },
+  { q: '¿Para qué se usa el generador de ruido en la práctica en LATAM?', a: 'Los usos más habituales son: enmascarar el ruido de conversaciones en oficinas de planta abierta en Colombia, México y Argentina donde el ruido ambiente dificulta la concentración; crear fondos sonoros para sesiones de meditación o yoga; generar ruido de sala para añadir a grabaciones demasiado silenciosas y que suenen más naturales; crear efectos de lluvia o estática para producciones de audio; probar la respuesta en frecuencia de altavoces o auriculares; y facilitar el sueño de bebés o personas con insomnio.' },
   { q: '¿Se sube el archivo al servidor?', a: 'No hay archivos que subir: esta herramienta genera el audio desde cero usando FFmpeg.wasm con la fuente lavfi anoisesrc. Todo ocurre localmente en tu navegador sin conexión a servidores.' },
 ]}>
   <GenerarRuidoBlancTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera ruido blanco, rosa y marrón con la fuente lavfi anoisesrc de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa la fuente <strong class="text-[var(--color-text)]">lavfi anoisesrc=d=N:color=TYPE:amplitude=N</strong> sin ningún archivo de entrada para generar los tres tipos de ruido: white (igual energía en todas las frecuencias), pink (energía decreciente por octava) y brown (energía muy concentrada en los graves). La duración máxima es 1 hora. El resultado siempre se descarga en MP3. Todo ocurre 100% en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Concentración en oficinas, terapia del sueño y calibración de audio en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El <strong class="text-[var(--color-text)]">ruido rosa</strong> es el favorito para concentración y sueño; el marrón para meditación y trabajo creativo; el blanco para calibración técnica de altavoces. Muy usado en oficinas de planta abierta en Colombia, México y Argentina para enmascarar conversaciones, y por productores de audio para añadir ruido de sala a grabaciones demasiado silenciosas.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

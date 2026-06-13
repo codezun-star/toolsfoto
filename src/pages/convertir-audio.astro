@@ -7,9 +7,25 @@ const faqs = [
   { q: '¿Qué diferencia hay entre MP3, OGG y AAC?', a: 'Los tres son formatos con pérdida (lossy). MP3 es el más compatible universalmente. OGG (Vorbis) es un formato abierto con mejor calidad que MP3 al mismo bitrate, muy usado en videojuegos y aplicaciones Linux. AAC es el formato de Apple, ofrece mejor calidad que MP3 y es compatible con iOS, macOS y la mayoría de reproductores modernos.' },
   { q: '¿Puedo convertir de MP3 a WAV sin perder calidad?', a: 'No exactamente. Si el MP3 original ya está comprimido, convertirlo a WAV no restaura la información perdida. El WAV resultante tendrá el mismo tamaño que un WAV original, pero la calidad sonora será la del MP3. Es útil si necesitas el formato WAV para compatibilidad con un software concreto.' },
   { q: '¿Se puede convertir FLAC a MP3?', a: 'Sí, FLAC se admite como entrada. FLAC es lossless, por lo que convertirlo a MP3 sí implica pérdida de calidad (pero el MP3 resultante tendrá mucha mejor base que uno proveniente de un MP3 ya comprimido).' },
+  { q: '¿Cuándo debo elegir OGG en lugar de MP3?', a: 'OGG (Vorbis) es preferible cuando distribues audio para aplicaciones web o videojuegos. La especificación HTML5 soporta OGG nativamente y el formato es libre de patentes. También en Linux y plataformas de software libre (como itch.io para videojuegos indie) el OGG es el formato preferido por defecto.' },
+  { q: '¿Qué codec usa FFmpeg para cada formato de salida?', a: 'MP3 usa libmp3lame con calidad variable -q:a 2 (alta calidad). WAV usa pcm_s16le (PCM sin compresión de 16 bits). OGG usa libvorbis con -q:a 4 (buena calidad). AAC usa el codec aac nativo con -b:a 192k. Todos producen audio de alta calidad desde cualquier formato de entrada compatible.' },
   { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
 ];
 ---
 <ToolLayout slug="convertir-audio" faqs={faqs}>
   <ConvertirAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte entre MP3, WAV, OGG y AAC con los codecs libmp3lame, pcm_s16le, libvorbis y aac de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el codec óptimo para cada formato: <strong class="text-[var(--color-text)]">libmp3lame</strong> (-q:a 2) para MP3 de alta calidad, <strong class="text-[var(--color-text)]">pcm_s16le</strong> para WAV sin compresión, <strong class="text-[var(--color-text)]">libvorbis</strong> (-q:a 4) para OGG y <strong class="text-[var(--color-text)]">aac</strong> (-b:a 192k) para AAC/M4A. Acepta MP3, WAV, OGG, AAC, FLAC y M4A como entrada. El procesamiento ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Distribución en Hotmart, DistroKid y compatibilidad con videojuegos indie en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Convierte tus audios a MP3 para distribuir en <strong class="text-[var(--color-text)]">Hotmart, DistroKid o Spotify</strong> desde Colombia, México y Argentina; a OGG para audioclips en videojuegos indie publicados en itch.io; a WAV para edición sin pérdida en DAWs como Reaper o Audacity; o a AAC para compatibilidad con iPhone e iPad. Sin necesidad de instalar software.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

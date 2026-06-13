@@ -6,8 +6,24 @@ import EcoAudioTool from '@/components/tools/EcoAudioTool';
   { q: '¿Qué diferencia hay entre eco y reverb?', a: 'El eco es una repetición discreta y audible del sonido original después de un retardo notable (generalmente más de 50 ms). El reverb es una serie de reflexiones muy rápidas que crean la sensación de espacio acústico. Esta herramienta aplica un eco con retardo configurable.' },
   { q: '¿Qué hace el parámetro de retardo?', a: 'El retardo (en milisegundos) determina cuánto tiempo pasa entre el sonido original y su eco. Un retardo de 60 ms da un efecto sutil de sala pequeña; 500-1000 ms crea el efecto de eco en cueva o cañón.' },
   { q: '¿Qué hace el parámetro de decaimiento?', a: 'El decaimiento controla cuánto volumen pierde cada repetición del eco. Con decaimiento 0.9 el eco es muy persistente; con 0.3 desaparece rápidamente después de la primera repetición.' },
+  { q: '¿Cuáles son los presets disponibles?', a: 'La herramienta ofrece 4 presets: "Sutil" (60ms / decaimiento 0.3, para añadir presencia sin que el eco sea notorio), "Sala" (200ms / 0.5, simula una sala de conciertos pequeña), "Caverna" (500ms / 0.7, efecto de cueva o espacio grande) y "Estadio" (1000ms / 0.8, eco de estadio o montaña). Los parámetros de retardo y decaimiento también son ajustables manualmente.' },
   { q: '¿Se modifica el formato del archivo original?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato de entrada no está en la lista compatible, se exporta como MP3.' },
   { q: '¿Puedo usar esta herramienta para podcasts y voz?', a: 'Sí, aunque para voz se recomienda usar presets sutiles como "Sala" con bajo decaimiento. Los efectos de eco muy pronunciados pueden dificultar la intelligibilidad del habla.' },
+  { q: '¿Para qué se usa el eco de audio en la práctica en LATAM?', a: 'Los usos más habituales son: añadir ambiente a grabaciones de voz para podcasts o narraciones de vídeo que suenan demasiado "secas" o grabadas en casa sin acondicionamiento acústico; crear efectos de sonido con eco para producción musical urbana o reggaetón en Colombia, México y Argentina; añadir el efecto de estadio a voces de coros en producciones musicales de home studio; crear efectos especiales de voz para personajes en audiolibros o contenido de ficción; y enriquecer grabaciones de guitarra acústica añadiendo espacialidad sin necesidad de procesadores de audio físicos.' },
 ]}>
   <EcoAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Efecto eco con el filtro aecho de FFmpeg: retardo y decaimiento configurables en 4 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">aecho=0.8:0.9:delay:decay</strong> con retardo configurable (60-1000ms) y decaimiento (0.3-0.8). Los 4 presets —Sutil, Sala, Caverna y Estadio— cubren desde efectos apenas perceptibles hasta ecos de gran espacio. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añadir ambiente a voces, efectos de sonido y producción musical sin hardware en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añade espacialidad a grabaciones de voz de podcast que suenan demasiado secas, crea efectos de <strong class="text-[var(--color-text)]">voz de estadio</strong> para música urbana, o añade el eco de sala a guitarras acústicas grabadas en casa. Muy usado por creadores de contenido en Colombia, México y Argentina para mejorar grabaciones hechas en home studio sin cabina de aislamiento ni procesadores de audio físicos.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

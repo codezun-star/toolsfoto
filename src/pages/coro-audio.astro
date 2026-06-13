@@ -7,7 +7,23 @@ import CoroAudioTool from '@/components/tools/CoroAudioTool';
   { q: '¿Qué diferencia hay entre los presets Sutil, Estándar y Rico?', a: '"Sutil" usa 2 voces adicionales con poca modulación, ideal para añadir amplitud sin que se note demasiado. "Estándar" usa 3 voces, el efecto clásico para voces y guitarras. "Rico" usa 4 voces con mayor modulación para un efecto coral más pronunciado y denso.' },
   { q: '¿Para qué tipo de audio es más efectivo el efecto coro?', a: 'El coro es especialmente efectivo en voces (hace que suenen más grandes y llenas), guitarras limpias y sintetizadores. Para percusión o graves, el efecto es menos notorio. Es ampliamente usado en música de los años 80.' },
   { q: '¿Cuál es la diferencia entre coro y eco?', a: 'El eco (aecho) repite el sonido con retardos largos y audibles (>50ms). El coro usa retardos muy cortos (30-100ms) con modulación de pitch que cambia continuamente, creando la sensación de amplitud y movimiento en lugar de repetición.' },
+  { q: '¿Se modifica el formato del archivo de salida?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato de entrada no está en la lista soportada, se exporta como MP3. El procesamiento es 100% en el navegador con FFmpeg.wasm.' },
+  { q: '¿Cuándo se usa el coro en la producción musical?', a: 'El coro se usa para: engordar voces de solista en música pop y latina (doblar la voz con coro sutil da presencia sin que se note la edición), dar amplitud a guitarras limpias en música indie o electrónica, añadir movimiento a pads de sintetizador, y crear capas de armonía artificial en producciones donde no hay acceso a varios cantantes.' },
   { q: '¿Se sube el archivo al servidor?', a: 'No. El efecto se aplica usando FFmpeg.wasm, que se ejecuta completamente en tu navegador. El archivo de audio nunca sale de tu dispositivo.' },
 ]}>
   <CoroAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Efecto coro con el filtro chorus de FFmpeg y 3 presets de intensidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">chorus</strong> con retardos cortos (30-100 ms) y modulación de pitch continua para simular varias voces tocando al unísono. Los presets <strong class="text-[var(--color-text)]">Sutil, Estándar y Rico</strong> controlan el número de voces (2, 3 y 4) y la profundidad de modulación. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Engrosar voces y guitarras para música urbana y producciones indie en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto coro es muy usado en <strong class="text-[var(--color-text)]">música pop y urbana</strong> para dar amplitud a voces grabadas en home studio sin contratar cantantes adicionales. Productores musicales en Colombia, México y Argentina lo aplican para engrosar guitarras limpias, pads de sintetizador y voces de reggaetón o bachata. Sin plugins de pago ni software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

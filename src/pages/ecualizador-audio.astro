@@ -7,7 +7,23 @@ import EcualizadorAudioTool from '@/components/tools/EcualizadorAudioTool';
   { q: '¿Qué rango de frecuencias controla cada banda?', a: 'La banda de graves controla frecuencias bajas (alrededor de 100 Hz) que dan peso y cuerpo al sonido. Los medios (alrededor de 1 kHz) afectan a la presencia y calidez. Los agudos (alrededor de 8-10 kHz) controlan el brillo y la definición.' },
   { q: '¿Qué presets están disponibles?', a: 'Los presets incluyen: Normal (sin cambios), Bajos potenciados, Pop, Rock, Voz y Clásica. Cada uno aplica una configuración específica de las tres bandas optimizada para ese tipo de contenido.' },
   { q: '¿En qué formato se descarga el audio procesado?', a: 'El audio se descarga en el mismo formato que el original (MP3, WAV, OGG, AAC). El codec y la calidad se mantienen en lo posible.' },
+  { q: '¿Cómo usa FFmpeg el ecualizador de 3 bandas?', a: 'FFmpeg encadena 3 filtros: <strong>bass=g=N</strong> ajusta los graves, <strong>treble=g=N</strong> ajusta los agudos, y <strong>equalizer=f=1000:t=h:width=500:g=N</strong> ajusta los medios alrededor de 1 kHz con un ancho de banda de 500 Hz. Los tres filtros se aplican en cadena sobre la misma señal. Los valores de ganancia N van de -15 a +15 dB.' },
+  { q: '¿Para qué se usa el ecualizador en la práctica en LATAM?', a: 'Los usos más habituales son: aplicar el preset "Voz" para mejorar la inteligibilidad de locuciones de podcast grabadas en casa en Colombia, México y Argentina (reducir graves de sala y potenciar medios); aplicar "Bajos" para añadir cuerpo a música urbana producida con monitores pequeños; aplicar "Rock" para potenciar pistas de guitarra eléctrica; compensar las carencias acústicas de grabaciones hechas sin tratamiento acústico en home studios; y preparar audios para plataformas de distribución que recomiendan ciertos perfiles de EQ para maximizar la calidad percibida en auriculares de consumo.' },
   { q: '¿Se procesan mis archivos en el servidor?', a: 'No. El ecualizador funciona 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
 ]}>
   <EcualizadorAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ecualizador de 3 bandas con los filtros bass, treble y equalizer de FFmpeg en 6 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg encadena los filtros <strong class="text-[var(--color-text)]">bass=g=N</strong> (graves ~100 Hz), <strong class="text-[var(--color-text)]">treble=g=N</strong> (agudos ~8 kHz) y <strong class="text-[var(--color-text)]">equalizer=f=1000:t=h:width=500:g=N</strong> (medios ~1 kHz) con ganancias de −15 a +15 dB. Los 6 presets —Normal, Bajos, Pop, Rock, Voz y Clásica— aplican configuraciones optimizadas. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Mejorar podcast, compensar acústica de home studio y optimizar música para LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El preset <strong class="text-[var(--color-text)]">Voz</strong> es muy usado por podcasters en Colombia, México y Argentina para reducir los graves de sala y potenciar la inteligibilidad de locuciones grabadas en home studio sin tratamiento acústico. El preset Bajos añade cuerpo a producciones de música urbana. Sin plugins de pago ni software de mezcla profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

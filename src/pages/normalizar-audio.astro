@@ -7,7 +7,23 @@ import NormalizarAudioTool from '@/components/tools/NormalizarAudioTool';
   { q: '¿Qué es LUFS y por qué es importante?', a: 'LUFS (Loudness Units Full Scale) es la unidad de medida de volumen percibido. Las plataformas de streaming como Spotify (-14 LUFS), Apple Podcasts (-16 LUFS) o la radiodifusión europea (-23 LUFS según EBU R128) usan estas referencias para igualar el volumen de todos los contenidos.' },
   { q: '¿Qué preset debo usar?', a: 'Usa -14 LUFS para música en streaming (YouTube, Spotify); -16 LUFS para podcasts (Apple Podcasts, Spotify); -23 LUFS para broadcast televisivo o radiofónico según el estándar EBU R128.' },
   { q: '¿Se modifica el formato del archivo?', a: 'No. El resultado se guarda en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista soportada, se exporta como MP3.' },
+  { q: '¿Cuál es la diferencia entre normalización por pico y normalización por LUFS?', a: 'La normalización de pico sube o baja el volumen del audio para que el punto más alto (el pico) llegue a un nivel de referencia (generalmente 0 dBFS). La normalización LUFS mide y ajusta el volumen promedio percibido durante toda la pista. Las plataformas de distribución usan LUFS porque refleja mejor cómo los oyentes perciben el volumen subjetivo.' },
+  { q: '¿Para qué se usa normalizar audio en la práctica en LATAM?', a: 'Los usos más habituales son: preparar episodios de podcast para cumplir el nivel de −16 LUFS de Apple Podcasts y Spotify antes de publicarlos desde Colombia, México y Argentina; normalizar pistas de música a −14 LUFS para distribución en Spotify, Apple Music o YouTube Music con DistroKid o TuneCore; igualar el volumen entre varios audios grabados en diferentes sesiones antes de unirlos en un proyecto de Hotmart; preparar locuciones para anuncios de radio digital o televisión que deben cumplir el estándar EBU R128 (−23 LUFS); y normalizar grabaciones de voz de WhatsApp Business antes de convertirlas en material de formación.' },
   { q: '¿Cuándo no conviene usar esta herramienta?', a: 'Si ya has masterizado el audio con compresores y limitadores para maximizar el volumen percibido, la normalización loudnorm puede reducir el volumen de pico para cumplir el objetivo de LUFS, cambiando la dinámica del master. En ese caso es mejor no normalizar.' },
 ]}>
   <NormalizarAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Normalización loudnorm de FFmpeg con 3 presets de LUFS: Streaming, Podcast y Broadcast</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el filtro <strong class="text-[var(--color-text)]">loudnorm=I=TARGET:TP=-1:LRA=7</strong> que mide el volumen integrado y lo ajusta al nivel LUFS objetivo: −14 LUFS (Streaming / YouTube / Spotify), −16 LUFS (Podcast / Apple Podcasts) o −23 LUFS (Broadcast / EBU R128). El parámetro TP=-1 limita los picos a −1 dBFS. El formato de salida es el mismo que el de entrada.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cumple los estándares LUFS de Spotify, Apple Podcasts y distribución musical en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Prepara tus episodios de podcast para cumplir el nivel de <strong class="text-[var(--color-text)]">−16 LUFS de Apple Podcasts</strong>, normaliza pistas de música a −14 LUFS para distribución en Spotify con DistroKid o TuneCore, o prepara locuciones para broadcast que deben cumplir el estándar EBU R128. Ideal para creadores de contenido en Colombia, México y Argentina sin acceso a iZotope Loudness Meter ni herramientas de masterización profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

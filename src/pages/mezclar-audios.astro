@@ -7,9 +7,25 @@ const faqs = [
   { q: '¿Cuál es la diferencia entre la pista principal y la secundaria?', a: 'No hay diferencia técnica en el procesamiento, solo de organización. Normalmente se pone la voz o el contenido principal en la primera pista y la música o efecto de fondo en la segunda.' },
   { q: '¿Qué significa el volumen al 200%?', a: 'Un volumen superior al 100% amplifica la señal. Puede aumentar la sonoridad pero también introducir distorsión (clipping) si el nivel resultante supera el máximo. Úsalo con precaución.' },
   { q: '¿Qué duración tiene la mezcla resultante?', a: 'La duración es la de la pista más larga. Si una pista termina antes, el silencio rellena el resto. Esto permite, por ejemplo, que la música siga sonando después de que acabe la voz.' },
+  { q: '¿Se puede mezclar una voz con música de fondo?', a: 'Sí, ese es el uso más habitual. Sube la locución o voz como Pista 1 al 100% de volumen, y la música como Pista 2 al 20-40% para que no tape la voz. El filtro amix de FFmpeg combina ambas señales simultáneamente en tiempo real. El resultado es un archivo MP3 listo para publicar.' },
+  { q: '¿Para qué se usa mezclar audios en la práctica en LATAM?', a: 'Los usos más habituales son: añadir música de fondo a episodios de podcast publicados en Spotify o Apple Podcasts desde Colombia, México y Argentina; mezclar una locución comercial con el jingle de la marca para spots de radio digital; crear karaoke añadiendo la voz a la pista instrumental de una canción; mezclar narración con efectos de sonido ambiental para audiolibros en Audible o plataformas de contenido; superponer el audio de respuestas de WhatsApp Business con una música corporativa de fondo; y combinar la música con la narración de clases grabadas en Hotmart para hacerlas más dinámicas.' },
   { q: '¿En qué formato se descarga la mezcla?', a: 'La mezcla resultante siempre se descarga en formato MP3. Este es el formato más compatible y de menor tamaño para audio mezclado.' },
 ];
 ---
 <ToolLayout slug="mezclar-audios" faqs={faqs}>
   <MezclarAudiosTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Mezcla de 2 audios con filter_complex amix y control de volumen por pista de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa <strong class="text-[var(--color-text)]">filter_complex</strong> con el filtro <strong class="text-[var(--color-text)]">amix=inputs=2:duration=longest</strong> para mezclar ambas pistas simultáneamente. Cada pista pasa primero por un filtro <strong class="text-[var(--color-text)]">volume=V</strong> independiente para ajustar su nivel antes de la mezcla. Requiere 2 archivos de entrada. El resultado siempre se descarga en MP3. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast con música de fondo, locuciones comerciales y clases en Hotmart para LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Mezcla locuciones de podcast con música de fondo a <strong class="text-[var(--color-text)]">20-40% de volumen</strong> para publicar en Spotify o Apple Podcasts, combina spots de radio con el jingle de la marca, o añade música ambiental a clases grabadas en Hotmart. Ideal para creadores de contenido en Colombia, México y Argentina que producen audio sin software de mezcla profesional como Adobe Audition o Logic Pro.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

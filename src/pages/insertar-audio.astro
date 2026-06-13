@@ -7,7 +7,23 @@ import InsertarAudioTool from '@/components/tools/InsertarAudioTool';
   { q: '¿En qué formato se exporta el resultado?', a: 'El resultado se exporta en MP3 para garantizar la compatibilidad. Esto es necesario porque la concatenación de diferentes formatos requiere recodificación.' },
   { q: '¿Puedo insertar un audio al principio o al final?', a: 'Sí. Con tiempo 0, el audio insertado quedará al inicio. Con un tiempo mayor a la duración del audio principal, se añadirá al final.' },
   { q: '¿Hay límite de tamaño para los archivos?', a: 'El límite es el que impone el componente de subida de audio (200 MB por archivo). Para archivos muy grandes, la herramienta puede tardar varios minutos en procesarlos.' },
+  { q: '¿El audio insertado se mezcla o se intercala?', a: 'Se intercala (concatena), no se superpone. El audio insertado se coloca entre dos fragmentos del audio principal: primero suena el inicio del principal, luego el audio insertado completo, y finalmente el resto del principal. Si quieres que dos audios suenen simultáneamente, usa la herramienta "Mezclar audios".' },
+  { q: '¿Para qué se usa insertar audio en la práctica en LATAM?', a: 'Los usos más habituales son: añadir una cortinilla o jingle publicitario en medio de un episodio de podcast publicado en Spotify o Apple Podcasts desde Colombia, México y Argentina; insertar un separador musical entre secciones de una clase grabada en Hotmart o Teachable; añadir un efecto de sonido en el momento exacto de un audio narrativo o audiolibro; insertar el logo sonoro de una marca en el punto correcto de una locución comercial; y añadir una intro personalizada a grabaciones de entrevistas antes de la transcripción del contenido principal.' },
   { q: '¿Se puede usar para añadir una intro o una jingle a un podcast?', a: 'Exacto, ese es uno de sus usos más habituales. Sube el episodio como audio principal, la intro como audio a insertar, y establece el tiempo en 0 para colocarla al inicio.' },
 ]}>
   <InsertarAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Inserción de audio con filter_complex atrim y concat de FFmpeg para 2 inputs</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa <strong class="text-[var(--color-text)]">filter_complex</strong> con filtros <strong class="text-[var(--color-text)]">atrim</strong> para dividir el audio principal en dos segmentos y <strong class="text-[var(--color-text)]">concat=n=3:v=0:a=1</strong> para unir los tres fragmentos: [antes] + [insertado] + [después]. Requiere 2 archivos de entrada. El resultado siempre se descarga en MP3. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Intros de podcast, separadores de clases y jingles comerciales para creadores en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añade intros personalizadas o <strong class="text-[var(--color-text)]">jingles publicitarios</strong> a tus episodios de podcast, inserta separadores musicales entre secciones de clases en Hotmart, o añade efectos de sonido en el momento exacto de un audiolibro. Ideal para creadores de contenido en Colombia, México y Argentina que producen audio sin acceso a Audacity o Adobe Audition.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
