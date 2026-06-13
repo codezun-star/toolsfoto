@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CompresorAudioTool from '@/components/tools/CompresorAudioTool';
+
+const faqs = [
+  { q: '¿Qué hace un compresor de audio?', a: 'Un compresor reduce la diferencia dinámica entre los momentos más altos y los más bajos de un audio. Cuando el volumen supera el umbral configurado, lo baja según el ratio indicado. El resultado es un audio más "uniforme" y con menos picos bruscos, que suena más profesional en podcast, radio y música.' },
+  { q: '¿Qué significan umbral, ratio, ataque y release?', a: 'El umbral (threshold) es el nivel en dB a partir del cual el compresor actúa. El ratio determina cuánto se reduce (4:1 = por cada 4 dB sobre el umbral, solo pasan 1 dB). El ataque es la rapidez con que el compresor reacciona a un pico. El release es cuánto tarda en dejar de comprimir después del pico.' },
+  { q: '¿Para qué sirve la ganancia de maquillaje (makeup)?', a: 'La compresión baja el nivel general del audio. El makeup gain lo sube de vuelta para compensar, de modo que el audio comprimido tenga un volumen similar al original pero con dinámica reducida. Es el último paso de la cadena de compresión y determina el volumen final del archivo.' },
+  { q: '¿Cuál es el preset más recomendado para podcast?', a: 'El preset "Podcast" (umbral: -12 dB, ratio: 4:1, ataque: 20ms, release: 250ms, makeup: +6dB) es el más adecuado para voces habladas. Nivela el volumen entre frases suaves y fuertes, haciendo la escucha más cómoda y reduciendo la diferencia entre locutores. Ideal para podcasts con varios participantes.' },
+  { q: '¿Qué diferencia hay entre compresor y normalizador de audio?', a: 'El normalizador sube o baja el volumen del audio completo para que el pico máximo llegue a un nivel determinado (ajuste estático). El compresor actúa dinámicamente: baja los picos fuertes y sube el nivel general. El compresor da más control sobre la dinámica y suena más natural en grabaciones de voz y música.' },
+  { q: '¿Cuándo NO usar el compresor de audio?', a: 'No uses compresión fuerte en música clásica o jazz donde la dinámica es parte esencial de la expresión artística. Tampoco en efectos de sonido donde los picos son intencionales. Para podcasts y locuciones, la compresión leve a moderada (ratio 2:1 a 4:1) siempre mejora la escucha.' },
+  { q: '¿Para qué se usa el compresor dinámico en la práctica en LATAM?', a: 'Los usos más habituales son: nivelar el volumen entre locutores de diferentes niveles de voz en podcasts publicados en Spotify o Apple Podcasts desde Colombia, México y Argentina; preparar la voz de narración de clases en Hotmart para que suene uniforme durante horas de grabación; comprimir locuciones de anuncios de radio digital y spots de TV para que el mensaje se escuche claramente en entornos ruidosos; nivelar grabaciones de música en vivo donde la dinámica entre instrumentos y voz es muy grande; y procesar audios de WhatsApp Business o llamadas grabadas de atención al cliente para mejorar la intelligibilidad.' },
+];
 ---
-<ToolLayout slug="compresor-audio" faqs={[
-  { q: '¿Qué hace un compresor de audio?', a: 'Un compresor reduce la diferencia dinámica entre los momentos más altos y los más bajos de un audio. Cuando el volumen supera el umbral, lo baja según el ratio configurado. El resultado es un audio más "uniforme" y con menos picos bruscos.' },
-  { q: '¿Qué significan umbral, ratio, ataque y release?', a: 'El umbral (threshold) es el nivel en dB a partir del cual el compresor actúa. El ratio determina cuánto se reduce (4:1 = por cada 4 dB sobre el umbral, solo pasan 1 dB). Ataque es la rapidez con que el compresor reacciona a un pico. Release es cuánto tarda en dejar de comprimir.' },
-  { q: '¿Para qué sirve la ganancia de maquillaje (makeup)?', a: 'La compresión baja el nivel general del audio. El makeup gain lo sube de vuelta para compensar, de modo que el audio comprimido tenga un volumen similar al original pero con dinámica reducida.' },
-  { q: '¿Cuál es el preset más recomendado para podcast?', a: 'El preset "Podcast" (umbral: -12 dB, ratio: 4:1, ataque: 20ms, release: 250ms, makeup: +6dB) es el más adecuado para voces habladas. Nivela el volumen entre frases suaves y fuertes, haciendo la escucha más cómoda.' },
-  { q: '¿Qué diferencia hay entre compresor y normalizador de audio?', a: 'El normalizador sube o baja el volumen del audio completo para que el pico máximo llegue a un nivel determinado. El compresor actúa dinámicamente: baja los picos fuertes y sube el nivel general. El compresor da más control sobre la dinámica.' },
-]}>
+<ToolLayout slug="compresor-audio" faqs={faqs}>
   <CompresorAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Compresor dinámico con el filtro acompressor de FFmpeg y 4 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">acompressor</strong> con 5 parámetros configurables: umbral (−60 a 0 dB), ratio (1:1 a 20:1), ataque (1-200ms), release (10-1000ms) y makeup gain (0-20 dB). Los presets Suave, Podcast, Máster y Heavy aplican configuraciones predefinidas. El resultado es un audio con dinámica reducida, listo para distribución profesional.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast profesional, radio y locuciones con volumen uniforme en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El preset <strong class="text-[var(--color-text)]">Podcast</strong> (ratio 4:1, threshold −12 dB) es el más usado para voces habladas. Nivela las diferencias de volumen entre locutores, reduce los picos bruscos y hace la escucha más cómoda en Spotify, Apple Podcasts y plataformas de e-learning como Hotmart. Ideal para creadores de contenido en Colombia, México y Argentina que producen audio sin software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

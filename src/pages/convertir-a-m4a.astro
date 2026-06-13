@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirAM4ATool from '@/components/tools/ConvertirAM4ATool';
+
+const faqs = [
+  { q: '¿Qué es el formato M4A?', a: 'M4A es un contenedor de audio de Apple que usa el códec AAC (Advanced Audio Coding). Ofrece mejor calidad que MP3 al mismo bitrate y es el formato nativo de iPhone, iPad e iTunes/Apple Music. Es compatible con la mayoría de reproductores modernos de escritorio y móviles.' },
+  { q: '¿Qué calidad debo elegir?', a: '128 kbps es suficiente para escuchar música de forma casual en auriculares de gama media. 192 kbps ofrece un buen equilibrio entre calidad y tamaño, recomendado para la mayoría de usos. 320 kbps es la máxima calidad AAC, ideal para archivos máster o cuando el tamaño no es una restricción.' },
+  { q: '¿Qué diferencia hay entre M4A y AAC?', a: 'AAC es el códec de audio (el algoritmo de compresión). M4A es el contenedor de archivo (basado en MPEG-4/MP4) que aloja el audio AAC. Son esencialmente lo mismo; M4A es solo la extensión de archivo que Apple popularizó para distinguir los archivos de solo audio de los vídeos MP4 que también pueden tener AAC.' },
+  { q: '¿Qué formatos de audio de entrada acepta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC, M4A y cualquier formato que FFmpeg.wasm pueda decodificar. La conversión se realiza en tu navegador sin subir archivos al servidor. El resultado es siempre un archivo .m4a con audio AAC.' },
+  { q: '¿Se pierde calidad al convertir?', a: 'Si el archivo original es lossy (MP3, AAC…), habrá una pequeña pérdida adicional por la recodificación. Para preservar la calidad máxima, parte siempre desde el archivo de mayor calidad disponible (WAV, FLAC) y elige 320 kbps. Convertir WAV a M4A a 192 kbps produce una pérdida mínima inapreciable para la mayoría de oyentes.' },
+  { q: '¿Cómo convierte FFmpeg a M4A?', a: 'FFmpeg usa el codec <strong>-c:a aac</strong> (codificador AAC nativo) con el bitrate seleccionado (<em>-b:a 128k/192k/320k</em>) y guarda el resultado en un contenedor MP4 con extensión .m4a. El codificador AAC de FFmpeg produce archivos de alta calidad compatibles con todos los dispositivos Apple y la mayoría de reproductores modernos.' },
+  { q: '¿Para qué se usa convertir a M4A en la práctica en LATAM?', a: 'Los usos más habituales son: preparar pistas de música para sincronizarlas con iTunes o Apple Music en iPhone y iPad de usuarios en Colombia, México y Argentina; convertir locuciones de podcast a M4A para distribuirlas en Apple Podcasts (que usa este formato nativamente); convertir audios de WhatsApp (OGG/Opus) a M4A para reproducirlos en dispositivos Apple; preparar ringtones personalizados en M4A para iPhone; distribuir música en plataformas que prefieren AAC sobre MP3 por su mejor relación calidad/tamaño; y exportar clases grabadas en Hotmart en formato M4A para que los alumnos las reproduzcan sin problemas en iPhone o iPad.' },
+];
 ---
-<ToolLayout slug="convertir-a-m4a" faqs={[
-  { q: '¿Qué es el formato M4A?', a: 'M4A es un contenedor de audio de Apple que usa el códec AAC (Advanced Audio Coding). Ofrece mejor calidad que MP3 al mismo bitrate y es el formato nativo de iPhone, iPad e iTunes. Es compatible con la mayoría de reproductores modernos.' },
-  { q: '¿Qué calidad debo elegir?', a: '128 kbps es suficiente para escuchar música de forma casual. 192 kbps ofrece un buen equilibrio entre calidad y tamaño, recomendado para la mayoría de usos. 320 kbps es la máxima calidad, ideal para archivos máster o cuando el tamaño no es una restricción.' },
-  { q: '¿Qué diferencia hay entre M4A y AAC?', a: 'AAC es el códec de audio. M4A es el contenedor de archivo (basado en MPEG-4) que aloja el audio AAC. Son esencialmente lo mismo; M4A es solo la extensión de archivo que Apple popularizó para distinguirlo de los vídeos MP4.' },
-  { q: '¿Qué formatos de audio de entrada acepta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC, M4A y cualquier formato que FFmpeg.wasm pueda decodificar. La conversión se realiza en tu navegador sin subir archivos al servidor.' },
-  { q: '¿Se pierde calidad al convertir?', a: 'Si el archivo original es lossy (MP3, AAC…), habrá una pequeña pérdida adicional por la recodificación. Para preservar la calidad máxima, parte siempre desde el archivo de mayor calidad disponible (WAV, FLAC) y elige 320 kbps.' },
-]}>
+<ToolLayout slug="convertir-a-m4a" faqs={faqs}>
   <ConvertirAM4ATool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte audio a M4A/AAC con FFmpeg en 3 niveles de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el codec <strong class="text-[var(--color-text)]">-c:a aac</strong> con bitrate configurable: 128 kbps (casual), 192 kbps (equilibrado) o 320 kbps (alta fidelidad). El resultado es un archivo <strong class="text-[var(--color-text)]">.m4a</strong> en contenedor MPEG-4, compatible con todos los dispositivos Apple, reproductores Android y plataformas de streaming. Acepta MP3, WAV, OGG, FLAC y M4A como entrada.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">iPhone, Apple Podcasts y distribución musical en el ecosistema Apple</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        M4A es el formato nativo de <strong class="text-[var(--color-text)]">iPhone, iPad e iTunes</strong>. Convierte tus pistas de música para sincronizarlas con Apple Music, prepara locuciones de podcast para Apple Podcasts, o convierte audios de WhatsApp a M4A para reproducirlos en iPhone. Ideal para artistas y creadores de contenido en Colombia, México y Argentina que trabajan principalmente con el ecosistema Apple.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

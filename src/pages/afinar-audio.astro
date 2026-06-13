@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AfinarAudioTool from '@/components/tools/AfinarAudioTool';
 
 const faqs = [
-  { q: '¿En qué se diferencia de "Cambiar tono"?', a: '"Afinar audio" incluye la opción de preservar la velocidad (time-stretching) para que el audio afinado mantenga la misma duración que el original. "Cambiar tono" usa solo asetrate, que también cambia la velocidad.' },
-  { q: '¿Qué es el time-stretching?', a: 'El time-stretching compensa el cambio de velocidad producido al desplazar el tono. Cuando subes el tono, el audio se acelera; la herramienta añade un filtro atempo que ralentiza el audio para restaurar la duración original.' },
-  { q: '¿Qué es el efecto vibrato?', a: 'El vibrato añade una modulación periódica del tono (oscilación de 5 Hz con profundidad 30%). Da un efecto parecido al autotune suave o a una voz procesada electrónicamente.' },
-  { q: '¿Cuántos semitonos puedo ajustar?', a: 'El rango va de -12 semitonos (una octava abajo) a +12 semitonos (una octava arriba). Cada semitono corresponde a una nota musical en la escala cromática.' },
-  { q: '¿Qué formato tiene el audio de salida?', a: 'El formato de salida es el mismo que el de entrada cuando es posible (MP3, OGG, AAC). Para otros formatos de entrada (FLAC, WAV, M4A), el resultado se convierte a MP3 para máxima compatibilidad.' },
+  { q: '¿En qué se diferencia de "Cambiar tono"?', a: '"Afinar audio" incluye la opción de preservar la velocidad (time-stretching) para que el audio afinado mantenga la misma duración que el original. "Cambiar tono" usa solo asetrate, que también cambia la velocidad. Para producción musical donde el tempo importa, usa "Afinar audio" con la opción de preservar velocidad activada.' },
+  { q: '¿Qué es el time-stretching?', a: 'El time-stretching compensa el cambio de velocidad producido al desplazar el tono. Cuando subes el tono, el audio se acelera; la herramienta añade el filtro atempo de FFmpeg que ralentiza el audio para restaurar la duración original. Para desplazamientos grandes (±12 semitonos), el filtro atempo puede encadenarse en varias etapas.' },
+  { q: '¿Qué es el efecto vibrato?', a: 'El vibrato añade una modulación periódica del tono (oscilación de 5 Hz con profundidad 30%). Da un efecto parecido al autotune suave o a una voz procesada electrónicamente. Es útil para producción de música electrónica, efectos de locutor de radio y vídeos creativos para TikTok o YouTube.' },
+  { q: '¿Cuántos semitonos puedo ajustar?', a: 'El rango va de -12 semitonos (una octava abajo) a +12 semitonos (una octava arriba). Cada semitono corresponde a una nota musical en la escala cromática. Para afinar con más precisión, usa la herramienta "Cambiar pitch sin cambiar tempo" que trabaja en cents (1/100 de semitono).' },
+  { q: '¿Qué formato tiene el audio de salida?', a: 'El formato de salida es el mismo que el de entrada cuando es posible (MP3, OGG, AAC). Para otros formatos de entrada (FLAC, WAV, M4A), el resultado se convierte a MP3 para máxima compatibilidad. El procesamiento es 100% en el navegador sin enviar el archivo a ningún servidor.' },
+  { q: '¿Cuándo necesito afinar audio en producción musical?', a: 'Afinar es necesario cuando una grabación vocal o instrumental no está perfectamente en el tono correcto: voces desafinadas en una canción, samples que no coinciden con la tonalidad del proyecto, karaoke que está en una tonalidad diferente a la voz del cantante, o efectos de sonido que necesitan ajustarse a la nota de la música de fondo.' },
+  { q: '¿Para qué se usa afinar audio en la práctica en LATAM?', a: 'Los usos más habituales son: transportar pistas de karaoke a la tonalidad correcta para cantantes en eventos en Colombia, México y Argentina; ajustar el tono de voces grabadas en home studios para que coincidan con la pista instrumental; crear versiones de canciones populares para covers en YouTube o TikTok adaptadas a la voz del artista; afinar efectos de sonido o samples para producciones musicales en DAWs como Logic, FL Studio o Reaper; y corregir pequeñas desafinaciones en locuciones de anuncios o contenido de Hotmart.' },
 ];
 ---
 <ToolLayout slug="afinar-audio" faqs={faqs}>
   <AfinarAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Afina el tono de cualquier audio con time-stretching y filtro vibrato</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa el filtro <strong class="text-[var(--color-text)]">asetrate + aresample</strong> de FFmpeg para cambiar el pitch y luego compensa la velocidad resultante con una cadena de filtros <strong class="text-[var(--color-text)]">atempo</strong> para mantener la duración original. El rango es de ±12 semitonos. El efecto vibrato añade modulación de 5 Hz opcional. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin subir el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Karaoke, covers y producción musical en Colombia, México y Argentina</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Transporta pistas de karaoke a la tonalidad correcta para tu voz, ajusta samples para que coincidan con la tonalidad de tu proyecto musical, o crea covers de canciones populares para publicarlos en YouTube o TikTok. Ideal para productores de música y cantantes que trabajan en <strong class="text-[var(--color-text)]">home studios</strong> en LATAM y necesitan afinar grabaciones sin software de escritorio costoso.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

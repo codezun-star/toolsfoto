@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AnalizarEspectroTool from '@/components/tools/AnalizarEspectroTool';
+
+const faqs = [
+  { q: '¿Qué muestra el espectro de frecuencias?', a: 'El espectro muestra la distribución de energía de un audio entre las distintas frecuencias, desde los graves (20 Hz, izquierda) hasta los agudos (20 kHz, derecha). Cada barra representa cuánta energía tiene esa frecuencia en el fragmento analizado. Los graves están a la izquierda y los agudos a la derecha.' },
+  { q: '¿Qué fragmento del audio se analiza?', a: 'Se analiza un fragmento de 2048 muestras tomado del centro del audio. La herramienta calcula la DFT (Transformada Discreta de Fourier) de ese fragmento en 256 bins de frecuencia. Para audios de estructura uniforme (tonos, ruido, música continua) esto es representativo. Para audios con cambios bruscos, el resultado refleja solo ese instante central.' },
+  { q: '¿Para qué sirve analizar el espectro?', a: 'Es útil para diagnosticar la calidad de un audio (ver si le faltan agudos), identificar frecuencias problemáticas como zumbidos o resonancias, comparar dos versiones del mismo audio (original vs comprimido) o verificar si un archivo supuestamente de alta calidad realmente tiene información en las altas frecuencias (>15 kHz), lo que revelaría si ha sido upsampled desde un MP3.' },
+  { q: '¿Puedo personalizar la imagen?', a: 'Sí, puedes cambiar el color de las barras del espectro y el color de fondo antes de generar la imagen. El resultado se descarga como PNG de 1200 × 400 píxeles, listo para incluir en presentaciones, documentación técnica o publicaciones en redes sociales.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el análisis se realiza con la Web Audio API del navegador (para decodificar el audio) y la Canvas API (para dibujar el espectrograma). El archivo de audio nunca sale de tu dispositivo.' },
+  { q: '¿Cómo se calcula el espectro sin FFT completa?', a: 'La herramienta usa una DFT directa (no FFT) sobre 2048 muestras del canal izquierdo, calculando la magnitud para 256 bins de frecuencia. Cada bin k corresponde a la frecuencia (k / 2048) × sampleRate Hz. El resultado es normalizado por la magnitud máxima para ocupar toda la altura del gráfico (400 px).' },
+  { q: '¿Para qué se usa analizar el espectro en la práctica en LATAM?', a: 'Los usos más habituales son: verificar la calidad de grabaciones de estudio antes de enviarlas a distribuidoras como DistroKid o TuneCore desde Colombia, México y Argentina; diagnosticar problemas de frecuencia en locuciones de podcast (exceso de graves o sibilantes); comparar el espectro de dos versiones de un master para verificar que el proceso de mastering no cortó frecuencias; verificar si archivos de audio recibidos de clientes o colaboradores son realmente de alta calidad o han sido upsampled; y crear imágenes de espectro de onda para publicaciones técnicas o educativas sobre producción musical.' },
+];
 ---
-<ToolLayout slug="analizar-espectro" faqs={[
-  { q: '¿Qué muestra el espectro de frecuencias?', a: 'El espectro muestra la distribución de energía de un audio entre las distintas frecuencias, desde los graves (20 Hz, izquierda) hasta los agudos (20 kHz, derecha). Cada barra representa cuánta energía tiene esa frecuencia en el fragmento analizado.' },
-  { q: '¿Qué fragmento del audio se analiza?', a: 'Se analiza un fragmento de 2048 muestras tomado del centro del audio. Para audios de estructura uniforme (tonos, ruido, música continua) esto es representativo. Para audios con cambios bruscos, el resultado refleja solo ese instante central.' },
-  { q: '¿Para qué sirve analizar el espectro?', a: 'Es útil para diagnosticar la calidad de un audio (ver si le faltan agudos), identificar frecuencias problemáticas, comparar dos versiones del mismo audio o verificar si un archivo supuestamente de alta calidad realmente tiene información en las altas frecuencias.' },
-  { q: '¿Puedo personalizar la imagen?', a: 'Sí, puedes cambiar el color de las barras del espectro y el color de fondo antes de generar la imagen. El resultado se descarga como PNG de 1200 × 400 píxeles.' },
-  { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el análisis se realiza con la Web Audio API del navegador y la Canvas API. El archivo de audio nunca sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="analizar-espectro" faqs={faqs}>
   <AnalizarEspectroTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera un espectrograma PNG de 1200×400 px con Web Audio API y Canvas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta decodifica el audio con la <strong class="text-[var(--color-text)]">Web Audio API</strong> del navegador, calcula la DFT de 2048 muestras del fragmento central y dibuja 128 barras de frecuencia con la <strong class="text-[var(--color-text)]">Canvas API</strong>. El resultado es un PNG de 1200 × 400 px con etiquetas de frecuencia (100 Hz, 500 Hz, 1k, 5k, 10k, 20k). Sin FFmpeg, sin servidores: 100% en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Verifica la calidad de grabaciones y masters antes de distribuirlos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un espectro con barras altas en frecuencias altas (>10 kHz) indica buena calidad de grabación. Un espectro que se corta abruptamente en 16 kHz revela un archivo MP3 upsampled a WAV o FLAC. Ideal para productores musicales y locutores en <strong class="text-[var(--color-text)]">Colombia, México y Argentina</strong> que quieren verificar sus masters antes de enviarlos a DistroKid, TuneCore o plataformas de streaming.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

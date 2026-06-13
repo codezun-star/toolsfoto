@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirAFlacTool from '@/components/tools/ConvertirAFlacTool';
+
+const faqs = [
+  { q: '¿Qué es FLAC y por qué usarlo?', a: 'FLAC (Free Lossless Audio Codec) es un formato de audio sin pérdida: comprime los datos sin descartar ninguna información. El audio decodificado es bit a bit idéntico al original. Se usa para archivos máster, música de alta fidelidad, archivado permanente y cuando se necesita editar en múltiples pasadas sin acumular degradación de calidad.' },
+  { q: '¿Cuánto más grande es un FLAC comparado con MP3?', a: 'Un FLAC típico ocupa entre 3 y 5 veces más que un MP3 al mismo contenido. Una canción de 4 minutos en MP3 a 128 kbps pesa ~4 MB; en FLAC puede pesar 20-30 MB. Para almacenamiento de archivos de música de alta calidad, el espacio adicional está justificado por la calidad perfecta.' },
+  { q: '¿Si convierto MP3 a FLAC recupero la calidad perdida?', a: 'No. FLAC preserva exactamente los datos que recibe, pero si el MP3 ya ha descartado información (lo que sucede con toda la música lossy), el FLAC resultante tendrá la misma calidad que el MP3, simplemente en un contenedor sin pérdida. No hay recuperación de información que ya fue eliminada.' },
+  { q: '¿En qué situaciones tiene sentido convertir a FLAC?', a: 'Tiene sentido cuando el archivo de origen ya es sin pérdida (WAV grabado en estudio) o cuando quieres un archivo intermedio para editar sin degradar la calidad en cada pasada. También para compatibilidad con reproductores de alta fidelidad que solo admiten FLAC y para archivar masters de grabaciones originales.' },
+  { q: '¿Es FLAC compatible con todos los dispositivos?', a: 'FLAC es compatible con Android, la mayoría de reproductores modernos y plataformas de streaming como Tidal y Qobuz. Apple lo soporta desde iOS 11 y macOS High Sierra (iTunes/Apple Music). Sin embargo, no es compatible con todos los reproductores DVD/Blu-ray o sistemas de audio antiguos.' },
+  { q: '¿Qué codec usa FFmpeg para generar FLAC?', a: 'FFmpeg usa el codec nativo <strong>flac</strong> con el argumento <em>-c:a flac</em>. El FLAC resultante usa compresión lossless que preserva 100% de los datos de audio de entrada. No requiere librerías externas; el codec flac está incluido en FFmpeg.wasm. El nivel de compresión por defecto ofrece el mejor equilibrio entre tamaño y velocidad de codificación.' },
+  { q: '¿Para qué se usa convertir a FLAC en la práctica en LATAM?', a: 'Los usos más habituales son: archivar grabaciones de estudio en formato sin pérdida antes de distribuirlas en formatos lossy (MP3, AAC) para plataformas en Colombia, México y Argentina; crear archivos máster FLAC de álbumes completos para venderlos en Bandcamp o Gumroad como "lossless download"; convertir grabaciones en WAV a FLAC para reducir el tamaño sin perder calidad (FLAC es un 30-50% más pequeño que WAV del mismo contenido); distribuir música en plataformas como Tidal HiFi que ofrecen streaming lossless; y archivar grabaciones de radio, entrevistas o documentales en formato sin pérdida para uso editorial futuro.' },
+];
 ---
-<ToolLayout slug="convertir-a-flac" faqs={[
-  { q: '¿Qué es FLAC y por qué usarlo?', a: 'FLAC (Free Lossless Audio Codec) es un formato de audio sin pérdida: comprime los datos sin descartar ninguna información. El audio decodificado es bit a bit idéntico al original. Se usa para archivos máster, música de alta fidelidad y archivado permanente.' },
-  { q: '¿Cuánto más grande es un FLAC comparado con MP3?', a: 'Un FLAC típico ocupa entre 3 y 5 veces más que un MP3 al mismo contenido. Una canción de 4 minutos en MP3 a 128 kbps pesa ~4 MB; en FLAC puede pesar 20-30 MB.' },
-  { q: '¿Si convierto MP3 a FLAC recupero la calidad perdida?', a: 'No. FLAC preserva exactamente los datos que recibe, pero si el MP3 ya ha descartado información (lo que sucede con toda la música lossy), el FLAC resultante tendrá la misma calidad que el MP3, simplemente en un contenedor sin pérdida.' },
-  { q: '¿En qué situaciones tiene sentido convertir a FLAC?', a: 'Tiene sentido cuando el archivo de origen ya es sin pérdida (WAV grabado en estudio) o cuando quieres un archivo intermedio para editar sin degradar la calidad en cada pasada. También para compatibilidad con reproductores que solo admiten FLAC.' },
-  { q: '¿Es FLAC compatible con todos los dispositivos?', a: 'FLAC es compatible con Android, la mayoría de reproductores modernos y plataformas de streaming como Tidal. Apple lo soporta desde iOS 11/macOS High Sierra. Sin embargo, no es compatible con todos los reproductores DVD/Blu-ray o sistemas de audio antiguos.' },
-]}>
+<ToolLayout slug="convertir-a-flac" faqs={faqs}>
   <ConvertirAFlacTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte cualquier audio a FLAC sin pérdida con el codec flac de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el codec <strong class="text-[var(--color-text)]">-c:a flac</strong> para recodificar el audio en formato sin pérdida. El FLAC resultante preserva 100% de los datos del archivo de entrada. Si partes de WAV, el FLAC será bit a bit idéntico al original con un 30-50% menos de tamaño. Acepta MP3, WAV, OGG, AAC y M4A como entrada. Todo ocurre con FFmpeg.wasm en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Masters sin pérdida, Tidal HiFi y archivo permanente de grabaciones</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Archiva tus grabaciones de estudio en FLAC para preservar la máxima calidad, vende "lossless downloads" en Bandcamp o Gumroad para fans audiófilos, o distribuye en <strong class="text-[var(--color-text)]">Tidal HiFi y Qobuz</strong>. El FLAC ocupa un 30-50% menos que WAV del mismo contenido. Ideal para productores musicales en Colombia, México y Argentina que quieren preservar sus masters originales.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

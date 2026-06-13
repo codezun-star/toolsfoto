@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CambiarTonoTool from '@/components/tools/CambiarTonoTool';
 
 const faqs = [
-  { q: '¿Qué es un semitono?', a: 'Un semitono es la distancia mínima entre dos notas musicales. Hay 12 semitonos en una octava. Subir 12 semitonos dobla la frecuencia del sonido. Subir 7 semitonos produce una quinta perfecta.' },
-  { q: '¿Cambiar el tono afecta la velocidad de reproducción?', a: 'No directamente. La herramienta usa el algoritmo asetrate+aresample, que cambia la frecuencia de muestreo para modificar el tono y luego la corrige para mantener la duración original.' },
-  { q: '¿Cuántos semitonos puedo cambiar?', a: 'El rango disponible es de -12 a +12 semitonos, equivalente a una octava hacia arriba o hacia abajo. Cambios de ±3 o ±4 semitonos ya son muy perceptibles.' },
-  { q: '¿Para qué se usa el cambio de tono?', a: 'Es útil para transportar música a una tonalidad más cómoda para cantar, crear efectos de voz, hacer covers, practicar instrumentos, o ajustar el tono de efectos de sonido.' },
-  { q: '¿Funciona con locuciones y podcast?', a: 'Sí, aunque el cambio de tono en voz humana puede sonar artificial con valores extremos. Para ajustes sutiles (±1-2 semitonos) los resultados son bastante naturales.' },
+  { q: '¿Qué es un semitono?', a: 'Un semitono es la distancia mínima entre dos notas musicales en la escala cromática occidental. Hay 12 semitonos en una octava. Subir 12 semitonos dobla la frecuencia del sonido. Subir 7 semitonos produce una quinta perfecta, y subir 5 produce una cuarta perfecta.' },
+  { q: '¿Cambiar el tono afecta la velocidad de reproducción?', a: 'En esta herramienta, el cambio de tono afecta ligeramente la velocidad porque usa el algoritmo asetrate+aresample de FFmpeg. La velocidad varía en proporción al cambio de pitch: un tono más alto acelera ligeramente el audio y uno más bajo lo ralentiza. Para cambiar el tono sin alterar el tempo, usa "Cambiar pitch sin cambiar tempo".' },
+  { q: '¿Cuántos semitonos puedo cambiar?', a: 'El rango disponible es de -12 a +12 semitonos, equivalente a una octava hacia arriba o hacia abajo. Cambios de ±3 o ±4 semitonos ya son muy perceptibles. Para ajustes menores de un semitono (corrección de pitch fina), usa la herramienta de cents.' },
+  { q: '¿Para qué se usa el cambio de tono?', a: 'Es útil para transportar música a una tonalidad más cómoda para cantar (karaoke), crear efectos de voz, hacer covers, practicar instrumentos en una tonalidad diferente, o ajustar el tono de efectos de sonido para que coincidan con la música de fondo.' },
+  { q: '¿Funciona con locuciones y podcast?', a: 'Sí, aunque el cambio de tono en voz humana puede sonar artificial con valores extremos. Para ajustes sutiles (±1-2 semitonos) los resultados son bastante naturales y útiles para igualizar el tono entre diferentes locutores de un mismo podcast.' },
+  { q: '¿Qué diferencia hay entre "Cambiar tono" y "Afinar audio"?', a: '"Cambiar tono" usa el algoritmo asetrate+aresample y trabaja en semitonos enteros sin compensar el tempo. "Afinar audio" usa el mismo algoritmo pero añade la opción de compensar el tempo con atempo (time-stretching) y añadir vibrato. Si necesitas cambiar el tono sin alterar la duración, usa "Afinar audio" o "Cambiar pitch sin tempo".' },
+  { q: '¿Para qué se usa cambiar el tono en la práctica en LATAM?', a: 'Los usos más habituales son: transportar pistas de karaoke a la tonalidad adecuada para el cantante en eventos sociales en Colombia, México y Argentina; crear versiones de canciones populares para covers en YouTube o TikTok adaptadas a la voz del artista; ajustar el tono de efectos de sonido de videojuegos o animaciones para que coincidan con la música de fondo; practicar instrumentos en tonalidades que les resultan más cómodas a los estudiantes; cambiar el tono de samples de música tradicional latina (cumbia, salsa, reggaeton) para remix o mashup; y ajustar el pitch de jingles comerciales cuando se cambia la tonalidad de la música de fondo de un anuncio.' },
 ];
 ---
 <ToolLayout slug="cambiar-tono" faqs={faqs}>
   <CambiarTonoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cambia el tono de tu audio en semitonos con asetrate + aresample de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">asetrate</strong> (modifica la tasa de muestreo para cambiar el pitch) seguido de <strong class="text-[var(--color-text)]">aresample</strong> (restaura la tasa original). El rango es de −12 a +12 semitonos. La velocidad varía ligeramente con el cambio de tono (inherente al método). El formato de salida es el mismo que el de entrada: MP3, WAV, OGG, AAC o FLAC.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Karaoke, covers y práctica musical en Colombia, México y Argentina</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Transporta pistas de karaoke a la tonalidad de tu voz, crea covers de canciones populares para TikTok o YouTube, o practica tu instrumento en una tonalidad más cómoda. También útil para ajustar el pitch de samples de <strong class="text-[var(--color-text)]">cumbia, salsa o reggaeton</strong> para remix. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin enviar el audio a ningún servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

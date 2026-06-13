@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AgregarFadeAudioTool from '@/components/tools/AgregarFadeAudioTool';
 
 const faqs = [
-  { q: '¿Qué es un fade in y un fade out?', a: 'Fade in significa que el audio empieza en silencio y sube gradualmente hasta el volumen normal al inicio. Fade out es lo contrario: el audio baja gradualmente hasta silencio al final. Ambos crean transiciones suaves.' },
-  { q: '¿Puedo aplicar solo el fade in o solo el fade out?', a: 'Sí. Puedes activar o desactivar independientemente el fade in y el fade out mediante las casillas de verificación. Es posible usar solo uno de los dos.' },
-  { q: '¿Cuántos segundos de fade son apropiados?', a: 'Para música, entre 2 y 5 segundos es habitual. Para podcasts o locución, 1-2 segundos suele ser suficiente. El fade out para canciones puede llegar a 8-10 segundos.' },
-  { q: '¿El fade out necesita saber la duración total del audio?', a: 'Sí. La herramienta detecta automáticamente la duración del audio cuando lo reproduces en el reproductor integrado. Si no se detecta, el fade out puede no aplicarse correctamente.' },
-  { q: '¿Se conserva el formato original del audio?', a: 'Sí. Si subes un MP3, el resultado es MP3. Si subes WAV, el resultado es WAV. El formato de salida coincide con el de entrada para todos los formatos soportados.' },
+  { q: '¿Qué es un fade in y un fade out?', a: 'Fade in significa que el audio empieza en silencio y sube gradualmente hasta el volumen normal al inicio. Fade out es lo contrario: el audio baja gradualmente hasta silencio al final. Ambos crean transiciones suaves que se usan en podcasts, música, locuciones y contenido educativo.' },
+  { q: '¿Puedo aplicar solo el fade in o solo el fade out?', a: 'Sí. Puedes activar o desactivar independientemente el fade in y el fade out mediante las casillas de verificación. Es posible usar solo uno de los dos. Por ejemplo, aplicar solo fade out es útil cuando el audio empieza abruptamente pero quieres que termine con suavidad.' },
+  { q: '¿Cuántos segundos de fade son apropiados?', a: 'Para música, entre 2 y 5 segundos es habitual. Para podcasts o locución, 1-2 segundos suele ser suficiente para evitar cortes abruptos. El fade out para canciones puede llegar a 8-10 segundos en casos de cierre largo. Para jingles cortos de radio, 0.5-1 segundo da el resultado más limpio.' },
+  { q: '¿El fade out necesita saber la duración total del audio?', a: 'Sí. La herramienta detecta automáticamente la duración del audio cuando lo reproduces en el reproductor integrado. El fade out empieza en el instante (duración_total − segundos_de_fade_out). Si no se detecta la duración, el fade out puede no aplicarse correctamente; reproduce el audio primero para asegurarte.' },
+  { q: '¿Se conserva el formato original del audio?', a: 'Sí. Si subes un MP3, el resultado es MP3. Si subes WAV, el resultado es WAV. El formato de salida coincide con el de entrada para MP3, WAV, OGG, AAC y FLAC. El procesamiento se realiza 100% en el navegador con FFmpeg.wasm.' },
+  { q: '¿Qué filtro de FFmpeg se usa para el fade?', a: 'FFmpeg usa el filtro <strong>afade</strong>: <em>afade=t=in:st=0:d=N</em> para el fade in y <em>afade=t=out:st=S:d=N</em> para el fade out. El tiempo de inicio del fade out (S) se calcula como duración_total − segundos_fade. Ambos filtros se pueden encadenar con coma para aplicarlos simultáneamente en una sola pasada.' },
+  { q: '¿Para qué se usa agregar fade de audio en la práctica en LATAM?', a: 'Los usos más habituales son: añadir fade in/out profesional a episodios de podcast publicados en Spotify, Apple Podcasts o plataformas en México, Colombia y Argentina; aplicar fade a clases grabadas en Hotmart o Teachable para evitar cortes abruptos entre temas; añadir transiciones suaves a jingles de radio o spots publicitarios de radio AM/FM; crear intros y outros de audio para canales de YouTube o TikTok con transición elegante; y preparar audios de presentaciones corporativas y webinars con apertura y cierre gradual.' },
 ];
 ---
 <ToolLayout slug="agregar-fade-audio" faqs={faqs}>
   <AgregarFadeAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Aplica fade in y fade out a tu audio con el filtro afade de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica <strong class="text-[var(--color-text)]">afade=t=in:st=0:d=N</strong> para la entrada gradual y <strong class="text-[var(--color-text)]">afade=t=out:st=S:d=N</strong> para la salida. Puedes activar uno o ambos de forma independiente y configurar la duración entre 0.5 y 10 segundos. El formato de salida es idéntico al de entrada (MP3, WAV, OGG, AAC, FLAC). Todo ocurre con FFmpeg.wasm en el navegador, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast, cursos en Hotmart y jingles de radio con transiciones profesionales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El fade es la transición más básica y profesional del audio. Aplícalo a episodios de <strong class="text-[var(--color-text)]">podcast</strong> para evitar cortes abruptos, a clases grabadas en Hotmart o Teachable para una experiencia más pulida, a jingles de radio y spots publicitarios, o a intros y outros de canales de YouTube y TikTok. Ideal para creadores de contenido en Colombia, México y Argentina que producen audio sin software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

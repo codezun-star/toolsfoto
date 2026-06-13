@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ComprimirAudioTool from '@/components/tools/ComprimirAudioTool';
 
 const faqs = [
-  { q: '¿Qué bitrate debo elegir?', a: '64 kbps es suficiente para voz, podcasts y audiolibros. 128 kbps es el estándar para música en streaming y ofrece buena calidad para la mayoría de los oídos. 192 kbps es para quienes perciben diferencias en música con compresión. 320 kbps solo se justifica para escucha con auriculares de alta gama.' },
-  { q: '¿Qué formatos admite como entrada?', a: 'MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se descarga siempre en MP3, que es el formato con mayor compatibilidad en reproductores, plataformas de streaming y dispositivos.' },
+  { q: '¿Qué bitrate debo elegir?', a: '64 kbps es suficiente para voz, podcasts y audiolibros. 128 kbps es el estándar para música en streaming y ofrece buena calidad para la mayoría de los oídos. 192 kbps es para quienes perciben diferencias en música con compresión. 320 kbps solo se justifica para escucha con auriculares de alta gama o master final.' },
+  { q: '¿Qué formatos admite como entrada?', a: 'MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se descarga siempre en MP3 con el codec libmp3lame, que es el formato con mayor compatibilidad en reproductores, plataformas de streaming, dispositivos móviles y apps de mensajería como WhatsApp.' },
   { q: '¿Se puede comprimir un archivo MP3 ya comprimido?', a: 'Sí, pero con limitaciones. Al recomprimir un MP3 a un bitrate inferior, se introduce una generación adicional de pérdida de calidad. El resultado puede sonar ligeramente peor que si se hubiera comprimido desde el WAV original. Para archivos ya muy comprimidos (64-128 kbps), no tiene sentido reducir más.' },
-  { q: '¿Cuánto se puede reducir el tamaño?', a: 'Un WAV sin comprimir de 44.1 kHz puede reducirse un 85-95% al convertirlo a MP3 a 128 kbps. Un MP3 a 320 kbps puede reducirse un 60-70% al convertirlo a 64 kbps.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+  { q: '¿Cuánto se puede reducir el tamaño?', a: 'Un WAV sin comprimir de 44.1 kHz puede reducirse un 85-95% al convertirlo a MP3 a 128 kbps. Un MP3 a 320 kbps puede reducirse un 60-70% al convertirlo a 64 kbps. La reducción exacta depende del contenido: los silencios y las frecuencias simples comprimen mejor.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm usando el codec libmp3lame. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+  { q: '¿Qué diferencia hay entre comprimir audio y usar el compresor dinámico?', a: 'Comprimir audio en este contexto significa reducir el bitrate para disminuir el tamaño del archivo (compresión con pérdida). El compresor dinámico es una herramienta de procesamiento de señal que reduce la diferencia entre los momentos más suaves y más fuertes del audio (dinámica). Son conceptos completamente diferentes.' },
+  { q: '¿Para qué se usa comprimir audio en la práctica en LATAM?', a: 'Los usos más habituales son: reducir el tamaño de episodios de podcast antes de subirlos a Spotify, Apple Podcasts o plataformas de hosting en Colombia, México y Argentina, donde el almacenamiento tiene costo; comprimir audios de WhatsApp y Telegram que superan los límites de tamaño de la plataforma; reducir el tamaño de archivos de audio para sitios web con ancho de banda limitado; comprimir locuciones de anuncios de radio digital para reducir el tiempo de carga; comprimir tracks de música para subirlos a plataformas de distribución como DistroKid o TuneCore con menor tiempo de transferencia; y reducir el tamaño de grabaciones de clases en línea antes de compartirlas por correo o por plataformas de e-learning.' },
 ];
 ---
 <ToolLayout slug="comprimir-audio" faqs={faqs}>
   <ComprimirAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Comprime tu audio a MP3 con libmp3lame en 4 niveles de bitrate</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el codec <strong class="text-[var(--color-text)]">libmp3lame</strong> para recodificar tu audio a MP3 en 4 niveles de calidad: 64 kbps (voz/podcast), 128 kbps (estándar streaming), 192 kbps (buena calidad) y 320 kbps (alta fidelidad). El resultado siempre es un MP3, el formato más compatible. Acepta WAV, FLAC, OGG, AAC y M4A como entrada. Todo ocurre con FFmpeg.wasm en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast, WhatsApp Business y distribución musical con menos peso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Reduce episodios de podcast antes de subirlos a plataformas de hosting, comprime locuciones de anuncios de radio digital, o reduce audios demasiado grandes para enviarlos por <strong class="text-[var(--color-text)]">WhatsApp</strong> o Telegram. Ideal para creadores de contenido en Colombia, México y Argentina que necesitan reducir el tamaño de sus archivos de audio sin perder calidad apreciable para los oyentes.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

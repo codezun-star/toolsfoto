@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AudioAFragmentosTool from '@/components/tools/AudioAFragmentosTool';
+
+const faqs = [
+  { q: '¿Cómo se calcula la duración de cada fragmento?', a: 'La herramienta analiza la duración total del archivo con la Web Audio API y la divide entre el número de fragmentos elegido. Por ejemplo, un audio de 10 minutos dividido en 4 fragmentos producirá 4 archivos de 2m 30s cada uno. Los fragmentos son de duración exactamente igual, excepto posibles diferencias de milisegundos en el último por límites de frame del codec.' },
+  { q: '¿Cuántos fragmentos puedo crear como máximo?', a: 'Puedes elegir entre 2 y 10 fragmentos. Los valores disponibles son 2, 3, 4, 5, 6, 8 y 10. Para dividir en fragmentos de duración específica (no iguales), usa la herramienta "Cortar audio".' },
+  { q: '¿Los fragmentos son exactamente iguales en duración?', a: 'Sí en teoría, pero puede haber una diferencia de unos pocos milisegundos en el último fragmento dependiendo del codec y los límites de frame del formato de audio. Para audio de podcast o narración, esta diferencia es completamente inapreciable.' },
+  { q: '¿Se pierde calidad al dividir?', a: 'Para formatos lossy (MP3, AAC…), hay una pequeña pérdida al recodificar. Para WAV, la calidad es perfecta ya que es sin pérdida. Si la calidad es crítica, trabaja con WAV como formato de entrada y conviértelo al formato deseado después.' },
+  { q: '¿Puedo descargar todos los fragmentos a la vez?', a: 'Actualmente la herramienta ofrece un botón de descarga individual por cada fragmento con su reproductor de audio para previsualizar. Los archivos se descargan uno a uno. Cada fragmento se nombra automáticamente con el sufijo _frag1, _frag2, etc.' },
+  { q: '¿Qué método usa FFmpeg para cortar los fragmentos?', a: 'FFmpeg usa los parámetros <strong>-ss</strong> (tiempo de inicio) y <strong>-t</strong> (duración) para cortar cada segmento. La duración total se obtiene previamente con la Web Audio API del navegador. Cada fragmento se procesa secuencialmente y se puede escuchar antes de descargar.' },
+  { q: '¿Para qué se usa dividir audio en fragmentos en la práctica en LATAM?', a: 'Los usos más habituales son: dividir episodios largos de podcast en partes para publicarlos en plataformas con límite de duración; dividir clases magistrales grabadas en módulos para subirlos a Hotmart, Teachable o Platzi; dividir audiolibros en capítulos para distribuirlos por WhatsApp o Telegram de forma más manejable; dividir grabaciones de reuniones largas de Zoom o Meet en segmentos temáticos antes de compartirlas; y dividir tracks de audio largo para procesarlos en partes cuando la memoria del navegador es limitada en dispositivos de gama baja en Colombia, México o Argentina.' },
+];
 ---
-<ToolLayout slug="audio-a-fragmentos" faqs={[
-  { q: '¿Cómo se calcula la duración de cada fragmento?', a: 'La herramienta analiza la duración total del archivo con la Web Audio API y la divide entre el número de fragmentos elegido. Por ejemplo, un audio de 10 minutos dividido en 4 fragmentos producirá 4 archivos de 2m 30s cada uno.' },
-  { q: '¿Cuántos fragmentos puedo crear como máximo?', a: 'Puedes elegir entre 2 y 10 fragmentos. Para más fragmentos, considera usar la herramienta de dividir audio manualmente o encadenar varias operaciones.' },
-  { q: '¿Los fragmentos son exactamente iguales en duración?', a: 'Sí en teoría, pero puede haber una diferencia de unos pocos milisegundos en el último fragmento dependiendo del codec y los límites de frame del formato de audio.' },
-  { q: '¿Se pierde calidad al dividir?', a: 'Para formatos lossy (MP3, AAC…), hay una pequeña pérdida al recodificar. Para WAV, la calidad es perfecta. Si la calidad es crítica, trabaja con WAV como formato de entrada.' },
-  { q: '¿Puedo descargar todos los fragmentos a la vez?', a: 'Actualmente la herramienta ofrece un botón de descarga individual por cada fragmento. Los archivos se descargan uno a uno. En el futuro añadiremos descarga en ZIP.' },
-]}>
+<ToolLayout slug="audio-a-fragmentos" faqs={faqs}>
   <AudioAFragmentosTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Divide tu audio en 2 a 10 fragmentos iguales con FFmpeg -ss y -t</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta calcula la duración total del audio con la <strong class="text-[var(--color-text)]">Web Audio API</strong> y luego divide el archivo usando los parámetros <strong class="text-[var(--color-text)]">-ss</strong> (inicio) y <strong class="text-[var(--color-text)]">-t</strong> (duración) de FFmpeg para cada segmento. Puedes previsualizar cada fragmento con el reproductor integrado antes de descargarlo. El formato de salida es el mismo que el de entrada: MP3, WAV, OGG o AAC.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcasts en partes, módulos de Hotmart y audiolibros por capítulos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Divide episodios largos de podcast en partes para plataformas con límite de duración, clases grabadas en módulos para subirlas a <strong class="text-[var(--color-text)]">Hotmart</strong> o Platzi, o audiolibros en capítulos para distribuirlos por WhatsApp. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin subir el archivo de audio a ningún servidor en ningún momento.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AudioABase64Tool from '@/components/tools/AudioABase64Tool';
+
+const faqs = [
+  { q: '¿Qué es Base64 y para qué sirve en audio?', a: 'Base64 es un sistema de codificación que convierte datos binarios (como un archivo de audio) a texto ASCII. Permite incrustar archivos de audio directamente en HTML, CSS, JavaScript o JSON sin necesidad de archivos externos o servidores. Es la forma estándar de embeber recursos en aplicaciones web o correos electrónicos.' },
+  { q: '¿Qué es un data URI de audio?', a: 'Un data URI incluye el tipo MIME y los datos en Base64 en una sola cadena: <em>data:audio/mpeg;base64,AAAA...</em>. Puedes usarlo directamente como valor del atributo src en una etiqueta &lt;audio&gt; en HTML, o como valor de una propiedad en JSON/JavaScript sin necesidad de un archivo externo.' },
+  { q: '¿Cuánto aumenta el tamaño al codificar en Base64?', a: 'Base64 aumenta el tamaño aproximadamente un 33-36%. Un archivo de 1 MB de audio producirá una cadena de unos 1.37 MB. Para archivos grandes (>1 MB), el uso de Base64 puede penalizar el rendimiento de una página web. Se recomienda solo para archivos pequeños como efectos de sonido o tonos cortos.' },
+  { q: '¿Con qué formatos de audio funciona?', a: 'Funciona con cualquier formato de audio: MP3, WAV, OGG, AAC, FLAC, M4A y cualquier otro. La codificación Base64 es independiente del formato de audio, ya que trabaja sobre los bytes del archivo directamente.' },
+  { q: '¿Se sube el archivo al servidor?', a: 'No. La conversión a Base64 se realiza completamente en tu navegador con JavaScript nativo (Uint8Array + btoa()). El archivo de audio nunca sale de tu dispositivo.' },
+  { q: '¿Puedo usar el Base64 en correos electrónicos HTML?', a: 'Técnicamente sí, pero la mayoría de clientes de correo (Gmail, Outlook) bloquean el audio embebido por seguridad. El caso de uso más fiable para audio en Base64 son aplicaciones web, apps móviles React Native o Expo, documentos HTML offline y APIs REST que devuelven recursos como strings.' },
+  { q: '¿Para qué se usa convertir audio a Base64 en la práctica en LATAM?', a: 'Los usos más habituales son: incrustar efectos de sonido en aplicaciones web desarrolladas con React, Vue o Angular sin necesidad de un servidor de archivos; embeber tonos de notificación en aplicaciones móviles con React Native o Expo para mercados en Colombia, México y Argentina; incluir audio en respuestas de APIs REST o webhooks; embeber audio corto en páginas de producto de Shopify o WooCommerce que se sirven como HTML estático; y convertir archivos de audio pequeños para incluirlos en documentos HTML de presentaciones offline.' },
+];
 ---
-<ToolLayout slug="audio-a-base64" faqs={[
-  { q: '¿Qué es Base64 y para qué sirve en audio?', a: 'Base64 es un sistema de codificación que convierte datos binarios (como un archivo de audio) a texto ASCII. Permite incrustar archivos de audio directamente en HTML, CSS, JavaScript o JSON sin necesidad de archivos externos o servidores.' },
-  { q: '¿Qué es un data URI de audio?', a: 'Un data URI incluye el tipo MIME y los datos en Base64 en una sola cadena: `data:audio/mpeg;base64,AAAA...`. Puedes usarlo directamente como valor de src en una etiqueta <audio> en HTML.' },
-  { q: '¿Cuánto aumenta el tamaño al codificar en Base64?', a: 'Base64 aumenta el tamaño aproximadamente un 33-36%. Un archivo de 1 MB de audio producirá una cadena de unos 1.37 MB. Para archivos grandes, considera si realmente necesitas incrustar el audio.' },
-  { q: '¿Con qué formatos de audio funciona?', a: 'Funciona con cualquier formato de audio: MP3, WAV, OGG, AAC, FLAC, M4A y cualquier otro. La codificación Base64 es independiente del formato de audio.' },
-  { q: '¿Se sube el archivo al servidor?', a: 'No. La conversión a Base64 se realiza completamente en tu navegador con JavaScript nativo. El archivo de audio nunca sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="audio-a-base64" faqs={faqs}>
   <AudioABase64Tool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte cualquier archivo de audio a cadena Base64 o data URI en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta lee el archivo como <strong class="text-[var(--color-text)]">Uint8Array</strong>, lo convierte a string binario y aplica <strong class="text-[var(--color-text)]">btoa()</strong> nativo del navegador para obtener la cadena Base64. Puedes copiar el Base64 puro o el data URI completo (<em>data:audio/mpeg;base64,...</em>) para usar directamente en código HTML, JavaScript o JSON. Todo ocurre en el navegador, sin servidores.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Para aplicaciones web, React Native y APIs REST sin servidor de archivos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Incrustar audio en Base64 elimina la necesidad de un CDN o servidor de archivos para efectos de sonido pequeños. Ideal para apps con <strong class="text-[var(--color-text)]">React Native</strong> o Expo que necesitan audio offline, páginas de Shopify con tonos de notificación, APIs REST que devuelven recursos embebidos o presentaciones HTML que deben funcionar sin conexión. Recuerda que el tamaño aumenta un 33%.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

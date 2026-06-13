@@ -1,13 +1,31 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirAEstereoTool from '@/components/tools/ConvertirAEstereoTool';
+
+const faqs = [
+  { q: '¿Qué diferencia hay entre mono y estéreo?', a: 'Un audio mono tiene un solo canal de audio que suena igual por ambos altavoces. Un audio estéreo tiene dos canales (izquierdo y derecho) que pueden contener información diferente, creando una sensación de amplitud y posición espacial del sonido. La mayoría de las plataformas de distribución y reproductores modernos esperan audio estéreo.' },
+  { q: '¿El audio resultante sonará diferente al original?', a: 'Si el original es mono, el resultado estéreo sonará igual en ambos altavoces (izquierdo = derecho). No se añade espacialización artificial; simplemente se duplica el canal mono en ambos canales estéreo con el flag -ac 2 de FFmpeg. Si el audio ya era estéreo, el resultado es idéntico al original.' },
+  { q: '¿Para qué sirve convertir mono a estéreo?', a: 'Muchas plataformas de distribución de música (Spotify, Apple Music, Amazon Music) y podcast requieren archivos estéreo. También es útil para mezclar un audio mono con efectos estéreo en un DAW, o cuando una aplicación de edición de vídeo solo acepta archivos de dos canales.' },
+  { q: '¿Aumenta el tamaño del archivo al convertir a estéreo?', a: 'Generalmente sí, ya que el archivo pasa de contener un canal a dos. El incremento de tamaño depende del formato: en MP3 puede ser del 50-100%; en WAV PCM casi exactamente el doble. En formatos comprimidos como AAC u OGG el incremento es menor.' },
+  { q: '¿Qué formatos de audio acepta la herramienta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se guarda en el mismo formato que el archivo de entrada. El procesamiento es 100% en el navegador con FFmpeg.wasm.' },
+  { q: '¿Qué es la "estereofización" y es diferente a convertir a estéreo?', a: 'La estereofización es un proceso de post-producción que añade diferencias artificiales entre los canales izquierdo y derecho para crear una percepción de amplitud espacial (el audio "suena más ancho"). Convertir mono a estéreo simplemente duplica el canal: no hay diferencias entre L y R. La estereofización real requiere plugins de DAW como Logic, Pro Tools o plugins VST específicos.' },
+  { q: '¿Para qué se usa convertir a estéreo en la práctica en LATAM?', a: 'Los usos más habituales son: cumplir los requisitos de formato estéreo de distribuidoras musicales como DistroKid, TuneCore o Amuse para artistas en Colombia, México y Argentina; convertir grabaciones de voz en mono a estéreo antes de subirlas a Spotify as podcast; preparar locuciones de radio grabadas en mono para editarlas en proyectos de vídeo de Adobe Premiere o DaVinci Resolve que esperan pistas estéreo; convertir efectos de sonido grabados con micrófono de solapa (mono) a estéreo para usarlos en proyectos de vídeo o animación; y cumplir requisitos de formato de plataformas de e-learning como Hotmart o Coursera que esperan audio estéreo.' },
+];
 ---
-<ToolLayout slug="convertir-a-estereo" faqs={[
-  { q: '¿Qué diferencia hay entre mono y estéreo?', a: 'Un audio mono tiene un solo canal de audio que suena igual por ambos altavoces. Un audio estéreo tiene dos canales (izquierdo y derecho) que pueden contener información diferente, creando una sensación de amplitud y posición espacial del sonido.' },
-  { q: '¿El audio resultante sonará diferente al original?', a: 'Si el original es mono, el resultado estéreo sonará igual en ambos altavoces (izquierdo = derecho). No se añade espacialización artificial; simplemente se duplica el canal mono en ambos canales estéreo.' },
-  { q: '¿Para qué sirve convertir mono a estéreo?', a: 'Muchas plataformas de distribución de música y podcasting requieren archivos estéreo. También es útil para mezclar un audio mono con efectos estéreo en un DAW o cuando una aplicación solo acepta archivos de dos canales.' },
-  { q: '¿Aumenta el tamaño del archivo al convertir a estéreo?', a: 'Generalmente sí, ya que el archivo pasa de contener un canal a dos. El incremento de tamaño depende del formato: en MP3 puede ser del 50-100%; en WAV PCM casi exactamente el doble.' },
-  { q: '¿Qué formatos de audio acepta la herramienta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado se guarda en el mismo formato que el archivo de entrada.' },
-]}>
+<ToolLayout slug="convertir-a-estereo" faqs={faqs}>
   <ConvertirAEstereoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte audio mono a estéreo con el flag -ac 2 de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el flag <strong class="text-[var(--color-text)]">-ac 2</strong> que duplica el canal mono en ambos canales estéreo (izquierdo = derecho). El resultado es un archivo estéreo idéntico en ambos canales, sin espacialización artificial. El formato de salida es el mismo que el de entrada: MP3, WAV, OGG, AAC o FLAC. Todo ocurre con FFmpeg.wasm en el navegador, sin enviar el audio a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cumple los requisitos de distribuidoras, plataformas de podcast y DAWs</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Plataformas como <strong class="text-[var(--color-text)]">Spotify, DistroKid y TuneCore</strong> requieren audio estéreo para distribución musical. Convierte tus grabaciones de voz mono a estéreo antes de subirlas, prepara locuciones para proyectos de vídeo en Premiere o DaVinci Resolve, o cumple los requisitos de formato de Hotmart y Coursera. Ideal para artistas y creadores de contenido en Colombia, México y Argentina.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

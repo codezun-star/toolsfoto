@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AnadirSilencioTool from '@/components/tools/AnadirSilencioTool';
 
 const faqs = [
-  { q: '¿Para qué sirve añadir silencio a un audio?', a: 'Añadir silencio es útil para dar un margen antes de que empiece la música o la voz (fade in natural), para que el audio no se corte bruscamente al inicio o al final en reproductores, para sincronizar pistas en edición de vídeo, o para cumplir requisitos de duración mínima en plataformas de distribución.' },
+  { q: '¿Para qué sirve añadir silencio a un audio?', a: 'Añadir silencio es útil para dar un margen antes de que empiece la música o la voz (fade in natural), para que el audio no se corte bruscamente al inicio o al final en reproductores, para sincronizar pistas en edición de vídeo, o para cumplir requisitos de duración mínima en plataformas de distribución musical como DistroKid, TuneCore o Amuse.' },
   { q: '¿Cuánto silencio puedo añadir?', a: 'Puedes añadir entre 0 y 10 segundos de silencio al inicio y otros 0-10 segundos al final, con pasos de 0.5 segundos. Ambos ajustes son independientes. Si los dos están en 0, el botón de proceso estará desactivado.' },
-  { q: '¿Se preserva el formato original del audio?', a: 'Sí. Si subes un MP3 el resultado es MP3, un WAV produce un WAV, etc. Los formatos compatibles son MP3, WAV, OGG, AAC y FLAC.' },
-  { q: '¿El procesamiento sube mis archivos a algún servidor?', a: 'No. El procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tus archivos de audio nunca salen de tu dispositivo.' },
-  { q: '¿Por qué tarda la primera vez?', a: 'La primera vez que uses cualquier herramienta de audio, el navegador descarga el motor FFmpeg.wasm (~30 MB). Este archivo queda en caché del navegador, por lo que las siguientes operaciones son prácticamente instantáneas.' },
+  { q: '¿Se preserva el formato original del audio?', a: 'Sí. Si subes un MP3 el resultado es MP3, un WAV produce un WAV, etc. Los formatos compatibles son MP3, WAV, OGG, AAC y FLAC. El silencio se genera como audio mudo del mismo formato y codec que el archivo de entrada.' },
+  { q: '¿Qué filtros usa FFmpeg para añadir silencio?', a: 'FFmpeg usa el filtro <strong>adelay</strong> para añadir silencio al inicio (en milisegundos: adelay=1000|1000 para 1 segundo en ambos canales) y el filtro <strong>apad</strong> para añadir silencio al final (apad=pad_dur=N donde N son los segundos). Ambos pueden encadenarse en una sola pasada con coma.' },
+  { q: '¿El procesamiento sube mis archivos a algún servidor?', a: 'No. El procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tus archivos de audio nunca salen de tu dispositivo. No se recopilan datos, no se almacena el audio en ningún servidor de ToolsFoto.' },
+  { q: '¿Por qué tarda la primera vez?', a: 'La primera vez que uses cualquier herramienta de audio, el navegador descarga el motor FFmpeg.wasm (~30 MB). Este archivo queda en caché del navegador, por lo que las siguientes operaciones son prácticamente instantáneas. En conexiones de 10 Mbps, la descarga inicial tarda unos 30-60 segundos.' },
+  { q: '¿Para qué se usa añadir silencio en la práctica en LATAM?', a: 'Los usos más habituales son: añadir 1-2 segundos de silencio al inicio de pistas musicales antes de distribuirlas en plataformas como Spotify, Apple Music o Deezer desde México, Colombia o Argentina; añadir margen de silencio al inicio y final de locuciones para que el editor de vídeo pueda hacer fade in/out sin cortar el audio; cumplir requisitos de duración mínima de plataformas de streaming o concursos; sincronizar pistas de audio con efectos de sonido en proyectos de vídeo; y añadir pausa de presentación antes de que empiece la narración de un curso en Hotmart.' },
 ];
 ---
 <ToolLayout slug="anadir-silencio" faqs={faqs}>
   <AnadirSilencioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Añade silencio al inicio y al final de tu audio con adelay y apad de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa el filtro <strong class="text-[var(--color-text)]">adelay</strong> para el silencio inicial (en milisegundos por canal) y <strong class="text-[var(--color-text)]">apad</strong> para el padding al final. Configura de 0 a 10 segundos en cada extremo con pasos de 0.5s. El formato de salida es idéntico al de entrada: MP3, WAV, OGG, AAC o FLAC. El procesamiento ocurre con FFmpeg.wasm en el navegador, sin subir el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Distribución en Spotify, sincronización de vídeo y requisitos de plataformas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchas plataformas de distribución musical (DistroKid, TuneCore, Amuse) y de podcast recomiendan un breve silencio al inicio y al final para evitar cortes abruptos. También es clave para sincronizar pistas de audio con efectos de sonido en edición de vídeo y para añadir margen de <strong class="text-[var(--color-text)]">fade in/out</strong> a locuciones de cursos en Hotmart o webinars.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CambiarVolumenTool from '@/components/tools/CambiarVolumenTool';
 
 const faqs = [
-  { q: '¿Qué significa aumentar o reducir el volumen en dB?', a: 'Los decibelios (dB) son una escala logarítmica. +6 dB duplica la amplitud de la onda (el sonido percibido es claramente más alto). -6 dB la reduce a la mitad. +3 dB es un aumento perceptible pero sutil. Para ajustes finos, usa valores entre -3 y +3 dB.' },
-  { q: '¿Qué hace la opción "Normalizar audio"?', a: 'La normalización (loudnorm) analiza el audio y ajusta el volumen para que el nivel más alto alcance el máximo posible sin distorsionar. Es ideal cuando tienes un audio grabado muy bajo y quieres subirlo al máximo nivel sin clipear. Ignora el slider de dB cuando está activada.' },
-  { q: '¿Puedo subir el volumen de un audio sin que se distorsione?', a: 'Si el audio original tiene partes que ya alcanzan el nivel máximo, subir el volumen puede producir distorsión (clipping). Usa la opción "Normalizar" para un resultado óptimo, ya que calcula automáticamente cuánto se puede subir sin distorsión.' },
-  { q: '¿Qué formatos admite?', a: 'MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el de entrada.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento.' },
+  { q: '¿Qué significa aumentar o reducir el volumen en dB?', a: 'Los decibelios (dB) son una escala logarítmica. +6 dB duplica la amplitud de la onda (el sonido percibido es claramente más alto). -6 dB la reduce a la mitad. +3 dB es un aumento perceptible pero sutil. Para ajustes finos, usa valores entre -3 y +3 dB. Para hacer un audio casi inaudible, usa -20 dB.' },
+  { q: '¿Qué hace la opción "Normalizar audio"?', a: 'La normalización usa el filtro <strong>loudnorm</strong> de FFmpeg, que analiza el audio y ajusta el volumen para que el nivel más alto alcance el máximo posible sin distorsionar. Es ideal cuando tienes un audio grabado muy bajo y quieres subirlo al máximo nivel. Ignora el slider de dB cuando está activada.' },
+  { q: '¿Puedo subir el volumen de un audio sin que se distorsione?', a: 'Si el audio original tiene partes que ya alcanzan el nivel máximo (0 dBFS), subir el volumen puede producir distorsión (clipping). Usa la opción "Normalizar" para un resultado óptimo, ya que calcula automáticamente cuánto se puede subir sin distorsión. Para controlar la dinámica más finamente, usa el "Compresor de audio".' },
+  { q: '¿Qué formatos admite?', a: 'MP3, WAV, OGG, AAC y FLAC. El formato de salida es el mismo que el de entrada. La herramienta usa FFmpeg.wasm para el procesamiento, que soporta todos los formatos de audio más comunes.' },
+  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tu audio nunca sale de tu dispositivo en ningún momento. Esto garantiza la privacidad de grabaciones de reuniones, conversaciones o contenido inédito.' },
+  { q: '¿Cuál es el máximo seguro para subir volumen sin distorsión?', a: 'Depende del audio. Si el pico máximo del original está a -10 dBFS, puedes subir hasta +10 dB sin distorsión. Si no sabes el pico del audio, usa la normalización, que lo calcula automáticamente. Como regla general, subidas de más de +12 dB en un audio ya bien grabado suelen producir clipping.' },
+  { q: '¿Para qué se usa cambiar el volumen en la práctica en LATAM?', a: 'Los usos más habituales son: subir el volumen de grabaciones de voz grabadas desde el móvil con bajo volumen para publicarlas en podcast o como audios de WhatsApp Business; normalizar episodios de podcast para que todos tengan el mismo volumen percibido antes de publicarlos en Spotify o Apple Podcasts desde Colombia, México y Argentina; bajar el volumen de música de fondo para que no tape la locución en vídeos de Hotmart o tutoriales de YouTube; ajustar el volumen de testimoniales de clientes para que coincidan entre sí en un vídeo de compilación; y equilibrar el volumen de diferentes pistas antes de mezclarlas con la herramienta de unión de audios.' },
 ];
 ---
 <ToolLayout slug="cambiar-volumen" faqs={faqs}>
   <CambiarVolumenTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ajusta el volumen en dB o normaliza con loudnorm de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">volume=NdB</strong> para cambiar el volumen en decibelios (−20 a +20 dB) o el filtro <strong class="text-[var(--color-text)]">loudnorm</strong> para normalizar automáticamente al máximo nivel sin distorsión. Presets rápidos de −20, −10, −6, −3, 0, +3, +6, +10, +15 y +20 dB. El formato de salida coincide con el de entrada. Todo ocurre con FFmpeg.wasm en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast, audios de WhatsApp Business y locuciones con volumen uniforme</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Sube el volumen de grabaciones de voz del móvil para publicarlas como audios de <strong class="text-[var(--color-text)]">WhatsApp Business</strong>, normaliza episodios de podcast para que todos tengan el mismo volumen percibido, o baja la música de fondo para que no tape la locución en vídeos de Hotmart. Ideal para creadores de contenido en Colombia, México y Argentina sin software de edición de audio profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
