@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MiniaturaVideoTool from '@/components/tools/MiniaturaVideoTool';
 
 const faqs = [
-  { q: '¿En qué se diferencia de "Capturar fotograma"?', a: 'Esta herramienta usa directamente el elemento de vídeo del navegador para capturar el frame visible en pantalla, sin necesitar FFmpeg. Es más rápida para obtener thumbnails y permite elegir el formato de salida (PNG o JPG).' },
-  { q: '¿Cómo selecciono el frame exacto que quiero?', a: 'Usa el slider de tiempo para navegar al segundo exacto. El vídeo reproduce el frame en tiempo real mientras mueves el slider. La imagen capturada corresponde exactamente al frame visible.' },
-  { q: '¿Qué formato es mejor para miniaturas de YouTube?', a: 'YouTube recomienda JPG para miniaturas (peso reducido). PNG es mejor si la miniatura incluye texto o gráficos nítidos que no deben comprimirse con artefactos.' },
-  { q: '¿La miniatura se captura en la resolución original del vídeo?', a: 'Sí. La resolución del frame capturado es la misma que la resolución nativa del vídeo. Si el vídeo es 1920×1080, la miniatura será 1920×1080.' },
-  { q: '¿Qué formatos de vídeo admite la herramienta?', a: 'Admite cualquier formato que tu navegador pueda reproducir: MP4 (H.264), WebM (VP8/VP9) y MOV. Los formatos AVI y MKV pueden no ser soportados dependiendo del navegador.' },
+  {
+    q: '¿En qué se diferencia de "Capturar fotograma"?',
+    a: 'Esta herramienta usa directamente el elemento de vídeo del navegador (Canvas API) para capturar el frame visible en pantalla, sin necesitar FFmpeg. Es más rápida para obtener thumbnails y permite elegir el formato de salida (PNG o JPG) con calidad ajustada.',
+  },
+  {
+    q: '¿Cómo selecciono el frame exacto que quiero?',
+    a: 'Usa el slider de tiempo para navegar al segundo exacto. El vídeo reproduce el frame en tiempo real mientras mueves el slider. La imagen capturada corresponde exactamente al frame visible en el reproductor integrado.',
+  },
+  {
+    q: '¿Qué formato es mejor para miniaturas de YouTube?',
+    a: 'YouTube recomienda JPG para miniaturas (peso reducido, resolución 1280×720 mínima). PNG es mejor si la miniatura incluye texto, logotipos o elementos gráficos que necesitan bordes nítidos sin artefactos de compresión.',
+  },
+  {
+    q: '¿La miniatura se captura en la resolución original del vídeo?',
+    a: 'Sí. El canvas de captura usa las dimensiones nativas del vídeo (videoWidth × videoHeight). Si el vídeo es 1920×1080, la miniatura capturada también será 1920×1080.',
+  },
+  {
+    q: '¿Qué formatos de vídeo admite?',
+    a: 'Admite cualquier formato que tu navegador pueda reproducir: MP4 (H.264), WebM (VP8/VP9) y MOV. Los formatos AVI y MKV pueden no ser compatibles dependiendo del navegador y sistema operativo.',
+  },
+  {
+    q: '¿Puedo capturar varias miniaturas del mismo vídeo?',
+    a: 'Sí. Después de capturar y descargar una miniatura, puedes mover el slider a otro momento y capturar otra. El vídeo permanece cargado mientras estés en la página, sin necesidad de volver a subirlo.',
+  },
+  {
+    q: '¿Para qué se usa en la práctica?',
+    a: 'Los usos más habituales son: crear thumbnails personalizados para vídeos de YouTube, TikTok o Instagram sin salir del navegador; capturar el frame más representativo de un vídeo de producto para la ficha de Mercado Libre, Shopify o WooCommerce; obtener capturas de vídeos de formación o webinars para incluirlas en presentaciones o informes; extraer frames de grabaciones de pantalla (screencasts) para documentación técnica o manuales de usuario; y crear la imagen de portada de un vídeo de un evento corporativo o social.',
+  },
 ];
 ---
 <ToolLayout slug="miniatura-video" faqs={faqs}>
   <MiniaturaVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Captura el thumbnail perfecto de tu vídeo sin FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa la <strong class="text-[var(--color-text)]">Canvas API</strong> del navegador para capturar directamente el frame visible en el reproductor integrado. El slider de tiempo permite navegar segundo a segundo para encontrar el frame exacto. Sin descarga de procesador adicional: la captura es instantánea. La resolución de la miniatura es idéntica a la del vídeo original.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">JPG o PNG, en la resolución nativa del vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elige <strong class="text-[var(--color-text)]">JPG</strong> (compresión alta, ideal para thumbnails de YouTube y redes sociales) o <strong class="text-[var(--color-text)]">PNG</strong> (sin pérdida, ideal para miniaturas con texto, iconos o logotipos). Puedes capturar múltiples frames del mismo vídeo sin volver a cargarlo, ideal para comparar y elegir la mejor miniatura para tu canal de YouTube, TikTok o Mercado Libre.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

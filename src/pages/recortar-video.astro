@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RecortarVideoTool from '@/components/tools/RecortarVideoTool';
 
 const faqs = [
-  { q: '¿Se pierde calidad al recortar el vídeo?', a: 'No. La herramienta usa la opción "-c copy" de FFmpeg, que copia los streams de vídeo y audio sin recodificar. Esto significa que el recorte es sin pérdida de calidad y además es muy rápido, ya que no hay que decodificar y volver a codificar el vídeo.' },
-  { q: '¿Cómo introduzco los tiempos correctamente?', a: 'Puedes usar el formato mm:ss (por ejemplo, "01:30" para 1 minuto y 30 segundos) o h:mm:ss para vídeos de más de una hora. También puedes escribir directamente los segundos (por ejemplo, "90" para 1 minuto y 30 segundos). El reproductor de vídeo te ayuda a identificar los tiempos exactos.' },
-  { q: '¿Puede haber un pequeño desfase en el punto de corte?', a: 'Sí, en vídeos H.264, el punto de corte exacto puede desplazarse al keyframe (fotograma clave) anterior más cercano. Esto es normal con "-c copy" y suele ser de menos de 1-2 segundos. Si necesitas cortes de precisión exacta, el vídeo deberá recodificarse.' },
-  { q: '¿Puedo recortar el principio y el final a la vez?', a: 'Sí. Introduce el tiempo de inicio para eliminar la parte inicial y el tiempo de fin para eliminar la parte final. Todo lo que esté entre inicio y fin se conservará en el vídeo descargado.' },
-  { q: '¿Qué formatos admite la herramienta?', a: 'MP4, WebM y MOV como entrada. El resultado se descarga siempre como MP4, que es el formato con mayor compatibilidad universal.' },
+  {
+    q: '¿Se pierde calidad al recortar el vídeo?',
+    a: 'No. La herramienta usa la opción "-c copy" de FFmpeg, que copia los streams de vídeo y audio sin recodificar. Esto significa que el recorte es sin pérdida de calidad y además es muy rápido, ya que no hay que decodificar ni volver a codificar el vídeo.',
+  },
+  {
+    q: '¿Cómo introduzco los tiempos correctamente?',
+    a: 'Puedes usar el formato mm:ss (por ejemplo, "01:30" para 1 minuto 30 segundos) o h:mm:ss para vídeos de más de una hora. También puedes escribir directamente los segundos (por ejemplo, "90" para 1 minuto y 30 segundos). El reproductor de vídeo integrado te ayuda a identificar los tiempos exactos.',
+  },
+  {
+    q: '¿Puede haber un pequeño desfase en el punto de corte?',
+    a: 'Sí, en vídeos H.264, el punto de corte exacto puede desplazarse al keyframe anterior más cercano. Esto es normal con "-c copy" y suele ser de menos de 1-2 segundos. Si necesitas cortes de precisión exacta al frame, el vídeo deberá recodificarse.',
+  },
+  {
+    q: '¿Puedo recortar el principio y el final a la vez?',
+    a: 'Sí. Introduce el tiempo de inicio para eliminar la parte inicial y el tiempo de fin para eliminar la parte final. Todo lo que esté entre inicio y fin se conservará en el vídeo descargado.',
+  },
+  {
+    q: '¿Qué formatos admite la herramienta?',
+    a: 'MP4, WebM y MOV como entrada. El resultado se descarga siempre como MP4 con copia de streams (-c copy), que preserva el codec original sin recodificar.',
+  },
+  {
+    q: '¿Hay límite de duración o tamaño del vídeo?',
+    a: 'El límite práctico es la memoria RAM disponible en el navegador, habitualmente 500 MB. Para vídeos muy grandes (reuniones largas de Zoom, grabaciones de eventos), considera dividir el trabajo en varios recortes secuenciales.',
+  },
+  {
+    q: '¿Para qué se usa recortar vídeo en la práctica en LATAM?',
+    a: 'Los usos más habituales son: eliminar la introducción o los créditos finales de grabaciones de clases o webinars antes de publicarlos en Hotmart o YouTube; recortar el fragmento relevante de una reunión de Zoom o Meet para compartirlo con el equipo; cortar el comienzo y fin de grabaciones de eventos para eliminar los momentos previos al inicio y posteriores al cierre; recortar clips específicos de partidos o entrenamientos deportivos para analizar jugadas; y preparar fragmentos de vídeo de testimoniales de clientes para publicarlos en Instagram, TikTok o WhatsApp Business.',
+  },
 ];
 ---
 <ToolLayout slug="recortar-video" faqs={faqs}>
   <RecortarVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recorta el inicio y el final de tu vídeo sin pérdida de calidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa <strong class="text-[var(--color-text)]">-c copy</strong> de FFmpeg para copiar los streams de vídeo y audio sin recodificar. El resultado tiene idéntica calidad al original y el procesamiento es muy rápido. El reproductor integrado permite identificar los tiempos exactos de inicio y fin antes de recortar. Admite formato mm:ss o segundos como entrada de tiempo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin recodificación, resultados en segundos para cualquier duración</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Al no recodificar el vídeo, un clip de 2 horas se recorta en el mismo tiempo que uno de 2 minutos. El punto de corte puede tener un desfase de hasta 1-2 segundos respecto al keyframe anterior (comportamiento normal de H.264 con stream copy). Ideal para recortar reuniones de Zoom, clases en línea, grabaciones de eventos y contenido para Instagram, TikTok y YouTube.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

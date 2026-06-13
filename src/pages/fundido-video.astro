@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FundidoVideoTool from '@/components/tools/FundidoVideoTool';
 
 const faqs = [
-  { q: '¿Qué es un fundido a negro?', a: 'Un fundido a negro es una transición suave donde la imagen pasa gradualmente del negro al vídeo (fundido de entrada) o del vídeo al negro (fundido de salida). Se usa en cine, televisión y vídeos de redes sociales para dar un inicio o cierre elegante al clip.' },
-  { q: '¿Puedo aplicar solo fundido de entrada o solo de salida?', a: 'Sí. Selecciona "Sin fundido" en la opción que no necesites. Por ejemplo, puedes aplicar solo 1s de fundido de entrada dejando el fundido de salida en 0s, y viceversa.' },
-  { q: '¿Se pierde calidad con el fundido?', a: 'El vídeo se recodifica con H.264 para aplicar el efecto de fundido, lo que implica una leve pérdida de calidad respecto al original. El resultado tendrá una calidad alta (configuración por defecto de FFmpeg).' },
-  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). El navegador lo guarda en caché, así que las siguientes veces es instantáneo. Tu vídeo nunca sale de tu dispositivo.' },
-  { q: '¿Qué formatos de vídeo admite?', a: 'Admite MP4, WebM, MOV y AVI como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos.' },
+  {
+    q: '¿Qué es un fundido a negro en vídeo?',
+    a: 'Un fundido a negro es una transición suave donde la imagen pasa gradualmente desde el negro al vídeo (fundido de entrada, "fade in") o del vídeo al negro (fundido de salida, "fade out"). Se usa en cine, televisión y vídeos de redes sociales para dar un inicio o cierre elegante al clip.',
+  },
+  {
+    q: '¿Puedo aplicar solo fundido de entrada o solo de salida?',
+    a: 'Sí. Selecciona "Sin fundido" (0s) en la opción que no necesites. Por ejemplo, puedes aplicar solo 1s de fundido de entrada dejando el fundido de salida en "Sin fundido", y viceversa. Ambas opciones pueden configurarse independientemente.',
+  },
+  {
+    q: '¿El audio también tiene fundido o solo el vídeo?',
+    a: 'Ambos. La herramienta aplica los filtros FFmpeg "fade" al stream de vídeo y "afade" al stream de audio simultáneamente, con la misma duración. Esto da el resultado más profesional: el vídeo y el audio aparecen y desaparecen juntos.',
+  },
+  {
+    q: '¿Se pierde calidad con el fundido?',
+    a: 'El vídeo se recodifica con H.264 (libx264) para aplicar el efecto. La pérdida de calidad es mínima e imperceptible en condiciones normales de visualización. El resultado tendrá una calidad estándar de FFmpeg.',
+  },
+  {
+    q: '¿Qué duración de fundido es la más habitual?',
+    a: '1 segundo es el estándar en la mayoría de producciones de vídeo para redes sociales. 0.5 segundos es más sutil y se usa en clips de acción o ritmo rápido. 2 segundos da un efecto más cinematográfico o dramático, habitual en cortos o documentales.',
+  },
+  {
+    q: '¿Qué formatos de vídeo admite?',
+    a: 'Admite MP4, WebM, MOV y AVI como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos.',
+  },
+  {
+    q: '¿Para qué se usa el fundido en la práctica?',
+    a: 'Los fundidos son uno de los recursos narrativos más usados en vídeo: añadir un fade in al inicio de un vídeo de YouTube, TikTok o Instagram Reels para un inicio elegante; aplicar fade out al final de presentaciones de producto o trailers; dar cierre profesional a tutoriales y clases en línea de Hotmart, Coursera o plataformas propias; transicionar entre segmentos de documentales o entrevistas; y añadir un look cinematográfico a bodas, quince años y eventos sociales en México, Colombia, Argentina y toda LATAM.',
+  },
 ];
 ---
 <ToolLayout slug="fundido-video" faqs={faqs}>
   <FundidoVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fundido de entrada y salida a negro para un inicio y cierre profesional</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los filtros FFmpeg <strong class="text-[var(--color-text)]">fade</strong> (vídeo) y <strong class="text-[var(--color-text)]">afade</strong> (audio) se aplican simultáneamente, dando un fundido suave en ambos streams. Elige entre 0.5, 1 o 2 segundos de duración para cada transición. El fundido de salida se posiciona automáticamente al final del vídeo, sin importar su duración total.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Look cinematográfico para YouTube, Reels y vídeos de eventos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El fundido a negro es el recurso narrativo más universalmente reconocible en vídeo. Da un inicio y cierre elegante a YouTube Reels, shorts de TikTok, trailers de producto para Mercado Libre, y presentaciones corporativas. Todo el procesamiento ocurre con <strong class="text-[var(--color-text)]">FFmpeg.wasm</strong> en el navegador: el vídeo nunca sale de tu dispositivo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

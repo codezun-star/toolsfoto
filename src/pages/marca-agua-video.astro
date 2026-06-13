@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MarcaAguaVideoTool from '@/components/tools/MarcaAguaVideoTool';
 
 const faqs = [
-  { q: '¿Puedo poner cualquier texto como marca de agua?', a: 'Sí. Puedes escribir cualquier texto: tu nombre, un copyright, un dominio web, un eslogan, etc. El texto se renderiza con fuente estándar del sistema sobre el vídeo.' },
-  { q: '¿Se puede cambiar el color de la marca de agua?', a: 'Actualmente la marca de agua es blanca con sombra negra, lo que garantiza legibilidad sobre cualquier tipo de fondo. Esta combinación funciona en el 99% de los casos.' },
-  { q: '¿Qué opacidad es la más adecuada?', a: 'Para marcas de agua sutiles, entre el 30% y el 50%. Para marcas de agua de protección visibles, entre el 70% y el 100%. Una opacidad del 60% es el equilibrio habitual entre visibilidad y discreción.' },
-  { q: '¿Se puede quitar la marca de agua del vídeo resultante?', a: 'La marca de agua queda incrustada permanentemente en el stream de vídeo. No puede eliminarse fácilmente sin software especializado, lo que la hace efectiva como protección visual.' },
-  { q: '¿Se pierde calidad al añadir la marca de agua?', a: 'El vídeo se re-codifica con libx264 para aplicar el filtro de texto. La calidad visual es prácticamente idéntica a la original, con pérdidas imperceptibles en condiciones normales.' },
+  {
+    q: '¿Puedo poner cualquier texto como marca de agua?',
+    a: 'Sí. Puedes escribir cualquier texto: tu nombre, un copyright (© Mi Empresa), un dominio web, un eslogan, el nombre de tu canal de YouTube o una frase de protección. El texto se renderiza con fuente del sistema sobre el vídeo.',
+  },
+  {
+    q: '¿Cómo se añade el texto al vídeo sin usar el filtro drawtext de FFmpeg?',
+    a: 'La herramienta renderiza el texto en un canvas HTML5 transparente del mismo tamaño que el vídeo, lo exporta como PNG y usa el filtro "overlay=0:0" de FFmpeg para superponerlo. Esto evita el problema de que drawtext requiere fontconfig, que no está disponible en FFmpeg.wasm.',
+  },
+  {
+    q: '¿Qué opacidad es la más adecuada?',
+    a: 'Para marcas de agua sutiles, entre el 30% y el 50%. Para marcas de agua de protección visibles, entre el 70% y el 100%. Una opacidad del 60% es el equilibrio habitual entre visibilidad y discreción.',
+  },
+  {
+    q: '¿Se puede quitar la marca de agua del vídeo resultante?',
+    a: 'La marca de agua queda incrustada permanentemente en el stream de vídeo. No puede eliminarse fácilmente sin software especializado de restauración de vídeo, lo que la hace efectiva como protección visual del contenido.',
+  },
+  {
+    q: '¿Qué posiciones están disponibles para el texto?',
+    a: 'Puedes colocar la marca de agua en cinco posiciones: Centro, Superior izquierda, Superior derecha, Inferior izquierda e Inferior derecha. La posición inferior derecha es la más habitual en televisión y producciones profesionales.',
+  },
+  {
+    q: '¿Se pierde calidad al añadir la marca de agua?',
+    a: 'El vídeo se re-codifica con libx264 para aplicar el overlay. La calidad visual es prácticamente idéntica a la original. El audio se copia directamente sin re-codificar (-c:a copy), preservando la calidad sonora.',
+  },
+  {
+    q: '¿Para qué se usa la marca de agua en vídeo en la práctica?',
+    a: 'Los usos más frecuentes son: proteger vídeos de producto o demostraciones en Mercado Libre, Shopify o WooCommerce antes de licenciarlos; identificar el canal de YouTube o perfil de TikTok en reels y shorts reutilizados por terceros; añadir copyright a grabaciones de clases o cursos en línea de Hotmart, Teachable o plataformas propias; marcar material de archivo de noticias o reportajes antes de distribuirlo a medios; y proteger grabaciones de bodas o quinceañeras entregadas a los clientes antes de que se liquidara el contrato.',
+  },
 ];
 ---
 <ToolLayout slug="marca-agua-video" faqs={faqs}>
   <MarcaAguaVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Incrusta texto personalizado como marca de agua permanente en el vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El texto se renderiza en un canvas HTML5 transparente del tamaño exacto del vídeo y se superpone con el filtro <strong class="text-[var(--color-text)]">overlay=0:0</strong> de FFmpeg. Esta técnica evita el problema de fontconfig de drawtext en WASM y garantiza que la fuente, el tamaño y la posición sean exactamente los configurados. El audio se copia sin recodificar para preservar la calidad sonora.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">5 posiciones, tamaño ajustable y opacidad personalizable</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elige entre <strong class="text-[var(--color-text)]">Centro</strong>, cuatro esquinas, o cualquier posición del vídeo. Ajusta el tamaño de fuente (12–120 px) y la opacidad (10–100%) para conseguir desde una marca sutil hasta una protección visual prominente. Ideal para proteger vídeos de producto, cursos en línea y contenido de creadores de LATAM antes de su distribución.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

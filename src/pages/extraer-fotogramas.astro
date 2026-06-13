@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ExtraerFotogramasTool from '@/components/tools/ExtraerFotogramasTool';
 
 const faqs = [
-  { q: '¿Qué frecuencias de extracción están disponibles?', a: 'Puedes elegir entre 0.5 fps (un frame cada 2 segundos), 1 fps (un frame por segundo), 2 fps o 5 fps. Para vídeos cortos con mucho movimiento, usa 2-5 fps. Para vídeos largos, 0.5-1 fps es suficiente.' },
-  { q: '¿Cuántos fotogramas se pueden extraer?', a: 'El límite es de 500 fotogramas por procesamiento. Para vídeos muy largos, combina una frecuencia baja (0.5 fps) o recorta el vídeo antes de extraer los frames.' },
-  { q: '¿En qué formato se descargan los fotogramas?', a: 'Puedes elegir entre JPG (menor tamaño de archivo, ideal para fotos) o PNG (sin pérdida, ideal para capturas con texto o gráficos). Todos los frames se empaquetan en un único archivo ZIP.' },
-  { q: '¿Qué formatos de vídeo admite la herramienta?', a: 'Admite MP4, WebM, MOV, AVI y MKV. Para mayor compatibilidad, usa MP4 con codec H.264.' },
-  { q: '¿Para qué sirve extraer fotogramas de un vídeo?', a: 'Es útil para crear storyboards, analizar movimiento frame a frame, generar datasets de imágenes para machine learning, crear GIFs o animaciones, o extraer capturas específicas de grabaciones.' },
+  {
+    q: '¿Qué frecuencias de extracción están disponibles?',
+    a: 'Puedes elegir entre 0.5 fps (un frame cada 2 segundos), 1 fps (un frame por segundo), 2 fps o 5 fps. Para vídeos cortos con mucho movimiento, usa 2-5 fps. Para vídeos largos de los que solo necesitas frames de referencia, 0.5-1 fps es suficiente.',
+  },
+  {
+    q: '¿Cuántos fotogramas se pueden extraer?',
+    a: 'El límite es de 500 fotogramas por procesamiento. Para vídeos muy largos, combina una frecuencia baja (0.5 fps) o usa primero la herramienta "Recortar vídeo" para reducir la duración antes de extraer los frames.',
+  },
+  {
+    q: '¿En qué formato se descargan los fotogramas?',
+    a: 'Puedes elegir JPG (menor tamaño, ideal para fotos con mucho color) o PNG (sin pérdida, ideal para capturas con texto, gráficos o transparencia). Todos los frames se empaquetan en un único archivo ZIP para facilitar la descarga.',
+  },
+  {
+    q: '¿Qué formatos de vídeo admite la herramienta?',
+    a: 'Admite MP4, WebM, MOV, AVI y MKV. Para mayor compatibilidad y velocidad de procesamiento, se recomienda MP4 con codec H.264.',
+  },
+  {
+    q: '¿Cómo se nombran los archivos del ZIP?',
+    a: 'Los frames se nombran frame_0001.jpg (o .png), frame_0002.jpg, etc., en orden cronológico del vídeo. La numeración con ceros a la izquierda facilita el ordenado automático en cualquier explorador de archivos.',
+  },
+  {
+    q: '¿Se envían el vídeo o los fotogramas a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El vídeo nunca sale de tu dispositivo. La primera vez descarga el motor (~30 MB) que queda en caché.',
+  },
+  {
+    q: '¿Para qué se usa extraer fotogramas en la práctica?',
+    a: 'Los usos más habituales son: crear storyboards o moodboards a partir de vídeos de referencia; generar datasets de imágenes para entrenar modelos de visión por computador o machine learning; analizar movimiento frame a frame en deportes (análisis técnico de swing de golf, carrera atlética, remates de fútbol); extraer capturas específicas de grabaciones de pantalla o tutoriales para incluir en documentación; y crear sprite sheets o secuencias de animación a partir de vídeos para diseño web o videojuegos.',
+  },
 ];
 ---
 <ToolLayout slug="extraer-fotogramas" faqs={faqs}>
   <ExtraerFotogramasTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae todos los frames que necesites en JPG o PNG comprimidos en ZIP</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El filtro <strong class="text-[var(--color-text)]">fps=N</strong> de FFmpeg extrae exactamente los fotogramas a la frecuencia elegida: 0.5, 1, 2 o 5 frames por segundo. Los fotogramas se empaquetan automáticamente en un ZIP con nombres numerados (<strong class="text-[var(--color-text)]">frame_0001.jpg</strong>, frame_0002.jpg…) para facilitar su ordenación. Máximo 500 fotogramas por extracción.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Storyboards, datasets de IA y análisis técnico de movimiento</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Extraer fotogramas es esencial para crear storyboards de producciones de vídeo, generar datasets de imágenes para modelos de visión artificial, analizar técnica deportiva frame a frame, o crear secuencias de animación para videojuegos y webs. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador: el vídeo nunca sale de tu dispositivo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

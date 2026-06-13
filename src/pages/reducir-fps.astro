@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ReducirFPSTool from '@/components/tools/ReducirFPSTool';
+
+const faqs = [
+  {
+    q: '¿Qué son los FPS y por qué reducirlos?',
+    a: 'Los FPS (fotogramas por segundo) determinan la fluidez del vídeo. Reducirlos disminuye el tamaño del archivo de forma proporcional al número de frames eliminados. Por ejemplo, pasar de 60 a 30 FPS puede reducir el peso hasta un 40-50%.',
+  },
+  {
+    q: '¿Puedo aumentar los FPS con esta herramienta?',
+    a: 'No. Esta herramienta está diseñada para reducir los FPS. Si el vídeo ya tiene menos FPS del objetivo configurado, el resultado no cambiará. Para aumentar FPS necesitarías interpolación de frames (no disponible en esta herramienta).',
+  },
+  {
+    q: '¿Qué FPS es el recomendado para cada tipo de contenido?',
+    a: '60 fps: deportes, gaming y contenido de alta acción. 30 fps: estándar para YouTube, redes sociales y vídeo corporativo. 24 fps: cine y documentales. 25 fps: estándar europeo y PAL. 15 fps: vídeos de baja prioridad, tiempo-lapso. 10 fps: GIFs y vídeos de muy bajo peso.',
+  },
+  {
+    q: '¿Se mantiene la duración del vídeo?',
+    a: 'Sí. Al reducir los FPS solo se eliminan fotogramas, pero la duración total del vídeo no cambia. El movimiento puede verse ligeramente menos fluido, especialmente en escenas de acción rápida.',
+  },
+  {
+    q: '¿En qué formato se descarga el resultado?',
+    a: 'Siempre en MP4 con codificación H.264 (libx264). El audio se copia sin re-codificar (-c:a copy) para preservar la calidad sonora original.',
+  },
+  {
+    q: '¿Puedo configurar un FPS personalizado?',
+    a: 'Sí. Activa la opción "FPS personalizado" e introduce cualquier valor entre 1 y 120 fps. Esto es útil para valores específicos como 23.976 (NTSC cinema) o 29.97 (NTSC television), aunque la herramienta trabaja con valores enteros.',
+  },
+  {
+    q: '¿Para qué se usa reducir los FPS en la práctica?',
+    a: 'Los usos más habituales son: reducir el tamaño de vídeos grabados con GoPro o dron a 60 fps antes de subirlos a YouTube o compartirlos por WhatsApp; convertir grabaciones de pantalla a 24 fps para tutoriales donde la fluidez no es crítica; reducir el tamaño de vídeos de seguridad CCTV de 25 fps a 10 fps para archivarlos sin ocupar tanto espacio; optimizar vídeos de producto a 24 fps para publicarlos en Mercado Libre o WooCommerce; y preparar vídeos para señalética digital en pantallas de bajo rendimiento en tiendas o restaurantes de LATAM.',
+  },
+];
 ---
-<ToolLayout slug="reducir-fps" faqs={[
-  { q: '¿Qué son los FPS y por qué reducirlos?', a: 'Los FPS (fotogramas por segundo) determinan la fluidez del vídeo. Reducirlos disminuye el tamaño del archivo de forma proporcional al número de frames eliminados. Por ejemplo, pasar de 60 a 30 FPS puede reducir el peso hasta un 40-50%.' },
-  { q: '¿Puedo aumentar los FPS con esta herramienta?', a: 'No. Esta herramienta está diseñada para reducir los FPS. Si el vídeo ya tiene menos FPS del objetivo, el resultado no cambiará. Para aumentar FPS necesitarías interpolación de frames, que no está disponible en esta versión.' },
-  { q: '¿Qué FPS es el recomendado para vídeos web?', a: '24-30 FPS es el estándar para la mayoría de contenidos web y redes sociales. 60 FPS es adecuado para deportes y gaming. 15 FPS se usa para GIFs y vídeos de muy bajo peso.' },
-  { q: '¿Se mantiene la duración del vídeo?', a: 'Sí. Al reducir los FPS solo se eliminan fotogramas, pero la duración total del vídeo no cambia. El movimiento puede verse ligeramente menos fluido.' },
-  { q: '¿En qué formato se descarga el resultado?', a: 'Siempre en MP4 con codificación H.264. El audio se copia sin re-codificar para preservar la calidad sonora.' },
-]}>
+<ToolLayout slug="reducir-fps" faqs={faqs}>
   <ReducirFPSTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reduce los fotogramas por segundo de tu vídeo para archivos más ligeros</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El filtro <strong class="text-[var(--color-text)]">fps=N</strong> de FFmpeg elimina los fotogramas sobrantes para alcanzar la frecuencia objetivo. Presets: 60, 30, 25, 24, 15 y 10 fps, más un campo personalizado para cualquier valor. El audio se copia sin recodificar. La duración total del vídeo no cambia, solo la cantidad de fotogramas.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De 60fps a 30fps: hasta un 50% menos de tamaño sin recodificación de audio</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Reducir de <strong class="text-[var(--color-text)]">60 fps</strong> (GoPro, dron, pantalla de gaming) a <strong class="text-[var(--color-text)]">30 fps</strong> puede reducir el archivo un 40-50%. Pasar a <strong class="text-[var(--color-text)]">24 fps</strong> da el look cinematográfico estándar. El resultado se descarga en MP4 H.264. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin enviar el vídeo a ningún servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

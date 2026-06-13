@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import VoltearVideoTool from '@/components/tools/VoltearVideoTool';
 
 const faqs = [
-  { q: '¿Qué diferencia hay entre volteo horizontal y vertical?', a: 'El volteo horizontal crea un espejo de izquierda a derecha, como ver la imagen reflejada en un espejo. El volteo vertical gira la imagen de arriba a abajo, como si la estuvieras viendo desde abajo.' },
-  { q: '¿Se conserva el audio al voltear el vídeo?', a: 'Sí. La pista de audio se copia directamente sin procesar, por lo que el audio del vídeo volteado es idéntico al original.' },
-  { q: '¿Qué formatos de vídeo acepta?', a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4, que es el más compatible con plataformas y reproductores.' },
-  { q: '¿Se pierde calidad al voltear el vídeo?', a: 'El volteo requiere re-codificar el vídeo. La herramienta usa libx264, que produce pérdidas mínimas e imperceptibles en condiciones normales de visualización.' },
-  { q: '¿Para qué sirve voltear un vídeo?', a: 'El volteo horizontal es útil para corregir vídeos grabados con cámara frontal (selfie) que aparecen al revés, crear efectos de espejo, o cumplir requisitos de plataformas de vídeo.' },
+  {
+    q: '¿Qué diferencia hay entre volteo horizontal y vertical?',
+    a: 'El volteo horizontal (hflip) crea un espejo de izquierda a derecha, como ver la imagen reflejada en un espejo. El volteo vertical (vflip) gira la imagen de arriba a abajo. La opción "Ambos ejes" aplica hflip y vflip simultáneamente, equivalente a una rotación de 180°.',
+  },
+  {
+    q: '¿Se conserva el audio al voltear el vídeo?',
+    a: 'Sí. La pista de audio se copia directamente sin procesar (-c:a copy), por lo que el audio del vídeo volteado es idéntico al original.',
+  },
+  {
+    q: '¿Qué formatos de vídeo acepta?',
+    a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4, que es el más compatible con plataformas y reproductores.',
+  },
+  {
+    q: '¿Se pierde calidad al voltear el vídeo?',
+    a: 'El volteo requiere re-codificar el stream de vídeo con libx264. La pérdida de calidad es mínima e imperceptible. El audio se copia sin recodificar para preservar la calidad sonora original.',
+  },
+  {
+    q: '¿Para qué sirve el volteo horizontal (espejo)?',
+    a: 'El volteo horizontal es el más usado: corrige vídeos grabados con la cámara frontal (selfie) de móvil que aparecen al revés respecto a lo que veías en la pantalla; crea efectos de espejo; corrige el texto o elementos visuales que aparecen invertidos; y cumple requisitos de algunas plataformas de vídeo que esperan orientación específica.',
+  },
+  {
+    q: '¿Hay alguna diferencia entre "voltear" y "rotar" un vídeo?',
+    a: 'Sí. Voltear (flip) invierte la imagen horizontal o verticalmente sin cambiar las dimensiones del vídeo. Rotar gira el vídeo 90°, 180° o 270°, lo que puede cambiar el aspecto (ancho por alto) si es una rotación de 90°. Para corregir la orientación de vídeos girados, usa "Rotar vídeo".',
+  },
+  {
+    q: '¿Para qué se usa voltear vídeo en la práctica en LATAM?',
+    a: 'Los usos más habituales son: corregir vídeos de selfie o cámara frontal que salen al revés para publicarlos en Instagram, TikTok o WhatsApp Stories; crear efectos de espejo para vídeos de baile, tutoriales de maquillaje o fitness donde es importante ver el lado correcto; corregir vídeos de entrevistas donde el entrevistado mira a la derecha en lugar de a la izquierda; voltear grabaciones de cámaras de seguridad espejadas; y crear efectos visuales simétricos o de reflejo para producciones de vídeo artístico y comercial.',
+  },
 ];
 ---
 <ToolLayout slug="voltear-video" faqs={faqs}>
   <VoltearVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Voltea tu vídeo en espejo horizontal, vertical o ambos ejes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica los filtros <strong class="text-[var(--color-text)]">hflip</strong> (espejo horizontal), <strong class="text-[var(--color-text)]">vflip</strong> (espejo vertical) o ambos combinados. El audio se copia sin recodificar para preservar la calidad sonora. El resultado es un MP4 H.264 compatible con todas las plataformas y reproductores. Todo el procesamiento ocurre en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corrige vídeos de cámara frontal y crea efectos de espejo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los vídeos grabados con la <strong class="text-[var(--color-text)]">cámara selfie</strong> del móvil suelen salir al revés respecto a lo que veías en pantalla. El volteo horizontal los corrige en segundos. También crea efectos de espejo para tutoriales de maquillaje, baile o fitness donde es clave que los espectadores vean el lado correcto. Ideal para Instagram, TikTok y WhatsApp Stories.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

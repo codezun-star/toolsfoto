@@ -5,15 +5,15 @@ import SilenciarVideoTool from '@/components/tools/SilenciarVideoTool';
 const faqs = [
   {
     q: '¿Para qué sirve silenciar un vídeo?',
-    a: 'Hay muchos casos de uso: vídeos de fondo para presentaciones o páginas web, clips para redes sociales donde añadirás tu propia música, vídeos con audio no deseado (viento, ruido ambiente), material de stock que no debe tener sonido, o simplemente para reducir el tamaño del archivo eliminando la pista de audio.',
+    a: 'Hay muchos casos de uso: vídeos de fondo para presentaciones o páginas web, clips para redes sociales donde añadirás tu propia música, vídeos con audio no deseado (viento, ruido ambiente, conversaciones privadas), material de stock sin licencia de audio, o simplemente para reducir el tamaño del archivo eliminando la pista de audio.',
   },
   {
     q: '¿Se pierde calidad de vídeo al eliminar el audio?',
-    a: 'No. La herramienta usa la opción -c:v copy de FFmpeg, que copia el stream de vídeo sin re-codificar. La calidad visual es idéntica al original. Solo se elimina la pista de audio.',
+    a: 'No. La herramienta usa la opción "-c:v copy" de FFmpeg, que copia el stream de vídeo sin recodificar. La calidad visual es idéntica al original. Solo se elimina la pista de audio con el parámetro "-an".',
   },
   {
     q: '¿El archivo resultante es más pequeño?',
-    a: 'Sí. Al eliminar la pista de audio el archivo es más ligero, aunque el ahorro depende de qué proporción del tamaño total era el audio (normalmente entre un 5% y un 20% del tamaño del vídeo).',
+    a: 'Sí. Al eliminar la pista de audio el archivo es más ligero. El ahorro depende del bitrate de audio del vídeo original: habitualmente entre un 5% y un 20% del tamaño total del vídeo.',
   },
   {
     q: '¿Qué formatos de vídeo acepta?',
@@ -23,8 +23,30 @@ const faqs = [
     q: '¿Puedo después añadir otra pista de audio al vídeo silenciado?',
     a: 'Sí. Una vez que tengas el vídeo sin audio, puedes usar la herramienta "Añadir audio a vídeo" de ToolsFoto para insertar cualquier archivo de música o narración que quieras.',
   },
+  {
+    q: '¿El procesamiento es rápido?',
+    a: 'Sí. Al usar "-c:v copy" (sin recodificar el vídeo), el procesamiento es muy rápido independientemente de la duración del vídeo. Un vídeo de 1 hora puede silenciarse en pocos segundos. Solo la primera vez descarga el motor FFmpeg.wasm (~30 MB).',
+  },
+  {
+    q: '¿Para qué se usa silenciar vídeo en la práctica en LATAM?',
+    a: 'Los usos más habituales son: preparar vídeos de producto sin audio para publicarlos en Mercado Libre o Shopify y añadir música de fondo royalty-free; eliminar el audio original de grabaciones de eventos para reemplazarlo con la banda sonora del cliente; preparar clips de redes sociales sin audio que se publicarán con música de la plataforma (Instagram Reels, TikTok); silenciar el audio de reuniones grabadas con Zoom o Meet antes de compartirlas por razones de confidencialidad; y crear vídeos de fondo para pantallas de locales comerciales, restaurantes o tiendas en Colombia, México y Argentina.',
+  },
 ];
 ---
 <ToolLayout slug="silenciar-video" faqs={faqs}>
   <SilenciarVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina el audio de tu vídeo sin recodificar el stream de vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg elimina la pista de audio con <strong class="text-[var(--color-text)]">-an</strong> y copia el stream de vídeo con <strong class="text-[var(--color-text)]">-c:v copy</strong>: sin recodificación, sin pérdida de calidad visual. El procesamiento es casi instantáneo independientemente de la duración del vídeo. El resultado es un MP4 sin pista de audio, listo para añadir tu propia música o narración.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Vídeos de producto, fondos para tiendas y contenido para redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Silenciar un vídeo es el primer paso para añadir música o narración propia. Prepara vídeos de producto sin audio para <strong class="text-[var(--color-text)]">Mercado Libre</strong>, fondos animados para pantallas de tiendas o restaurantes, o clips para Instagram Reels y TikTok donde añadirás la música de la plataforma. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

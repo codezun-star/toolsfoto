@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ExtraerAudioTool from '@/components/tools/ExtraerAudioTool';
 
 const faqs = [
-  { q: '¿Qué formatos de audio puedo obtener?', a: 'Puedes extraer el audio como MP3 (comprimido, compatible universalmente), WAV (sin pérdida, mayor tamaño) o AAC (comprimido, mejor calidad que MP3 al mismo bitrate). MP3 es la opción recomendada para la mayoría de los usos.' },
-  { q: '¿Se puede extraer audio de cualquier vídeo?', a: 'Sí, siempre que el vídeo tenga una pista de audio (la mayoría los tiene). Si el vídeo no tiene audio, la herramienta mostrará un error. Formatos admitidos: MP4, WebM, MOV y AVI.' },
-  { q: '¿Se pierde calidad al extraer el audio?', a: 'En MP3 y AAC hay una pequeña recodificación que puede implicar una ligera pérdida de calidad respecto al audio original del vídeo. Si quieres preservar la máxima calidad, elige WAV (sin pérdida), aunque el archivo será más grande.' },
-  { q: '¿Para qué sirve extraer el audio de un vídeo?', a: 'Es útil para obtener la banda sonora de una presentación, el audio de una entrevista grabada en vídeo, la música de fondo de un clip, o para importar el audio en un editor de sonido como Audacity.' },
-  { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el audio extraído salen de tu dispositivo en ningún momento.' },
+  {
+    q: '¿Qué formatos de audio puedo obtener?',
+    a: 'Puedes extraer el audio como MP3 (comprimido, compatible universalmente), WAV (sin pérdida, mayor tamaño) o AAC (comprimido, mejor calidad que MP3 al mismo bitrate). MP3 es la opción recomendada para la mayoría de los usos.',
+  },
+  {
+    q: '¿Se puede extraer audio de cualquier vídeo?',
+    a: 'Sí, siempre que el vídeo tenga una pista de audio. Si el vídeo no tiene audio, la herramienta mostrará un error. Formatos admitidos como entrada: MP4, WebM, MOV y AVI.',
+  },
+  {
+    q: '¿Se pierde calidad al extraer el audio?',
+    a: 'En MP3 (libmp3lame -q:a 2) y AAC (192k) hay una pequeña recodificación. Si quieres preservar la máxima calidad, elige WAV (PCM 16-bit sin pérdida), aunque el archivo será considerablemente más grande.',
+  },
+  {
+    q: '¿Para qué sirve extraer el audio de un vídeo?',
+    a: 'Los usos más frecuentes son: obtener la banda sonora de una presentación grabada, extraer el audio de una entrevista para editarla en Audacity o Adobe Audition, obtener el audio de una clase o webinar para escucharlo como podcast, o separar el audio de vídeos de YouTube descargados para hacer compilaciones de música.',
+  },
+  {
+    q: '¿Los archivos se envían a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el audio extraído salen de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿Cuánto tarda en procesar?',
+    a: 'La primera vez descarga el motor FFmpeg.wasm (~30 MB) que queda en caché. El tiempo de extracción depende de la duración del vídeo: un vídeo de 10 minutos puede tardar entre 30 y 90 segundos según la potencia del dispositivo.',
+  },
+  {
+    q: '¿Para qué se usa en la práctica en LATAM?',
+    a: 'Los casos más habituales son: extraer el audio de clases de Hotmart, Udemy o YouTube para escucharlos como podcasts mientras se viaja en transporte público; separar la locución de vídeos corporativos para reutilizarla; obtener el audio de grabaciones de reuniones de Zoom o Meet para transcribirlas con herramientas de IA; y extraer la música de vídeos de eventos como bodas, quince años o graduaciones para compartir la canción.',
+  },
 ];
 ---
 <ToolLayout slug="extraer-audio" faqs={faqs}>
   <ExtraerAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae la pista de audio de cualquier vídeo como MP3, WAV o AAC</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg extrae el stream de audio directamente sin tocar el vídeo. <strong class="text-[var(--color-text)]">MP3</strong> (libmp3lame, calidad alta) es el más compatible. <strong class="text-[var(--color-text)]">WAV</strong> (PCM 16-bit) es sin pérdida, ideal para seguir editando en Audacity o Adobe Audition. <strong class="text-[var(--color-text)]">AAC</strong> (192 kbps) ofrece mejor relación calidad/peso que MP3, compatible con iPhone y Mac.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Procesamiento 100% en el navegador, sin subir el vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El vídeo no sale de tu dispositivo en ningún momento. FFmpeg.wasm procesa el archivo localmente con el parámetro <strong class="text-[var(--color-text)]">-vn</strong> para eliminar el stream de vídeo y conservar únicamente el audio. La primera vez descarga el motor (~30 MB) que queda cacheado; las siguientes veces el procesamiento comienza de inmediato.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

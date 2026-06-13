@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MedirDuracionTool from '@/components/tools/MedirDuracionTool';
+
+const faqs = [
+  {
+    q: '¿Qué información muestra esta herramienta?',
+    a: 'Muestra la duración exacta del audio (en horas, minutos y segundos con milisegundos), la frecuencia de muestreo (sample rate en Hz), el número de canales (mono o estéreo), el bitrate estimado en kbps y el tamaño del archivo.',
+  },
+  {
+    q: '¿Por qué el bitrate es "estimado"?',
+    a: 'El bitrate real de un archivo de audio codificado con bitrate variable (VBR) no puede conocerse exactamente sin analizar cada frame. La herramienta calcula el bitrate promedio dividiendo el tamaño del archivo entre la duración, que es una aproximación muy cercana al bitrate real.',
+  },
+  {
+    q: '¿Se necesita internet para usar esta herramienta?',
+    a: 'No. Todo el análisis se realiza con la Web Audio API del navegador. El archivo de audio nunca sale de tu dispositivo. Solo necesitas el navegador, sin descargar FFmpeg ni ningún motor adicional.',
+  },
+  {
+    q: '¿Qué formatos de audio admite?',
+    a: 'Admite cualquier formato que el navegador pueda decodificar: MP3, WAV, OGG, AAC, FLAC y M4A. La disponibilidad de formatos puede variar ligeramente entre Chrome, Firefox y Safari.',
+  },
+  {
+    q: '¿Es más precisa que el reproductor del sistema operativo?',
+    a: 'Para la duración, la precisión es equivalente, ya que ambos usan decodificación del mismo formato. Para el bitrate, los reproductores del sistema operativo pueden leer los metadatos ID3 del archivo (más preciso para bitrate fijo), mientras que esta herramienta lo calcula matemáticamente.',
+  },
+  {
+    q: '¿Para qué sirve conocer la duración y los metadatos del audio?',
+    a: 'Es útil para verificar la duración exacta de jingles o cuñas publicitarias que deben tener una duración específica (15s, 30s, 60s); comprobar el bitrate de archivos de audio antes de subirlos a plataformas de streaming como Spotify o Apple Music; auditar la calidad de archivos de audio recibidos de clientes o productoras; y calcular el tiempo de narración de audiolibros o podcasts.',
+  },
+  {
+    q: '¿Para qué se usa en la práctica en LATAM?',
+    a: 'Los usos más habituales son: verificar la duración de cuñas de radio o publicidad de audio para emisoras y agencias en México, Colombia y Argentina; comprobar que los archivos de audio de cursos en línea (Hotmart, Udemy) tienen la duración correcta antes de subirlos; auditar bibliotecas de sonido o efectos de audio para proyectos de edición de vídeo; y verificar la calidad (sample rate y bitrate) de archivos de música enviados por artistas a estudios de grabación.',
+  },
+];
 ---
-<ToolLayout slug="medir-duracion" faqs={[
-  { q: '¿Qué información muestra esta herramienta?', a: 'Muestra la duración exacta del audio (en horas, minutos y segundos con milisegundos), la frecuencia de muestreo (sample rate en Hz), el número de canales (mono o estéreo), el bitrate estimado y el tamaño del archivo.' },
-  { q: '¿Por qué el bitrate es "estimado"?', a: 'El bitrate real de un archivo de audio codificado con bitrate variable (VBR) no puede conocerse exactamente sin analizar cada frame. La herramienta calcula una aproximación dividiendo el tamaño del archivo entre la duración, que es muy cercana al bitrate promedio real.' },
-  { q: '¿Se necesita internet para usar esta herramienta?', a: 'No. Todo el análisis se realiza con la Web Audio API del navegador. El archivo de audio nunca sale de tu dispositivo. Solo necesitas el navegador.' },
-  { q: '¿Qué formatos de audio admite?', a: 'Admite cualquier formato que el navegador pueda decodificar: MP3, WAV, OGG, AAC, FLAC, M4A. La disponibilidad de formatos puede variar ligeramente entre navegadores.' },
-  { q: '¿Es más precisa que el reproductor de Windows o macOS?', a: 'Para la duración, la precisión es equivalente ya que ambos usan la misma API de decodificación. Para el bitrate, los reproductores del sistema operativo pueden leer los metadatos del archivo (más preciso), mientras que esta herramienta lo calcula matemáticamente.' },
-]}>
+<ToolLayout slug="medir-duracion" faqs={faqs}>
   <MedirDuracionTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Duración exacta, sample rate, canales y bitrate de cualquier archivo de audio</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa la <strong class="text-[var(--color-text)]">Web Audio API</strong> del navegador para decodificar el archivo y extraer sus propiedades: duración en horas/minutos/segundos con milisegundos, frecuencia de muestreo (44100 Hz, 48000 Hz…), número de canales (mono/estéreo) y bitrate estimado en kbps. No se descarga ni FFmpeg ni ningún motor adicional.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin conexión, sin servidor, análisis instantáneo en el navegador</html2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El archivo de audio no sale de tu dispositivo en ningún momento. El análisis es <strong class="text-[var(--color-text)]">instantáneo</strong> — no hay procesamiento con FFmpeg, solo la decodificación nativa del navegador. Compatible con MP3, WAV, OGG, AAC, FLAC y M4A. Útil para verificar duración de jingles publicitarios, auditar archivos de audio de cursos en línea y comprobar la calidad de grabaciones de estudio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

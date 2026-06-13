@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RevertirVideoTool from '@/components/tools/RevertirVideoTool';
+
+const faqs = [
+  {
+    q: '¿Qué hace exactamente "revertir" un vídeo?',
+    a: 'Revertir un vídeo invierte el orden de todos los fotogramas, de manera que el último frame se convierte en el primero. El resultado se reproduce de atrás hacia adelante, igual que si rebobinaras una cinta de VHS.',
+  },
+  {
+    q: '¿El audio también se invierte?',
+    a: 'Sí. Los filtros FFmpeg "reverse" (vídeo) y "areverse" (audio) se aplican simultáneamente. El audio sonará al revés, creando el efecto clásico de reproducción inversa.',
+  },
+  {
+    q: '¿Por qué solo funciona bien con clips cortos?',
+    a: 'El filtro "reverse" de FFmpeg carga todos los fotogramas del vídeo en memoria RAM antes de procesarlos. Para vídeos largos, esto puede agotar la memoria disponible. Se recomienda usar clips de menos de 60 segundos.',
+  },
+  {
+    q: '¿En qué formato se descarga el vídeo revertido?',
+    a: 'Siempre en MP4 con codificación H.264 y audio AAC, que es el formato más compatible con todas las plataformas y reproductores.',
+  },
+  {
+    q: '¿Puedo revertir solo el vídeo sin invertir el audio?',
+    a: 'Esta herramienta invierte ambas pistas simultáneamente. Si necesitas invertir solo el vídeo, puedes después silenciarlo con "Silenciar vídeo" y añadir el audio original con "Añadir audio a vídeo".',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'El filtro reverse es más lento que otros porque carga el vídeo completo en memoria. Un clip de 30 segundos en 1080p puede tardar 2-5 minutos. La primera vez también descarga el motor FFmpeg.wasm (~30 MB). Se recomienda usar clips de menos de 1 minuto.',
+  },
+  {
+    q: '¿Para qué se usa revertir un vídeo en la práctica?',
+    a: 'Los usos más populares son: crear el efecto de acción en reversa para vídeos de TikTok e Instagram Reels (saltar en reversa, beber en reversa, construir en reversa); hacer el efecto de "deshacer" para contenido cómico o educativo; crear loops de vídeo que se reproducen hacia adelante y hacia atrás para fondos de webs o pantallas de eventos; invertir grabaciones de experimentos o fenómenos físicos para mostrarlos al revés de forma artística; y crear teasers misteriosos en reversa para anunciar lanzamientos de productos en redes sociales.',
+  },
+];
 ---
-<ToolLayout slug="revertir-video" faqs={[
-  { q: '¿Qué hace exactamente "revertir" un vídeo?', a: 'Revertir un vídeo invierte el orden de todos los fotogramas, de manera que el último frame se convierte en el primero. El resultado se reproduce de atrás hacia adelante, igual que si rebobinaras una cinta.' },
-  { q: '¿El audio también se invierte?', a: 'Sí. Tanto el vídeo como el audio se invierten simultáneamente. El audio sonará al revés, lo que crea el efecto clásico de "backward masking".' },
-  { q: '¿Por qué solo funciona bien con clips cortos?', a: 'El filtro "reverse" de FFmpeg carga todos los fotogramas del vídeo en memoria RAM antes de procesarlos. Para vídeos largos, esto puede agotar la memoria disponible. Se recomienda usar clips de menos de 60 segundos.' },
-  { q: '¿En qué formato se descarga el vídeo revertido?', a: 'Siempre en MP4 con codificación H.264 y audio AAC, que es el formato más compatible con todas las plataformas y reproductores.' },
-  { q: '¿Puedo revertir solo el vídeo sin invertir el audio?', a: 'Esta herramienta invierte ambas pistas simultáneamente. Si necesitas invertir solo el vídeo, puedes después silenciarlo con la herramienta "Silenciar vídeo" y añadir el audio original con "Añadir audio a vídeo".' },
-]}>
+<ToolLayout slug="revertir-video" faqs={faqs}>
   <RevertirVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Invierte el orden de tu vídeo y audio con los filtros reverse y areverse</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica los filtros <strong class="text-[var(--color-text)]">reverse</strong> (vídeo) y <strong class="text-[var(--color-text)]">areverse</strong> (audio) para invertir el orden de todos los fotogramas y el stream de audio simultáneamente. El resultado es un MP4 H.264 que se reproduce de atrás hacia adelante. Por limitación de memoria, se recomienda usar clips de menos de 60 segundos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Efecto reversa para TikTok, Reels y contenido creativo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto de vídeo en reversa es tendencia en TikTok, Instagram Reels y YouTube Shorts: acciones cotidianas reproducidas hacia atrás crean contenido sorprendente y viral. Salta, danza, construye o rompe algo y grábalo — luego revierte el vídeo para el efecto inverso. Todo el procesamiento ocurre con <strong class="text-[var(--color-text)]">FFmpeg.wasm</strong> en el navegador, sin subir el vídeo a ningún servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

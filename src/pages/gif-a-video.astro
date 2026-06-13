@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import GifAVideoTool from '@/components/tools/GifAVideoTool';
 
 const faqs = [
-  { q: '¿Por qué convertir un GIF a MP4?', a: 'Los archivos MP4 son mucho más eficientes que los GIF: pueden ser hasta 10 veces más pequeños con la misma calidad visual. Además, MP4 tiene soporte nativo en todas las redes sociales, WhatsApp y reproductores modernos, mientras que los GIF grandes pueden no cargarse correctamente.' },
-  { q: '¿El MP4 resultante tendrá audio?', a: 'No. Los GIFs no tienen pista de audio, por lo que el MP4 resultante será un vídeo silencioso. Si quieres añadir música o audio, puedes usar la herramienta "Añadir audio a vídeo" después.' },
-  { q: '¿Se mantiene la animación y la velocidad del GIF?', a: 'Sí. FFmpeg lee los frames y la velocidad de fotogramas del GIF original. La animación en el MP4 tendrá la misma velocidad y número de frames que el GIF de origen.' },
-  { q: '¿Qué tamaño máximo de GIF admite?', a: 'El límite es 100 MB. La mayoría de GIFs web son mucho menores. Si tu GIF supera ese límite, considera reducir su tamaño con otra herramienta antes de convertirlo.' },
-  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). El navegador lo guarda en caché para las siguientes sesiones. El GIF nunca sale de tu dispositivo.' },
+  {
+    q: '¿Por qué convertir un GIF a MP4?',
+    a: 'Los archivos MP4 son mucho más eficientes que los GIF: pueden ser hasta 10 veces más pequeños con la misma calidad visual. Además, MP4 tiene soporte nativo en todas las redes sociales, WhatsApp y reproductores modernos, mientras que los GIF grandes pueden no cargarse correctamente.',
+  },
+  {
+    q: '¿El MP4 resultante tendrá audio?',
+    a: 'No. Los GIFs no tienen pista de audio, por lo que el MP4 resultante será un vídeo silencioso. Si quieres añadir música o audio, puedes usar la herramienta "Añadir audio a vídeo" después.',
+  },
+  {
+    q: '¿Se mantiene la animación y la velocidad del GIF?',
+    a: 'Sí. FFmpeg lee los frames y la velocidad de fotogramas del GIF original con el flag "-f gif". La animación en el MP4 tendrá la misma velocidad y número de frames que el GIF de origen.',
+  },
+  {
+    q: '¿Por qué se aplica el filtro de escala antes de convertir?',
+    a: 'FFmpeg aplica "scale=trunc(iw/2)*2:trunc(ih/2)*2" para garantizar que las dimensiones del vídeo sean pares. El codec H.264 requiere dimensiones pares; los GIFs a veces tienen dimensiones impares que causarían un error sin este filtro.',
+  },
+  {
+    q: '¿Qué tamaño máximo de GIF admite?',
+    a: 'El límite es 100 MB. La mayoría de GIFs web son mucho menores. Si tu GIF supera ese límite, considera usar una herramienta de optimización de GIF antes de convertirlo.',
+  },
+  {
+    q: '¿Para qué sirven los tres niveles de calidad?',
+    a: 'Alta calidad (CRF 18) produce el mayor tamaño de archivo pero la mejor calidad visual. Equilibrada (CRF 23) es el estándar para la mayoría de usos. Ligera (CRF 28) produce archivos pequeños, útil para enviar por WhatsApp o Telegram que tienen límites de tamaño en GIFs.',
+  },
+  {
+    q: '¿Para qué se usa convertir GIF a MP4 en la práctica?',
+    a: 'Los usos más habituales son: convertir GIFs animados de memes para compartirlos en WhatsApp, Instagram o TikTok (las plataformas reproducen MP4 como GIF si no tiene audio); reducir el tamaño de GIFs de tutoriales o documentación técnica para incluirlos en sitios web y que carguen más rápido; convertir GIFs de animaciones de producto para publicarlos en Mercado Libre, Shopify o WooCommerce como vídeos de demostración; y transformar GIFs de presentaciones a MP4 para incrustarlos en diapositivas de Google Slides o PowerPoint.',
+  },
 ];
 ---
 <ToolLayout slug="gif-a-video" faqs={faqs}>
   <GifAVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte GIF animado a MP4 hasta 10 veces más pequeño</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un GIF de 5 MB convertido a MP4 H.264 puede quedar en 500 KB sin pérdida de calidad perceptible. FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">scale=trunc(iw/2)*2:trunc(ih/2)*2</strong> para garantizar dimensiones pares (requerido por H.264) y usa libx264 con tres niveles de calidad ajustables. El resultado MP4 se comporta como un GIF en plataformas que reproducen vídeos en bucle automático.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Compatible con WhatsApp, Instagram, TikTok y todas las plataformas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        MP4 tiene soporte nativo en todas las redes sociales y aplicaciones de mensajería. WhatsApp y Telegram reproducen automáticamente los MP4 cortos en bucle, igual que los GIFs, pero con un tamaño mucho menor. Para enviar animaciones de producto, memes o presentaciones visuales por WhatsApp Business, Instagram o TikTok, el formato MP4 es siempre la opción más eficiente.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

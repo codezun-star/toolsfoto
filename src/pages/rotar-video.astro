@@ -5,11 +5,15 @@ import RotarVideoTool from '@/components/tools/RotarVideoTool';
 const faqs = [
   {
     q: '¿Por qué mi vídeo aparece girado al subirlo a internet?',
-    a: 'Los vídeos grabados con el móvil en vertical o girado almacenan la orientación como metadato (rotation flag) en el contenedor, pero algunos reproductores web ignoran ese metadato. Esta herramienta aplica la rotación directamente al stream de vídeo con FFmpeg, eliminando la dependencia del reproductor.',
+    a: 'Los vídeos grabados con el móvil en vertical o girado almacenan la orientación como metadato (rotation flag) en el contenedor, pero algunos reproductores web y plataformas ignoran ese metadato. Esta herramienta aplica la rotación directamente al stream de vídeo con FFmpeg, eliminando la dependencia del reproductor.',
   },
   {
     q: '¿Se pierde calidad al rotar el vídeo?',
-    a: 'La rotación requiere re-codificar el vídeo (no es posible hacerlo sin re-encode como en el corte por tiempo). La herramienta usa libx264 con CRF 23, que es el balance estándar calidad/tamaño. La pérdida de calidad visual es prácticamente imperceptible.',
+    a: 'La rotación requiere re-codificar el vídeo (no es posible hacerlo sin re-encode). La herramienta usa libx264 con CRF estándar, que produce pérdidas mínimas e imperceptibles en condiciones normales de visualización. El audio se copia sin modificar (-c:a copy).',
+  },
+  {
+    q: '¿Qué significa rotar 90° derecha vs 90° izquierda?',
+    a: '90° derecha (transpose=1) rota el vídeo en el sentido de las agujas del reloj. Si el vídeo está girado hacia la izquierda, aplica 90° derecha para corregirlo. 90° izquierda (transpose=2) rota en sentido antihorario. 180° aplica dos rotaciones de 90° consecutivas, girando el vídeo completamente.',
   },
   {
     q: '¿Qué formatos de vídeo acepta?',
@@ -17,14 +21,32 @@ const faqs = [
   },
   {
     q: '¿Se conserva el audio al rotar el vídeo?',
-    a: 'Sí. La pista de audio se copia directamente sin modificar (stream copy), por lo que el audio del vídeo rotado es idéntico al original.',
+    a: 'Sí. La pista de audio se copia directamente sin modificar (-c:a copy), por lo que el audio del vídeo rotado es idéntico al original.',
   },
   {
     q: '¿Cuánto tarda el procesamiento?',
-    a: 'Depende del tamaño del vídeo. FFmpeg.wasm procesa en tu navegador sin enviar datos al servidor. Un vídeo de 1 minuto en 1080p puede tardar entre 1 y 3 minutos según la potencia de tu dispositivo. La primera carga del procesador (~30 MB) puede añadir unos segundos adicionales.',
+    a: 'Depende del tamaño del vídeo. FFmpeg.wasm procesa en tu navegador sin enviar datos al servidor. Un vídeo de 1 minuto en 1080p puede tardar entre 1 y 3 minutos según la potencia del dispositivo. La primera carga del motor (~30 MB) puede añadir unos segundos adicionales.',
+  },
+  {
+    q: '¿Para qué se usa rotar vídeo en la práctica?',
+    a: 'Los usos más habituales son: corregir vídeos grabados con el móvil en la orientación equivocada antes de subirlos a Instagram, TikTok, YouTube o WhatsApp; corregir grabaciones de cámaras de seguridad mal instaladas antes de enviarlas a aseguradoras o autoridades en México, Colombia o Argentina; rotar grabaciones de entrevistas o testimoniales para adaptarlas al formato correcto antes de publicarlas; y corregir la orientación de grabaciones de bodas, quinceañeras o eventos sociales antes de entregarlas a los clientes.',
   },
 ];
 ---
 <ToolLayout slug="rotar-video" faqs={faqs}>
   <RotarVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Rota tu vídeo 90° o 180° con el filtro transpose de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El filtro <strong class="text-[var(--color-text)]">transpose=1</strong> (90° derecha) y <strong class="text-[var(--color-text)]">transpose=2</strong> (90° izquierda) de FFmpeg aplican la rotación directamente al stream de vídeo. La rotación de 180° encadena dos filtros transpose. El audio se copia sin recodificar. El resultado es un MP4 que cualquier reproductor mostrará correctamente, sin depender de metadatos de orientación.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corrige vídeos grabados en orientación incorrecta con el móvil</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los vídeos grabados con el móvil en la orientación equivocada aparecen girados en reproductores web y al subirlos a Instagram o TikTok. Esta herramienta aplica la rotación <strong class="text-[var(--color-text)]">directamente al contenido del vídeo</strong> (no solo al metadato), garantizando que se vea correctamente en cualquier plataforma, reproductor o dispositivo. Todo el procesamiento ocurre en el navegador.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

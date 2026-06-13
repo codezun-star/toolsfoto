@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FotogramasAVideoTool from '@/components/tools/FotogramasAVideoTool';
 
 const faqs = [
-  { q: '¿Cuántas fotos puedo añadir al slideshow?', a: 'Puedes añadir hasta 30 imágenes por slideshow. Las fotos se procesan en el orden que elijas, que puedes cambiar arrastrando las miniaturas antes de crear el vídeo.' },
-  { q: '¿Qué formatos de imagen admite?', a: 'Admite JPG, PNG y WebP. Las imágenes se escalan automáticamente a la resolución elegida (720p o 1080p) con barras negras laterales si el aspecto no coincide, para evitar distorsión.' },
-  { q: '¿El vídeo resultante tiene audio?', a: 'No. Los slideshows creados con esta herramienta son vídeos sin audio. Si quieres añadir música, puedes usar la herramienta "Añadir audio a vídeo" después de descargar el slideshow.' },
-  { q: '¿Por qué tarda más que otras herramientas?', a: 'Con muchas fotos y duración larga, FFmpeg tiene que procesar cada imagen individualmente y concatenarlas. Con 10 fotos a 2s cada una y 1080p, el proceso puede tardar 1-2 minutos. Es normal.' },
-  { q: '¿Puedo reordenar las fotos antes de crear el vídeo?', a: 'Sí. Una vez subidas las imágenes, puedes arrastrarlas en la cuadrícula para cambiar el orden. Los números en la esquina inferior izquierda indican la posición en el vídeo final.' },
+  {
+    q: '¿Cuántas fotos puedo añadir al slideshow?',
+    a: 'Puedes añadir hasta 30 imágenes por slideshow. Las fotos se procesan en el orden que elijas, que puedes cambiar arrastrando las miniaturas antes de crear el vídeo.',
+  },
+  {
+    q: '¿Qué formatos de imagen admite?',
+    a: 'Admite JPG, PNG y WebP. Las imágenes se escalan automáticamente a la resolución elegida (720p o 1080p) con barras negras si el aspecto no coincide, para evitar distorsión del contenido.',
+  },
+  {
+    q: '¿El vídeo resultante tiene audio?',
+    a: 'No. Los slideshows creados con esta herramienta son vídeos sin audio. Si quieres añadir música, puedes usar la herramienta "Añadir audio a vídeo" después de descargar el slideshow.',
+  },
+  {
+    q: '¿Por qué tarda más que otras herramientas?',
+    a: 'Con muchas fotos y duración larga, FFmpeg tiene que procesar cada imagen individualmente y concatenarlas. Con 10 fotos a 2s cada una y 1080p, el proceso puede tardar 1-2 minutos según el hardware. La primera vez también descarga el motor (~30 MB).',
+  },
+  {
+    q: '¿Puedo reordenar las fotos antes de crear el vídeo?',
+    a: 'Sí. Una vez subidas las imágenes, puedes arrastrarlas en la cuadrícula para cambiar el orden. Los números en la esquina inferior izquierda indican la posición en el vídeo final. También puedes eliminar imágenes individualmente con el botón de la X.',
+  },
+  {
+    q: '¿En qué resolución se genera el vídeo?',
+    a: 'Puedes elegir entre 720p (1280×720) para archivos más ligeros, o 1080p (1920×1080) para máxima calidad. Ambas resoluciones usan el aspecto 16:9 estándar. Si las imágenes tienen proporción diferente (cuadrada, vertical), se añaden barras negras.',
+  },
+  {
+    q: '¿Para qué se usa convertir fotos a vídeo en la práctica?',
+    a: 'Los usos más habituales son: crear un álbum de fotos en vídeo de una boda, quince años, graduación o viaje para compartir en YouTube o WhatsApp; hacer una presentación de producto en formato vídeo para publicar en Instagram, TikTok o Mercado Libre; crear un portfolio visual animado con capturas de proyectos de diseño; montar un reel de fotos de un evento para enviarlo por redes sociales; y generar vídeos para señalética digital en pantallas de restaurantes, tiendas o eventos de LATAM.',
+  },
 ];
 ---
 <ToolLayout slug="fotogramas-a-video" faqs={faqs}>
   <FotogramasAVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte hasta 30 fotos en un vídeo slideshow MP4</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Sube tus imágenes (JPG, PNG o WebP), ajusta el orden arrastrando las miniaturas, elige la duración por foto (1, 2, 3 o 5 segundos) y la resolución (720p o 1080p). FFmpeg concatena las imágenes con el filtro <strong class="text-[var(--color-text)]">scale+pad</strong> para mantener el aspecto original sin distorsión. El resultado es un MP4 H.264 listo para redes sociales, WhatsApp o YouTube.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reordena, elimina y controla la duración de cada foto</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La cuadrícula de previsualización muestra todas las imágenes numeradas. <strong class="text-[var(--color-text)]">Arrastra</strong> para reordenar, elimina las que no necesites. La duración total se calcula automáticamente: 15 fotos × 3 segundos = 45 segundos de vídeo. Ideal para crear álbumes de bodas, galerías de producto para Mercado Libre o portafolios animados para presentaciones.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

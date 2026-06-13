@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RecortarAreaVideoTool from '@/components/tools/RecortarAreaVideoTool';
 
 const faqs = [
-  { q: '¿Cómo sé las dimensiones originales del vídeo?', a: 'Puedes verlas haciendo clic derecho en el archivo y consultando Propiedades > Detalles, o reproduciéndolo y mirando la resolución. Los valores de ancho, alto y offsets deben caber dentro de esas dimensiones.' },
-  { q: '¿Qué significa el punto de inicio X e Y?', a: 'X es la distancia en píxeles desde el borde izquierdo donde empieza el recorte. Y es la distancia desde el borde superior. El punto (0, 0) es la esquina superior izquierda del vídeo.' },
-  { q: '¿Se conserva el audio al recortar el área?', a: 'Sí. La pista de audio se copia directamente sin modificar. El recorte solo afecta al área visual del vídeo.' },
-  { q: '¿Qué pasa si los valores de recorte exceden el tamaño del vídeo?', a: 'FFmpeg dará un error. Asegúrate de que "Inicio X + Ancho" no supere el ancho del vídeo original, y que "Inicio Y + Alto" no supere el alto original.' },
-  { q: '¿Para qué casos es útil recortar el área de un vídeo?', a: 'Es ideal para eliminar barras negras de vídeos con letterbox, recortar los bordes con marcas de cámara, extraer una región de interés, o preparar contenido para formatos específicos.' },
+  {
+    q: '¿Cómo sé las dimensiones originales del vídeo?',
+    a: 'Puedes verlas haciendo clic derecho en el archivo y consultando Propiedades > Detalles (Windows) o Obtener información (Mac). Los valores de ancho, alto y offsets X/Y deben caber dentro de esas dimensiones.',
+  },
+  {
+    q: '¿Qué significa el punto de inicio X e Y?',
+    a: 'X es la distancia en píxeles desde el borde izquierdo donde empieza el recorte. Y es la distancia desde el borde superior. El punto (0, 0) es la esquina superior izquierda del vídeo. Por ejemplo, para recortar el centro de un vídeo 1920×1080 a 1280×720, usa X=320, Y=180, Ancho=1280, Alto=720.',
+  },
+  {
+    q: '¿Se conserva el audio al recortar el área?',
+    a: 'Sí. La pista de audio se copia directamente sin modificar (-c:a copy). El recorte solo afecta al área visual del vídeo. El stream de vídeo se re-codifica con libx264 para aplicar el filtro crop.',
+  },
+  {
+    q: '¿Qué pasa si los valores de recorte exceden el tamaño del vídeo?',
+    a: 'FFmpeg dará un error. Asegúrate de que "Inicio X + Ancho" no supere el ancho del vídeo original, y que "Inicio Y + Alto" no supere el alto original. La herramienta mostrará el error en pantalla.',
+  },
+  {
+    q: '¿Qué casos de uso tiene recortar el área de un vídeo?',
+    a: 'Eliminar barras negras de vídeos con letterbox (formato cine en pantalla 16:9), recortar los bordes con marcas de tiempo o identificadores de cámara de seguridad, extraer una región de interés de vídeos de vigilancia o grabaciones deportivas, o preparar contenido para formatos específicos.',
+  },
+  {
+    q: '¿Se envía el vídeo a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El vídeo nunca sale de tu dispositivo. La primera vez descarga el motor (~30 MB) que queda en caché para sesiones posteriores.',
+  },
+  {
+    q: '¿Para qué se usa en la práctica en LATAM?',
+    a: 'Los usos más habituales son: eliminar barras negras y marcas de agua de esquina de vídeos descargados para editarlos; recortar el área útil de grabaciones de cámaras de seguridad (CCTV) que incluyen el dashboard de la cámara en los bordes; extraer la región con el producto de vídeos de demostración amplios para publicarlos en Mercado Libre; recortar grabaciones de pantalla que muestran información confidencial en los bordes o esquinas; y preparar vídeos para plataformas de e-learning que requieren resoluciones específicas.',
+  },
 ];
 ---
 <ToolLayout slug="recortar-area-video" faqs={faqs}>
   <RecortarAreaVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recorta cualquier área del vídeo con coordenadas en píxeles</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El filtro <strong class="text-[var(--color-text)]">crop=W:H:X:Y</strong> de FFmpeg recorta el área exacta que defines en píxeles. El punto (0, 0) es la esquina superior izquierda. El audio se copia sin recodificar. Ideal para eliminar barras negras de letterbox, recortar bordes con marcas de cámaras de seguridad, o extraer una región de interés de grabaciones deportivas o de vigilancia.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina barras negras, marcas de cámara y áreas no deseadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Si necesitas el centro de un vídeo 1920×1080 en 1280×720: usa <strong class="text-[var(--color-text)]">X=320, Y=180, Ancho=1280, Alto=720</strong>. Para eliminar las barras negras de un vídeo con letterbox, mide en píxeles el alto de las barras y úsalo como offset Y. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin enviar el vídeo a ningún servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
