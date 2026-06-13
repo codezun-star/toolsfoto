@@ -5,9 +5,25 @@ import RobotizarVozTool from '@/components/tools/RobotizarVozTool';
 <ToolLayout slug="robotizar-voz" faqs={[
   { q: '¿Cómo funciona el efecto de voz robótica?', a: 'El efecto se consigue combinando filtros de FFmpeg: ecos muy cortos (5-30 ms) que crean una resonancia metálica, cambios sutiles de sample rate para modificar el timbre y, en algunos presets, modulación de vibrato para añadir una oscilación característica.' },
   { q: '¿Cuál es la diferencia entre los 4 presets?', a: '"Robot estándar" aplica ecos muy cortos a velocidad normal. "Robot grave" baja el pitch un 15% antes de añadir el eco. "Alien" añade vibrato rápido (10 Hz) para una sensación extraterrestre. "Cibernético" usa múltiples capas de eco con decaimiento rápido para un sonido digital extremo.' },
-  { q: '¿Funciona con música o solo con voz?', a: 'Funciona con cualquier tipo de audio, aunque el efecto es más dramático en voces y tonos simples. Aplicado a música, puede sonar interessante pero difuminará los detalles melódicos.' },
+  { q: '¿Funciona con música o solo con voz?', a: 'Funciona con cualquier tipo de audio, aunque el efecto es más dramático en voces y tonos simples. Aplicado a música, puede sonar interesante pero difuminará los detalles melódicos.' },
   { q: '¿En qué formato se descarga el resultado?', a: 'El resultado se descarga en el mismo formato que el archivo de entrada (MP3, WAV, OGG, AAC). Si el formato no está en la lista compatible, se exporta como MP3.' },
   { q: '¿Puedo usar el audio resultante en vídeos y proyectos?', a: 'Sí. El archivo descargado es un audio estándar compatible con cualquier editor de vídeo, DAW o plataforma. El procesamiento es completamente local en tu navegador.' },
+  { q: '¿Qué filtros de FFmpeg se usan en cada preset?', a: '"Robot estándar" usa <strong>aecho=0.8:0.9:10:0.9 + asetrate=44982 + aresample=44100</strong> para un eco metálico con pitch ligeramente aumentado. "Robot grave" usa asetrate=37485 + aresample + aecho para bajar el pitch. "Alien" usa vibrato=f=8:d=0.7 + aecho para la oscilación extraterrestre. "Cibernético" usa asetrate=46305 + aresample + aecho=0.9:0.88:5:0.9 para el sonido digital extremo.' },
+  { q: '¿Para qué se usa robotizar la voz en la práctica en LATAM?', a: 'Los usos más habituales son: crear personajes robóticos o de IA para podcasts de ciencia ficción y audiolibros en Colombia, México y Argentina; añadir el efecto de voz de robot a streams de Twitch o vídeos de YouTube para efectos especiales; procesar la voz de narradores para trailers de videojuegos indie; crear efectos de sonido de robots para animaciones o cortometrajes; y generar contenido de audio creativo para TikTok, Reels o YouTube Shorts con voces transformadas.' },
 ]}>
   <RobotizarVozTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Voz robótica con filtros aecho, asetrate y vibrato de FFmpeg en 4 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg combina filtros <strong class="text-[var(--color-text)]">aecho</strong> (eco muy corto 5-30ms), <strong class="text-[var(--color-text)]">asetrate + aresample</strong> (cambio de timbre) y <strong class="text-[var(--color-text)]">vibrato</strong> (oscilación) en 4 presets: Robot estándar, Robot grave, Alien y Cibernético. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcasts de ciencia ficción, streaming y efectos para creadores digitales en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Crea personajes robóticos para <strong class="text-[var(--color-text)]">podcasts de ciencia ficción</strong>, añade efectos de voz de IA a streams de Twitch o YouTube, o genera voces de robots para videojuegos indie. Muy usado por creadores de contenido en Colombia, México y Argentina para TikTok, Reels y YouTube Shorts sin necesidad de plugins de pago ni software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

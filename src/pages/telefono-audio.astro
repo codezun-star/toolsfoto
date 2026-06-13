@@ -4,10 +4,26 @@ import TelefonoAudioTool from '@/components/tools/TelefonoAudioTool';
 ---
 <ToolLayout slug="telefono-audio" faqs={[
   { q: '¿Cómo funciona el efecto de teléfono?', a: 'El efecto se consigue aplicando filtros de paso alto y bajo que limitan el audio a la banda de frecuencia de los teléfonos analógicos (300-3400 Hz). Esto elimina los graves profundos y los agudos extremos, dejando solo el rango de voz humana estándar.' },
-  { q: '¿Qué diferencia hay entre los 4 presets?', a: '"Teléfono" aplica la banda clásica 300-3400 Hz. "Radio AM" usa una banda ligeramente más amplia con un leve eco. "Intercomunicador" aplica compresión agresiva para el sonido saturado típico de los walkie-talkies de interior. "Walkie-talkie" es la versión más agresiva con mayor compresión.' },
+  { q: '¿Qué diferencia hay entre los 4 presets?', a: '"Teléfono" aplica la banda clásica 300-3400 Hz. "Radio AM" usa una banda ligeramente más amplia con un leve eco. "Intercomunicador" aplica compresión agresiva para el sonido saturado típico de los intercomunicadores de interior. "Walkie-talkie" es la versión más agresiva con mayor compresión y más ganancia.' },
   { q: '¿Para qué se usa este efecto?', a: 'Es muy útil en producción de audio y vídeo: para simular llamadas de teléfono en podcasts, doblajes o ficciones sonoras. También se usa en producción musical para añadir interés a partes vocales o crear contraste.' },
   { q: '¿Funciona también con música o solo con voz?', a: 'Funciona con cualquier audio, pero es más efectivo y reconocible con voces. Aplicado a música, eliminará la mayor parte de los graves y los agudos brillantes, lo que puede sonar muy distorsionado.' },
+  { q: '¿Cuáles son los filtros de FFmpeg que crean cada efecto?', a: '"Teléfono" usa <strong>highpass=f=300 + lowpass=f=3400 + volume=1.4</strong>. "Radio AM" añade <strong>aecho</strong> para el efecto radiofónico. "Intercomunicador" añade <strong>acompressor=threshold=-20dB:ratio=6:attack=2:release=50</strong> para la saturación. "Walkie-talkie" usa la versión más agresiva con <strong>acompressor=ratio=8 + makeup=4dB</strong> para mayor compresión y volumen.' },
+  { q: '¿Para qué se usa el efecto de teléfono en la práctica en LATAM?', a: 'Los usos más habituales son: simular escenas de llamadas telefónicas en podcasts de true crime o ficción sonora de Colombia, México y Argentina; crear el efecto de locución radiofónica en vídeos de YouTube o TikTok; añadir el sonido de "voz de teléfono" a partes vocales en producciones de reggaetón o trap; crear efectos de sonido de walkie-talkie o intercomunicador para videojuegos indie; y agregar autenticidad a recreaciones de llamadas históricas en contenido educativo o periodístico.' },
   { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El archivo de audio nunca sale de tu dispositivo.' },
 ]}>
   <TelefonoAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Efecto de teléfono con filtros highpass, lowpass y acompressor de FFmpeg en 4 presets</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg encadena <strong class="text-[var(--color-text)]">highpass=f=300 + lowpass=f=3400</strong> para limitar la banda de frecuencias al rango telefónico (300-3400 Hz), más <strong class="text-[var(--color-text)]">volume</strong> y <strong class="text-[var(--color-text)]">acompressor</strong> según el preset: Teléfono, Radio AM, Intercomunicador y Walkie-talkie. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast de ficción, música urbana y efectos sonoros para creadores en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Simula llamadas telefónicas en <strong class="text-[var(--color-text)]">podcasts de true crime o ficción sonora</strong>, añade el efecto de radio a locuciones de TikTok o YouTube, o crea el sonido de walkie-talkie para videojuegos indie. Muy usado por productores de reggaetón y trap en Colombia, México y Argentina para añadir la textura de "voz de teléfono" a partes vocales sin plugins de pago.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,28 +3,29 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RevertirAudioTool from '@/components/tools/RevertirAudioTool';
 
 const faqs = [
-  {
-    q: '¿Qué hace exactamente la herramienta de revertir audio?',
-    a: 'Invierte el orden de las muestras del archivo de audio para que se reproduzca de atrás hacia adelante. El primer segundo del original pasa a ser el último, y viceversa. Es el equivalente sonoro de reproducir una cinta de cassette al revés.',
-  },
-  {
-    q: '¿Para qué se usa revertir un audio?',
-    a: 'Es una técnica clásica en producción musical y diseño de sonido: crear efectos de reverberación invertida (reverse reverb), pads atmosféricos, efectos especiales de ciencia ficción, o simplemente explorar cómo suena una grabación al revés.',
-  },
-  {
-    q: '¿Qué formatos de audio admite?',
-    a: 'Admite MP3, WAV, OGG, AAC y FLAC. El archivo resultante se descarga en el mismo formato que el original para mantener la compatibilidad con tus herramientas de audio.',
-  },
-  {
-    q: '¿Se pierde calidad al revertir el audio?',
-    a: 'No hay degradación de calidad perceptible. El filtro areverse de FFmpeg opera sobre el audio decodificado y lo re-codifica con los mismos parámetros. Para máxima calidad sin pérdida, usa archivos WAV o FLAC de origen.',
-  },
-  {
-    q: '¿El procesamiento es en mi dispositivo?',
-    a: 'Sí, completamente. FFmpeg.wasm procesa el audio en tu navegador sin enviar el archivo a ningún servidor. La privacidad de tus grabaciones está garantizada.',
-  },
+  { q: '¿Qué hace exactamente la herramienta de revertir audio?', a: 'Invierte el orden de las muestras del archivo de audio para que se reproduzca de atrás hacia adelante. El primer segundo del original pasa a ser el último, y viceversa. Es el equivalente sonoro de reproducir una cinta de cassette al revés.' },
+  { q: '¿Para qué se usa revertir un audio?', a: 'Es una técnica clásica en producción musical y diseño de sonido: crear efectos de reverberación invertida (reverse reverb), pads atmosféricos, efectos especiales de ciencia ficción, o simplemente explorar cómo suena una grabación al revés.' },
+  { q: '¿Qué formatos de audio admite?', a: 'Admite MP3, WAV, OGG, AAC y FLAC. El archivo resultante se descarga en el mismo formato que el original para mantener la compatibilidad con tus herramientas de audio.' },
+  { q: '¿Se pierde calidad al revertir el audio?', a: 'No hay degradación de calidad perceptible. El filtro areverse de FFmpeg opera sobre el audio decodificado y lo re-codifica con los mismos parámetros. Para máxima calidad sin pérdida, usa archivos WAV o FLAC de origen.' },
+  { q: '¿Qué es el "reverse reverb" y cómo se consigue con esta herramienta?', a: 'El reverse reverb es una técnica de estudio clásica: se aplica reverberación al audio revertido, se revierte de nuevo el resultado, y el efecto final produce un crescendo fantasmal antes del sonido original. Para lograrlo: (1) revierte el audio, (2) aplica reverb con otra herramienta, (3) revierte de nuevo el resultado. Muy usado en producción de rock, electrónica y bandas sonoras.' },
+  { q: '¿Para qué se usa revertir audio en la práctica en LATAM?', a: 'Los usos más habituales son: crear reverse samples de percusión o platillos para producción de trap y música urbana en Colombia, México y Argentina; generar pads atmosféricos revertiendo grabaciones de guitarra o sintetizador; crear efectos especiales de ciencia ficción para podcast, juegos indie o vídeos de TikTok; crear transiciones creativas en vídeos de Reels o YouTube Shorts con el audio de un sample al revés; y explorar combinaciones sonoras creativas en home studios.' },
+  { q: '¿El procesamiento es en mi dispositivo?', a: 'Sí, completamente. FFmpeg.wasm procesa el audio en tu navegador sin enviar el archivo a ningún servidor. La privacidad de tus grabaciones está garantizada.' },
 ];
 ---
 <ToolLayout slug="revertir-audio" faqs={faqs}>
   <RevertirAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Inversión de audio con el filtro areverse de FFmpeg: reproduce el audio de atrás hacia adelante</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">areverse</strong> que invierte el orden de todas las muestras del audio en memoria, produciendo una reproducción exactamente invertida. El formato de salida es el mismo que el de entrada (MP3, WAV, OGG, AAC). No hay pérdida de calidad adicional significativa. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reverse samples, pads atmosféricos y efectos especiales para producción musical en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Crea <strong class="text-[var(--color-text)]">reverse samples</strong> de percusión o platillos para producciones de trap y música urbana, genera pads atmosféricos revertiendo grabaciones de guitarra, o crea transiciones creativas para vídeos de TikTok y Reels. Muy usado por productores musicales en Colombia, México y Argentina que trabajan en home studio sin acceso a DAWs de pago.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

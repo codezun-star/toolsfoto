@@ -7,7 +7,23 @@ import VisualizarFormaOndaTool from '@/components/tools/VisualizarFormaOndaTool'
   { q: '¿Qué tamaño tiene la imagen generada?', a: 'La imagen se genera en alta resolución: 1200 × 300 píxeles en formato PNG. Es suficiente para usarla en presentaciones, portadas de podcast, redes sociales o como miniatura.' },
   { q: '¿Qué formatos de audio admite?', a: 'La herramienta acepta los formatos que tu navegador puede decodificar: MP3, WAV, OGG, AAC, FLAC y M4A. La decodificación se realiza con la Web Audio API del navegador, sin servidores externos.' },
   { q: '¿Puedo cambiar los colores?', a: 'Sí. Puedes personalizar el color de la onda y el color de fondo antes de generar la imagen. Usa el selector de color para elegir cualquier valor HEX.' },
+  { q: '¿Cómo dibuja la forma de onda el componente Canvas API?', a: 'La herramienta decodifica el audio con la Web Audio API, obtiene el array de muestras del primer canal (getChannelData(0)), y lo divide en W=1200 segmentos (1 por píxel horizontal). Para cada segmento calcula el mínimo y máximo de las muestras y dibuja una línea vertical entre esos dos puntos. El resultado es la forma de onda clásica que representa la dinámica del audio con precisión de muestra.' },
+  { q: '¿Para qué se usa visualizar la forma de onda en la práctica en LATAM?', a: 'Los usos más habituales son: crear coberturas visuales de episodios de podcast para publicar como imagen en Instagram, Twitter o LinkedIn desde Colombia, México y Argentina; usar la imagen de fondo para vídeos de audio en YouTube (lyric videos, audiogramas de podcast); identificar visualmente silencios, picos de volumen excesivos o secciones problemáticas en una grabación antes de editarla; añadir la visualización como elemento decorativo en presentaciones de cursos en Hotmart; y crear contenido de audio visual para TikTok o Reels que combine música y visualización.' },
   { q: '¿Se sube el archivo al servidor?', a: 'No. Todo el procesamiento ocurre en tu navegador usando la Web Audio API y la Canvas API. El archivo de audio nunca sale de tu dispositivo.' },
 ]}>
   <VisualizarFormaOndaTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Genera la forma de onda en PNG 1200×300 con Web Audio API y Canvas API del navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta decodifica el audio con la <strong class="text-[var(--color-text)]">Web Audio API</strong> (getChannelData), divide las muestras en 1200 columnas y dibuja el min/max de cada segmento en un canvas con la <strong class="text-[var(--color-text)]">Canvas API</strong>. El resultado es un PNG 1200×300 px con colores personalizables. No usa FFmpeg ni servidores externos. Todo ocurre 100% en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Coberturas de podcast, audiogramas para Instagram y análisis visual de grabaciones en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Crea coberturas visuales de episodios de podcast para publicar en <strong class="text-[var(--color-text)]">Instagram o Twitter</strong>, genera audiogramas de fondo para vídeos de audio en YouTube, o identifica silencios y picos en grabaciones antes de editarlas. Muy usado por podcasters y creadores de contenido en Colombia, México y Argentina que quieren producir contenido visual atractivo a partir de sus audios.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -8,8 +8,24 @@ const faqs = [
   { q: '¿Cómo transcribo un archivo de audio existente?', a: 'Reproduce el archivo de audio en altavoz o auriculares con micrófono activado, e inicia la transcripción. La herramienta capturará el audio a través del micrófono de tu dispositivo.' },
   { q: '¿Qué idiomas soporta?', a: 'Soporta español, inglés, francés, alemán, italiano, portugués y catalán. La precisión varía según el idioma y la claridad del habla.' },
   { q: '¿La transcripción se guarda en algún servidor?', a: 'El texto transcrito se procesa localmente en tu sesión del navegador y no se envía a nuestros servidores. Sin embargo, ten en cuenta que la Web Speech API de Chrome envía el audio a Google para el reconocimiento.' },
+  { q: '¿Puedo usar la transcripción sin conexión a internet?', a: 'No. La Web Speech API de Chrome envía el audio a los servidores de Google para el reconocimiento de voz y requiere conexión activa a internet. Para uso offline o con mayor privacidad, existen herramientas de escritorio como OpenAI Whisper (que procesa localmente en tu PC) aunque requieren instalación técnica.' },
+  { q: '¿Para qué se usa transcribir audio en la práctica en LATAM?', a: 'Los usos más habituales son: transcribir episodios de podcast para publicar las notas del episodio o el texto completo en un blog desde Colombia, México y Argentina; crear los subtítulos de vídeos de YouTube o TikTok hablando directamente con la herramienta; transcribir grabaciones de reuniones de Zoom o Google Meet antes de compartirlas; analizar audios de WhatsApp Business de clientes para extraer preguntas frecuentes; y transcribir entrevistas periodísticas para acelerar el proceso de redacción de artículos.' },
 ];
 ---
 <ToolLayout slug="transcribir-audio" faqs={faqs}>
   <TranscribirAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Transcripción en tiempo real con la Web Speech API del navegador en 7 idiomas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa la <strong class="text-[var(--color-text)]">Web Speech API</strong> con reconocimiento continuo (<em>continuous: true</em>) e resultados intermedios (<em>interimResults: true</em>) para mostrar la transcripción mientras hablas. Soporta 7 idiomas: español, inglés, francés, alemán, italiano, portugués y catalán. Descarga el texto como .txt. Requiere Chrome o Edge. No usa FFmpeg.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Notas de podcast, subtítulos para YouTube y análisis de WhatsApp Business en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Transcribe episodios de podcast para publicar el texto en tu blog, crea subtítulos para vídeos de <strong class="text-[var(--color-text)]">YouTube o TikTok</strong> hablando directamente, o analiza audios de WhatsApp Business de clientes para extraer preguntas frecuentes. Ideal para periodistas, podcasters y emprendedores en Colombia, México y Argentina que quieren convertir voz en texto sin pagar herramientas de IA.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

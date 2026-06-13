@@ -7,7 +7,23 @@ import ReducirRuidoAudioTool from '@/components/tools/ReducirRuidoAudioTool';
   { q: '¿Cuáles son los niveles de reducción disponibles?', a: 'Hay tres niveles: Suave (intensidad 0.02), adecuado para grabaciones con poco ruido; Medio (0.05), para ruido moderado de ventiladores o ambiente; e Intenso (0.1), para grabaciones con mucho ruido de fondo. A mayor intensidad, mayor riesgo de afectar la calidad del audio deseado.' },
   { q: '¿Puede afectar la calidad de la voz o música?', a: 'Sí. Una reducción de ruido agresiva puede producir artefactos sonoros o suavizar excesivamente el audio. Recomendamos empezar con el nivel Suave y subir solo si es necesario. El nivel Intenso puede alterar la naturalidad del audio en grabaciones limpias.' },
   { q: '¿En qué formato se descarga el audio?', a: 'El audio se descarga en el mismo formato que el original (MP3, WAV, OGG, AAC). La herramienta mapea el formato de entrada al codec adecuado de salida.' },
+  { q: '¿Qué es el filtro ANLMDN y cómo lo aplica FFmpeg?', a: 'ANLMDN (Adaptive LMS Noise Reduction) es un filtro de reducción de ruido adaptativo basado en el algoritmo de mínimos cuadrados (LMS). FFmpeg lo aplica con <strong>anlmdn=s=STRENGTH:p=0.002:r=0.002:m=15</strong>: el parámetro <em>s</em> controla la fuerza de reducción (0.02 suave, 0.1 intenso); <em>p</em> y <em>r</em> controlan la sensibilidad adaptativa; <em>m</em> es el tamaño de la ventana. Funciona bien con ruido estacionario de alta frecuencia.' },
+  { q: '¿Para qué se usa reducir el ruido de audio en la práctica en LATAM?', a: 'Los usos más habituales son: eliminar el ruido del ventilador del PC o del aire acondicionado en grabaciones de podcast hechas en casa en Colombia, México y Argentina; limpiar locuciones de clases en Hotmart gravadas con el ruido de calle de fondo; reducir el hiss de grabaciones analógicas digitalizadas; mejorar la calidad de audios de entrevistas grabadas en exteriores con ruido de tráfico constante; y limpiar grabaciones de reuniones de Zoom con ruido de sala antes de compartirlas o usarlas como contenido.' },
   { q: '¿Se procesan mis archivos en el servidor?', a: 'No. La reducción de ruido se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
 ]}>
   <ReducirRuidoAudioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reducción de ruido estacionario con el filtro anlmdn de FFmpeg en 3 niveles de intensidad</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">anlmdn=s=STRENGTH:p=0.002:r=0.002:m=15</strong> (Adaptive LMS Noise Reduction) para detectar y reducir el ruido estacionario de fondo. Los 3 niveles —Suave (s=0.02), Medio (s=0.05) e Intenso (s=0.1)— controlan la agresividad. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Home studios, podcast y clases online con menos ruido de fondo en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elimina el <strong class="text-[var(--color-text)]">ruido del ventilador del PC o del aire acondicionado</strong> de grabaciones de podcast en casa, limpia el hiss de locuciones para Hotmart, o reduce el ruido ambiente de entrevistas en exterior. Muy usado por podcasters y creadores de contenido en Colombia, México y Argentina que graban sin cabina de aislamiento acústico.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

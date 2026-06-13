@@ -7,9 +7,25 @@ const faqs = [
   { q: '¿Los archivos deben estar en el mismo formato?', a: 'No. La herramienta recodifica automáticamente todos los archivos a MP3 antes de unirlos, por lo que puedes combinar MP3, WAV, OGG y AAC sin problema. El resultado siempre se descarga en MP3.' },
   { q: '¿Cómo funciona el reordenamiento?', a: 'Arrastra los archivos de la lista usando el icono de agarre (⠿) para cambiar su orden antes de unirlos. El orden de la lista es el orden en que aparecerán en el audio final.' },
   { q: '¿Se puede añadir silencio entre los archivos?', a: 'Esta herramienta une los audios directamente sin silencio entre ellos. Si necesitas añadir silencios, una opción es crear un archivo WAV de silencio con la herramienta de ajuste de volumen aplicada a un audio vacío, y añadirlo entre los archivos.' },
+  { q: '¿Por qué la herramienta recodifica todos los archivos a MP3 antes de unirlos?', a: 'El concat demuxer de FFmpeg requiere que todos los archivos tengan exactamente el mismo formato, sample rate y número de canales. Recodificar todos los archivos a MP3 con libmp3lame antes de unirlos garantiza compatibilidad total y evita errores cuando se mezclan MP3, WAV, OGG o AAC de diferentes fuentes o grabaciones.' },
+  { q: '¿Para qué se usa unir audios en la práctica en LATAM?', a: 'Los usos más habituales son: unir episodios de podcast grabados en varias sesiones separadas para publicar un único archivo en Spotify o Apple Podcasts desde Colombia, México y Argentina; concatenar pistas de música para crear un mix continuo sin silencios para fiestas o eventos; unir la intro, el contenido principal y el outro de un episodio antes de distribuirlo; combinar múltiples grabaciones de WhatsApp en un único archivo para guardar conversaciones completas; y unir capítulos grabados por separado de un audiolibro.' },
   { q: '¿Los archivos se envían a algún servidor?', a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Tus archivos de audio nunca salen de tu dispositivo en ningún momento.' },
 ];
 ---
 <ToolLayout slug="unir-audios" faqs={faqs}>
   <UnirAudiosTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Une múltiples audios con re-encode a MP3 y concat demuxer con list.txt de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg re-codifica cada archivo a <strong class="text-[var(--color-text)]">MP3 con libmp3lame -q:a 2</strong> para uniformar el formato, luego usa el <strong class="text-[var(--color-text)]">concat demuxer</strong> con un list.txt para unir todos los fragmentos en orden. Admite MP3, WAV, OGG y AAC como entrada. El resultado se descarga en MP3. Reordenamiento drag-and-drop. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast multi-sesión, mixes continuos y capítulos de audiolibro para LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Une episodios de podcast grabados en varias sesiones para publicar en <strong class="text-[var(--color-text)]">Spotify o Apple Podcasts</strong>, concatena pistas de música para mixes de fiesta sin silencios, o une la intro, el contenido y el outro de tus episodios. Ideal para creadores de contenido en Colombia, México y Argentina que producen audio sin acceso a software de edición de audio profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

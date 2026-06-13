@@ -8,6 +8,22 @@ import ReemplazarSegmentoTool from '@/components/tools/ReemplazarSegmentoTool';
   { q: '¿Puedo reemplazar varios segmentos?', a: 'Actualmente la herramienta procesa un segmento a la vez. Para silenciar múltiples partes, descarga el resultado y vuelve a subir el archivo procesado tantas veces como necesites.' },
   { q: '¿Afecta a la calidad del resto del audio?', a: 'El filtro de volumen solo afecta al segmento indicado. El resto del audio se recodifica al mismo bitrate y calidad que el original.' },
   { q: '¿Cuál es la precisión de los tiempos?', a: 'Puedes especificar los tiempos con decimales (ej: 12.5 segundos). La precisión real depende del frame rate del formato de audio; para MP3, la resolución es de aproximadamente 26 ms (1152 muestras a 44100 Hz).' },
+  { q: '¿Se puede usar para censurar palabras o frases antes de publicar una grabación?', a: 'Sí, es uno de los usos más habituales. Reproduce el audio, identifica el segundo exacto de inicio y fin de la palabra o frase que quieres silenciar (con decimales), introdúcelos en los campos de tiempo y procesa. El resultado tiene exactamente la misma duración que el original, con el fragmento indicado reemplazado por silencio.' },
+  { q: '¿Para qué se usa silenciar un segmento en la práctica en LATAM?', a: 'Los usos más habituales son: censurar groserías o datos privados (nombres, teléfonos, cédulas) en grabaciones de reuniones corporativas antes de compartirlas; silenciar una tos o ruido puntual en medio de una locución de podcast sin tener que regrabar todo el episodio; eliminar un error verbal en un audiolibro o clase de Hotmart sin cortar la duración; silenciar el nombre de un cliente en una grabación de atención al cliente de WhatsApp Business antes de usarla como ejemplo en formación; y cumplir requisitos legales de privacidad para grabaciones de reuniones en Colombia, México o Argentina.' },
 ]}>
   <ReemplazarSegmentoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Silencia un segmento con el filtro volume=enable='between(t,S,E)':volume=0 de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">volume=enable='between(t,START,END)':volume=0</strong> que pone el volumen a cero exactamente durante el intervalo de tiempo especificado. La duración total del audio no cambia: el segmento se convierte en silencio en lugar de eliminarse. El formato de salida es el mismo que el de entrada.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Censura de contenido, podcast y privacidad en grabaciones corporativas de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Silencia palabras inapropiadas en grabaciones de <strong class="text-[var(--color-text)]">podcast o radio digital</strong>, elimina datos privados (nombres, cédulas, teléfonos) de grabaciones de reuniones corporativas antes de compartirlas, o limpia ruidos puntuales de locuciones de Hotmart. Ideal para creadores de contenido y empresas en Colombia, México y Argentina que necesitan editar audio sin software de escritorio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

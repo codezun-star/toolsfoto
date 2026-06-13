@@ -8,8 +8,24 @@ const faqs = [
   { q: '¿El audio de salida tiene perfecta calidad?', a: 'Es una aproximación basada en la posición estéreo, no un aislamiento perfecto. La pista vocal puede contener instrumentos centrados (como bajo o bombo), y la pista instrumental puede tener restos de voz.' },
   { q: '¿En qué formato se descargan las pistas separadas?', a: 'Ambas pistas se generan en MP3 con calidad alta (VBR Q3), que ofrece un buen equilibrio entre calidad y tamaño de archivo.' },
   { q: '¿Funciona con archivos mono?', a: 'No. La separación requiere un archivo estéreo (2 canales). Los archivos mono son iguales en ambos canales, por lo que la diferencia sería silencio. Usa archivos estéreo para obtener resultados útiles.' },
+  { q: '¿Cuál es la limitación comparada con herramientas de IA como Spleeter?', a: 'La técnica de canal central (mid-side) es una aproximación matemática simple: extrae lo que está centrado como vocal y lo que está a los lados como instrumental. Herramientas de IA como Spleeter, LALAL.ai o Moises.ai usan redes neuronales entrenadas con millones de canciones, lo que produce separaciones mucho más limpias. Sin embargo, esas herramientas requieren servidores externos o instalación de Python; esta herramienta funciona 100% en el navegador sin enviar el audio a ningún lugar.' },
+  { q: '¿Para qué se usa separar voz e instrumental en la práctica en LATAM?', a: 'Los usos más habituales son: extraer la pista instrumental de canciones de reggaetón, cumbia o bachata para cantar karaoke en fiestas o eventos en Colombia, México y Argentina; crear bases instrumentales para grabar covers y publicarlos en YouTube; practicar con la pista vocal solamente para clases de canto; extraer la voz de una canción para estudiar la melodía o letra; y preparar pistas para mezclar en DJ sets sin necesidad de la versión instrumental oficial.' },
 ];
 ---
 <ToolLayout slug="separar-voz" faqs={faqs}>
   <SepararVozTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Separación vocal/instrumental con filter_complex pan=stereo técnica mid-side de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg usa <strong class="text-[var(--color-text)]">filter_complex</strong> con el filtro <strong class="text-[var(--color-text)]">pan=stereo</strong> para extraer el canal central (L+R)/2 como pista vocal y el canal lateral (L-R)/2 como pista instrumental, en una sola operación con 2 salidas MP3. Funciona mejor con música comercial estéreo donde la voz está centrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Karaoke, covers y bases instrumentales de reggaetón, cumbia y bachata en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Extrae la pista instrumental de canciones de <strong class="text-[var(--color-text)]">reggaetón, cumbia o bachata</strong> para cantar karaoke, crea bases para grabar covers en YouTube, o practica con la pista vocal sola para clases de canto. Muy usado por músicos y cantantes en Colombia, México y Argentina que necesitan las pistas por separado sin acceso a las versiones oficiales de las distribuidoras.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

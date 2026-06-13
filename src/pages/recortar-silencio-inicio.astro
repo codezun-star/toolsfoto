@@ -8,6 +8,22 @@ import RecortarSilencioInicioTool from '@/components/tools/RecortarSilencioInici
   { q: '¿Qué es la duración mínima de silencio?', a: 'Solo se eliminarán los silencios que duren al menos ese tiempo. Con 0.3s, silencios brevísimos no serán eliminados. Aumenta este valor si el audio tiene clics o artefactos breves al inicio.' },
   { q: '¿Se mantiene el formato del archivo original?', a: 'Sí, el resultado se exporta en el mismo formato que la entrada (MP3, WAV, OGG, AAC). Si el formato no está soportado, se exporta como MP3.' },
   { q: '¿Para qué casos es útil esta herramienta?', a: 'Es ideal para grabaciones de voz o podcast donde el presentador tarda en empezar a hablar, para música que tiene silencio al principio generado al grabar, y para cualquier audio donde los extremos contienen silencio no deseado.' },
+  { q: '¿Cómo funciona el filtro silenceremove para eliminar el silencio del inicio y del final?', a: 'FFmpeg usa el filtro <strong>silenceremove=start_periods=1:start_silence=N:start_threshold=NdB:stop_periods=-1:stop_silence=N:stop_threshold=NdB</strong>. El parámetro <em>start_periods=1</em> elimina el primer período de silencio (al inicio); <em>stop_periods=-1</em> elimina el último período de silencio (al final). Ambos extremos usan el mismo umbral y duración mínima configurados.' },
+  { q: '¿Para qué se usa recortar el silencio del inicio y fin en la práctica en LATAM?', a: 'Los usos más habituales son: limpiar grabaciones de podcast grabadas en casa donde hay 3-5 segundos de silencio antes de empezar a hablar; eliminar el silencio final de locuciones comerciales que las radios digitales de Colombia, México y Argentina publican en Spotify o iVoox; preparar audios de clases de Hotmart eliminando los segundos de silencio antes de que comience la narración; limpiar archivos de audio de WhatsApp Business antes de usarlos como material de formación; y normalizar el inicio de pistas de música para distribuirlas en DistroKid o TuneCore sin el silencio del comienzo de la grabación.' },
 ]}>
   <RecortarSilencioInicioTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recorta el silencio del inicio y final con silenceremove start_periods=1 y stop_periods=-1 de FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg aplica el filtro <strong class="text-[var(--color-text)]">silenceremove</strong> con <strong class="text-[var(--color-text)]">start_periods=1</strong> para eliminar el silencio al inicio y <strong class="text-[var(--color-text)]">stop_periods=-1</strong> para el final. El umbral (−70 a −20 dB) y la duración mínima (0.1–2.0s) son configurables. El contenido interior del audio queda intacto. El formato de salida es el mismo que el de entrada. Todo ocurre 100% en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Podcast, locuciones y distribución musical sin silencios en los extremos en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elimina los segundos de silencio antes y después de las <strong class="text-[var(--color-text)]">grabaciones de podcast</strong> antes de publicarlas en Spotify o Apple Podcasts, limpia locuciones comerciales para radio digital, o prepara pistas musicales para distribución en DistroKid o TuneCore. Ideal para creadores de contenido en Colombia, México y Argentina que graban en home studio sin edición post-grabación profesional.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
