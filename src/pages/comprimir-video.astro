@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ComprimirVideoTool from '@/components/tools/ComprimirVideoTool';
 
 const faqs = [
-  { q: '¿Qué formatos de vídeo admite esta herramienta?', a: 'Admite MP4, WebM y MOV como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos móviles.' },
-  { q: '¿Qué significa el nivel CRF?', a: 'CRF (Constant Rate Factor) controla la calidad visual de la compresión. Un valor bajo (20) produce mayor calidad y mayor tamaño de archivo. Un valor alto (36) produce menor calidad pero mucho menor tamaño. El valor 28 es el equilibrio recomendado para la mayoría de los casos.' },
-  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez que usas la herramienta se descarga el procesador FFmpeg.wasm (~30 MB) desde la CDN. El navegador guarda en caché este archivo, por lo que las siguientes veces es inmediato. Tu vídeo nunca sale de tu dispositivo.' },
-  { q: '¿Cuánto puedo reducir el tamaño del vídeo?', a: 'Depende del vídeo original. Un vídeo grabado con el móvil sin compresión puede reducirse un 50-80%. Un vídeo ya comprimido (como los descargados de YouTube) se reducirá menos. La calidad "Baja" puede reducir hasta un 70-80% del tamaño original.' },
-  { q: '¿Hay límite de tamaño del archivo?', a: 'El límite técnico está en la memoria RAM disponible en tu navegador. Para la mayoría de los casos, archivos de hasta 500 MB se procesan sin problemas. Si el vídeo es muy largo, considera primero recortarlo con la herramienta de recorte.' },
+  {
+    q: '¿Qué formatos de vídeo admite?',
+    a: 'Admite MP4, WebM y MOV como entrada. El resultado se descarga siempre en MP4 (H.264), el formato más compatible con navegadores, redes sociales y dispositivos móviles.',
+  },
+  {
+    q: '¿Qué significa el nivel CRF?',
+    a: 'CRF (Constant Rate Factor) controla la calidad visual de la compresión H.264. Un valor bajo (CRF 20) produce mayor calidad visual y mayor tamaño de archivo. Un valor alto (CRF 36) produce menor calidad pero mucho menor tamaño. El valor 28 es el equilibrio recomendado para la mayoría de los casos: buena calidad visible y reducción significativa de tamaño.',
+  },
+  {
+    q: '¿Por qué tarda en cargar la primera vez?',
+    a: 'La primera vez que usas la herramienta se descarga el procesador FFmpeg.wasm (~30 MB) desde la CDN. El navegador guarda en caché este archivo, por lo que las siguientes veces el procesamiento comienza de inmediato. Tu vídeo nunca sale de tu dispositivo.',
+  },
+  {
+    q: '¿Cuánto puedo reducir el tamaño del vídeo?',
+    a: 'Depende del vídeo original. Un vídeo grabado con el móvil sin compresión puede reducirse un 50-80% con calidad Media. Un vídeo ya comprimido (como los descargados de YouTube) se reducirá menos porque ya está optimizado. La calidad "Baja" (CRF 36) puede reducir hasta un 70-80% del tamaño original.',
+  },
+  {
+    q: '¿Hay límite de tamaño del archivo de entrada?',
+    a: 'El límite práctico está en la memoria RAM disponible en tu navegador. Para la mayoría de dispositivos modernos, archivos de hasta 500 MB se procesan sin problemas. Si el vídeo es muy largo, considera primero recortarlo con la herramienta "Recortar vídeo" para reducir la duración antes de comprimir.',
+  },
+  {
+    q: '¿Se pierde calidad visible al comprimir?',
+    a: 'Con la opción Alta (CRF 20), la pérdida de calidad es prácticamente inapreciable. Con la opción Media (CRF 28), la pérdida es leve y aceptable para uso en web y redes sociales. Con la opción Baja (CRF 36), puede notarse algo de compresión en escenas con mucho movimiento o texturas finas.',
+  },
+  {
+    q: '¿Para qué se comprime vídeo en la práctica de LATAM?',
+    a: 'Los usos más frecuentes son: reducir el peso de vídeos de capacitación o eventos para enviarlos por correo electrónico (muchos servidores limitan adjuntos a 25-50 MB); preparar vídeos para compartir por WhatsApp o Telegram que tienen límites de tamaño de 100-200 MB; reducir el tamaño de vídeos antes de subirlos a plataformas de e-learning como Moodle, Blackboard o Google Classroom; comprimir grabaciones de reuniones de Zoom o Meet para archivarlas en Google Drive sin ocupar demasiado espacio; y optimizar vídeos de producto para tiendas en Mercado Libre, Shopify o WooCommerce.',
+  },
 ];
 ---
 <ToolLayout slug="comprimir-video" faqs={faqs}>
   <ComprimirVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reduce el tamaño de tus vídeos MP4 en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Comprimir un vídeo es imprescindible para enviarlo por correo electrónico, WhatsApp o subirlo a plataformas con límites de tamaño. La compresión H.264 con parámetro CRF permite elegir el equilibrio entre calidad visual y tamaño de archivo. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador: el vídeo nunca sale de tu dispositivo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tres niveles de compresión para cada caso de uso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Alta (CRF 20)</strong>: calidad máxima, tamaño moderado — para vídeos de archivo o máster. <strong class="text-[var(--color-text)]">Media (CRF 28)</strong>: equilibrio ideal para redes sociales, WhatsApp y plataformas e-learning. <strong class="text-[var(--color-text)]">Baja (CRF 36)</strong>: tamaño mínimo, para vídeos de larga duración o conexiones lentas. El porcentaje de reducción se muestra al terminar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -5,26 +5,48 @@ import CapturarFotogramaTool from '@/components/tools/CapturarFotogramaTool';
 const faqs = [
   {
     q: '¿En qué formato se descarga el fotograma extraído?',
-    a: 'El fotograma se descarga como imagen PNG, que es un formato sin pérdida que preserva toda la calidad del cuadro original. El nombre del archivo incluye el tiempo en segundos del fotograma para identificarlo fácilmente.',
+    a: 'El fotograma se descarga como imagen PNG, que es un formato sin pérdida que preserva toda la calidad del cuadro original del vídeo. El nombre del archivo incluye el tiempo en segundos para identificar fácilmente de qué momento del vídeo proviene.',
   },
   {
     q: '¿Cómo elijo el momento exacto que quiero capturar?',
-    a: 'La herramienta carga el vídeo en el navegador y muestra un reproductor con un slider de tiempo. Arrastra el slider al momento que quieras y el vídeo se posiciona en ese instante. También puedes reproducir el vídeo y pausarlo en el fotograma exacto que buscas.',
+    a: 'La herramienta carga el vídeo en el navegador y muestra un reproductor con un slider de tiempo. Arrastra el slider al momento que quieras y el vídeo se posiciona en ese instante. También puedes reproducir el vídeo y pausarlo en el fotograma exacto que buscas, y el slider se actualiza automáticamente.',
   },
   {
     q: '¿Qué resolución tiene el fotograma capturado?',
-    a: 'La imagen PNG resultante tiene exactamente la misma resolución que el vídeo original. Si tu vídeo es 1920×1080, el fotograma capturado también será 1920×1080 píxeles.',
+    a: 'La imagen PNG resultante tiene exactamente la misma resolución que el vídeo original. Si tu vídeo es 1920×1080, el fotograma capturado también será 1920×1080 píxeles. FFmpeg extrae el fotograma en calidad máxima (parámetro -q:v 2).',
   },
   {
     q: '¿Funciona con vídeos de alta resolución (4K)?',
-    a: 'Sí, aunque los vídeos 4K son archivos muy grandes y pueden tardar en cargarse en el navegador. El límite práctico depende de la memoria RAM de tu dispositivo. Para vídeos muy grandes, considera comprimirlos primero.',
+    a: 'Sí, aunque los vídeos 4K son archivos muy grandes y pueden tardar en cargarse en el navegador. El límite práctico depende de la memoria RAM disponible en tu dispositivo. Para vídeos muy grandes, considera comprimirlos o cambiar la resolución primero.',
   },
   {
     q: '¿Puedo extraer varios fotogramas del mismo vídeo?',
-    a: 'Actualmente puedes capturar un fotograma a la vez. Después de descargar el primero, puedes mover el slider a otro momento y extraer otro fotograma sin necesidad de volver a subir el vídeo.',
+    a: 'Sí. Después de descargar el primer fotograma, puedes mover el slider a otro momento y extraer otro fotograma sin necesidad de volver a subir el vídeo. El vídeo permanece cargado en el navegador mientras esté en la página.',
+  },
+  {
+    q: '¿Se envía el vídeo a algún servidor?',
+    a: 'No. El vídeo se procesa con FFmpeg.wasm completamente en tu navegador. El archivo nunca sale de tu dispositivo. La primera vez se descarga el motor de procesamiento (~30 MB) que queda cacheado para sesiones posteriores.',
+  },
+  {
+    q: '¿Para qué se usa capturar fotogramas de vídeo en la práctica?',
+    a: 'Los usos más frecuentes son: extraer la miniatura (thumbnail) perfecta de un vídeo de YouTube o redes sociales desde el propio archivo de vídeo; capturar imágenes de referencia de grabaciones de reuniones o webinars para incluir en informes o presentaciones; obtener frames de vídeos de vigilancia o grabaciones de eventos para documentación; extraer imágenes de vídeos de productos para fichas de e-commerce en Mercado Libre o WooCommerce; y capturar capturas de pantalla de grabaciones de pantalla (screencasts) para manuales o tutoriales.',
   },
 ];
 ---
 <ToolLayout slug="capturar-fotograma" faqs={faqs}>
   <CapturarFotogramaTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Extrae cualquier fotograma de tu vídeo como imagen PNG</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El reproductor integrado permite navegar por el vídeo segundo a segundo para encontrar el fotograma exacto que necesitas. FFmpeg extrae la imagen en calidad máxima como PNG con la misma resolución del vídeo original. Ideal para capturar thumbnails de YouTube, imágenes de producto de vídeos de e-commerce o frames de referencia de grabaciones de reuniones.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Resolución completa del vídeo, procesamiento en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El fotograma resultante tiene la <strong class="text-[var(--color-text)]">misma resolución que el vídeo original</strong>: si el vídeo es 4K, el PNG es 4K. FFmpeg extrae el frame con calidad máxima (<strong class="text-[var(--color-text)]">-q:v 2</strong>) para preservar todos los detalles. Puedes extraer múltiples fotogramas de un mismo vídeo sin volver a cargarlo: mueve el slider a otro segundo y captura de nuevo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

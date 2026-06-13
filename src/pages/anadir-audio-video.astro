@@ -5,26 +5,48 @@ import AnadirAudioVideoTool from '@/components/tools/AnadirAudioVideoTool';
 const faqs = [
   {
     q: '¿Qué diferencia hay entre reemplazar y mezclar el audio?',
-    a: 'El modo Reemplazar elimina el audio original del vídeo y lo sustituye completamente por el archivo de audio que subas. El modo Mezclar mantiene el audio original del vídeo y añade el archivo de audio como capa adicional (música de fondo, por ejemplo), combinando ambas pistas.',
+    a: 'El modo Reemplazar elimina el audio original del vídeo y lo sustituye completamente por el archivo de audio que subas. Es útil para poner una narración, doblaje o música nueva. El modo Mezclar mantiene el audio original del vídeo y añade el archivo de audio como capa adicional (música de fondo, efectos de sonido), combinando ambas pistas con amix de FFmpeg.',
   },
   {
     q: '¿El vídeo pierde calidad al añadir el audio?',
-    a: 'En modo Reemplazar, el stream de vídeo se copia directamente sin recodificar (copia de stream), por lo que la calidad visual es idéntica al original. En modo Mezclar es necesario un pequeño procesamiento de audio pero el vídeo sigue sin recodificarse.',
+    a: 'En modo Reemplazar, el stream de vídeo se copia directamente sin recodificar (stream copy), por lo que la calidad visual es idéntica al original. En modo Mezclar también se copia el vídeo sin recodificar; solo se procesa el audio con amix.',
   },
   {
-    q: '¿Qué pasa si el audio es más largo que el vídeo?',
+    q: '¿Qué pasa si el audio es más largo o más corto que el vídeo?',
     a: 'La herramienta usa la opción -shortest de FFmpeg, que corta el resultado a la duración del stream más corto. Si el audio es más largo que el vídeo, el resultado tendrá la duración del vídeo. Si el audio es más corto, el vídeo se cortará cuando el audio termine.',
   },
   {
     q: '¿Qué formatos de vídeo y audio se admiten?',
-    a: 'Vídeo: MP4, WebM, MOV, AVI. Audio: MP3, WAV, OGG, AAC, FLAC. El resultado siempre se descarga como MP4. Si tienes un formato no listado, puedes convertirlo primero con las herramientas de conversión de ToolsFoto.',
+    a: 'Vídeo: MP4, WebM, MOV, AVI (hasta 500 MB). Audio: MP3, WAV, OGG, AAC, FLAC, M4A (hasta 200 MB). El resultado siempre se descarga como MP4. Si tienes un formato no soportado, conviértelo primero con las herramientas de conversión de ToolsFoto.',
   },
   {
     q: '¿Se envían mis archivos a algún servidor?',
-    a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el audio salen de tu dispositivo en ningún momento.',
+    a: 'No. Todo el procesamiento se realiza 100% en tu navegador con FFmpeg.wasm. Ni el vídeo ni el archivo de audio salen de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿Puedo añadir audio a un vídeo que ya tiene música y quiero mantenerla?',
+    a: 'Sí, usa el modo Mezclar. FFmpeg combina el audio original del vídeo con el nuevo archivo usando amix=inputs=2:duration=first, de modo que el vídeo resultante mezcla ambas pistas de audio con igual nivel de volumen.',
+  },
+  {
+    q: '¿Para qué se usa añadir audio a un vídeo en la práctica?',
+    a: 'Los usos más frecuentes son: doblar o sustituir el audio original de un vídeo corporativo con una narración grabada después; añadir una jingle o música de fondo a un vídeo de producto para Mercado Libre o una tienda online; reemplazar el audio de un tutorial grabado con ruido ambiente con una voz en off limpia; añadir efectos de sonido a grabaciones de pantalla o demos de software; y poner música de fondo a slideshows de fotos convertidos en vídeo.',
   },
 ];
 ---
 <ToolLayout slug="anadir-audio-video" faqs={faqs}>
   <AnadirAudioVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Reemplaza o mezcla el audio de tu vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añadir o cambiar el audio de un vídeo sin recodificar el contenido visual es la forma más rápida de doblar un vídeo, añadir música de fondo o sustituir una narración ruidosa por una grabación limpia. Sube el vídeo y el archivo de audio, elige si quieres reemplazar el audio original o mezclarlo, y genera el MP4 directamente en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Modo Reemplazar y modo Mezclar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Reemplazar</strong>: elimina el audio original y pone el nuevo (doblaje, narración, música nueva). <strong class="text-[var(--color-text)]">Mezclar</strong>: combina el audio original del vídeo con el nuevo archivo como capa adicional, ideal para añadir música de fondo sin silenciar la voz o los efectos originales. El stream de vídeo se copia en ambos modos sin perder calidad.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

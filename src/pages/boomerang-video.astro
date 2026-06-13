@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import BoomerangVideoTool from '@/components/tools/BoomerangVideoTool';
+
+const faqs = [
+  {
+    q: '¿Qué es el efecto boomerang en un vídeo?',
+    a: 'El efecto boomerang reproduce el vídeo hacia adelante y luego inmediatamente hacia atrás, creando un ciclo continuo de ida y vuelta. Instagram popularizó este efecto con su función Boomerang para Stories. Es muy utilizado en redes sociales para movimientos repetitivos visualmente llamativos: saltos, aplausos, movimientos de pelo, lanzamientos.',
+  },
+  {
+    q: '¿Cuántas veces puedo repetir el ciclo boomerang?',
+    a: 'Puedes configurar entre 1 y 3 ciclos completos. Cada ciclo incluye el vídeo original seguido de su versión invertida. Con 2 ciclos obtienes: adelante → atrás → adelante → atrás (4 pasadas en total).',
+  },
+  {
+    q: '¿El audio también se invierte?',
+    a: 'Sí. Para mantener la coherencia del efecto boomerang, el audio también se invierte en la parte reversa del ciclo con el filtro areverse de FFmpeg. El resultado final alterna entre el audio original y el audio invertido.',
+  },
+  {
+    q: '¿En qué formato se descarga el resultado?',
+    a: 'El vídeo resultante se descarga como MP4 con el codec H.264, compatible con todas las plataformas y dispositivos modernos: Instagram, TikTok, WhatsApp, YouTube y reproductores de escritorio y móvil.',
+  },
+  {
+    q: '¿Para qué tipo de vídeos funciona mejor el efecto boomerang?',
+    a: 'Funciona mejor con clips cortos (menos de 10 segundos) que muestren un movimiento claro y definido: saltar, aplaudir, abrir una puerta, verter líquido, agitar el pelo, lanzar un objeto. Clips largos generan archivos muy pesados y el efecto boomerang pierde impacto visual si el clip es demasiado lento o estático.',
+  },
+  {
+    q: '¿Se envía el vídeo a algún servidor?',
+    a: 'No. El efecto boomerang se genera 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo porque queda cacheado en el navegador.',
+  },
+  {
+    q: '¿Cuánto pesa el archivo resultante?',
+    a: 'El archivo resultante pesa aproximadamente el doble que el original por ciclo (cada ciclo añade el vídeo original + la versión invertida). Con 2 ciclos el archivo es aproximadamente 4 veces el tamaño del clip original. Recomendamos usarlo con clips cortos para mantener el peso del archivo manejable para redes sociales.',
+  },
+];
 ---
-<ToolLayout slug="boomerang-video" faqs={[
-  { q: '¿Qué es el efecto boomerang en un vídeo?', a: 'El efecto boomerang es cuando un vídeo se reproduce hacia adelante y luego inmediatamente hacia atrás, creando un bucle continuo. Instagram popularizó este efecto con su función Boomerang. Es muy usado en redes sociales para movimientos repetitivos y llamativos.' },
-  { q: '¿Cuántas veces puedo repetir el ciclo boomerang?', a: 'Puedes configurar entre 1 y 5 ciclos completos. Cada ciclo incluye el vídeo original seguido de su versión invertida. Con 2 ciclos obtienes: adelante → atrás → adelante → atrás.' },
-  { q: '¿El audio también se invierte?', a: 'Sí. Para mantener la coherencia del efecto boomerang, el audio también se invierte en la parte reversa del ciclo. El resultado final alterna entre el audio original y el audio invertido.' },
-  { q: '¿En qué formato se descarga el resultado?', a: 'El vídeo resultante se descarga como MP4 con codec H.264, compatible con todas las plataformas y dispositivos modernos.' },
-  { q: '¿Se procesan mis vídeos en el servidor?', a: 'No. El efecto boomerang se genera 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
-]}>
+<ToolLayout slug="boomerang-video" faqs={faqs}>
   <BoomerangVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Crea el efecto boomerang de Instagram en cualquier vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El efecto boomerang (vídeo que va hacia adelante y luego hacia atrás en bucle) es uno de los formatos más virales de Instagram Stories, TikTok y Reels. Esta herramienta lo aplica a cualquier vídeo: sube el clip, elige el número de ciclos y descarga el MP4 generado directamente en el navegador con FFmpeg.wasm, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ideal para clips cortos con movimientos definidos</html2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El boomerang funciona mejor con clips de <strong class="text-[var(--color-text)]">menos de 10 segundos</strong> que muestren un movimiento claro: saltar, aplaudir, verter, lanzar. FFmpeg genera la versión invertida con los filtros <strong class="text-[var(--color-text)]">reverse y areverse</strong> para vídeo y audio, y las concatena con el clip original para el número de ciclos elegido. El resultado se descarga como MP4 H.264 compatible con todas las plataformas.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

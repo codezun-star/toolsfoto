@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirVideoTool from '@/components/tools/ConvertirVideoTool';
 
 const faqs = [
-  { q: '¿Cuál es la diferencia entre MP4 y WebM?', a: 'MP4 (H.264) es el formato más compatible: funciona en todos los navegadores, dispositivos iOS, Android, Windows y macOS. WebM (VP8) es un formato abierto de Google, más ligero pero con menor compatibilidad en dispositivos más antiguos y en iOS.' },
-  { q: '¿Cuándo debo usar WebM?', a: 'WebM es ideal para vídeos que se van a incrustar en páginas web, ya que ofrece mejor compresión que MP4 con similar calidad visual. Sin embargo, si el vídeo se va a compartir o reproducir en dispositivos móviles o apps de mensajería, MP4 es la opción más segura.' },
-  { q: '¿Se pierde calidad al convertir?', a: 'La conversión entre formatos implica una recodificación que puede introducir una ligera pérdida de calidad. Para minimizarla, se usa un CRF de 23, que es la configuración de calidad estándar de FFmpeg. La diferencia visual es inapreciable en la mayoría de los casos.' },
-  { q: '¿Puedo convertir MOV o AVI?', a: 'Sí, también se admiten MOV y AVI como entrada. Todos los formatos se convierten a MP4 o WebM según tu selección.' },
-  { q: '¿Por qué el archivo WebM puede ser más grande?', a: 'El codificador VP8 de la versión single-threaded de FFmpeg.wasm es menos eficiente que el H.264 para algunos tipos de vídeo. Si el resultado WebM es más grande, elige MP4 para ese contenido.' },
+  {
+    q: '¿Cuál es la diferencia entre MP4 y WebM?',
+    a: 'MP4 (H.264) es el formato más compatible: funciona en todos los navegadores, dispositivos iOS, Android, Windows y macOS. WebM (VP8) es un formato abierto desarrollado por Google, más ligero en algunas condiciones pero con menor compatibilidad en dispositivos antiguos y en iOS.',
+  },
+  {
+    q: '¿Cuándo debo usar WebM en lugar de MP4?',
+    a: 'WebM es ideal para vídeos incrustados en páginas web HTML5 que van a visualizarse principalmente desde navegadores modernos en escritorio, ya que ofrece buena compresión sin pagar licencias de codec. Para vídeos que se van a compartir en redes sociales, WhatsApp o dispositivos móviles, MP4 es siempre la opción más segura.',
+  },
+  {
+    q: '¿Se pierde calidad al convertir?',
+    a: 'La conversión entre formatos implica una recodificación que puede introducir una pequeña pérdida de calidad. Para MP4 se usa CRF 23 (calidad estándar de H.264). Para WebM se usa CRF 10 con bitrate variable. La diferencia visual es inapreciable en la mayoría de los casos a resolución de pantalla.',
+  },
+  {
+    q: '¿Puedo convertir MOV, AVI o MKV?',
+    a: 'Sí. El VideoUploader admite MP4, WebM, MOV, AVI y MKV como entrada. Todos los formatos se convierten a MP4 o WebM según tu selección. El resultado se descarga como el formato elegido.',
+  },
+  {
+    q: '¿Por qué el archivo WebM puede ser más grande que el MP4?',
+    a: 'El codificador VP8 en la versión single-threaded de FFmpeg.wasm es menos eficiente que el H.264 para algunos tipos de contenido (especialmente vídeos con mucho movimiento). Si el resultado WebM es más grande que el MP4, elige MP4 para ese contenido.',
+  },
+  {
+    q: '¿Se envían los archivos a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El vídeo nunca sale de tu dispositivo. La primera vez descarga el motor de procesamiento (~30 MB) que queda cacheado para sesiones posteriores.',
+  },
+  {
+    q: '¿Para qué se convierte el formato de vídeo en la práctica?',
+    a: 'Los usos más habituales son: convertir vídeos MOV grabados con iPhone o cámara Canon/Nikon a MP4 para que sean compatibles con reproductores de Windows y plataformas de redes sociales; convertir a WebM para incrustar vídeos en páginas web HTML5 sin depender de JavaScript; convertir AVI o MKV de grabaciones antiguas a MP4 para subirlos a YouTube, Mercado Libre o Hotmart; y estandarizar el formato de varios clips antes de unirlos con "Unir vídeos".',
+  },
 ];
 ---
 <ToolLayout slug="convertir-video" faqs={faqs}>
   <ConvertirVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte tus vídeos entre MP4 y WebM en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        MOV, AVI y MKV son formatos frecuentes en cámaras y grabaciones de pantalla que no siempre son compatibles con plataformas de redes sociales o reproductores web. Convierte cualquier vídeo a MP4 (el formato más compatible para dispositivos y plataformas) o a WebM (formato abierto para vídeos web HTML5) directamente en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">MP4 para máxima compatibilidad, WebM para la web</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">MP4 (H.264)</strong>: compatible con iOS, Android, Windows, macOS, YouTube, Instagram, TikTok y todos los reproductores. La opción más segura para cualquier uso. <strong class="text-[var(--color-text)]">WebM (VP8)</strong>: formato open source optimizado para vídeos incrustados en HTML5, ideal para webs que requieren vídeo sin plugin ni licencia de codec propietario.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

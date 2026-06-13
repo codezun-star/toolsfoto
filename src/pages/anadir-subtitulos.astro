@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AnadirSubtitulosTool from '@/components/tools/AnadirSubtitulosTool';
 
 const faqs = [
-  { q: '¿Qué es el formato SRT?', a: 'SRT (SubRip Text) es el formato de subtítulos más extendido. Consiste en bloques numerados con marcas de tiempo de inicio y fin, y el texto del subtítulo. Prácticamente todos los editores de vídeo y reproductores lo soportan.' },
-  { q: '¿Los subtítulos quedan permanentemente en el vídeo?', a: 'Sí. Esta herramienta incrusta los subtítulos "quemados" directamente en el stream de vídeo (hardcoded subtitles). No se pueden desactivar ni seleccionar en la reproducción posterior.' },
-  { q: '¿Cuántos subtítulos soporta?', a: 'La herramienta soporta hasta 30 entradas del archivo SRT. Archivos con más subtítulos procesarán solo los primeros 30. Para vídeos con muchos subtítulos se recomienda usar herramientas de escritorio como HandBrake.' },
-  { q: '¿Cómo se ve el texto de los subtítulos?', a: 'Los subtítulos se muestran en blanco con contorno negro en la parte inferior del vídeo, estilo broadcast clásico. El tamaño de fuente es ajustable antes del procesamiento.' },
-  { q: '¿Qué formato tiene el vídeo de salida?', a: 'El vídeo de salida es MP4 con codec H.264 (libx264), que es el formato más compatible con reproductores, redes sociales y dispositivos móviles.' },
+  {
+    q: '¿Qué es el formato SRT?',
+    a: 'SRT (SubRip Text) es el formato de subtítulos más extendido del mundo. Consiste en bloques numerados con marcas de tiempo de inicio y fin, y el texto del subtítulo. Es un archivo de texto plano (.srt) que genera automáticamente YouTube, Kapwing, Descript, CapCut o cualquier servicio de transcripción de audio.',
+  },
+  {
+    q: '¿Los subtítulos quedan permanentemente en el vídeo?',
+    a: 'Sí. Esta herramienta incrusta los subtítulos "quemados" directamente en el stream de vídeo (hardcoded subtitles). Aparecen en todos los reproductores sin necesidad de activarlos, pero no se pueden desactivar ni seleccionar como pista separada en la reproducción posterior.',
+  },
+  {
+    q: '¿Cuántos subtítulos soporta?',
+    a: 'La herramienta procesa hasta 30 entradas del archivo SRT. Para vídeos con más de 30 subtítulos se procesan solo los primeros 30. Para vídeos largos con muchos subtítulos recomendamos herramientas de escritorio como HandBrake o Kdenlive que soportan subtítulos completos sin límite.',
+  },
+  {
+    q: '¿Cómo aparecen visualmente los subtítulos?',
+    a: 'Los subtítulos se muestran en texto blanco con contorno negro en la parte inferior del vídeo, estilo broadcast clásico (mismo estilo que los subtítulos de YouTube). El tamaño de fuente es ajustable entre 20 y 72 px antes del procesamiento.',
+  },
+  {
+    q: '¿El proceso funciona sin internet?',
+    a: 'Una vez cargado el motor FFmpeg.wasm (primera vez, ~30 MB), el procesamiento es completamente offline. Los archivos de vídeo, audio y SRT no salen de tu dispositivo en ningún momento.',
+  },
+  {
+    q: '¿Puedo usar subtítulos generados automáticamente por IA?',
+    a: 'Sí. Herramientas como Whisper (OpenAI), Descript, Kapwing, CapCut o el mismo YouTube generan archivos SRT automáticamente a partir del audio. Descarga el .srt generado, edítalo si es necesario, y súbelo aquí para incrustarlo en el vídeo.',
+  },
+  {
+    q: '¿Para qué se usan los subtítulos incrustados en vídeo en LATAM?',
+    a: 'Los subtítulos incrustados son imprescindibles para redes sociales donde el vídeo se reproduce sin sonido por defecto (Instagram, Facebook, TikTok, LinkedIn). Subtitular mejora el alcance orgánico y la accesibilidad. También son necesarios para vídeos de formación o cursos en línea en plataformas que no soportan pistas de subtítulos externas, y para vídeos enviados por WhatsApp Business donde no hay reproductor de subtítulos.',
+  },
 ];
 ---
 <ToolLayout slug="anadir-subtitulos" faqs={faqs}>
   <AnadirSubtitulosTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Incrusta subtítulos SRT directamente en el vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los subtítulos incrustados (hardcoded) aparecen en cualquier reproductor sin necesidad de activarlos: Instagram, TikTok, WhatsApp, televisiones Smart TV y reproductores de DVD. Sube el vídeo y el archivo .srt, ajusta el tamaño de fuente, y la herramienta renderiza cada subtítulo como imagen PNG y lo superpone en el vídeo con FFmpeg.wasm, completamente en el navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Subtítulos automáticos con IA + incrustación sin programar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El flujo más rápido: transcribe el vídeo con <strong class="text-[var(--color-text)]">Whisper, Descript o CapCut</strong> para obtener el .srt automáticamente, corrígelo en un editor de texto, y sube aquí el .srt y el vídeo para incrustar los subtítulos en segundos. Sin instalar software, sin pagar suscripciones de edición de vídeo, sin que los archivos salgan de tu dispositivo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AjusteColorVideoTool from '@/components/tools/AjusteColorVideoTool';
 
 const faqs = [
-  { q: '¿Qué parámetros de color puedo ajustar?', a: 'Puedes ajustar brillo (-0.5 a +0.5), contraste (0.5x a 2.0x), saturación (0 a 3.0x) y gamma (0.1 a 3.0). El valor 0 en brillo, 1 en contraste, 1 en saturación y 1 en gamma corresponden al original sin cambios.' },
-  { q: '¿Qué son los presets de color?', a: 'Los presets (Original, Vivid, Cine, Vintage, B&N) aplican combinaciones preconfiguradas de los cuatro parámetros para conseguir estilos cinematográficos populares con un solo clic.' },
-  { q: '¿Cómo afecta el parámetro gamma al vídeo?', a: 'El gamma controla la respuesta tonal del vídeo. Un gamma menor de 1 aclara los medios tonos, un gamma mayor de 1 los oscurece. Es útil para corregir vídeos que parecen demasiado oscuros o lavados.' },
-  { q: '¿El audio se preserva en el vídeo de salida?', a: 'Sí. El audio se copia sin recodificar (stream copy), por lo que se preserva la calidad original del sonido y el procesamiento es más rápido.' },
-  { q: '¿Cuánto tiempo tarda el procesamiento?', a: 'Depende de la duración y resolución del vídeo, y del hardware del dispositivo. La primera vez puede tardar más porque descarga el motor FFmpeg.wasm (~30 MB). Las siguientes veces es más rápido.' },
+  {
+    q: '¿Qué parámetros de color puedo ajustar?',
+    a: 'Puedes ajustar cuatro parámetros: brillo (de -0.5 a +0.5), contraste (de 0.5× a 2.0×), saturación (de 0 a 3.0×) y gamma (de 0.1 a 3.0). El valor cero en brillo y uno en el resto corresponden al vídeo original sin cambios.',
+  },
+  {
+    q: '¿Qué son los presets de color?',
+    a: 'Los presets (Original, Vivid, Cine, Vintage, B&N) aplican combinaciones preconfiguradas de los cuatro parámetros para conseguir estilos visuales populares con un solo clic. "Vivid" aumenta saturación y contraste; "Cine" simula la paleta de color de producciones cinematográficas; "Vintage" desatura y añade suavidad; "B&N" lleva la saturación a 0.',
+  },
+  {
+    q: '¿Cómo afecta el parámetro gamma al vídeo?',
+    a: 'El gamma controla la respuesta tonal del vídeo. Un gamma menor de 1 aclara los medios tonos (útil para vídeos subexpuestos grabados en interiores o de noche). Un gamma mayor de 1 los oscurece. Es el primer parámetro a ajustar en vídeos que parecen demasiado oscuros o excesivamente lavados.',
+  },
+  {
+    q: '¿El audio se preserva en el vídeo de salida?',
+    a: 'Sí. El audio se copia sin recodificar (stream copy), por lo que se preserva la calidad original del sonido y el procesamiento es más rápido que si se recodificara el audio.',
+  },
+  {
+    q: '¿Los cambios de color afectan la calidad del vídeo?',
+    a: 'El vídeo se recodifica con H.264 (libx264, preset fast). Este proceso implica una pequeña pérdida de calidad inevitable con cualquier codificador, aunque con preset fast y valores de contraste y saturación moderados el resultado visual es prácticamente indistinguible del original.',
+  },
+  {
+    q: '¿Se envía el vídeo a algún servidor?',
+    a: 'No. Todo el procesamiento se realiza con FFmpeg.wasm en tu navegador. El vídeo nunca sale de tu dispositivo. La primera vez se descarga el motor de procesamiento (~30 MB) desde una CDN, que queda cacheado para las siguientes sesiones.',
+  },
+  {
+    q: '¿Para qué se usan los ajustes de color en vídeo en producción de contenido?',
+    a: 'Los ajustes de color son esenciales para unificar el look visual de vídeos grabados en diferentes condiciones: corregir la exposición de grabaciones de eventos en exteriores de LATAM (mucho sol = vídeo sobreexpuesto = bajar brillo y gamma), dar estilo cinematográfico a vlogs o reels de Instagram y TikTok, y adaptar el tono de vídeos grabados con teléfonos diferentes antes de unirlos. También es muy usada por content creators para aplicar un "look" consistente a todos sus vídeos.',
+  },
 ];
 ---
 <ToolLayout slug="ajuste-color-video" faqs={faqs}>
   <AjusteColorVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corrige y estiliza el color de tus vídeos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los ajustes de brillo, contraste, saturación y gamma permiten corregir vídeos mal expuestos o dar un look cinematográfico a grabaciones de redes sociales. Los presets <strong class="text-[var(--color-text)]">Vivid, Cine, Vintage y B&N</strong> aplican combinaciones probadas con un solo clic. Todo el procesamiento ocurre con FFmpeg.wasm en el navegador, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Ajustes precisos con cuatro parámetros independientes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Brillo</strong>: corrección de exposición global. <strong class="text-[var(--color-text)]">Contraste</strong>: diferencia entre luces y sombras. <strong class="text-[var(--color-text)]">Saturación</strong>: intensidad de los colores (0 = blanco y negro, 3× = colores muy vivos). <strong class="text-[var(--color-text)]">Gamma</strong>: respuesta tonal de los medios tonos, clave para corregir vídeos oscuros grabados en interiores o de noche. El audio se copia sin recodificar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

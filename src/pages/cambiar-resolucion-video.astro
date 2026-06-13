@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CambiarResolucionVideoTool from '@/components/tools/CambiarResolucionVideoTool';
 
 const faqs = [
-  { q: '¿Se puede aumentar la resolución de un vídeo?', a: 'Técnicamente sí, pero no se gana calidad real. Aumentar la resolución (upscale) solo interpola píxeles existentes y puede hacer el vídeo más borroso. Es más útil reducir la resolución para ahorrar espacio.' },
-  { q: '¿Qué pasa si el vídeo tiene una relación de aspecto diferente?', a: 'La herramienta usa escalado con padding: escala el vídeo para que quepa en las dimensiones seleccionadas manteniendo la proporción original, y añade barras negras en los lados si es necesario.' },
-  { q: '¿Cuánto reduce el tamaño cambiar de 1080p a 720p?', a: 'En general, pasar de 1080p a 720p reduce el tamaño del archivo aproximadamente a la mitad, dependiendo del contenido. Es una de las formas más efectivas de reducir el peso de un vídeo.' },
-  { q: '¿Se conserva el audio al cambiar la resolución?', a: 'Sí. La pista de audio se copia directamente sin re-codificar, por lo que el audio permanece intacto e idéntico al original.' },
-  { q: '¿Qué resolución debo elegir?', a: '1080p es estándar para YouTube y streaming de calidad. 720p es la opción equilibrada para redes sociales. 480p o 360p son adecuadas para mensajería (WhatsApp, Telegram) o conexiones lentas.' },
+  {
+    q: '¿Se puede aumentar la resolución de un vídeo?',
+    a: 'Técnicamente sí, pero no se gana calidad real. Aumentar la resolución (upscale) solo interpola píxeles existentes y puede hacer el vídeo más borroso. El uso principal de esta herramienta es reducir la resolución para ahorrar espacio o cumplir con requisitos de plataformas.',
+  },
+  {
+    q: '¿Qué pasa si el vídeo tiene una relación de aspecto diferente?',
+    a: 'La herramienta usa el filtro scale+pad de FFmpeg: escala el vídeo para que quepa en las dimensiones seleccionadas manteniendo la proporción original del vídeo, y añade barras negras en los lados si la relación de aspecto no coincide con el destino. El contenido original no se recorta.',
+  },
+  {
+    q: '¿Cuánto reduce el tamaño pasar de 1080p a 720p?',
+    a: 'En general, pasar de 1080p a 720p reduce el tamaño del archivo aproximadamente a la mitad, dependiendo del contenido y el codec original. Es una de las formas más efectivas de reducir el peso de un vídeo. Para reducción de tamaño más agresiva, combina con la herramienta "Comprimir vídeo".',
+  },
+  {
+    q: '¿Se conserva el audio al cambiar la resolución?',
+    a: 'Sí. La pista de audio se copia directamente sin re-codificar (-c:a copy), por lo que el audio permanece intacto e idéntico al original.',
+  },
+  {
+    q: '¿Qué resolución debo elegir para cada plataforma?',
+    a: '1080p: estándar para YouTube, videoconferencias y vídeos de formación. 720p: opción equilibrada para Instagram Reels y TikTok (suficiente calidad, menos peso). 480p o 360p: adecuadas para mensajería por WhatsApp o Telegram, o para conexiones lentas en regiones de LATAM con cobertura limitada.',
+  },
+  {
+    q: '¿Puedo introducir dimensiones personalizadas?',
+    a: 'Sí. La opción "Personalizado" permite introducir cualquier ancho y alto en píxeles. Útil para plataformas con requisitos específicos de resolución no estándar o para preparar vídeos para pantallas industriales o señalética digital.',
+  },
+  {
+    q: '¿Para qué se cambia la resolución de un vídeo en la práctica de LATAM?',
+    a: 'Los usos más frecuentes son: reducir el peso de vídeos de eventos o capacitaciones para enviarlos por correo electrónico o WhatsApp; adaptar vídeos grabados en 4K con cámaras de acción para publicarlos en redes sociales donde 1080p es suficiente; preparar vídeos para reproductores de pantallas de señalética digital en tiendas con resolución específica; y cumplir con los límites de tamaño máximo de vídeo en plataformas de e-learning como Moodle o Blackboard.',
+  },
 ];
 ---
 <ToolLayout slug="cambiar-resolucion-video" faqs={faqs}>
   <CambiarResolucionVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Escala tu vídeo a 4K, 1080p, 720p o resolución personalizada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cambiar la resolución de un vídeo es la forma más efectiva de reducir su peso sin comprometer demasiado la calidad visual. Pasar de 1080p a 720p reduce el archivo aproximadamente a la mitad. La herramienta usa el filtro scale+pad de FFmpeg para mantener la proporción original del vídeo, añadiendo barras negras si la relación de aspecto no coincide. El audio se copia sin recodificar.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Presets estándar y resolución personalizada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los presets cubren las resoluciones más usadas: <strong class="text-[var(--color-text)]">4K</strong> (3840×2160), <strong class="text-[var(--color-text)]">1080p</strong>, <strong class="text-[var(--color-text)]">720p</strong>, <strong class="text-[var(--color-text)]">480p</strong> y <strong class="text-[var(--color-text)]">360p</strong>. El modo Personalizado acepta cualquier dimensión para pantallas no estándar, señalética digital o plataformas con requisitos específicos. Todo el procesamiento ocurre en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

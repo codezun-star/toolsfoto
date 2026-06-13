@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirVerticalTool from '@/components/tools/ConvertirVerticalTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve convertir un vídeo a formato vertical?',
+    a: 'Las plataformas como Instagram Reels, TikTok, YouTube Shorts y WhatsApp Status están optimizadas para vídeo vertical (9:16). Si tienes un vídeo horizontal grabado con una cámara, dron, captura de pantalla o grabación de reunión, esta herramienta lo adapta al formato vertical añadiendo barras del color que elijas.',
+  },
+  {
+    q: '¿Qué formatos de salida están disponibles?',
+    a: 'Puedes convertir a formato vertical 9:16 (1080×1920 píxeles, estándar para TikTok, Reels, Shorts y Stories), o a formato cuadrado 1:1 (1080×1080 píxeles, usado en Instagram Feed y algunos formatos de TikTok).',
+  },
+  {
+    q: '¿El vídeo se recorta o se añaden barras?',
+    a: 'El vídeo se escala para ajustarse al ancho del formato de destino manteniendo su proporción original, y se añaden barras en las zonas sin contenido (habitualmente arriba y abajo en el formato 9:16 cuando el vídeo original es 16:9). El contenido original no se recorta ni se pierde ninguna parte del vídeo.',
+  },
+  {
+    q: '¿Puedo elegir el color de las barras?',
+    a: 'Sí. Puedes elegir negro, blanco, azul oscuro u otro color preset, o cualquier color personalizado mediante el selector de color. El negro es el más habitual para vídeos cinematográficos o de acción; el blanco da un look más limpio y profesional para vídeos de producto o corporate.',
+  },
+  {
+    q: '¿Se re-codifica el vídeo completo?',
+    a: 'Sí. La operación de cambio de resolución y relleno de barras requiere recodificar el stream de vídeo con H.264 (libx264). El audio se copia sin recodificar (-c:a copy), preservando la calidad de sonido original.',
+  },
+  {
+    q: '¿Se envían los archivos a algún servidor?',
+    a: 'No. La conversión se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el motor de procesamiento (~30 MB); las siguientes veces es instantáneo.',
+  },
+  {
+    q: '¿Para qué se usa convertir vídeo a vertical en la práctica de LATAM?',
+    a: 'Los usos más comunes son: adaptar vídeos de productos filmados horizontalmente para publicarlos en TikTok e Instagram Reels con el formato correcto; convertir grabaciones de pantalla o tutoriales en formato 16:9 a formato 9:16 para YouTube Shorts; transformar vídeos de conferencias y charlas a formato vertical para publicarlos como contenido en redes sociales; y preparar vídeos de WhatsApp Status que requieren formato vertical para visualizarse correctamente en los teléfonos de los contactos.',
+  },
+];
 ---
-<ToolLayout slug="convertir-vertical" faqs={[
-  { q: '¿Para qué sirve convertir un vídeo a formato vertical?', a: 'Las plataformas como Instagram Reels, TikTok, YouTube Shorts y WhatsApp Status están optimizadas para vídeo vertical (9:16). Si tienes un vídeo horizontal grabado con una cámara o pantalla, esta herramienta lo adapta al formato vertical añadiendo barras laterales del color que elijas.' },
-  { q: '¿Qué formatos de salida están disponibles?', a: 'Puedes convertir a formato vertical 9:16 (1080×1920 píxeles, estándar para móviles y Reels) o a formato cuadrado 1:1 (1080×1080 píxeles, usado en Instagram Feed y TikTok).' },
-  { q: '¿El vídeo se recorta o se añaden barras?', a: 'El vídeo se escala para ajustarse al ancho del formato de destino manteniendo su proporción original, y se añaden barras en las zonas sin contenido (arriba y abajo en el formato 9:16). No se recorta contenido.' },
-  { q: '¿Puedo elegir el color de las barras laterales?', a: 'Sí. Puedes elegir negro, blanco o un color personalizado mediante el selector de color. El negro es el más habitual para vídeos cinematográficos; el blanco da un look más limpio.' },
-  { q: '¿Se procesan mis vídeos en el servidor?', a: 'No. La conversión se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
-]}>
+<ToolLayout slug="convertir-vertical" faqs={faqs}>
   <ConvertirVerticalTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte vídeos horizontales a formato vertical para redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        TikTok, Instagram Reels, YouTube Shorts y WhatsApp Status requieren vídeo en formato vertical 9:16 (1080×1920) o cuadrado 1:1 (1080×1080). Esta herramienta adapta cualquier vídeo horizontal al formato vertical añadiendo barras del color que elijas, sin recortar el contenido. El procesamiento ocurre con FFmpeg.wasm en el navegador, sin enviar el archivo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">TikTok, Reels, Shorts y Stories: el formato correcto para cada plataforma</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">9:16 (1080×1920)</strong>: estándar para TikTok, Instagram Reels, YouTube Shorts y WhatsApp Status. <strong class="text-[var(--color-text)]">1:1 (1080×1080)</strong>: formato cuadrado para Instagram Feed y algunos formatos de TikTok. El color de las barras laterales es personalizable: negro para vídeos cinematográficos, blanco para contenido de producto o corporativo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

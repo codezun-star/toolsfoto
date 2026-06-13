@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EscalaGrisesVideoTool from '@/components/tools/EscalaGrisesVideoTool';
 
 const faqs = [
-  { q: '¿Qué filtros de color incluye esta herramienta?', a: 'La herramienta ofrece tres efectos: Escala de grises (elimina todo el color), Sepia (tono marrón cálido vintage) y Negativo (invierte todos los colores). Todos procesan el vídeo en el navegador con FFmpeg.wasm.' },
-  { q: '¿Se pierde calidad al convertir a escala de grises?', a: 'El vídeo se mantiene en el mismo códec de vídeo (H.264 en el caso de MP4). El filtro de color se aplica a nivel de frame sin degradar la resolución. Solo el audio se copia sin cambios.' },
-  { q: '¿El audio se mantiene después del efecto?', a: 'Sí. El stream de audio se copia exactamente igual que en el vídeo original, sin re-codificar ni modificar.' },
-  { q: '¿Qué formatos admite como entrada?', a: 'Admite MP4, WebM, MOV y AVI. El resultado siempre se descarga como MP4, el formato más compatible con navegadores, redes sociales y reproductores.' },
-  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB) desde la CDN. El navegador lo guarda en caché para las siguientes sesiones. Tu vídeo nunca sale del dispositivo.' },
+  {
+    q: '¿Qué efectos de color incluye esta herramienta?',
+    a: 'La herramienta ofrece tres efectos: Escala de grises (elimina todo el color usando el filtro hue=s=0), Sepia (tono marrón cálido vintage con colorchannelmixer) y Negativo (invierte todos los colores con el filtro negate). Todos procesan el vídeo con FFmpeg.wasm completamente en el navegador.',
+  },
+  {
+    q: '¿Se pierde calidad al convertir a escala de grises?',
+    a: 'El filtro de color se aplica a nivel de frame durante la recodificación H.264, sin degradar la resolución del vídeo. La calidad visual depende del codec de salida, no del filtro de color en sí. El audio se copia sin ningún cambio.',
+  },
+  {
+    q: '¿El audio se mantiene después de aplicar el efecto?',
+    a: 'Sí. El stream de audio se copia exactamente igual que en el vídeo original (-c:a copy), sin re-codificar ni modificar.',
+  },
+  {
+    q: '¿Qué formatos admite como entrada?',
+    a: 'Admite MP4, WebM, MOV y AVI. El resultado siempre se descarga como MP4 H.264, el formato más compatible con navegadores, redes sociales (Instagram, TikTok, YouTube) y reproductores de escritorio y móvil.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre el efecto Sepia y el Vintage de ajuste de color?',
+    a: 'El Sepia de esta herramienta usa una matriz de colorchannelmixer específica de FFmpeg que produce el tono marrón cálido clásico de las fotografías antiguas. El preset "Vintage" de la herramienta de ajuste de color desatura y reduce el contraste, pero no produce el tono sepia característico. Para el efecto visual de fotografía antigua, el Sepia de esta herramienta es el resultado más auténtico.',
+  },
+  {
+    q: '¿Para qué sirve el efecto Negativo?',
+    a: 'El negativo invierte todos los canales de color: los claros se vuelven oscuros y viceversa. Se usa en: efectos visuales artísticos para vídeos de música o arte; visualización de radiografías o imágenes médicas convertidas a vídeo; crear thumbnails o portadas visuales llamativos; y efectos de revelado analógico en producciones de época.',
+  },
+  {
+    q: '¿Para qué se usa escala de grises en vídeo en la práctica?',
+    a: 'La escala de grises y el sepia son recursos visuales muy usados en producción de contenido: aplicar escala de grises a flashbacks en vlogs o cortometrajes; crear un look cinematográfico monocromático para testimoniales o documentales; dar estilo vintage-sepia a vídeos de bodas, quince años o eventos familiares; publicar en blanco y negro en Instagram para destacar en feeds con mucho color; y crear vídeos de archivo o históricos con el tono sepia que se asocia a épocas pasadas.',
+  },
 ];
 ---
 <ToolLayout slug="escala-grises-video" faqs={faqs}>
   <EscalaGrisesVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte tu vídeo a blanco y negro, sepia o negativo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El blanco y negro, el sepia y el negativo son efectos de color clásicos con gran impacto visual. La escala de grises da un look cinematográfico monocromático; el sepia recrea el tono cálido de las fotografías antiguas; el negativo invierte todos los colores para efectos artísticos o creativos. Todos los efectos se aplican con FFmpeg.wasm directamente en el navegador, sin enviar el vídeo a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tres filtros FFmpeg para estilos cinematográficos clásicos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Escala de grises</strong> (hue=s=0): elimina completamente el color para un look monocromático. <strong class="text-[var(--color-text)]">Sepia</strong> (colorchannelmixer): tono marrón cálido de fotografía antigua, ideal para bodas, eventos y contenido nostálgico. <strong class="text-[var(--color-text)]">Negativo</strong> (negate): invierte todos los canales de color para efectos artísticos y creativos. El audio se copia sin recodificar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AjustarVolumenVideoTool from '@/components/tools/AjustarVolumenVideoTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve ajustar el volumen de un vídeo?',
+    a: 'Es útil para normalizar vídeos que tienen audio demasiado alto o bajo, unificar el nivel de volumen entre varios clips antes de unirlos con la herramienta "Unir vídeos", o subir el volumen de grabaciones que quedaron con el sonido demasiado bajo al enviarse por WhatsApp o publicarse en redes sociales.',
+  },
+  {
+    q: '¿Cómo funciona el ajuste en decibelios (dB)?',
+    a: 'Los decibelios son una escala logarítmica. 0 dB mantiene el volumen original. +6 dB aproximadamente dobla la amplitud percibida; -6 dB la reduce a la mitad. El rango disponible es de -40 dB a +40 dB. Valores superiores a +12 dB suelen causar distorsión salvo que el audio original esté muy por debajo del máximo.',
+  },
+  {
+    q: '¿Se re-codifica el stream de vídeo?',
+    a: 'No. El stream de vídeo se copia directamente sin re-codificación (stream copy), preservando la calidad visual original. Solo el audio se procesa con el filtro de volumen de FFmpeg, lo que también hace el proceso más rápido.',
+  },
+  {
+    q: '¿Puede ocurrir clipping si subo demasiado el volumen?',
+    a: 'Sí. Si subes el volumen por encima del nivel máximo que admite la señal, se produce distorsión (clipping). Si el audio original ya estaba cerca del máximo, no subas más de +6 dB. Para normalizar el audio correctamente, combina esta herramienta con "Normalizar audio" si el vídeo tiene una pista de audio muy irregular.',
+  },
+  {
+    q: '¿Se envían los archivos a algún servidor?',
+    a: 'No. El ajuste de volumen se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo porque queda cacheado.',
+  },
+  {
+    q: '¿Qué formatos de vídeo admite?',
+    a: 'Admite los formatos más comunes: MP4, WebM, MOV, AVI y MKV. El resultado se descarga siempre en formato MP4 con el stream de vídeo original y el audio ajustado en volumen.',
+  },
+  {
+    q: '¿Para qué se usa en la práctica en LATAM?',
+    a: 'Los usos más frecuentes son: subir el volumen de testimoniales de clientes grabados con teléfonos en entornos ruidosos para incluirlos en presentaciones comerciales; bajar el volumen de música de fondo en reels de Instagram o TikTok para que la voz del narrador se escuche por encima; unificar el nivel de audio de varios fragmentos de una conferencia o evento antes de combinarlos en un solo vídeo; y corregir vídeos de cursos online grabados con micrófono insuficiente antes de subirlos a plataformas como Hotmart o Teachable.',
+  },
+];
 ---
-<ToolLayout slug="ajustar-volumen-video" faqs={[
-  { q: '¿Para qué sirve ajustar el volumen de un vídeo?', a: 'Es útil para normalizar vídeos que tienen audio demasiado alto o bajo, unificar el nivel de volumen entre varios clips antes de unirlos, o simplemente subir el volumen de una grabación que quedó baja.' },
-  { q: '¿Cómo funciona el ajuste en decibelios?', a: 'Los decibelios (dB) son una escala logarítmica. 0 dB mantiene el volumen original. +6 dB aproximadamente dobla la amplitud percibida; -6 dB la reduce a la mitad. El rango disponible es de -20 dB a +20 dB.' },
-  { q: '¿Se re-codifica el stream de vídeo?', a: 'No. El stream de vídeo se copia directamente sin re-codificación, preservando la calidad original. Solo el audio se procesa con el filtro de volumen de FFmpeg.' },
-  { q: '¿Puede ocurrir clipping si subo demasiado el volumen?', a: 'Sí. Si subes el volumen más de lo que admite la señal, puede producirse distorsión (clipping). Si el audio original ya estaba cerca del máximo, te recomendamos no superar +6 dB para evitar distorsión.' },
-  { q: '¿Se procesan mis vídeos en el servidor?', a: 'No. El ajuste de volumen se realiza 100% en tu navegador con FFmpeg.wasm. Ningún archivo sale de tu dispositivo. La primera vez descarga el procesador (~30 MB); las siguientes veces es instantáneo.' },
-]}>
+<ToolLayout slug="ajustar-volumen-video" faqs={faqs}>
   <AjustarVolumenVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sube o baja el volumen del audio de tu vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Ajustar el volumen de un vídeo es una de las ediciones más frecuentes antes de publicar en redes sociales o compartir por WhatsApp: la grabación quedó demasiado baja, la música de fondo tapa la voz, o necesitas unificar el nivel de varios clips antes de combinarlos. El ajuste en decibelios se aplica solo al audio con FFmpeg.wasm en el navegador; el stream de vídeo se copia sin recodificar.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Presets rápidos y control personalizado en dB</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los botones de preset cubren los ajustes más habituales: <strong class="text-[var(--color-text)]">+6 dB</strong> para doblar el volumen percibido, <strong class="text-[var(--color-text)]">-6 dB</strong> para reducirlo a la mitad, <strong class="text-[var(--color-text)]">+10 dB o +20 dB</strong> para grabaciones muy débiles. El campo personalizado permite introducir cualquier valor entero en el rango completo de -40 a +40 dB para control milimétrico.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

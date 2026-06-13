@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import BucleVideoTool from '@/components/tools/BucleVideoTool';
+
+const faqs = [
+  {
+    q: '¿Qué formatos de vídeo acepta?',
+    a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4 con codificación H.264, que es compatible con todas las plataformas: YouTube, Instagram, TikTok, WhatsApp y reproductores de escritorio y móvil.',
+  },
+  {
+    q: '¿Cuántas veces puedo repetir el vídeo?',
+    a: 'Puedes repetirlo entre 2 y 20 veces. Los presets rápidos son ×2, ×3, ×4, ×5, ×8 y ×10, y también puedes escribir cualquier número entre 2 y 20 en el campo personalizado.',
+  },
+  {
+    q: '¿El audio también se repite?',
+    a: 'Sí. Tanto el vídeo como el audio se repiten el mismo número de veces usando el concat demuxer de FFmpeg. El resultado es un archivo continuo sin silencios, cortes ni transiciones entre repeticiones.',
+  },
+  {
+    q: '¿Para qué sirve crear un vídeo en bucle?',
+    a: 'Es ideal para: vídeos de fondo (ambient loops) en webs y eventos; cumplir con los requisitos mínimos de duración de algunas plataformas publicitarias; crear loops para pantallas de tiendas, restaurantes y stands de ferias; y generar versiones extendidas de clips cortos para publicarlos como vídeos largos en YouTube.',
+  },
+  {
+    q: '¿El tamaño del archivo se multiplica por el número de bucles?',
+    a: 'Aproximadamente sí. El vídeo se recodifica con H.264 a partir de la lista de repeticiones, por lo que el tamaño resultante es similar al original multiplicado por el número de repeticiones. Para archivos muy grandes, usa un número de bucles bajo y sube el resultado a plataformas que acepten vídeo pesado.',
+  },
+  {
+    q: '¿Se envía el vídeo a algún servidor?',
+    a: 'No. El procesamiento se realiza completamente en tu navegador con FFmpeg.wasm. El vídeo nunca sale de tu dispositivo. La primera vez descarga el motor de procesamiento (~30 MB); las siguientes veces es instantáneo.',
+  },
+  {
+    q: '¿Cómo hacer un loop perfecto sin cortes visibles?',
+    a: 'La herramienta usa el concat demuxer de FFmpeg, que une los clips secuencialmente en el mismo contenedor MP4 sin transiciones. Para que el bucle sea visualmente invisible (el final conecta perfectamente con el inicio), el vídeo original debe ser un loop perfecto: que el último frame sea visualmente similar al primero. Esto se consigue grabando el clip con ese objetivo o recortándolo con la herramienta "Recortar vídeo".',
+  },
+];
 ---
-<ToolLayout slug="bucle-video" faqs={[
-  { q: '¿Qué formatos de vídeo acepta la herramienta?', a: 'Acepta MP4, WebM, MOV, AVI y MKV. El resultado siempre se descarga en formato MP4 con codificación H.264, que es compatible con todas las plataformas.' },
-  { q: '¿Cuántas veces puedo repetir el vídeo?', a: 'Puedes repetirlo entre 2 y 20 veces. Los presets rápidos son ×2, ×3, ×4, ×5, ×8 y ×10, pero puedes escribir cualquier número entre 2 y 20.' },
-  { q: '¿El audio también se repite?', a: 'Sí. Tanto el vídeo como el audio se repiten el mismo número de veces. El resultado es un archivo continuo sin silencios ni cortes entre repeticiones.' },
-  { q: '¿Para qué sirve crear un vídeo en bucle?', a: 'Es ideal para vídeos de fondo en webs, contenido para pantallas de tiendas o eventos, loops para redes sociales (Instagram, TikTok), y para cumplir con los requisitos mínimos de duración de algunas plataformas.' },
-  { q: '¿El tamaño del archivo se multiplica por el número de bucles?', a: 'Aproximadamente sí. El vídeo se recodifica con H.264, por lo que el tamaño resultante es similar al original multiplicado por el número de repeticiones.' },
-]}>
+<ToolLayout slug="bucle-video" faqs={faqs}>
   <BucleVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Repite cualquier vídeo hasta 20 veces en un solo archivo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Crear un vídeo en bucle es imprescindible para vídeos de fondo en webs, pantallas de tiendas o eventos, loops para redes sociales o para extender un clip corto a la duración mínima requerida por algunas plataformas. Elige entre 2 y 20 repeticiones y el vídeo resultante se genera con el concat demuxer de FFmpeg directamente en el navegador, sin enviar nada a servidores externos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Sin cortes entre repeticiones, compatible con cualquier plataforma</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        FFmpeg une los clips con el <strong class="text-[var(--color-text)]">concat demuxer</strong> en un único contenedor MP4 sin transiciones visibles entre repeticiones. El resultado se recodifica con H.264 y es compatible con YouTube, Instagram, TikTok, WhatsApp Business y cualquier reproductor. El audio también se repite el mismo número de veces sin silencios entre bucles.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

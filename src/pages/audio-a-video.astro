@@ -1,13 +1,52 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import AudioAVideoTool from '@/components/tools/AudioAVideoTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve convertir audio a vídeo?',
+    a: 'Muchas plataformas como YouTube, Instagram, TikTok y Facebook solo aceptan subidas de vídeo, no audio directamente. Esta herramienta crea un MP4 a partir de tu audio (podcast, música, locución, clase) con un fondo visual estático, listo para subir a cualquier plataforma.',
+  },
+  {
+    q: '¿Qué formatos de audio acepta?',
+    a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado siempre se descarga como MP4 con codificación H.264 para el vídeo y AAC a 192 kbps para el audio.',
+  },
+  {
+    q: '¿Qué resolución tiene el vídeo si elijo fondo de color?',
+    a: 'El vídeo se genera a 1280×720 píxeles (720p) con el color de fondo elegido. Esta resolución es adecuada para YouTube, Instagram y la mayoría de plataformas de streaming de audio.',
+  },
+  {
+    q: '¿Qué pasa si subo una imagen de fondo?',
+    a: 'Si subes una imagen (JPG, PNG, WebP), FFmpeg la usa como frame estático en bucle durante toda la duración del audio. La resolución del vídeo resultante coincide con la de la imagen que subas. Recomendamos imágenes de 1280×720 o 1920×1080 para mejor compatibilidad con plataformas.',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). Después, la velocidad depende de la duración del audio: aproximadamente 1 minuto de audio tarda entre 30 y 90 segundos en procesarse, dependiendo del hardware del dispositivo.',
+  },
+  {
+    q: '¿Se envían los archivos a algún servidor?',
+    a: 'No. Todo el procesamiento ocurre en tu navegador con FFmpeg.wasm. Ni el audio ni la imagen salen de tu dispositivo. Esto lo hace adecuado para podcasts con contenido privado, sesiones de coaching, clases grabadas o cualquier audio que no quieras subir a servidores externos.',
+  },
+  {
+    q: '¿Para qué se usa convertir audio a vídeo en la práctica de LATAM?',
+    a: 'Los usos más comunes son: publicar episodios de podcast en YouTube con una imagen de portada estática; subir clases o conferencias de audio a plataformas como Hotmart, Udemy o YouTube en formato vídeo porque no admiten audio puro; crear contenido de "audio branding" para Instagram Stories y Reels con la carátula del artista o marca; y distribuir entrevistas de radio o pódcast en TikTok y Reels con un fondo visual corporativo.',
+  },
+];
 ---
-<ToolLayout slug="audio-a-video" faqs={[
-  { q: '¿Para qué sirve convertir audio a vídeo?', a: 'Muchas plataformas como YouTube, Instagram o TikTok solo aceptan subidas de vídeo, no audio directamente. Esta herramienta crea un MP4 con el audio y una imagen o color de fondo estático para poder subir tu podcast, música o locución.' },
-  { q: '¿Qué formatos de audio acepta?', a: 'Acepta MP3, WAV, OGG, AAC, FLAC y M4A. El resultado siempre se descarga como MP4 con codificación H.264 y audio AAC 192 kbps.' },
-  { q: '¿Qué pasa si no subo ninguna imagen de fondo?', a: 'Si eliges el modo "Color sólido", el fondo será del color que selecciones. El vídeo tendrá una resolución de 1280×720 píxeles con ese color de fondo uniformemente.' },
-  { q: '¿Qué resolución tiene el vídeo si subo una imagen?', a: 'Si subes una imagen de fondo, FFmpeg usa esa imagen como frame estático en bucle con la resolución original de la imagen. Recomendamos imágenes de 1280×720 o 1920×1080 para mejor compatibilidad.' },
-  { q: '¿Cuánto tarda el procesamiento?', a: 'La primera vez descarga el procesador FFmpeg.wasm (~30 MB). Después, la velocidad depende de la duración del audio: aproximadamente 1 minuto de audio tarda entre 30 y 90 segundos en procesarse.' },
-]}>
+<ToolLayout slug="audio-a-video" faqs={faqs}>
   <AudioAVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Convierte tu audio en un vídeo MP4 listo para publicar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        YouTube, Instagram, TikTok y Facebook no aceptan subidas de audio puro. Convierte cualquier archivo de audio (podcast, música, locución, clase) a un vídeo MP4 con fondo estático para subirlo a cualquier plataforma. Elige un color de fondo o sube una imagen de portada. Todo el proceso ocurre en el navegador con FFmpeg.wasm, sin enviar tus archivos a ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fondo de color o imagen de portada personalizada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Fondo de color</strong>: elige entre 8 colores preset o cualquier color personalizado para un vídeo 1280×720 con fondo liso. <strong class="text-[var(--color-text)]">Imagen de fondo</strong>: sube la portada de tu podcast, el logo de tu marca o cualquier imagen JPG/PNG/WebP para crear un vídeo con imagen estática. Ideal para podcasters, músicos, coaches y creadores de contenido que necesitan presencia visual en plataformas de vídeo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

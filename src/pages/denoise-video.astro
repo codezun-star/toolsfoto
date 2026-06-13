@@ -3,13 +3,50 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import DenoiseVideoTool from '@/components/tools/DenoiseVideoTool';
 
 const faqs = [
-  { q: '¿Qué es el ruido digital en vídeo?', a: 'El ruido digital es la variación aleatoria de brillo o color en los píxeles de un vídeo, perceptible como un efecto de grano. Aparece habitualmente en grabaciones con poca luz, cámaras de baja calidad o al usar sensibilidad ISO alta.' },
-  { q: '¿Qué filtro usa la herramienta?', a: 'Usa el filtro hqdn3d (High Quality 3D Denoiser) de FFmpeg, que analiza el ruido en tres dimensiones: espacio horizontal, espacio vertical y tiempo entre fotogramas. Es uno de los filtros de reducción de ruido más eficientes disponibles en FFmpeg.' },
-  { q: '¿Perderé detalle al aplicar el denoising?', a: 'Con la opción Suave o Medio, la pérdida de detalle es mínima. La opción Intenso puede suavizar ligeramente los bordes y texturas finas. Para vídeos con detalle importante (textura de piel, objetos pequeños), usa Suave o Medio.' },
-  { q: '¿El audio se ve afectado?', a: 'No. El stream de audio se copia exactamente igual, sin recodificación ni pérdida de calidad.' },
-  { q: '¿Por qué tarda en cargar la primera vez?', a: 'La primera vez se descarga el procesador FFmpeg.wasm (~30 MB). El navegador lo guarda en caché para las siguientes sesiones. Tu vídeo nunca sale del dispositivo.' },
+  {
+    q: '¿Qué es el ruido digital en vídeo?',
+    a: 'El ruido digital es la variación aleatoria de brillo o color en los píxeles de un vídeo, perceptible como un efecto de grano o estática visual. Aparece habitualmente en grabaciones con poca luz (interiores, noche), cámaras de baja calidad (cámaras de seguridad, cámaras antiguas) o al usar sensibilidad ISO alta en cámaras réflex y mirrorless.',
+  },
+  {
+    q: '¿Qué filtro usa la herramienta?',
+    a: 'Usa el filtro hqdn3d (High Quality 3D Denoiser) de FFmpeg, que analiza el ruido en tres dimensiones: espacio horizontal, espacio vertical y tiempo entre fotogramas. Al combinar las tres dimensiones, reduce el ruido de forma más eficiente que los filtros bidimensionales sin perder tanto detalle.',
+  },
+  {
+    q: '¿Perderé detalle al aplicar el denoising?',
+    a: 'Con la opción Suave, la pérdida de detalle es prácticamente imperceptible. Con Medio, la pérdida es leve y aceptable para la mayoría de usos. La opción Intenso puede suavizar ligeramente los bordes y texturas finas en escenas con mucho detalle (pelo, tela, vegetación). Para vídeos donde el detalle es importante, usa Suave o Medio.',
+  },
+  {
+    q: '¿El audio se ve afectado?',
+    a: 'No. El stream de audio se copia exactamente igual (-c:a copy), sin recodificación ni pérdida de calidad. El filtro hqdn3d solo procesa el stream de vídeo.',
+  },
+  {
+    q: '¿Funciona con vídeos de cámaras de seguridad o CCTV?',
+    a: 'Sí. Las grabaciones de cámaras de vigilancia suelen tener mucho ruido debido al bajo ISO y la compresión agresiva. La opción Medio o Intenso puede mejorar significativamente la legibilidad de este tipo de vídeos.',
+  },
+  {
+    q: '¿Cuánto tarda el procesamiento?',
+    a: 'La primera vez descarga el motor FFmpeg.wasm (~30 MB). El procesamiento es más lento que comprimir o cambiar el formato porque hqdn3d analiza cada fotograma individualmente. Un vídeo de 1 minuto en HD puede tardar entre 2 y 5 minutos según el hardware del dispositivo.',
+  },
+  {
+    q: '¿Para qué se usa la reducción de ruido en vídeo en la práctica?',
+    a: 'Los usos más habituales son: mejorar grabaciones de eventos nocturnos o en interiores mal iluminados antes de publicarlas en redes sociales; limpiar vídeos de cámaras de seguridad para hacer más legibles matrículas, caras o detalles en investigaciones; mejorar la calidad de vídeos antiguos digitalizados con mucho grano; limpiar grabaciones de entrevistas o vlogs grabados en condiciones de iluminación deficientes; y preparar vídeos antes de hacer zoom digital para minimizar el efecto del ruido al ampliar.',
+  },
 ];
 ---
 <ToolLayout slug="denoise-video" faqs={faqs}>
   <DenoiseVideoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Elimina el grano y el ruido digital de tus vídeos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El ruido digital en vídeo (grano, estática visual) aparece en grabaciones con poca luz, cámaras de seguridad o ISO alto. El filtro <strong class="text-[var(--color-text)]">hqdn3d</strong> de FFmpeg analiza el ruido en tres dimensiones (horizontal, vertical y temporal entre fotogramas) para reducirlo eficientemente sin perder el detalle del contenido. Todo el procesamiento ocurre en el navegador con FFmpeg.wasm.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Tres niveles de denoising para cada tipo de vídeo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong class="text-[var(--color-text)]">Suave</strong>: mínima intervención, ideal para vídeos con poco grano donde el detalle es prioritario. <strong class="text-[var(--color-text)]">Medio</strong>: equilibrio para la mayoría de vídeos con ruido moderado de interiores. <strong class="text-[var(--color-text)]">Intenso</strong>: para grabaciones de cámaras de seguridad, vídeos nocturnos o cámaras de baja calidad con mucho ruido. El audio se copia sin recodificar.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
