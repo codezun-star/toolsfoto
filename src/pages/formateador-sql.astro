@@ -1,13 +1,53 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import FormateadorSQLTool from '@/components/tools/FormateadorSQLTool';
+
+const faqs = [
+  {
+    q: '¿Qué dialectos de SQL soporta el formateador?',
+    a: 'El formateador funciona con los keywords estándar de SQL (SELECT, FROM, WHERE, JOIN, GROUP BY, ORDER BY, etc.) y es compatible con MySQL, PostgreSQL, SQLite y SQL Server. Pone en mayúsculas los keywords reconocidos y añade saltos de línea antes de cada cláusula principal. No interpreta funciones específicas de cada motor como NOW(), COALESCE() o ISNULL().',
+  },
+  {
+    q: '¿Qué hace el modo "Minificar SQL"?',
+    a: 'El modo minificar elimina todos los espacios extra, saltos de línea y tabulaciones, dejando la consulta en una sola línea compacta. Es útil cuando necesitas incrustar SQL en variables de entorno, archivos de configuración, o cuando quieres reducir el tamaño de una query almacenada en un string de JavaScript.',
+  },
+  {
+    q: '¿Puedo formatear consultas con subconsultas o CTEs?',
+    a: 'Sí. Las subconsultas (subqueries) se formatean como parte de la consulta principal preservando los paréntesis y elevando a mayúsculas los keywords internos. Los CTEs (WITH ... AS) también se reconocen: la cláusula WITH genera un salto de línea y los keywords internos se procesan igual.',
+  },
+  {
+    q: '¿Los datos de mi consulta son seguros?',
+    a: 'Todo el procesamiento se realiza 100% en tu navegador con JavaScript puro. El texto de tu consulta nunca se envía a ningún servidor. Puedes formatear consultas con datos sensibles, nombres de tablas de producción o lógica de negocio con total seguridad.',
+  },
+  {
+    q: '¿Puedo descargar el SQL formateado?',
+    a: 'Sí. Usa el botón ".sql" para descargar el resultado como archivo query.sql, listo para importar en tu cliente de base de datos (TablePlus, DBeaver, phpMyAdmin) o guardar como documentación del proyecto.',
+  },
+  {
+    q: '¿Cuál es el estilo de formato SQL más aceptado en equipos de desarrollo?',
+    a: 'El estilo más extendido en equipos profesionales pone los keywords en MAYÚSCULAS, cada cláusula principal (SELECT, FROM, WHERE, JOIN, ORDER BY) en su propia línea, y AND/OR con 2 espacios de sangría dentro de WHERE y HAVING. Las columnas del SELECT se listan una por línea con 2 espacios de sangría. Este estilo es el que aplica esta herramienta y es compatible con linters SQL como sqlfluff.',
+  },
+  {
+    q: '¿Cómo se usa el formateador en proyectos con MySQL o PostgreSQL en hosting de LATAM?',
+    a: 'La mayoría de proyectos web en hosting compartido en México, Colombia y Argentina (GoDaddy, Hostgator, Hostinger) usan MySQL con phpMyAdmin. Al revisar queries directamente en phpMyAdmin, el SQL a menudo viene en una sola línea y es difícil de leer. Pegar esa query aquí y formatearla la convierte en algo legible en segundos. Para proyectos en Railway, Render o Supabase con PostgreSQL, el formateador también es útil antes de añadir migraciones en Prisma, Django o Laravel.',
+  },
+];
 ---
-<ToolLayout slug="formateador-sql" faqs={[
-  { q: '¿Qué dialectos de SQL soporta el formateador?', a: 'El formateador funciona con los keywords estándar de SQL (SELECT, FROM, WHERE, JOIN, GROUP BY, ORDER BY, etc.) y es compatible con MySQL, PostgreSQL, SQLite y SQL Server. No interpreta funciones específicas de cada motor.' },
-  { q: '¿Qué hace el modo "Minificar SQL"?', a: 'El modo minificar elimina todos los espacios extra, saltos de línea y tabulaciones, dejando la consulta en una sola línea compacta. Es útil cuando necesitas incrustar SQL en código o variables de entorno.' },
-  { q: '¿Puedo formatear consultas con subconsultas?', a: 'Sí. Las subconsultas (subqueries) se formatean como parte de la consulta principal. Los paréntesis de las subconsultas se preservan y los keywords internos también se ponen en mayúsculas.' },
-  { q: '¿Los datos de mi consulta son seguros?', a: 'Todo el procesamiento se realiza 100% en tu navegador con JavaScript puro. El texto de tu consulta nunca se envía a ningún servidor. Puedes formatear consultas con datos sensibles con total seguridad.' },
-  { q: '¿Puedo descargar el SQL formateado?', a: 'Sí. Usa el botón ".sql" para descargar el resultado como archivo con extensión .sql, listo para importar en tu cliente de base de datos o guardar como documentación.' },
-]}>
+<ToolLayout slug="formateador-sql" faqs={faqs}>
   <FormateadorSQLTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Formato automático: keywords y cláusulas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El formateador aplica tres transformaciones: primero normaliza todos los espacios en blanco múltiples a uno solo. Luego pone en MAYÚSCULAS los keywords de una lista de más de 50 términos usando expresiones regulares con límites de palabra (<code>\b</code>). Finalmente añade saltos de línea antes de las cláusulas principales (SELECT, FROM, WHERE, JOIN, ORDER BY, GROUP BY...) e indenta AND/OR con 2 espacios dentro de WHERE y HAVING. El modo minificar invierte el proceso: quita todos los espacios extra y deja la query en una línea compacta.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">SQL en proyectos web de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En la industria del desarrollo web en América Latina, MySQL es el motor más común por su integración con cPanel y hosting compartido de proveedores como Hostgator, GoDaddy y SiteGround. Los frameworks más usados en la región (Laravel en PHP y Django en Python) generan SQL automáticamente a través de sus ORMs, pero cuando se depuran queries lentas con EXPLAIN o se revisan migraciones manualmente, un formateador hace el trabajo ilegible en algo comprensible al instante. También es útil para documentar procedimientos almacenados en proyectos de facturación electrónica del SAT (México) o la AFIP (Argentina).
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,13 +1,53 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConversorBaseTool from '@/components/tools/ConversorBaseTool';
+
+const faqs = [
+  {
+    q: '¿Qué es el sistema de bases numéricas?',
+    a: 'Un sistema de bases es una forma de representar números usando un conjunto de dígitos. El decimal (base 10) usa 0-9 y es el que usamos cotidianamente. El binario (base 2) usa solo 0 y 1 y es el que usa el hardware. El hexadecimal (base 16) usa 0-9 y A-F y es común en programación. El octal (base 8) usa 0-7.',
+  },
+  {
+    q: '¿Para qué se usa el sistema hexadecimal en programación?',
+    a: 'El hexadecimal es muy usado en programación: colores CSS (#FF5733), direcciones de memoria en depuradores, valores de bytes en protocolos de red, representación compacta de hashes SHA y UUID, y permisos de archivos en Unix (chmod 755 = rwxr-xr-x). Un byte (8 bits) se representa con exactamente 2 dígitos hexadecimales.',
+  },
+  {
+    q: '¿Por qué el binario se muestra agrupado en grupos de 4?',
+    a: 'Los grupos de 4 bits se llaman nibbles y corresponden exactamente a un dígito hexadecimal. Agrupar el binario en nibbles (ej: 1111 0011 en lugar de 11110011) facilita la lectura y la conversión mental a hexadecimal: 1111 = F, 0011 = 3, por tanto 0xF3.',
+  },
+  {
+    q: '¿Hay un límite en el tamaño del número que puedo convertir?',
+    a: 'La herramienta usa el tipo Number de JavaScript, que puede representar enteros exactamente hasta 2^53 - 1 (9.007.199.254.740.991, el límite de Number.MAX_SAFE_INTEGER). Para la mayoría de los usos en programación esto es más que suficiente. Números más grandes requieren BigInt.',
+  },
+  {
+    q: '¿Los cálculos se hacen en el servidor?',
+    a: 'No. Todas las conversiones se realizan localmente en tu navegador con las funciones nativas de JavaScript: parseInt(valor, base) para convertir desde cualquier base a decimal, y Number.toString(base) para convertir a la base de destino. Ningún dato sale de tu dispositivo.',
+  },
+  {
+    q: '¿Qué relación hay entre hexadecimal y los colores CSS?',
+    a: 'Los colores CSS en formato HEX son tres bytes consecutivos: #RRGGBB. Cada byte (0-255 en decimal) se representa con 2 dígitos hexadecimales (00-FF). Así #FF0000 es rojo puro (R=255, G=0, B=0), #00FF00 es verde (G=255), y #FFFFFF es blanco (todos los canales al máximo). Entender hexadecimal ayuda a leer y ajustar colores manualmente en CSS.',
+  },
+  {
+    q: '¿Cómo se usa el binario en electrónica y robótica educativa en LATAM?',
+    a: 'En programas de educación STEM en México, Colombia, Argentina y Chile, el binario es fundamental para entender cómo funciona el hardware: registros de microcontroladores Arduino (ej: PORTB = B11001100 para controlar LEDs), máscaras de bits en C/C++ (value & 0xFF para extraer el byte bajo), direcciones IPv4 y máscaras de subred (192.168.1.0/24 en CIDR). En la carrera de Ingeniería en Sistemas o Electrónica, convertir entre bases es una habilidad básica del primer semestre.',
+  },
+];
 ---
-<ToolLayout slug="conversor-base" faqs={[
-  { q: '¿Qué es el sistema de bases numéricas?', a: 'Un sistema de bases es una forma de representar números usando un conjunto de dígitos. El decimal (base 10) usa 0-9 y es el que usamos cotidianamente. El binario (base 2) usa solo 0 y 1 y es el que usa el hardware. El hexadecimal (base 16) usa 0-9 y A-F y es común en programación. El octal (base 8) usa 0-7.' },
-  { q: '¿Para qué se usa el sistema hexadecimal?', a: 'El hexadecimal es muy usado en programación: colores CSS (#FF5733), direcciones de memoria, valores de bytes en depuración, representación compacta de datos binarios y protocolos de red. Un byte (8 bits) se representa con exactamente 2 dígitos hexadecimales.' },
-  { q: '¿Por qué el binario se muestra agrupado en grupos de 4?', a: 'Los grupos de 4 bits se llaman nibbles y corresponden exactamente a un dígito hexadecimal. Agrupar el binario en nibbles (ej: 1111 0011 en lugar de 11110011) facilita la lectura y la conversión mental a hexadecimal.' },
-  { q: '¿Hay un límite en el tamaño del número que puedo convertir?', a: 'La herramienta usa el tipo Number de JavaScript, que puede representar enteros exactamente hasta 2^53 - 1 (Number.MAX_SAFE_INTEGER). Para la mayoría de los usos prácticos en programación esto es más que suficiente.' },
-  { q: '¿Los cálculos se hacen en el servidor?', a: 'No. Todas las conversiones se realizan localmente en tu navegador con JavaScript nativo (parseInt y toString con base). Ningún dato sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="conversor-base" faqs={faqs}>
   <ConversorBaseTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Decimal, Binario, Hexadecimal y Octal</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La conversión entre bases usa <code>parseInt(valor, base)</code> para transformar desde cualquier base a decimal, y luego <code>n.toString(base)</code> para obtener la representación en la base de destino. La validación de caracteres es estricta: en hexadecimal solo se aceptan 0-9 y A-F; en binario solo 0 y 1. El resultado binario se muestra agrupado en nibbles (grupos de 4 bits) para facilitar la lectura. La tabla de referencia rápida al pie muestra los valores 0-255 más habituales en sus representaciones decimales, hexadecimales y binarias.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Bases numéricas en educación STEM de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En universidades e institutos técnicos de México, Colombia, Argentina, Chile y Perú, los cursos de Arquitectura de Computadoras, Sistemas Digitales y Programación de Microcontroladores exigen dominar la conversión entre bases. El hexadecimal aparece en depuración de código Arduino y Raspberry Pi, en el estudio de protocolos de comunicación serial (I2C, SPI, UART) y en el análisis de imágenes por bytes. Esta herramienta sirve tanto para estudiantes que practican antes de un examen como para profesionales que depuran comunicación a bajo nivel en proyectos de IoT desarrollados en la región.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

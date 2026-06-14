@@ -1,13 +1,53 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import EntidadesHTMLTool from '@/components/tools/EntidadesHTMLTool';
+
+const faqs = [
+  {
+    q: '¿Qué son las entidades HTML?',
+    a: 'Las entidades HTML son secuencias de caracteres especiales que representan símbolos que de otro modo podrían confundirse con código HTML. Por ejemplo, &lt; representa el símbolo < que de otro modo se interpretaría como inicio de una etiqueta HTML. Se escriben como &nombre; o como &#número;.',
+  },
+  {
+    q: '¿Cuándo necesito codificar entidades HTML?',
+    a: 'Siempre que incluyas contenido generado por el usuario o texto externo en HTML, debes codificar los caracteres especiales para evitar inyecciones XSS. También cuando quieras mostrar literalmente los caracteres <, >, & o " en una página web, o cuando insertes caracteres especiales como copyright (©) o trademark (™) en el HTML.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre codificar y decodificar?',
+    a: 'Codificar convierte texto plano en entidades HTML: el carácter < se convierte en &lt;, & en &amp;. Decodificar hace el proceso inverso: &lt; vuelve a ser <. El modo codificar es el más útil para preparar texto generado por usuarios antes de insertarlo en el DOM.',
+  },
+  {
+    q: '¿Qué entidades incluye la tabla de referencia?',
+    a: 'La tabla incluye las 23 entidades más frecuentes: caracteres de control (&amp;, &lt;, &gt;, &quot;, &apos;), símbolos de moneda (&euro;, &pound;, &yen;), símbolos matemáticos (&plusmn;, &times;, &divide;), tipografía (&mdash;, &ndash;, &hellip;, &nbsp;), flechas (&larr;, &rarr;, &uarr;, &darr;) y símbolos legales (&copy;, &reg;, &trade;). Hacer clic en cualquier entidad la inserta en el área de entrada.',
+  },
+  {
+    q: '¿Los datos se envían al servidor?',
+    a: 'No. La codificación y decodificación se realiza completamente en tu navegador con JavaScript puro y la API DOM nativa (textarea.innerHTML para decodificar, reemplazos de string para codificar). Ningún texto sale de tu dispositivo.',
+  },
+  {
+    q: '¿Qué entidades HTML son más importantes para contenido en español?',
+    a: 'Para contenido en español, las más importantes son &amp; (ampersand), &lt; y &gt; (corchetes angulares para mostrar código), &apos; (apóstrofe en contracciones del inglés), &nbsp; (espacio de no ruptura para evitar saltos de línea indeseados), y &mdash; (raya larga — usada frecuentemente en tipografía española en lugar del guion largo). El signo © es también muy frecuente en pies de página.',
+  },
+  {
+    q: '¿Cómo prevenir inyecciones XSS con entidades HTML en sitios web de LATAM?',
+    a: 'Las inyecciones XSS ocurren cuando contenido malicioso de un usuario se inserta en el HTML sin codificar. Por ejemplo, si un formulario de contacto en un sitio de e-commerce en Colombia o México acepta el nombre del cliente y lo muestra sin codificar, un atacante puede insertar <script>alert(document.cookie)</script>. Codificar el contenido convierte < en &lt; y > en &gt;, neutralizando el ataque. En WordPress, usa esc_html() o esc_attr(); en Laravel, las plantillas Blade escapan automáticamente con {{ }}.',
+  },
+];
 ---
-<ToolLayout slug="entidades-html" faqs={[
-  { q: '¿Qué son las entidades HTML?', a: 'Las entidades HTML son secuencias de caracteres especiales que representan símbolos que de otro modo podrían confundirse con código HTML. Por ejemplo, &lt; representa el símbolo < que de otro modo se interpretaría como inicio de una etiqueta HTML.' },
-  { q: '¿Cuándo necesito codificar entidades HTML?', a: 'Siempre que incluyas contenido generado por el usuario o texto externo en HTML, debes codificar los caracteres especiales para evitar inyecciones XSS. También cuando quieras mostrar literalmente los caracteres <, >, & o " en una página web.' },
-  { q: '¿Cuál es la diferencia entre codificar y decodificar?', a: 'Codificar convierte texto plano en entidades HTML: el carácter < se convierte en &lt;. Decodificar hace el proceso inverso: &lt; vuelve a ser <. El modo codificar es el más útil para preparar texto para insertar en HTML.' },
-  { q: '¿Qué entidades incluye la tabla de referencia?', a: 'La tabla incluye las 23 entidades más frecuentes: caracteres de control (&amp;, &lt;, &gt;, &quot;, &apos;), símbolos de moneda (€, £, ¥), símbolos matemáticos (±, ×, ÷), tipografía (—, –, …, &nbsp;), flechas y símbolos legales (©, ®, ™).' },
-  { q: '¿Los datos se envían al servidor?', a: 'No. La codificación y decodificación se realiza completamente en tu navegador con JavaScript puro y la API DOM nativa. Ningún texto sale de tu dispositivo.' },
-]}>
+<ToolLayout slug="entidades-html" faqs={faqs}>
   <EntidadesHTMLTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Las 23 entidades HTML más frecuentes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La tabla de referencia agrupa las entidades por categoría: <strong>Control</strong> (&amp; &lt; &gt; &quot; &apos;) son obligatorias para cualquier contenido HTML; <strong>Legales</strong> (&copy; &reg; &trade;) aparecen en pies de página y marcas registradas; <strong>Moneda</strong> (&euro; &pound; &yen;) para precios internacionales; <strong>Tipografía</strong> (&nbsp; &mdash; &ndash; &hellip;) para maquetación de texto; <strong>Flechas</strong> (&larr; &rarr; &uarr; &darr;) para iconografía sin imágenes; <strong>Matemáticas</strong> (&plusmn; &times; &divide;) para contenido científico o de precios. Haz clic en cualquier entidad para insertarla.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Seguridad web y contenido en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las inyecciones XSS son una de las vulnerabilidades más comunes en sitios web de la región: formularios de contacto en WordPress, comentarios en blogs, búsquedas en tiendas WooCommerce y campos de texto en aplicaciones Laravel o Django. Codificar el contenido del usuario antes de insertarlo en el HTML es la defensa principal. Adicionalmente, para tiendas en línea en México, Colombia y Argentina que muestran descripciones de producto con caracteres especiales como ©, ® o guiones largos, usar entidades HTML garantiza que el texto se muestre correctamente en cualquier navegador y codificación, evitando los caracteres extraños típicos de problemas de encoding ISO-8859-1 vs UTF-8.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

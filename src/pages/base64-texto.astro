@@ -13,18 +13,41 @@ const faqs = [
   },
   {
     q: '¿Funciona con caracteres Unicode, emojis y acentos?',
-    a: 'Sí. La herramienta maneja correctamente caracteres Unicode completos, incluyendo emojis, caracteres con acento (á, é, ñ…), caracteres CJK (chino, japonés, coreano) y cualquier otro script. Internamente usa TextEncoder para una conversión correcta.',
+    a: 'Sí. La herramienta maneja correctamente caracteres Unicode completos, incluyendo emojis, caracteres con acento (á, é, ñ…), caracteres CJK (chino, japonés, coreano) y cualquier otro script. Internamente usa TextEncoder para una conversión correcta antes de aplicar btoa().',
   },
   {
     q: '¿Qué diferencia hay entre Base64 normal y Base64 URL-safe?',
-    a: 'El Base64 estándar usa los caracteres +, / y = que tienen significado especial en URLs. El Base64 URL-safe reemplaza + por -, / por _ y omite el relleno =. Esta herramienta genera Base64 estándar; si necesitas URL-safe, reemplaza los caracteres manualmente.',
+    a: 'El Base64 estándar usa los caracteres +, / y = que tienen significado especial en URLs. El Base64 URL-safe reemplaza + por -, / por _ y omite el relleno =. Esta herramienta genera Base64 estándar; si necesitas URL-safe, reemplaza los caracteres manualmente: output.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "").',
   },
   {
     q: '¿Hay límite de tamaño del texto a codificar?',
-    a: 'No hay límite impuesto por la herramienta. El procesamiento ocurre en tu navegador con JavaScript nativo. Para textos muy largos (varios megabytes), puede tardar un momento, pero funciona correctamente.',
+    a: 'No hay límite impuesto por la herramienta. El procesamiento ocurre en tu navegador con JavaScript nativo. Para textos muy largos (varios megabytes), puede tardar un momento, pero funciona correctamente. Ten en cuenta que Base64 aumenta el tamaño del dato original aproximadamente un 33%.',
+  },
+  {
+    q: '¿Cómo se usa Base64 en APIs REST y tokens JWT?',
+    a: 'Los tokens JWT tienen tres partes separadas por puntos, todas en Base64 URL-safe: el header (algoritmo), el payload (datos del usuario) y la firma. En cabeceras HTTP de autenticación Basic, las credenciales usuario:contraseña también se codifican en Base64 estándar. Las APIs REST usan Base64 para incluir imágenes o archivos directamente en el cuerpo JSON.',
+  },
+  {
+    q: '¿Se usa Base64 en integraciones con Mercado Libre, WhatsApp Business o plataformas de LATAM?',
+    a: 'Sí. La API de Mercado Libre usa tokens OAuth codificados en Base64 en las cabeceras de autorización. WhatsApp Business API (Meta) usa Basic Auth en Base64 para las credenciales del proveedor. Hotmart y otras plataformas de cursos codifican en Base64 el payload de sus webhooks para incluir datos binarios de manera segura.',
   },
 ];
 ---
 <ToolLayout slug="base64-texto" faqs={faqs}>
   <Base64TextoTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Codificación, no cifrado</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Base64 convierte bytes binarios en caracteres ASCII usando un alfabeto de 64 símbolos (A-Z, a-z, 0-9, +, /). Por cada 3 bytes de entrada produce 4 caracteres de salida, aumentando el tamaño un 33%. El navegador expone <code>btoa()</code> y <code>atob()</code> para Base64 nativo, aunque para texto Unicode es necesario pasar por <code>TextEncoder</code> primero para evitar errores con caracteres fuera del rango ASCII. Esta herramienta maneja esa conversión automáticamente, por lo que funciona con cualquier idioma: español, portugués, árabe o CJK.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Base64 en el ecosistema digital de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En América Latina, Base64 aparece en múltiples integraciones cotidianas: las credenciales de acceso a la API de Mercado Libre Argentina, Colombia y México se transmiten en cabeceras <code>Authorization: Basic</code> codificadas en Base64. Los webhooks de Hotmart incluyen el payload firmado en Base64 para validar la autenticidad del evento. Firebase y Supabase codifican en Base64 las claves de servicio en los archivos JSON de configuración. Al depurar estas integraciones, decodificar el token ayuda a verificar que las credenciales son correctas antes de realizar llamadas a la API.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

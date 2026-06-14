@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ContadorPalabrasTool from '@/components/tools/ContadorPalabrasTool';
 
 const faqs = [
-  { q: '¿Cómo se cuentan las palabras?', a: 'Las palabras se cuentan dividiendo el texto por espacios en blanco (espacios, tabulaciones, saltos de línea). Secuencias de caracteres separadas por estos espacios cuentan como una palabra.' },
-  { q: '¿Cómo se calculan las frases?', a: 'Se cuentan los signos de puntuación que terminan frases: punto (.), signo de exclamación (!) y signo de interrogación (?). Múltiples signos consecutivos cuentan como uno solo.' },
-  { q: '¿Qué velocidad de lectura se usa para el tiempo estimado?', a: 'Se usa la velocidad media de lectura adulta: 200 palabras por minuto. El tiempo se redondea al minuto más cercano, con un mínimo de 1 minuto para textos cortos.' },
-  { q: '¿Las estadísticas se actualizan en tiempo real?', a: 'Sí. Todas las estadísticas se recalculan instantáneamente mientras escribes o pegas texto, sin necesidad de hacer clic en ningún botón.' },
-  { q: '¿Para qué tipos de contenido es útil esta herramienta?', a: 'Es útil para artículos de blog (SEO suele recomendar 300-2000 palabras), tweets (280 caracteres), publicaciones de LinkedIn, correos electrónicos, informes académicos y cualquier contenido con límites de extensión.' },
+  {
+    q: '¿Cómo se cuentan las palabras?',
+    a: 'Las palabras se cuentan dividiendo el texto por espacios en blanco (espacios, tabulaciones, saltos de línea) usando la expresión regular /\s+/. Secuencias de caracteres no separadas por espacios cuentan como una palabra, independientemente de si contienen números, guiones o puntuación.',
+  },
+  {
+    q: '¿Cómo se calculan las frases?',
+    a: 'Se cuentan los signos de puntuación que terminan frases: punto (.), signo de exclamación (!) y signo de interrogación (?). Múltiples signos consecutivos (como "!!!" o "...") cuentan como uno solo. Los signos de apertura (¡, ¿) no se contabilizan.',
+  },
+  {
+    q: '¿Qué velocidad de lectura se usa para el tiempo estimado?',
+    a: 'Se usa la velocidad media de lectura adulta: 200 palabras por minuto, que es el estándar para textos en español. El tiempo se redondea al minuto más cercano con un mínimo de 1 minuto. Para comparación: la velocidad de lectura en voz alta es aproximadamente 130 palabras/minuto.',
+  },
+  {
+    q: '¿Las estadísticas se actualizan en tiempo real?',
+    a: 'Sí. Todas las estadísticas se recalculan instantáneamente mientras escribes o pegas texto, sin necesidad de hacer clic en ningún botón. La herramienta usa React con useMemo para el cálculo eficiente, de modo que no hay retardo perceptible incluso con textos largos.',
+  },
+  {
+    q: '¿Para qué tipos de contenido es útil esta herramienta?',
+    a: 'Es útil para artículos de blog (SEO recomienda entre 1000 y 2500 palabras), tweets (280 caracteres), publicaciones de LinkedIn, correos electrónicos, informes académicos, subtítulos de vídeo y cualquier contenido con límites de extensión.',
+  },
+  {
+    q: '¿Cuántas palabras debe tener un artículo de blog para posicionarse en Google en español?',
+    a: 'Para artículos informativos en español, los estudios de SEO indican que los artículos de entre 1500 y 2500 palabras tienden a posicionarse mejor en Google. Las guías exhaustivas o pilares de contenido pueden llegar a 3000-5000 palabras. Sin embargo, la calidad y la relevancia son más importantes que la longitud; un artículo de 800 palabras bien estructurado puede superar a uno de 3000 palabras relleno.',
+  },
+  {
+    q: '¿Cómo ayuda a creadores de contenido en Instagram, TikTok y LinkedIn en LATAM?',
+    a: 'Los creadores de contenido en América Latina usan esta herramienta para controlar límites de plataforma: Instagram permite hasta 2200 caracteres en captions; TikTok limita la bio a 80 caracteres; LinkedIn recorta el preview del artículo a 300 caracteres. Para WhatsApp Business, los mensajes de plantilla aprobadas por Meta tienen límites de caracteres según la categoría. Contar antes de publicar evita que el texto se corte en la previsualización.',
+  },
 ];
 ---
 <ToolLayout slug="contador-palabras" faqs={faqs}>
   <ContadorPalabrasTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">7 métricas de texto calculadas al instante</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta calcula simultáneamente siete estadísticas: caracteres totales (con espacios), caracteres sin espacios (útil para límites de SMS o formularios), palabras (split por espacios), frases (signos terminales .!?), párrafos (bloques separados por línea en blanco), líneas no vacías y tiempo estimado de lectura a 200 palabras por minuto. Todo se recalcula con cada pulsación de tecla usando <code>useMemo</code> de React, sin ningún retardo. El botón "Copiar stats" exporta todas las métricas al portapapeles en formato texto.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Creadores de contenido en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el ecosistema de creación de contenido en América Latina, los límites de caracteres son una preocupación constante: Instagram captions hasta 2200 caracteres, TikTok bio de 80 caracteres, LinkedIn posts que muestran "ver más" después de 210 caracteres, y correos de WhatsApp Business con plantillas de máximo 1024 caracteres por componente. Para bloggers que escriben en español para SEO en México, Colombia o Argentina, el contador de palabras ayuda a alcanzar la extensión mínima recomendada para posicionar en Google. Y para guiones de YouTube o podcasts, el tiempo de lectura estima directamente la duración del contenido.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -1,13 +1,53 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import CompararTextoTool from '@/components/tools/CompararTextoTool';
+
+const faqs = [
+  {
+    q: '¿Cómo funciona la comparación de texto?',
+    a: 'La herramienta usa el algoritmo LCS (Longest Common Subsequence) para encontrar la secuencia más larga de líneas iguales entre los dos textos. Las líneas que no forman parte de esa secuencia se marcan como añadidas (verde) o eliminadas (rojo). El resultado se muestra en una tabla con números de línea de cada versión.',
+  },
+  {
+    q: '¿La comparación distingue mayúsculas de minúsculas?',
+    a: 'Sí. "Hola" y "hola" se tratan como líneas diferentes. Si quieres comparar sin tener en cuenta mayúsculas, convierte ambos textos a minúsculas antes de pegar. La comparación tampoco ignora espacios al inicio o final de cada línea.',
+  },
+  {
+    q: '¿Qué significa cada color en el resultado?',
+    a: 'Verde (+) indica líneas presentes en el Texto B pero no en el A (líneas añadidas). Rojo (-) indica líneas del Texto A que no están en el B (líneas eliminadas). Sin color indica líneas idénticas en ambos textos. El contador de resumen muestra el total de cada tipo.',
+  },
+  {
+    q: '¿Para qué casos de uso es útil?',
+    a: 'Comparar versiones de archivos de configuración, detectar cambios entre dos versiones de un contrato o documento, revisar modificaciones en código fuente antes de un commit, o verificar diferencias entre traducciones de un mismo texto.',
+  },
+  {
+    q: '¿Hay límite en el tamaño de los textos a comparar?',
+    a: 'No hay un límite explícito, pero el algoritmo LCS tiene complejidad cuadrática O(m×n). Para textos muy largos (miles de líneas), la comparación puede tardar varios segundos. Todo el procesamiento es 100% local en tu navegador sin enviar datos al servidor.',
+  },
+  {
+    q: '¿Puedo comparar archivos de código fuente o archivos de configuración?',
+    a: 'Sí. Puedes pegar código fuente JavaScript, TypeScript, Python, PHP, YAML, JSON, SQL o cualquier texto plano. La comparación funciona línea a línea, igual que el comando "diff" de Unix o la vista de cambios en GitHub. Para archivos de configuración como .env o docker-compose.yml es especialmente útil para detectar diferencias entre entornos.',
+  },
+  {
+    q: '¿Cómo sirve esta herramienta para revisar contratos o documentos legales en LATAM?',
+    a: 'En México, Colombia, Argentina y otros países de la región, los contratos digitales y términos y condiciones suelen actualizarse con frecuencia. Pegar la versión anterior en el Texto A y la nueva en el Texto B permite identificar exactamente qué cláusulas cambiaron, sin necesidad de leer el documento completo. Útil también para comparar traducciones al español de contratos de SaaS internacionales o políticas de privacidad que deben cumplir con la LGPD de Brasil o la Ley 1581 de Colombia.',
+  },
+];
 ---
-<ToolLayout slug="comparar-texto" faqs={[
-  { q: '¿Cómo funciona la comparación de texto?', a: 'La herramienta usa el algoritmo LCS (Longest Common Subsequence) para encontrar la secuencia más larga de líneas iguales entre los dos textos. Las líneas que no forman parte de esa secuencia se marcan como añadidas o eliminadas.' },
-  { q: '¿La comparación distingue mayúsculas de minúsculas?', a: 'Sí. "Hola" y "hola" se tratan como líneas diferentes. Si quieres comparar sin tener en cuenta mayúsculas, convierte ambos textos a minúsculas antes de pegar.' },
-  { q: '¿Qué significa cada color en el resultado?', a: 'Verde (+) indica líneas presentes en el Texto B pero no en el A (líneas añadidas). Rojo (-) indica líneas del Texto A que no están en el B (líneas eliminadas). Sin color indica líneas idénticas en ambos textos.' },
-  { q: '¿Para qué casos de uso es útil?', a: 'Comparar versiones de archivos de configuración, detectar cambios entre dos versiones de un contrato o documento, revisar modificaciones en código fuente, o verificar diferencias entre traducciones.' },
-  { q: '¿Hay límite en el tamaño de los textos a comparar?', a: 'No hay un límite explícito, pero el algoritmo LCS tiene complejidad cuadrática. Para textos muy largos (miles de líneas), la comparación puede tardar varios segundos. Todo el procesamiento es 100% local en tu navegador.' },
-]}>
+<ToolLayout slug="comparar-texto" faqs={faqs}>
   <CompararTextoTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Algoritmo LCS — diff línea a línea</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El algoritmo LCS (Longest Common Subsequence) construye una tabla de programación dinámica de tamaño m×n (líneas del texto A × líneas del texto B) y recorre el resultado hacia atrás para reconstruir el diff. Las líneas comunes forman la "columna vertebral" del diff; el resto se clasifica como añadidas o eliminadas. El resultado se muestra en una tabla con números de línea independientes para cada versión (columnas A y B), idéntica a la vista de diff unificado de Git o GitHub, con código de colores verde para inserciones y rojo para eliminaciones.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Casos de uso para equipos en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En equipos de desarrollo distribuidos por América Latina, esta herramienta cubre varios escenarios frecuentes: comparar archivos de traducción (i18n) entre versiones de una app, detectar cambios en políticas de privacidad o contratos de SaaS que los equipos legales en México o Colombia deben revisar, verificar diferencias entre archivos <code>.env</code> de staging y producción, o revisar cambios en queries SQL antes de ejecutarlos en producción. También es útil para redactores de contenido que trabajan con múltiples revisiones de un mismo artículo para Instagram, LinkedIn o blogs en español.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

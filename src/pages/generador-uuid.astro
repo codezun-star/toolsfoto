@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import GeneradorUUIDTool from '@/components/tools/GeneradorUUIDTool';
 
 const faqs = [
-  { q: '¿Qué es un UUID?', a: 'UUID (Universally Unique Identifier) es un identificador de 128 bits estandarizado (RFC 4122) representado como 32 caracteres hexadecimales en formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. Se usa para identificar recursos de forma única sin coordinación centralizada.' },
-  { q: '¿Qué versión de UUID genera la herramienta?', a: 'Genera UUID versión 4, que usa números aleatorios criptográficamente seguros. Los bits 12-15 del tercer grupo son siempre "4" y los bits 6-7 del cuarto grupo son siempre "8", "9", "a" o "b".' },
-  { q: '¿La probabilidad de colisión es real?', a: 'Prácticamente nula. La probabilidad de generar un UUID duplicado entre dos UUIDs v4 aleatorios es de 1 en 2^122 (≈5.3 × 10^36). Para una colisión estadísticamente probable, habría que generar trillones de IDs.' },
-  { q: '¿Para qué se usan los UUID en desarrollo?', a: 'Son estándar en bases de datos como clave primaria, en APIs REST para identificar recursos, en sistemas distribuidos para crear IDs sin servidor central, y en tokens de sesión o referencias únicas.' },
-  { q: '¿Cuál es la diferencia entre UUID con y sin guiones?', a: 'Los guiones son parte del formato estándar y no afectan el valor. Algunos sistemas los admiten con guiones (550e8400-e29b-41d4-a716-446655440000) y otros sin ellos (550e8400e29b41d4a716446655440000). Ambas representan el mismo identificador.' },
+  {
+    q: '¿Qué es un UUID?',
+    a: 'UUID (Universally Unique Identifier) es un identificador de 128 bits estandarizado (RFC 4122) representado como 32 caracteres hexadecimales en formato xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx. Se usa para identificar recursos de forma única sin coordinación centralizada ni base de datos de secuencias.',
+  },
+  {
+    q: '¿Qué versión de UUID genera la herramienta?',
+    a: 'Genera UUID versión 4, que usa números aleatorios criptográficamente seguros. Los bits 12-15 del tercer grupo son siempre "4" (identifica la versión) y los bits 6-7 del cuarto grupo son siempre "8", "9", "a" o "b" (identifica la variante RFC 4122). El resto son 122 bits de aleatoriedad.',
+  },
+  {
+    q: '¿La probabilidad de colisión es real?',
+    a: 'Prácticamente nula. La probabilidad de generar un UUID duplicado entre dos UUIDs v4 aleatorios es de 1 en 2^122 (≈5.3 × 10^36). Para una colisión estadísticamente probable, necesitarías generar aproximadamente 2.71 × 10^18 UUIDs. A mil millones por segundo, tardarías 85 años.',
+  },
+  {
+    q: '¿Para qué se usan los UUID en desarrollo?',
+    a: 'Son estándar en bases de datos como clave primaria (especialmente en sistemas distribuidos donde las secuencias numéricas auto-incrementales requieren coordinación), en APIs REST para identificar recursos (/users/550e8400-e29b-41d4-a716-446655440000), en tokens de sesión, y en sistemas de mensajería para identificar mensajes de forma única.',
+  },
+  {
+    q: '¿Cuál es la diferencia entre UUID con y sin guiones?',
+    a: 'Los guiones son parte del formato estándar visual y no afectan el valor. Algunos sistemas los almacenan con guiones (MySQL CHAR(36): 550e8400-e29b-41d4-a716-446655440000) y otros sin ellos (MySQL BINARY(16) o como cadena de 32 chars: 550e8400e29b41d4a716446655440000). La opción está disponible en la herramienta.',
+  },
+  {
+    q: '¿Puedo usar UUID v4 como clave primaria en bases de datos?',
+    a: 'Sí, con consideraciones: UUID v4 como PRIMARY KEY en MySQL o PostgreSQL puede ser menos eficiente que INTEGER auto-incremental para tablas con millones de filas, porque los valores aleatorios causan fragmentación de índices. Para mejorar esto, puedes usar UUID v7 (ordenado por tiempo, más eficiente en índices B-tree) o almacenar el UUID como BINARY(16) en lugar de VARCHAR(36) para reducir el tamaño.',
+  },
+  {
+    q: '¿Cómo se usan los UUID en sistemas distribuidos y proyectos fintech en LATAM?',
+    a: 'En proyectos de e-commerce y fintech en América Latina, los UUID son especialmente importantes cuando se usan microservicios o arquitecturas distribuidas donde múltiples servicios generan IDs sin coordinación: plataformas de pago como Kushki, Conekta o Culqi generan UUID para identificar transacciones; sistemas de gestión de inventario en VTEX o Shopify Plus usan UUID para productos y variantes; los eventos de webhooks de Mercado Pago incluyen un UUID como identificador único del evento para la deduplicación.',
+  },
 ];
 ---
 <ToolLayout slug="generador-uuid" faqs={faqs}>
   <GeneradorUUIDTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">UUID v4 — 122 bits de aleatoriedad real</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa <code>crypto.randomUUID()</code> cuando está disponible (Chrome 92+, Firefox 95+, Safari 15.4+) y cae a un fallback manual con <code>Math.random()</code> para navegadores más antiguos. El formato 8-4-4-4-12 (32 hex + 4 guiones) es el estándar RFC 4122: el dígito en la posición 13 siempre es "4" (versión), y el primer dígito de la cuarta sección es siempre 8, 9, a o b (variante). Las opciones de formato permiten generar el UUID en mayúsculas o sin guiones para adaptarlo al sistema de destino.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">UUID en proyectos de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el ecosistema de startups tech de América Latina, los UUID son el estándar para identificar entidades en arquitecturas modernas: microservicios en Node.js o Python, bases de datos PostgreSQL en Railway o Supabase, y APIs REST que siguen las guías de diseño de Stripe o Google. Plataformas de pago como Conekta (México) y Kushki (Colombia y Ecuador) devuelven UUID para identificar transacciones y evitar duplicados en reintentos. Al desarrollar integraciones con estas APIs, tener un generador rápido de UUID ayuda a simular IDs de entidades durante las pruebas locales sin necesidad de conectarse a un servidor.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

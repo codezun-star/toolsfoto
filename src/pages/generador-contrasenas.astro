@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import GeneradorContrasenasTool from '@/components/tools/GeneradorContrasenasTool';
 
 const faqs = [
-  { q: '¿Son seguras las contraseñas generadas?', a: 'Sí. El generador usa la API Web Crypto del navegador (`crypto.getRandomValues()`), que es criptográficamente segura. Ningún dato sale de tu dispositivo: las contraseñas se generan y muestran solo en tu navegador.' },
-  { q: '¿Cuántos caracteres debe tener una contraseña segura?', a: 'Se recomienda un mínimo de 12-16 caracteres combinando mayúsculas, minúsculas, números y símbolos. A partir de 20 caracteres con todos los tipos, la contraseña es prácticamente imposible de romper por fuerza bruta.' },
-  { q: '¿Qué significa la fortaleza de la contraseña?', a: 'El indicador de fortaleza evalúa la longitud y la variedad de caracteres usados. "Débil" significa contraseña corta o con pocos tipos de caracteres; "Excelente" indica una contraseña larga con todos los tipos. Es una orientación visual, no una métrica de seguridad absoluta.' },
-  { q: '¿Puedo generar varias contraseñas a la vez?', a: 'Sí. Puedes generar hasta 20 contraseñas en una sola acción. Cada una puede copiarse individualmente o puedes copiarlas todas juntas con el botón "Copiar todas". También puedes regenerar una contraseña individual sin afectar al resto.' },
-  { q: '¿Dónde debo guardar las contraseñas generadas?', a: 'Usa un gestor de contraseñas como Bitwarden (gratuito y de código abierto), 1Password, Dashlane o el gestor integrado en tu navegador. Nunca las guardes en un archivo de texto plano ni las reutilices en múltiples servicios.' },
+  {
+    q: '¿Son seguras las contraseñas generadas?',
+    a: 'Sí. El generador usa la API Web Crypto del navegador (crypto.getRandomValues()), que es criptográficamente segura y utiliza el generador de números aleatorios del sistema operativo. Ningún dato sale de tu dispositivo: las contraseñas se generan y muestran solo en tu navegador.',
+  },
+  {
+    q: '¿Cuántos caracteres debe tener una contraseña segura?',
+    a: 'Se recomienda un mínimo de 12-16 caracteres combinando mayúsculas, minúsculas, números y símbolos. A partir de 20 caracteres con todos los tipos, la contraseña es prácticamente imposible de romper por fuerza bruta con hardware actual. El NIST (estándar de seguridad de EEUU) recomienda contraseñas de al menos 15 caracteres.',
+  },
+  {
+    q: '¿Qué significa el indicador de fortaleza de la contraseña?',
+    a: 'El indicador evalúa seis criterios: longitud mayor de 12 caracteres (+1), mayor de 16 (+1), presencia de mayúsculas (+1), minúsculas (+1), números (+1) y símbolos (+1). Puntuación 1-2: Débil (rojo); 3: Regular (naranja); 4: Buena (amarillo); 5-6: Excelente (verde). Es orientativo; lo que determina la seguridad real es la entropía (aleatoriedad) que proviene de crypto.getRandomValues().',
+  },
+  {
+    q: '¿Puedo generar varias contraseñas a la vez?',
+    a: 'Sí. Puedes generar entre 1 y 20 contraseñas en una sola acción. Cada una puede copiarse individualmente con el botón de copiar o regenerarse sin afectar las demás. También puedes copiarlas todas con el botón "Copiar todas".',
+  },
+  {
+    q: '¿Dónde debo guardar las contraseñas generadas?',
+    a: 'Usa un gestor de contraseñas como Bitwarden (gratuito y de código abierto, disponible en español), 1Password, Dashlane o el gestor integrado en tu navegador (Chrome, Firefox, Safari). Nunca las guardes en un archivo de texto plano ni las reutilices en múltiples servicios.',
+  },
+  {
+    q: '¿Por qué nunca se genera la misma contraseña dos veces?',
+    a: 'Porque crypto.getRandomValues() llena un Uint32Array con valores de 32 bits aleatorios generados por el sistema operativo (no por JavaScript). La probabilidad de que dos llamadas generen exactamente el mismo array de 16 números de 32 bits es de 1 en 2^512 — prácticamente imposible. Incluso si alguien conoce el pool de caracteres, no puede predecir el resultado.',
+  },
+  {
+    q: '¿Cómo protejo mis cuentas de Mercado Libre, Rappi o plataformas bancarias en LATAM?',
+    a: 'Para cuentas de alto valor en América Latina, usa contraseñas únicas y largas generadas aquí: Mercado Libre, Mercado Pago, Rappi, PedidosYa, Bancolombia, BBVA México, Santander y otras plataformas. Combina la contraseña fuerte con autenticación en dos factores (2FA) mediante una app como Google Authenticator o Authy. Nunca reutilices la misma contraseña en múltiples servicios; si uno es comprometido, el resto permanece seguro.',
+  },
 ];
 ---
 <ToolLayout slug="generador-contrasenas" faqs={faqs}>
   <GeneradorContrasenasTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">crypto.getRandomValues — entropía criptográfica real</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El generador usa <code>crypto.getRandomValues(new Uint32Array(N))</code> para crear N números enteros de 32 bits criptográficamente aleatorios (no pseudo-aleatorios como <code>Math.random()</code>). Luego mapea cada número al carácter del pool con <code>n % pool.length</code>. El pool se construye concatenando los grupos activos: UPPER (A-Z, 26 chars), LOWER (a-z, 26 chars), NUMS (0-9, 10 chars), SYMS (!@#$%^&*..., 27 chars). El indicador de fortaleza evalúa 6 criterios para dar orientación visual, aunque la entropía real depende de la longitud y la variedad del pool.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Seguridad digital en el contexto de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En América Latina, las filtraciones de datos afectan a millones de usuarios cada año: bases de datos de e-commerce, plataformas financieras y servicios de entretenimiento. Las cuentas de Mercado Libre, Mercado Pago, Rappi y plataformas bancarias como BBVA, Bancolombia o Santander contienen información financiera sensible. Usar contraseñas únicas y largas generadas criptográficamente es la primera línea de defensa. Complementa con un gestor de contraseñas gratuito como Bitwarden (disponible en español, con apps para Android e iOS populares en la región) y activa el 2FA en todas las cuentas que lo soporten.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

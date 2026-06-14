@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirTimestampTool from '@/components/tools/ConvertirTimestampTool';
 
 const faqs = [
-  { q: '¿Qué es un Unix timestamp?', a: 'Un Unix timestamp (o epoch time) es el número de segundos transcurridos desde las 00:00:00 UTC del 1 de enero de 1970. Es el estándar universal para representar fechas y horas en sistemas informáticos.' },
-  { q: '¿La herramienta detecta automáticamente segundos o milisegundos?', a: 'Sí. Si el número tiene más de 10 dígitos, se interpreta como milisegundos (como el que devuelve Date.now() en JavaScript). Si tiene 10 o menos dígitos, se interpreta como segundos.' },
-  { q: '¿Qué formatos de fecha acepta en la conversión inversa?', a: 'Acepta formatos estándar como YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SSZ (ISO 8601), y fechas en inglés como "January 15, 2024". Los formatos locales (DD/MM/YYYY) pueden no funcionar correctamente.' },
-  { q: '¿Las fechas se muestran en mi zona horaria?', a: 'Sí. La herramienta muestra tanto la hora local (según la configuración de tu navegador) como UTC. Así puedes ver la diferencia con el huso horario.' },
-  { q: '¿Para qué se usa el timestamp en programación?', a: 'Es el estándar para almacenar fechas en bases de datos, registros de logs, APIs REST, tokens JWT, cabeceras HTTP y cualquier sistema que necesite manejar fechas sin ambigüedad de zona horaria.' },
+  {
+    q: '¿Qué es un Unix timestamp?',
+    a: 'Un Unix timestamp (o epoch time) es el número de segundos transcurridos desde las 00:00:00 UTC del 1 de enero de 1970. Es el estándar universal para representar fechas y horas en sistemas informáticos, independiente de zona horaria o formato local.',
+  },
+  {
+    q: '¿La herramienta detecta automáticamente segundos o milisegundos?',
+    a: 'Sí. Si el número tiene más de 10 dígitos, se interpreta como milisegundos (como el que devuelve Date.now() en JavaScript). Si tiene 10 o menos dígitos, se interpreta como segundos (el estándar en Unix/Linux, APIs REST y bases de datos). El timestamp de ahora en segundos tiene 10 dígitos hasta el año 2286.',
+  },
+  {
+    q: '¿Qué formatos de fecha acepta en la conversión inversa?',
+    a: 'Acepta formatos estándar como YYYY-MM-DD HH:MM:SS, YYYY-MM-DDTHH:MM:SSZ (ISO 8601) y fechas en inglés como "January 15, 2024". Los formatos locales de LATAM como DD/MM/YYYY pueden no interpretarse correctamente; usa el formato ISO 8601 para mayor fiabilidad.',
+  },
+  {
+    q: '¿Las fechas se muestran en mi zona horaria?',
+    a: 'Sí. La herramienta muestra tanto la hora local (según la configuración de tu navegador) como la hora UTC. Esto es útil para trabajar con equipos distribuidos por diferentes husos horarios o al depurar logs de servidores que registran en UTC.',
+  },
+  {
+    q: '¿Para qué se usa el timestamp en programación?',
+    a: 'Es el estándar para almacenar fechas en bases de datos (columnas tipo UNIX_TIMESTAMP o INTEGER), registros de logs, APIs REST, tokens JWT (campos iat, exp, nbf), cabeceras HTTP (Last-Modified, Expires) y cualquier sistema que necesite manejar fechas sin ambigüedad de zona horaria.',
+  },
+  {
+    q: '¿Cuáles son las zonas horarias más comunes en Latinoamérica?',
+    a: 'Las principales zonas horarias en LATAM son: México (CST, UTC-6 / CDT UTC-5), Colombia y Perú (COT, UTC-5), Ecuador (ECT, UTC-5), Venezuela (VET, UTC-4), Bolivia (BOT, UTC-4), Chile y Paraguay (CLT, UTC-4 / CLST UTC-3), Argentina (ART, UTC-3), Brasil (BRT, UTC-3 / BRST UTC-2). Al trabajar con APIs que devuelven timestamps, siempre verifica si los logs están en UTC o en hora local del servidor.',
+  },
+  {
+    q: '¿Cómo manejo fechas en APIs de Mercado Libre, Stripe o Shopify en LATAM?',
+    a: 'Mercado Libre devuelve fechas en formato ISO 8601 con zona horaria (ej: "2024-01-15T10:30:00.000-03:00"). Stripe devuelve timestamps Unix en segundos para todos sus eventos y objetos (created, updated, expires_at). Shopify usa ISO 8601 en UTC. Esta herramienta te permite convertir cualquiera de estos valores a una fecha legible o viceversa, útil al depurar webhooks o discrepancias en fechas de pedidos entre zonas horarias.',
+  },
 ];
 ---
 <ToolLayout slug="convertir-timestamp" faqs={faqs}>
   <ConvertirTimestampTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Conversión bidireccional Timestamp ↔ Fecha</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta cubre los dos sentidos de conversión más habituales en desarrollo. De timestamp a fecha: muestra hora local (según el navegador), hora UTC, formato ISO 8601 y valor en milisegundos, con botón de copia para cada uno. De fecha a timestamp: acepta cualquier formato parseado por <code>Date()</code> y devuelve el valor en segundos y en milisegundos. La autodetección de segundos/milisegundos compara la longitud del número: más de 10 dígitos = milisegundos. El botón "Ahora" inserta el timestamp actual para verificar la zona horaria del navegador.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Timestamps en el ecosistema de desarrollo LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En proyectos de e-commerce y fintech en América Latina los timestamps aparecen en múltiples puntos críticos: los webhooks de Mercado Pago incluyen <code>date_created</code> y <code>date_last_updated</code> en ISO 8601 que hay que convertir para mostrar al usuario. Las APIs de la AFIP (Argentina) y la Receita Federal (Brasil) trabajan con fechas en formatos propios que a veces necesitan convertirse a Unix timestamp para almacenarse. Los cron jobs en servidores de hosting en Colombia o México registran logs en UTC; esta herramienta ayuda a mapear esas horas a la hora local correcta al depurar ejecuciones.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

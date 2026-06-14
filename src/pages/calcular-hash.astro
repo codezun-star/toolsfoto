@@ -9,22 +9,45 @@ const faqs = [
   },
   {
     q: '¿Qué algoritmos de hash están disponibles?',
-    a: 'SHA-1, SHA-256, SHA-384 y SHA-512. Para uso moderno recomendamos SHA-256 o SHA-512 ya que SHA-1 está considerado criptográficamente débil para aplicaciones de seguridad (aunque sigue siendo válido para verificar integridad sin adversario).',
+    a: 'SHA-1, SHA-256, SHA-384 y SHA-512. Para uso moderno recomendamos SHA-256 o SHA-512 ya que SHA-1 está considerado criptográficamente débil para aplicaciones de seguridad (aunque sigue siendo válido para verificar integridad sin adversario). Los cuatro hashes se calculan simultáneamente con una sola lectura del archivo.',
   },
   {
     q: '¿Por qué no está disponible MD5?',
-    a: 'La Web Crypto API nativa del navegador (que usa esta herramienta) no incluye MD5 por razones de seguridad. MD5 está considerado obsoleto para uso criptográfico. Si necesitas MD5, te recomendamos usar herramientas de línea de comandos como md5sum (Linux/Mac) o CertUtil (Windows).',
+    a: 'La Web Crypto API nativa del navegador no incluye MD5 por razones de seguridad. MD5 está considerado obsoleto para uso criptográfico. Si necesitas MD5, te recomendamos usar herramientas de línea de comandos como md5sum (Linux/Mac) o CertUtil -hashfile archivo MD5 (Windows).',
   },
   {
     q: '¿El archivo se envía a algún servidor?',
-    a: 'No. Todo el procesamiento ocurre en tu navegador usando la Web Crypto API nativa (window.crypto.subtle). El archivo nunca sale de tu dispositivo. Esto lo hace seguro para calcular hashes de archivos confidenciales.',
+    a: 'No. Todo el procesamiento ocurre en tu navegador usando la Web Crypto API nativa (window.crypto.subtle). El archivo nunca sale de tu dispositivo. Esto lo hace seguro para calcular hashes de archivos confidenciales como bases de datos, contratos o backups.',
   },
   {
     q: '¿Puedo calcular el hash de un archivo muy grande?',
     a: 'Sí, aunque para archivos muy grandes (varios GB) la operación puede tardar unos segundos ya que el archivo completo debe leerse en memoria. La herramienta funciona con cualquier tipo de archivo: ejecutables, imágenes, documentos, bases de datos, etc.',
   },
+  {
+    q: '¿Cómo verifico que un hash SHA-256 que leo en pantalla es correcto?',
+    a: 'Los hashes SHA-256 siempre tienen exactamente 64 caracteres hexadecimales (0-9 y a-f). SHA-512 tiene 128 caracteres. Si el hash que ves en la documentación oficial de una descarga coincide exactamente con el que genera esta herramienta para el mismo archivo, el archivo es auténtico e íntegro.',
+  },
+  {
+    q: '¿Cómo verifico la integridad de descargas de software en Latinoamérica?',
+    a: 'Al descargar software desde distribuidores en México, Colombia o Argentina (sistemas Linux, drivers, instaladores), muchos sitios publican el hash SHA-256 junto al archivo. Descarga el archivo, arrástralo aquí, y compara el hash resultante con el publicado. Si coinciden, el archivo no fue modificado en tránsito. Esto es especialmente útil al descargar desde mirrors regionales cuya seguridad puede ser variable.',
+  },
 ];
 ---
 <ToolLayout slug="calcular-hash" faqs={faqs}>
   <CalcularHashTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Web Crypto API — SHA nativo en el navegador</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Esta herramienta usa <code>crypto.subtle.digest()</code>, la implementación nativa del navegador de SHA-1, SHA-256, SHA-384 y SHA-512. No se descarga ninguna librería externa: el cálculo se realiza directamente en el motor JavaScript de Chrome, Firefox, Safari o Edge. El archivo se lee como <code>ArrayBuffer</code>, se pasa al algoritmo de hash y el resultado se convierte a hexadecimal. Los cuatro algoritmos se calculan en paralelo con <code>Promise.all()</code>, por lo que obtener los cuatro hashes es tan rápido como calcular uno solo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Usos prácticos en proyectos de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el ecosistema tech de América Latina, los hashes SHA aparecen en múltiples contextos: los paquetes npm y los instaladores de Node.js publican SHA-256 para verificar descargas. Los proveedores de hosting en México, Colombia y Argentina (DigitalOcean con sede en SAO, servidores en Bogotá o CDMX) recomiendan verificar backups con SHA antes de restaurarlos. Las integraciones de pago con Conekta, Khipu y Mercado Pago usan HMAC-SHA256 para firmar webhooks; aunque HMAC no es lo mismo que SHA simple, entender el hash subyacente ayuda a depurar problemas de autenticación.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

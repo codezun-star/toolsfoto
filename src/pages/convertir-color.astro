@@ -5,26 +5,49 @@ import ConvertirColorTool from '@/components/tools/ConvertirColorTool';
 const faqs = [
   {
     q: '¿Qué formatos de color admite la herramienta?',
-    a: 'Puedes introducir colores en HEX (hexadecimal, ej: #FF5733), RGB (ej: rgb(255, 87, 51)), HSL (ej: hsl(11, 100%, 60%)) y HSB/HSV (ej: hsb(11, 80%, 100%)). La herramienta convierte automáticamente a todos los demás formatos al instante.',
+    a: 'Puedes introducir colores en HEX (hexadecimal, ej: #FF5733), RGB (ej: 255, 87, 51), HSL (ej: 11, 100%, 60%) y HSB/HSV. La herramienta convierte automáticamente a los cuatro formatos al instante mientras escribes, y muestra un swatch de previsualización con el color resultante.',
   },
   {
     q: '¿Cuál es la diferencia entre HSL y HSB?',
-    a: 'HSL (Hue, Saturation, Lightness) y HSB/HSV (Hue, Saturation, Brightness/Value) son dos formas diferentes de describir el mismo espacio de color. En HSL el blanco puro es L=100%; en HSB el blanco puro es S=0%, B=100%. HSB es más intuitivo para diseñadores, mientras que HSL es más común en CSS.',
+    a: 'HSL (Hue, Saturation, Lightness) y HSB/HSV (Hue, Saturation, Brightness/Value) son dos formas diferentes de describir el mismo espacio de color. En HSL el blanco puro es L=100% con cualquier saturación; en HSB el blanco puro es S=0%, B=100%. HSB es más intuitivo en herramientas de diseño (Figma, Photoshop), mientras que HSL es más común en CSS moderno.',
   },
   {
     q: '¿Puedo copiar cada formato con un clic?',
-    a: 'Sí. Cada formato tiene un botón de copiar que guarda el valor en el portapapeles. El valor se copia exactamente como aparece en pantalla, listo para pegar en tu editor de código, herramienta de diseño o hoja de estilos CSS.',
+    a: 'Sí. Cada tarjeta de formato tiene un botón de copiar que guarda el valor en el portapapeles con la notación completa (ej: rgb(255, 87, 51) o hsl(11, 100%, 60%)). El valor se copia exactamente como aparece, listo para pegar en un editor de código, Figma o una hoja de estilos CSS.',
   },
   {
     q: '¿Hay un selector de color visual?',
-    a: 'Sí. Además de los campos numéricos, hay un selector de color nativo del navegador (color picker) que te permite elegir visualmente cualquier color. El swatch de previsualización en la parte superior muestra siempre el color actual.',
+    a: 'Sí. En el campo HEX hay un selector de color nativo del navegador (color picker) que te permite elegir visualmente cualquier color del espectro. El swatch de previsualización a ancho completo muestra siempre el color actual actualizado en tiempo real.',
   },
   {
     q: '¿La conversión es exacta o hay pérdida de precisión?',
-    a: 'Las conversiones entre HEX y RGB son exactas (son representaciones equivalentes del mismo espacio sRGB). Las conversiones a HSL y HSB implican aritmética de punto flotante y pueden tener variaciones de ±1 en el último decimal. Para uso en diseño y desarrollo esto es completamente irrelevante.',
+    a: 'Las conversiones entre HEX y RGB son exactas (son representaciones equivalentes del mismo espacio sRGB). Las conversiones a HSL y HSB implican aritmética de punto flotante y pueden tener variaciones de ±1 en el último decimal debido al redondeo. Para uso en diseño y desarrollo esto es completamente irrelevante.',
+  },
+  {
+    q: '¿Cuál es el formato de color preferido para CSS moderno?',
+    a: 'CSS moderno (CSS Color Level 4) admite todos los formatos, pero HSL es el preferido para definir paletas de diseño porque es más intuitivo ajustar: incrementar L% aclara el color, reducir S% lo desatura. El formato oklch() es el más nuevo y recomendado por Google, aunque todavía requiere fallback. Para compatibilidad amplia con todos los navegadores, HEX sigue siendo el estándar más seguro.',
+  },
+  {
+    q: '¿Cómo uso los colores de marca en proyectos web para clientes de México, Colombia o Argentina?',
+    a: 'Al trabajar con clientes latinoamericanos que tienen un manual de marca con colores en CMYK (para impresión) o HSB (de Photoshop/Illustrator), esta herramienta permite convertirlos al HEX o RGB necesarios para implementar en código CSS, Tailwind, Figma o WordPress. Muchas agencias digitales en LATAM reciben los colores de marca en un formato y necesitan usarlos en otro; la conversión instantánea evita errores manuales que cambiarían el color de la marca.',
   },
 ];
 ---
 <ToolLayout slug="convertir-color" faqs={faqs}>
   <ConvertirColorTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Los 4 espacios de color y sus usos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        <strong>HEX</strong> es el estándar histórico de CSS y HTML: 6 dígitos hexadecimales que compactan los tres canales RGB. <strong>RGB</strong> es el espacio nativo de pantallas y la Canvas API; también es el que usa JavaScript para manipular píxeles. <strong>HSL</strong> (Hue, Saturation, Lightness) es preferido en CSS moderno porque ajustar la luminosidad o saturación es intuitivo para crear variaciones de un mismo color. <strong>HSB</strong> (Hue, Saturation, Brightness) es el espacio de color que usan Figma, Adobe Photoshop e Illustrator para el selector visual, lo que lo convierte en el punto de partida habitual al trabajar con diseñadores.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Paletas de marca para proyectos en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las agencias y freelancers de diseño web en México, Colombia, Argentina y Chile trabajan habitualmente con clientes que entregan su identidad visual en diferentes formatos: manuales de marca en PDF con valores CMYK, capturas de Photoshop con colores HSB, o simplemente el color de su logo en un PNG. Esta herramienta convierte cualquier formato a HEX o RGB para usar directamente como variables CSS, tokens de diseño en Figma o clases personalizadas en Tailwind CSS. También es útil para verificar contraste de accesibilidad (WCAG) antes de entregar un proyecto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

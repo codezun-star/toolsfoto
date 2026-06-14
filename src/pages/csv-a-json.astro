@@ -5,15 +5,15 @@ import CsvAJsonTool from '@/components/tools/CsvAJsonTool';
 const faqs = [
   {
     q: '¿Cómo debo formatear el CSV para que la conversión funcione?',
-    a: 'El CSV debe tener la primera fila como cabecera (nombres de columnas), los valores separados por comas y las filas separadas por saltos de línea. Si un campo contiene comas o comillas, debe estar entre comillas dobles. Ejemplo: nombre,edad\\nAna,30\\nLuis,25.',
+    a: 'El CSV debe tener la primera fila como cabecera (nombres de columnas), los valores separados por comas y las filas separadas por saltos de línea. Si un campo contiene comas o comillas, debe estar entre comillas dobles. Ejemplo: nombre,edad,ciudad seguido de Ana,30,Bogotá.',
   },
   {
     q: '¿Qué estructura debe tener el JSON para convertirlo a CSV?',
-    a: 'El JSON debe ser un array de objetos, donde cada objeto tiene las mismas claves. Ejemplo: [{"nombre":"Ana","edad":"30"},{"nombre":"Luis","edad":"25"}]. Las claves del primer objeto se usan como cabecera del CSV.',
+    a: 'El JSON debe ser un array de objetos, donde cada objeto tiene las mismas claves. Ejemplo: [{"nombre":"Ana","edad":"30"},{"nombre":"Luis","edad":"25"}]. Las claves del primer objeto se usan como cabecera del CSV resultante.',
   },
   {
     q: '¿Se manejan correctamente los campos con comas o saltos de línea?',
-    a: 'Sí. El parser CSV respeta los campos entre comillas dobles, incluyendo comas y saltos de línea dentro de ellos. La conversión JSON a CSV también escapa correctamente los campos que contienen comas o comillas.',
+    a: 'Sí. El parser CSV respeta los campos entre comillas dobles, incluyendo comas, comillas escapadas ("") y saltos de línea dentro de ellos. La conversión JSON a CSV también escapa automáticamente los campos que contienen comas o comillas.',
   },
   {
     q: '¿Hay límite de tamaño para el CSV o JSON?',
@@ -21,10 +21,33 @@ const faqs = [
   },
   {
     q: '¿Puedo subir un archivo .csv en lugar de pegar el texto?',
-    a: 'Actualmente la herramienta trabaja con texto pegado en el área de entrada. Para archivos CSV grandes, puedes abrirlo con un editor de texto (Notepad, VS Code) y copiar el contenido.',
+    a: 'Actualmente la herramienta trabaja con texto pegado en el área de entrada. Para archivos CSV grandes, puedes abrirlos con un editor de texto (Notepad, VS Code) y copiar el contenido, o usar el modo de previsualización de Excel/Google Sheets y copiar desde allí.',
+  },
+  {
+    q: '¿Qué herramientas populares exportan CSV en el ecosistema LATAM?',
+    a: 'Mercado Libre permite exportar reportes de ventas, devoluciones e inventario en CSV desde el Panel de Vendedor. Shopify exporta pedidos, productos y clientes en CSV. Google Analytics 4, Meta Ads y TikTok Ads exportan datos de campañas en CSV. Sistemas ERP como SAP Business One (muy usado en empresas medianas de México y Colombia) exportan informes contables en CSV. Esta herramienta los convierte a JSON para procesarlos en código o importarlos en otras plataformas.',
+  },
+  {
+    q: '¿Cómo exporto datos de Mercado Libre o Shopify a JSON para usarlos en una aplicación?',
+    a: 'Descarga el CSV desde Mercado Libre (Mis ventas → Exportar) o Shopify (Pedidos → Exportar), ábrelo en un editor de texto, pega el contenido en esta herramienta y haz clic en Convertir. El JSON resultante tiene una estructura array-de-objetos que puedes consumir directamente en JavaScript (fetch + JSON.parse), Python (json.loads), Node.js o cualquier lenguaje moderno. Útil para construir dashboards personalizados o migrar datos entre plataformas.',
   },
 ];
 ---
 <ToolLayout slug="csv-a-json" faqs={faqs}>
   <CsvAJsonTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Conversión bidireccional CSV ↔ JSON</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El modo CSV → JSON parsea el archivo línea a línea usando un analizador que respeta las comillas dobles: detecta si un campo comienza con comilla, y en ese caso no corta en las comas internas ni en los saltos de línea hasta encontrar el cierre. La primera fila siempre se trata como cabecera. El modo JSON → CSV requiere un array de objetos; las claves del primer objeto definen las columnas, y los campos que contienen comas o comillas se escapan automáticamente envolviéndolos en comillas dobles. La descarga genera el archivo con la extensión correcta (.json o .csv).
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Datos en el ecosistema digital de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el día a día de tiendas y negocios en América Latina, el CSV es el formato universal de intercambio: Mercado Libre exporta reportes de ventas en CSV; Shopify, VTEX y WooCommerce exportan catálogos de productos y pedidos en CSV; Google Sheets importa y exporta en CSV para colaborar sin pagar licencias de Office. Al necesitar procesar esos datos en una aplicación Node.js o Python, o importarlos en una base de datos como PostgreSQL o Firebase, el paso a JSON es indispensable. Esta herramienta convierte instantáneamente sin necesidad de instalar pandas, csvtojson ni ningún otro paquete.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

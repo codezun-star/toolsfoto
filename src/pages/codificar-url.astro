@@ -21,10 +21,33 @@ const faqs = [
   },
   {
     q: '¿Admite caracteres Unicode y emojis?',
-    a: 'Sí. Las funciones de JavaScript encodeURIComponent y encodeURI manejan correctamente caracteres Unicode, incluidos emojis, caracteres CJK, árabe y cualquier otro script. Por ejemplo, "café" se codifica como "caf%C3%A9".',
+    a: 'Sí. Las funciones de JavaScript encodeURIComponent y encodeURI manejan correctamente caracteres Unicode, incluidos emojis, caracteres CJK, árabe y cualquier otro script. Por ejemplo, "café" se codifica como "caf%C3%A9" y "ñ" como "%C3%B1".',
+  },
+  {
+    q: '¿Qué son los parámetros UTM y por qué necesitan codificación URL?',
+    a: 'Los parámetros UTM (utm_source, utm_medium, utm_campaign, utm_content, utm_term) son query strings añadidos a URLs para rastrear el origen del tráfico en Google Analytics o Meta Pixel. Si el nombre de la campaña contiene espacios, tildes (á, é, ó) o caracteres especiales, deben codificarse con encodeURIComponent para que la URL sea válida. Ejemplo: utm_campaign=Oferta%20Navide%C3%B1a.',
+  },
+  {
+    q: '¿Cómo afecta la codificación URL a las campañas en Meta Ads, Google Ads y marketing en LATAM?',
+    a: 'Las campañas en Meta Ads y Google Ads para audiencias hispanohablantes suelen incluir palabras con tildes, ñ o & en las URLs de destino. Si estas no están correctamente codificadas, el píxel de seguimiento puede fallar o la URL redirigir a una página 404. Para links de afiliados en Hotmart, ClickBank o Amazon Afiliados con UTMs, usa siempre encodeURIComponent en los valores de los parámetros antes de construir la URL final.',
   },
 ];
 ---
 <ToolLayout slug="codificar-url" faqs={faqs}>
   <CodificarURLTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Los 4 modos de codificación URL</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Esta herramienta expone los cuatro métodos nativos de JavaScript para trabajar con URLs: <strong>encodeURIComponent</strong> codifica todo excepto letras, dígitos y los caracteres <code>- _ . ! ~ * ' ( )</code>; ideal para valores de parámetros. <strong>encodeURI</strong> preserva los separadores estructurales de una URL (<code>:/?#[]@!$&'()*+,;=</code>); ideal para URLs completas. Sus inversos <strong>decodeURIComponent</strong> y <strong>decodeURI</strong> revierten las secuencias <code>%XX</code>. La conversión ocurre en tiempo real sin enviar datos al servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">URLs en marketing digital de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En campañas de marketing digital para México, Colombia, Argentina y el resto de América Latina, las URLs con tildes y ñ son frecuentes: nombres de productos ("Colchón Ortopédico"), nombres de campañas ("Año Nuevo"), contenidos UTM en español. Google Ads, Meta Ads y TikTok Ads requieren URLs válidas con todos los caracteres especiales codificados. Los links de afiliados en Hotmart y Amazon Associates con parámetros personalizados también deben codificarse correctamente para que el tracking funcione sin errores en cualquier navegador y sistema operativo.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

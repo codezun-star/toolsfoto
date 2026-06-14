@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import ConvertirFuenteTool from '@/components/tools/ConvertirFuenteTool';
 
 const faqs = [
-  { q: '¿Qué formatos de fuente soporta la conversión?', a: 'La herramienta soporta TTF (TrueType), OTF (OpenType CFF) y WOFF (Web Open Font Format). Puedes convertir TTF/OTF a WOFF, y WOFF a TTF.' },
-  { q: '¿Por qué no está disponible WOFF2?', a: 'WOFF2 utiliza compresión Brotli, que no está disponible de forma nativa en las APIs web del navegador (CompressionStream solo soporta deflate y gzip). Se necesita una librería externa o herramienta de escritorio como fonttools.' },
-  { q: '¿Cuándo necesito un WOFF en lugar de TTF?', a: 'WOFF es el formato preferido para web. Está soportado por todos los navegadores modernos desde IE9, tiene meta-información adicional y opcionalmente compresión de tablas, lo que reduce el tamaño de descarga de fuentes en web.' },
-  { q: '¿Se pierden datos al convertir entre formatos?', a: 'No. La conversión TTF/OTF ↔ WOFF es reversible y sin pérdida de información tipográfica. Todas las tablas de la fuente se preservan íntegras. El WOFF generado usa tablas sin compresión para máxima compatibilidad.' },
-  { q: '¿Puedo usar las fuentes convertidas en proyectos comerciales?', a: 'La herramienta solo convierte el formato del archivo. Los derechos de uso de la fuente (licencia) no cambian con la conversión. Verifica siempre la licencia de la fuente que estás convirtiendo.' },
+  {
+    q: '¿Qué formatos de fuente soporta la conversión?',
+    a: 'La herramienta soporta TTF (TrueType), OTF (OpenType CFF) y WOFF (Web Open Font Format v1). Puedes convertir TTF/OTF a WOFF para uso web, y WOFF de vuelta a TTF para instalación en sistemas operativos o uso en aplicaciones de escritorio.',
+  },
+  {
+    q: '¿Por qué no está disponible WOFF2?',
+    a: 'WOFF2 utiliza compresión Brotli, que no está disponible de forma nativa en las APIs de compresión del navegador (CompressionStream solo soporta deflate y gzip). Para convertir a WOFF2 se necesita una librería externa o herramienta de escritorio como fonttools de Python (pyftsubset).',
+  },
+  {
+    q: '¿Cuándo necesito un WOFF en lugar de TTF?',
+    a: 'WOFF es el formato preferido para web. Está soportado por todos los navegadores modernos desde IE9, incluye metainformación adicional (licencia, descripción) y permite compresión de tablas, reduciendo el tamaño de descarga. Para proyectos web en producción, siempre se prefiere WOFF o WOFF2 sobre TTF.',
+  },
+  {
+    q: '¿Se pierden datos al convertir entre formatos?',
+    a: 'No. La conversión TTF/OTF ↔ WOFF es reversible y sin pérdida de información tipográfica. Todas las tablas de la fuente (glifos, kerning, hinting, OpenType features) se preservan íntegras. El WOFF generado usa tablas sin compresión para máxima compatibilidad.',
+  },
+  {
+    q: '¿Puedo usar las fuentes convertidas en proyectos comerciales?',
+    a: 'La herramienta solo convierte el formato del archivo binario. Los derechos de uso de la fuente (licencia) no cambian con la conversión. Verifica siempre la licencia: fuentes gratuitas como las de Google Fonts tienen licencias OFL o Apache que permiten uso comercial; fuentes comerciales de Adobe Fonts o Monotype pueden requerir licencia específica para web.',
+  },
+  {
+    q: '¿Qué pasa si tengo una fuente TTF que quiero usar en un sitio web?',
+    a: 'Convierte el TTF a WOFF con esta herramienta y añade la regla @font-face en tu CSS: @font-face { font-family: "MiFuente"; src: url("/fonts/mifuente.woff") format("woff"), url("/fonts/mifuente.ttf") format("truetype"); }. El navegador descargará la versión más eficiente disponible. Para producción, considera también generar WOFF2 con fonttools para mayor compresión.',
+  },
+  {
+    q: '¿Cómo se integra el WOFF en un proyecto de Shopify, WordPress o tienda WooCommerce en México?',
+    a: 'En Shopify, sube el archivo WOFF a la carpeta "Assets" del tema y referéncialo con {{ "mifuente.woff" | asset_url }} en el CSS. En WordPress con un tema hijo o plugin como "Use Any Font", puedes subir el WOFF y el plugin genera automáticamente el @font-face. En WooCommerce con hosting en México (GoDaddy, Hostinger, SiteGround), lo mismo: el WOFF va en la carpeta /wp-content/themes/tu-tema/fonts/ y se registra en functions.php.',
+  },
 ];
 ---
 <ToolLayout slug="convertir-fuente" faqs={faqs}>
   <ConvertirFuenteTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">WOFF sin Brotli — cómo funciona la conversión</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La conversión TTF/OTF → WOFF construye el wrapper WOFF (44 bytes de cabecera + 20 bytes por tabla) alrededor de las tablas SFNT existentes. Cada tabla se copia sin comprimir (compLength = origLength) y se alinea a 4 bytes. La firma <code>wOFF</code> (0x774F4646) identifica el formato. La conversión WOFF → TTF extrae las tablas y reconstruye el header SFNT con los parámetros de búsqueda (searchRange, entrySelector, rangeShift). Todo ocurre en el navegador con Typed Arrays, sin librerías externas ni envío de datos al servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fuentes tipográficas en proyectos web de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En la industria del diseño web en América Latina, muchos diseñadores trabajan con fuentes comerciales que compran en sitios como Dafont, Creative Market o fontspring y necesitan convertirlas a formato web para entregarlas en proyectos de Shopify o WordPress. Esta herramienta permite hacerlo sin instalar software adicional. Para proyectos que deben cumplir con regulaciones de privacidad (LGPD en Brasil, normativas en Colombia y México), alojar las fuentes localmente en lugar de usar Google Fonts evita cargar recursos desde servidores externos y simplifica la política de cookies del sitio.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
