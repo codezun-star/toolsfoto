@@ -8,6 +8,9 @@ keywords:
   - "medidas foto carnet DNI pasaporte"
   - "hacer foto carnet en casa sin ir a la copistería"
   - "foto carnet tamaño oficial"
+  - "foto carnet cédula identidad Colombia México Argentina"
+  - "foto pasaporte trámite consular LATAM gratis"
+  - "hacer foto carnet sin fondo desde móvil"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
@@ -54,4 +57,10 @@ Si tu foto tiene fondo de otro color, puedes combinarlo con la herramienta [Elim
 
 La herramienta genera la imagen digital con la proporción correcta. Si necesitas imprimirla en papel, consulta a la imprenta las dimensiones en píxeles que recomienda para su resolución (300 DPI es el estándar para impresión de calidad fotográfica). Para trámites online, el archivo descargado es válido directamente.
 
-Pruébalo en [Foto carnet](/foto-carnet) — gratis, sin registro, sin marca de agua, sin salir de tu navegador.
+## Fotos carnet para trámites en América Latina
+
+En América Latina, la foto carnet es un documento recurrente en decenas de trámites de la vida cotidiana: la cédula de ciudadanía en Colombia, la credencial del INE y la CURP en México, el DNI en Argentina, la cédula de identidad en Chile y Perú. Todos estos documentos de identidad requieren fotos con especificaciones concretas de tamaño, fondo y encuadre que cada entidad emisora (Registraduría, INE, RENIEC, Registro Civil) publica en sus portales de tramitación.
+
+Además de los documentos de identidad nacionales, en la región hay una demanda constante de fotos para **trámites consulares**: visados para EE.UU. (DS-160, 51×51 mm con fondo blanco), visados para Canadá, Schengen (para quienes viajan a Europa), y pasaportes para renovación. Los consulados tienen requisitos técnicos estrictos y rechazan fotos que no cumplan las especificaciones exactas — lo que obliga a repetir la foto si se hace mal, perdiendo tiempo y el coste de la copistería.
+
+Para muchas familias y trabajadores de la región que viven en ciudades pequeñas o en zonas rurales sin fácil acceso a fotostudios o copisterías, poder hacer la foto carnet digital en casa con el smartphone y ajustarla a las proporciones exactas con una herramienta gratuita online es una solución práctica real. El proceso es: fotografiar con buena luz cerca de una pared blanca o una cortina clara, subir a ToolsFoto, seleccionar el preset del documento, ajustar el encuadre y descargar — listo para subir al portal del trámite.
