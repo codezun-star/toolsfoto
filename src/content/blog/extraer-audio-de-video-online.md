@@ -1,57 +1,70 @@
 ---
-titulo: "Extraer el audio de un vídeo online gratis: tres usos que quizás no habías pensado"
-descripcion: "Separar la pista de audio de un MP4 o MOV es más útil de lo que parece. Te explico cómo hacerlo en segundos desde el navegador y qué formato elegir según el caso."
+titulo: "Cómo extraer el audio de un vídeo online (MP3, WAV, AAC)"
+descripcion: "Convertir un vídeo en audio te permite guardar la conferencia, el podcast en vídeo o la música como archivo de audio. Te explico cómo hacerlo desde el navegador sin instalar nada."
 categoria: "tutoriales"
-fecha: "2026-05-28"
+fecha: "2026-05-29"
 keywords:
-  - "extraer audio de un vídeo online gratis"
-  - "separar audio de video MP4"
-  - "convertir vídeo a MP3 online"
-  - "sacar audio de video sin programa"
+  - "extraer audio de video online"
+  - "convertir video a MP3 online"
+  - "sacar audio de video gratis"
+  - "video a audio online sin instalar"
+  - "separar audio de video"
+  - "extraer audio video podcast YouTube LATAM"
+  - "convertir video MP3 gratis Colombia México Argentina"
+  - "sacar audio entrevista vídeo sin programa"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Tienes una grabación de una reunión en vídeo, una ponencia descargada o un clip con música de fondo, y solo necesitas el audio. **Extraer el audio de un vídeo online gratis** lleva menos de un minuto — sin instalar Handbrake, VLC ni ninguna aplicación.
+Tienes una conferencia grabada en MP4, un podcast que alguien subió en formato vídeo a YouTube, una entrevista en MKV, o una canción en formato vídeo. **Extraer el audio de un vídeo** y guardarlo como MP3, WAV o AAC es inmediato con la herramienta [Extraer audio](/extraer-audio-de-video) de ToolsFoto — sin instalar nada, sin enviar el archivo a ningún servidor.
 
-La herramienta [Extraer audio](/extraer-audio) de ToolsFoto separa la pista de audio usando FFmpeg en el navegador. Sin subir nada a servidores externos, sin límite de uso.
+## Qué significa extraer audio técnicamente
 
-## Cómo extraer el audio paso a paso
+Un archivo de vídeo contiene varias pistas independientes multiplexadas en un contenedor: una (o varias) pistas de vídeo, una (o varias) pistas de audio, a veces subtítulos. Extraer el audio simplemente significa copiar la pista de audio del contenedor y guardarla como archivo independiente.
 
-1. Abre [Extraer audio](/extraer-audio).
-2. Sube tu vídeo (MP4, WebM, MOV, AVI, MKV — hasta 500 MB).
-3. Elige el formato de salida: MP3, AAC, WAV u OGG.
-4. Haz clic en **Extraer** y descarga el archivo de audio.
+Si la operación se hace con **copia directa** (`-c copy` en FFmpeg), no hay re-encodificación: el audio resultante es bit a bit idéntico al que había en el vídeo. Si se re-encodifica (por ejemplo, de AAC a MP3), hay una conversión que puede implicar mínima pérdida de calidad, pero el resultado es compatible con más reproductores.
 
-La primera vez descarga el procesador FFmpeg (~30 MB) — después el proceso es prácticamente instantáneo.
+La herramienta permite elegir el formato de salida (MP3, WAV, AAC, OGG, FLAC) y extrae la pista de audio en ese formato.
 
-## Qué formato elegir para el audio extraído
+## Cuándo usar cada formato
 
 | Formato | Cuándo usarlo |
 |---|---|
-| **MP3** | Compatibilidad máxima con cualquier dispositivo o plataforma. Ideal para compartir o escuchar. |
-| **AAC** | Mejor calidad que MP3 al mismo bitrate. Estándar en iPhone y Android. |
-| **WAV** | Sin pérdida. Para editar el audio después en un DAW o herramienta profesional. |
-| **OGG** | Alternativa open source eficiente, pero con compatibilidad más limitada. |
+| MP3 | Compatibilidad universal. Podcasts, música, archivos para compartir. |
+| AAC | Mejor calidad que MP3 al mismo bitrate. iOS/Mac nativo. |
+| WAV | Sin compresión, máxima calidad. Edición de audio profesional. |
+| OGG | Código abierto, buena compresión. Juegos, apps web. |
+| FLAC | Sin pérdida comprimido. Archivado de alta calidad. |
 
-Si el vídeo ya tiene audio comprimido en MP3 o AAC, elegir el mismo formato evita una recompresión y preserva la calidad original.
+Para la mayoría de los usos — compartir, escuchar, publicar — **MP3 a 192 kbps** es la opción correcta.
 
-## Usos que quizás no habías considerado
+## Casos de uso frecuentes
 
-### Transcribir una reunión grabada en vídeo
+**Extraer música de un vídeo de YouTube (descargado localmente)**
+Si tienes el vídeo guardado en tu dispositivo, la herramienta extrae el audio como MP3 en segundos.
 
-Muchas herramientas de transcripción solo aceptan audio, no vídeo. Si grabaste la reunión en MP4, extraes el audio en MP3 y lo pasas al transcriptor de turno. Más rápido y limpio que buscar si acepta el formato de vídeo concreto.
+**Guardar una conferencia o clase como audio**
+Las grabaciones de Zoom, Meet o Teams en MP4 suelen pesar 300–600 MB/hora. El audio en MP3 equivalente pesa 50–80 MB y es perfectamente escuchable en el coche, el gym o el metro.
 
-Si no quieres usar herramientas externas, ToolsFoto tiene también [Transcribir audio](/transcribir-audio) que hace el proceso completo en el navegador con la API de reconocimiento de voz del propio sistema.
+**Preparar material para un podcast**
+Si grabaste en vídeo (mejor encuadre, más fácil de editar visualmente) pero el canal de distribución es un podcast de solo audio, extraer el audio es el primer paso antes de la edición y la publicación.
 
-### Crear el episodio de podcast a partir de una charla grabada en vídeo
+**Aislar audio de un vídeo para editarlo**
+Si necesitas aplicar un ecualizador, reducir ruido o añadir música de fondo al audio de un vídeo, primero extrae el audio, edítalo con tu herramienta preferida y luego combínalo de nuevo con el vídeo usando [Reemplazar audio en vídeo](/reemplazar-audio-video).
 
-Si grabaste una clase, un webinar o una conversación en vídeo y quieres distribuirla en formato podcast, extraes el audio, lo normalizas con [Normalizar audio](/normalizar-audio) para igualar los niveles de volumen y ya tienes el archivo listo para subir.
+## Cómo extraer audio con ToolsFoto
 
-### Guardar la pista musical de una actuación en directo
+1. Abre [Extraer audio de vídeo](/extraer-audio-de-video).
+2. Sube tu vídeo (MP4, WebM, MOV, AVI, MKV — hasta 500 MB).
+3. Selecciona el formato de salida (MP3, WAV, AAC, OGG o FLAC).
+4. Haz clic en **Extraer** y descarga el archivo de audio.
 
-Si grabaste en vídeo una actuación y quieres el audio por separado para escucharlo, compartirlo o editarlo, este es el método más directo. El resultado conserva la calidad del audio original del vídeo sin pasar por conversiones innecesarias.
+La primera vez se descarga FFmpeg.wasm (~30 MB). Las siguientes, el proceso es inmediato desde caché.
 
-## Qué pasa con el vídeo después de extraer el audio
+## Podcasters y creadores de contenido en audio: el contexto LATAM
 
-La herramienta solo extrae el audio — el vídeo original no se modifica. Si lo que necesitas es un vídeo sin sonido, usa la herramienta [Silenciar vídeo](/silenciar-video), que elimina la pista de audio del vídeo usando stream copy (sin re-encode, preservando la calidad de imagen exactamente).
+El formato podcast ha crecido sostenidamente en América Latina. México, Argentina, Colombia, Chile y Perú tienen comunidades activas de oyentes y creadores en plataformas como Spotify, Apple Podcasts, Google Podcasts y plataformas locales. Muchos de los creadores de podcast en la región empiezan grabando en formato vídeo — porque YouTube es la plataforma con mayor penetración en LATAM y les permite alcanzar a audiencias que no consumen podcasts — y luego extraen el audio para distribuirlo en plataformas de audio.
+
+Este flujo de "vídeo primero, audio después" es especialmente común en podcasters de **tecnología, emprendimiento y finanzas personales** dirigidos a audiencias latinoamericanas. El vídeo va a YouTube con cara visible, el mismo contenido va como audio a Spotify. Extraer el audio del vídeo editado es el paso que conecta ambos canales, y hacerlo sin herramientas de pago ni instalaciones complejas es clave para creadores independientes.
+
+Para **periodistas, investigadores y comunicadores** en la región que realizan entrevistas en vídeo y las publican en múltiples formatos, extraer el audio como MP3 y subirlo directamente a plataformas de distribución de podcasts o al servidor de audio de su medio ahorra el paso de una re-grabación o una edición de audio separada. La herramienta convierte el vídeo de la entrevista en el audio del episodio en menos de un minuto, sin software profesional.

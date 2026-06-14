@@ -1,60 +1,70 @@
 ---
-titulo: "Crear un código QR gratis y personalizado en segundos"
-descripcion: "Un código QR puede apuntar a una URL, un teléfono, un WiFi o una tarjeta de contacto. Te explico los tipos, el tamaño mínimo para impresión y cómo crearlo gratis sin registro."
+titulo: "Crear un código QR gratis: tipos, usos y cómo generarlo en segundos"
+descripcion: "Los códigos QR enlazan el mundo físico con el digital. Te explico qué tipos existen, para qué sirve cada uno y cómo generar el tuyo sin registro."
 categoria: "tutoriales"
-fecha: "2026-05-28"
+fecha: "2026-05-31"
 keywords:
-  - "crear código QR gratis personalizado"
+  - "crear codigo QR gratis"
   - "generar QR online sin registro"
-  - "código QR para URL web gratis"
-  - "hacer QR sin instalar nada"
+  - "código QR para web gratis"
+  - "hacer codigo QR URL"
+  - "generador QR online"
+  - "QR para WhatsApp Business Mercado Pago LATAM"
+  - "generar QR para restaurante Colombia México"
+  - "código QR para pago digital Argentina Chile"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Poner un enlace en papel o en un cartel es mala experiencia para el usuario. Un código QR lo resuelve: apuntas la cámara y estás en la URL en un segundo, sin escribir nada. **Crear un código QR gratis** no requiere registrarte en ningún servicio ni pagar ninguna suscripción.
+Los códigos QR llevan información codificada en un patrón de puntos que cualquier cámara de smartphone puede leer. No necesitan app especial en iOS ni en Android moderno — la cámara nativa los detecta directamente. **Crear un código QR gratis** en segundos y sin registro es posible con la herramienta [Generar QR](/generar-qr) de ToolsFoto.
 
-La herramienta [Generar QR](/generar-qr) de ToolsFoto genera el código directamente en el navegador — el enlace o texto que introduces no se envía a ningún servidor.
+## Qué puede contener un código QR
 
-## Qué tipos de contenido puede codificar un QR
+Un código QR no es más que un texto codificado visualmente. El smartphone, al escanearlo, lee ese texto y lo interpreta. Los tipos de contenido más comunes:
 
-No solo URLs. Un código QR puede contener:
+| Tipo | Contenido codificado | Resultado al escanear |
+|---|---|---|
+| URL | `https://tudominio.com` | Abre el navegador en esa dirección |
+| Teléfono | `tel:+521234567890` | Ofrece llamar al número |
+| Email | `mailto:info@empresa.com` | Abre el cliente de correo |
+| SMS | `sms:+521234567890?body=Hola` | Abre el SMS con el texto prellenado |
+| WiFi | `WIFI:S:MiRed;T:WPA;P:password;;` | Conecta automáticamente a la red |
+| Texto plano | `Cualquier texto` | Muestra el texto en pantalla |
+| vCard | Datos de contacto formateados | Añade el contacto a la agenda |
 
-- **URL**: una web, un producto en tienda, un formulario de contacto, un vídeo
-- **Texto libre**: un mensaje, un código de acceso, instrucciones de uso
-- **Email**: abre el cliente de correo con el destinatario predefinido
-- **Teléfono**: inicia una llamada directamente al número codificado
-- **SMS**: abre el compositor de mensajes con el número ya relleno
-- **Tarjeta de contacto (vCard)**: guarda nombre, teléfono y email en un clic
-- **WiFi**: conecta al usuario a la red sin escribir la contraseña
+La herramienta de ToolsFoto permite generar QRs de todos estos tipos desde un formulario sencillo.
 
-## Cómo generar el código QR paso a paso
+## Estático vs. dinámico: cuál necesitas
+
+**QR estático** (lo que genera ToolsFoto): el contenido está grabado permanentemente en el patrón gráfico. Si cambias la URL, tienes que generar un QR nuevo. Ventaja: funciona sin ningún servicio externo, es tuyo para siempre.
+
+**QR dinámico** (servicios como QR code generator pro, Bitly, etc.): el QR apunta a una URL intermediaria que redirige a la URL real. Puedes cambiar el destino sin cambiar el QR. Desventaja: depende del servicio — si cierra o pasa a ser de pago, el QR deja de funcionar.
+
+Para uso permanente en tarjetas de visita, señalización, menús de restaurante o publicaciones en redes sociales, el QR estático es la opción más fiable. Para campañas que cambiarán de destino, el dinámico tiene sentido.
+
+## Cómo personalizar el tamaño y el color
+
+Un código QR funciona siempre que haya suficiente contraste entre el patrón oscuro y el fondo claro. Las personalizaciones básicas que permite la herramienta:
+
+- **Tamaño:** de 200×200 a 1000×1000 píxeles. Para impresión en papel A4 o menor, 500px es suficiente. Para carteles grandes, usa el tamaño máximo.
+- **Color del módulo:** puede ser cualquier color oscuro — negro, azul, verde oscuro, granate. Evita colores claros o de bajo contraste con el fondo.
+- **Color de fondo:** blanco o colores muy claros. Nunca oscuro si el módulo es oscuro.
+- **Margen (quiet zone):** el espacio blanco alrededor es obligatorio para que los escáneres detecten el código correctamente. Nunca elimines el margen aunque quieras el QR más grande.
+
+## Cómo generar un código QR con ToolsFoto
 
 1. Abre [Generar QR](/generar-qr).
-2. Introduce el contenido: escribe la URL, el texto o selecciona el tipo de dato (teléfono, email, WiFi...).
-3. Ajusta el tamaño si lo necesitas para impresión.
-4. Descarga el código en **PNG** o **SVG**.
+2. Selecciona el tipo de contenido (URL, teléfono, email, texto…).
+3. Rellena los datos.
+4. Personaliza el color y el tamaño si lo deseas.
+5. Descarga el QR como PNG.
 
-PNG es suficiente para la mayoría de usos digitales (email, web, presentaciones). SVG es mejor si vas a imprimir a gran tamaño — escala a cualquier resolución sin perder nitidez.
+El proceso ocurre completamente en el navegador — no se registra ningún dato ni se envía nada a servidores externos.
 
-## Tamaño mínimo para que se pueda escanear bien
+## QR codes en el ecosistema digital y de pagos de LATAM
 
-La regla práctica: **el código QR impreso debe tener al menos 2×2 cm** para que la mayoría de cámaras lo lean sin problema desde 30 cm de distancia.
+En América Latina, los códigos QR han vivido una segunda revolución gracias al auge de los **pagos digitales móviles**. **Mercado Pago** en Argentina, México y Brasil permite cobrar mediante QR estático en el punto de venta — cualquier negocio puede imprimir un QR de Mercado Pago en la caja y los clientes pagan directamente desde la app sin efectivo ni datáfono. Lo mismo aplica a **Nequi** y **Daviplata** en Colombia, y a **OXXO Pay** y **CoDi** en México.
 
-A más contenido codificado, más densa queda la cuadrícula y más grande necesita ser el código para ser legible. Para una URL corta, 2×2 cm funciona. Para una vCard completa o un texto largo, 3×3 cm o más.
+Para **restaurantes, cafeterías y hoteles** en Colombia, México, Chile y Perú, el menú digital vía QR se popularizó durante 2020–2021 y se ha mantenido porque reduce costes de impresión y permite actualizar precios y platos sin reimprimir nada. Un restaurante que genera su QR con ToolsFoto, lo imprime en adhesivos para las mesas y lo apunta a su carta online tiene toda la infraestructura de menú digital sin costes recurrentes.
 
-Si el QR va en un cartel, banner o señalética grande, usa siempre la versión SVG — a cualquier tamaño de impresión se ve perfecta y sin pixelado.
-
-## Cuándo usar una URL acortada
-
-Si la URL es muy larga (por ejemplo, una URL de producto con parámetros UTM de analítica), el QR resultante es más denso y requiere mayor resolución para escanearse bien. En esos casos, acortar la URL antes de generar el QR produce un código más simple y fácil de escanear incluso a tamaños pequeños.
-
-## Casos de uso habituales
-
-- Menú de restaurante sin contacto físico (muy útil aún para turistas)
-- Tarjetas de visita con enlace a portfolio, LinkedIn o formulario de cita
-- Materiales impresos en eventos, ferias y congresos
-- Instrucciones de uso en productos físicos o packaging
-- Acceso rápido a WiFi en negocios, hoteles o salas de reuniones
-
-Genera tu código en [Generar QR](/generar-qr) — gratis, sin registro, sin marca de agua, sin que el contenido salga de tu navegador.
+Para **negocios con presencia en WhatsApp Business** — que en LATAM son millones, desde farmacias hasta veterinarias, desde tiendas de ropa hasta talleres mecánicos — generar un QR que abra directamente el chat de WhatsApp del negocio (usando `https://wa.me/521XXXXXXXXXX`) y colocarlo en el establecimiento, en las tarjetas de visita o en el packaging del producto es la forma más efectiva de convertir clientes físicos en contactos digitales.

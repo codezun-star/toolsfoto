@@ -1,63 +1,71 @@
 ---
-titulo: "Cómo recortar un archivo de audio online sin instalar programas"
-descripcion: "Recortar un MP3 para crear un tono, extraer un fragmento de una grabación o eliminar el silencio inicial no requiere instalar nada. Te explico cómo hacerlo online con precisión de segundos."
+titulo: "Cómo cortar audio online: recorta, divide y une fragmentos sin instalar nada"
+descripcion: "Cortar un archivo de audio al segundo exacto es posible desde el navegador. Te enseño a recortar, dividir y unir pistas de audio online sin instalar programas."
 categoria: "tutoriales"
-fecha: "2026-05-28"
+fecha: "2026-05-30"
 keywords:
-  - "recortar audio online"
-  - "cortar MP3 online gratis"
-  - "editar audio online sin programa"
-  - "recortar canción online"
-  - "cortar fragmento de audio"
+  - "cortar audio online gratis"
+  - "recortar MP3 online sin instalar"
+  - "dividir audio online"
+  - "cortar canción online"
+  - "editor audio online"
+  - "cortar audio podcast Colombia México Argentina"
+  - "editar MP3 online sin programa gratis"
+  - "recortar audio WhatsApp nota de voz"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Tienes una grabación de una entrevista de una hora y necesitas el fragmento donde se menciona el dato relevante. O quieres crear un tono de llamada de treinta segundos a partir de una canción. O una grabación empieza con veinte segundos de silencio antes de que arranque el contenido.
+Tienes una canción y quieres extraer el coro. Una grabación de una hora de la que solo necesitas cinco minutos. Un fragmento de podcast que quieres convertir en un clip. **Cortar audio online** sin instalar nada es posible y más preciso de lo que parece con las herramientas correctas.
 
-**Recortar un archivo de audio online** es una de esas operaciones que parece requerir software especializado — Audacity, GarageBand, Adobe Audition — pero que en realidad lleva menos de un minuto con las herramientas adecuadas.
+La herramienta [Cortar audio](/cortar-audio) de ToolsFoto recorta cualquier archivo de audio al fragmento exacto que necesitas, procesando todo en el navegador sin enviar el archivo a ningún servidor.
 
-La herramienta [Cortar audio](/cortar-audio) de ToolsFoto procesa el audio en el navegador con FFmpeg, sin que tu archivo salga del dispositivo.
+## La diferencia entre recortar y dividir
 
-## Cómo recortar audio paso a paso
+**Recortar** significa quedarte con un fragmento: defines dónde empieza y dónde termina, y el resultado es ese único fragmento.
+
+**Dividir** significa separar un archivo en partes: defines el punto de corte y obtienes dos archivos independientes, cada uno con su parte del original.
+
+Ambas operaciones son variantes del mismo proceso técnico — en realidad, FFmpeg opera con los mismos parámetros `-ss` (inicio) y `-to` (fin), solo cambia lo que se le pide al usuario que defina.
+
+La herramienta [Cortar audio](/cortar-audio) cubre el caso de recorte. Para dividir un audio en múltiples partes, puedes hacer varias pasadas seleccionando fragmentos distintos.
+
+## Recortar con o sin re-encode
+
+Hay dos modos de cortar audio:
+
+**Con copia directa (`-c copy`):** no re-encodifica el audio, simplemente copia los frames que corresponden al fragmento. El resultado es idéntico al original en calidad y es inmediato. La limitación es que el punto de corte puede no ser exacto al milisegundo — se ajusta al keyframe más cercano, lo que en audio suele ser irrelevante.
+
+**Con re-encode:** reproces el audio con el codec y bitrate que especifiques. Más lento, pero el corte es exacto al segundo. Útil si necesitas precisión absoluta en el punto de entrada.
+
+La herramienta de ToolsFoto usa copia directa para preservar la calidad original — en práctica para la mayoría de los cortes de audio, la diferencia de posición es de milisegundos, imperceptible.
+
+## Formatos soportados
+
+La herramienta acepta MP3, WAV, OGG, AAC, FLAC y M4A. El archivo resultante mantiene el mismo formato del original — no hay conversión de formato en el proceso de corte. Si además necesitas cambiar el formato, usa [Convertir audio](/convertir-audio) después.
+
+## Paso a paso: cómo cortar audio en ToolsFoto
 
 1. Abre [Cortar audio](/cortar-audio).
-2. Sube tu archivo (MP3, WAV, OGG, AAC, FLAC, M4A — hasta 200 MB).
-3. Define el punto de inicio y el punto de fin del fragmento que quieres conservar.
+2. Sube tu archivo de audio.
+3. Define el tiempo de inicio y fin del fragmento que quieres conservar.
 4. Haz clic en **Cortar** y descarga el resultado.
 
-El resultado mantiene el mismo formato que el archivo original. Si subes un MP3, el recorte se descarga como MP3.
+La primera vez que uses la herramienta se descarga FFmpeg.wasm (~30 MB). Las siguientes es inmediato.
 
-## Casos de uso
+## Otros editores de audio disponibles
 
-### Crear un tono de llamada
+Si lo que necesitas va más allá del corte:
 
-Los tonos de llamada suelen tener entre 15 y 30 segundos. Si tienes una canción completa, recorta el estribillo o la introducción con el punto de inicio y fin exactos. Guarda el resultado en MP3 o AAC (los formatos más compatibles con smartphones).
+- [Unir audios](/unir-audios) — fusiona varios archivos de audio en uno solo, en el orden que elijas.
+- [Cambiar volumen audio](/cambiar-volumen-audio) — sube o baja el nivel de volumen del archivo.
+- [Convertir audio](/convertir-audio) — cambia el formato entre MP3, WAV, OGG, AAC, FLAC y M4A.
+- [Extraer audio de vídeo](/extraer-audio-de-video) — extrae la pista de audio de un vídeo como archivo independiente.
 
-### Extraer un fragmento de una reunión o podcast
+## Edición de audio para podcasters y productores en LATAM
 
-Grabaste una reunión o descargaste un podcast y quieres guardar solo una parte concreta: una declaración, una cifra, un segmento. El recorte extrae exactamente ese fragmento sin tocar el archivo original.
+El podcasting ha crecido enormemente en América Latina en los últimos años. México, Colombia, Argentina y Brasil tienen comunidades activas de podcasters que producen contenido en español sobre tecnología, negocios, cultura pop, deportes y política. Muchos de estos creadores trabajan de forma independiente, con equipos básicos de grabación y sin presupuesto para software de edición profesional como Adobe Audition o Logic Pro.
 
-### Eliminar el silencio del inicio de una grabación
+Para este perfil de creador, poder **cortar y editar audio directamente desde el navegador** sin instalar Audacity ni aprender una interfaz compleja es un cambio significativo en el flujo de trabajo. Un episodio de podcast grabado de una hora tiene inevitablemente silencios, tartamudeos, tangentes y fragmentos que hay que eliminar antes de publicar. Hacer esos cortes básicos online, sin instalar nada, desde el mismo ordenador que usan para grabar, es exactamente el caso de uso que cubre esta herramienta.
 
-Las grabaciones de voz suelen empezar con unos segundos de silencio antes de que el orador comience. Si en lugar de detectarlo automáticamente prefieres hacerlo manualmente, defines el inicio en el segundo exacto donde arranca el audio.
-
-Para automatizar esta tarea en muchos archivos, la herramienta [Recortar silencio al inicio](/recortar-silencio-inicio) detecta y elimina el silencio inicial de forma automática.
-
-### Separar secciones de una grabación larga
-
-Si grabaste varias locuciones o tomas seguidas en un único archivo, puedes hacer múltiples recortes para extraer cada sección como archivo separado, y después [unirlos](/unir-audios) en el orden que necesites.
-
-## Precisión y formatos de tiempo
-
-La mayoría de herramientas de recorte de audio aceptan el tiempo en formato `MM:SS` (minutos:segundos) o `HH:MM:SS` para archivos largos. Para mayor precisión, algunos formatos aceptan décimas o centésimas: `01:23.5`.
-
-En grabaciones de música, la precisión es especialmente importante: un corte a mitad de una nota crea un clic audible. Trata de hacer los cortes en los silencios naturales entre notas o frases.
-
-## Si necesitas más de un recorte
-
-La herramienta procesa un fragmento por operación. Si necesitas extraer varias partes de un archivo largo, haz los recortes uno a uno y después combina los fragmentos con [Unir audios](/unir-audios) para crear el archivo final en el orden que necesites.
-
-## Convertir el formato si hace falta
-
-Si después del recorte necesitas el audio en un formato diferente (por ejemplo, convertir el WAV resultante a MP3 para reducir el tamaño), usa [Convertir audio](/convertir-audio) como paso siguiente.
+Para **músicos independientes y productores musicales** de la región que trabajan en plataformas digitales como SoundCloud, Spotify for Artists o Bandcamp — y que suelen crear sus demos y beats en DAWs como FL Studio o GarageBand — tener una herramienta de corte rápido online permite editar un fragmento concreto de una exportación sin volver a abrir el proyecto completo. También es útil para preparar clips de preview de canciones para Instagram o TikTok, donde el fragmento más viral suele ser el coro de 15–30 segundos.

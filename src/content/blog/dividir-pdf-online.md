@@ -1,63 +1,63 @@
 ---
-titulo: "Cómo dividir un PDF: separar páginas o partir el documento en varios archivos"
-descripcion: "Dividir un PDF permite extraer páginas concretas, crear versiones por capítulos o enviar solo la parte relevante de un informe largo. Te explico las distintas formas de hacerlo online."
+titulo: "Dividir un PDF online: separa páginas o extrae fragmentos sin Acrobat"
+descripcion: "Dividir un PDF en partes o extraer páginas concretas es más útil de lo que parece. Te explico los casos de uso y cómo hacerlo gratis desde el navegador."
 categoria: "tutoriales"
-fecha: "2026-05-29"
+fecha: "2026-05-30"
 keywords:
   - "dividir PDF online gratis"
   - "separar páginas PDF"
+  - "extraer páginas PDF online"
+  - "dividir PDF sin Acrobat"
   - "partir PDF en varios archivos"
-  - "dividir documento PDF online"
-  - "extraer páginas de un PDF"
+  - "dividir PDF contratos facturas LATAM"
+  - "separar páginas PDF trámites Colombia México Argentina"
+  - "extraer página PDF expediente gratis"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Tienes un informe de 80 páginas y necesitas enviar solo el capítulo tres. O un contrato en PDF donde cada parte tiene que firmarse por separado. O un libro escaneado que quieres dividir en capítulos individuales. **Dividir un PDF online** es la solución en todos estos casos — sin necesidad de Acrobat ni ningún software de pago.
+Recibes un PDF de 40 páginas y solo necesitas la página 7. O tienes un contrato de 10 páginas y debes enviar solo los anexos (páginas 8–10) a una persona y las cláusulas principales (páginas 1–5) a otra. **Dividir un PDF online** sin Acrobat resuelve estos casos en segundos.
 
-ToolsFoto ofrece dos herramientas según lo que necesites: [Dividir PDF](/dividir-pdf) para partir en partes y [Extraer páginas PDF](/extraer-paginas-pdf) para sacar páginas concretas.
+La herramienta [Dividir PDF](/dividir-pdf) de ToolsFoto procesa el documento íntegramente en el navegador — ninguna página de tu documento sale de tu dispositivo.
 
-## Dividir en partes vs. extraer páginas concretas
+## Dividir vs. extraer: cuál es la diferencia
 
-Son operaciones distintas aunque relacionadas:
+**Extraer páginas** significa seleccionar páginas concretas y crear un PDF nuevo solo con esas páginas. El PDF original no se modifica. Resultado: un archivo nuevo con las páginas que elegiste.
 
-**Dividir en partes:** divides el PDF en dos o más documentos a partir de un punto de corte. Por ejemplo, un PDF de 20 páginas partido en dos de 10 páginas cada uno, o en cuatro de 5. Útil para separar capítulos o secciones.
+**Dividir en partes iguales** significa partir el PDF en segmentos del mismo número de páginas (por ejemplo, un PDF de 20 páginas en cuatro PDFs de 5 páginas cada uno). Útil para distribuir un documento largo en capítulos o secciones.
 
-**Extraer páginas concretas:** seleccionas exactamente qué páginas quieres en un nuevo PDF. Por ejemplo, extraer las páginas 3, 7 y 12 de un documento de 50 páginas. Útil cuando necesitas compartir solo partes específicas.
+**Dividir en páginas individuales** significa extraer cada página como un PDF separado. Útil cuando necesitas páginas sueltas para archivar o enviar individualmente.
 
-## Cuándo tiene sentido dividir un PDF
+La herramienta de ToolsFoto cubre los tres casos.
 
-### Compartir solo la parte relevante
+## Cuándo dividir y cuándo usar otras herramientas
 
-Un presupuesto de 30 páginas donde la parte comercial ocupa las primeras 10 y el anexo técnico las siguientes 20. Divides en dos y envías a cada receptor solo lo que le corresponde.
+Si lo que necesitas es **eliminar páginas** del PDF manteniendo el resto como un único documento, la herramienta correcta es [Eliminar páginas PDF](/eliminar-paginas-pdf) — produce un único PDF sin las páginas que marques como innecesarias.
 
-### Reducir el tamaño para enviar por correo
+Si lo que necesitas es **juntar** varios PDFs en uno, usa [Unir PDFs](/unir-pdf).
 
-Los límites de adjuntos en correo electrónico (típicamente 10–25 MB) a veces impiden enviar documentos largos. Dividiéndolo en partes más pequeñas el envío es posible sin comprometer calidad.
-
-### Organizar archivos escaneados
-
-Si escaneaste un lote de documentos en un único PDF y necesitas separarlos por expediente o cliente, la división permite crear un archivo por documento.
-
-### Separar secciones para edición independiente
-
-Antes de modificar secciones con diferentes colaboradores, dividir el documento en partes permite que cada persona trabaje sobre su sección sin interferir con el resto.
-
-## Cómo funciona la extracción de páginas concretas
-
-La herramienta [Extraer páginas PDF](/extraer-paginas-pdf) permite indicar un rango (`3-7`), páginas individuales separadas por comas (`1, 5, 12`) o una combinación de ambos. El resultado es un nuevo PDF con solo esas páginas, en el orden original del documento.
-
-Si después necesitas reordenar las páginas del PDF resultante, [Reordenar páginas PDF](/reordenar-paginas-pdf) permite arrastrarlas al orden deseado.
-
-## Antes de dividir: comprimir si el archivo es muy grande
-
-Si el PDF pesa muchos MB porque tiene imágenes a alta resolución, [Comprimir PDF](/comprimir-pdf) puede reducir significativamente el tamaño antes de dividir — lo que hace que los archivos resultantes sean más manejables.
+Si necesitas **reordenar** las páginas antes de dividir, [Reordenar páginas PDF](/reordenar-paginas-pdf) te permite arrastrar las páginas al orden correcto y luego descarga el PDF reordenado, que puedes dividir a continuación.
 
 ## Cómo dividir un PDF con ToolsFoto
 
-1. Abre [Dividir PDF](/dividir-pdf) o [Extraer páginas PDF](/extraer-paginas-pdf) según el caso.
-2. Sube tu documento.
-3. Indica los puntos de corte o las páginas que quieres extraer.
-4. Descarga el PDF o los PDFs resultantes.
+1. Abre [Dividir PDF](/dividir-pdf).
+2. Sube tu PDF.
+3. Selecciona el modo:
+   - **Extraer páginas específicas:** introduce los números de página (ej: `1,3,7-10`).
+   - **Dividir en rangos fijos:** define cuántas páginas debe tener cada parte.
+   - **Una página por archivo:** divide automáticamente en PDFs de una sola página.
+4. Descarga los archivos resultantes.
 
-Todo el procesamiento ocurre en el navegador, sin que el documento salga de tu dispositivo.
+No hay registro, no hay límite de uso, no hay servidor externo.
+
+## La privacidad importa al dividir PDFs
+
+Los PDFs que se dividen suelen contener información sensible: contratos, facturas, datos personales, documentos legales. Que el proceso ocurra íntegramente en el navegador, sin enviar ningún byte a servidores externos, no es un detalle técnico menor — es una garantía de privacidad real. Ningún empleado de ningún servicio puede acceder a tus documentos cuando el procesamiento es 100% client-side.
+
+## División de PDFs en contextos legales, fiscales y empresariales de LATAM
+
+En América Latina, la necesidad de dividir PDFs aparece constantemente en contextos profesionales y burocráticos. Los **expedientes judiciales** en México, Colombia y Argentina se generan como PDFs voluminosos de cientos de páginas que los abogados necesitan fragmentar por auto, resolución o diligencia para adjuntar a escritos específicos. Los **portales de trámites gubernamentales** de la región — SAT, IMSS, DIAN, AFIP, SII — tienen límites de tamaño para los archivos adjuntos que en muchos casos no superan los 5–10 MB, forzando a dividir o comprimir documentos antes de subirlos.
+
+Para los **contadores y asesores fiscales** en México que trabajan con declaraciones anuales, comprobantes CFDI y estados de cuenta bancarios en PDF, extraer páginas concretas de un estado de cuenta de 12 meses para adjuntar solo el período que corresponde a una auditoría o una declaración específica es una tarea semanal. Hacerlo con una herramienta online gratuita y sin registro elimina la dependencia de Adobe Acrobat Pro o de servicios en la nube que almacenan los documentos.
+
+Para **recursos humanos y administración** en empresas de la región que manejan expedientes de empleados (contratos, addenda, nóminas, certificados médicos) en PDFs consolidados, dividir esos documentos para extraer la parte que necesita firmar un departamento específico o enviar a un tercero es un flujo de trabajo habitual que esta herramienta cubre sin coste.

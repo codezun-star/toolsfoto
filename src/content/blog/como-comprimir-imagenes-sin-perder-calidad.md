@@ -9,8 +9,10 @@ keywords:
   - "compresión JPG PNG WebP"
   - "optimizar imágenes web"
   - "cómo comprimir imagen gratis"
+  - "comprimir imagen para Mercado Libre WooCommerce"
+  - "reducir peso foto sin perder calidad Colombia México"
+  - "optimizar fotos tienda online gratis"
 autor: "Equipo ToolsFoto"
-svgCover: "imagen"
 publicado: true
 ---
 
@@ -86,8 +88,12 @@ Si tu imagen es JPG o PNG, convertirla a WebP suele reducir el peso un 25–35% 
 - **Capturas para diagnóstico técnico**: los artefactos de compresión pueden ocultar detalles relevantes.
 - **Archivos que ya están muy comprimidos**: recomprimir un JPG ya comprimido acumula pérdida generación a generación. Parte siempre del original.
 
-## Resumen
+## Comprimir imágenes en el contexto del comercio digital de LATAM
 
-Comprimir imágenes correctamente no es cuestión de suerte — es entender que el ojo humano no percibe diferencias por debajo de cierto umbral de pérdida. Con quality 80 en WebP y unas dimensiones razonables, una foto de 4 MB puede quedar en menos de 300 KB sin que nadie lo note.
+En América Latina, la velocidad de carga de las páginas es un factor decisivo para las ventas online. Los estudios de Google para la región muestran que el 53% de los usuarios móviles abandona una página si tarda más de 3 segundos en cargar — y las imágenes sin comprimir son la causa número uno de carga lenta.
+
+Para **vendedores de Mercado Libre y Mercado Shops**, Mercado Libre recomienda imágenes de 1200×1200 px en JPG de alta calidad para el thumbnail de producto, pero eso no significa que tengan que pesar 3 MB. Una foto de producto comprimida a quality 80 en JPG o WebP puede quedar en 80–150 KB manteniendo la nitidez que requieren las políticas de la plataforma, y eso se traduce en páginas de ficha de producto que cargan más rápido en móvil — donde más del 70% de las compras en Mercado Libre ocurren en Argentina, México y Colombia.
+
+Para tiendas en **WooCommerce, Shopify en español o VTEX** en la región, comprimir las imágenes de producto antes de subirlas mejora el PageSpeed Score de Google, que afecta directamente al posicionamiento orgánico en Google Shopping y en búsquedas locales. Plugins como WP Smush o Imagify hacen esto automáticamente, pero si gestionas las imágenes una a una o trabajas con un catálogo pequeño, comprimir con ToolsFoto antes de subir da el mismo resultado sin coste de suscripción.
 
 Pruébalo ahora en [ToolsFoto — Comprimir imágenes](/comprimir). Gratis, sin registro y sin que tus archivos salgan de tu dispositivo.
