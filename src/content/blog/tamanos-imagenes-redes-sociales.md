@@ -1,82 +1,112 @@
 ---
-titulo: "Tamaños de imagen para redes sociales: la referencia que no se queda obsoleta"
-descripcion: "Las plataformas cambian los píxeles recomendados, pero las proporciones son estables. Aquí los tamaños correctos para Instagram, LinkedIn, X y YouTube, y cómo adaptar tus imágenes en un clic."
+titulo: "Tamaños de imagen para redes sociales: la guía de dimensiones que no quedan desfasadas"
+descripcion: "Instagram, TikTok, Facebook, LinkedIn, X, YouTube: cada plataforma tiene sus propias especificaciones de imagen. Te doy las dimensiones correctas y los ratios que tienes que conocer."
 categoria: "tips"
-fecha: "2026-05-28"
+fecha: "2026-05-30"
 keywords:
-  - "tamaños de imagen para redes sociales"
-  - "dimensiones fotos Instagram LinkedIn Twitter"
-  - "redimensionar imagen para redes sociales"
-  - "medidas imágenes Instagram YouTube"
+  - "tamaños imagen redes sociales"
+  - "dimensiones foto Instagram Facebook"
+  - "medidas imagen redes sociales"
+  - "tamaño foto portada Facebook"
+  - "resolución imagen YouTube"
+  - "tamaños imagen Instagram TikTok community manager Colombia México Argentina"
+  - "medidas foto redes sociales emprendedor LATAM"
+  - "dimensiones post story reel sin cortar"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Subir una imagen con las proporciones incorrectas a Instagram o LinkedIn hace que la plataforma la recorte automáticamente — a veces justo donde no quieres. Los **tamaños de imagen para redes sociales** cambian ocasionalmente en píxeles exactos, pero las **proporciones** son mucho más estables. Entender esto te permite adaptar cualquier imagen aunque los números cambien.
+Subir una imagen con las dimensiones incorrectas no la hace desaparecer — la plataforma la muestra de todas formas, pero recortada, estirada o pixelada. El resultado es contenido que parece descuidado aunque el diseño sea bueno. Las dimensiones correctas son el detalle que separa el contenido que se ve bien del que se ve amateur.
 
-La herramienta [Redimensionar para redes](/redimensionar-redes) de ToolsFoto tiene presets actualizados para 12 formatos de plataforma y recorta automáticamente a las dimensiones correctas, sin que la imagen salga de tu navegador.
+Para ajustar cualquier imagen a las dimensiones exactas de cada plataforma, usa la herramienta [Redimensionar para redes sociales](/redimensionar-redes).
 
 ## Instagram
 
-| Formato | Proporción | Píxeles recomendados |
+| Formato | Dimensiones | Ratio |
 |---|---|---|
-| Cuadrado (feed) | 1:1 | 1080×1080 px |
-| Portrait (feed) | 4:5 | 1080×1350 px |
-| Landscape (feed) | 1,91:1 | 1080×566 px |
-| Story / Reels | 9:16 | 1080×1920 px |
+| Post cuadrado | 1080×1080 px | 1:1 |
+| Post vertical | 1080×1350 px | 4:5 |
+| Post horizontal | 1080×566 px | 1.91:1 |
+| Story / Reel | 1080×1920 px | 9:16 |
+| Foto de perfil | 320×320 px (se muestra en 110×110) | 1:1 |
 
-El formato 4:5 (portrait) ocupa más espacio vertical en el feed y tiende a funcionar mejor para fotos de producto o retrato porque el algoritmo muestra más imagen antes del scroll.
+El **formato 4:5 vertical (1080×1350)** es el que más espacio ocupa en el feed de Instagram y suele obtener mejor alcance orgánico, ya que domina más pantalla.
 
-## LinkedIn
+## TikTok
 
-| Formato | Píxeles recomendados |
-|---|---|
-| Imagen en publicación | 1200×627 px |
-| Foto de perfil | 400×400 px |
-| Portada perfil personal | 1584×396 px |
-| Portada página de empresa | 1128×191 px |
+| Formato | Dimensiones | Ratio |
+|---|---|---|
+| Vídeo / foto en feed | 1080×1920 px | 9:16 |
+| Foto de perfil | 200×200 px | 1:1 |
 
-LinkedIn muestra las imágenes en publicaciones a 1200×627 en escritorio. Si subes algo más cuadrado, lo recortará. Si sube algo más panorámico, añadirá franjas.
-
-## X (Twitter)
-
-| Formato | Píxeles recomendados |
-|---|---|
-| Imagen en tweet (landscape) | 1200×675 px |
-| Imagen en tweet (cuadrado) | 1200×1200 px |
-| Foto de perfil | 400×400 px |
-| Banner | 1500×500 px |
+TikTok es una plataforma nativa vertical: todo el contenido está diseñado para ocupar la pantalla completa del móvil. El ratio 9:16 es el único que tiene sentido aquí.
 
 ## Facebook
 
-| Formato | Píxeles recomendados |
-|---|---|
-| Imagen en publicación | 1200×630 px |
-| Story | 1080×1920 px |
-| Foto de portada | 820×312 px |
+| Formato | Dimensiones | Ratio |
+|---|---|---|
+| Post imagen (feed) | 1200×630 px | 1.91:1 |
+| Post cuadrado | 1200×1200 px | 1:1 |
+| Story | 1080×1920 px | 9:16 |
+| Portada (cover) | 820×312 px | — |
+| Foto de perfil | 170×170 px | 1:1 |
+| Imagen de evento | 1920×1080 px | 16:9 |
+
+## LinkedIn
+
+| Formato | Dimensiones | Ratio |
+|---|---|---|
+| Post imagen (feed) | 1200×627 px | 1.91:1 |
+| Post cuadrado | 1200×1200 px | 1:1 |
+| Banner de perfil | 1584×396 px | 4:1 |
+| Logo de empresa | 300×300 px | 1:1 |
+
+## X (antes Twitter)
+
+| Formato | Dimensiones | Ratio |
+|---|---|---|
+| Imagen en tweet | 1200×675 px | 16:9 |
+| Foto de perfil | 400×400 px | 1:1 |
+| Banner | 1500×500 px | 3:1 |
 
 ## YouTube
 
-| Formato | Píxeles recomendados |
-|---|---|
-| Miniatura de vídeo | 1280×720 px (proporción 16:9) |
-| Foto de perfil (canal) | 800×800 px |
-| Imagen de arte del canal | 2560×1440 px |
+| Formato | Dimensiones | Ratio |
+|---|---|---|
+| Thumbnail | 1280×720 px | 16:9 |
+| Miniatura de canal (foto de perfil) | 800×800 px | 1:1 |
+| Banner de canal | 2560×1440 px | — |
 
-Para crear miniaturas de YouTube con texto superpuesto directamente, la herramienta [Thumbnail YouTube](/thumbnail-youtube) tiene opciones específicas con overlay de color y texto incorporadas.
+El thumbnail es el elemento visual más importante en YouTube. Una imagen nítida de 1280×720 px con buen contraste y texto legible tiene impacto directo en el CTR (click-through rate) de los vídeos.
 
-## Cómo redimensionar una imagen para redes paso a paso
+Para crear thumbnails optimizados, existe la herramienta dedicada [Thumbnail YouTube](/thumbnail-youtube).
 
-1. Abre [Redimensionar para redes](/redimensionar-redes).
-2. Sube tu imagen.
-3. Selecciona la plataforma y el formato del desplegable (Instagram cuadrado, LinkedIn publicación, etc.).
-4. Elige entre **recortar** o **contener**:
-   - **Recortar**: la imagen llena el encuadre exacto. Puede perder bordes, pero no hay franjas.
-   - **Contener**: la imagen entra completa con franjas de fondo si las proporciones no coinciden.
-5. Descarga el resultado en JPG o PNG.
+## Por qué las dimensiones cambian según el dispositivo
 
-## La proporción importa más que los píxeles exactos
+Las plataformas muestran las imágenes de forma diferente en móvil y escritorio. Las dimensiones recomendadas están optimizadas para que la imagen se vea correctamente en ambos casos:
 
-Instagram puede aceptar imágenes de 800×800 px y de 2000×2000 px para el formato cuadrado — lo que le importa es la proporción 1:1. La resolución mínima recomendada es 1080 px en el lado más corto para que no quede borrosa en pantallas retina.
+- En **feed de escritorio**, las imágenes generalmente tienen más espacio horizontal.
+- En **móvil**, el formato vertical (9:16 o 4:5) domina la pantalla.
+- Las **stories y reels** siempre son pantalla completa en móvil — el formato 9:16 es innegociable.
 
-Si cambias de plataforma o la red actualiza sus dimensiones recomendadas, lo que no cambia es la proporción. Mantén esa referencia y los píxeles exactos son solo una guía de resolución mínima.
+## Cuánto espacio "seguro" dejar en stories y reels
+
+En los formatos de pantalla completa (9:16), las plataformas superponen su interfaz sobre partes de la imagen: el nombre de usuario arriba, los iconos de interacción abajo y a la derecha. La zona segura donde el contenido importante no quedará cubierto es aproximadamente:
+
+- **Arriba:** dejar 250 px libres de contenido crítico.
+- **Abajo:** dejar 300 px libres.
+- **Los lados:** dejar 50 px de margen.
+
+Si el texto, logo o elemento principal de tu story queda en la zona segura central, no habrá interferencias con la interfaz de la plataforma.
+
+## Cómo ajustar imágenes a estas dimensiones
+
+La herramienta [Redimensionar para redes sociales](/redimensionar-redes) tiene presets predefinidos para cada uno de estos formatos. Sube tu imagen, elige la plataforma y el formato, y descarga la imagen ajustada sin necesidad de conocer las dimensiones exactas.
+
+## Tamaños de imagen y la realidad del content marketing en LATAM
+
+En América Latina, el rol de **community manager** es uno de los más demandados y con mayor rotación en agencias digitales y empresas con presencia en redes sociales. México, Colombia, Argentina y Chile concentran la mayor parte de la actividad de marketing de contenidos en español, con comunidades activas de Instagram, TikTok y Facebook que responden a publicaciones localizadas en forma, tono y referentes culturales. Para este perfil profesional, dominar las especificaciones técnicas de cada plataforma — especialmente cuando cambian con actualizaciones — es parte del trabajo cotidiano.
+
+La realidad práctica del content marketing en la región incluye una alta proporción de **emprendedores y pequeñas empresas** que gestionan sus propias redes sin equipo de diseño: vendedores de Mercado Libre que también tienen Instagram, restaurantes que suben fotos del menú a Facebook, creadores de cursos en Hotmart que promocionan en TikTok. Para este perfil, una guía concreta de dimensiones y una herramienta gratuita de ajuste de formato son suficientes para publicar contenido con aspecto profesional sin necesitar Canva Pro, Adobe Express ni aplicaciones de pago.
+
+**TikTok** ha desplazado en engagement a Instagram entre los usuarios menores de 30 años en México, Colombia, Argentina y Perú, y su formato 9:16 se ha convertido en el estándar de facto para el contenido de video corto en toda la región. El fenómeno de los **Reels de Instagram** (adoptado directamente del formato TikTok) significa que la mayoría del contenido visual nuevo para LATAM se produce en formato vertical — un cambio que afecta directamente a cómo se planifican y dimensionan las imágenes de apoyo, las portadas de vídeo y los thumbnails de las publicaciones.

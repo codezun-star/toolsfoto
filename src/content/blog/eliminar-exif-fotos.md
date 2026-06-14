@@ -9,6 +9,9 @@ keywords:
   - "quitar datos GPS de foto"
   - "metadatos EXIF qué son"
   - "privacidad fotos online"
+  - "quitar GPS foto antes de publicar Mercado Libre LATAM"
+  - "borrar metadatos foto Android Colombia México Argentina"
+  - "eliminar ubicación foto celular antes de vender"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
@@ -64,3 +67,11 @@ Lo único que se pierde es la información de metadatos: la ubicación, el dispo
 4. Descarga el archivo sin metadatos.
 
 Si quieres ver qué metadatos tiene una imagen antes de borrarlos, muchos sistemas operativos muestran los EXIF en las propiedades del archivo. En macOS: clic derecho → Obtener información. En Windows: clic derecho → Propiedades → Detalles.
+
+## Privacidad de fotos y marketplaces en América Latina
+
+En América Latina, los datos EXIF suponen un riesgo de privacidad concreto en el uso cotidiano de marketplaces y plataformas de venta. Millones de vendedores en **Mercado Libre** de México, Argentina, Colombia, Chile y Perú fotografían los productos que venden directamente en casa — en la sala, en la cocina, en el dormitorio — y suben esas fotos a sus publicaciones sin borrar los metadatos. Mercado Libre no elimina los EXIF de las imágenes de las publicaciones en todos los casos, lo que significa que cualquier persona que descargue la foto de un artículo en venta puede ver exactamente dónde vive el vendedor.
+
+El mismo riesgo aparece en grupos de **Facebook Marketplace**, **OLX**, **Vivanuncios** (México) y **Yapo** (Chile), que son canales de compraventa de segunda mano masivamente usados en la región. Un vendedor que publica fotos de artículos de valor (electrónica, joyería, muebles) con los metadatos GPS intactos está revelando su dirección exacta a compradores desconocidos — un riesgo de seguridad personal que muchos desconocen.
+
+Para **fotógrafos profesionales y de afición** en la región que comparten su trabajo en plataformas de portafolio, Instagram o grupos de fotografía de Facebook, eliminar los metadatos EXIF antes de publicar protege dos cosas: la privacidad de la ubicación donde trabajan y la información técnica de su equipo (que puede ser relevante en contextos competitivos). Al mismo tiempo, si trabajan con modelos o retratan a personas en sus casas, borrar la ubicación GPS de las fotos es una medida básica de protección de la privacidad de los retratados — cada vez más relevante en el contexto de la Ley de Protección de Datos Personales de México, la Ley 1581 de Colombia y normativas similares en otros países de la región.

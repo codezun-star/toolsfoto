@@ -1,69 +1,82 @@
 ---
-titulo: "Redimensionar imagen online: diferencia entre cambiar tamaño y comprimir"
-descripcion: "Redimensionar y comprimir no son lo mismo — uno reduce los píxeles, el otro reduce los bytes. Entender la diferencia te permite elegir la operación correcta y obtener exactamente lo que necesitas."
+titulo: "Redimensionar imágenes online: cuándo cambiar el tamaño y cuándo comprimir"
+descripcion: "Redimensionar y comprimir son dos operaciones distintas que se confunden con frecuencia. Te explico la diferencia, cuándo usar cada una y cómo redimensionar sin perder calidad."
 categoria: "tips"
-fecha: "2026-05-28"
+fecha: "2026-05-30"
 keywords:
-  - "redimensionar imagen online"
-  - "cambiar tamaño de imagen gratis"
-  - "reducir píxeles imagen"
+  - "redimensionar imagen online gratis"
+  - "cambiar tamaño imagen online"
+  - "reducir dimensiones foto"
+  - "redimensionar sin perder calidad"
   - "escalar imagen online"
-  - "reducir resolución foto"
+  - "redimensionar imagen Mercado Libre producto WooCommerce LATAM"
+  - "cambiar tamaño foto celular Colombia México Argentina"
+  - "ajustar imagen para tienda online sin Photoshop"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-"Reducir el tamaño de una imagen" puede significar dos cosas completamente distintas: reducir sus **dimensiones** (píxeles) o reducir su **peso** (bytes en disco). Confundir las dos operaciones lleva a resultados inesperados — imágenes que siguen pesando demasiado aunque "las redimensionaste", o imágenes borrosas porque las comprimiste demasiado cuando lo que necesitabas era bajar la resolución.
+Muchas personas buscan "comprimir imagen" cuando en realidad lo que necesitan es "reducir el tamaño en píxeles". Son dos operaciones distintas con resultados diferentes. Entender la diferencia te ahorra tiempo y te da mejores resultados.
 
-## Redimensionar ≠ comprimir
+La herramienta [Redimensionar imagen](/redimensionar) de ToolsFoto cambia las dimensiones de una imagen en píxeles, directamente en el navegador.
 
-**Redimensionar** cambia el número de píxeles de la imagen. Una foto de 4000×3000 px redimensionada a 800×600 px tendrá exactamente 800×600 píxeles. El peso resultante depende del formato y la compresión aplicados al guardar.
+## Redimensionar vs. comprimir: la diferencia clave
 
-**Comprimir** mantiene las mismas dimensiones pero descarta información de color para reducir el peso del archivo. Una foto de 4000×3000 px comprimida al 80% sigue siendo de 4000×3000 px, pero el archivo pesa menos porque se ha aplicado compresión con pérdida.
+**Redimensionar** cambia la resolución de la imagen: el número de píxeles en anchura y altura. Una imagen de 4000×3000 píxeles redimensionada a 800×600 píxeles ocupa menos espacio en disco porque tiene menos datos de píxeles, pero la calidad a ese tamaño de visualización es la misma.
 
-Las dos operaciones se pueden combinar: redimensionar primero y luego comprimir suele dar el mayor ahorro de peso.
+**Comprimir** reduce el tamaño del archivo sin cambiar las dimensiones. Una imagen de 4000×3000 píxeles comprimida sigue siendo de 4000×3000 píxeles, pero el algoritmo de compresión descarta información para que el archivo pese menos — lo que puede introducir artefactos visibles si se comprime demasiado.
 
-## Cuándo redimensionar
+| Operación | Cambia dimensiones | Cambia peso | Afecta calidad |
+|---|---|---|---|
+| Redimensionar | Sí | Sí (proporcionalmente) | No si se reduce |
+| Comprimir | No | Sí | Depende del nivel |
 
-- La imagen se va a mostrar en un contexto de tamaño fijo y tiene muchos más píxeles de los necesarios. Una foto de perfil se muestra a 200×200 px — no necesita tener 3000×3000 px.
-- Vas a enviar la imagen por correo o mensajería y el receptor no necesita la resolución completa.
-- Vas a subirla a una plataforma que tiene un límite de dimensiones máximas (algunas limitan a 2000 px de lado).
-- Necesitas generar una miniatura o thumbnail de menor tamaño.
+## Cuándo redimensionar es la solución correcta
 
-## Cuándo comprimir (sin redimensionar)
+- La imagen es más grande de lo que necesitas y quieres reducir su peso.
+- La plataforma donde vas a subir la imagen tiene un límite de resolución máxima.
+- Necesitas una versión miniatura de una imagen de alta resolución.
+- Quieres ajustar la imagen a unas dimensiones específicas.
 
-- La imagen ya tiene las dimensiones correctas y solo quieres reducir el peso del archivo.
-- Vas a subirla a una web y quieres mantener la resolución original para que se vea nítida en pantallas de alta densidad.
-- Necesitas que quepa en un límite de tamaño de archivo (correo, plataforma de carga) pero sin perder píxeles.
+## Cuándo comprimir es la solución correcta
 
-## El efecto de cada operación sobre el peso
+- Necesitas exactamente las mismas dimensiones pero en un archivo más pequeño.
+- La resolución ya es correcta pero el archivo pesa demasiado para subirlo a una plataforma.
+- Quieres optimizar imágenes para web sin cambiar el tamaño de visualización.
 
-Supón una foto de 4000×3000 px que pesa 5 MB en JPG:
+Para muchos casos, la combinación óptima es **primero redimensionar, luego comprimir** — especialmente para optimizar imágenes de producto en e-commerce.
 
-| Operación | Resultado |
+## Cómo mantener la proporción al redimensionar
+
+Al reducir una imagen, es importante mantener la relación de aspecto (aspect ratio) para que no aparezca deformada. Si la imagen original es de 1200×800 píxeles (relación 3:2) y quieres reducirla a 600 píxeles de ancho, el alto resultante debe ser 400 píxeles — no cualquier valor.
+
+La herramienta [Redimensionar imagen](/redimensionar) mantiene la proporción automáticamente: introduce el ancho o el alto y el otro valor se calcula solo.
+
+## Tamaños habituales para distintos usos
+
+| Uso | Dimensiones recomendadas |
 |---|---|
-| Redimensionar a 1200×900 px (sin comprimir más) | ~500 KB — 90% de ahorro |
-| Comprimir al 75% (mismas dimensiones) | ~1 MB — 80% de ahorro |
-| Redimensionar a 1200×900 + comprimir al 75% | ~150 KB — 97% de ahorro |
+| Foto de perfil redes sociales | 400×400 px mínimo |
+| Imagen para web (general) | 1200 px de ancho máx. |
+| Thumbnail YouTube | 1280×720 px |
+| Imagen de producto e-commerce | 800×800 px mínimo |
+| Imagen para email marketing | 600 px de ancho máx. |
+| Fondo de escritorio | Resolución del monitor (1920×1080 o superior) |
 
-Redimensionar suele dar ahorros mayores porque se eliminan píxeles por completo, no solo se comprime la información de cada uno.
+## Cómo redimensionar con ToolsFoto
 
-## Mantener la proporción
+1. Abre [Redimensionar imagen](/redimensionar).
+2. Sube tu imagen.
+3. Introduce las nuevas dimensiones (ancho y/o alto).
+4. Activa "mantener proporción" si quieres evitar deformaciones.
+5. Descarga la imagen redimensionada.
 
-Cuando redimensionas una imagen, cambia una sola dimensión y deja que la otra se calcule automáticamente para mantener la proporción original. Forzar dimensiones que no mantienen la proporción estira o aplasta la imagen de forma visible.
+Si también necesitas ajustar la imagen para formatos específicos de redes sociales, la herramienta [Redimensionar para redes sociales](/redimensionar-redes) tiene presets con los tamaños exactos de cada plataforma.
 
-La herramienta [Redimensionar imagen](/redimensionar) de ToolsFoto mantiene la proporción por defecto — puedes desactivarla si necesitas dimensiones exactas.
+## Redimensionar imágenes para el e-commerce en América Latina
 
-## Para redes sociales: redimensionar y recortar
+En América Latina, los vendedores en marketplaces y tiendas online se enfrentan a requisitos de imagen específicos que varían por plataforma, y las fotografías tomadas con el móvil rara vez cumplen esas especificaciones de salida. **Mercado Libre**, el marketplace más grande de la región con presencia en México, Argentina, Colombia, Chile, Perú, Brasil y otros países, recomienda imágenes de producto de al menos 1200×1200 píxeles en formato cuadrado con fondo blanco. Una fotografía tomada con un smartphone moderno puede tener 4000×3000 píxeles — perfectamente usable como fuente, pero que necesita ser recortada a proporción cuadrada y redimensionada antes de subirse a la plataforma para cumplir los estándares visuales del catálogo.
 
-Las redes sociales no solo tienen un límite de peso — tienen proporciones específicas. Instagram en formato cuadrado necesita 1:1; LinkedIn, 1.91:1. Redimensionar sin recortar puede dejar franjas de fondo.
+Para **tiendas en WooCommerce y Shopify** en la región — las dos plataformas de e-commerce más usadas en LATAM después de Mercado Libre — las imágenes de producto que se suben sin redimensionar crean páginas lentas y una experiencia inconsistente: imágenes que se muestran en distintos tamaños dependiendo del dispositivo porque el tema no puede normalizar imágenes de 4K cuando el producto se muestra en una cuadrícula de 300×300 píxeles. La práctica estándar es subir imágenes de 1200×1200 píxeles para producto individual y 1920×600 píxeles para banners y sliders de inicio.
 
-La herramienta [Redimensionar para redes](/redimensionar-redes) hace las dos operaciones a la vez: redimensiona y recorta a la proporción exacta de cada plataforma con presets predefinidos.
-
-## El flujo recomendado
-
-Para optimizar una imagen para web:
-
-1. [Redimensionar](/redimensionar) a las dimensiones máximas que necesitas (ej. 1200 px de ancho).
-2. [Comprimir](/comprimir) con quality 80 para reducir el peso del archivo.
-3. Si necesitas WebP, [convertir a WebP](/imagen-a-webp) como último paso para un 25–35% de ahorro adicional.
+Para **community managers y creadores de contenido** en México, Colombia, Argentina y Chile que trabajan con imágenes de eventos, productos y personas y deben adaptarlas a múltiples formatos de redes sociales (post cuadrado para Instagram, historia vertical, banner horizontal para Facebook), redimensionar a las dimensiones exactas de cada plataforma antes de subir garantiza que la imagen no quede recortada ni deformada por el algoritmo de visualización automático de cada red. La herramienta de redimensionado por presets de redes sociales en [Redimensionar para redes](/redimensionar-redes) complementa este flujo para los casos de formato específico por plataforma.

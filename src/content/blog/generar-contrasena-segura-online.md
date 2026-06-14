@@ -1,66 +1,84 @@
 ---
-titulo: "Cómo generar una contraseña segura online que de verdad lo sea"
-descripcion: "Muchos generadores de contraseñas usan Math.random(), que no es criptográficamente seguro. Te explico qué hace una contraseña realmente fuerte y cómo crear una en segundos con aleatoriedad real."
+titulo: "Generar contraseñas seguras: por qué tu método actual probablemente falla"
+descripcion: "Las contraseñas débiles siguen siendo la causa número uno de cuentas comprometidas. Te explico qué hace segura a una contraseña, cómo generarlas correctamente y cómo gestionarlas."
 categoria: "tips"
-fecha: "2026-05-28"
+fecha: "2026-05-30"
 keywords:
   - "generar contraseña segura online"
-  - "generador contraseñas aleatorias criptográfico"
-  - "crear password seguro gratis"
-  - "contraseña aleatoria sin instalar"
+  - "crear contraseña fuerte gratis"
+  - "generador contraseñas aleatorias"
+  - "contraseña segura sin gestor"
+  - "cómo crear contraseña segura"
+  - "crear contraseña segura Mercado Pago banca digital Colombia México"
+  - "generador contraseñas celular LATAM sin app"
+  - "cómo proteger cuenta débito ahorros password"
 autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-La mayoría de servicios piden una contraseña de al menos 8 caracteres con mayúsculas, minúsculas y números. Eso está muy por debajo de lo que se considera seguro hoy. **Generar una contraseña segura online** de verdad implica longitud suficiente, aleatoriedad criptográfica y no reutilizarla nunca.
+"Mi cumpleaños y el nombre de mi mascota" no es una contraseña segura. Tampoco lo son variaciones de `123456`, los nombres de tus hijos, ni la misma contraseña que usas para todo. **La mayoría de cuentas comprometidas lo son por contraseñas débiles o reutilizadas** — y el problema es que nunca lo sabes hasta que ya ha pasado.
 
-El [Generador de contraseñas](/generador-contrasenas) de ToolsFoto usa `crypto.getRandomValues()` del navegador — el mismo generador de aleatoriedad que usa el sistema operativo para claves criptográficas. Ninguna contraseña generada sale de tu dispositivo.
+La herramienta [Generador de contraseñas](/generar-contrasena) de ToolsFoto crea contraseñas aleatorias seguras directamente en tu navegador, sin enviar nada a ningún servidor.
 
-## Qué hace que una contraseña sea realmente fuerte
+## Qué hace insegura a una contraseña
 
-### La longitud es el factor más importante
+Las contraseñas débiles comparten características comunes que los atacantes explotan:
 
-Una contraseña de 12 caracteres con el alfabeto completo tiene 95¹² ≈ 540 billones de combinaciones. A 16 caracteres son 95¹⁶ ≈ 4 × 10³¹ combinaciones — prácticamente inviable por fuerza bruta con la tecnología actual, incluso a largo plazo.
+| Problema | Ejemplo | Por qué falla |
+|---|---|---|
+| Longitud corta | `abc123` | Rompible por fuerza bruta en segundos |
+| Palabras del diccionario | `verano2023` | Los ataques de diccionario las prueban primero |
+| Información personal | `juan1985` | Fácil de adivinar con información pública |
+| Reutilización | La misma en todo | Si se filtra una, caen todas |
+| Patrones de teclado | `qwerty`, `asdfgh` | Las primeras en probarse en ataques automáticos |
+| Sustituciones obvias | `p@ssw0rd` | Incluidas en diccionarios modernos de ataque |
 
-El mínimo recomendado hoy para cuentas importantes (email, banco, gestor de contraseñas) es **16 caracteres**.
+## Qué hace segura a una contraseña
 
-### La aleatoriedad real importa más de lo que parece
+Una contraseña robusta tiene estas características:
 
-`Math.random()` — la función de aleatoriedad estándar de JavaScript — no es criptográficamente segura: es predecible si conoces el estado interno del generador. `crypto.getRandomValues()` usa entropía del hardware del dispositivo, lo que la hace genuinamente impredecible.
+- **Longitud mínima de 16 caracteres.** La longitud es el factor más importante. Cada carácter adicional multiplica exponencialmente el tiempo necesario para romperla por fuerza bruta.
+- **Aleatoriedad real.** No elegida por humanos — los humanos somos malos generadores de aleatoriedad, inconscientemente creamos patrones.
+- **Mezcla de tipos de caracteres.** Mayúsculas, minúsculas, números y símbolos amplían el espacio de posibilidades.
+- **Única para cada cuenta.** Una contraseña filtrada solo compromete una cuenta.
 
-La diferencia práctica: una contraseña generada con `Math.random()` podría reconstruirse con suficiente información sobre el sistema. Una generada con `crypto.getRandomValues()` no puede.
+## Por qué `Math.random()` no es suficiente para generar contraseñas
 
-### Variedad de caracteres
+Casi todos los generadores de contraseñas online básicos usan `Math.random()`, la función de números aleatorios estándar de JavaScript. El problema es que `Math.random()` **no es criptográficamente seguro** — su salida es predecible si se conoce el estado interno del generador.
 
-Más tipos de caracteres en el pool = más combinaciones posibles por posición:
+La herramienta de ToolsFoto usa `crypto.getRandomValues()`, la API del navegador diseñada específicamente para criptografía. Es impredecible, usa la entropía del sistema operativo y es la misma base que usan las aplicaciones de seguridad serias.
 
-- Solo minúsculas: 26 opciones por carácter
-- Minúsculas + mayúsculas: 52
-- Letras + números: 62
-- Letras + números + símbolos: ~95
+## Gestores de contraseñas: la solución real
 
-Añadir símbolos incrementa el espacio de búsqueda considerablemente. Sin embargo, si el servicio no admite símbolos en la contraseña, compensa con mayor longitud.
+Generar contraseñas únicas y largas para cada servicio crea el problema de tener que recordarlas. La solución es un **gestor de contraseñas**:
 
-## Cómo generar una contraseña segura paso a paso
+| Gestor | Tipo | Precio |
+|---|---|---|
+| **Bitwarden** | Open source, cloud | Gratuito (plan personal) |
+| **KeePass / KeePassXC** | Open source, local | Gratuito |
+| **1Password** | Propietario, cloud | ~$3/mes |
+| **Apple Keychain / Google Password Manager** | Integrado en el sistema | Gratuito |
 
-1. Abre [Generador de contraseñas](/generador-contrasenas).
-2. Elige la longitud — **mínimo 16 caracteres** para cuentas importantes.
-3. Activa los tipos de caracteres que el servicio permita (mayúsculas, minúsculas, números, símbolos).
-4. Haz clic en **Generar** o pulsa el botón varias veces si algún resultado es difícil de escribir a mano.
-5. Copia la contraseña directamente en tu gestor de contraseñas.
+Un gestor de contraseñas almacena todas tus contraseñas cifradas con una única contraseña maestra (esa sí tienes que recordarla). Solo necesitas recordar una contraseña fuerte para tener acceso a todas las demás.
 
-## Por qué necesitas un gestor de contraseñas
+## Cómo generar una contraseña segura con ToolsFoto
 
-Una contraseña fuerte es inútil si la reutilizas. El 81% de las brechas de datos ocurren porque una contraseña filtrada de un servicio se usa en otros. La solución es una contraseña diferente por servicio — imposible de memorizar sin ayuda.
+1. Abre [Generador de contraseñas](/generar-contrasena).
+2. Elige la longitud (mínimo 16 caracteres recomendado).
+3. Activa los tipos de caracteres que necesitas (mayúsculas, minúsculas, números, símbolos).
+4. Copia la contraseña generada.
+5. Guárdala en tu gestor de contraseñas.
 
-Un gestor de contraseñas (Bitwarden, 1Password, KeePass) almacena todas tus contraseñas cifradas. Solo necesitas recordar una contraseña maestra fuerte para acceder a todas las demás.
+Puedes generar tantas contraseñas como necesites — el proceso ocurre en tu navegador sin ninguna transmisión de datos.
 
-## Cuándo cambiar una contraseña
+## Cómo saber si tu contraseña ya ha sido filtrada
 
-- Cuando el servicio anuncia una brecha de datos (compruébalo en [haveibeenpwned.com](https://haveibeenpwned.com)).
-- Cuando sospechas que alguien tiene acceso no autorizado a tu cuenta.
-- Cuando la contraseña tiene menos de 12 caracteres o es predecible.
+El servicio **Have I Been Pwned** (haveibeenpwned.com) te permite comprobar si tu contraseña o email aparece en bases de datos de filtraciones conocidas. Si tu contraseña aparece en sus bases de datos, cámbiala inmediatamente.
 
-No es necesario cambiar contraseñas periódicamente si son fuertes y únicas — ese consejo está desactualizado y solo genera fatiga que lleva a contraseñas peores. Lo que importa es que sean aleatorias y no se repitan.
+## Contraseñas seguras en el contexto de la seguridad digital en LATAM
 
-Genera la tuya en [Generador de contraseñas](/generador-contrasenas) — sin registro, sin que la contraseña salga de tu navegador.
+América Latina es una de las regiones con mayor crecimiento en incidentes de ciberseguridad, impulsado por la rápida adopción de servicios digitales sin la formación de seguridad correspondiente. En México, Colombia, Argentina, Perú y Brasil, millones de usuarios realizan operaciones bancarias, de pagos y de comercio electrónico desde el móvil con contraseñas creadas antes de entender los riesgos — con frecuencia la misma contraseña de 8 caracteres reutilizada en todos sus servicios.
+
+Las **billeteras digitales y plataformas de pago** más usadas en la región — **Mercado Pago** en Argentina, México y Brasil; **Nequi** y **Daviplata** en Colombia; **OXXO Pay** y **CoDi** en México; **Yape** y **Plin** en Perú — son blancos específicos de ataques de credenciales porque almacenan dinero real. Un atacante que consiga las credenciales de una cuenta de Mercado Pago puede vaciarlo en minutos antes de que el usuario reciba una notificación. La diferencia entre una contraseña de 8 caracteres (rompible en horas con hardware moderno) y una de 20 caracteres aleatorios (prácticamente imposible de romper por fuerza bruta) es la primera línea de defensa.
+
+Para **emprendedores y dueños de tiendas online** en la región que gestionan cuentas de Shopify, WooCommerce, Mercado Libre, Facebook Business y Google Ads — plataformas que dan acceso tanto a datos de clientes como a presupuestos publicitarios — el uso de contraseñas únicas y fuertes por cada plataforma es especialmente crítico. El compromiso de una cuenta de Google Ads puede significar miles de dólares en publicidad fraudulenta cargada a la tarjeta registrada; el de una cuenta de Mercado Libre Seller puede exponer los datos de cientos de clientes.
