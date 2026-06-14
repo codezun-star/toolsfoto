@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MinificadorJSTool from '@/components/tools/MinificadorJSTool';
 
 const faqs = [
-  { q: '¿Qué hace el minificador de JavaScript?', a: 'El minificador elimina los comentarios de bloque (/* */) y de línea (//), y colapsa los espacios en blanco, saltos de línea y tabulaciones en un único espacio donde sea posible. El resultado es un archivo más pequeño que el navegador carga más rápido.' },
-  { q: '¿Es seguro usar este minificador en código de producción?', a: 'El minificador es "básico" y no usa un AST (árbol sintáctico abstracto), por lo que puede alterar código con strings que contengan // o /* */. Para producción real, usa herramientas especializadas como Terser, esbuild o el minificador de Vite/Webpack, que entienden la sintaxis JS al completo.' },
-  { q: '¿Qué hace el modo "Formatear"?', a: 'El modo formateo aplica una indentación básica y separa el código con saltos de línea después de ; y { }. Es útil para hacer legible un código minificado o compacto, aunque no es tan completo como Prettier.' },
-  { q: '¿Puedo descargar el resultado?', a: 'Sí. El botón "Descargar .js" guarda el resultado en un archivo JavaScript. En modo minificar el archivo se llama script.min.js; en modo formatear, script.formatted.js.' },
-  { q: '¿Se muestra cuánto se ha reducido el archivo?', a: 'Sí. Junto al tamaño del resultado se muestra el porcentaje de reducción (por ejemplo, "-35%") en verde. Los tamaños se calculan en bytes reales usando Blob.' },
+  {
+    q: '¿Qué hace el minificador de JavaScript?',
+    a: 'El minificador elimina los comentarios de bloque (/* */) y de línea (//), y colapsa los espacios en blanco, saltos de línea y tabulaciones en un único espacio donde sea posible. El resultado es un archivo más pequeño que el navegador carga más rápido.',
+  },
+  {
+    q: '¿Es seguro usar este minificador en código de producción?',
+    a: 'El minificador es "básico" y no usa un AST (árbol sintáctico abstracto), por lo que puede alterar código con strings que contengan // o /* */. Para producción real, usa herramientas especializadas como Terser, esbuild o el minificador de Vite/Webpack, que entienden la sintaxis JS al completo.',
+  },
+  {
+    q: '¿Qué hace el modo "Formatear"?',
+    a: 'El modo formateo aplica una indentación básica y separa el código con saltos de línea después de ; y { }. Es útil para hacer legible un código minificado o compacto, aunque no es tan completo como Prettier.',
+  },
+  {
+    q: '¿Puedo descargar el resultado?',
+    a: 'Sí. El botón "Descargar .js" guarda el resultado en un archivo JavaScript. En modo minificar el archivo se llama script.min.js; en modo formatear, script.formatted.js.',
+  },
+  {
+    q: '¿Se muestra cuánto se ha reducido el archivo?',
+    a: 'Sí. Junto al tamaño del resultado se muestra el porcentaje de reducción (por ejemplo, "-35%") en verde. Los tamaños se calculan en bytes reales usando Blob.',
+  },
+  {
+    q: '¿Cuál es la diferencia con Terser o esbuild?',
+    a: 'Terser y esbuild parsean el JavaScript como un árbol sintáctico abstracto (AST), lo que les permite renombrar variables a nombres más cortos (mangling), eliminar código muerto (dead code elimination), inlining de constantes y otras optimizaciones que reducen el archivo entre un 60% y 80%. Este minificador opera a nivel de texto, sin parsear el AST: elimina comentarios y espacios, lo que consigue reducciones del 20-40%. La ventaja es que funciona directamente en el navegador sin instalar nada, es ideal para snippets, scripts pequeños o cuando solo se quiere una compresión rápida sin configurar un entorno de build.',
+  },
+  {
+    q: '¿Cómo afecta el tamaño de los scripts JS al rendimiento en sitios de LATAM?',
+    a: 'En América Latina, un alto porcentaje de usuarios accede desde smartphones Android con conexiones 4G variables o 3G. Un script JavaScript no minificado de 100 KB puede tardar 2-3 segundos en descargarse en condiciones de señal débil, más 500 ms adicionales en parsearse y ejecutarse. Para tiendas en Shopify con muchos scripts de terceros (chat, analytics, reviews), reducir el JS es crítico para el Core Web Vitals INP (Interaction to Next Paint). Scripts de WordPress en sitios con WooCommerce, sliders o plugins de redes sociales acumulan cientos de KB de JS que pueden minificarse individualmente con esta herramienta antes de subirlos al servidor.',
+  },
 ];
 ---
 <ToolLayout slug="minificador-js" faqs={faqs}>
   <MinificadorJSTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona el minificador basado en texto</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La función <code>minifyJS()</code> aplica cuatro pasos: elimina comentarios de bloque (<code>/\*[\s\S]*?\*/</code>), elimina comentarios de línea con un lookbehind negativo (<code>(?&lt;![:\w])\/\/[^\n]*</code>) para no romper URLs como <code>https://</code>, colapsa secuencias de espacios/tabs/saltos de línea en un solo espacio, y elimina espacios alrededor de operadores y puntuación (<code>=+-*/%&amp;|^~!&lt;&gt;?:;,{}[]()</code>). El modo <code>formatJS()</code> recorre el string carácter a carácter, gestionando un nivel de indentación para <code>{}</code> y saltos de línea para <code>;</code>, respetando strings entre comillas para no romper su contenido.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Rendimiento JavaScript en proyectos de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El JavaScript es el mayor cuello de botella de rendimiento en sitios web modernos de América Latina. Tiendas de Shopify con apps de terceros pueden acumular 500 KB de JS; sitios de WordPress con plugins de WooCommerce, SEO y analytics añaden scripts sin minificar que bloquean el renderizado. Para sitios que no tienen un bundler (páginas estáticas, temas PHP, scripts de Google Tag Manager), este minificador permite reducir el peso de snippets individuales antes de subirlos. Útil también para minificar scripts de Google Ads o Meta Pixel personalizados antes de implementarlos en el gestor de etiquetas, o para optimizar JavaScript de landing pages construidas con Elementor o Divi en el mercado hispanohablante.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

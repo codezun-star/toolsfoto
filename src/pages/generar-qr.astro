@@ -23,8 +23,31 @@ const faqs = [
     q: '¿Caduca el código QR generado?',
     a: 'No. Los códigos QR son simplemente imágenes que codifican datos. No caducan ni requieren ningún servicio externo para funcionar. El QR generado funciona indefinidamente mientras los datos que contiene sean accesibles (por ejemplo, una URL que siga activa).',
   },
+  {
+    q: '¿Cuántos caracteres puedo codificar en un QR?',
+    a: 'Depende del nivel de corrección de errores y del tipo de datos. En su versión máxima (versión 40), un QR puede almacenar hasta 7089 dígitos numéricos, 4296 caracteres alfanuméricos o 2953 bytes de datos binarios con nivel L. La biblioteca selecciona automáticamente la versión mínima necesaria para el texto que escribas. Si el texto es muy largo, el QR resultante será más denso y puede ser difícil de escanear en tamaños pequeños.',
+  },
+  {
+    q: '¿Cómo se usan los QR en campañas de marketing y negocios en LATAM?',
+    a: 'En América Latina los QR se usan masivamente para conectar el mundo físico con el digital: vendedores de Mercado Libre los imprimen en tarjetas para llevar a clientes a su tienda; WhatsApp Business los genera para que clientes escaneen y abran una conversación directa; restaurantes de México, Colombia y Argentina los usan para mostrar la carta digital en lugar de menús físicos; influencers de TikTok e Instagram los ponen en stories y bio para redirigir a enlaces de afiliado. También son estándar en pagos QR de Mercado Pago, CoDi (México) y Pix (Brasil).',
+  },
 ];
 ---
 <ToolLayout slug="generar-qr" faqs={faqs}>
   <GenerarQRTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Generación en canvas con corrección de errores</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa la librería <code>qrcode</code> con <code>QRCode.toCanvas()</code>, que dibuja el código QR directamente en un elemento <code>&lt;canvas&gt;</code> del navegador. Los niveles de corrección de errores siguen el estándar ISO 18004: L (7%), M (15%), Q (25%) y H (30%). A mayor corrección, el QR tiene más módulos de redundancia y tolera más daño, pero también es más denso. Los tamaños disponibles (200, 400, 600, 800 px) se renderizan en canvas y la descarga se obtiene con <code>canvas.toDataURL('image/png')</code>, por lo que el archivo nunca pasa por ningún servidor.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">QR en el ecosistema digital de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los códigos QR son parte fundamental del comercio y la comunicación digital en América Latina. Mercado Pago y CoDi (México) usan QR para pagos sin contacto; Rappi y PedidosYa los usan en restaurantes para acceso a menús digitales; Hotmart y Udemy impresores de cursos los incluyen en materiales físicos. Para negocios en WhatsApp Business, un QR que abra directamente una conversación en wa.me elimina la fricción de buscar el número. Si tienes una tienda en Shopify, WooCommerce o VTEX, puedes generar QR que enlacen directamente a productos o categorías para incluirlos en empaques, flyers y publicidad exterior.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

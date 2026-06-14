@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MinificadorSVGTool from '@/components/tools/MinificadorSVGTool';
 
 const faqs = [
-  { q: '¿Qué elimina el minificador de un SVG?', a: 'Elimina comentarios XML, metadatos, elementos title y desc, atributos de namespaces de edición (inkscape:*, sodipodi:*, dc:*, cc:*, rdf:*), bloques defs vacíos, la declaración XML y espacios en blanco redundantes.' },
-  { q: '¿Se puede abrir el SVG minificado en un editor gráfico?', a: 'Sí, los SVG minificados siguen siendo archivos SVG válidos que se abren correctamente en Inkscape, Illustrator, navegadores y cualquier visor de SVG. Solo se eliminan datos irrelevantes para el renderizado.' },
-  { q: '¿Cuánto se reduce el tamaño típicamente?', a: 'Depende de cuántos metadatos tenga el SVG original. Los SVG exportados desde Inkscape suelen reducirse un 20-50% porque incluyen muchos atributos de edición propios de Inkscape que no son necesarios para su visualización.' },
-  { q: '¿Se pierden animaciones o efectos al minificar?', a: 'No. Solo se eliminan atributos y metadatos que no afectan al renderizado ni las animaciones. Los paths, formas, colores, gradientes y animaciones CSS/SMIL se conservan intactos.' },
-  { q: '¿Puedo pegar el SVG directamente o debo subir un archivo?', a: 'Puedes hacer ambas cosas. Pega el código SVG directamente en el área de texto, o arrastra y suelta (o sube) un archivo .svg. El resultado aparece en el área inferior con el porcentaje de reducción.' },
+  {
+    q: '¿Qué elimina el minificador de un SVG?',
+    a: 'Elimina comentarios XML, metadatos, elementos title y desc, atributos de namespaces de edición (inkscape:*, sodipodi:*, dc:*, cc:*, rdf:*), bloques defs vacíos, la declaración XML y espacios en blanco redundantes.',
+  },
+  {
+    q: '¿Se puede abrir el SVG minificado en un editor gráfico?',
+    a: 'Sí, los SVG minificados siguen siendo archivos SVG válidos que se abren correctamente en Inkscape, Illustrator, navegadores y cualquier visor de SVG. Solo se eliminan datos irrelevantes para el renderizado.',
+  },
+  {
+    q: '¿Cuánto se reduce el tamaño típicamente?',
+    a: 'Depende de cuántos metadatos tenga el SVG original. Los SVG exportados desde Inkscape suelen reducirse un 20-50% porque incluyen muchos atributos de edición propios de Inkscape que no son necesarios para su visualización.',
+  },
+  {
+    q: '¿Se pierden animaciones o efectos al minificar?',
+    a: 'No. Solo se eliminan atributos y metadatos que no afectan al renderizado ni las animaciones. Los paths, formas, colores, gradientes y animaciones CSS/SMIL se conservan intactos.',
+  },
+  {
+    q: '¿Puedo pegar el SVG directamente o debo subir un archivo?',
+    a: 'Puedes hacer ambas cosas. Pega el código SVG directamente en el área de texto, o arrastra y suelta (o sube) un archivo .svg. El resultado aparece en el área inferior con el porcentaje de reducción.',
+  },
+  {
+    q: '¿Qué son los atributos de Inkscape que se eliminan?',
+    a: 'Inkscape, al guardar archivos SVG, añade decenas de atributos propios para recordar el estado del editor: inkscape:version (versión de Inkscape), inkscape:label (nombres de capas), sodipodi:nodetypes (tipos de nodos de los paths), dc:title (título en Dublin Core), cc:license (licencia Creative Commons en RDF), y declaraciones de namespace como xmlns:inkscape, xmlns:sodipodi, xmlns:dc. Todos son útiles para editar en Inkscape pero completamente innecesarios para mostrar el SVG en la web o en otros programas. El minificador elimina estos atributos sin tocar los elementos visuales del SVG.',
+  },
+  {
+    q: '¿Cómo se usan SVG optimizados en sitios web y proyectos de diseño en LATAM?',
+    a: 'Los SVG son el formato preferido para logos, iconos e ilustraciones en la web latinoamericana: escalan sin pérdida en cualquier resolución, pesan menos que PNG/JPG y son estilizables con CSS. Diseñadores de Canva (muy popular en la región) pueden exportar SVG e incluirlos en sitios de WordPress, Shopify o Webflow; al minificarlos con esta herramienta, los archivos de 50 KB exportados desde Canva o Illustrator se reducen a 25-30 KB. Para tiendas en WooCommerce o Mercado Shops que usan iconos SVG en sus páginas de producto, tener SVG optimizados mejora el PageSpeed de Google y reduce los datos móviles que consume el usuario al navegar la tienda.',
+  },
 ];
 ---
 <ToolLayout slug="minificador-svg" faqs={faqs}>
   <MinificadorSVGTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Qué elimina el minificador y por qué</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La función <code>minifySVG()</code> aplica una secuencia de transformaciones regex: elimina comentarios XML (<code>&lt;!-- ... --&gt;</code>), bloques <code>&lt;metadata&gt;</code>, <code>&lt;title&gt;</code> y <code>&lt;desc&gt;</code> completos, todos los atributos con prefijos <code>inkscape:</code>, <code>sodipodi:</code>, <code>dc:</code>, <code>cc:</code> y <code>rdf:</code> (metadatos del editor Inkscape), declaraciones de namespace <code>xmlns:inkscape</code> y similares, bloques <code>&lt;defs&gt;</code> vacíos, la declaración XML (<code>&lt;?xml ...?&gt;</code>) y el DOCTYPE. Después colapsa espacios múltiples, elimina espacios entre etiquetas y antes de <code>/&gt;</code>, y los espacios alrededor de <code>=</code> en atributos. El resultado es un SVG visualmente idéntico pero sin ningún byte innecesario.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">SVG en el diseño web de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En América Latina, los SVG son el formato estándar para logos, ilustraciones y sistemas de iconos en proyectos web modernos. Herramientas de diseño populares en la región como Canva, Figma y Adobe Illustrator exportan SVG con abundantes metadatos de edición que duplican el tamaño real del gráfico. Para proyectos en WordPress (con el tema Astra o GeneratePress), Shopify o en agencias que entregan sitios a clientes, optimizar los SVG antes de subirlos al servidor reduce el peso de la página sin afectar la calidad visual. Los SVG inline (pegados directamente en el HTML) también se benefician de la minificación: un SVG de 8 KB minificado a 4 KB que se repite 20 veces en una página de iconos representa un ahorro de 80 KB en el HTML inicial.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

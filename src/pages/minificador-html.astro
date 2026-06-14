@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import MinificadorHTMLTool from '@/components/tools/MinificadorHTMLTool';
 
 const faqs = [
-  { q: '¿Qué hace el minificador HTML?', a: 'Elimina comentarios HTML, colapsa múltiples espacios en blanco en uno solo, y elimina espacios innecesarios entre etiquetas. El resultado es HTML funcionalmente idéntico pero con menor peso.' },
-  { q: '¿Cuánto se puede reducir el tamaño de un HTML?', a: 'Depende del código fuente. HTML con mucha indentación y comentarios puede reducirse un 20-40%. El mayor beneficio es en archivos con mucho espaciado o generados automáticamente.' },
-  { q: '¿El HTML minificado es funcionalmente idéntico?', a: 'Sí para HTML normal. Sin embargo, la minificación puede afectar el espaciado de elementos inline como <span> o <a> cuando hay espacios significativos entre ellos. Verifica el resultado en un navegador.' },
-  { q: '¿Para qué sirve el modo formatear?', a: 'El formateo (beautify) sirve para el proceso contrario: tomar HTML minificado o con formato incorrecto y hacerlo legible con indentación y saltos de línea. Es útil para revisar HTML comprimido.' },
-  { q: '¿Es seguro pegar código HTML confidencial?', a: 'Sí. Todo el procesamiento ocurre en tu navegador con JavaScript nativo. El código HTML que pegas nunca se envía a ningún servidor.' },
+  {
+    q: '¿Qué hace el minificador HTML?',
+    a: 'Elimina comentarios HTML, colapsa múltiples espacios en blanco en uno solo, y elimina espacios innecesarios entre etiquetas. El resultado es HTML funcionalmente idéntico pero con menor peso.',
+  },
+  {
+    q: '¿Cuánto se puede reducir el tamaño de un HTML?',
+    a: 'Depende del código fuente. HTML con mucha indentación y comentarios puede reducirse un 20-40%. El mayor beneficio es en archivos con mucho espaciado o generados automáticamente.',
+  },
+  {
+    q: '¿El HTML minificado es funcionalmente idéntico?',
+    a: 'Sí para HTML normal. Sin embargo, la minificación puede afectar el espaciado de elementos inline como span o a cuando hay espacios significativos entre ellos. Verifica el resultado en un navegador.',
+  },
+  {
+    q: '¿Para qué sirve el modo formatear?',
+    a: 'El formateo (beautify) sirve para el proceso contrario: tomar HTML minificado o con formato incorrecto y hacerlo legible con indentación y saltos de línea. Es útil para revisar HTML comprimido.',
+  },
+  {
+    q: '¿Es seguro pegar código HTML confidencial?',
+    a: 'Sí. Todo el procesamiento ocurre en tu navegador con JavaScript nativo. El código HTML que pegas nunca se envía a ningún servidor.',
+  },
+  {
+    q: '¿Cuándo es más útil el modo "formatear" HTML?',
+    a: 'El modo formatear es especialmente útil cuando: recibes HTML minificado de terceros (templates de email de Mailchimp, código de widgets embebidos, snippets de analytics) y necesitas leerlo para modificarlo; quieres depurar el HTML generado por un CMS o framework que produce salida comprimida; o copias HTML desde la pestaña Elements de DevTools, que muestra el DOM actual pero sin indentación consistente. También es útil para formatear templates de Shopify Liquid o plantillas de correo de HubSpot antes de editarlos.',
+  },
+  {
+    q: '¿Cómo afecta el HTML minificado al rendimiento y SEO de sitios en LATAM?',
+    a: 'El HTML minificado reduce el TTFB (Time to First Byte) y el tiempo de parsing del DOM, lo que mejora el LCP y el FID en los Core Web Vitals de Google. Para sitios de e-commerce en WooCommerce, Shopify o VTEX que sirven páginas de 100-200 KB de HTML, minificar puede ahorrar 20-40 KB por página. En conexiones 3G comunes en zonas rurales de México, Colombia y Perú, ese ahorro es perceptible. Servidores con cPanel o Nginx en hosting compartido de la región (Hostinger, GoDaddy LATAM) a menudo no habilitan compresión Gzip automáticamente para todo el contenido, por lo que el tamaño del HTML sin comprimir impacta directamente en la velocidad de carga.',
+  },
 ];
 ---
 <ToolLayout slug="minificador-html" faqs={faqs}>
   <MinificadorHTMLTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Algoritmo de minificación y formateo basado en tokens</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La función <code>minifyHTML()</code> aplica regex en cadena: elimina comentarios <code>&lt;!-- ... --&gt;</code>, colapsa espacios múltiples en uno, elimina espacios entre etiquetas (<code>&gt;\s+&lt;</code> → <code>&gt;&lt;</code>), limpia espacios antes de <code>&gt;</code> y después de <code>&lt;</code>. La función <code>formatHTML()</code> usa un enfoque basado en tokens: divide el HTML en etiquetas y texto con <code>match(/&lt;[^&gt;]+&gt;|[^&lt;]+/g)</code>, y para cada token decide si aumentar o disminuir la indentación según si es etiqueta de cierre (<code>&lt;/</code>), de apertura o texto. Las etiquetas auto-cerrantes (area, base, br, col, img, input…) no incrementan el nivel de indentación.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">HTML y rendimiento web en el contexto de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En América Latina, la optimización del HTML es especialmente relevante para sitios de alto tráfico: tiendas en Mercado Shops, landing pages de campañas en Meta Ads y Google Ads, y blogs de WordPress con mucho contenido. El HTML minificado reduce el tiempo de parsing del navegador y el peso de la respuesta HTTP, mejorando las métricas de Core Web Vitals que Google usa para el ranking. Para templates de email en HTML (Mailchimp, SendGrid, Amazon SES) que se envían a miles de suscriptores en la región, el modo formatear ayuda a leer y editar plantillas que los ESPs devuelven minificadas, mientras el modo minificar reduce el peso final del email antes del envío, importante porque algunos clientes de correo tienen límites de tamaño.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

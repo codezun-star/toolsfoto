@@ -1,13 +1,53 @@
 ---
 import ToolLayout from '@/components/layout/ToolLayout.astro';
 import JwtDecoderTool from '@/components/tools/JwtDecoderTool';
+
+const faqs = [
+  {
+    q: '¿Qué es un token JWT?',
+    a: 'JWT (JSON Web Token) es un estándar abierto para transmitir información de forma segura entre partes como un objeto JSON. Se usa habitualmente para autenticación en APIs REST. Tiene tres partes separadas por puntos: header.payload.signature.',
+  },
+  {
+    q: '¿Es seguro pegar mi token aquí?',
+    a: 'Todo el procesamiento es 100% local en tu navegador. El token nunca sale de tu dispositivo. Dicho esto, los JWT de producción son credenciales sensibles; úsalos solo en entornos seguros y evita compartirlos.',
+  },
+  {
+    q: '¿Puedo verificar la firma del token?',
+    a: 'No. Para verificar la firma se necesita la clave secreta (HMAC) o la clave pública (RSA/ECDSA), que nunca debes compartir. Esta herramienta solo decodifica el header y el payload, que son datos públicos en Base64url.',
+  },
+  {
+    q: '¿Cómo sé si mi token ha expirado?',
+    a: 'Si el payload contiene el campo "exp" (Unix timestamp de expiración), la herramienta lo detecta automáticamente y muestra si el token está vigente o expirado, junto con la fecha y hora exacta de vencimiento.',
+  },
+  {
+    q: '¿Qué algoritmos de firma muestra la herramienta?',
+    a: 'El algoritmo de firma (HS256, RS256, ES256, etc.) está en el header del token, en el campo "alg". La herramienta lo muestra junto con el tipo de token (typ). Solo se muestra, no se verifica.',
+  },
+  {
+    q: '¿Cómo se usa JWT en frameworks como Express, Laravel o Django?',
+    a: 'En Express.js se usa la librería jsonwebtoken: jwt.sign(payload, secret, { expiresIn: "1h" }) genera el token y jwt.verify(token, secret) lo valida. En Laravel, la librería Tymon/jwt-auth gestiona tokens con auth:api middleware. En Django, djangorestframework-simplejwt es el estándar. En todos los casos, el cliente envía el JWT en el header HTTP Authorization: Bearer <token> y el servidor lo valida en cada petición protegida. Esta herramienta ayuda a depurar qué contiene el payload en cada etapa.',
+  },
+  {
+    q: '¿Qué APIs de LATAM usan JWT para autenticación?',
+    a: 'La mayoría de APIs modernas en América Latina adoptan JWT como estándar: Mercado Libre emite access_token JWT para su API OAuth2; Conekta, Kushki y Culqi usan tokens Bearer en sus SDKs de pago; Stripe LATAM sigue el mismo patrón. Al integrar estas APIs, recibir el JWT y querer ver la fecha de expiración o el scope incluido sin configurar un entorno de debugging completo es un caso de uso frecuente para esta herramienta. También es útil cuando un webhook de Hotmart, DistroKid o cualquier plataforma SaaS incluye un JWT en la cabecera para validar la autenticidad del request.',
+  },
+];
 ---
-<ToolLayout slug="jwt-decoder" faqs={[
-  { q: '¿Qué es un token JWT?', a: 'JWT (JSON Web Token) es un estándar abierto para transmitir información de forma segura entre partes como un objeto JSON. Se usa habitualmente para autenticación en APIs REST. Tiene tres partes separadas por puntos: header.payload.signature.' },
-  { q: '¿Es seguro pegar mi token aquí?', a: 'Todo el procesamiento es 100% local en tu navegador. El token nunca sale de tu dispositivo. Dicho esto, los JWT de producción son credenciales sensibles; úsalos solo en entornos seguros y evita compartirlos.' },
-  { q: '¿Puedo verificar la firma del token?', a: 'No. Para verificar la firma se necesita la clave secreta (HMAC) o la clave pública (RSA/ECDSA), que nunca debes compartir. Esta herramienta solo decodifica el header y el payload, que son datos públicos en Base64url.' },
-  { q: '¿Cómo sé si mi token ha expirado?', a: 'Si el payload contiene el campo "exp" (Unix timestamp de expiración), la herramienta lo detecta automáticamente y muestra si el token está vigente o expirado, junto con la fecha y hora exacta de vencimiento.' },
-  { q: '¿Qué algoritmos de firma muestra la herramienta?', a: 'El algoritmo de firma (HS256, RS256, ES256, etc.) está en el header del token, en el campo "alg". La herramienta lo muestra junto con el tipo de token (typ). Solo se muestra, no se verifica.' },
-]}>
+<ToolLayout slug="jwt-decoder" faqs={faqs}>
   <JwtDecoderTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Decodificación Base64url sin librería externa</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El JWT usa Base64url, una variante de Base64 que reemplaza <code>+</code> por <code>-</code> y <code>/</code> por <code>_</code>, y omite el padding <code>=</code>. La función <code>base64urlDecode()</code> de la herramienta invierte estos cambios (restaura <code>+</code> y <code>/</code>, añade <code>=</code> hasta completar múltiplos de 4) y luego usa <code>atob()</code> para decodificar el string, pasando el resultado por <code>TextDecoder</code> para manejar caracteres Unicode correctamente. El método <code>parseJwt()</code> divide el token por <code>.</code>, decodifica header y payload como JSON, y detecta el campo <code>exp</code> para compararlo con <code>Date.now()</code>.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">JWT en APIs e integraciones de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el ecosistema de desarrollo en América Latina, los JWT aparecen en prácticamente toda integración API moderna. Al conectar con la API de Mercado Libre, el flujo OAuth2 devuelve un <code>access_token</code> que es un JWT: decodificarlo revela el <code>user_id</code>, el <code>scope</code> y el tiempo de expiración, útil para saber cuándo refrescar el token. Pasarelas de pago como Conekta o Kushki usan tokens Bearer en sus webhooks. Al depurar por qué una petición devuelve 401 Unauthorized, decodificar el JWT aquí es el primer paso: verifica que el token no haya expirado (<code>exp</code>), que el scope incluya el permiso necesario y que el <code>iss</code> (issuer) sea correcto.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import LoremIpsumTool from '@/components/tools/LoremIpsumTool';
 
 const faqs = [
-  { q: '¿Qué es el Lorem Ipsum?', a: 'Lorem ipsum es un texto estándar de la industria tipográfica y del diseño gráfico usado como texto de relleno (placeholder) desde los años 1500. Proviene de un pasaje del libro "De finibus bonorum et malorum" del filósofo romano Cicerón, aunque la versión moderna está alterada.' },
-  { q: '¿Para qué se usa el Lorem Ipsum?', a: 'Se usa para rellenar maquetas de diseño web, presentaciones, prototipos de aplicaciones y plantillas de documentos. Al ser texto sin significado, el lector se enfoca en el diseño visual en lugar del contenido, lo que es útil en fases tempranas de diseño.' },
-  { q: '¿Puedo generar párrafos, frases o palabras sueltas?', a: 'Sí. La herramienta ofrece tres modos: Párrafos (bloques de texto de 4-8 frases cada uno), Frases (frases individuales de longitud variable) y Palabras (palabras sueltas del corpus lorem ipsum). Ajusta la cantidad con el slider.' },
-  { q: '¿El texto generado siempre empieza con "Lorem ipsum"?', a: 'Por defecto sí, ya que es lo que los diseñadores esperan al revisar una maqueta. Puedes desactivar la opción "Empezar con Lorem ipsum" para obtener texto completamente aleatorio desde la primera palabra.' },
-  { q: '¿Puedo descargar el texto generado?', a: 'Sí. El botón "Descargar .txt" guarda el texto como un archivo de texto plano que puedes abrir con cualquier editor. También puedes copiarlo al portapapeles con el botón "Copiar".' },
+  {
+    q: '¿Qué es el Lorem Ipsum?',
+    a: 'Lorem ipsum es un texto estándar de la industria tipográfica y del diseño gráfico usado como texto de relleno (placeholder) desde los años 1500. Proviene de un pasaje del libro "De finibus bonorum et malorum" del filósofo romano Cicerón, aunque la versión moderna está alterada.',
+  },
+  {
+    q: '¿Para qué se usa el Lorem Ipsum?',
+    a: 'Se usa para rellenar maquetas de diseño web, presentaciones, prototipos de aplicaciones y plantillas de documentos. Al ser texto sin significado, el lector se enfoca en el diseño visual en lugar del contenido, lo que es útil en fases tempranas de diseño.',
+  },
+  {
+    q: '¿Puedo generar párrafos, frases o palabras sueltas?',
+    a: 'Sí. La herramienta ofrece tres modos: Párrafos (bloques de texto de 4-8 frases cada uno), Frases (frases individuales de longitud variable) y Palabras (palabras sueltas del corpus lorem ipsum). Ajusta la cantidad con el slider.',
+  },
+  {
+    q: '¿El texto generado siempre empieza con "Lorem ipsum"?',
+    a: 'Por defecto sí, ya que es lo que los diseñadores esperan al revisar una maqueta. Puedes desactivar la opción "Empezar con Lorem ipsum" para obtener texto completamente aleatorio desde la primera palabra.',
+  },
+  {
+    q: '¿Puedo descargar el texto generado?',
+    a: 'Sí. El botón "Descargar .txt" guarda el texto como un archivo de texto plano que puedes abrir con cualquier editor. También puedes copiarlo al portapapeles con el botón "Copiar".',
+  },
+  {
+    q: '¿Por qué se usa Lorem Ipsum y no texto real para maquetas?',
+    a: 'El texto real distrae al revisor: se lee el contenido en lugar de evaluar el diseño (tipografía, espaciado, jerarquía visual). Lorem ipsum, al no tener significado en ningún idioma moderno, elimina esa distracción y permite juzgar el diseño por sí mismo. Además, como todos los profesionales del diseño y desarrollo web lo reconocen, no hay confusión sobre si el texto es definitivo o de relleno. Usar texto repetido como "texto de ejemplo texto de ejemplo" crea patrones visuales artificiales que el lorem ipsum evita.',
+  },
+  {
+    q: '¿Cómo usan el Lorem Ipsum los diseñadores web en LATAM con Figma y WordPress?',
+    a: 'En el flujo de trabajo de diseñadores y desarrolladores de América Latina, el lorem ipsum aparece en Figma y Adobe XD al prototipar pantallas antes de recibir el copy definitivo del cliente; en WordPress y Elementor al construir la estructura visual de una landing page; en plantillas de WooCommerce y Shopify para las descripciones de producto de ejemplo; y en emails de prueba en Mailchimp o SendGrid para verificar el renderizado antes de tener el texto final. Tener un generador rápido disponible en el navegador ahorra tiempo frente a buscar texto en una página externa.',
+  },
 ];
 ---
 <ToolLayout slug="lorem-ipsum" faqs={faqs}>
   <LoremIpsumTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Corpus de palabras y tres modos de generación</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta mantiene un corpus de más de 180 palabras derivadas del texto clásico de Cicerón. La función <code>randomWord()</code> selecciona palabras al azar con <code>Math.floor(Math.random() * WORDS.length)</code>, adecuado para texto de relleno (no crítico desde el punto de vista criptográfico). En modo <strong>Párrafos</strong>, cada bloque tiene 4-8 frases de 8-17 palabras generadas con <code>sentence()</code>. En modo <strong>Frases</strong>, genera frases individuales. En modo <strong>Palabras</strong>, devuelve palabras separadas por espacios. La opción "Empezar con Lorem ipsum" fija el primer elemento al texto clásico reconocible, mientras el resto se genera aleatoriamente.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Lorem ipsum en el flujo de diseño y desarrollo de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En los equipos de diseño y desarrollo web de México, Colombia, Argentina y Chile, el lorem ipsum es un compañero constante. Diseñadores que usan Figma o Adobe XD lo insertan como texto de relleno antes de recibir el copy del cliente. Desarrolladores de WordPress con Elementor o Divi lo usan para rellenar secciones mientras el cliente decide el contenido. En proyectos de e-commerce con WooCommerce o PrestaShop, las descripciones de producto de los temas de demostración siempre llevan lorem ipsum. También es útil para probar límites de diseño: cuántas palabras caben en un botón, cuánto ocupa un párrafo en mobile, cómo se ve el tipado en diferentes pesos de fuente.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

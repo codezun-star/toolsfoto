@@ -23,8 +23,31 @@ const faqs = [
     q: '¿Puedo usar esta herramienta para hacer legible un CSS minificado?',
     a: 'Sí. El modo "Formatear" aplica indentación y saltos de línea para hacer legible un CSS comprimido. Es útil para inspeccionar CSS de terceros o de build tools.',
   },
+  {
+    q: '¿Cuándo debo minificar CSS manualmente y cuándo usar un build tool?',
+    a: 'Minifica manualmente aquí cuando: tienes un archivo CSS estático que no forma parte de un proyecto con bundler (un CSS de plantilla, un plugin de WordPress, un snippet para un cliente), quieres inspeccionar qué hace un minificador, o necesitas probar rápidamente cuánto se reduce un archivo concreto. Usa un build tool (Vite, Webpack, Parcel) cuando el CSS es parte de un proyecto con múltiples archivos, componentes o preprocesadores (SASS, PostCSS), ya que estos herramientas también manejan tree-shaking, autoprefixer y sourcemaps.',
+  },
+  {
+    q: '¿Cómo impacta la minificación CSS en el SEO y Core Web Vitals de sitios en LATAM?',
+    a: 'Google usa los Core Web Vitals (LCP, CLS, INP) como factor de ranking. Un CSS no minificado ralentiza el renderizado inicial de la página porque el navegador debe parsear más bytes antes de mostrar contenido. En países de LATAM donde muchos usuarios tienen conexiones 4G o 3G lentas y usan datos móviles, reducir el CSS de 50 KB a 30 KB puede mejorar el LCP en varios décimas de segundo. Para sitios en WordPress, WooCommerce, Shopify o tiendas en VTEX, usar CSS minificado en todos los archivos cargados en el head mejora tanto la experiencia del usuario como el posicionamiento en Google.',
+  },
 ];
 ---
 <ToolLayout slug="minificador-css" faqs={faqs}>
   <MinificadorCSSTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona la minificación y el formateo CSS</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La función <code>minifyCSS()</code> aplica cinco transformaciones regex en cadena: elimina comentarios <code>/* ... */</code>, colapsa espacios alrededor de <code>{} : ; , &gt; ~ +</code>, reduce espacios múltiples a uno solo, elimina el punto y coma antes de <code>}</code> y elimina espacios al inicio/fin de cada línea. El modo <code>beautifyCSS()</code> hace el proceso inverso: inserta saltos de línea después de <code>{</code> y <code>;</code>, y calcula la profundidad de indentación contando llaves de apertura y cierre para aplicar 2 espacios por nivel. El contador de bytes en pantalla usa <code>Blob</code> para dar el tamaño real en UTF-8, no solo la longitud de caracteres.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Rendimiento CSS en proyectos web de LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En América Latina, más del 60% del tráfico web proviene de dispositivos móviles con conexiones variables. El CSS no minificado es un recurso bloqueante del renderizado: el navegador no puede mostrar el contenido visual hasta haber descargado y parseado todo el CSS del <code>&lt;head&gt;</code>. Para sitios en WordPress con Elementor, WooCommerce o temas de Themeforest que acumulan múltiples archivos CSS, minificar y combinar esos archivos puede reducir el tiempo de bloqueo en 200-400 ms. Plugins como LiteSpeed Cache o WP Rocket hacen esto automáticamente, pero esta herramienta es útil para hacerlo manualmente o para temas personalizados donde los plugins no tienen acceso completo al CSS generado.
+      </p>
+    </div>
+  </section>
 </ToolLayout>

@@ -3,13 +3,51 @@ import ToolLayout from '@/components/layout/ToolLayout.astro';
 import RegexTesterTool from '@/components/tools/RegexTesterTool';
 
 const faqs = [
-  { q: '¿Qué son las expresiones regulares?', a: 'Las expresiones regulares (regex) son patrones para buscar y manipular texto. Usan caracteres especiales como . (cualquier carácter), * (0 o más repeticiones), + (1 o más), [] (conjuntos) y muchos más.' },
-  { q: '¿Qué significan los flags g, i, m y s?', a: 'g (global) encuentra todas las coincidencias en lugar de detenerse en la primera. i (case insensitive) ignora mayúsculas/minúsculas. m (multiline) hace que ^ y $ coincidan con inicio/fin de línea. s (dotAll) hace que . coincida también con saltos de línea.' },
-  { q: '¿Cómo se usan los grupos de captura?', a: 'Rodea una parte del patrón con paréntesis: (\\d+) captura uno o más dígitos. Con grupos nombrados: (?<año>\\d{4}). Las coincidencias de grupos se muestran en el detalle de cada resultado.' },
-  { q: '¿Se puede probar la regex contra texto multilínea?', a: 'Sí. El área de texto acepta múltiples líneas. Para que ^ y $ coincidan con inicio/fin de cada línea (no solo del texto completo), activa el flag m (multiline).' },
-  { q: '¿Las regex de esta herramienta son compatibles con JavaScript?', a: 'Sí. La herramienta usa el motor de JavaScript (RegExp) del navegador, por lo que el comportamiento es exactamente el mismo que al usar regex en código JavaScript.' },
+  {
+    q: '¿Qué son las expresiones regulares?',
+    a: 'Las expresiones regulares (regex) son patrones para buscar y manipular texto. Usan caracteres especiales como . (cualquier carácter), * (0 o más repeticiones), + (1 o más), [] (conjuntos) y muchos más.',
+  },
+  {
+    q: '¿Qué significan los flags g, i, m y s?',
+    a: 'g (global) encuentra todas las coincidencias en lugar de detenerse en la primera. i (case insensitive) ignora mayúsculas/minúsculas. m (multiline) hace que ^ y $ coincidan con inicio/fin de línea. s (dotAll) hace que . coincida también con saltos de línea.',
+  },
+  {
+    q: '¿Cómo se usan los grupos de captura?',
+    a: 'Rodea una parte del patrón con paréntesis: (\d+) captura uno o más dígitos. Con grupos nombrados: (?<año>\d{4}). Las coincidencias de grupos se muestran en el detalle de cada resultado.',
+  },
+  {
+    q: '¿Se puede probar la regex contra texto multilínea?',
+    a: 'Sí. El área de texto acepta múltiples líneas. Para que ^ y $ coincidan con inicio/fin de cada línea (no solo del texto completo), activa el flag m (multiline).',
+  },
+  {
+    q: '¿Las regex de esta herramienta son compatibles con JavaScript?',
+    a: 'Sí. La herramienta usa el motor de JavaScript (RegExp) del navegador, por lo que el comportamiento es exactamente el mismo que al usar regex en código JavaScript.',
+  },
+  {
+    q: '¿Cómo valido un email, número de teléfono o documentos de identidad de LATAM con regex?',
+    a: 'Para email básico: /^[^\s@]+@[^\s@]+\.[^\s@]+$/. Para teléfonos de México (+52): /^\+?52[\s-]?\d{2}[\s-]?\d{4}[\s-]?\d{4}$/. Para RUT chileno: /^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$/. Para CURP mexicano: /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/. Para RFC mexicano: /^[A-Z]{3,4}\d{6}[A-Z0-9]{3}$/. Para DNI argentino: /^\d{7,8}$/. Para CUIT/CUIL argentino: /^(20|23|24|27|30|33|34)\d{8}\d$/. Cada país tiene su propio formato; prueba y ajusta el patrón aquí antes de implementarlo.',
+  },
+  {
+    q: '¿Cómo se usan las expresiones regulares en frameworks web de LATAM?',
+    a: 'Las regex son fundamentales en el desarrollo web de la región: en PHP (Laravel) para validar campos de formulario con preg_match(); en JavaScript/TypeScript para sanitizar entradas de usuario antes de enviarlas a APIs de Mercado Libre o Stripe; en Python (Django) para las rutas url() y la validación de modelos; en Node.js para parsear logs de servidores o validar tokens. En formularios de checkout de WooCommerce o Shopify, regex personalizadas validan RFC, CUIT, RUT, NIT o CEP (Brasil) para asegurar que los datos fiscales son correctos antes de procesar el pago.',
+  },
 ];
 ---
 <ToolLayout slug="regex-tester" faqs={faqs}>
   <RegexTesterTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Motor JavaScript nativo con flags y grupos nombrados</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta usa <code>new RegExp(pattern, flagStr)</code> del motor JS del navegador para garantizar compatibilidad exacta con el comportamiento de regex en código JavaScript. Con el flag <code>g</code> activo, usa un bucle <code>regex.exec(text)</code> para encontrar todas las coincidencias y evita bucles infinitos en coincidencias de longitud cero incrementando <code>regex.lastIndex</code>. Cada coincidencia incluye su posición en el string (<code>index</code>), longitud y grupos nombrados (<code>m.groups</code>). El resaltado de coincidencias usa <code>useMemo</code> sobre el patrón, flags y texto, recalculando solo cuando alguno de estos tres cambia. Los errores de sintaxis (patrón inválido) se capturan en el <code>try/catch</code> y se muestran en español.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Regex para validar datos de identidad en LATAM</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En el desarrollo de aplicaciones para América Latina, las expresiones regulares son esenciales para validar documentos de identidad fiscal: el RFC mexicano tiene formato <code>AAAA######AAA</code> (4 letras, 6 dígitos de fecha, 3 caracteres de homoclave); el CURP es un código de 18 caracteres que incluye sexo y estado; el RUT chileno termina con un dígito verificador que puede ser K; el CUIT argentino tiene 11 dígitos con prefijo 20/23/27/30/33; el CEP brasileño tiene formato <code>#####-###</code>. Probar estas regex aquí antes de implementarlas en formularios de WooCommerce, plataformas de facturación o pasarelas de pago como Conekta, Khipu o Culqi ahorra horas de debugging en producción.
+      </p>
+    </div>
+  </section>
 </ToolLayout>
