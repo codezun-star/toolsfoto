@@ -16,7 +16,7 @@ export default defineConfig({
     sitemap({
       // Excluir del sitemap las páginas legales (noindex, follow)
       filter: (page) =>
-        !['/privacidad', '/terminos', '/cookies', '/aviso-legal', '/contacto'].some(
+        !['/privacidad', '/terminos', '/cookies', '/aviso-legal'].some(
           (p) => page === `https://toolsfoto.com${p}` || page === `https://toolsfoto.com${p}/`,
         ),
     }),
