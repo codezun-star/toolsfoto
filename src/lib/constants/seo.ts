@@ -1015,7 +1015,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
   },
   video: {
     title: 'Herramientas de vídeo online gratis — MP4, WebM, GIF | ToolsFoto',
-    description: 'Comprime, convierte, recorta, rota y edita vídeos online gratis. 26 herramientas de vídeo: MP4, WebM, GIF. Sin registro, todo se procesa en tu navegador.',
+    description: 'Comprime, convierte, recorta, rota y edita vídeos online gratis. 31 herramientas de vídeo: MP4, WebM, GIF. Sin registro, todo se procesa en tu navegador.',
     canonical: 'https://toolsfoto.com/video',
   },
   audio: {

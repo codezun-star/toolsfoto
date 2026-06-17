@@ -1707,7 +1707,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'pdf',
     icon: 'Spline',
     color: 'blue',
-    related: ['pdf-a-imagen', 'pdf-a-texto', 'comprimir-pdf'],
+    related: ['pdf-a-jpg', 'extraer-texto-pdf', 'comprimir-pdf'],
   },
   {
     slug: 'comparar-pdfs',
@@ -1718,7 +1718,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'pdf',
     icon: 'FileDiff',
     color: 'blue',
-    related: ['comparar-texto', 'unir-pdf', 'extraer-paginas-pdf'],
+    related: ['comparar-texto', 'unir-pdfs', 'extraer-paginas-pdf'],
   },
   {
     slug: 'indice-pdf',
@@ -1729,7 +1729,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'pdf',
     icon: 'ListTree',
     color: 'blue',
-    related: ['pdf-a-texto', 'extraer-paginas-pdf', 'metadatos-pdf'],
+    related: ['extraer-texto-pdf', 'extraer-paginas-pdf', 'metadatos-pdf'],
   },
 
   // Vídeo
@@ -1753,7 +1753,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'video',
     icon: 'GalleryHorizontal',
     color: 'purple',
-    related: ['miniatura-video', 'recortar-video', 'gif-desde-video'],
+    related: ['miniatura-video', 'recortar-video', 'video-a-gif'],
   },
   {
     slug: 'ajuste-color-video',
@@ -1775,7 +1775,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'video',
     icon: 'MonitorPlay',
     color: 'blue',
-    related: ['extraer-fotogramas', 'gif-desde-video', 'recortar-video'],
+    related: ['extraer-fotogramas', 'video-a-gif', 'recortar-video'],
   },
   {
     slug: 'fundido-video',
@@ -1865,7 +1865,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'audio',
     icon: 'MessageSquare',
     color: 'blue',
-    related: ['grabar-audio', 'convertir-audio', 'separar-voz'],
+    related: ['cortar-audio', 'convertir-audio', 'separar-voz'],
   },
   {
     slug: 'afinar-audio',
