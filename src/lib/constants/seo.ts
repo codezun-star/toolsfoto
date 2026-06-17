@@ -14,8 +14,8 @@ export interface PageSEO {
 
 export const PAGE_SEO: Record<string, PageSEO> = {
   home: {
-    title: 'ToolsFoto — Herramientas de imágenes online gratis',
-    description: 'Comprime, redimensiona, recorta, convierte y edita imágenes online sin registro. 11 herramientas gratis. Tus imágenes nunca salen de tu dispositivo.',
+    title: 'ToolsFoto — Herramientas online para imagen, PDF, vídeo y audio',
+    description: '184 herramientas online gratis para imagen, PDF, vídeo, audio y developers. Comprime, convierte, recorta y edita sin registro. Todo se procesa en tu navegador.',
     canonical: 'https://toolsfoto.com',
   },
   comprimir: {
