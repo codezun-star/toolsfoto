@@ -104,8 +104,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/invertir',
   },
   paleta: {
-    title: 'Extraer paleta de colores de imagen online gratis | ToolsFoto',
-    description: 'Detecta los colores dominantes de cualquier imagen. Obtén códigos hexadecimales y descarga la paleta. Herramienta gratuita para diseñadores.',
+    title: 'Extraer la paleta de colores de una imagen online gratis | ToolsFoto',
+    description: 'Saca los colores dominantes de cualquier foto y descarga su paleta lista para moodboards, branding e inspiración de diseño. Códigos HEX incluidos. Sin registro, 100% en tu navegador.',
     canonical: 'https://toolsfoto.com/paleta',
   },
   collage: {
@@ -262,8 +262,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/svg-a-png',
   },
   'colores-imagen': {
-    title: 'Extraer paleta de colores de imagen — HEX RGB HSL gratis | ToolsFoto',
-    description: 'Extrae los colores dominantes de cualquier imagen: códigos HEX, RGB y HSL listos para copiar. Genera paletas de marca desde logos o fotos. Variables CSS incluidas. Ideal para diseñadores y developers. Sin registro, gratis.',
+    title: 'Sacar códigos de color HEX, RGB y HSL de una imagen | ToolsFoto',
+    description: 'Obtén los códigos HEX, RGB y HSL de los colores de cualquier imagen, con variables CSS listas para copiar. Cuentagotas online para developers y maquetadores. Sin registro, 100% gratis.',
     canonical: 'https://toolsfoto.com/colores-imagen',
   },
   'eliminar-exif': {
@@ -409,8 +409,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/silenciar-video',
   },
   'capturar-fotograma': {
-    title: 'Capturar fotograma de vídeo online gratis | ToolsFoto',
-    description: 'Extrae cualquier fotograma de un vídeo como imagen PNG. Elige el segundo exacto y descarga la captura en alta calidad. FFmpeg.wasm, 100% local. Sin registro, completamente gratis.',
+    title: 'Extraer un fotograma exacto de un vídeo como imagen PNG | ToolsFoto',
+    description: 'Saca el fotograma de un segundo exacto de tu vídeo como imagen PNG en alta calidad, ideal para capturas y screenshots. FFmpeg.wasm, 100% local. Sin registro, completamente gratis.',
     canonical: 'https://toolsfoto.com/capturar-fotograma',
   },
 
@@ -840,8 +840,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/ajuste-color-video',
   },
   'miniatura-video': {
-    title: 'Capturar miniatura de vídeo online gratis — frame a imagen | ToolsFoto',
-    description: 'Captura cualquier fotograma de tu vídeo como imagen PNG o JPG con un slider de tiempo. HTML5 Video + Canvas API, sin FFmpeg. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    title: 'Sacar la miniatura o portada de un vídeo online gratis | ToolsFoto',
+    description: 'Crea la miniatura o portada de cualquier vídeo al instante en PNG o JPG con un slider de tiempo. Rápido, sin FFmpeg ni subir archivos. Sin registro, completamente gratis.',
     canonical: 'https://toolsfoto.com/miniatura-video',
   },
   'fundido-video': {
@@ -885,8 +885,8 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/transcribir-audio',
   },
   'afinar-audio': {
-    title: 'Afinar audio online gratis — pitch shift con time-stretching | ToolsFoto',
-    description: 'Desplaza el tono de tu audio en semitonos (-12 a +12) preservando la velocidad original. Vibrato opcional. FFmpeg.wasm, 100% local. Sin registro, sin subir archivos al servidor. Completamente gratis.',
+    title: 'Afinar audio y voz online gratis — corrige la afinación | ToolsFoto',
+    description: 'Corrige la afinación de voz e instrumentos desafinados ajustando el tono en semitonos sin cambiar la velocidad, con vibrato opcional. FFmpeg.wasm, 100% local. Sin registro, gratis.',
     canonical: 'https://toolsfoto.com/afinar-audio',
   },
   'minificador-svg': {
