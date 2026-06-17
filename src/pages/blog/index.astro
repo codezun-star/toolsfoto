@@ -32,13 +32,28 @@ const description = 'Tutoriales, guías y tips sobre compresión de imágenes, e
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ToolsFoto — herramientas online para imagen, PDF, vídeo y audio" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://toolsfoto.com/blog" />
+    <meta property="og:site_name" content="ToolsFoto" />
+    <meta property="og:locale" content="es_ES" />
 
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={SITE.twitterHandle} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={SITE.ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://toolsfoto.com" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://toolsfoto.com/blog" },
+      ],
+    })} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />

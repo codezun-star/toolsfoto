@@ -13,7 +13,13 @@ export default defineConfig({
   },
   integrations: [
     react(),
-    sitemap(),
+    sitemap({
+      // Excluir del sitemap las páginas legales (noindex, follow)
+      filter: (page) =>
+        !['/privacidad', '/terminos', '/cookies', '/aviso-legal', '/contacto'].some(
+          (p) => page === `https://toolsfoto.com${p}` || page === `https://toolsfoto.com${p}/`,
+        ),
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],
