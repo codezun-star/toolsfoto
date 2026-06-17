@@ -40,6 +40,25 @@ const seo = PAGE_SEO.home;
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     })} />
 
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ToolsFoto",
+      "url": "https://toolsfoto.com",
+      "inLanguage": "es",
+      "description": seo.description,
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ToolsFoto",
+      "url": "https://toolsfoto.com",
+      "logo": "https://toolsfoto.com/favicon-192.png",
+      "email": "codezun@gmail.com",
+      "description": "Herramientas online para imagen, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.",
+    })} />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />

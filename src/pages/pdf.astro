@@ -8,6 +8,7 @@ import '@/styles/global.css';
 
 const tools = TOOLS.filter(t => t.domain === 'pdf');
 const seo = PAGE_SEO['pdf'];
+const domainLabel = 'Herramientas de PDF';
 ---
 
 <!doctype html>
@@ -29,6 +30,35 @@ const seo = PAGE_SEO['pdf'];
     <meta name="twitter:title" content={seo.title} />
     <meta name="twitter:description" content={seo.description} />
     <meta name="twitter:image" content={SITE.ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": SITE.url },
+        { "@type": "ListItem", "position": 2, "name": domainLabel, "item": seo.canonical },
+      ],
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": seo.title,
+      "description": seo.description,
+      "url": seo.canonical,
+      "inLanguage": "es",
+      "isPartOf": { "@type": "WebSite", "name": "ToolsFoto", "url": SITE.url },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": tools.length,
+        "itemListElement": tools.map((t, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": t.name,
+          "url": `${SITE.url}/${t.slug}`,
+        })),
+      },
+    })} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
