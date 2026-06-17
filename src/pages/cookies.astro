@@ -3,28 +3,37 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
 ---
 <LegalLayout slug="cookies" title="Política de Cookies">
   <h1>Política de Cookies</h1>
-  <span class="updated">Última actualización: 15 de mayo de 2026</span>
+  <span class="updated">Última actualización: 17 de junio de 2026</span>
 
   <div class="highlight-box">
-    <p>Resumen: ToolsFoto no utiliza cookies de seguimiento, publicidad ni analítica. No necesitas aceptar ni rechazar nada.</p>
+    <p>Resumen: ToolsFoto solo utiliza cookies analíticas de Google Analytics para medir el uso del sitio de forma anónima y agregada. No usamos cookies de publicidad ni vendemos tus datos, y puedes rechazarlas en cualquier momento.</p>
   </div>
 
   <h2>1. ¿Qué son las cookies?</h2>
   <p>
     Las cookies son pequeños archivos de texto que los sitios web almacenan en tu navegador para recordar preferencias
-    o rastrear tu actividad. Existen cookies técnicas (necesarias para el funcionamiento), de preferencias, analíticas
+    o medir el uso del sitio. Existen cookies técnicas (necesarias para el funcionamiento), de preferencias, analíticas
     y publicitarias.
   </p>
 
   <h2>2. Cookies que usamos</h2>
   <p>
-    <strong>ToolsFoto no instala ninguna cookie en tu navegador.</strong> Al ser una aplicación estática sin servidor ni
-    sistema de autenticación, no existe ningún mecanismo que requiera cookies.
+    ToolsFoto utiliza <strong>Google Analytics 4 (GA4)</strong> para entender de forma anónima y agregada cómo se usa el
+    sitio (páginas más visitadas, tipo de dispositivo, país aproximado). Para ello, Google instala estas cookies
+    analíticas en tu navegador:
+  </p>
+  <ul>
+    <li><strong>_ga</strong> — distingue usuarios de forma anónima. Duración: hasta 2 años.</li>
+    <li><strong>_ga_&lt;ID&gt;</strong> — mantiene el estado de la sesión de Analytics. Duración: hasta 2 años.</li>
+  </ul>
+  <p>
+    Son cookies analíticas de terceros. GA4 no almacena tu dirección IP, no usamos estos datos para publicidad ni para
+    identificarte personalmente, y no instalamos ninguna otra cookie (ni propia, ni de publicidad).
   </p>
 
   <h2>3. Almacenamiento local (localStorage / Cache API)</h2>
   <p>
-    Aunque no usamos cookies, algunas herramientas pueden aprovechar el almacenamiento local del navegador de forma
+    Además de las cookies, algunas herramientas pueden aprovechar el almacenamiento local del navegador de forma
     técnica:
   </p>
   <ul>
@@ -40,21 +49,27 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
 
   <h2>4. Cookies de terceros</h2>
   <p>
-    ToolsFoto no integra servicios de terceros que instalen cookies (Google Analytics, Facebook Pixel, publicidad, etc.).
-    Ningún proveedor externo tiene acceso a tu actividad en esta web.
+    El único tercero que instala cookies es <strong>Google</strong>, como proveedor de Google Analytics (ver punto 2).
+    Puedes consultar cómo trata Google esta información en su
+    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+    No integramos Facebook Pixel, redes publicitarias ni otros rastreadores de terceros.
   </p>
 
-  <h2>5. ¿Por qué no hay banner de cookies?</h2>
-  <p>
-    El Reglamento General de Protección de Datos (RGPD) y la normativa española sobre cookies solo exigen el consentimiento
-    para cookies no esenciales. Dado que ToolsFoto no instala ninguna cookie, no existe obligación de mostrar un banner
-    de consentimiento.
-  </p>
+  <h2>5. Cómo rechazar o eliminar las cookies</h2>
+  <p>Las cookies analíticas no son necesarias para el funcionamiento de las herramientas. Puedes gestionarlas así:</p>
+  <ul>
+    <li>Bloquéalas o elimínalas desde los ajustes de privacidad de tu navegador.</li>
+    <li>
+      Instala el complemento oficial de inhabilitación de Google Analytics:
+      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.
+    </li>
+  </ul>
+  <p>Si las rechazas, todas las herramientas seguirán funcionando con normalidad.</p>
 
   <h2>6. Cambios en esta política</h2>
   <p>
-    Si en el futuro incorporamos cookies o herramientas de análisis, actualizaremos esta política e implementaremos el
-    mecanismo de consentimiento correspondiente antes de activar cualquier cookie.
+    Si en el futuro cambian las cookies o los servicios de análisis que utilizamos, actualizaremos esta política
+    indicándolo en la fecha del inicio.
   </p>
 
   <hr />
