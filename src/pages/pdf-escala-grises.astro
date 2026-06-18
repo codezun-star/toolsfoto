@@ -1,0 +1,49 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PdfEscalaGrisesTool from '@/components/tools/PdfEscalaGrisesTool';
+
+const faqs = [
+  {
+    q: '¿Para qué sirve convertir un PDF a escala de grises?',
+    a: 'Convertir un PDF a blanco y negro (escala de grises) es útil para imprimir ahorrando tinta de color, para unificar el aspecto de documentos escaneados, para reducir distracciones al leer, o para cumplir requisitos de entrega de documentos en gris. El resultado es un nuevo PDF con todas las páginas en tonos de gris.',
+  },
+  {
+    q: '¿El texto seguirá siendo seleccionable después?',
+    a: 'No. Para garantizar que el color desaparezca por completo, cada página se rasteriza (se convierte en imagen) en escala de grises y se reensambla en un nuevo PDF. Esto significa que el texto deja de ser seleccionable o buscable. Si necesitas conservar el texto, una alternativa es imprimir en gris desde el diálogo de impresión de tu sistema.',
+  },
+  {
+    q: '¿Cambiará el tamaño del archivo?',
+    a: 'Depende del PDF. Documentos con muchas imágenes a color pueden reducir su tamaño; documentos con mucho texto pueden aumentarlo, porque el texto vectorial pasa a ser una imagen. La herramienta usa compresión JPEG de calidad media-alta para equilibrar nitidez y peso.',
+  },
+  {
+    q: '¿Se suben mis documentos a un servidor?',
+    a: 'No. Todo el procesamiento ocurre en tu navegador con pdf.js (para renderizar) y pdf-lib (para reconstruir el PDF). Tu documento nunca se envía a ningún servidor, por lo que puedes procesar archivos confidenciales con total privacidad.',
+  },
+  {
+    q: '¿Funciona con PDFs de muchas páginas?',
+    a: 'Sí, aunque a más páginas y mayor resolución, más tardará y más memoria usará el navegador, ya que cada página se renderiza individualmente. Para documentos muy largos, ten paciencia mientras avanza el contador de páginas.',
+  },
+  {
+    q: '¿Puedo convertir un PDF protegido con contraseña?',
+    a: 'No directamente. Primero debes quitar la contraseña con nuestra herramienta "Eliminar contraseña de PDF" (necesitas conocerla) y después convertir el PDF resultante a escala de grises.',
+  },
+];
+---
+<ToolLayout slug="pdf-escala-grises" faqs={faqs}>
+  <PdfEscalaGrisesTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">PDF en blanco y negro para imprimir</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Imprimir documentos a color gasta mucha más tinta y, en impresoras de oficina, suele costar más por página. Convertir el PDF a escala de grises de antemano garantiza que toda la impresión salga en gris, independientemente de la configuración de la impresora, y deja el documento con un aspecto homogéneo. Ideal para apuntes, contratos, facturas y material de lectura.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo funciona la conversión</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La herramienta renderiza cada página del PDF a alta resolución en un lienzo (canvas), calcula la luminosidad de cada píxel con la fórmula estándar (0.299·R + 0.587·G + 0.114·B) para obtener un gris fiel a la percepción humana, y reensambla todas las páginas en un nuevo PDF. Todo el proceso es local: no se sube ningún dato.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

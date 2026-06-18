@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Developer (31)
+## Developer (32)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -36,3 +36,4 @@
 | `/minificador-svg` | `MinificadorSVGTool.tsx` | Básicas | JS regex puro — elimina metadatos, comentarios, attrs Inkscape/RDF |
 | `/og-image` | `OGImageTool.tsx` | Básicas | Canvas API 1200×630 — título, subtítulo, colores, logo opcional |
 | `/convertir-fuente` | `ConvertirFuenteTool.tsx` | Básicas | Binary SFNT parser — TTF/OTF ↔ WOFF sin pérdida, sin librería |
+| `/formatear-xml` | `FormatearXMLTool.tsx` | Básicas | JS puro — indentación jerárquica + minify + validación con DOMParser |

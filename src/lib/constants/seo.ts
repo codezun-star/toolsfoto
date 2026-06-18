@@ -1002,6 +1002,33 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/generar-ruido-blanco',
   },
 
+  // ── 5 herramientas nuevas (1 por categoría) ──────────────────
+  'heic-a-jpg': {
+    title: 'Convertir HEIC a JPG online gratis — fotos de iPhone | ToolsFoto',
+    description: 'Convierte fotos HEIC y HEIF de iPhone a JPG o PNG compatibles con cualquier dispositivo. Elige la calidad. 100% en tu navegador, sin subir tus fotos. Gratis y sin registro.',
+    canonical: 'https://toolsfoto.com/heic-a-jpg',
+  },
+  'pdf-escala-grises': {
+    title: 'Convertir PDF a escala de grises (blanco y negro) gratis | ToolsFoto',
+    description: 'Convierte un PDF a escala de grises para imprimir ahorrando tinta o unificar documentos. Procesamiento 100% local con pdf.js y pdf-lib. Sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/pdf-escala-grises',
+  },
+  'comprimir-gif': {
+    title: 'Comprimir GIF online gratis — reducir el tamaño de un GIF | ToolsFoto',
+    description: 'Reduce el peso de tus GIF animados ajustando ancho, FPS y colores con paleta optimizada de FFmpeg. Mantiene la animación. 100% en el navegador, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-gif',
+  },
+  'grabar-audio': {
+    title: 'Grabar audio y voz online gratis — grabadora de voz | ToolsFoto',
+    description: 'Graba voz o sonido desde el micrófono en el navegador y descárgalo en WebM o MP3. Sin instalar apps y sin que tu voz salga de tu dispositivo. Gratis y sin registro.',
+    canonical: 'https://toolsfoto.com/grabar-audio',
+  },
+  'formatear-xml': {
+    title: 'Formatear y minificar XML online gratis | ToolsFoto',
+    description: 'Formatea XML con indentación jerárquica o minifícalo a una sola línea, con validación de sintaxis. Sin subir datos, 100% en el navegador. Ideal para SOAP, sitemaps y RSS. Gratis.',
+    canonical: 'https://toolsfoto.com/formatear-xml',
+  },
+
   // ── Páginas de categoría ──────────────────────────────────────
   imagen: {
     title: 'Herramientas de imagen online gratis — JPG, PNG, WebP | ToolsFoto',

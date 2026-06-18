@@ -1,0 +1,49 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FormatearXMLTool from '@/components/tools/FormatearXMLTool';
+
+const faqs = [
+  {
+    q: '¿Qué hace el formateador de XML?',
+    a: 'El modo "Formatear" toma un XML desordenado o en una sola línea y lo indenta jerárquicamente, poniendo cada etiqueta en su propia línea con la sangría correcta según su nivel de anidamiento. Así el documento se vuelve legible de un vistazo. Es ideal para revisar respuestas de APIs SOAP, sitemaps, archivos de configuración, RSS o cualquier XML difícil de leer.',
+  },
+  {
+    q: '¿Y el modo "Minificar"?',
+    a: 'El modo minificar hace lo contrario: elimina los espacios en blanco, saltos de línea y sangrías entre etiquetas para dejar el XML en una sola línea compacta. Es útil para reducir el tamaño de archivos XML que se van a transmitir o almacenar, o para incrustar XML dentro de otro archivo o variable.',
+  },
+  {
+    q: '¿Valida si mi XML es correcto?',
+    a: 'Sí, de forma ligera. La herramienta intenta analizar el XML con el parser nativo del navegador y, si detecta errores de sintaxis (etiquetas mal cerradas, caracteres no válidos), te avisa. Aun así, formatea el contenido para que puedas localizar el problema visualmente. No realiza validación contra un esquema XSD o DTD.',
+  },
+  {
+    q: '¿Se envían mis datos a un servidor?',
+    a: 'No. Todo el procesamiento se hace en tu navegador con JavaScript puro. El contenido de tu XML nunca sale de tu dispositivo, así que puedes formatear documentos con datos sensibles, tokens o información de producción con total seguridad.',
+  },
+  {
+    q: '¿Funciona con archivos XML grandes?',
+    a: 'Sí. Al ejecutarse localmente, puede manejar documentos grandes sin límites de subida. Con archivos de varios megabytes el navegador puede tardar un instante en renderizar el resultado, pero el formateo en sí es muy rápido.',
+  },
+  {
+    q: '¿Sirve para HTML, SVG o RSS?',
+    a: 'Funciona muy bien con XML bien formado, lo que incluye SVG, RSS, Atom, sitemaps y archivos de configuración basados en XML. Para HTML, que no siempre es XML válido, te recomendamos nuestro "Minificador HTML". Para SVG en concreto, también tenemos un "Minificador SVG" especializado.',
+  },
+];
+---
+<ToolLayout slug="formatear-xml" faqs={faqs}>
+  <FormatearXMLTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Formatear y minificar XML al instante</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El XML aparece a menudo en una sola línea (respuestas de APIs, exportaciones, configuraciones) y resulta imposible de leer. Este formateador lo indenta con la jerarquía correcta para que entiendas la estructura de un vistazo, y también lo minifica cuando necesitas compactarlo. Completa nuestra familia de herramientas de formateo junto a JSON, SQL, HTML, CSS y JavaScript.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Casos de uso habituales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Depurar respuestas de servicios web SOAP, revisar un <code>sitemap.xml</code> antes de enviarlo a Google Search Console, leer feeds RSS/Atom, inspeccionar archivos <code>.xml</code> de configuración de Android, Maven o Spring, o preparar XML para documentación. Pega el contenido, formatea, y copia o descarga el resultado listo para usar.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

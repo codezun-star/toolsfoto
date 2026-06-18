@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Vídeo (31)
+## Vídeo (32)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -36,3 +36,4 @@
 | `/fotogramas-a-video` | `FotogramasAVideoTool.tsx` | Básicas | FFmpeg.wasm — filter_complex `scale+pad+concat` multi-input; hasta 30 imágenes |
 | `/gif-a-video` | `GifAVideoTool.tsx` | Básicas | FFmpeg.wasm — `-f gif` → H.264 MP4 con `pix_fmt yuv420p` |
 | `/denoise-video` | `DenoiseVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `hqdn3d` (3 niveles: suave/medio/intenso) |
+| `/comprimir-gif` | `ComprimirGifTool.tsx` | Básicas | FFmpeg.wasm — `palettegen`/`paletteuse` + ajuste de scale, fps y colores |

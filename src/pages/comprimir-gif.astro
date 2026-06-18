@@ -1,0 +1,45 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirGifTool from '@/components/tools/ComprimirGifTool';
+
+const faqs = [
+  {
+    q: '¿Cómo se reduce el tamaño de un GIF?',
+    a: 'Un GIF pesa más cuanto mayor es su resolución, su número de fotogramas por segundo (FPS) y su paleta de colores. La herramienta te deja reducir esos tres factores: bajar el ancho, recortar los FPS y limitar la paleta (de 256 a 32 colores) usando el algoritmo de paleta optimizada de FFmpeg, que mantiene la mejor calidad posible para el número de colores elegido.',
+  },
+  {
+    q: '¿Cuánto puedo reducir el peso sin que se note?',
+    a: 'Depende del GIF, pero recortar a 10–15 FPS y limitar a 128 colores suele reducir el tamaño entre un 40% y un 70% con una pérdida de calidad mínima. Reducir el ancho a 320 px es muy efectivo para GIFs que se verán en móvil o en chats. Experimenta: la herramienta te muestra el porcentaje de reducción conseguido.',
+  },
+  {
+    q: '¿Por qué mi GIF pesa tanto al principio?',
+    a: 'Los GIFs creados desde vídeo o con muchos fotogramas y colores pueden pesar varios MB. El formato GIF es antiguo y poco eficiente: para animaciones largas, convertir a vídeo MP4 (con nuestra herramienta "GIF a MP4") reduce el peso hasta 10 veces más. Pero si necesitas mantener el formato GIF, comprimirlo es la mejor opción.',
+  },
+  {
+    q: '¿Se sube mi GIF a algún servidor?',
+    a: 'No. La compresión se hace 100% en tu navegador con FFmpeg.wasm. Tu archivo nunca se envía a ningún servidor. La primera vez se descarga el procesador (~30 MB) y luego funciona al instante en las siguientes compresiones.',
+  },
+  {
+    q: '¿Mantiene la animación y la transparencia?',
+    a: 'Sí, el resultado sigue siendo un GIF animado con todos sus fotogramas. La transparencia se conserva en la mayoría de los casos, aunque reducir mucho la paleta de colores puede afectar a los bordes de las zonas transparentes. Si la transparencia es crítica, mantén la paleta en 256 colores.',
+  },
+];
+---
+<ToolLayout slug="comprimir-gif" faqs={faqs}>
+  <ComprimirGifTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">GIFs más ligeros para chats y webs</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Muchas plataformas (WhatsApp, Discord, foros, correos) limitan el tamaño de los GIF, y un GIF pesado tarda en cargar y empeora la experiencia. Comprimirlo reduce el peso ajustando resolución, fotogramas y colores, manteniendo la animación. Es la solución cuando necesitas conservar el formato GIF pero el archivo es demasiado grande para enviarlo o subirlo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Paleta optimizada con FFmpeg</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        En lugar de aplicar una paleta fija, la herramienta genera una paleta a medida para cada GIF (<code>palettegen</code>) y la aplica con difuminado (<code>paluseuse</code> con dither bayer). Así, incluso con pocos colores, el resultado conserva degradados suaves y evita el bandeado típico de los GIF mal optimizados. Es la misma técnica que usan las herramientas profesionales.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

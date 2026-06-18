@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Audio (42)
+## Audio (43)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -47,3 +47,4 @@
 | `/coro-audio` | `CoroAudioTool.tsx` | Creativas | FFmpeg.wasm — filtro `achorus` (3 presets: sutil/estándar/rico) |
 | `/telefono-audio` | `TelefonoAudioTool.tsx` | Creativas | FFmpeg.wasm — `highpass + lowpass` + `acompressor` (4 presets de banda estrecha) |
 | `/generar-ruido-blanco` | `GenerarRuidoBlancTool.tsx` | Básicas | FFmpeg.wasm lavfi `anoisesrc` — ruido blanco/rosa/marrón sin input de archivo |
+| `/grabar-audio` | `GrabarAudioTool.tsx` | Básicas | MediaRecorder (`getUserMedia`) + conversión opcional a MP3 con FFmpeg.wasm |

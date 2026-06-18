@@ -1,0 +1,49 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import HeicAJpgTool from '@/components/tools/HeicAJpgTool';
+
+const faqs = [
+  {
+    q: '¿Qué es un archivo HEIC y por qué necesito convertirlo?',
+    a: 'HEIC (High Efficiency Image Container) es el formato en que los iPhone y iPad guardan las fotos desde iOS 11. Ofrece mejor compresión que JPG, pero muchos programas, webs y dispositivos Android o Windows no pueden abrirlo. Convertir a JPG (o PNG) te da una imagen compatible con cualquier aplicación, red social o sistema operativo.',
+  },
+  {
+    q: '¿La conversión pierde calidad?',
+    a: 'Al convertir a JPG puedes elegir el nivel de calidad con el deslizador: 90% conserva prácticamente toda la calidad visible con un tamaño razonable. Si necesitas máxima fidelidad sin compresión con pérdida, elige PNG, aunque el archivo será más grande. El HEIC original ya está comprimido, así que partir de él es suficiente para la mayoría de usos.',
+  },
+  {
+    q: '¿Se suben mis fotos a algún servidor?',
+    a: 'No. La conversión se realiza 100% en tu navegador mediante un decodificador HEIC en WebAssembly. Tus fotos nunca salen de tu dispositivo, lo que es ideal para imágenes personales o privadas. La primera vez se descarga el decodificador (~1 MB) y después funciona al instante.',
+  },
+  {
+    q: '¿Puedo convertir varias fotos HEIC a la vez?',
+    a: 'Esta herramienta convierte un archivo cada vez para mantener el proceso rápido y fiable. Para varias fotos, conviértelas una tras otra: como todo es local, no hay límites de uso ni esperas de subida. Cada descarga conserva el nombre original con la nueva extensión.',
+  },
+  {
+    q: '¿Por qué mi iPhone hace fotos en HEIC y cómo evitarlo?',
+    a: 'Es el ajuste por defecto para ahorrar espacio. Si prefieres que tu iPhone capture directamente en JPG, ve a Ajustes → Cámara → Formatos → y elige "Más compatible". Aun así, esta herramienta te sirve para todas las fotos HEIC que ya tengas guardadas.',
+  },
+  {
+    q: '¿Convierte también archivos HEIF?',
+    a: 'Sí. HEIF es el estándar y HEIC es la variante de Apple; ambos comparten la misma base. La herramienta acepta archivos .heic y .heif y los convierte por igual a JPG o PNG.',
+  },
+];
+---
+<ToolLayout slug="heic-a-jpg" faqs={faqs}>
+  <HeicAJpgTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">HEIC a JPG sin instalar nada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las fotos de iPhone en formato HEIC dan problemas al subirlas a webs, enviarlas por correo o abrirlas en Windows y Android. Esta herramienta las convierte a JPG o PNG directamente en el navegador, sin programas de pago ni subir tus imágenes a la nube. Elige la calidad, convierte y descarga: el archivo resultante se abre en cualquier dispositivo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">JPG o PNG: cuál elegir</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elige <strong class="text-[var(--color-text)]">JPG</strong> para fotografías: pesa poco y es el formato más universal para compartir y publicar. Elige <strong class="text-[var(--color-text)]">PNG</strong> si necesitas la máxima calidad sin compresión con pérdida o vas a editar la imagen después. Para subir a redes sociales, marketplaces o adjuntar en un correo, JPG al 85–90% es la mejor relación calidad/tamaño.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

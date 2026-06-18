@@ -1,0 +1,49 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GrabarAudioTool from '@/components/tools/GrabarAudioTool';
+
+const faqs = [
+  {
+    q: '¿Cómo grabo audio desde el navegador?',
+    a: 'Pulsa "Empezar a grabar" y concede el permiso de micrófono cuando el navegador lo pida. Habla o reproduce el sonido que quieras capturar y pulsa "Detener" cuando termines. Podrás escuchar la grabación y descargarla en su formato original o convertida a MP3. No necesitas instalar ninguna aplicación.',
+  },
+  {
+    q: '¿En qué formato se guarda la grabación?',
+    a: 'El navegador graba en su formato nativo, normalmente WebM (con códec Opus), que ofrece muy buena calidad y poco peso. Si necesitas un MP3 compatible con cualquier reproductor, pulsa "Descargar MP3" y la herramienta lo convierte en tu navegador con FFmpeg. El WebM/OGG también se reproduce sin problemas en navegadores modernos.',
+  },
+  {
+    q: '¿Se sube mi voz a algún servidor?',
+    a: 'No. La grabación se realiza y se guarda 100% en tu dispositivo mediante la API MediaRecorder del navegador. El audio nunca se envía a ningún servidor. La conversión opcional a MP3 también es local (descarga el procesador la primera vez).',
+  },
+  {
+    q: 'El micrófono no funciona, ¿qué hago?',
+    a: 'Asegúrate de haber concedido el permiso de micrófono: busca el icono de la cámara/micrófono en la barra de direcciones y permite el acceso. La grabación requiere una conexión segura (HTTPS), que esta web ya usa. Comprueba también que ninguna otra aplicación esté usando el micrófono y que el dispositivo correcto esté seleccionado en los ajustes del sistema.',
+  },
+  {
+    q: '¿Hay límite de duración?',
+    a: 'No hay un límite fijo, pero como todo se almacena en la memoria del navegador, las grabaciones muy largas (más de una hora) pueden consumir bastante memoria. Para notas de voz, podcasts cortos, ideas musicales o memorandos, funciona perfectamente.',
+  },
+  {
+    q: '¿Puedo grabar el sonido del sistema o de una pestaña?',
+    a: 'Esta herramienta graba la entrada del micrófono. Para capturar el audio interno del ordenador necesitarías la opción de compartir audio de pantalla del navegador, que no forma parte de esta herramienta. Para voz, instrumentos o cualquier sonido captado por el micrófono, es ideal.',
+  },
+];
+---
+<ToolLayout slug="grabar-audio" faqs={faqs}>
+  <GrabarAudioTool client:load />
+
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Grabadora de voz online y privada</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Una grabadora de voz directa en el navegador, sin instalar apps ni crear cuenta. Perfecta para notas de voz rápidas, grabar ideas, ensayar una presentación, capturar una melodía o registrar una entrevista. Como todo se procesa en tu dispositivo, tu voz nunca llega a un servidor: es la opción más privada para grabar.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Descarga en WebM o MP3</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Al terminar puedes reproducir la grabación y descargarla en el formato nativo del navegador (WebM/OGG, ligero y de alta calidad) o convertirla a <strong class="text-[var(--color-text)]">MP3</strong> con un clic para máxima compatibilidad con reproductores, editores y plataformas. La conversión a MP3 usa FFmpeg en tu propio navegador, sin subir nada.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

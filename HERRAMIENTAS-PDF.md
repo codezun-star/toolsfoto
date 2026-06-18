@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## PDF (32)
+## PDF (33)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -37,3 +37,4 @@
 | `/pdf-a-svg` | `PDFaSVGTool.tsx` | Básicas | pdfjs-dist → canvas → SVG con PNG embebido + ZIP builder puro |
 | `/comparar-pdfs` | `CompararPDFsTool.tsx` | Básicas | pdfjs-dist — renderizado paralelo sincronizado, escala ajustable |
 | `/indice-pdf` | `IndicePDFTool.tsx` | Básicas | pdfjs-dist `getOutline()` + detección por tamaño de fuente fallback |
+| `/pdf-escala-grises` | `PdfEscalaGrisesTool.tsx` | Avanzadas | pdfjs render → grayscale por luminancia → pdf-lib `embedJpg` |

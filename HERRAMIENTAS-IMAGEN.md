@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (48)
+## Imagen (49)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -53,3 +53,4 @@
 | `/efecto-glitch` | `EfectoGlitchTool.tsx` | Creativas | Canvas `getImageData` — desplazamiento RGB + cortes aleatorios |
 | `/tilt-shift` | `TiltShiftTool.tsx` | Creativas | Canvas blur con padding + gradient mask `destination-in` |
 | `/imagen-a-ico` | `ImagenAICOTool.tsx` | Básicas | Binary ICO builder — PNG embebido, múltiples tamaños |
+| `/heic-a-jpg` | `HeicAJpgTool.tsx` | Básicas | heic2any (WASM libheif) — HEIC/HEIF → JPG/PNG con calidad ajustable |
