@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JsonATypescriptTool from '@/components/tools/JsonATypescriptTool';
+
+const faqs = [
+  { q: '¿Qué hace esta herramienta?', a: 'Analiza un objeto JSON y genera automáticamente las interfaces de TypeScript correspondientes, detectando los tipos de cada propiedad (string, number, boolean, arrays y objetos anidados).' },
+  { q: '¿Cómo trata los objetos anidados?', a: 'Crea una interfaz independiente para cada objeto anidado, usando el nombre de la propiedad en PascalCase. Así obtienes un conjunto de tipos limpio y reutilizable en lugar de un único tipo enorme.' },
+  { q: '¿Qué pasa con los arrays?', a: 'Detecta el tipo de los elementos del array. Si todos son del mismo tipo genera, por ejemplo, number[]; si hay tipos mezclados, genera una unión como (string | number)[]. Los arrays vacíos se tipan como unknown[].' },
+  { q: '¿Puedo cambiar el nombre de la interfaz raíz?', a: 'Sí. Hay un campo "Nombre raíz" donde defines cómo se llamará la interfaz principal (por defecto "Root"). El resto de interfaces anidadas se nombran a partir de sus propiedades.' },
+  { q: '¿Mis datos son privados?', a: 'Sí. El JSON se procesa por completo en tu navegador y nunca se envía a ningún servidor. Es seguro para datos sensibles o respuestas reales de tu API.' },
+];
+---
+<ToolLayout slug="json-a-typescript" faqs={faqs}>
+  <JsonATypescriptTool client:load />
+</ToolLayout>

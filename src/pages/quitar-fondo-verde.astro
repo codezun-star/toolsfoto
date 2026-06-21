@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import QuitarFondoVerdeTool from '@/components/tools/QuitarFondoVerdeTool';
+
+const faqs = [
+  { q: '¿Qué es el croma o chroma key?', a: 'Es la técnica de grabar sobre un fondo de color uniforme (normalmente verde o azul) para luego eliminarlo y sustituirlo por otro fondo. Es lo que usan el cine y los youtubers para cambiar el decorado.' },
+  { q: '¿Por qué se usa el verde?', a: 'El verde es el color más alejado de los tonos de piel humana, lo que facilita separar a la persona del fondo sin afectar a la imagen. El azul es la alternativa clásica cuando hay elementos verdes en escena.' },
+  { q: '¿Qué hace la tolerancia?', a: 'Controla cuánto rango de color alrededor del verde se elimina. Si queda fondo sin quitar, súbela; si se borran partes del sujeto, bájala. Un buen croma con iluminación uniforme necesita menos tolerancia.' },
+  { q: '¿Puedo poner otro color de fondo?', a: 'Sí. Eliges el color sólido que sustituirá al fondo verde. El resultado se exporta en MP4 con ese nuevo fondo.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa localmente con FFmpeg.wasm; tu vídeo no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="quitar-fondo-verde" faqs={faqs}>
+  <QuitarFondoVerdeTool client:load />
+</ToolLayout>

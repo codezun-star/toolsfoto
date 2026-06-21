@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BassBoostTool from '@/components/tools/BassBoostTool';
+
+const faqs = [
+  { q: '¿Qué hace el bass boost?', a: 'Aumenta el volumen de las frecuencias graves (los bajos) de tu audio, dando más cuerpo y potencia a la música, especialmente en géneros como hip-hop, electrónica o reguetón.' },
+  { q: '¿Cuánta ganancia debo aplicar?', a: 'Entre +6 y +10 dB suele ser ideal para notar la mejora sin distorsionar. Valores muy altos (por encima de +15 dB) pueden saturar el sonido y provocar recortes.' },
+  { q: '¿Puede dañar mis altavoces o auriculares?', a: 'Subir mucho los graves a volumen alto exige más a los altavoces. Aplica una ganancia moderada y revisa el resultado antes de subir el volumen al máximo.' },
+  { q: '¿En qué se diferencia del ecualizador?', a: 'El bass boost actúa solo sobre los graves de forma rápida. El ecualizador multibanda te permite ajustar varias frecuencias por separado para un control más fino.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa localmente en tu navegador con FFmpeg.wasm, sin subir el audio a ningún servidor.' },
+];
+---
+<ToolLayout slug="bass-boost" faqs={faqs}>
+  <BassBoostTool client:load />
+</ToolLayout>

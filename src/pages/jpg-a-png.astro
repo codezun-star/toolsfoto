@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JpgAPngTool from '@/components/tools/JpgAPngTool';
+
+const faqs = [
+  { q: '¿Por qué convertir JPG a PNG?', a: 'Para editar la imagen varias veces sin acumular pérdida de calidad, para preparar gráficos que luego necesitarán transparencia, o para cumplir requisitos de plataformas que piden PNG.' },
+  { q: '¿La conversión mejora la calidad del JPG?', a: 'No crea detalle nuevo, pero evita que se pierda más calidad en futuras ediciones. El PNG es sin pérdida, así que actúa como una "copia de trabajo" estable que no se degrada al guardar.' },
+  { q: '¿El PNG resultante pesará más?', a: 'Sí, normalmente bastante más, porque el PNG no comprime con pérdida. Es el precio de la calidad sin pérdida. Si el peso es un problema, considera WebP, que combina calidad y compresión.' },
+  { q: '¿Se conserva la calidad original?', a: 'Sí. La imagen se vuelve a dibujar píxel a píxel sin recompresión con pérdida, por lo que el PNG conserva exactamente lo que mostraba el JPG de partida.' },
+  { q: '¿Es privado?', a: 'Totalmente. Todo se procesa en tu navegador con Canvas API y nada se envía a ningún servidor.' },
+];
+---
+<ToolLayout slug="jpg-a-png" faqs={faqs}>
+  <JpgAPngTool client:load />
+</ToolLayout>

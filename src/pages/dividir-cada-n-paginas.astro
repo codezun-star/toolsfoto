@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DividirCadaNPaginasTool from '@/components/tools/DividirCadaNPaginasTool';
+
+const faqs = [
+  { q: '¿Cómo funciona dividir cada N páginas?', a: 'Eliges cuántas páginas quieres en cada archivo y la herramienta parte el PDF en varios documentos consecutivos de ese tamaño. Por ejemplo, un PDF de 10 páginas dividido cada 2 genera 5 archivos.' },
+  { q: '¿Para qué sirve?', a: 'Para trocear documentos largos en capítulos, separar lotes de facturas o formularios, o crear archivos más pequeños y manejables a partir de un PDF extenso.' },
+  { q: '¿Qué pasa si las páginas no son divisibles exactamente?', a: 'El último archivo contiene las páginas restantes. Por ejemplo, 10 páginas divididas cada 3 generan archivos de 3, 3, 3 y 1 páginas.' },
+  { q: '¿Se pierde calidad?', a: 'No. Las páginas se copian tal cual del PDF original, sin recomprimir ni alterar su contenido.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="dividir-cada-n-paginas" faqs={faqs}>
+  <DividirCadaNPaginasTool client:load />
+</ToolLayout>

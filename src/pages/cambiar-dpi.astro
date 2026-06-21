@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarDpiTool from '@/components/tools/CambiarDpiTool';
+
+const faqs = [
+  { q: '¿Qué son los DPI o PPP de una imagen?', a: 'DPI (puntos por pulgada) o PPP indican cuántos píxeles se imprimen por pulgada. No cambian la imagen en pantalla, pero determinan su tamaño físico al imprimir: a más DPI, menor tamaño impreso y más nitidez.' },
+  { q: '¿Por qué necesito 300 DPI para imprimir?', a: 'La imprenta profesional exige normalmente 300 DPI para que las fotos salgan nítidas. Muchas plataformas de impresión, fotomatones y formularios oficiales rechazan imágenes con menos resolución de impresión.' },
+  { q: '¿Cambiar los DPI altera los píxeles de la imagen?', a: 'No. Esta herramienta solo modifica el metadato de densidad (JFIF en JPG, chunk pHYs en PNG); el número de píxeles no cambia. Lo que cambia es el tamaño al que se imprimirá la imagen.' },
+  { q: '¿Qué tamaño de impresión tendré?', a: 'La herramienta calcula el tamaño en centímetros según los píxeles y los DPI elegidos. Por ejemplo, una imagen de 1772×1181 px a 300 DPI se imprime a unos 15×10 cm.' },
+  { q: '¿Se procesa en mi navegador?', a: 'Sí. Todo se hace localmente y la imagen nunca se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="cambiar-dpi" faqs={faqs}>
+  <CambiarDpiTool client:load />
+</ToolLayout>

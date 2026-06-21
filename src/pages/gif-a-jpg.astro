@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GifAJpgTool from '@/components/tools/GifAJpgTool';
+
+const faqs = [
+  { q: '¿Convierte el GIF animado completo?', a: 'No. Como el JPG es un formato estático, la herramienta toma el primer fotograma del GIF y lo convierte en una imagen JPG fija. Para conservar la animación, usarías un formato de vídeo o el propio GIF.' },
+  { q: '¿Por qué convertir un GIF a JPG?', a: 'Para usar un fotograma como imagen fija, reducir el peso (un JPG suele pesar mucho menos que un GIF) o para subirlo a plataformas que no admiten GIF como imagen de perfil o portada.' },
+  { q: '¿Puedo elegir la calidad?', a: 'Sí, con un control deslizante de calidad. Para fotografías 85-92% es ideal; para imágenes con texto o colores planos puedes subir más para mantener los bordes limpios.' },
+  { q: '¿Qué pasa con la transparencia del GIF?', a: 'El JPG no admite transparencia, así que las zonas transparentes se rellenan con el color de fondo que elijas en la herramienta.' },
+  { q: '¿Es privado y gratis?', a: 'Sí. La conversión es 100% local en tu navegador, sin subir archivos, sin registro y sin marcas de agua.' },
+];
+---
+<ToolLayout slug="gif-a-jpg" faqs={faqs}>
+  <GifAJpgTool client:load />
+</ToolLayout>

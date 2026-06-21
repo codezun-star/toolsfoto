@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import WebpAJpgTool from '@/components/tools/WebpAJpgTool';
+
+const faqs = [
+  { q: '¿Por qué convertir WebP a JPG?', a: 'Aunque WebP es excelente para la web, muchos programas de escritorio, editores antiguos, marcos digitales y algunas plataformas todavía no lo admiten. Convertir a JPG garantiza compatibilidad universal.' },
+  { q: '¿Se pierde calidad al convertir?', a: 'WebP y JPG son ambos formatos con pérdida. Convertir de uno a otro implica una recompresión, pero con calidad 90% o más la diferencia es prácticamente imperceptible.' },
+  { q: '¿Qué ocurre si el WebP tiene transparencia?', a: 'El JPG no soporta transparencia, así que las zonas transparentes se rellenan con el color de fondo que elijas. Si necesitas conservarla, usa la herramienta WebP a PNG.' },
+  { q: '¿Puedo convertir WebP animados?', a: 'Esta herramienta convierte el primer fotograma a una imagen JPG estática. Para WebP animados con movimiento, necesitarías una herramienta de vídeo o GIF.' },
+  { q: '¿Mis archivos están seguros?', a: 'Sí. La conversión es 100% local en tu navegador; tus imágenes nunca se suben a ningún servidor.' },
+];
+---
+<ToolLayout slug="webp-a-jpg" faqs={faqs}>
+  <WebpAJpgTool client:load />
+</ToolLayout>

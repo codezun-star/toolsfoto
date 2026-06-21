@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarMayusculasTool from '@/components/tools/CambiarMayusculasTool';
+
+const faqs = [
+  { q: '¿Qué transformaciones de texto puedo hacer?', a: 'Puedes pasar el texto a MAYÚSCULAS, minúsculas, Tipo Título (cada palabra en mayúscula), Tipo frase (solo la primera letra), invertir el caso de cada letra y el modo alternado (mayúscula y minúscula intercaladas).' },
+  { q: '¿Funciona con acentos y la letra ñ?', a: 'Sí. La herramienta respeta los caracteres del español, incluyendo vocales acentuadas (á, é, í, ó, ú), la ñ y la ü, aplicando correctamente las reglas de mayúsculas y minúsculas de Unicode.' },
+  { q: '¿Para qué sirve el modo "Tipo Título"?', a: 'Convierte la primera letra de cada palabra en mayúscula, ideal para titulares, nombres propios o encabezados. Por ejemplo, "informe anual de ventas" se convierte en "Informe Anual De Ventas".' },
+  { q: '¿Hay límite de tamaño del texto?', a: 'No hay límite práctico. Todo el procesamiento ocurre en tu navegador de forma instantánea, así que puedes transformar desde una palabra hasta documentos enteros.' },
+  { q: '¿Se guarda o se envía mi texto?', a: 'No. El texto se procesa 100% en tu navegador y nunca se sube a ningún servidor. Es completamente privado y gratuito.' },
+];
+---
+<ToolLayout slug="mayusculas-minusculas" faqs={faqs}>
+  <CambiarMayusculasTool client:load />
+</ToolLayout>

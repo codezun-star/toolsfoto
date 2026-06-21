@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PaginasParesImparesTool from '@/components/tools/PaginasParesImparesTool';
+
+const faqs = [
+  { q: '¿Para qué sirve separar páginas pares e impares?', a: 'El uso principal es imprimir a doble cara con una impresora que solo imprime por una cara: primero imprimes las impares, le das la vuelta al papel y luego imprimes las pares.' },
+  { q: '¿Qué páginas son las impares y cuáles las pares?', a: 'Las impares son la 1, 3, 5, 7… (la primera página es impar). Las pares son la 2, 4, 6, 8… La herramienta numera empezando en 1, como un documento normal.' },
+  { q: '¿Conserva el orden original?', a: 'Sí. Las páginas extraídas mantienen el mismo orden que tenían en el PDF original.' },
+  { q: '¿Se pierde calidad?', a: 'No. Las páginas se copian tal cual del PDF original, sin recomprimir ni alterar su contenido.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="paginas-pares-impares" faqs={faqs}>
+  <PaginasParesImparesTool client:load />
+</ToolLayout>

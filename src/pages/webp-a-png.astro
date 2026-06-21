@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import WebpAPngTool from '@/components/tools/WebpAPngTool';
+
+const faqs = [
+  { q: '¿Se conserva la transparencia al pasar de WebP a PNG?', a: 'Sí. A diferencia del JPG, el PNG admite canal alfa, por lo que la transparencia de tu WebP se mantiene intacta en el archivo resultante.' },
+  { q: '¿Cuándo conviene WebP a PNG en lugar de WebP a JPG?', a: 'Elige PNG cuando la imagen tenga transparencia, texto, logos o bordes nítidos. Elige JPG cuando sea una fotografía sin transparencia y quieras el archivo más ligero.' },
+  { q: '¿Es una conversión sin pérdida?', a: 'El PNG generado es sin pérdida, pero recuerda que si el WebP original ya tenía compresión con pérdida, esa pérdida previa no se recupera. La conversión no añade pérdida nueva.' },
+  { q: '¿El PNG pesará más que el WebP?', a: 'Por lo general sí, porque el PNG no comprime tanto como el WebP. Es el coste de la compatibilidad y la calidad sin pérdida.' },
+  { q: '¿Se procesa en mi navegador?', a: 'Sí, todo ocurre localmente con Canvas API. Tus imágenes no se suben a ningún servidor.' },
+];
+---
+<ToolLayout slug="webp-a-png" faqs={faqs}>
+  <WebpAPngTool client:load />
+</ToolLayout>

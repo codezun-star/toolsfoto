@@ -1055,4 +1055,260 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Formatea JSON, genera QR, convierte colores, codifica URLs, calcula hashes y más. 31 herramientas para developers. Sin registro, todo en tu navegador.',
     canonical: 'https://toolsfoto.com/developer',
   },
+
+  // ── 50 herramientas nuevas ───────────────────────────────────
+  'png-a-jpg': {
+    title: 'Convertir PNG a JPG online gratis | ToolsFoto',
+    description: 'Convierte PNG a JPG en el navegador y reduce el peso hasta un 80%. Ajusta la calidad y el color de fondo. Sin registro, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/png-a-jpg',
+  },
+  'jpg-a-png': {
+    title: 'Convertir JPG a PNG online gratis | ToolsFoto',
+    description: 'Convierte JPG a PNG sin pérdida para editar o añadir transparencia. Procesamiento 100% en tu navegador, sin marcas de agua ni registro. Gratis.',
+    canonical: 'https://toolsfoto.com/jpg-a-png',
+  },
+  'webp-a-jpg': {
+    title: 'Convertir WebP a JPG online gratis | ToolsFoto',
+    description: 'Convierte imágenes WebP a JPG compatibles con cualquier programa o dispositivo. Ajusta calidad y fondo. Sin subir archivos al servidor. Gratis.',
+    canonical: 'https://toolsfoto.com/webp-a-jpg',
+  },
+  'webp-a-png': {
+    title: 'Convertir WebP a PNG online gratis | ToolsFoto',
+    description: 'Convierte WebP a PNG conservando la transparencia, sin pérdida. Compatible con cualquier editor. 100% en el navegador, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/webp-a-png',
+  },
+  'gif-a-jpg': {
+    title: 'Convertir GIF a JPG online gratis | ToolsFoto',
+    description: 'Convierte un GIF en una imagen JPG estática con calidad y fondo ajustables. Procesamiento 100% en el navegador, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/gif-a-jpg',
+  },
+  'dividir-imagen': {
+    title: 'Dividir imagen en partes online gratis | ToolsFoto',
+    description: 'Corta una imagen en una cuadrícula de partes iguales para feeds de Instagram, carruseles o puzzles. Descarga cada parte. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/dividir-imagen',
+  },
+  'unir-imagenes': {
+    title: 'Unir imágenes online gratis | ToolsFoto',
+    description: 'Combina varias imágenes en una sola, en fila o columna, con separación y fondo ajustables. 100% en el navegador, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/unir-imagenes',
+  },
+  'imagen-a-ascii': {
+    title: 'Convertir imagen a ASCII art online gratis | ToolsFoto',
+    description: 'Transforma cualquier foto en arte ASCII de texto. Ajusta ancho, caracteres e inversión. Copia o descarga el resultado. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/imagen-a-ascii',
+  },
+  'ampliar-imagen': {
+    title: 'Ampliar imagen online gratis: 2x, 3x, 4x | ToolsFoto',
+    description: 'Agranda imágenes 2×, 3× o 4× con suavizado de alta calidad. Ideal para fotos pequeñas que necesitas a mayor resolución. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/ampliar-imagen',
+  },
+  'cambiar-dpi': {
+    title: 'Cambiar DPI de imagen online gratis: 300 dpi | ToolsFoto',
+    description: 'Cambia los DPI/PPP de una imagen a 72, 150, 300 o 600 para impresión. Escribe los metadatos correctos y calcula el tamaño en cm. Gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-dpi',
+  },
+
+  'pdf-a-webp': {
+    title: 'Convertir PDF a WebP online gratis | ToolsFoto',
+    description: 'Convierte cada página de un PDF en una imagen WebP ligera con resolución y calidad ajustables. Sin subir archivos al servidor. Gratis.',
+    canonical: 'https://toolsfoto.com/pdf-a-webp',
+  },
+  'n-up-pdf': {
+    title: 'Imprimir varias páginas por hoja en PDF gratis | ToolsFoto',
+    description: 'Combina 2, 4 o 6 páginas de un PDF en una hoja A4 para ahorrar papel al imprimir. Procesamiento 100% en tu navegador, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/n-up-pdf',
+  },
+  'paginas-pares-impares': {
+    title: 'Extraer páginas pares o impares de un PDF gratis | ToolsFoto',
+    description: 'Separa las páginas pares o impares de un PDF para imprimir a doble cara. Procesamiento 100% local, sin subir archivos. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/paginas-pares-impares',
+  },
+  'invertir-orden-pdf': {
+    title: 'Invertir el orden de las páginas de un PDF gratis | ToolsFoto',
+    description: 'Da la vuelta al orden de las páginas de un PDF: la última pasa a ser la primera. Ideal para escaneos al revés. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/invertir-orden-pdf',
+  },
+  'pdf-a-imagen-larga': {
+    title: 'Convertir PDF a una imagen larga gratis | ToolsFoto',
+    description: 'Une todas las páginas de un PDF en una sola imagen vertical (JPG o PNG). Perfecto para compartir el documento como imagen. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/pdf-a-imagen-larga',
+  },
+  'dividir-pdf-mitad': {
+    title: 'Dividir páginas de un PDF a la mitad gratis | ToolsFoto',
+    description: 'Parte cada página de un PDF en dos mitades, vertical u horizontal. Ideal para libros escaneados con dos páginas por hoja. Gratis y sin registro.',
+    canonical: 'https://toolsfoto.com/dividir-pdf-mitad',
+  },
+  'cambiar-tamano-pdf': {
+    title: 'Cambiar tamaño de página de un PDF gratis: A4, Carta | ToolsFoto',
+    description: 'Cambia el tamaño de página de un PDF a A4, A3, A5, Carta o Legal, vertical u horizontal. El contenido se reescala. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/cambiar-tamano-pdf',
+  },
+  'marca-agua-imagen-pdf': {
+    title: 'Marca de agua con logo en PDF online gratis | ToolsFoto',
+    description: 'Añade una imagen o logo como marca de agua a todas las páginas de un PDF, con posición, tamaño y opacidad ajustables. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/marca-agua-imagen-pdf',
+  },
+  'dividir-cada-n-paginas': {
+    title: 'Dividir un PDF cada N páginas online gratis | ToolsFoto',
+    description: 'Divide un PDF en varios archivos con el número de páginas que elijas cada uno. Ideal para trocear documentos largos. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/dividir-cada-n-paginas',
+  },
+  'unir-pdf-imagenes': {
+    title: 'Unir PDF e imágenes en un solo PDF gratis | ToolsFoto',
+    description: 'Combina varios PDFs e imágenes (JPG/PNG) en un único PDF, en el orden que quieras. Reordena antes de unir. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/unir-pdf-imagenes',
+  },
+
+  'video-a-mp3': {
+    title: 'Convertir vídeo a MP3 online gratis | ToolsFoto',
+    description: 'Extrae el audio de cualquier vídeo y descárgalo en MP3 con bitrate ajustable. Procesamiento 100% local con FFmpeg, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/video-a-mp3',
+  },
+  'mov-a-mp4': {
+    title: 'Convertir MOV a MP4 online gratis | ToolsFoto',
+    description: 'Convierte vídeos MOV de iPhone a MP4 (H.264) compatible con todo. Procesamiento 100% local con FFmpeg, sin subir tus vídeos. Gratis.',
+    canonical: 'https://toolsfoto.com/mov-a-mp4',
+  },
+  'avi-a-mp4': {
+    title: 'Convertir AVI a MP4 online gratis | ToolsFoto',
+    description: 'Convierte vídeos AVI antiguos a MP4 moderno para reproducir en cualquier dispositivo. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/avi-a-mp4',
+  },
+  'mkv-a-mp4': {
+    title: 'Convertir MKV a MP4 online gratis | ToolsFoto',
+    description: 'Convierte vídeos MKV a MP4 compatible con móviles, smart TV y editores. Procesamiento 100% local con FFmpeg, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/mkv-a-mp4',
+  },
+  'webm-a-mp4': {
+    title: 'Convertir WebM a MP4 online gratis | ToolsFoto',
+    description: 'Convierte vídeos WebM a MP4 universal para redes sociales y editores. Procesamiento 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/webm-a-mp4',
+  },
+  'comprimir-para-whatsapp': {
+    title: 'Comprimir vídeo para WhatsApp online gratis | ToolsFoto',
+    description: 'Reduce el peso de un vídeo con presets 720p, 480p y 360p para enviarlo sin problemas por WhatsApp. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-para-whatsapp',
+  },
+  'dividir-video': {
+    title: 'Dividir vídeo en partes online gratis | ToolsFoto',
+    description: 'Divide un vídeo en varias partes iguales por copia directa, sin pérdida de calidad. Ideal para grabaciones largas. Sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/dividir-video',
+  },
+  'recorte-cuadrado-video': {
+    title: 'Hacer un vídeo cuadrado 1:1 online gratis | ToolsFoto',
+    description: 'Convierte un vídeo a formato cuadrado 1:1, recortando o rellenando con bordes. Perfecto para Instagram. 100% local con FFmpeg. Gratis.',
+    canonical: 'https://toolsfoto.com/recorte-cuadrado-video',
+  },
+  'difuminar-video': {
+    title: 'Difuminar vídeo online gratis | ToolsFoto',
+    description: 'Aplica desenfoque a todo un vídeo con intensidad ajustable, útil para fondos o censurar contenido. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/difuminar-video',
+  },
+  'quitar-fondo-verde': {
+    title: 'Quitar fondo verde de vídeo (chroma) online gratis | ToolsFoto',
+    description: 'Elimina el fondo verde o azul (croma) de un vídeo y cámbialo de color, con tolerancia ajustable. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/quitar-fondo-verde',
+  },
+
+  'audio-a-mp3': {
+    title: 'Convertir audio a MP3 online gratis | ToolsFoto',
+    description: 'Convierte cualquier audio a MP3 con bitrate ajustable (128–320 kbps). El formato más compatible. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/audio-a-mp3',
+  },
+  'wav-a-mp3': {
+    title: 'Convertir WAV a MP3 online gratis | ToolsFoto',
+    description: 'Convierte audio WAV a MP3 y reduce su peso manteniendo la calidad, con bitrate ajustable. 100% local con FFmpeg, sin subir archivos. Gratis.',
+    canonical: 'https://toolsfoto.com/wav-a-mp3',
+  },
+  'm4a-a-mp3': {
+    title: 'Convertir M4A a MP3 online gratis | ToolsFoto',
+    description: 'Convierte audio M4A (AAC de Apple) a MP3 compatible con cualquier reproductor o coche. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/m4a-a-mp3',
+  },
+  'ogg-a-mp3': {
+    title: 'Convertir OGG a MP3 online gratis | ToolsFoto',
+    description: 'Convierte audio OGG Vorbis a MP3 para reproducirlo en cualquier dispositivo. 100% local con FFmpeg, sin subir archivos al servidor. Gratis.',
+    canonical: 'https://toolsfoto.com/ogg-a-mp3',
+  },
+  'aac-a-mp3': {
+    title: 'Convertir AAC a MP3 online gratis | ToolsFoto',
+    description: 'Convierte audio AAC a MP3 para máxima compatibilidad con reproductores y coches. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/aac-a-mp3',
+  },
+  'flac-a-mp3': {
+    title: 'Convertir FLAC a MP3 online gratis | ToolsFoto',
+    description: 'Convierte audio FLAC sin pérdida a MP3 ligero con bitrate ajustable. Reproduce en cualquier dispositivo. 100% local con FFmpeg. Gratis.',
+    canonical: 'https://toolsfoto.com/flac-a-mp3',
+  },
+  'audio-a-wav': {
+    title: 'Convertir audio a WAV online gratis | ToolsFoto',
+    description: 'Convierte cualquier audio a WAV sin pérdida con frecuencia de muestreo ajustable. Ideal para edición profesional. 100% local con FFmpeg. Gratis.',
+    canonical: 'https://toolsfoto.com/audio-a-wav',
+  },
+  'loop-audio': {
+    title: 'Repetir audio en bucle online gratis | ToolsFoto',
+    description: 'Repite un audio varias veces seguidas creando un bucle continuo. Perfecto para tonos y música de fondo. 100% local con FFmpeg. Gratis.',
+    canonical: 'https://toolsfoto.com/loop-audio',
+  },
+  'audio-8d': {
+    title: 'Crear audio 8D online gratis | ToolsFoto',
+    description: 'Aplica el efecto 8D para que el sonido gire entre tus oídos, con velocidad ajustable. Se disfruta con auriculares. 100% local con FFmpeg. Gratis.',
+    canonical: 'https://toolsfoto.com/audio-8d',
+  },
+  'bass-boost': {
+    title: 'Potenciar graves de audio (bass boost) gratis | ToolsFoto',
+    description: 'Aumenta los graves de cualquier audio con control de ganancia en dB. Da más cuerpo a tu música. 100% local con FFmpeg, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/bass-boost',
+  },
+
+  slugify: {
+    title: 'Generar slug para URL online gratis | ToolsFoto',
+    description: 'Convierte títulos en slugs limpios para URLs: quita acentos, pasa a minúsculas y reemplaza espacios por guiones. Ideal para SEO. Gratis.',
+    canonical: 'https://toolsfoto.com/slugify',
+  },
+  'mayusculas-minusculas': {
+    title: 'Convertir mayúsculas y minúsculas online gratis | ToolsFoto',
+    description: 'Cambia texto a MAYÚSCULAS, minúsculas, Tipo Título, frase o alternado al instante. Copia con un clic. 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/mayusculas-minusculas',
+  },
+  'base64-a-imagen': {
+    title: 'Convertir Base64 a imagen online gratis | ToolsFoto',
+    description: 'Decodifica una cadena Base64 o data URI a una imagen visible y descargable (PNG, JPG, WebP). El proceso inverso de imagen a Base64. Gratis.',
+    canonical: 'https://toolsfoto.com/base64-a-imagen',
+  },
+  'contraste-color': {
+    title: 'Verificador de contraste de colores WCAG gratis | ToolsFoto',
+    description: 'Comprueba si tu combinación de color de texto y fondo cumple WCAG AA y AAA. Muestra el ratio y una vista previa. Accesibilidad web. Gratis.',
+    canonical: 'https://toolsfoto.com/contraste-color',
+  },
+  'sombra-css': {
+    title: 'Generador de box-shadow CSS online gratis | ToolsFoto',
+    description: 'Crea sombras CSS box-shadow con vista previa en vivo y copia el código. Ajusta desplazamiento, desenfoque, color y opacidad. Gratis.',
+    canonical: 'https://toolsfoto.com/sombra-css',
+  },
+  'meta-tags': {
+    title: 'Generador de meta tags SEO y Open Graph gratis | ToolsFoto',
+    description: 'Genera meta tags de SEO, Open Graph y Twitter Card a partir de tu título, descripción e imagen. Copia el HTML para tu head. Gratis.',
+    canonical: 'https://toolsfoto.com/meta-tags',
+  },
+  'convertir-bytes': {
+    title: 'Convertir bytes a KB, MB, GB online gratis | ToolsFoto',
+    description: 'Convierte entre bytes, KB, MB, GB, TB y bits con el sistema binario (1 KB = 1024 B). Muestra todas las equivalencias. 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/convertir-bytes',
+  },
+  'texto-a-binario': {
+    title: 'Convertir texto a binario online gratis | ToolsFoto',
+    description: 'Convierte texto a código binario y binario a texto, con soporte Unicode. Útil para aprender y depurar. 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/texto-a-binario',
+  },
+  'codigo-morse': {
+    title: 'Traductor de código morse online gratis | ToolsFoto',
+    description: 'Traduce texto a código morse y morse a texto, con letras, números y signos. 100% en el navegador, sin registro. Gratis.',
+    canonical: 'https://toolsfoto.com/codigo-morse',
+  },
+  'json-a-typescript': {
+    title: 'Convertir JSON a TypeScript online gratis | ToolsFoto',
+    description: 'Genera interfaces de TypeScript a partir de un JSON, detectando objetos anidados y arrays. Acelera tu desarrollo. 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/json-a-typescript',
+  },
 };

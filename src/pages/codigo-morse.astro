@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CodigoMorseTool from '@/components/tools/CodigoMorseTool';
+
+const faqs = [
+  { q: '¿Cómo se separan letras y palabras en morse?', a: 'Por convención, un espacio separa las letras dentro de una palabra y una barra ( / ) separa las palabras. La herramienta sigue este estándar tanto al traducir como al descodificar.' },
+  { q: '¿Qué caracteres soporta?', a: 'Soporta las 26 letras del alfabeto, los números del 0 al 9, los signos de puntuación más comunes (punto, coma, interrogación, etc.) y la letra Ñ. Los caracteres sin código morse se omiten.' },
+  { q: '¿Distingue mayúsculas de minúsculas?', a: 'No. El código morse no diferencia mayúsculas y minúsculas, por lo que el texto se convierte todo a mayúsculas internamente antes de traducir.' },
+  { q: '¿Para qué se usa el código morse hoy?', a: 'Aunque ya no es el principal sistema de telecomunicación, sigue vivo en radioafición, señales de emergencia (SOS), aviación, actividades educativas y como curiosidad o juego.' },
+  { q: '¿Se procesa en mi navegador?', a: 'Sí, la traducción es instantánea y 100% local. Tu texto nunca sale de tu dispositivo.' },
+];
+---
+<ToolLayout slug="codigo-morse" faqs={faqs}>
+  <CodigoMorseTool client:load />
+</ToolLayout>

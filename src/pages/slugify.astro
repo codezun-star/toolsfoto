@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SlugifyTool from '@/components/tools/SlugifyTool';
+
+const faqs = [
+  { q: '¿Qué es un slug y para qué sirve?', a: 'Un slug es la parte legible de una URL que identifica una página, por ejemplo "como-crear-un-blog" en /como-crear-un-blog. Usa solo minúsculas, números y guiones. Mejora el SEO y hace las URLs más claras para usuarios y buscadores.' },
+  { q: '¿Por qué se quitan los acentos y caracteres especiales?', a: 'Las URLs deben usar caracteres ASCII seguros. Los acentos, la ñ y los símbolos pueden codificarse de forma poco legible (%C3%B1) o causar problemas. La herramienta convierte "á" en "a", "ñ" en "n" y elimina los signos para generar un slug limpio.' },
+  { q: '¿Debo usar guion ( - ) o guion bajo ( _ )?', a: 'Google recomienda el guion normal ( - ) como separador de palabras en URLs, ya que lo interpreta como espacio. El guion bajo ( _ ) une las palabras a efectos de búsqueda. Para SEO, usa siempre el guion medio.' },
+  { q: '¿El slug afecta al posicionamiento SEO?', a: 'Sí. Una URL corta, descriptiva y con la palabra clave principal ayuda a los buscadores a entender el contenido y mejora la tasa de clics. Evita slugs largos o con palabras vacías innecesarias.' },
+  { q: '¿Se procesa el texto en mi navegador?', a: 'Sí, todo ocurre localmente en tu navegador con JavaScript. El texto nunca se envía a ningún servidor, por lo que es totalmente privado y funciona sin conexión una vez cargada la página.' },
+];
+---
+<ToolLayout slug="slugify" faqs={faqs}>
+  <SlugifyTool client:load />
+</ToolLayout>

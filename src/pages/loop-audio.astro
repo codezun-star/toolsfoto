@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import LoopAudioTool from '@/components/tools/LoopAudioTool';
+
+const faqs = [
+  { q: '¿Para qué sirve repetir un audio en bucle?', a: 'Para crear pistas largas a partir de un clip corto: música de fondo continua, sonidos de ambiente, tonos de llamada, bases para vídeos, o un mismo efecto repetido varias veces.' },
+  { q: '¿Cuántas veces puedo repetirlo?', a: 'Entre 2 y 20 repeticiones. El audio resultante será la duración original multiplicada por el número de veces elegido.' },
+  { q: '¿El bucle queda continuo sin silencios?', a: 'Sí. Las repeticiones se concatenan directamente sin pausas entre ellas. Si el propio clip empieza o termina en silencio, ese silencio se mantendrá entre bucles.' },
+  { q: '¿En qué formato se descarga?', a: 'El resultado se genera en MP3 a 192 kbps, compatible con cualquier reproductor.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con FFmpeg.wasm; tu audio no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="loop-audio" faqs={faqs}>
+  <LoopAudioTool client:load />
+</ToolLayout>

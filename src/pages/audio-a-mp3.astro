@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AudioAMp3Tool from '@/components/tools/AudioAMp3Tool';
+
+const faqs = [
+  { q: '¿Qué formatos puedo convertir a MP3?', a: 'Cualquier formato de audio común: WAV, OGG, AAC, M4A, FLAC y más. La herramienta los convierte todos a MP3, el formato más compatible que existe.' },
+  { q: '¿Qué bitrate debo elegir?', a: 'Para música, 192-256 kbps es un gran equilibrio entre calidad y peso; 320 kbps es la máxima calidad MP3. Para voz o pódcast, 128 kbps es suficiente y genera archivos más pequeños.' },
+  { q: '¿Se pierde calidad al convertir a MP3?', a: 'MP3 es un formato con pérdida, así que hay una recompresión. A 256-320 kbps la diferencia es prácticamente inaudible para la mayoría de personas y oídos.' },
+  { q: '¿Hay límite de tamaño o duración?', a: 'No imponemos límites. El procesamiento ocurre en tu navegador con FFmpeg.wasm; archivos muy largos solo tardarán un poco más.' },
+  { q: '¿Se sube mi audio a algún servidor?', a: 'No. Todo el proceso es local. La primera vez se descarga el motor de conversión (~30 MB); después es instantáneo.' },
+];
+---
+<ToolLayout slug="audio-a-mp3" faqs={faqs}>
+  <AudioAMp3Tool client:load />
+</ToolLayout>

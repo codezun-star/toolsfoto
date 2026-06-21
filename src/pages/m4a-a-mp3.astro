@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import M4aAMp3Tool from '@/components/tools/M4aAMp3Tool';
+
+const faqs = [
+  { q: '¿Qué es un archivo M4A?', a: 'M4A es un contenedor de audio que suele guardar audio AAC, usado por Apple (iTunes, Voice Memos, Apple Music). Aunque tiene buena calidad, no todos los reproductores y coches lo admiten.' },
+  { q: '¿Por qué convertir M4A a MP3?', a: 'Para reproducirlo en cualquier dispositivo, radio de coche, reproductor antiguo o software que solo acepta MP3, que es el formato de audio más universal.' },
+  { q: '¿Se pierde calidad?', a: 'Tanto AAC como MP3 son formatos con pérdida. Al reconvertir hay una ligera recompresión, pero a 256-320 kbps es prácticamente inaudible.' },
+  { q: '¿Funciona con las notas de voz del iPhone?', a: 'Sí. Las notas de voz y grabaciones M4A del iPhone se convierten sin problema a MP3 para compartirlas o editarlas en cualquier programa.' },
+  { q: '¿Mis archivos son privados?', a: 'Totalmente. El proceso es 100% local en el navegador con FFmpeg.wasm. Nada se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="m4a-a-mp3" faqs={faqs}>
+  <M4aAMp3Tool client:load />
+</ToolLayout>

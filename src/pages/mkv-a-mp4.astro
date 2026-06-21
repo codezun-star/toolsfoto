@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MkvAMp4Tool from '@/components/tools/MkvAMp4Tool';
+
+const faqs = [
+  { q: '¿Por qué convertir MKV a MP4?', a: 'El MKV (Matroska) es un contenedor potente, pero muchos móviles, smart TV, consolas y programas de edición no lo reproducen. El MP4 es compatible prácticamente con todo.' },
+  { q: '¿Se pierde calidad?', a: 'La conversión recodifica el vídeo a H.264 con calidad alta. La pérdida es mínima y, a cambio, obtienes máxima compatibilidad.' },
+  { q: '¿Mantiene los subtítulos?', a: 'Esta conversión se centra en vídeo y audio. Los subtítulos incrustados como pista separada en el MKV no se transfieren; si los necesitas, considera incrustarlos por separado.' },
+  { q: '¿Funciona con archivos grandes?', a: 'Sí, aunque los MKV en alta resolución o muy largos tardarán más en procesarse al hacerse todo en el navegador.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa localmente con FFmpeg.wasm, sin subir tu vídeo a ningún servidor.' },
+];
+---
+<ToolLayout slug="mkv-a-mp4" faqs={faqs}>
+  <MkvAMp4Tool client:load />
+</ToolLayout>

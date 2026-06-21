@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CuadradoVideoTool from '@/components/tools/CuadradoVideoTool';
+
+const faqs = [
+  { q: '¿Para qué sirve un vídeo cuadrado?', a: 'El formato 1:1 es ideal para publicaciones en el feed de Instagram y Facebook, donde el vídeo cuadrado ocupa más espacio en pantalla y suele tener mejor rendimiento que el horizontal.' },
+  { q: '¿Qué diferencia hay entre recortar y rellenar?', a: 'Recortar elimina los lados para llenar el cuadrado sin bordes (pierdes parte de la imagen). Rellenar mantiene todo el vídeo y añade bordes negros arriba y abajo (o a los lados) para completar el cuadrado.' },
+  { q: '¿Qué opción es mejor?', a: 'Recortar es mejor cuando el contenido importante está centrado. Rellenar es mejor cuando no quieres perder nada de la escena, aunque queden franjas negras.' },
+  { q: '¿Mantiene el audio?', a: 'Sí, el audio se conserva intacto durante la conversión.' },
+  { q: '¿Es privado?', a: 'Sí. El procesamiento es 100% local con FFmpeg.wasm; tu vídeo no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="recorte-cuadrado-video" faqs={faqs}>
+  <CuadradoVideoTool client:load />
+</ToolLayout>

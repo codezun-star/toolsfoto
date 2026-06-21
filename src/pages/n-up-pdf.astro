@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import NupPdfTool from '@/components/tools/NupPdfTool';
+
+const faqs = [
+  { q: '¿Qué significa imprimir varias páginas por hoja?', a: 'Es combinar 2, 4 o 6 páginas del PDF en una sola hoja A4 (también llamado "N-up"). Reduce el número de hojas necesarias y ahorra papel y tinta al imprimir.' },
+  { q: '¿Para qué casos es útil?', a: 'Para imprimir apuntes, presentaciones (varias diapositivas por hoja), borradores, manuales o cualquier documento donde no necesites el tamaño completo de cada página.' },
+  { q: '¿Se mantiene la legibilidad?', a: 'Con 2 por hoja el texto sigue siendo cómodo de leer. Con 4 o 6 por hoja el contenido se reduce más, ideal para documentos con texto grande o diapositivas.' },
+  { q: '¿En qué orden se colocan las páginas?', a: 'Se colocan de izquierda a derecha y de arriba abajo, en el orden original del PDF, llenando cada hoja antes de pasar a la siguiente.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="n-up-pdf" faqs={faqs}>
+  <NupPdfTool client:load />
+</ToolLayout>

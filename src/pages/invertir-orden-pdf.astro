@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import InvertirOrdenPdfTool from '@/components/tools/InvertirOrdenPdfTool';
+
+const faqs = [
+  { q: '¿Qué hace invertir el orden de las páginas?', a: 'Da la vuelta a la secuencia completa del PDF: la última página pasa a ser la primera, la penúltima la segunda, y así sucesivamente.' },
+  { q: '¿Cuándo es útil?', a: 'Cuando escaneas un documento al revés (de la última a la primera hoja), cuando una impresora deja las páginas en orden inverso, o cuando un PDF se generó de atrás hacia adelante.' },
+  { q: '¿Se pierde calidad o contenido?', a: 'No. Las páginas se reordenan copiándolas tal cual; el contenido, las imágenes y el texto se mantienen intactos.' },
+  { q: '¿Puedo invertir solo algunas páginas?', a: 'Esta herramienta invierte el documento completo. Para reordenar páginas concretas usa la herramienta de reordenar páginas.' },
+  { q: '¿Es privado?', a: 'Sí. El proceso es local en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="invertir-orden-pdf" faqs={faqs}>
+  <InvertirOrdenPdfTool client:load />
+</ToolLayout>

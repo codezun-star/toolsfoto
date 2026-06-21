@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FlacAMp3Tool from '@/components/tools/FlacAMp3Tool';
+
+const faqs = [
+  { q: '¿Qué es FLAC?', a: 'FLAC es un formato de audio sin pérdida: conserva toda la calidad del original pero ocupa mucho espacio. Es popular entre audiófilos, pero no se reproduce en todos los dispositivos.' },
+  { q: '¿Cuánto se reduce el peso al pasar a MP3?', a: 'Bastante. Un FLAC puede ocupar 5-6 veces más que un MP3 a 320 kbps. Convertir libera mucho espacio a cambio de una pérdida de calidad mínima a bitrates altos.' },
+  { q: '¿Merece la pena perder calidad?', a: 'Depende del uso. Para escuchar en el móvil, coche o auriculares normales, la diferencia entre FLAC y MP3 320 kbps es inapreciable. Para archivo o equipos hi-fi, conserva el FLAC.' },
+  { q: '¿Qué bitrate elijo?', a: 'Para la máxima calidad MP3, usa 320 kbps. Si priorizas el tamaño, 192-256 kbps sigue sonando muy bien.' },
+  { q: '¿Es privado?', a: 'Sí. La conversión se hace en tu navegador con FFmpeg.wasm y tu audio nunca se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="flac-a-mp3" faqs={faqs}>
+  <FlacAMp3Tool client:load />
+</ToolLayout>

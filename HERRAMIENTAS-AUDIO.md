@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Audio (43)
+## Audio (53)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -48,3 +48,13 @@
 | `/telefono-audio` | `TelefonoAudioTool.tsx` | Creativas | FFmpeg.wasm — `highpass + lowpass` + `acompressor` (4 presets de banda estrecha) |
 | `/generar-ruido-blanco` | `GenerarRuidoBlancTool.tsx` | Básicas | FFmpeg.wasm lavfi `anoisesrc` — ruido blanco/rosa/marrón sin input de archivo |
 | `/grabar-audio` | `GrabarAudioTool.tsx` | Básicas | MediaRecorder (`getUserMedia`) + conversión opcional a MP3 con FFmpeg.wasm |
+| `/audio-a-mp3` | `AudioAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/wav-a-mp3` | `WavAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/m4a-a-mp3` | `M4aAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/ogg-a-mp3` | `OggAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/aac-a-mp3` | `AacAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/flac-a-mp3` | `FlacAMp3Tool.tsx` | Básicas | FFmpeg.wasm libmp3lame (vía `AudioToMp3Base`) |
+| `/audio-a-wav` | `AudioAWavTool.tsx` | Básicas | FFmpeg.wasm — `pcm_s16le` + `-ar` ajustable |
+| `/loop-audio` | `LoopAudioTool.tsx` | Básicas | FFmpeg.wasm — `-stream_loop` N repeticiones |
+| `/audio-8d` | `Audio8dTool.tsx` | Creativas | FFmpeg.wasm — filtro `apulsator` (paneo 8D) |
+| `/bass-boost` | `BassBoostTool.tsx` | Creativas | FFmpeg.wasm — filtro `bass=g=` ganancia en dB |

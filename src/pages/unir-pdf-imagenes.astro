@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import UnirPdfImagenesTool from '@/components/tools/UnirPdfImagenesTool';
+
+const faqs = [
+  { q: '¿Qué puedo combinar con esta herramienta?', a: 'Puedes unir varios PDFs e imágenes (JPG y PNG) en un único documento PDF. Cada imagen se convierte en una página y los PDFs se insertan con todas sus páginas.' },
+  { q: '¿Puedo ordenar los archivos antes de unir?', a: 'Sí. Cada archivo de la lista tiene botones para moverlo arriba o abajo, de modo que controlas el orden exacto en el que aparecerán en el PDF final.' },
+  { q: '¿En qué se diferencia de "Unir PDFs"?', a: 'La herramienta de unir PDFs solo acepta archivos PDF. Esta también admite imágenes, perfecta para juntar escaneos, fotos y documentos en un único PDF.' },
+  { q: '¿Qué tamaño tienen las páginas de imagen?', a: 'Cada imagen genera una página con sus mismas dimensiones, mostrando la foto a tamaño completo sin recortes.' },
+  { q: '¿Es privado?', a: 'Sí. Todos los archivos se procesan localmente en tu navegador con pdf-lib; nada se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="unir-pdf-imagenes" faqs={faqs}>
+  <UnirPdfImagenesTool client:load />
+</ToolLayout>

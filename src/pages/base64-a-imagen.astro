@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import Base64AImagenTool from '@/components/tools/Base64AImagenTool';
+
+const faqs = [
+  { q: '¿Qué formatos de entrada acepta?', a: 'Acepta tanto un data URI completo (data:image/png;base64,iVBOR…) como solo la cadena Base64 sin la cabecera. Si pegas solo la cadena, se asume formato PNG por defecto.' },
+  { q: '¿Qué tipos de imagen puede decodificar?', a: 'Cualquier imagen codificada en Base64: PNG, JPG, WebP, GIF, BMP y SVG. El tipo se detecta automáticamente a partir de la cabecera del data URI cuando está presente.' },
+  { q: '¿Para qué se usa convertir Base64 a imagen?', a: 'Es útil para developers que encuentran imágenes incrustadas en código HTML, CSS o JSON y necesitan verlas o guardarlas como archivo. También para depurar APIs que devuelven imágenes en Base64.' },
+  { q: '¿Es seguro pegar mi Base64 aquí?', a: 'Sí. La decodificación ocurre por completo en tu navegador con JavaScript nativo. La cadena nunca se envía a ningún servidor, por lo que es totalmente privada.' },
+  { q: '¿Cuál es el proceso inverso?', a: 'Para convertir una imagen en una cadena Base64 usa la herramienta "Imagen a Base64". Esta herramienta hace exactamente lo contrario: de Base64 de vuelta a imagen.' },
+];
+---
+<ToolLayout slug="base64-a-imagen" faqs={faqs}>
+  <Base64AImagenTool client:load />
+</ToolLayout>

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Vídeo (32)
+## Vídeo (42)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -37,3 +37,13 @@
 | `/gif-a-video` | `GifAVideoTool.tsx` | Básicas | FFmpeg.wasm — `-f gif` → H.264 MP4 con `pix_fmt yuv420p` |
 | `/denoise-video` | `DenoiseVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `hqdn3d` (3 niveles: suave/medio/intenso) |
 | `/comprimir-gif` | `ComprimirGifTool.tsx` | Básicas | FFmpeg.wasm — `palettegen`/`paletteuse` + ajuste de scale, fps y colores |
+| `/video-a-mp3` | `VideoAMp3Tool.tsx` | Básicas | FFmpeg.wasm — `-vn` + libmp3lame, bitrate ajustable |
+| `/mov-a-mp4` | `MovAMp4Tool.tsx` | Básicas | FFmpeg.wasm — libx264 + aac (vía `VideoToMp4Base`) |
+| `/avi-a-mp4` | `AviAMp4Tool.tsx` | Básicas | FFmpeg.wasm — libx264 + aac (vía `VideoToMp4Base`) |
+| `/mkv-a-mp4` | `MkvAMp4Tool.tsx` | Básicas | FFmpeg.wasm — libx264 + aac (vía `VideoToMp4Base`) |
+| `/webm-a-mp4` | `WebmAMp4Tool.tsx` | Básicas | FFmpeg.wasm — libx264 + aac (vía `VideoToMp4Base`) |
+| `/comprimir-para-whatsapp` | `ComprimirWhatsappTool.tsx` | Básicas | FFmpeg.wasm — presets scale+CRF 720/480/360p |
+| `/dividir-video` | `DividirVideoTool.tsx` | Básicas | FFmpeg.wasm — segment muxer `-c copy` según duración |
+| `/recorte-cuadrado-video` | `CuadradoVideoTool.tsx` | Básicas | FFmpeg.wasm — `crop`/`pad` a relación 1:1 |
+| `/difuminar-video` | `DifuminarVideoTool.tsx` | Básicas | FFmpeg.wasm — filtro `boxblur` con intensidad ajustable |
+| `/quitar-fondo-verde` | `QuitarFondoVerdeTool.tsx` | Básicas | FFmpeg.wasm — `colorkey` + `overlay` sobre color sólido |

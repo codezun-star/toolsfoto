@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import WebmAMp4Tool from '@/components/tools/WebmAMp4Tool';
+
+const faqs = [
+  { q: '¿Por qué convertir WebM a MP4?', a: 'El WebM es ideal para la web, pero muchos editores de vídeo, redes sociales, móviles antiguos y programas de escritorio no lo admiten. El MP4 (H.264) es el estándar universal.' },
+  { q: '¿Se pierde calidad?', a: 'Hay una recodificación a H.264 con calidad alta (CRF 23), por lo que la diferencia visual es mínima. A cambio ganas compatibilidad total.' },
+  { q: '¿Sirve para vídeos grabados o descargados de la web?', a: 'Sí. Muchas grabaciones de pantalla y vídeos web salen en WebM; esta herramienta los pasa a MP4 para editarlos o subirlos a cualquier plataforma.' },
+  { q: '¿Conserva el audio?', a: 'Sí, el audio se recodifica a AAC para que funcione en cualquier reproductor MP4.' },
+  { q: '¿Es privado?', a: 'Sí. La conversión es 100% local con FFmpeg.wasm; tu vídeo no sale de tu dispositivo.' },
+];
+---
+<ToolLayout slug="webm-a-mp4" faqs={faqs}>
+  <WebmAMp4Tool client:load />
+</ToolLayout>

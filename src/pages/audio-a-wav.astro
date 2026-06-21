@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AudioAWavTool from '@/components/tools/AudioAWavTool';
+
+const faqs = [
+  { q: '¿Por qué convertir a WAV?', a: 'El WAV es audio sin compresión (PCM), ideal para edición profesional, masterización, software de audio que exige formato sin pérdida, o para procesar el sonido sin acumular artefactos de compresión.' },
+  { q: '¿Convertir un MP3 a WAV mejora la calidad?', a: 'No recupera la calidad ya perdida en el MP3, pero crea un archivo sin pérdida que no se degradará más al editarlo. Es la "copia de trabajo" recomendada para edición de audio.' },
+  { q: '¿Qué frecuencia de muestreo elijo?', a: '44.1 kHz es el estándar de CD y música; 48 kHz es el estándar de vídeo y cine. Elige "Original" para conservar la del archivo de entrada.' },
+  { q: '¿El WAV pesará mucho más?', a: 'Sí, al no comprimir, un WAV puede ocupar alrededor de 10 MB por minuto en estéreo a 44.1 kHz. Es el coste de la calidad sin pérdida.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con FFmpeg.wasm; nada se sube a un servidor.' },
+];
+---
+<ToolLayout slug="audio-a-wav" faqs={faqs}>
+  <AudioAWavTool client:load />
+</ToolLayout>

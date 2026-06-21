@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DividirPdfMitadTool from '@/components/tools/DividirPdfMitadTool';
+
+const faqs = [
+  { q: '¿Qué hace dividir las páginas a la mitad?', a: 'Convierte cada página del PDF en dos páginas, cortándola por la mitad. Es útil cuando un PDF tiene dos páginas de contenido en cada hoja (libros escaneados, folletos, documentos a doble página).' },
+  { q: '¿Puedo elegir la dirección del corte?', a: 'Sí. Vertical corta cada página en mitad izquierda y mitad derecha; horizontal la corta en mitad superior e inferior. Elige según cómo esté maquetado tu documento.' },
+  { q: '¿Cuántas páginas tendrá el resultado?', a: 'El doble que el original: un PDF de 10 páginas se convierte en uno de 20, manteniendo el orden de lectura correcto.' },
+  { q: '¿Se pierde calidad?', a: 'No. El contenido no se recomprime; simplemente se ajusta el área visible de cada página, por lo que la nitidez se mantiene.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="dividir-pdf-mitad" faqs={faqs}>
+  <DividirPdfMitadTool client:load />
+</ToolLayout>

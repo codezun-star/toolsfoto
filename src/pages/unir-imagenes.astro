@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import UnirImagenesTool from '@/components/tools/UnirImagenesTool';
+
+const faqs = [
+  { q: '¿En qué se diferencia de un collage?', a: 'Unir imágenes las coloca una tras otra en línea recta (en fila o en columna), ideal para tiras de fotos, comparativas o capturas largas. El collage organiza varias imágenes en diseños de cuadrícula con distintas proporciones.' },
+  { q: '¿Puedo unirlas en horizontal y en vertical?', a: 'Sí. Elige "En fila" para juntarlas de izquierda a derecha o "En columna" para apilarlas de arriba abajo. La herramienta ajusta automáticamente los tamaños para que encajen.' },
+  { q: '¿Qué pasa si las imágenes tienen tamaños distintos?', a: 'Se escalan proporcionalmente: en horizontal igualan la altura, y en vertical igualan el ancho, para que se unan sin deformarse.' },
+  { q: '¿Puedo añadir separación entre ellas?', a: 'Sí, con un control de separación y un selector de color para el espacio entre imágenes y el fondo. Pon 0 para unirlas sin margen.' },
+  { q: '¿Es privado?', a: 'Sí, todo el proceso es local en tu navegador. Las imágenes no se suben a ningún servidor.' },
+];
+---
+<ToolLayout slug="unir-imagenes" faqs={faqs}>
+  <UnirImagenesTool client:load />
+</ToolLayout>

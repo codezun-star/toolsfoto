@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DifuminarVideoTool from '@/components/tools/DifuminarVideoTool';
+
+const faqs = [
+  { q: '¿Para qué sirve difuminar un vídeo?', a: 'Para crear fondos borrosos, ocultar información sensible, suavizar imágenes de fondo en montajes, o conseguir un efecto estético tipo bokeh en todo el cuadro.' },
+  { q: '¿Puedo controlar la intensidad?', a: 'Sí, con un control deslizante. A más intensidad, más borroso queda el vídeo. Valores bajos dan un desenfoque sutil; valores altos lo difuminan por completo.' },
+  { q: '¿Difumina solo una parte o todo el vídeo?', a: 'Esta herramienta aplica el desenfoque a todo el cuadro de forma uniforme. Para difuminar solo una zona concreta necesitarías edición por regiones.' },
+  { q: '¿Mantiene el audio?', a: 'Sí, el audio original se conserva sin cambios.' },
+  { q: '¿Es privado?', a: 'Sí. El procesamiento es local con FFmpeg.wasm; tu vídeo nunca se sube a un servidor.' },
+];
+---
+<ToolLayout slug="difuminar-video" faqs={faqs}>
+  <DifuminarVideoTool client:load />
+</ToolLayout>

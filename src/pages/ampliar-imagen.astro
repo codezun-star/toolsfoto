@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AmpliarImagenTool from '@/components/tools/AmpliarImagenTool';
+
+const faqs = [
+  { q: '¿Cómo amplía la imagen sin que se vea pixelada?', a: 'Usa interpolación bicúbica de alta calidad, que calcula los píxeles nuevos a partir de los vecinos para suavizar la ampliación. El resultado es mucho más limpio que un simple aumento de tamaño.' },
+  { q: '¿Puede recuperar detalle que no existe?', a: 'No. Ninguna herramienta basada en escalado puede inventar detalle real que no estaba en la imagen original. Lo que hace es suavizar el aumento para que se vea lo mejor posible. Para reconstrucción con IA se necesitan modelos pesados.' },
+  { q: '¿Qué factor de ampliación elijo?', a: 'Para fotos pequeñas, 2× ofrece el mejor equilibrio entre tamaño y nitidez. 3× y 4× sirven si necesitas dimensiones mayores, asumiendo un suavizado algo más visible.' },
+  { q: '¿En qué formato se descarga?', a: 'Se conserva el tipo del archivo original: PNG si subiste un PNG (manteniendo transparencia), o JPG de alta calidad en el resto de casos.' },
+  { q: '¿Es privado?', a: 'Sí, el reescalado se hace en tu navegador con Canvas API. Tu imagen no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="ampliar-imagen" faqs={faqs}>
+  <AmpliarImagenTool client:load />
+</ToolLayout>

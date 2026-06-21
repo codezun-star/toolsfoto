@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import OggAMp3Tool from '@/components/tools/OggAMp3Tool';
+
+const faqs = [
+  { q: '¿Qué es un archivo OGG?', a: 'OGG (normalmente con códec Vorbis) es un formato de audio libre y de buena calidad, común en videojuegos, WhatsApp (audios de voz) y software libre. No siempre es compatible con reproductores comerciales.' },
+  { q: '¿Por qué pasar OGG a MP3?', a: 'Para reproducirlo en cualquier dispositivo o programa, ya que el MP3 tiene compatibilidad universal mientras que el OGG no se abre en todas partes.' },
+  { q: '¿Sirve para los audios de voz de WhatsApp?', a: 'Sí. Los mensajes de voz de WhatsApp suelen estar en formato OGG/Opus; esta herramienta los convierte a MP3 para guardarlos o compartirlos fácilmente.' },
+  { q: '¿Qué calidad elijo?', a: 'Para voz, 128 kbps basta. Para música, sube a 192-320 kbps para conservar mejor el detalle.' },
+  { q: '¿Es privado?', a: 'Sí. La conversión es local en tu navegador con FFmpeg.wasm; tu audio no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="ogg-a-mp3" faqs={faqs}>
+  <OggAMp3Tool client:load />
+</ToolLayout>

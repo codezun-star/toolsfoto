@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (49)
+## Imagen (59)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -54,3 +54,13 @@
 | `/tilt-shift` | `TiltShiftTool.tsx` | Creativas | Canvas blur con padding + gradient mask `destination-in` |
 | `/imagen-a-ico` | `ImagenAICOTool.tsx` | Básicas | Binary ICO builder — PNG embebido, múltiples tamaños |
 | `/heic-a-jpg` | `HeicAJpgTool.tsx` | Básicas | heic2any (WASM libheif) — HEIC/HEIF → JPG/PNG con calidad ajustable |
+| `/png-a-jpg` | `PngAJpgTool.tsx` | Básicas | Canvas API (`toBlob` JPEG + color de fondo) |
+| `/jpg-a-png` | `JpgAPngTool.tsx` | Básicas | Canvas API (`toBlob` PNG sin pérdida) |
+| `/webp-a-jpg` | `WebpAJpgTool.tsx` | Básicas | Canvas API (`toBlob` JPEG + color de fondo) |
+| `/webp-a-png` | `WebpAPngTool.tsx` | Básicas | Canvas API (`toBlob` PNG, conserva alfa) |
+| `/gif-a-jpg` | `GifAJpgTool.tsx` | Básicas | Canvas API (primer fotograma → JPEG) |
+| `/dividir-imagen` | `DividirImagenTool.tsx` | Básicas | Canvas `drawImage` recorte en cuadrícula N×M |
+| `/unir-imagenes` | `UnirImagenesTool.tsx` | Básicas | Canvas API concatena en horizontal/vertical |
+| `/imagen-a-ascii` | `ImagenAAsciiTool.tsx` | Creativas | `getImageData` → luminancia → rampa de caracteres |
+| `/ampliar-imagen` | `AmpliarImagenTool.tsx` | Básicas | Canvas `imageSmoothingQuality: high` upscale 2-4× |
+| `/cambiar-dpi` | `CambiarDpiTool.tsx` | Básicas | Patch JFIF (JPG) + chunk pHYs con CRC32 (PNG) |

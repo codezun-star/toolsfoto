@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MovAMp4Tool from '@/components/tools/MovAMp4Tool';
+
+const faqs = [
+  { q: '¿Por qué convertir MOV a MP4?', a: 'El MOV es el formato de vídeo de Apple (QuickTime) que graban los iPhone. Aunque tiene buena calidad, no se reproduce ni edita bien en muchos dispositivos Android, Windows o plataformas. El MP4 es universal.' },
+  { q: '¿Se pierde calidad al convertir?', a: 'La conversión recodifica el vídeo a H.264 con calidad alta (CRF 23), por lo que la pérdida es mínima y prácticamente imperceptible, a la vez que el archivo suele pesar menos.' },
+  { q: '¿Funciona con vídeos grandes del iPhone?', a: 'Sí, aunque los archivos muy largos o en 4K tardarán más en procesarse, ya que todo el trabajo se hace en tu navegador.' },
+  { q: '¿Mantiene el audio?', a: 'Sí. La pista de audio se conserva y se recodifica a AAC, compatible con cualquier reproductor MP4.' },
+  { q: '¿Se sube mi vídeo a algún servidor?', a: 'No. La conversión es 100% local con FFmpeg.wasm. La primera vez se descarga el motor (~30 MB); después es instantáneo.' },
+];
+---
+<ToolLayout slug="mov-a-mp4" faqs={faqs}>
+  <MovAMp4Tool client:load />
+</ToolLayout>

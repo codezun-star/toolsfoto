@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SombraCssTool from '@/components/tools/SombraCssTool';
+
+const faqs = [
+  { q: '¿Qué parámetros controla box-shadow?', a: 'box-shadow define el desplazamiento horizontal (X), el vertical (Y), el desenfoque (blur), la expansión (spread), el color y, opcionalmente, si la sombra es interior (inset). Esta herramienta te deja ajustar todos con sliders y ver el resultado al instante.' },
+  { q: '¿Qué es una sombra "inset"?', a: 'Una sombra inset se dibuja dentro del elemento en lugar de hacia fuera, creando una sensación de profundidad hundida. Es útil para campos de formulario, botones presionados o efectos de relieve.' },
+  { q: '¿Cómo consigo una sombra suave y realista?', a: 'Usa un desplazamiento Y pequeño (4-10px), un desenfoque alto (20-40px), una expansión ligeramente negativa y una opacidad baja (10-25%). Esto imita la luz natural y evita sombras duras poco naturales.' },
+  { q: '¿Puedo usar el código en cualquier framework?', a: 'Sí. El código generado es CSS estándar y funciona en cualquier proyecto: HTML puro, React, Vue, Tailwind (con clases arbitrarias), etc. Solo copia la línea box-shadow y pégala en tu estilo.' },
+  { q: '¿Se procesa todo en mi navegador?', a: 'Sí, la vista previa y la generación del código ocurren localmente. No se envía nada a ningún servidor y la herramienta es totalmente gratuita.' },
+];
+---
+<ToolLayout slug="sombra-css" faqs={faqs}>
+  <SombraCssTool client:load />
+</ToolLayout>

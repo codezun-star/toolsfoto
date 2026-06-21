@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DividirImagenTool from '@/components/tools/DividirImagenTool';
+
+const faqs = [
+  { q: '¿Para qué sirve dividir una imagen en cuadrícula?', a: 'El uso más popular es crear un feed de Instagram en mosaico (por ejemplo 3×3), donde una imagen grande se reparte en varias publicaciones que juntas forman un diseño. También sirve para carruseles, puzzles o imprimir un póster en varias hojas.' },
+  { q: '¿Cómo subo el resultado a Instagram en orden?', a: 'Instagram coloca las publicaciones de derecha a izquierda y de abajo arriba. Sube las partes empezando por la esquina inferior derecha para que el mosaico quede correcto en el perfil.' },
+  { q: '¿Las partes mantienen la calidad original?', a: 'Sí. Cada parte se recorta directamente de la imagen original sin recomprimir con pérdida, y se exporta como PNG sin pérdida.' },
+  { q: '¿Cuántas partes puedo crear?', a: 'Hasta una cuadrícula de 6 columnas por 6 filas (36 partes). También hay presets rápidos para 1×3, 3×1, 2×2 y 3×3.' },
+  { q: '¿Se procesa en mi navegador?', a: 'Sí, todo el recorte ocurre localmente con Canvas API. Tu imagen no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="dividir-imagen" faqs={faqs}>
+  <DividirImagenTool client:load />
+</ToolLayout>

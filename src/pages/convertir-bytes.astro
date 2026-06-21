@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ConvertirBytesTool from '@/components/tools/ConvertirBytesTool';
+
+const faqs = [
+  { q: '¿Cuántos bytes tiene un kilobyte?', a: 'En el sistema binario que usan los sistemas operativos y el almacenamiento, 1 KB = 1024 bytes, 1 MB = 1024 KB, 1 GB = 1024 MB, etc. Esta herramienta usa ese estándar binario.' },
+  { q: '¿Por qué un disco de 1 TB muestra menos espacio?', a: 'Los fabricantes anuncian capacidad en sistema decimal (1 TB = 1.000.000.000.000 bytes), pero el sistema operativo la mide en binario (1 TB = 1.099.511.627.776 bytes). Por eso un disco de "1 TB" aparece como ~931 GB.' },
+  { q: '¿Cuál es la diferencia entre bit y byte?', a: 'Un byte son 8 bits. Los archivos se miden en bytes (B, KB, MB), mientras que la velocidad de internet suele medirse en bits por segundo (Mbps). La herramienta también muestra la equivalencia en bits.' },
+  { q: '¿Para qué sirve convertir unidades de almacenamiento?', a: 'Es útil para calcular límites de subida de archivos, planificar almacenamiento, entender el peso de imágenes y vídeos, o configurar cuotas en servidores y bases de datos.' },
+  { q: '¿Se procesa todo localmente?', a: 'Sí, el cálculo es instantáneo y ocurre en tu navegador. No se envía nada a ningún servidor.' },
+];
+---
+<ToolLayout slug="convertir-bytes" faqs={faqs}>
+  <ConvertirBytesTool client:load />
+</ToolLayout>

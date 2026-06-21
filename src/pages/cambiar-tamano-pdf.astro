@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CambiarTamanoPdfTool from '@/components/tools/CambiarTamanoPdfTool';
+
+const faqs = [
+  { q: '¿Qué tamaños de página puedo aplicar?', a: 'A4, A3, A5, Carta (Letter) y Legal, en orientación vertical u horizontal. Son los formatos estándar más usados para imprimir y compartir documentos.' },
+  { q: '¿Qué pasa con el contenido al cambiar el tamaño?', a: 'El contenido de cada página se reescala manteniendo su proporción para encajar en el nuevo tamaño, centrado y con un pequeño margen, sin deformarse.' },
+  { q: '¿Cuándo necesito cambiar el tamaño de un PDF?', a: 'Cuando un documento viene en un formato distinto al que necesita tu impresora o destinatario (por ejemplo pasar de Carta a A4), o para unificar varios PDFs al mismo tamaño antes de combinarlos.' },
+  { q: '¿En qué se diferencia de escalar el PDF?', a: 'Cambiar el tamaño define unas dimensiones de página concretas (A4, Carta…) y ajusta el contenido a ellas. Escalar aumenta o reduce el contenido en un porcentaje sin fijar un formato estándar.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local en tu navegador con pdf-lib; el PDF no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="cambiar-tamano-pdf" faqs={faqs}>
+  <CambiarTamanoPdfTool client:load />
+</ToolLayout>

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Developer (32)
+## Developer (42)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -37,3 +37,13 @@
 | `/og-image` | `OGImageTool.tsx` | Básicas | Canvas API 1200×630 — título, subtítulo, colores, logo opcional |
 | `/convertir-fuente` | `ConvertirFuenteTool.tsx` | Básicas | Binary SFNT parser — TTF/OTF ↔ WOFF sin pérdida, sin librería |
 | `/formatear-xml` | `FormatearXMLTool.tsx` | Básicas | JS puro — indentación jerárquica + minify + validación con DOMParser |
+| `/slugify` | `SlugifyTool.tsx` | Básicas | JS puro — normalize NFD + regex de slug |
+| `/mayusculas-minusculas` | `CambiarMayusculasTool.tsx` | Básicas | JS puro — transformaciones de caso Unicode |
+| `/base64-a-imagen` | `Base64AImagenTool.tsx` | Básicas | `atob` → Blob → object URL descargable |
+| `/contraste-color` | `ContrasteColorTool.tsx` | Básicas | JS puro — luminancia relativa + ratio WCAG AA/AAA |
+| `/sombra-css` | `SombraCssTool.tsx` | Básicas | JS puro — generador box-shadow + preview en vivo |
+| `/meta-tags` | `MetaTagsTool.tsx` | Básicas | JS puro — plantillas OG/Twitter + escape HTML |
+| `/convertir-bytes` | `ConvertirBytesTool.tsx` | Básicas | JS puro — conversión binaria (1 KB = 1024 B) |
+| `/texto-a-binario` | `TextoABinarioTool.tsx` | Básicas | `TextEncoder/TextDecoder` + base 2 |
+| `/codigo-morse` | `CodigoMorseTool.tsx` | Básicas | JS puro — mapa morse bidireccional |
+| `/json-a-typescript` | `JsonATypescriptTool.tsx` | Básicas | JS puro — generador recursivo de interfaces TS |

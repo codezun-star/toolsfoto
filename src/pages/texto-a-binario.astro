@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import TextoABinarioTool from '@/components/tools/TextoABinarioTool';
+
+const faqs = [
+  { q: '¿Cómo se convierte el texto a binario?', a: 'Cada carácter se codifica primero en bytes UTF-8 y cada byte se representa como un número binario de 8 bits. Por ejemplo, la letra "A" (valor 65) es 01000001. Los caracteres se separan con un espacio.' },
+  { q: '¿Funciona con acentos, ñ y emojis?', a: 'Sí. Al usar codificación UTF-8, los caracteres especiales como á, ñ o los emojis se representan con varios bytes (varios grupos de 8 bits), de forma totalmente correcta y reversible.' },
+  { q: '¿Cómo decodifico binario a texto?', a: 'Pega los grupos de 8 bits (con o sin espacios) en modo "Binario → Texto" y la herramienta los reconstruye en caracteres. La longitud total debe ser múltiplo de 8.' },
+  { q: '¿Para qué sirve esta conversión?', a: 'Es muy usada con fines educativos para entender cómo los ordenadores representan el texto, en ejercicios de informática, criptografía básica y para crear mensajes ocultos o curiosos.' },
+  { q: '¿Es privado?', a: 'Totalmente. La conversión se realiza en tu navegador y el texto nunca se envía a ningún servidor.' },
+];
+---
+<ToolLayout slug="texto-a-binario" faqs={faqs}>
+  <TextoABinarioTool client:load />
+</ToolLayout>

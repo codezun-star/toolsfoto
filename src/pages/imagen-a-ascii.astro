@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ImagenAAsciiTool from '@/components/tools/ImagenAAsciiTool';
+
+const faqs = [
+  { q: '¿Qué es el arte ASCII?', a: 'Es una técnica que representa imágenes usando solo caracteres de texto. Las zonas oscuras y claras de la foto se sustituyen por símbolos de mayor o menor densidad visual, recreando la imagen con texto.' },
+  { q: '¿Cómo ajusto el detalle?', a: 'Con el control de ancho (en caracteres): más ancho da más detalle pero más texto. También puedes elegir el conjunto de caracteres (detallado, bloques o simple) e invertir para fondos oscuros.' },
+  { q: '¿Para qué se usa?', a: 'Para firmas de correo, mensajes en foros y terminales, README de proyectos, decoración retro, o simplemente por diversión. El resultado es texto plano que puedes pegar en cualquier sitio.' },
+  { q: '¿Puedo descargar el resultado?', a: 'Sí. Puedes copiarlo al portapapeles o descargarlo como archivo .txt para usarlo donde quieras.' },
+  { q: '¿Se sube mi imagen a algún servidor?', a: 'No. La imagen se analiza localmente con Canvas API y nunca sale de tu navegador.' },
+];
+---
+<ToolLayout slug="imagen-a-ascii" faqs={faqs}>
+  <ImagenAAsciiTool client:load />
+</ToolLayout>

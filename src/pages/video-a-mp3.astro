@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import VideoAMp3Tool from '@/components/tools/VideoAMp3Tool';
+
+const faqs = [
+  { q: '¿Cómo extrae el MP3 de un vídeo?', a: 'La herramienta separa la pista de audio del vídeo y la codifica en MP3, descartando la imagen. Funciona con MP4, WebM, MOV, AVI, MKV y más, todo en tu navegador.' },
+  { q: '¿Qué bitrate debo elegir?', a: 'Para música, 256-320 kbps conserva la calidad. Para charlas, clases o pódcast, 128-192 kbps reduce el tamaño manteniendo claridad.' },
+  { q: '¿Sirve para descargar el audio de YouTube?', a: 'La herramienta convierte vídeos que ya tienes en tu dispositivo. No descarga directamente de YouTube; primero debes tener el archivo de vídeo.' },
+  { q: '¿Se pierde calidad respecto al audio original?', a: 'Hay una recompresión a MP3, pero a bitrates altos es prácticamente inaudible. La calidad nunca superará a la del audio dentro del vídeo original.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa localmente con FFmpeg.wasm. La primera vez se descarga el motor (~30 MB); luego es instantáneo.' },
+];
+---
+<ToolLayout slug="video-a-mp3" faqs={faqs}>
+  <VideoAMp3Tool client:load />
+</ToolLayout>

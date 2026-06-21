@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PdfAImagenLargaTool from '@/components/tools/PdfAImagenLargaTool';
+
+const faqs = [
+  { q: '¿Qué es una imagen larga de un PDF?', a: 'Es una única imagen vertical que apila todas las páginas del PDF, una debajo de otra. Permite ver y compartir el documento completo como una sola imagen scrolleable, sin pasar páginas.' },
+  { q: '¿Para qué sirve?', a: 'Es ideal para compartir documentos en chats o redes donde una imagen se ve mejor que un PDF, para previsualizaciones largas, o para incrustar un documento completo en una web.' },
+  { q: '¿Elijo el formato de salida?', a: 'Sí. Puedes generar la imagen en JPG (más ligera, ideal para compartir) o en PNG (sin pérdida, mejor para texto nítido).' },
+  { q: '¿Hay un límite de páginas?', a: 'No hay un límite fijo, pero PDFs con muchísimas páginas generan imágenes muy altas que pueden consumir bastante memoria del navegador. Para documentos enormes, considera dividirlo antes.' },
+  { q: '¿Es privado?', a: 'Sí. El PDF se renderiza localmente con pdf.js y nada se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="pdf-a-imagen-larga" faqs={faqs}>
+  <PdfAImagenLargaTool client:load />
+</ToolLayout>

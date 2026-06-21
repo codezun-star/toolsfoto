@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import Audio8dTool from '@/components/tools/Audio8dTool';
+
+const faqs = [
+  { q: '¿Qué es el audio 8D?', a: 'Es un efecto que hace que el sonido parezca moverse en círculos alrededor de tu cabeza, alternando entre el oído izquierdo y el derecho. Crea una sensación envolvente muy popular en redes sociales.' },
+  { q: '¿Necesito auriculares?', a: 'Sí. El efecto 8D se basa en el paneo entre canales izquierdo y derecho, así que solo se aprecia bien con auriculares o cascos. Por altavoces se pierde casi por completo.' },
+  { q: '¿Puedo ajustar la velocidad del giro?', a: 'Sí, con un control de velocidad (en Hz). Valores bajos hacen un giro lento y suave; valores altos lo aceleran. Alrededor de 0.09 Hz es el ajuste clásico.' },
+  { q: '¿Funciona con cualquier canción?', a: 'Funciona mejor con música en estéreo. Si el audio es mono, el efecto será menos perceptible porque no hay separación de canales original.' },
+  { q: '¿Es privado?', a: 'Sí. El procesamiento es 100% local en tu navegador con FFmpeg.wasm; tu audio no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="audio-8d" faqs={faqs}>
+  <Audio8dTool client:load />
+</ToolLayout>

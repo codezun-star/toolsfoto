@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MetaTagsTool from '@/components/tools/MetaTagsTool';
+
+const faqs = [
+  { q: '¿Qué meta tags genera esta herramienta?', a: 'Genera el título, la meta descripción, las etiquetas Open Graph (og:title, og:description, og:image, og:url) para Facebook/LinkedIn/WhatsApp y las Twitter Card para X. Todo en un solo bloque HTML listo para tu <head>.' },
+  { q: '¿Para qué sirve Open Graph?', a: 'Open Graph controla cómo se ve tu página cuando alguien la comparte en redes sociales: el título, la descripción y la imagen de previsualización. Sin estas etiquetas, las redes muestran datos incompletos o incorrectos.' },
+  { q: '¿Qué tamaño debe tener la imagen og:image?', a: 'La medida recomendada es 1200×630 px (proporción 1.91:1). Es la que usan Facebook, LinkedIn y Twitter para mostrar la imagen grande en las previsualizaciones de enlaces.' },
+  { q: '¿La descripción tiene un largo ideal?', a: 'Para SEO, la meta descripción debería tener entre 150 y 160 caracteres. Más allá de eso, Google la trunca en los resultados de búsqueda. Sé conciso y persuasivo.' },
+  { q: '¿Dónde pego el código generado?', a: 'Copia el bloque y pégalo dentro de la etiqueta <head> de tu HTML, antes del cierre </head>. En frameworks como Astro, Next o WordPress, ponlo en el componente de cabecera o el plugin de SEO correspondiente.' },
+];
+---
+<ToolLayout slug="meta-tags" faqs={faqs}>
+  <MetaTagsTool client:load />
+</ToolLayout>

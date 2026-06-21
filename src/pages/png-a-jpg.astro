@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PngAJpgTool from '@/components/tools/PngAJpgTool';
+
+const faqs = [
+  { q: '¿Cuánto peso se ahorra al pasar de PNG a JPG?', a: 'En fotografías, la reducción suele ser del 60% al 80%. El PNG guarda cada píxel sin pérdida, lo que es muy ineficiente para imágenes con muchos tonos; el JPG comprime descartando detalles imperceptibles.' },
+  { q: '¿Qué pasa con la transparencia del PNG?', a: 'El JPG no admite transparencia. Las zonas transparentes se rellenan con el color de fondo que elijas (blanco por defecto). Si necesitas conservar la transparencia, usa la herramienta WebP a PNG o mantén el PNG.' },
+  { q: '¿Cuándo NO debo convertir a JPG?', a: 'Evítalo en logos, capturas de pantalla con texto o imágenes con bordes nítidos: la compresión JPG introduce artefactos alrededor de los bordes. Para esos casos, PNG o WebP son mejores.' },
+  { q: '¿Qué calidad debo elegir?', a: 'Para la mayoría de fotos, una calidad del 85-90% ofrece un resultado visualmente idéntico al original con un peso mucho menor. Baja a 70-80% si necesitas archivos aún más ligeros.' },
+  { q: '¿Se suben mis imágenes a un servidor?', a: 'No. Toda la conversión ocurre en tu navegador con Canvas API. Tus imágenes nunca salen de tu dispositivo, garantizando total privacidad.' },
+];
+---
+<ToolLayout slug="png-a-jpg" faqs={faqs}>
+  <PngAJpgTool client:load />
+</ToolLayout>

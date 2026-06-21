@@ -24,6 +24,7 @@ import {
   GalleryHorizontal, Settings2, MonitorPlay, Drum, Mic, MessageSquare,
   PackageMinus, Share2, ALargeSmall,
   Bot, Phone, Users2, ArrowDownToLine, ListPlus, Replace,
+  ZoomIn, Ruler, Slice, RadioTower,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -180,6 +181,10 @@ const ICONS: Record<string, React.ReactNode> = {
   ArrowDownToLine: <ArrowDownToLine size={20} />,
   ListPlus: <ListPlus size={20} />,
   Replace: <Replace size={20} />,
+  ZoomIn: <ZoomIn size={20} />,
+  Ruler: <Ruler size={20} />,
+  Slice: <Slice size={20} />,
+  RadioTower: <RadioTower size={20} />,
 };
 
 interface Props {

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PdfAWebpTool from '@/components/tools/PdfAWebpTool';
+
+const faqs = [
+  { q: '¿Por qué convertir un PDF a WebP?', a: 'WebP es el formato de imagen más ligero para la web: pesa menos que JPG y PNG con la misma calidad. Es ideal para mostrar páginas de un PDF en una web optimizando la velocidad de carga.' },
+  { q: '¿Puedo elegir la resolución?', a: 'Sí, con presets de 72 a 216 dpi. A mayor resolución, más nitidez y más peso. 144 dpi es un buen equilibrio para pantalla.' },
+  { q: '¿Y la calidad del WebP?', a: 'Hay un control de calidad del 50% al 100%. 85% ofrece imágenes nítidas con un peso reducido; sube al 95-100% si necesitas máxima fidelidad.' },
+  { q: '¿Convierte todas las páginas?', a: 'Sí. Genera una imagen WebP por cada página del PDF y puedes descargarlas individualmente o todas a la vez.' },
+  { q: '¿Es privado?', a: 'Sí. El PDF se renderiza en tu navegador con pdf.js; nada se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="pdf-a-webp" faqs={faqs}>
+  <PdfAWebpTool client:load />
+</ToolLayout>

@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DividirVideoTool from '@/components/tools/DividirVideoTool';
+
+const faqs = [
+  { q: '¿Cómo divide el vídeo en partes?', a: 'Calcula la duración total y la reparte en el número de partes que elijas, cortando por copia directa (sin recodificar). El resultado son varios clips de duración similar que puedes descargar por separado.' },
+  { q: '¿Se pierde calidad al dividir?', a: 'No. Al usar copia directa de los flujos de vídeo y audio, no hay recompresión, por lo que cada parte conserva exactamente la calidad original.' },
+  { q: '¿Por qué las partes no duran exactamente lo mismo?', a: 'El corte por copia directa solo puede hacerse en los fotogramas clave del vídeo, así que la duración de cada parte puede variar ligeramente respecto al cálculo exacto.' },
+  { q: '¿Para qué sirve dividir un vídeo?', a: 'Para trocear grabaciones largas, subir clips a redes sociales con límite de duración (estados, historias), o enviar un vídeo extenso en partes más manejables.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local con FFmpeg.wasm; tu vídeo no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="dividir-video" faqs={faqs}>
+  <DividirVideoTool client:load />
+</ToolLayout>

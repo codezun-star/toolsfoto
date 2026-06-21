@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MarcaAguaImagenPdfTool from '@/components/tools/MarcaAguaImagenPdfTool';
+
+const faqs = [
+  { q: '¿En qué se diferencia de la marca de agua de texto?', a: 'Esta herramienta añade una imagen o logo (PNG/JPG) como marca de agua, en lugar de texto. Es ideal para sellar documentos con el logotipo de tu empresa o una firma escaneada.' },
+  { q: '¿Puedo controlar la posición y el tamaño?', a: 'Sí. Eliges una de las 9 posiciones (esquinas, centros y centro), el tamaño como porcentaje del ancho de la página y la opacidad para que sea sutil o destacada.' },
+  { q: '¿Se aplica a todas las páginas?', a: 'Sí, la imagen se inserta en todas las páginas del PDF en la misma posición, manteniendo la coherencia en todo el documento.' },
+  { q: '¿Qué formatos de imagen admite?', a: 'Admite PNG (recomendado si el logo tiene transparencia) y JPG. La transparencia del PNG se respeta en el resultado.' },
+  { q: '¿Es privado?', a: 'Sí. Tanto el PDF como la imagen se procesan localmente en tu navegador con pdf-lib; nada se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="marca-agua-imagen-pdf" faqs={faqs}>
+  <MarcaAguaImagenPdfTool client:load />
+</ToolLayout>

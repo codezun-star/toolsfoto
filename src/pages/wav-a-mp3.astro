@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import WavAMp3Tool from '@/components/tools/WavAMp3Tool';
+
+const faqs = [
+  { q: '¿Cuánto se reduce el peso de un WAV al pasar a MP3?', a: 'Muchísimo. Un WAV es audio sin comprimir y puede ocupar 10 MB por minuto; el mismo audio en MP3 a 192 kbps ocupa alrededor de 1,4 MB por minuto, una reducción de más del 80%.' },
+  { q: '¿Pierdo calidad audible?', a: 'A 256 o 320 kbps la diferencia con el WAV original es prácticamente imperceptible para la mayoría de la gente. Si necesitas calidad de estudio sin pérdida, conserva el WAV o usa FLAC.' },
+  { q: '¿Por qué convertir WAV a MP3?', a: 'Para ahorrar espacio, enviar el audio por email o mensajería, subirlo a plataformas con límite de peso o reproducirlo en dispositivos con poca memoria.' },
+  { q: '¿Qué bitrate recomiendan?', a: 'Para música, 256-320 kbps. Para voz y pódcast, 128-192 kbps es suficiente y reduce aún más el tamaño.' },
+  { q: '¿Es privado?', a: 'Sí. Toda la conversión es local en tu navegador con FFmpeg.wasm; tu audio nunca se sube a un servidor.' },
+];
+---
+<ToolLayout slug="wav-a-mp3" faqs={faqs}>
+  <WavAMp3Tool client:load />
+</ToolLayout>

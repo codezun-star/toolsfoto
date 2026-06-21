@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirWhatsappTool from '@/components/tools/ComprimirWhatsappTool';
+
+const faqs = [
+  { q: '¿Por qué WhatsApp comprime tanto mis vídeos?', a: 'WhatsApp aplica su propia compresión a los vídeos que superan cierto peso, degradando la calidad. Si comprimes antes de enviarlo, controlas tú el resultado y evitas que la app lo reduzca de forma agresiva.' },
+  { q: '¿Qué preset elijo?', a: '720p para buena calidad en clips cortos, 480p para un equilibrio general, y 360p para máxima compresión cuando el vídeo es largo o necesitas que pese muy poco.' },
+  { q: '¿Cuánto se reduce el peso?', a: 'Depende del vídeo, pero es habitual reducir entre un 60% y un 90% respecto al original, sobre todo en vídeos grabados a alta resolución.' },
+  { q: '¿Sirve también para Telegram o email?', a: 'Sí. El MP4 comprimido es ideal para cualquier plataforma con límite de tamaño: Telegram, correo electrónico, formularios web o mensajería.' },
+  { q: '¿Es privado?', a: 'Sí. Toda la compresión se hace en tu navegador con FFmpeg.wasm; tu vídeo nunca se sube a un servidor.' },
+];
+---
+<ToolLayout slug="comprimir-para-whatsapp" faqs={faqs}>
+  <ComprimirWhatsappTool client:load />
+</ToolLayout>

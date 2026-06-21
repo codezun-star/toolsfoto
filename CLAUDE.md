@@ -182,12 +182,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 121 herramientas
+## Las 239 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 189 herramientas — 49 imagen · 33 PDF · 32 vídeo · 43 audio · 32 developer + 5 legales**
+> **Total: 239 herramientas — 59 imagen · 43 PDF · 42 vídeo · 53 audio · 42 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -411,11 +411,11 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 
 | URL | Archivo | Herramientas |
 |---|---|---|
-| `/imagen` | `src/pages/imagen.astro` | 48 (2 páginas) |
-| `/pdf` | `src/pages/pdf.astro` | 32 (2 páginas) |
-| `/video` | `src/pages/video.astro` | 26 (1 página) |
-| `/audio` | `src/pages/audio.astro` | 23 (1 página) |
-| `/developer` | `src/pages/developer.astro` | 31 (2 páginas) |
+| `/imagen` | `src/pages/imagen.astro` | 59 (3 páginas) |
+| `/pdf` | `src/pages/pdf.astro` | 43 (2 páginas) |
+| `/video` | `src/pages/video.astro` | 42 (2 páginas) |
+| `/audio` | `src/pages/audio.astro` | 53 (3 páginas) |
+| `/developer` | `src/pages/developer.astro` | 42 (2 páginas) |
 
 **`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
 - Recibe `domain: ToolDomain` como prop, filtra `TOOLS` internamente.
@@ -465,7 +465,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 238 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 298 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -486,3 +486,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | Fecha | Acción |
 |---|---|
 | 2026-05-29 | SEO/URLs: `trailingSlash: 'never'` en `astro.config.mjs`. Canonical del home corregida en `seo.ts` (`toolsfoto.com/` → `toolsfoto.com`). Redirect 301 `/*/→/:splat` en `public/_redirects` (Cloudflare Pages) para normalizar URLs con slash final. |
+| 2026-06-21 | +50 herramientas (10 por categoría) muy buscadas y +10 artículos de blog. Imagen 49→59 (conversores png/jpg/webp/gif, dividir/unir imagen, ASCII, ampliar, cambiar DPI), PDF 33→43 (pdf-a-webp, n-up, pares/impares, invertir orden, imagen larga, dividir mitad, cambiar tamaño, marca de agua con logo, dividir cada N, unir pdf+imágenes), Vídeo 32→42 (video-a-mp3, mov/avi/mkv/webm a mp4, comprimir WhatsApp, dividir, cuadrado, difuminar, chroma), Audio 43→53 (conversores a mp3/wav, loop, 8D, bass-boost), Developer 32→42 (slugify, mayúsculas, base64-a-imagen, contraste WCAG, box-shadow, meta tags, bytes, binario, morse, JSON→TS). Bases compartidas `AudioToMp3Base`/`VideoToMp4Base`. Total: 239 herramientas, 298 páginas. |

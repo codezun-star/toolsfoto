@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ContrasteColorTool from '@/components/tools/ContrasteColorTool';
+
+const faqs = [
+  { q: '¿Qué es el ratio de contraste WCAG?', a: 'Es una medida de la diferencia de luminancia entre el texto y su fondo, que va de 1:1 (sin contraste) a 21:1 (negro sobre blanco). Las pautas WCAG 2.1 definen mínimos para garantizar que el texto sea legible por personas con baja visión.' },
+  { q: '¿Qué diferencia hay entre nivel AA y AAA?', a: 'AA es el nivel recomendado para la mayoría de webs: exige 4.5:1 en texto normal y 3:1 en texto grande. AAA es el nivel reforzado: exige 7:1 en texto normal y 4.5:1 en grande, ideal para máxima accesibilidad.' },
+  { q: '¿Qué se considera "texto grande"?', a: 'Según WCAG, texto grande es a partir de 18pt (24px) en peso normal, o 14pt (18.66px) en negrita. Al ser más fácil de leer, se le permite un contraste algo menor.' },
+  { q: '¿Por qué es importante el contraste de color?', a: 'Un buen contraste hace tu web legible para personas con baja visión, daltonismo o en condiciones de mucha luz. Además, es un requisito legal de accesibilidad en muchos países y mejora la experiencia de todos los usuarios.' },
+  { q: '¿Cómo introduzco los colores?', a: 'Puedes usar el selector de color o escribir el código HEX directamente (por ejemplo #1a1a1a o #abc). El ratio y los resultados AA/AAA se actualizan en tiempo real.' },
+];
+---
+<ToolLayout slug="contraste-color" faqs={faqs}>
+  <ContrasteColorTool client:load />
+</ToolLayout>

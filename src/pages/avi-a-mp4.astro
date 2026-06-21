@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AviAMp4Tool from '@/components/tools/AviAMp4Tool';
+
+const faqs = [
+  { q: '¿Por qué convertir AVI a MP4?', a: 'El AVI es un formato antiguo que suele generar archivos grandes y no se reproduce en muchos móviles, smart TV ni plataformas modernas. El MP4 con H.264 es ligero y compatible con todo.' },
+  { q: '¿Cuánto se reduce el peso?', a: 'Depende del códec original del AVI, pero la recodificación a H.264 suele reducir el tamaño de forma notable manteniendo una calidad muy similar.' },
+  { q: '¿Se conserva el audio?', a: 'Sí. El audio se recodifica a AAC, garantizando que se reproduzca correctamente en el MP4 final.' },
+  { q: '¿Hay límite de tamaño?', a: 'No imponemos límites. Como el proceso ocurre en tu navegador, los archivos muy grandes solo tardarán más en convertirse.' },
+  { q: '¿Es privado?', a: 'Sí. Todo el proceso es local con FFmpeg.wasm; tu vídeo no se sube a ningún servidor.' },
+];
+---
+<ToolLayout slug="avi-a-mp4" faqs={faqs}>
+  <AviAMp4Tool client:load />
+</ToolLayout>

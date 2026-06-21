@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## PDF (33)
+## PDF (43)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -38,3 +38,13 @@
 | `/comparar-pdfs` | `CompararPDFsTool.tsx` | Básicas | pdfjs-dist — renderizado paralelo sincronizado, escala ajustable |
 | `/indice-pdf` | `IndicePDFTool.tsx` | Básicas | pdfjs-dist `getOutline()` + detección por tamaño de fuente fallback |
 | `/pdf-escala-grises` | `PdfEscalaGrisesTool.tsx` | Avanzadas | pdfjs render → grayscale por luminancia → pdf-lib `embedJpg` |
+| `/pdf-a-webp` | `PdfAWebpTool.tsx` | Básicas | pdfjs render → `toBlob('image/webp')` calidad ajustable |
+| `/n-up-pdf` | `NupPdfTool.tsx` | Básicas | pdf-lib `embedPages` + grid 2/4/6 en hoja A4 |
+| `/paginas-pares-impares` | `PaginasParesImparesTool.tsx` | Básicas | pdf-lib `copyPages` filtrando índices pares/impares |
+| `/invertir-orden-pdf` | `InvertirOrdenPdfTool.tsx` | Básicas | pdf-lib `copyPages` en orden inverso |
+| `/pdf-a-imagen-larga` | `PdfAImagenLargaTool.tsx` | Básicas | pdfjs render + apilado vertical en canvas → JPG/PNG |
+| `/dividir-pdf-mitad` | `DividirPdfMitadTool.tsx` | Básicas | pdf-lib `setMediaBox` mitad izq/der o arr/abj |
+| `/cambiar-tamano-pdf` | `CambiarTamanoPdfTool.tsx` | Básicas | pdf-lib `embedPages` + reescala a A4/A3/A5/Carta/Legal |
+| `/marca-agua-imagen-pdf` | `MarcaAguaImagenPdfTool.tsx` | Avanzadas | pdf-lib `embedPng/Jpg` + `drawImage` con opacidad y posición |
+| `/dividir-cada-n-paginas` | `DividirCadaNPaginasTool.tsx` | Básicas | pdf-lib `copyPages` en lotes de N páginas |
+| `/unir-pdf-imagenes` | `UnirPdfImagenesTool.tsx` | Básicas | pdf-lib `copyPages` + `embedPng/Jpg` mixto reordenable |

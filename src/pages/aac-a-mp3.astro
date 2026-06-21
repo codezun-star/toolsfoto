@@ -1,0 +1,15 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import AacAMp3Tool from '@/components/tools/AacAMp3Tool';
+
+const faqs = [
+  { q: '¿Qué es el formato AAC?', a: 'AAC (Advanced Audio Coding) es un formato de audio con pérdida más eficiente que el MP3 a igual bitrate. Lo usan YouTube, streaming y dispositivos Apple, pero no todos los reproductores lo soportan.' },
+  { q: '¿Por qué convertir AAC a MP3?', a: 'Para garantizar compatibilidad con reproductores antiguos, radios de coche y software que solo acepta MP3, el formato de audio más extendido del mundo.' },
+  { q: '¿Pierdo calidad al convertir?', a: 'Ambos son formatos con pérdida, así que hay una recompresión. A 256-320 kbps la diferencia es prácticamente inaudible.' },
+  { q: '¿Qué bitrate recomiendan?', a: 'Para música, 256-320 kbps. Para voz o grabaciones, 128-192 kbps reduce el tamaño manteniendo claridad suficiente.' },
+  { q: '¿Es privado?', a: 'Sí. Todo se procesa localmente en tu navegador con FFmpeg.wasm, sin subir nada a un servidor.' },
+];
+---
+<ToolLayout slug="aac-a-mp3" faqs={faqs}>
+  <AacAMp3Tool client:load />
+</ToolLayout>
