@@ -1,0 +1,12 @@
+---
+// Scripts de anuncios (Monetag) para todo el sitio.
+// Se renderiza una sola vez por página a través de Footer.astro (presente en
+// todas las páginas), por lo que los anuncios aparecen en todo ToolsFoto.
+// IMPORTANTE: usar siempre is:inline para que Astro no procese ni empaquete
+// estos scripts y se emitan tal cual (igual que el patrón de gtag).
+// Cada script se autoinyecta en document.body (o documentElement si body aún
+// no existe), por eso es seguro emitirlos al final del <body>.
+---
+<script is:inline>(function(s){s.dataset.zone='11097758',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script is:inline>(function(s){s.dataset.zone='11097756',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script is:inline>(function(s){s.dataset.zone='11095208',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>

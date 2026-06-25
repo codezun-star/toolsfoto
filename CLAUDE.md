@@ -90,19 +90,20 @@ const CORE_URL = `${_PROXY}esm/ffmpeg-core.js`;   // ESM — obligatorio
 const WASM_URL = `${_PROXY}umd/ffmpeg-core.wasm`; // binario — da igual la build
 ```
 
-**Headers COOP/COEP (`public/_headers`):**
-El sitio sirve estos headers en todas las rutas para habilitar SharedArrayBuffer (aunque el core de 1 hilo no lo requiere, los headers son necesarios para que `toBlobURL` funcione en todos los contextos):
+**Headers (`public/_headers`):**
+El sitio sirve únicamente este header en todas las rutas:
 ```
 /*
-  Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Embedder-Policy: require-corp
   Cross-Origin-Resource-Policy: cross-origin
 ```
 
-**Compatibilidad verificada de CDNs externos con `require-corp`:**
-- `unpkg.com` → devuelve `CORP: cross-origin` ✓
-- `cdnjs.cloudflare.com` → devuelve `CORP: cross-origin` ✓
-- `staticimgly.com` (`@imgly`) → devuelve `CORP: cross-origin` ✓
+> **No reactivar `Cross-Origin-Embedder-Policy: require-corp` ni `Cross-Origin-Opener-Policy: same-origin`.**
+> Esos dos headers activan el *cross-origin isolation* y **bloquean los scripts de anuncios** de terceros (Monetag: `n6wxm.com`, `nap5k.com`, `al5sm.com`): sus subrecursos/iframes no envían `CORP` y `COOP: same-origin` rompe los popunder/popup. Se retiraron a propósito para que los anuncios funcionen en todo el sitio.
+> Quitarlos es **seguro**: el core de FFmpeg es de 1 hilo (`@ffmpeg/core@0.12.6`, no `core-mt`), **no usa `SharedArrayBuffer`**, y `toBlobURL` carga core/WASM como `blob:` del **mismo origen** (no requiere COEP/CORP). `@imgly/background-removal` también funciona sin aislamiento (onnxruntime-web cae al backend WASM de 1 hilo; solo pierde algo de velocidad, no funcionalidad).
+> Los CDNs externos (`unpkg.com`, `cdnjs.cloudflare.com`, `staticimgly.com`) devuelven `CORP: cross-origin`, por lo que seguirían siendo compatibles si algún día se reactivara el aislamiento.
+
+**Scripts de anuncios (`src/components/layout/AdScripts.astro`):**
+Los 3 scripts `is:inline` de Monetag viven en este componente, incluido una sola vez en `Footer.astro`. Como el footer se renderiza en **todas** las páginas (tools vía `ToolLayout`, legales vía `LegalLayout`, e `index`/categorías/blog directamente), los anuncios aparecen en todo el sitio sin duplicar los scripts. Para cambiar zonas o añadir/quitar anuncios, editar solo ese componente.
 
 **Limitación conocida — filtro `drawtext` de FFmpeg:**
 El filtro `drawtext` requiere fontconfig y fuentes del sistema. En el entorno WASM del navegador no existen. **Nunca usar `drawtext`.** Para superponer texto en vídeo usar canvas overlay + filtro `overlay=0:0` (ver `MarcaAguaVideoTool.tsx`).
@@ -487,3 +488,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 |---|---|
 | 2026-05-29 | SEO/URLs: `trailingSlash: 'never'` en `astro.config.mjs`. Canonical del home corregida en `seo.ts` (`toolsfoto.com/` → `toolsfoto.com`). Redirect 301 `/*/→/:splat` en `public/_redirects` (Cloudflare Pages) para normalizar URLs con slash final. |
 | 2026-06-21 | +50 herramientas (10 por categoría) muy buscadas y +10 artículos de blog. Imagen 49→59 (conversores png/jpg/webp/gif, dividir/unir imagen, ASCII, ampliar, cambiar DPI), PDF 33→43 (pdf-a-webp, n-up, pares/impares, invertir orden, imagen larga, dividir mitad, cambiar tamaño, marca de agua con logo, dividir cada N, unir pdf+imágenes), Vídeo 32→42 (video-a-mp3, mov/avi/mkv/webm a mp4, comprimir WhatsApp, dividir, cuadrado, difuminar, chroma), Audio 43→53 (conversores a mp3/wav, loop, 8D, bass-boost), Developer 32→42 (slugify, mayúsculas, base64-a-imagen, contraste WCAG, box-shadow, meta tags, bytes, binario, morse, JSON→TS). Bases compartidas `AudioToMp3Base`/`VideoToMp4Base`. Total: 239 herramientas, 298 páginas. |
+| 2026-06-25 | Anuncios Monetag en todo el sitio: nuevo componente `src/components/layout/AdScripts.astro` (3 scripts `is:inline`) incluido vía `Footer.astro` (presente en todas las páginas). Se retiraron `Cross-Origin-Opener-Policy: same-origin` y `Cross-Origin-Embedder-Policy: require-corp` de `public/_headers` porque bloqueaban los anuncios; es seguro porque el core FFmpeg de 1 hilo + `toBlobURL` (blob mismo origen) no necesitan cross-origin isolation. |
