@@ -1,7 +1,6 @@
 ---
 import Header from './Header.astro';
 import Footer from './Footer.astro';
-import EzoicScripts from './EzoicScripts.astro';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 
@@ -45,9 +44,8 @@ const seo = PAGE_SEO[slug];
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon-192.png" />
-    {/* Monetag desactivado — aplicando al programa incubadora de Ezoic */}
+    {/* Monetag desactivado temporalmente — sitio sin anuncios por ahora */}
     {/* <meta name="monetag" content="7a8a8d7deccc95cced5ef94a9c6e3b73" /> */}
-    <EzoicScripts />
     <!-- Google tag (gtag.js) -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
     <script is:inline>
