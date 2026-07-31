@@ -469,6 +469,21 @@ El sitio está preparado para ser citado por ChatGPT, Perplexity, Claude, Google
 | JSON-LD unificado | `ToolLayout.astro` | Un solo `@graph` con `Organization`, `WebSite`, `WebPage`, `SoftwareApplication`, `BreadcrumbList`, `HowTo` y `FAQPage` (antes eran 4 `<script>` separados) |
 | Bloque de respuesta directa | `ToolLayout.astro` | El párrafo bajo el H1 lleva la clase `aeo-answer` y es el objetivo de `speakable` |
 | Frescura | `SITE.dateModified` en `seo.ts` | Alimenta `dateModified` del schema, `<meta name="last-modified">` y la línea "Actualizado el…" visible |
+| Serialización del JSON-LD | `src/lib/utils/jsonld.ts` | **Usar `jsonLd()` siempre, nunca `JSON.stringify()`** para JSON-LD |
+
+### `jsonLd()` — regla obligatoria
+
+Todo bloque `<script type="application/ld+json">` debe serializarse con `jsonLd()` de `@/lib/utils/jsonld`, que escapa `<`, `>` y `&` como secuencias unicode.
+
+```astro
+---
+import { jsonLd } from '@/lib/utils/jsonld';
+const graph = jsonLd({ '@context': 'https://schema.org', '@graph': [...] });
+---
+<script is:inline type="application/ld+json" set:html={graph} />
+```
+
+El JSON resultante parsea idéntico al original, pero evita que un `</script>` dentro de cualquier texto (FAQ, descripción) cierre el bloque antes de tiempo, y que los comparadores sueltos rompan los parsers de HTML.
 
 ### Props AEO de `ToolLayout`
 
@@ -526,5 +541,6 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-06-21 | +50 herramientas (10 por categoría) muy buscadas y +10 artículos de blog. Imagen 49→59 (conversores png/jpg/webp/gif, dividir/unir imagen, ASCII, ampliar, cambiar DPI), PDF 33→43 (pdf-a-webp, n-up, pares/impares, invertir orden, imagen larga, dividir mitad, cambiar tamaño, marca de agua con logo, dividir cada N, unir pdf+imágenes), Vídeo 32→42 (video-a-mp3, mov/avi/mkv/webm a mp4, comprimir WhatsApp, dividir, cuadrado, difuminar, chroma), Audio 43→53 (conversores a mp3/wav, loop, 8D, bass-boost), Developer 32→42 (slugify, mayúsculas, base64-a-imagen, contraste WCAG, box-shadow, meta tags, bytes, binario, morse, JSON→TS). Bases compartidas `AudioToMp3Base`/`VideoToMp4Base`. Total: 239 herramientas, 298 páginas. |
 | 2026-06-25 | Anuncios Monetag en todo el sitio: nuevo componente `src/components/layout/AdScripts.astro` (3 scripts `is:inline`) incluido vía `Footer.astro` (presente en todas las páginas). Se retiraron `Cross-Origin-Opener-Policy: same-origin` y `Cross-Origin-Embedder-Policy: require-corp` de `public/_headers` porque bloqueaban los anuncios; es seguro porque el core FFmpeg de 1 hilo + `toBlobURL` (blob mismo origen) no necesitan cross-origin isolation. |
 | 2026-07-09 | Migración a Ezoic (programa incubadora): Monetag comentado por completo (scripts en `AdScripts.astro` y metas de verificación en los 5 heads). Nuevo `EzoicScripts.astro` (CMP Gatekeeper + `sa.min.js` + init `ezstandalone` + analytics) incluido en el `<head>` de las 10 plantillas/páginas con head propio — las 298 páginas lo llevan. Redirect `/ads.txt` → `srv.adstxtmanager.com/19390/toolsfoto.com` en `public/_redirects`. |
+| 2026-07-31 | Serialización segura del JSON-LD: nuevo `src/lib/utils/jsonld.ts` con `jsonLd()`, que escapa `<`, `>` y `&` como unicode. 33 páginas publicaban caracteres `<`/`>` sin escapar dentro del bloque JSON-LD; un `</script>` en cualquier texto cerraría el bloque antes de tiempo. Aplicado en `ToolLayout`, `index`, las 5 páginas de categoría y el blog. |
 | 2026-07-31 | AEO (optimización para motores de respuesta). (1) Nuevo `src/pages/llms.txt.ts` — genera `/llms.txt` en cada build desde `TOOLS` + blog, agrupado por los 5 dominios. (2) `public/robots.txt` con `Allow` explícito para GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, meta-externalagent y otros. (3) `ToolLayout.astro`: los 4 `<script>` de JSON-LD se unifican en un `@graph` que añade `WebSite`, `WebPage` (con `speakable`) y `HowTo`; el `SoftwareApplication` gana `browserRequirements`, `featureList`, `dateModified` y `applicationCategory` por dominio (`DeveloperApplication` para developer, `BusinessApplication` para PDF). Nuevos props opcionales `answer`, `howTo` y `dateModified`. (4) `<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large…">` en herramientas y home. (5) Bloque de respuesta directa con clase `aeo-answer` bajo el H1 + línea visible "Actualizado el…". (6) Home: los 3 `<script>` sueltos pasan a un `@graph` con `Organization`, `WebSite`, `CollectionPage`, `WebApplication` e `ItemList` de las 5 categorías. |
 | 2026-07-10 | Sitio sin anuncios: Ezoic eliminado por completo (borrado `EzoicScripts.astro`, quitados sus includes de las 10 plantillas y el redirect `/ads.txt` de `public/_redirects`). Monetag permanece comentado (scripts de `AdScripts.astro` + metas de verificación en los 5 heads) por si se reactiva más adelante. Los headers COOP/COEP siguen retirados (regla vigente: no reactivarlos). |

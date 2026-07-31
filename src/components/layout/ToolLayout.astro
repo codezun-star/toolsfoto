@@ -5,6 +5,7 @@ import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
 import ToolCard from '@/components/ui/ToolCard';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
+import { jsonLd } from '@/lib/utils/jsonld';
 
 interface Props {
   slug: string;
@@ -170,7 +171,7 @@ const faqSchema = faqs && faqs.length > 0
     }
   : null;
 
-const graph = JSON.stringify({
+const graph = jsonLd({
   '@context': 'https://schema.org',
   '@graph': [
     orgSchema,

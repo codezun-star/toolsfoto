@@ -5,6 +5,7 @@ import BlogList from '@/components/blog/BlogList';
 import '@/styles/global.css';
 import { SITE } from '@/lib/constants/seo';
 import { getCollection } from 'astro:content';
+import { jsonLd } from '@/lib/utils/jsonld';
 
 const todos = await getCollection('blog', (e) => e.data.publicado !== false);
 const sorted = todos
@@ -46,7 +47,7 @@ const description = 'Tutoriales, guías y tips sobre compresión de imágenes, e
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={SITE.ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script type="application/ld+json" set:html={jsonLd({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [

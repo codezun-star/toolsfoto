@@ -5,6 +5,7 @@ import CategoryGrid from '@/components/ui/CategoryGrid';
 import { TOOLS } from '@/lib/constants/tools';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import '@/styles/global.css';
+import { jsonLd } from '@/lib/utils/jsonld';
 
 const tools = TOOLS.filter(t => t.domain === 'imagen');
 const seo = PAGE_SEO['imagen'];
@@ -37,7 +38,7 @@ const domainLabel = 'Herramientas de imagen';
     <meta name="twitter:description" content={seo.description} />
     <meta name="twitter:image" content={SITE.ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script type="application/ld+json" set:html={jsonLd({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -46,7 +47,7 @@ const domainLabel = 'Herramientas de imagen';
       ],
     })} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script type="application/ld+json" set:html={jsonLd({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       "name": seo.title,

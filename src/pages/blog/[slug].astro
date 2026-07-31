@@ -4,6 +4,7 @@ import Footer from '@/components/layout/Footer.astro';
 import '@/styles/global.css';
 import { SITE } from '@/lib/constants/seo';
 import { getCollection, getEntry, render } from 'astro:content';
+import { jsonLd } from '@/lib/utils/jsonld';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', (e) => e.data.publicado !== false);
@@ -81,8 +82,8 @@ const pageDesc  = post.data.descripcion ?? '';
     <meta name="twitter:description" content={pageDesc} />
     <meta name="twitter:image" content={SITE.ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script type="application/ld+json" set:html={jsonLd(articleSchema)} />
+    <script type="application/ld+json" set:html={jsonLd({
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [

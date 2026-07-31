@@ -6,6 +6,7 @@ import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { TOOLS } from '@/lib/constants/tools';
 import { Shield, Gift } from 'lucide-react';
 import '@/styles/global.css';
+import { jsonLd } from '@/lib/utils/jsonld';
 
 const seo = PAGE_SEO.home;
 
@@ -17,7 +18,7 @@ const CATEGORIAS = [
   { slug: 'developer', label: 'Herramientas para developers', desc: 'Codificadores, formateadores, generadores y utilidades de texto y color.' },
 ];
 
-const homeGraph = JSON.stringify({
+const homeGraph = jsonLd({
   '@context': 'https://schema.org',
   '@graph': [
     {
