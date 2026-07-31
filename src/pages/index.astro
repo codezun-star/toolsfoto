@@ -3,10 +3,89 @@ import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import HomeTools from '@/components/HomeTools';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
+import { TOOLS } from '@/lib/constants/tools';
 import { Shield, Gift } from 'lucide-react';
 import '@/styles/global.css';
 
 const seo = PAGE_SEO.home;
+
+const CATEGORIAS = [
+  { slug: 'imagen',    label: 'Herramientas de imagen',      desc: 'Comprimir, redimensionar, recortar, convertir y editar imágenes en el navegador.' },
+  { slug: 'pdf',       label: 'Herramientas de PDF',         desc: 'Unir, dividir, comprimir, rotar, proteger y convertir documentos PDF.' },
+  { slug: 'video',     label: 'Herramientas de vídeo',       desc: 'Convertir, comprimir, recortar y editar vídeo con FFmpeg en el navegador.' },
+  { slug: 'audio',     label: 'Herramientas de audio',       desc: 'Convertir, cortar, unir y ajustar archivos de audio sin instalar nada.' },
+  { slug: 'developer', label: 'Herramientas para developers', desc: 'Codificadores, formateadores, generadores y utilidades de texto y color.' },
+];
+
+const homeGraph = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.name,
+      url: SITE.url,
+      logo: { '@type': 'ImageObject', url: `${SITE.url}/favicon-192.png` },
+      email: 'codezun@gmail.com',
+      description: 'Herramientas online para imagen, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'codezun@gmail.com',
+        contactType: 'customer support',
+        availableLanguage: 'Spanish',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      name: SITE.name,
+      url: SITE.url,
+      description: seo.description,
+      inLanguage: 'es',
+      publisher: { '@id': `${SITE.url}/#organization` },
+    },
+    {
+      '@type': 'CollectionPage',
+      '@id': `${SITE.url}/#webpage`,
+      url: SITE.url,
+      name: seo.title,
+      description: seo.description,
+      inLanguage: 'es',
+      isPartOf: { '@id': `${SITE.url}/#website` },
+      dateModified: SITE.dateModified,
+      datePublished: SITE.datePublished,
+      speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.aeo-answer'] },
+      mainEntity: { '@id': `${SITE.url}/#catalogo` },
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${SITE.url}/#app`,
+      name: SITE.name,
+      url: SITE.url,
+      description: seo.description,
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Web',
+      inLanguage: 'es',
+      isAccessibleForFree: true,
+      publisher: { '@id': `${SITE.url}/#organization` },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${SITE.url}/#catalogo`,
+      name: `Categorías de herramientas de ${SITE.name}`,
+      description: `${TOOLS.length} herramientas online gratuitas agrupadas en ${CATEGORIAS.length} categorías.`,
+      numberOfItems: CATEGORIAS.length,
+      itemListElement: CATEGORIAS.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.label,
+        description: c.desc,
+        url: `${SITE.url}/${c.slug}`,
+      })),
+    },
+  ],
+});
 ---
 
 <!doctype html>
@@ -17,6 +96,11 @@ const seo = PAGE_SEO.home;
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
+    <link rel="alternate" type="text/plain" href={`${SITE.url}/llms.txt`} title="Índice para motores de respuesta (llms.txt)" />
+
+    <!-- Indexación: permite fragmentos completos en resultados y respuestas generadas -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author" content={SITE.name} />
 
     <meta property="og:title" content={seo.title} />
     <meta property="og:description" content={seo.description} />
@@ -35,35 +119,8 @@ const seo = PAGE_SEO.home;
     <meta name="twitter:description" content={seo.description} />
     <meta name="twitter:image" content={SITE.ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "ToolsFoto",
-      "url": "https://toolsfoto.com",
-      "description": seo.description,
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "Web",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    })} />
-
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ToolsFoto",
-      "url": "https://toolsfoto.com",
-      "inLanguage": "es",
-      "description": seo.description,
-    })} />
-
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "ToolsFoto",
-      "url": "https://toolsfoto.com",
-      "logo": "https://toolsfoto.com/favicon-192.png",
-      "email": "codezun@gmail.com",
-      "description": "Herramientas online para imagen, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.",
-    })} />
+    <!-- JSON-LD unificado en un @graph -->
+    <script type="application/ld+json" set:html={homeGraph} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
@@ -105,8 +162,8 @@ const seo = PAGE_SEO.home;
                 <span style="color: #ffb3a7;">imágenes, vídeo,</span><br />
                 audio y PDF
               </h1>
-              <p class="mt-5 text-lg text-white/80 leading-relaxed max-w-lg">
-                Todo se procesa directamente en tu navegador. Ningún archivo sale de tu dispositivo.
+              <p class="aeo-answer mt-5 text-lg text-white/80 leading-relaxed max-w-lg">
+                {TOOLS.length} herramientas gratuitas para imagen, PDF, vídeo, audio y desarrollo. Todo se procesa directamente en tu navegador: ningún archivo sale de tu dispositivo y no hace falta registrarse ni instalar nada.
               </p>
               <div class="mt-8 flex flex-wrap gap-3">
                 <a href="#imagen" class="px-6 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold hover:bg-[#C93D1E] transition-colors shadow-lg">

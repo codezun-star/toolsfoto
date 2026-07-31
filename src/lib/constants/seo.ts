@@ -4,6 +4,10 @@ export const SITE = {
   description: 'Herramientas online para imágenes, PDF y developers. Gratis, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.',
   ogImage: 'https://toolsfoto.com/og-image.png',
   twitterHandle: '@toolsfoto',
+  // Señales de frescura para buscadores y motores de respuesta.
+  // Actualizar `dateModified` cuando se revise el contenido del sitio.
+  datePublished: '2026-05-01',
+  dateModified: '2026-07-31',
 };
 
 export interface PageSEO {

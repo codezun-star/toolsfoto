@@ -1,4 +1,73 @@
 User-agent: *
 Allow: /
 
+# ── Motores de respuesta / IA ────────────────────────────────────────────
+# Acceso explícito para los rastreadores que alimentan respuestas generadas
+# (AEO). Sin estas reglas algunos bots aplican su política restrictiva por
+# defecto y el sitio deja de aparecer como fuente citada.
+
+# OpenAI — ChatGPT Search y rastreo
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Anthropic — Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google — AI Overviews y Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Copilot / Bing
+User-agent: bingbot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: meta-externalagent
+Allow: /
+
+# Common Crawl — corpus usado por múltiples modelos
+User-agent: CCBot
+Allow: /
+
+# Otros asistentes
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+# ── Índices ──────────────────────────────────────────────────────────────
 Sitemap: https://toolsfoto.com/sitemap-index.xml
+
+# Índice legible por LLM (https://llmstxt.org):
+# https://toolsfoto.com/llms.txt
