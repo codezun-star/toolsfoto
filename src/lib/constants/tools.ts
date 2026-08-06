@@ -2742,6 +2742,28 @@ export const TOOLS: ToolMeta[] = [
     color: 'blue',
     related: ['formatear-json', 'csv-a-json', 'minificador-js'],
   },
+  {
+    slug: 'quitar-fondo-blanco',
+    name: 'Quitar fondo blanco',
+    description: 'Convierte el fondo blanco de una imagen en transparente.',
+    longDescription: 'Elimina el fondo blanco (o el color liso que elijas) de una imagen y descárgala en PNG con transparencia real. Ajusta la tolerancia y el suavizado de bordes con vista previa en tiempo real. 100% en el navegador.',
+    category: 'Básicas',
+    domain: 'imagen',
+    icon: 'Eraser',
+    color: 'blue',
+    related: ['eliminar-fondo', 'cambiar-fondo', 'recorte-circular', 'convertir'],
+  },
+  {
+    slug: 'generador-cron',
+    name: 'Generador de expresiones cron',
+    description: 'Crea y traduce expresiones cron a lenguaje natural.',
+    longDescription: 'Escribe una expresión cron y comprueba al instante qué significa en español y cuáles serán sus próximas cinco ejecuciones. Incluye plantillas frecuentes y validación campo a campo. 100% en el navegador.',
+    category: 'Básicas',
+    domain: 'developer',
+    icon: 'CalendarClock',
+    color: 'blue',
+    related: ['convertir-timestamp', 'regex-tester', 'formatear-json'],
+  },
 ];
 
 export const TOOL_BY_SLUG: Record<string, ToolMeta> = Object.fromEntries(

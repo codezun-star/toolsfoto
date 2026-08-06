@@ -7,7 +7,7 @@ export const SITE = {
   // Señales de frescura para buscadores y motores de respuesta.
   // Actualizar `dateModified` cuando se revise el contenido del sitio.
   datePublished: '2026-05-01',
-  dateModified: '2026-07-31',
+  dateModified: '2026-08-06',
 };
 
 export interface PageSEO {
@@ -19,7 +19,7 @@ export interface PageSEO {
 export const PAGE_SEO: Record<string, PageSEO> = {
   home: {
     title: 'ToolsFoto — Herramientas online para imagen, PDF, vídeo y audio',
-    description: '184 herramientas online gratis para imagen, PDF, vídeo, audio y developers. Comprime, convierte, recorta y edita sin registro. Todo se procesa en tu navegador.',
+    description: '241 herramientas online gratis para imagen, PDF, vídeo, audio y developers. Comprime, convierte, recorta y edita sin registro. Todo se procesa en tu navegador.',
     canonical: 'https://toolsfoto.com',
   },
   comprimir: {
@@ -1314,5 +1314,15 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     title: 'Convertir JSON a TypeScript online gratis | ToolsFoto',
     description: 'Genera interfaces de TypeScript a partir de un JSON, detectando objetos anidados y arrays. Acelera tu desarrollo. 100% en el navegador. Gratis.',
     canonical: 'https://toolsfoto.com/json-a-typescript',
+  },
+  'quitar-fondo-blanco': {
+    title: 'Quitar el fondo blanco de una imagen online gratis | ToolsFoto',
+    description: 'Convierte el fondo blanco de tu imagen en transparente y descárgala en PNG. Tolerancia y suavizado ajustables. 100% en el navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/quitar-fondo-blanco',
+  },
+  'generador-cron': {
+    title: 'Generador de expresiones cron online gratis | ToolsFoto',
+    description: 'Crea expresiones cron, tradúcelas a español y consulta sus próximas ejecuciones. Plantillas listas y validación campo a campo. Gratis.',
+    canonical: 'https://toolsfoto.com/generador-cron',
   },
 };

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (59)
+## Imagen (60)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -64,3 +64,4 @@
 | `/imagen-a-ascii` | `ImagenAAsciiTool.tsx` | Creativas | `getImageData` → luminancia → rampa de caracteres |
 | `/ampliar-imagen` | `AmpliarImagenTool.tsx` | Básicas | Canvas `imageSmoothingQuality: high` upscale 2-4× |
 | `/cambiar-dpi` | `CambiarDpiTool.tsx` | Básicas | Patch JFIF (JPG) + chunk pHYs con CRC32 (PNG) |
+| `/quitar-fondo-blanco` | `QuitarFondoBlancoTool.tsx` | Básicas | `getImageData` → distancia por canal RGB → alfa 0 con banda de suavizado |

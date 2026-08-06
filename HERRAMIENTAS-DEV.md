@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Developer (42)
+## Developer (43)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -47,3 +47,4 @@
 | `/texto-a-binario` | `TextoABinarioTool.tsx` | Básicas | `TextEncoder/TextDecoder` + base 2 |
 | `/codigo-morse` | `CodigoMorseTool.tsx` | Básicas | JS puro — mapa morse bidireccional |
 | `/json-a-typescript` | `JsonATypescriptTool.tsx` | Básicas | JS puro — generador recursivo de interfaces TS |
+| `/generador-cron` | `GeneradorCronTool.tsx` | Básicas | JS puro — parser de 5 campos + descripción en español + próximas ejecuciones |

@@ -1,0 +1,56 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import GeneradorCronTool from '@/components/tools/GeneradorCronTool';
+
+const faqs = [
+  {
+    q: '¿Qué es una expresión cron y cómo se lee?',
+    a: 'Una expresión cron es una línea de cinco campos separados por espacios que describe cuándo debe repetirse una tarea programada. El orden es siempre: minuto (0-59), hora (0-23), día del mes (1-31), mes (1-12) y día de la semana (0-6, donde 0 es domingo). Por ejemplo, "30 8 * * 1" significa: minuto 30, hora 8, cualquier día del mes, cualquier mes, los lunes; es decir, todos los lunes a las 08:30.',
+  },
+  {
+    q: '¿Qué significan los símbolos *, /, - y , en cron?',
+    a: 'El asterisco (*) representa todos los valores posibles del campo. El guion define un rango cerrado: "1-5" en el día de la semana son de lunes a viernes. La coma enumera valores sueltos: "0,15,30,45". La barra indica un paso: "*/10" en los minutos significa cada 10 minutos (0, 10, 20, 30, 40 y 50), y también funciona sobre un rango, como "9-17/2". Además se aceptan nombres en inglés de tres letras: MON-FRI para los días y JAN, JUL para los meses.',
+  },
+  {
+    q: '¿Cómo escribo "cada 5 minutos" o "cada 6 horas" en cron?',
+    a: 'Cada 5 minutos es "*/5 * * * *". Cada 6 horas, en punto, es "0 */6 * * *": fíjate en que el minuto debe fijarse en 0, porque si dejas un asterisco la tarea se ejecutaría los 60 minutos de esas horas. Es el error más habitual al escribir crons: dejar campos a la izquierda con asterisco multiplica las ejecuciones en lugar de espaciarlas.',
+  },
+  {
+    q: '¿Qué pasa si relleno a la vez el día del mes y el día de la semana?',
+    a: 'Cron los combina con un OR, no con un AND. La expresión "0 0 1 * 1" no se ejecuta los lunes que caen en día 1, sino todos los días 1 del mes y además todos los lunes. Es una excepción a la lógica del resto de campos y sorprende a mucha gente. Si necesitas de verdad la intersección, deja uno de los dos campos con asterisco y comprueba la otra condición dentro de tu script.',
+  },
+  {
+    q: '¿En qué zona horaria se ejecutan las tareas cron?',
+    a: 'En la del sistema donde corre el planificador, que en servidores y contenedores suele ser UTC. Las próximas ejecuciones que muestra esta herramienta se calculan con la zona horaria de tu navegador para que te resulten legibles, así que si tu servidor va en UTC tendrás que aplicar el desfase correspondiente. Ten en cuenta también los cambios de hora: una tarea programada en la hora que se salta en el cambio a horario de verano puede no ejecutarse ese día.',
+  },
+  {
+    q: '¿Esta herramienta valida la expresión antes de usarla?',
+    a: 'Sí. Cada campo se comprueba contra su rango permitido y contra la sintaxis admitida. Si algo no encaja se indica el campo concreto que falla y los valores aceptados, en lugar de un error genérico. Cuando la expresión es válida verás su traducción en español y las cinco próximas fechas en que se dispararía, que es la forma más rápida de confirmar que hace lo que crees.',
+  },
+  {
+    q: '¿Se envía la expresión a algún servidor?',
+    a: 'No. El análisis, la traducción a lenguaje natural y el cálculo de las próximas ejecuciones se hacen íntegramente en JavaScript dentro de tu navegador. Nada se transmite ni se guarda, por lo que puedes usar la herramienta con expresiones de sistemas internos sin exponer información.',
+  },
+];
+---
+<ToolLayout
+  slug="generador-cron"
+  answer="Escribe una expresión cron de cinco campos y la herramienta te dice en español qué programa y cuándo se dispararán sus próximas cinco ejecuciones, validando cada campo por separado."
+  faqs={faqs}
+>
+  <GeneradorCronTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Comprobar antes de desplegar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El fallo típico de un cron no es que no se ejecute, sino que se ejecute mucho más de lo previsto. Una copia de seguridad pensada para correr una vez al día que arranca cada minuto puede llenar un disco o disparar la factura de un servicio en horas. Leer la frase en español y las <strong class="text-[var(--color-text)]">próximas cinco fechas reales</strong> antes de subir el cambio detecta ese error en segundos, sin esperar a que la tarea se dispare en producción para descubrirlo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">El mismo formato en todas partes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La sintaxis de cinco campos que popularizó el <code class="font-mono text-[13px]">crontab</code> de Unix se ha convertido en el estándar de facto para programar tareas: la usan <strong class="text-[var(--color-text)]">GitHub Actions, Kubernetes CronJob, Vercel Cron, Cloudflare Workers, systemd timers, Jenkins y las tareas programadas de la mayoría de paneles de hosting</strong>. Algunos añaden un sexto campo para los segundos o extensiones propias, pero la base es idéntica, así que lo que compruebes aquí sirve para casi cualquier plataforma.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

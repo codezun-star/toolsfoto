@@ -184,12 +184,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 239 herramientas
+## Las 241 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 239 herramientas — 59 imagen · 43 PDF · 42 vídeo · 53 audio · 42 developer + 5 legales**
+> **Total: 241 herramientas — 60 imagen · 43 PDF · 42 vídeo · 53 audio · 43 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -413,11 +413,11 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 
 | URL | Archivo | Herramientas |
 |---|---|---|
-| `/imagen` | `src/pages/imagen.astro` | 59 (3 páginas) |
+| `/imagen` | `src/pages/imagen.astro` | 60 (3 páginas) |
 | `/pdf` | `src/pages/pdf.astro` | 43 (2 páginas) |
 | `/video` | `src/pages/video.astro` | 42 (2 páginas) |
 | `/audio` | `src/pages/audio.astro` | 53 (3 páginas) |
-| `/developer` | `src/pages/developer.astro` | 42 (2 páginas) |
+| `/developer` | `src/pages/developer.astro` | 43 (2 páginas) |
 
 **`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
 - Recibe `domain: ToolDomain` como prop, filtra `TOOLS` internamente.
@@ -517,7 +517,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 298 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 302 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -544,3 +544,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-07-31 | Serialización segura del JSON-LD: nuevo `src/lib/utils/jsonld.ts` con `jsonLd()`, que escapa `<`, `>` y `&` como unicode. 33 páginas publicaban caracteres `<`/`>` sin escapar dentro del bloque JSON-LD; un `</script>` en cualquier texto cerraría el bloque antes de tiempo. Aplicado en `ToolLayout`, `index`, las 5 páginas de categoría y el blog. |
 | 2026-07-31 | AEO (optimización para motores de respuesta). (1) Nuevo `src/pages/llms.txt.ts` — genera `/llms.txt` en cada build desde `TOOLS` + blog, agrupado por los 5 dominios. (2) `public/robots.txt` con `Allow` explícito para GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, meta-externalagent y otros. (3) `ToolLayout.astro`: los 4 `<script>` de JSON-LD se unifican en un `@graph` que añade `WebSite`, `WebPage` (con `speakable`) y `HowTo`; el `SoftwareApplication` gana `browserRequirements`, `featureList`, `dateModified` y `applicationCategory` por dominio (`DeveloperApplication` para developer, `BusinessApplication` para PDF). Nuevos props opcionales `answer`, `howTo` y `dateModified`. (4) `<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large…">` en herramientas y home. (5) Bloque de respuesta directa con clase `aeo-answer` bajo el H1 + línea visible "Actualizado el…". (6) Home: los 3 `<script>` sueltos pasan a un `@graph` con `Organization`, `WebSite`, `CollectionPage`, `WebApplication` e `ItemList` de las 5 categorías. |
 | 2026-07-10 | Sitio sin anuncios: Ezoic eliminado por completo (borrado `EzoicScripts.astro`, quitados sus includes de las 10 plantillas y el redirect `/ads.txt` de `public/_redirects`). Monetag permanece comentado (scripts de `AdScripts.astro` + metas de verificación en los 5 heads) por si se reactiva más adelante. Los headers COOP/COEP siguen retirados (regla vigente: no reactivarlos). |
+| 2026-08-06 | +2 herramientas y +2 artículos. Imagen 59→60: `/quitar-fondo-blanco` (`QuitarFondoBlancoTool.tsx`) — recorte por color con `getImageData`, distancia máxima por canal RGB, banda de suavizado del borde y vista previa sobre patrón a cuadros; exporta PNG. Developer 42→43: `/generador-cron` (`GeneradorCronTool.tsx`) — parser de expresiones cron de 5 campos (`*`, rangos, listas, pasos y nombres `MON`/`JAN`), traducción a español, validación por campo y cálculo de las 5 próximas ejecuciones. Artículos: `quitar-fondo-blanco-imagen-transparente` y `como-funcionan-las-expresiones-cron`. Nuevos iconos `Eraser` y `CalendarClock` en `ToolCard.tsx`. Total: 241 herramientas, 302 páginas. El sitemap y `/llms.txt` se regeneran solos en el build; el JSON-LD lo aporta `ToolLayout`. |

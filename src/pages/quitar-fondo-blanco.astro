@@ -1,0 +1,62 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import QuitarFondoBlancoTool from '@/components/tools/QuitarFondoBlancoTool';
+
+const faqs = [
+  {
+    q: '¿Cómo quito el fondo blanco de una imagen?',
+    a: 'Arrastra la imagen a la herramienta, deja seleccionado el blanco (#FFFFFF) como color a eliminar y ajusta la tolerancia hasta que la vista previa muestre el fondo a cuadros. Después pulsa Descargar y obtendrás un PNG con el fondo transparente. Todo ocurre en tu navegador: la imagen no se sube a ningún servidor.',
+  },
+  {
+    q: '¿Qué diferencia hay con la herramienta de eliminar fondo con IA?',
+    a: 'Son dos enfoques distintos. Esta herramienta trabaja por color: borra los píxeles parecidos al tono que elijas, así que es ideal para fondos lisos y uniformes (fotos de producto sobre blanco, logos, escaneos, capturas). La herramienta de eliminar fondo usa un modelo de inteligencia artificial que identifica al sujeto, por lo que funciona con fondos complejos como paisajes o interiores. Como contrapartida, esta es instantánea y no descarga ningún modelo de 50 MB.',
+  },
+  {
+    q: '¿Para qué sirven la tolerancia y el suavizado de bordes?',
+    a: 'La tolerancia define cuánto puede alejarse un píxel del color elegido para considerarse fondo. Con 0 % solo desaparece el color exacto; al subirla también se eliminan los blancos rotos, las sombras suaves y el ruido del JPG. El suavizado añade una franja de transparencia progresiva justo después de ese umbral, de modo que el borde del sujeto no queda dentado ni con aspecto de recorte con tijeras. Un buen punto de partida es 12 % de tolerancia y 8 % de suavizado.',
+  },
+  {
+    q: '¿Por qué el resultado se descarga en PNG y no en JPG?',
+    a: 'Porque el formato JPG no admite canal alfa: no puede almacenar información de transparencia y rellenaría el hueco con blanco o negro, deshaciendo el trabajo. El PNG guarda 8 bits de transparencia por píxel, que es justo lo que necesita un fondo recortado con bordes suaves. Si necesitas un archivo más ligero manteniendo la transparencia, convierte después el PNG a WebP.',
+  },
+  {
+    q: '¿Puedo eliminar un fondo que no sea blanco?',
+    a: 'Sí. Pulsa el selector de color personalizado y elige cualquier tono, o usa uno de los presets: negro, verde croma, azul o magenta. La herramienta borra el color que le indiques, así que funciona igual con fondos de estudio verdes, con capturas sobre fondo negro o con ilustraciones de fondo plano de cualquier color.',
+  },
+  {
+    q: '¿Funciona bien con cualquier imagen?',
+    a: 'Funciona muy bien cuando el fondo es de un color uniforme y contrasta con el sujeto. Da peores resultados si el sujeto contiene el mismo color que el fondo (una camisa blanca sobre fondo blanco pierde partes) o si el fondo tiene degradados y texturas. En esos casos baja la tolerancia para proteger al sujeto, o usa la herramienta de eliminar fondo con IA, que separa por forma y no por color.',
+  },
+  {
+    q: '¿Se suben mis imágenes a algún servidor?',
+    a: 'No. El recorte se hace con la Canvas API dentro de tu navegador leyendo los píxeles en memoria. Ningún archivo sale de tu dispositivo, no hay cola de procesamiento ni almacenamiento temporal, y la herramienta sigue funcionando aunque pierdas la conexión después de cargar la página.',
+  },
+];
+---
+<ToolLayout
+  slug="quitar-fondo-blanco"
+  answer="Sube la imagen, elige el blanco como color de fondo y ajusta la tolerancia: la herramienta convierte esos píxeles en transparentes y descarga un PNG. Todo el proceso ocurre en tu navegador."
+  howTo={[
+    'Arrastra tu imagen o haz clic para seleccionarla.',
+    'Elige el color de fondo que quieres eliminar (blanco por defecto).',
+    'Ajusta la tolerancia y el suavizado mirando la vista previa a cuadros.',
+    'Descarga el PNG con el fondo ya transparente.',
+  ]}
+  faqs={faqs}
+>
+  <QuitarFondoBlancoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fotos de producto listas para cualquier catálogo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Los marketplaces y las plantillas de tienda online esperan imágenes que se integren con su propio fondo. Un PNG recortado se coloca sobre <strong class="text-[var(--color-text)]">fichas de producto, banners, catálogos PDF y mockups</strong> sin arrastrar un rectángulo blanco que delata el montaje. Si fotografías sobre una cartulina blanca o una caja de luz, este recorte por color resuelve el trabajo en segundos y con un resultado más limpio que cualquier selección manual, porque el umbral se aplica píxel a píxel y no depende del pulso de tu ratón.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Logos, firmas y escaneos sobre papel</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un logo descargado en JPG o una firma escaneada llegan casi siempre con fondo blanco pegado. Al volverlo transparente puedes superponerlos en <strong class="text-[var(--color-text)]">documentos, presentaciones, cabeceras de color o marcas de agua</strong> sin recortes visibles. Para escaneos, sube la tolerancia hasta el 20–30 %: el papel nunca es blanco puro y suele traer un tinte gris o amarillento que el umbral estricto dejaría intacto.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

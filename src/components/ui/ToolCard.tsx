@@ -25,6 +25,7 @@ import {
   PackageMinus, Share2, ALargeSmall,
   Bot, Phone, Users2, ArrowDownToLine, ListPlus, Replace,
   ZoomIn, Ruler, Slice, RadioTower,
+  Eraser, CalendarClock,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -185,6 +186,8 @@ const ICONS: Record<string, React.ReactNode> = {
   Ruler: <Ruler size={20} />,
   Slice: <Slice size={20} />,
   RadioTower: <RadioTower size={20} />,
+  Eraser: <Eraser size={20} />,
+  CalendarClock: <CalendarClock size={20} />,
 };
 
 interface Props {
