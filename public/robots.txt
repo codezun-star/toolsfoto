@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+# Marco aislado de los banners: no es contenido, no debe indexarse
+Disallow: /ads/
+
 # ── Motores de respuesta / IA ────────────────────────────────────────────
 # Acceso explícito para los rastreadores que alimentan respuestas generadas
 # (AEO). Sin estas reglas algunos bots aplican su política restrictiva por

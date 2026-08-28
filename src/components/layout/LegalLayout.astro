@@ -1,6 +1,7 @@
 ---
 import Header from './Header.astro';
 import Footer from './Footer.astro';
+import AdSlot from '@/components/ads/AdSlot.astro';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 
@@ -68,6 +69,8 @@ const seo = PAGE_SEO[slug];
       <article class="prose-legal">
         <slot />
       </article>
+
+      <AdSlot type="leaderboard" />
     </main>
 
     <Footer />

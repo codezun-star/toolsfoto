@@ -2,6 +2,8 @@
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import HomeTools from '@/components/HomeTools';
+import AdSlot from '@/components/ads/AdSlot.astro';
+import AdNative from '@/components/ads/AdNative.astro';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { TOOLS } from '@/lib/constants/tools';
 import { Shield, Gift } from 'lucide-react';
@@ -232,9 +234,19 @@ const homeGraph = jsonLd({
         </div>
       </div>
 
+      <!-- Anuncio: justo bajo la barra de confianza, antes del grid de herramientas -->
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <AdSlot type="leaderboard" />
+      </div>
+
       <!-- TOOLS TABS -->
       <div id="herramientas">
         <HomeTools client:load />
+      </div>
+
+      <!-- Banner nativo: uno por página -->
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <AdNative />
       </div>
 
       <!-- CTA bottom -->
@@ -247,6 +259,9 @@ const homeGraph = jsonLd({
           Empezar ahora
         </a>
       </section>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 pb-10">
+        <AdSlot type="rectangle" />
+      </div>
     </main>
 
     <Footer />

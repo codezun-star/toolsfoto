@@ -3,6 +3,8 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
 import ToolCard from '@/components/ui/ToolCard';
+import AdSlot from '@/components/ads/AdSlot.astro';
+import AdNative from '@/components/ads/AdNative.astro';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { jsonLd } from '@/lib/utils/jsonld';
@@ -257,7 +259,13 @@ const graph = jsonLd({
         </p>
       </div>
 
+      {/* Anuncio superior: primer bloque tras la ficha, antes de la herramienta */}
+      <AdSlot type="leaderboard" />
+
       <slot />
+
+      {/* Anuncio tras el resultado: el usuario acaba de terminar su tarea */}
+      <AdSlot type="rectangle" />
 
       {related.length > 0 && (
         <section class="mt-20">
@@ -267,6 +275,9 @@ const graph = jsonLd({
           </div>
         </section>
       )}
+
+      {/* Banner nativo: uno por página (id de contenedor fijo de la red) */}
+      <AdNative />
 
       {faqs && faqs.length > 0 && (
         <section class="mt-16">

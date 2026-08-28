@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="referrer" content="no-referrer-when-downgrade" />
+<title>Publicidad</title>
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; background: transparent; }
+  body { display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+<!--
+  Host aislado de un banner de Adsterra.
+
+  POR QUÉ EXISTE ESTE ARCHIVO: los banners de tipo iframe de Adsterra se
+  configuran con la variable GLOBAL `atOptions`, que el invoke.js lee al
+  ejecutarse. Con dos o más banners en la misma página las configuraciones
+  se pisan entre sí y solo renderiza uno (o ninguno). Cargando cada banner
+  dentro de este archivo, en su propio iframe, cada unidad tiene su propio
+  `window` y por tanto su propio `atOptions`. Sin colisiones y en paralelo.
+
+  Se invoca como /ads/banner.html?s=728x90 desde el loader de AdScripts.astro.
+  El tamaño se valida contra UNITS: nunca se construye una URL de script a
+  partir de texto arbitrario de la query string.
+-->
+<script>
+  (function () {
+    var UNITS = {
+      '728x90':  '52da20bbddacf88d1f6abd58bdae2ba6',
+      '468x60':  'a7ceeaafc7ec0556faa8e63c1fd6b957',
+      '320x50':  '2bd99f19f95ae2eaf724ed39f19ebb1a',
+      '300x250': '53959aeb93ebbd0f84ba67f2c55e5a19',
+      '160x600': '224bdf72d71aeb4a0c1d6715837b0a16',
+      '160x300': '7bee5b1533deba1a4316d297f1b44751'
+    };
+
+    var size = new URLSearchParams(location.search).get('s') || '';
+    var key = Object.prototype.hasOwnProperty.call(UNITS, size) ? UNITS[size] : null;
+    if (!key) return;
+
+    var wh = size.split('x');
+    window.atOptions = {
+      key: key,
+      format: 'iframe',
+      height: parseInt(wh[1], 10),
+      width: parseInt(wh[0], 10),
+      params: {}
+    };
+
+    // document.write durante el parseo inserta el script igual que el snippet
+    // original de Adsterra (bloqueante y con atOptions ya definido).
+    document.write('<scr' + 'ipt src="https://www.highrevenueformat.com/' + key + '/invoke.js"><\/scr' + 'ipt>');
+  })();
+</script>
+</body>
+</html>

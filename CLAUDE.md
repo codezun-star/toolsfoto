@@ -102,8 +102,42 @@ El sitio sirve únicamente este header en todas las rutas:
 > Quitarlos es **seguro**: el core de FFmpeg es de 1 hilo (`@ffmpeg/core@0.12.6`, no `core-mt`), **no usa `SharedArrayBuffer`**, y `toBlobURL` carga core/WASM como `blob:` del **mismo origen** (no requiere COEP/CORP). `@imgly/background-removal` también funciona sin aislamiento (onnxruntime-web cae al backend WASM de 1 hilo; solo pierde algo de velocidad, no funcionalidad).
 > Los CDNs externos (`unpkg.com`, `cdnjs.cloudflare.com`, `staticimgly.com`) devuelven `CORP: cross-origin`, por lo que seguirían siendo compatibles si algún día se reactivara el aislamiento.
 
-**Anuncios — sitio SIN anuncios actualmente (2026-07-10):**
-- **Monetag (desactivado, comentado):** los 3 scripts de `src/components/layout/AdScripts.astro` (incluido vía `Footer.astro`, que renderiza vacío) y la meta de verificación `<meta name="monetag">` en los 5 heads (`ToolLayout`, `LegalLayout`, `index`, `blog/index`, `blog/[slug]`) están **comentados** con `{/* */}`. Para reactivar Monetag: descomentar los 3 scripts de `AdScripts.astro` y las 5 metas. No descomentar sin decisión explícita del usuario.
+**Anuncios — Adsterra en todo el sitio (2026-08-28):**
+
+| Pieza | Dónde vive | Qué hace |
+|---|---|---|
+| `public/ads/banner.html` | estático, fuera de Astro | Aloja **un** banner iframe de Adsterra. Recibe `?s=728x90` y valida el tamaño contra su mapa `UNITS`. |
+| `src/components/ads/AdSlot.astro` | in-content | Hueco vacío (`<div class="tf-ad" data-ad="…">`). No pinta nada: lo rellena el loader. |
+| `src/components/ads/AdNative.astro` | in-content | Contenedor del banner **nativo**. Id fijo de la red → **máximo uno por página**. |
+| `src/components/layout/AdScripts.astro` | global vía `Footer.astro` | Social bar/popunder + estilos de todos los huecos + loader + anchor inferior + rails laterales. |
+
+**Por qué cada banner va en su propio iframe (crítico — leer antes de tocar los anuncios):**
+Los formatos iframe de Adsterra se configuran con la variable **global** `atOptions`, que el `invoke.js` lee al ejecutarse. Con dos o más banners en la misma página las configuraciones se pisan y solo renderiza uno (o ninguno, con el tamaño equivocado). Por eso cada unidad se carga dentro de `/ads/banner.html`, que le da su propio `window` y por tanto su propio `atOptions`. **Nunca pegar los snippets de `atOptions` directamente en una plantilla.**
+
+**Las 8 unidades:**
+
+| Formato | Key | Slot |
+|---|---|---|
+| 728x90 | `52da20bb…` | `leaderboard` / `anchor` en ≥760px |
+| 468x60 | `a7ceeaaf…` | `leaderboard` / `anchor` en 500-759px |
+| 320x50 | `2bd99f19…` | `leaderboard` / `anchor` en <500px |
+| 300x250 | `53959aeb…` | `rectangle` |
+| 160x600 | `224bdf72…` | rail derecho (`sky`) |
+| 160x300 | `7bee5b15…` | rail izquierdo (`sky-small`) |
+| Nativo | contenedor `934ea823…` | `AdNative`, uno por página |
+| Social bar / popunder | `pl31073442…` | global, una vez por página |
+
+**Reglas del loader (`AdScripts.astro`):**
+- Carga diferida con `IntersectionObserver` (`rootMargin: 600px`): el anuncio se pide cuando el hueco se acerca al viewport. No toca el LCP y sube la viewability.
+- **No usar `display: none` en `.tf-ad`.** Un elemento oculto no tiene caja, el observer no lo notifica nunca y el hueco no llegaría a rellenarse. El hueco vacío usa `min-height: 1px` y márgenes a cero; los márgenes y la etiqueta "Publicidad" aparecen solo con `.is-filled`.
+- El formato horizontal se elige en runtime por ancho real de pantalla. No se recarga al redimensionar: repetir la petición cuenta como refresco y la red lo penaliza.
+- **Anchor inferior:** barra fija con botón de cerrar; la preferencia se guarda en `sessionStorage` (`tf-anchor=off`). Reserva su altura con `--tf-anchor-h` en el `padding-bottom` del `body` para no tapar el footer.
+- **Rails laterales:** solo a partir de 1560px de ancho y 720px de alto. El contenido es `max-w-6xl` (1152px) centrado, así que por debajo de ese ancho un rail de 160px pisaría el contenido.
+- Al añadir huecos por JS (p. ej. el in-content del blog), insertarlos antes de que corra el loader o llamar a `window.__tfAds.scan()`.
+
+**Páginas legales:** `privacidad.astro` y `cookies.astro` describen la publicidad y sus cookies. **Si se cambia de red publicitaria hay que actualizarlas.** Nota pendiente: el sitio no tiene banner de consentimiento (CMP); para tráfico del EEE/Reino Unido con publicidad personalizada probablemente haga falta uno — decisión del usuario, no se ha añadido.
+
+- **Monetag (desactivado, comentado):** los 3 scripts de `AdScripts.astro` y la meta de verificación `<meta name="monetag">` en los 5 heads (`ToolLayout`, `LegalLayout`, `index`, `blog/index`, `blog/[slug]`) están **comentados** con `{/* */}`. No descomentar sin decisión explícita del usuario: dos redes de popunder en la misma página se pisan y hunden el eCPM de ambas.
 - **Ezoic (eliminado):** la integración JavaScript Standalone (`EzoicScripts.astro` + redirect `/ads.txt`) se integró y se eliminó por completo el 2026-07-10. Si se retoma, ver el registro de cambios para los detalles de la integración.
 
 **Limitación conocida — filtro `drawtext` de FFmpeg:**
@@ -144,6 +178,9 @@ toolsfoto-v2/
 │   │   ├── privacidad.astro / terminos.astro / cookies.astro
 │   │   └── aviso-legal.astro / contacto.astro
 │   ├── components/
+│   │   ├── ads/
+│   │   │   ├── AdSlot.astro          # Hueco de anuncio in-content (lo rellena el loader)
+│   │   │   └── AdNative.astro        # Banner nativo — máximo uno por página
 │   │   ├── layout/
 │   │   │   ├── Header.astro          # Nav: Inicio, Imágenes, PDF, Vídeo, Audio, Dev, Blog
 │   │   │   ├── Footer.astro          # 5 columnas: Imágenes, PDF, Vídeo, Audio, ToolsFoto (incluye Blog)
@@ -528,7 +565,7 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 - Astro detecta el adapter de Cloudflare y habilita "Cloudflare Images" y "KV sessions" — esos mensajes en el build son informativos, no errores.
 - El `output: "static"` en `astro.config.mjs` genera HTML estático puro. No hay server-side rendering.
 - La depreciación de `punycode` en los logs de build/dev es un warning de Node.js interno de las dependencias, no del código propio.
-- **ToolsFoto no usa cookies de seguimiento ni analíticas.** El único almacenamiento local es la caché del modelo de IA de `@imgly/background-removal`, que gestiona el propio navegador. No se necesita banner de consentimiento de cookies.
+- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal` y a la preferencia `tf-anchor` del anuncio inferior. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
 - **Hero background:** `public/hero-bg.jpg` — gradiente full-spectrum (rosa/naranja/azul), 1920px, ~73 KB. Overlay `from-black/75 via-black/55 to-black/30` para legibilidad del texto.
 
 ---
@@ -544,4 +581,5 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-07-31 | Serialización segura del JSON-LD: nuevo `src/lib/utils/jsonld.ts` con `jsonLd()`, que escapa `<`, `>` y `&` como unicode. 33 páginas publicaban caracteres `<`/`>` sin escapar dentro del bloque JSON-LD; un `</script>` en cualquier texto cerraría el bloque antes de tiempo. Aplicado en `ToolLayout`, `index`, las 5 páginas de categoría y el blog. |
 | 2026-07-31 | AEO (optimización para motores de respuesta). (1) Nuevo `src/pages/llms.txt.ts` — genera `/llms.txt` en cada build desde `TOOLS` + blog, agrupado por los 5 dominios. (2) `public/robots.txt` con `Allow` explícito para GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended, CCBot, meta-externalagent y otros. (3) `ToolLayout.astro`: los 4 `<script>` de JSON-LD se unifican en un `@graph` que añade `WebSite`, `WebPage` (con `speakable`) y `HowTo`; el `SoftwareApplication` gana `browserRequirements`, `featureList`, `dateModified` y `applicationCategory` por dominio (`DeveloperApplication` para developer, `BusinessApplication` para PDF). Nuevos props opcionales `answer`, `howTo` y `dateModified`. (4) `<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large…">` en herramientas y home. (5) Bloque de respuesta directa con clase `aeo-answer` bajo el H1 + línea visible "Actualizado el…". (6) Home: los 3 `<script>` sueltos pasan a un `@graph` con `Organization`, `WebSite`, `CollectionPage`, `WebApplication` e `ItemList` de las 5 categorías. |
 | 2026-07-10 | Sitio sin anuncios: Ezoic eliminado por completo (borrado `EzoicScripts.astro`, quitados sus includes de las 10 plantillas y el redirect `/ads.txt` de `public/_redirects`). Monetag permanece comentado (scripts de `AdScripts.astro` + metas de verificación en los 5 heads) por si se reactiva más adelante. Los headers COOP/COEP siguen retirados (regla vigente: no reactivarlos). |
+| 2026-08-28 | Publicidad Adsterra en las 302 páginas. Nuevo `public/ads/banner.html` (host aislado: cada banner iframe en su propio `window` para que no se pisen los `atOptions` globales de la red) y nuevos `src/components/ads/AdSlot.astro` y `AdNative.astro`. `AdScripts.astro` pasa de 3 scripts comentados a la capa global de anuncios: social bar/popunder, estilos, loader con `IntersectionObserver`, anchor inferior descartable (`sessionStorage`) y 2 rails laterales a partir de 1560px. Huecos: `ToolLayout` (leaderboard + rectangle + nativo), home (leaderboard + nativo + rectangle), las 5 categorías (leaderboard + nativo), blog listado (leaderboard + nativo), artículo (leaderboard + rectangle in-content tras el 2.º H2 + nativo) y `LegalLayout` (leaderboard). `Disallow: /ads/` en `robots.txt`; `privacidad.astro` y `cookies.astro` actualizadas — antes afirmaban que no había publicidad ni cookies publicitarias. |
 | 2026-08-06 | +2 herramientas y +2 artículos. Imagen 59→60: `/quitar-fondo-blanco` (`QuitarFondoBlancoTool.tsx`) — recorte por color con `getImageData`, distancia máxima por canal RGB, banda de suavizado del borde y vista previa sobre patrón a cuadros; exporta PNG. Developer 42→43: `/generador-cron` (`GeneradorCronTool.tsx`) — parser de expresiones cron de 5 campos (`*`, rangos, listas, pasos y nombres `MON`/`JAN`), traducción a español, validación por campo y cálculo de las 5 próximas ejecuciones. Artículos: `quitar-fondo-blanco-imagen-transparente` y `como-funcionan-las-expresiones-cron`. Nuevos iconos `Eraser` y `CalendarClock` en `ToolCard.tsx`. Total: 241 herramientas, 302 páginas. El sitemap y `/llms.txt` se regeneran solos en el build; el JSON-LD lo aporta `ToolLayout`. |

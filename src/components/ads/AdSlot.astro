@@ -1,0 +1,27 @@
+---
+/**
+ * Hueco de anuncio in-content.
+ *
+ * No pinta nada por sí mismo: solo marca el sitio. El loader global de
+ * `AdScripts.astro` lo rellena con un iframe hacia `/ads/banner.html` cuando
+ * el hueco se acerca al viewport (IntersectionObserver). Así el anuncio no
+ * bloquea la carga de la página y solo se pide cuando de verdad se va a ver.
+ *
+ * El formato final se elige en tiempo de ejecución según el ancho real de la
+ * pantalla (ver `sizeFor()` en AdScripts.astro):
+ *   - leaderboard → 728x90 · 468x60 · 320x50 según viewport
+ *   - rectangle   → 300x250 (entra en cualquier móvil)
+ *
+ * Los slots vacíos (bloqueador de anuncios, sin relleno) no dejan hueco:
+ * el margen y la etiqueta "Publicidad" solo aparecen con `.is-filled`.
+ */
+interface Props {
+  type?: 'leaderboard' | 'rectangle';
+  /** Clases extra para el contenedor (márgenes, alineación…). */
+  class?: string;
+}
+
+const { type = 'leaderboard', class: className = '' } = Astro.props;
+---
+
+<div class:list={['tf-ad', className]} data-ad={type}></div>

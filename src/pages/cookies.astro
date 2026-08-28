@@ -3,10 +3,10 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
 ---
 <LegalLayout slug="cookies" title="Política de Cookies">
   <h1>Política de Cookies</h1>
-  <span class="updated">Última actualización: 17 de junio de 2026</span>
+  <span class="updated">Última actualización: 28 de agosto de 2026</span>
 
   <div class="highlight-box">
-    <p>Resumen: ToolsFoto solo utiliza cookies analíticas de Google Analytics para medir el uso del sitio de forma anónima y agregada. No usamos cookies de publicidad ni vendemos tus datos, y puedes rechazarlas en cualquier momento.</p>
+    <p>Resumen: ToolsFoto utiliza cookies analíticas de Google Analytics para medir el uso del sitio de forma anónima, y muestra publicidad de terceros que puede instalar cookies publicitarias. Tus archivos siguen procesándose íntegramente en tu dispositivo y nunca se envían a ningún servidor, ni nuestro ni de los anunciantes.</p>
   </div>
 
   <h2>1. ¿Qué son las cookies?</h2>
@@ -16,7 +16,7 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
     y publicitarias.
   </p>
 
-  <h2>2. Cookies que usamos</h2>
+  <h2>2. Cookies analíticas</h2>
   <p>
     ToolsFoto utiliza <strong>Google Analytics 4 (GA4)</strong> para entender de forma anónima y agregada cómo se usa el
     sitio (páginas más visitadas, tipo de dispositivo, país aproximado). Para ello, Google instala estas cookies
@@ -27,11 +27,31 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
     <li><strong>_ga_&lt;ID&gt;</strong> — mantiene el estado de la sesión de Analytics. Duración: hasta 2 años.</li>
   </ul>
   <p>
-    Son cookies analíticas de terceros. GA4 no almacena tu dirección IP, no usamos estos datos para publicidad ni para
-    identificarte personalmente, y no instalamos ninguna otra cookie (ni propia, ni de publicidad).
+    Son cookies analíticas de terceros. GA4 no almacena tu dirección IP y no usamos estos datos para identificarte
+    personalmente.
   </p>
 
-  <h2>3. Almacenamiento local (localStorage / Cache API)</h2>
+  <h2>3. Cookies publicitarias</h2>
+  <p>
+    ToolsFoto es gratuito y se financia con publicidad. Los espacios publicitarios los sirve
+    <strong>Adsterra</strong> y sus anunciantes, que pueden instalar cookies o identificadores en tu navegador para:
+  </p>
+  <ul>
+    <li>Limitar cuántas veces ves un mismo anuncio (control de frecuencia).</li>
+    <li>Medir clics e impresiones y detectar tráfico fraudulento.</li>
+    <li>Mostrar anuncios más relevantes según tu navegación en otros sitios.</li>
+  </ul>
+  <p>
+    Estas cookies las instala el tercero, no ToolsFoto: nosotros no accedemos a ellas ni recibimos información personal
+    de los anunciantes. Puedes consultar cómo trata Adsterra estos datos en su
+    <a href="https://adsterra.com/privacy-policy/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+  </p>
+  <p>
+    <strong>Importante:</strong> la publicidad se carga en marcos aislados y nunca tiene acceso a los archivos que
+    procesas en las herramientas. Tus imágenes, PDF, vídeos y audios no salen de tu dispositivo en ningún caso.
+  </p>
+
+  <h2>4. Almacenamiento local (localStorage / Cache API)</h2>
   <p>
     Además de las cookies, algunas herramientas pueden aprovechar el almacenamiento local del navegador de forma
     técnica:
@@ -41,35 +61,47 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
       <strong>Modelo de IA (eliminación de fondo):</strong> el navegador puede almacenar en caché el modelo de inteligencia
       artificial (~50 MB) para que las siguientes ejecuciones sean más rápidas. Este dato nunca sale de tu dispositivo.
     </li>
+    <li>
+      <strong>Anuncio inferior descartado:</strong> si cierras la barra de anuncios inferior, guardamos esa preferencia en
+      el almacenamiento de sesión para no volver a mostrártela mientras dure la visita.
+    </li>
   </ul>
   <p>
     Este almacenamiento no es una cookie y no permite identificarte ni rastrearte. Puedes borrarlo en cualquier momento
     desde los ajustes de tu navegador (habitualmente en <em>Configuración → Privacidad → Borrar datos del sitio</em>).
   </p>
 
-  <h2>4. Cookies de terceros</h2>
+  <h2>5. Cookies de terceros</h2>
   <p>
-    El único tercero que instala cookies es <strong>Google</strong>, como proveedor de Google Analytics (ver punto 2).
-    Puedes consultar cómo trata Google esta información en su
+    Los terceros que pueden instalar cookies en ToolsFoto son <strong>Google</strong>, como proveedor de Google Analytics
+    (punto 2), y <strong>Adsterra</strong> junto a sus anunciantes, como proveedor de publicidad (punto 3). Puedes
+    consultar cómo trata Google esta información en su
     <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
-    No integramos Facebook Pixel, redes publicitarias ni otros rastreadores de terceros.
+    No integramos Facebook Pixel ni otros rastreadores de redes sociales.
   </p>
 
-  <h2>5. Cómo rechazar o eliminar las cookies</h2>
-  <p>Las cookies analíticas no son necesarias para el funcionamiento de las herramientas. Puedes gestionarlas así:</p>
+  <h2>6. Cómo rechazar o eliminar las cookies</h2>
+  <p>Ni las cookies analíticas ni las publicitarias son necesarias para el funcionamiento de las herramientas. Puedes gestionarlas así:</p>
   <ul>
     <li>Bloquéalas o elimínalas desde los ajustes de privacidad de tu navegador.</li>
     <li>
       Instala el complemento oficial de inhabilitación de Google Analytics:
       <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>.
     </li>
+    <li>
+      Gestiona la publicidad personalizada en
+      <a href="https://www.youronlinechoices.com/es/" target="_blank" rel="noopener noreferrer">youronlinechoices.com</a>
+      o en
+      <a href="https://optout.aboutads.info/" target="_blank" rel="noopener noreferrer">optout.aboutads.info</a>.
+    </li>
+    <li>Activa la opción «No rastrear» o el bloqueo de cookies de terceros de tu navegador.</li>
   </ul>
   <p>Si las rechazas, todas las herramientas seguirán funcionando con normalidad.</p>
 
-  <h2>6. Cambios en esta política</h2>
+  <h2>7. Cambios en esta política</h2>
   <p>
-    Si en el futuro cambian las cookies o los servicios de análisis que utilizamos, actualizaremos esta política
-    indicándolo en la fecha del inicio.
+    Si en el futuro cambian las cookies, los servicios de análisis o los proveedores de publicidad que utilizamos,
+    actualizaremos esta política indicándolo en la fecha del inicio.
   </p>
 
   <hr />

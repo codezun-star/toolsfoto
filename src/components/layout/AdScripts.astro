@@ -1,13 +1,291 @@
 ---
-// Scripts de anuncios (Monetag) para todo el sitio.
+// ─────────────────────────────────────────────────────────────────────────────
+// Anuncios (Adsterra) — capa global del sitio.
+//
 // Se renderiza una sola vez por página a través de Footer.astro (presente en
-// todas las páginas), por lo que los anuncios aparecen en todo ToolsFoto.
+// todas las páginas), así que lo que hay aquí llega a las 302 páginas.
+//
+// Este archivo aporta tres cosas:
+//   1. El script de social bar / popunder (una sola vez por página).
+//   2. Los estilos de todos los huecos de anuncio del sitio.
+//   3. El loader: rellena los `.tf-ad` con carga diferida, elige el formato
+//      según el ancho real de pantalla y monta el anchor inferior y los dos
+//      rails laterales.
+//
 // IMPORTANTE: usar siempre is:inline para que Astro no procese ni empaquete
 // estos scripts y se emitan tal cual (igual que el patrón de gtag).
-// Cada script se autoinyecta en document.body (o documentElement si body aún
-// no existe), por eso es seguro emitirlos al final del <body>.
+//
+// Monetag (desactivado) — se mantiene comentado por si se retomara. No
+// descomentar sin decisión explícita del usuario: convivir dos redes de
+// popunder en la misma página se pisa y hunde el eCPM de ambas.
+// ─────────────────────────────────────────────────────────────────────────────
 ---
-{/* Monetag desactivado temporalmente — sitio sin anuncios por ahora. Para reactivar, descomentar los 3 scripts. */}
+
+{/* Monetag desactivado — sustituido por Adsterra. Para reactivar, descomentar los 3 scripts. */}
 {/* <script is:inline>(function(s){s.dataset.zone='11097758',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script> */}
 {/* <script is:inline>(function(s){s.dataset.zone='11097756',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script> */}
 {/* <script is:inline>(function(s){s.dataset.zone='11095208',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script> */}
+
+<style is:global>
+  /* Hueco vacío: ocupa el ancho pero no altura, sin margen ni etiqueta, para
+     que un bloqueador de anuncios no deje agujeros en el layout.
+     OJO: no usar `display: none` aquí. Un elemento oculto no tiene caja y el
+     IntersectionObserver no lo notifica nunca, así que el hueco no llegaría a
+     rellenarse jamás. El mínimo de 1px garantiza que sí se observe. */
+  .tf-ad {
+    display: block;
+    min-height: 1px;
+    margin: 0;
+    line-height: 0;
+  }
+
+  .tf-ad.is-filled {
+    margin: 2rem auto;
+    text-align: center;
+  }
+
+  .tf-ad.is-filled::before {
+    content: 'Publicidad';
+    display: block;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted, #A8A49E);
+    margin-bottom: 6px;
+  }
+
+  .tf-ad.is-filled iframe {
+    display: inline-block;
+    max-width: 100%;
+    border: 0;
+    overflow: hidden;
+  }
+
+  /* Banner nativo: ocupa el ancho del contenedor, no lleva medidas fijas. */
+  .tf-ad-native.is-filled { line-height: normal; }
+  .tf-ad-native.is-filled > div { min-height: 1px; }
+
+  /* ── Anchor inferior ──────────────────────────────────────────────────── */
+  body { padding-bottom: var(--tf-anchor-h, 0px); }
+
+  .tf-anchor {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 4px 0 2px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(4px);
+    border-top: 1px solid var(--color-border, #E8E4DE);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .tf-anchor .tf-ad.is-filled { margin: 0; }
+  .tf-anchor .tf-ad.is-filled::before { display: none; }
+
+  .tf-anchor-close {
+    position: absolute;
+    top: -13px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    line-height: 1;
+    color: var(--color-text-secondary, #706C66);
+    background: #fff;
+    border: 1px solid var(--color-border, #E8E4DE);
+    border-radius: 999px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .tf-anchor-close:hover { color: var(--color-accent, #E84827); }
+
+  /* ── Rails laterales (solo pantallas anchas, nunca pisan el contenido) ── */
+  .tf-rail {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+  }
+
+  .tf-rail-left  { left: 10px; }
+  .tf-rail-right { right: 10px; }
+  .tf-rail .tf-ad.is-filled { margin: 0; }
+
+  @media print {
+    .tf-ad, .tf-anchor, .tf-rail { display: none !important; }
+  }
+</style>
+
+{/* Social bar / popunder de Adsterra — una vez por página, en todo el sitio. */}
+<script is:inline async data-cfasync="false" src="https://pl31073442.profitableratecpmnetwork.com/d0/ae/e6/d0aee660083cbae90f8e576e5259457b.js"></script>
+
+<script is:inline>
+  /**
+   * Loader de anuncios de ToolsFoto.
+   *
+   * Rellena cada `.tf-ad[data-ad]` con un iframe hacia /ads/banner.html.
+   * Cada banner vive en su propio iframe porque los formatos iframe de
+   * Adsterra se configuran con la global `atOptions`: dos en la misma página
+   * se pisarían y solo renderizaría uno. Ver el comentario de /ads/banner.html.
+   *
+   * Se carga en diferido (IntersectionObserver, 600px de margen): el anuncio
+   * se pide cuando el hueco se acerca al viewport, no antes. Eso mantiene el
+   * LCP intacto y sube la viewability, que es lo que paga el CPM.
+   */
+  (function () {
+    if (window.__tfAds) return;
+
+    var NATIVE_SRC = 'https://pl31073441.profitableratecpmnetwork.com/934ea82384654687f34f72b2e6d95efc/invoke.js';
+
+    // El contenido del sitio es max-w-6xl (1152px) centrado. Un rail de 160px
+    // con 10px de aire necesita 1152 + 2*180 de hueco libre para no pisarlo.
+    var RAIL_MIN_W = 1560;
+    var RAIL_MIN_H = 720;
+
+    function vw() { return document.documentElement.clientWidth || window.innerWidth || 0; }
+    function vh() { return document.documentElement.clientHeight || window.innerHeight || 0; }
+
+    /** Formato horizontal más grande que entra en el ancho disponible. */
+    function horizontal() {
+      var w = vw();
+      if (w >= 760) return '728x90';
+      if (w >= 500) return '468x60';
+      return '320x50';
+    }
+
+    function sizeFor(type) {
+      if (type === 'rectangle') return '300x250';
+      if (type === 'sky') return '160x600';
+      if (type === 'sky-small') return '160x300';
+      return horizontal();
+    }
+
+    function buildFrame(size) {
+      var wh = size.split('x');
+      var f = document.createElement('iframe');
+      f.src = '/ads/banner.html?s=' + size;
+      f.title = 'Publicidad';
+      f.width = wh[0];
+      f.height = wh[1];
+      f.setAttribute('frameborder', '0');
+      f.setAttribute('scrolling', 'no');
+      f.style.cssText = 'width:' + wh[0] + 'px;height:' + wh[1] + 'px;';
+      return f;
+    }
+
+    var nativeDone = false;
+    function loadNative() {
+      if (nativeDone) return;
+      nativeDone = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.setAttribute('data-cfasync', 'false');
+      s.src = NATIVE_SRC;
+      document.body.appendChild(s);
+    }
+
+    function fill(el) {
+      if (el.getAttribute('data-tf-filled')) return;
+      el.setAttribute('data-tf-filled', '1');
+      var type = el.getAttribute('data-ad') || 'leaderboard';
+      el.classList.add('is-filled');
+      if (type === 'native') { loadNative(); return; }
+      el.appendChild(buildFrame(sizeFor(type)));
+    }
+
+    var io = null;
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            io.unobserve(entries[i].target);
+            fill(entries[i].target);
+          }
+        }
+      }, { rootMargin: '600px 0px' });
+    }
+
+    /** Registra los huecos que aún no se han rellenado (incluye los añadidos por JS). */
+    function scan() {
+      var nodes = document.querySelectorAll('.tf-ad[data-ad]:not([data-tf-filled])');
+      for (var i = 0; i < nodes.length; i++) {
+        if (io) io.observe(nodes[i]); else fill(nodes[i]);
+      }
+    }
+
+    /** Barra inferior fija, descartable y recordada durante la sesión. */
+    function mountAnchor() {
+      try { if (sessionStorage.getItem('tf-anchor') === 'off') return; } catch (e) {}
+
+      var size = horizontal();
+      var height = parseInt(size.split('x')[1], 10);
+
+      var bar = document.createElement('aside');
+      bar.className = 'tf-anchor';
+      bar.setAttribute('aria-label', 'Publicidad');
+
+      var close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'tf-anchor-close';
+      close.setAttribute('aria-label', 'Cerrar anuncio');
+      close.textContent = '✕';
+      close.addEventListener('click', function () {
+        if (bar.parentNode) bar.parentNode.removeChild(bar);
+        document.documentElement.style.setProperty('--tf-anchor-h', '0px');
+        try { sessionStorage.setItem('tf-anchor', 'off'); } catch (e) {}
+      });
+
+      var slot = document.createElement('div');
+      slot.className = 'tf-ad';
+      slot.setAttribute('data-ad', 'anchor');
+
+      bar.appendChild(close);
+      bar.appendChild(slot);
+      document.body.appendChild(bar);
+      document.documentElement.style.setProperty('--tf-anchor-h', (height + 14) + 'px');
+      fill(slot);
+    }
+
+    /** Rascacielos laterales: solo cuando sobra ancho de verdad. */
+    function mountRails() {
+      if (vw() < RAIL_MIN_W || vh() < RAIL_MIN_H) return;
+      var rails = [['tf-rail-left', 'sky-small'], ['tf-rail-right', 'sky']];
+      for (var i = 0; i < rails.length; i++) {
+        var rail = document.createElement('aside');
+        rail.className = 'tf-rail ' + rails[i][0];
+        rail.setAttribute('aria-label', 'Publicidad');
+        var slot = document.createElement('div');
+        slot.className = 'tf-ad';
+        slot.setAttribute('data-ad', rails[i][1]);
+        rail.appendChild(slot);
+        document.body.appendChild(rail);
+        fill(slot);
+      }
+    }
+
+    function init() {
+      scan();
+      mountAnchor();
+      mountRails();
+    }
+
+    window.__tfAds = { scan: scan };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
