@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 interface Part { url: string; size: number; from: number; to: number; index: number }
@@ -47,7 +48,7 @@ export default function DividirCadaNPaginasTool() {
         const copied = await doc.copyPages(src, idxs);
         copied.forEach((p) => doc.addPage(p));
         const bytes = await doc.save({ useObjectStreams: true });
-        out.push({ url: URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' })), size: bytes.length, from: start + 1, to: end, index: part });
+        out.push({ url: URL.createObjectURL(new Blob([toBlobPart(bytes)], { type: 'application/pdf' })), size: bytes.length, from: start + 1, to: end, index: part });
         part++;
       }
       setResults(out);

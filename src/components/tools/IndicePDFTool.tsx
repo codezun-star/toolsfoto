@@ -2,8 +2,8 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 interface OutlineItem {
   title: string;
@@ -32,8 +32,7 @@ export default function IndicePDFTool() {
     setOutline([]);
     setDone(false);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
 

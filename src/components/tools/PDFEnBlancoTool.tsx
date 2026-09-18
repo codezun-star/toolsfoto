@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 const PAGE_SIZES: Record<string, [number, number]> = {
   'A4 (210×297 mm)': [595.28, 841.89],
@@ -31,7 +32,7 @@ export default function PDFEnBlancoTool() {
       }
 
       const outBytes = await doc.save();
-      const url = URL.createObjectURL(new Blob([outBytes], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(outBytes)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = `documento_en_blanco_${numPages}pag.pdf`;

@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { RotateCcw } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 type Rotation = 90 | 180 | 270;
@@ -29,7 +30,7 @@ export default function RotarPDFTool() {
         page.setRotation(degrees((current + rotation) % 360));
       });
       const out = await doc.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, `_rotado${rotation}.pdf`);

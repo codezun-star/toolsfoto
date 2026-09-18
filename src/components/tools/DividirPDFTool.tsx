@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -72,7 +73,7 @@ export default function DividirPDFTool() {
         const [copied] = await newDoc.copyPages(srcDoc, [pageNum - 1]);
         newDoc.addPage(copied);
         const out = await newDoc.save({ useObjectStreams: true });
-        const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+        const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
         const a = document.createElement('a');
         a.href = url;
         a.download = mode === 'all' ? `${baseName}_pagina${pageNum}.pdf` : `${baseName}_paginas_${pagesToExtract[0]}-${pagesToExtract[pagesToExtract.length - 1]}.pdf`;

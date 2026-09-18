@@ -66,7 +66,7 @@ export default function DistorsionAudioTool() {
       const buf = await audio.file.arrayBuffer();
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       await ff.exec(['-i', `input.${ext}`, '-af', PRESETS[preset]!.filter, `output.${ext}`]);
-      const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      const data = await ff.readFile(`output.${ext}`) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }

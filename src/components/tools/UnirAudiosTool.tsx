@@ -85,14 +85,14 @@ export default function UnirAudiosTool() {
       const enc = new TextEncoder();
       await ff.writeFile('list.txt', enc.encode(listContent));
       await ff.exec(['-f', 'concat', '-safe', '0', '-i', 'list.txt', '-c', 'copy', 'output.mp3']);
-      const data = (await ff.readFile('output.mp3')) as Uint8Array;
+      const data = (await ff.readFile('output.mp3')) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
 
       for (const n of [...inputNames, ...reencoded]) { try { await ff.deleteFile(n); } catch { /* ignore */ } }
       try { await ff.deleteFile('list.txt'); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }
 
-      const blob = new Blob([data.buffer], { type: 'audio/mpeg' });
+      const blob = new Blob([data], { type: 'audio/mpeg' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);

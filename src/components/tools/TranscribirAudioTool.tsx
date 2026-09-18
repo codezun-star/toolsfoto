@@ -11,10 +11,31 @@ const LANGUAGES = [
   { code: 'ca-ES', label: 'Català' },
 ];
 
+/**
+ * La lib DOM de TypeScript trae los tipos de resultado de la Web Speech API
+ * (`SpeechRecognitionEvent`, `SpeechRecognitionResultList`…) pero no la
+ * interfaz `SpeechRecognition` ni su constructor, porque la API sigue sin
+ * estar estandarizada. Se declara aquí lo que este componente usa.
+ */
+interface SpeechRecognition extends EventTarget {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onend: ((event: Event) => void) | null;
+  start(): void;
+  stop(): void;
+  abort(): void;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognition;
+
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
   }
 }
 

@@ -64,9 +64,9 @@ export default function QuitarFondoVerdeTool() {
         console.error('[QuitarFondoVerde] Error FFmpeg:', err);
         throw err;
       }
-      const data = (await ff.readFile('output.mp4')) as Uint8Array;
+      const data = (await ff.readFile('output.mp4')) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('vacío');
-      const blob = new Blob([data.buffer], { type: 'video/mp4' });
+      const blob = new Blob([data], { type: 'video/mp4' });
       try { await ff.deleteFile('input_src'); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }
       setResultSize(blob.size);

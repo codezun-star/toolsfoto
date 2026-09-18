@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { Eye, EyeOff } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -43,7 +44,7 @@ export default function ProtegerPDFTool() {
       });
 
       const out = await doc.save();
-      const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_protegido.pdf');

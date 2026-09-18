@@ -65,7 +65,7 @@ export default function AfinarAudioTool() {
       const args = ['-i', inputName, '-af', filterParts.join(','), outputName];
       try { await ff.exec(args); } catch (err) { console.error('[AfinarAudio] FFmpeg error:', err); throw err; }
 
-      const data = await ff.readFile(outputName) as Uint8Array;
+      const data = await ff.readFile(outputName) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío.');
       await ff.deleteFile(inputName).catch(() => {});
       await ff.deleteFile(outputName).catch(() => {});

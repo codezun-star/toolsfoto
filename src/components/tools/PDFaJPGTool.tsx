@@ -2,12 +2,12 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
-import { revokeURL, getContext } from '@/lib/utils/canvas';
+import { revokeURL } from '@/lib/utils/canvas';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
 interface PdfFile { file: File; name: string; size: number }
 interface PagePreview { num: number; url: string }
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 export default function PDFaJPGTool() {
   const [pdf, setPdf] = useState<PdfFile | null>(null);
@@ -28,8 +28,7 @@ export default function PDFaJPGTool() {
     pages.forEach(p => revokeURL(p.url));
     setPages([]);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const bytes = await pdf.file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: bytes }).promise;
       const newPages: PagePreview[] = [];
@@ -40,8 +39,7 @@ export default function PDFaJPGTool() {
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        const ctx = getContext(canvas);
-        await page.render({ canvasContext: ctx, viewport }).promise;
+        await page.render({ canvas, viewport }).promise;
         const url = await new Promise<string>((res, rej) => {
           canvas.toBlob(b => { if (b) res(URL.createObjectURL(b)); else rej(); }, 'image/jpeg', quality / 100);
         });

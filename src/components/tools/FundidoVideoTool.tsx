@@ -84,7 +84,7 @@ export default function FundidoVideoTool() {
 
       try { await ff.exec(args); } catch (err) { console.error('[FundidoVideo] FFmpeg:', err); throw err; }
 
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('archivo vacío');
       try { await ff.deleteFile(inputName); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }

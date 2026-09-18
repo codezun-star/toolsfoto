@@ -4,6 +4,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes, formatReduction } from '@/lib/utils/format';
 import { TrendingDown } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 interface Result { blob: Blob; size: number }
@@ -31,7 +32,7 @@ export default function ComprimirPDFTool() {
       const bytes = await pdf.file.arrayBuffer();
       const doc = await PDFDocument.load(bytes, { ignoreEncryption: true });
       const compressed = await doc.save({ useObjectStreams: true });
-      setResult({ blob: new Blob([compressed], { type: 'application/pdf' }), size: compressed.byteLength });
+      setResult({ blob: new Blob([toBlobPart(compressed)], { type: 'application/pdf' }), size: compressed.byteLength });
     } catch {
       setError('Error al comprimir el PDF. Asegúrate de que no esté protegido con contraseña.');
     } finally {

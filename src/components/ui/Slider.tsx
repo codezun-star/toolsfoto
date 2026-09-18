@@ -1,5 +1,10 @@
 interface Props {
-  label: string;
+  /**
+   * Cabecera con etiqueta y valor. Es opcional porque algunas herramientas
+   * pintan la suya con formato propio (signo, sufijo "x", decimales fijos);
+   * sin `label` el slider va suelto y no se duplica la fila.
+   */
+  label?: string;
   value: number;
   min: number;
   max: number;
@@ -11,12 +16,14 @@ interface Props {
 export default function Slider({ label, value, min, max, step = 1, unit = '', onChange }: Props) {
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <label className="text-sm font-medium text-[var(--color-text)]">{label}</label>
-        <span className="text-sm text-[var(--color-text-secondary)] tabular-nums">
-          {value}{unit}
-        </span>
-      </div>
+      {label && (
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-[var(--color-text)]">{label}</label>
+          <span className="text-sm text-[var(--color-text-secondary)] tabular-nums">
+            {value}{unit}
+          </span>
+        </div>
+      )}
       <input
         type="range"
         min={min}

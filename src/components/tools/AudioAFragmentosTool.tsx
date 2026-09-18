@@ -56,7 +56,7 @@ export default function AudioAFragmentosTool() {
         const start = i * segDuration;
         const outName = `frag${i}.${ext}`;
         await ff.exec(['-i', `input.${ext}`, '-ss', String(start), '-t', String(segDuration), outName]);
-        const data = await ff.readFile(outName) as Uint8Array;
+        const data = await ff.readFile(outName) as Uint8Array<ArrayBuffer>;
         if (!data || data.length === 0) throw new Error(`Fragmento ${i + 1} vacío. Prueba con otro formato de audio.`);
         try { await ff.deleteFile(outName); } catch { /* ignore */ }
         const blob = new Blob([data], { type: mime });

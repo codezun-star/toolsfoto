@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: '¿Por qué se carga PDF.js desde un CDN externo?',
-    a: 'PDF.js necesita un archivo worker para renderizar en segundo plano. Lo cargamos desde la CDN de Cloudflare, que sirve el worker con los headers CORS correctos. El renderizado real ocurre íntegramente en tu navegador; el contenido del PDF no se envía al servidor de la CDN.',
+    a: 'PDF.js necesita un archivo worker para renderizar en segundo plano. Lo servimos desde el propio dominio de ToolsFoto, junto al resto de la web, así que no hay ninguna petición a servidores de terceros. El renderizado ocurre íntegramente en tu navegador y el contenido del PDF no se envía a ningún servidor.',
   },
   {
     q: '¿Funciona con PDFs que contienen solo imágenes escaneadas?',

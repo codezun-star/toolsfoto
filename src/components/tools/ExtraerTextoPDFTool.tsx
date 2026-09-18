@@ -2,10 +2,10 @@ import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { Copy, Download, Check } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
 interface PdfFile { file: File; name: string; size: number }
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 export default function ExtraerTextoPDFTool() {
   const [pdf, setPdf] = useState<PdfFile | null>(null);
@@ -22,8 +22,7 @@ export default function ExtraerTextoPDFTool() {
     setError(null);
     setText('');
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const bytes = await pdf.file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: bytes }).promise;
       const parts: string[] = [];

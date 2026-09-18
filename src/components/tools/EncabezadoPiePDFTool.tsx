@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfEntry { file: File; name: string; size: number }
 
@@ -71,7 +72,7 @@ export default function EncabezadoPiePDFTool() {
       }
 
       const bytes = await doc.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch (err) {

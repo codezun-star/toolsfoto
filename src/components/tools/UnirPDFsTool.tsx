@@ -3,6 +3,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, Upload, Files } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfEntry { id: number; file: File }
 
@@ -45,7 +46,7 @@ export default function UnirPDFsTool() {
         pages.forEach(p => merged.addPage(p));
       }
       const out = await merged.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const a = document.createElement('a'); a.href = url; a.download = 'union.pdf'; a.click();
       revokeURL(url);
     } catch {

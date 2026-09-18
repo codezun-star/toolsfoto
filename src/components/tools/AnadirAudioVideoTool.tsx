@@ -66,7 +66,7 @@ export default function AnadirAudioVideoTool() {
       }
 
       await ff.exec(args);
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo o audio.');
       await ff.deleteFile('video.mp4');
       await ff.deleteFile('audio.mp3');

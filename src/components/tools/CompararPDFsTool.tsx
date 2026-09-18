@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Loader2, Upload } from 'lucide-react';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 interface PdfDoc {
   pdf: { numPages: number; getPage: (n: number) => Promise<unknown> };
@@ -9,13 +9,18 @@ interface PdfDoc {
 }
 
 async function renderPage(pdf: PdfDoc, pageNum: number, scale: number): Promise<string> {
-  const page = await pdf.pdf.getPage(pageNum) as { getViewport: (o: {scale: number}) => {width: number; height: number}; render: (o: object) => {promise: Promise<void>} };
+  // El tipo del render se declara explícitamente: si se deja como `object`,
+  // TypeScript no detecta un cambio de API de pdf.js (fue justo lo que pasó
+  // con `canvasContext` → `canvas` en la v5, y esta llamada se quedó atrás).
+  const page = await pdf.pdf.getPage(pageNum) as {
+    getViewport: (o: { scale: number }) => { width: number; height: number };
+    render: (o: { canvas: HTMLCanvasElement; viewport: { width: number; height: number } }) => { promise: Promise<void> };
+  };
   const vp = page.getViewport({ scale });
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(vp.width);
   canvas.height = Math.round(vp.height);
-  const ctx = canvas.getContext('2d')!;
-  await page.render({ canvasContext: ctx, viewport: vp }).promise;
+  await page.render({ canvas, viewport: vp }).promise;
   return canvas.toDataURL('image/jpeg', 0.85);
 }
 
@@ -26,8 +31,7 @@ function PdfDropZone({ label, onLoad, loaded }: { label: string; onLoad: (name: 
     if (!f.name.toLowerCase().endsWith('.pdf')) return;
     setLoading(true);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await f.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       onLoad(f.name, pdf as PdfDoc['pdf']);
@@ -70,16 +74,25 @@ export default function CompararPDFsTool() {
     }
   }
 
+  // El render de la pareja se dispara desde un efecto, no desde cada carga.
+  // Antes `loadA` leía `docB` (y viceversa) del closure: si los dos PDFs
+  // terminaban de cargar en el mismo ciclo, ambos veían el otro a `null` y no
+  // se renderizaba nada. Con el efecto basta con que ambos estén en el estado.
+  useEffect(() => {
+    if (!docA || !docB) return;
+    setPage(1);
+    renderBoth(1, scale, docA, docB);
+    // `scale` queda fuera a propósito: cambiarlo ya llama a `changeScale`,
+    // y aquí volvería a forzar la página 1.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [docA, docB]);
+
   function loadA(name: string, pdf: PdfDoc['pdf']) {
-    const doc = { pdf, name };
-    setDocA(doc);
-    if (docB) { setPage(1); renderBoth(1, scale, doc, docB); }
+    setDocA({ pdf, name });
   }
 
   function loadB(name: string, pdf: PdfDoc['pdf']) {
-    const doc = { pdf, name };
-    setDocB(doc);
-    if (docA) { setPage(1); renderBoth(1, scale, docA, doc); }
+    setDocB({ pdf, name });
   }
 
   function navigate(delta: number) {

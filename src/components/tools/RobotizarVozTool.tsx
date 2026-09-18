@@ -67,7 +67,7 @@ export default function RobotizarVozTool() {
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       const exitCode = await ff.exec(['-i', `input.${ext}`, '-af', PRESETS[preset]!.filter, `output.${ext}`]);
       if (exitCode !== 0) throw new Error(`FFmpeg terminó con error (código ${exitCode}).`);
-      const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      const data = await ff.readFile(`output.${ext}`) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato (WAV o MP3).');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }

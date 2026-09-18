@@ -39,9 +39,9 @@ export default function LoopAudioTool() {
         console.error('[LoopAudio] Error FFmpeg:', err);
         throw err;
       }
-      const data = (await ff.readFile('output.mp3')) as Uint8Array;
+      const data = (await ff.readFile('output.mp3')) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('vacío');
-      const blob = new Blob([data.buffer], { type: 'audio/mpeg' });
+      const blob = new Blob([data], { type: 'audio/mpeg' });
       try { await ff.deleteFile('input_audio'); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }
       setResultSize(blob.size);

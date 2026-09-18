@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { Download, Loader2, Info } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface Meta {
   title: string;
@@ -70,7 +71,7 @@ export default function MetadatosPDFTool() {
       setProgress(70);
       const bytes = await doc.save();
       setProgress(100);
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

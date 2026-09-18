@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { Eye, EyeOff } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -22,19 +23,24 @@ export default function EliminarPasswordPDFTool() {
     try {
       const { PDFDocument } = await import('pdf-lib');
       const bytes = await pdf.file.arrayBuffer();
-      const doc = await PDFDocument.load(bytes, {
-        password,
-        ignoreEncryption: false,
-      });
+      // pdf-lib NO descifra: `LoadOptions` solo admite `ignoreEncryption`,
+      // `parseSpeed`, `throwOnInvalidObject`, `updateMetadata` y `capNumbers`.
+      // El `password` que se pasaba aquí nunca existió en la API y se ignoraba
+      // en silencio. Se mantiene `ignoreEncryption: false` a propósito: así un
+      // PDF cifrado falla de forma visible en vez de descargar un archivo
+      // corrupto con los streams todavía cifrados.
+      const doc = await PDFDocument.load(bytes, { ignoreEncryption: false });
       const out = await doc.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_sin_contraseña.pdf');
       a.click();
       revokeURL(url);
     } catch {
-      setError('No se pudo desbloquear el PDF. Comprueba que la contraseña sea correcta.');
+      // El mensaje anterior culpaba a la contraseña del usuario, que en
+      // realidad nunca llegaba a usarse.
+      setError('Este PDF está cifrado y no se puede desbloquear en el navegador. La herramienta solo retira restricciones de PDFs que no piden contraseña para abrirse.');
     } finally {
       setLoading(false);
     }

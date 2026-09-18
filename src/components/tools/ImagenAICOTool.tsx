@@ -4,6 +4,7 @@ import { loadImage, revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import ImageUploader from '@/components/ui/ImageUploader';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 const SIZES = [16, 32, 48, 64, 128, 256];
 
@@ -93,7 +94,7 @@ export default function ImagenAICOTool() {
         selectedSizes.map(async (size) => ({ size, data: await canvasToPngBytes(img, size) }))
       );
       const ico = buildICO(pngList);
-      const blob = new Blob([ico], { type: 'image/x-icon' });
+      const blob = new Blob([toBlobPart(ico)], { type: 'image/x-icon' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

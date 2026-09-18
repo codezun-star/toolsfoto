@@ -61,7 +61,7 @@ export default function ConvertirVerticalTool() {
         'output.mp4',
       ]);
 
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }
@@ -125,7 +125,7 @@ export default function ConvertirVerticalTool() {
                 ))}
                 <label className="cursor-pointer">
                   <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="sr-only" />
-                  <div style={{ backgroundColor: bgColor }} className="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: bgColor }}>+</div>
+                  <div style={{ backgroundColor: bgColor }} className="w-8 h-8 rounded-full border-2 border-gray-300 flex items-center justify-center text-xs font-bold text-white">+</div>
                 </label>
               </div>
             </div>

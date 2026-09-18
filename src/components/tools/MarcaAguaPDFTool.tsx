@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 export default function MarcaAguaPDFTool() {
   const [file, setFile] = useState<File | null>(null);
@@ -58,7 +59,7 @@ export default function MarcaAguaPDFTool() {
       }
 
       const bytes = await pdfDoc.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

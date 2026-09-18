@@ -3,6 +3,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { X, FilePlus2, FileText, Image as ImageIcon, ArrowUp, ArrowDown } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface Item { file: File; id: string }
 
@@ -53,7 +54,7 @@ export default function UnirPdfImagenesTool() {
         }
       }
       const outBytes = await out.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([outBytes], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(outBytes)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = 'documento-unido.pdf';

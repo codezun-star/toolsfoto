@@ -40,7 +40,7 @@ export default function BoomerangVideoTool() {
 
       // Build concat list: orig + reversed, repeated loops times
       let listContent = '';
-      await ff.writeFile('orig_copy.mp4', await ff.readFile(`input.${ext}`) as Uint8Array);
+      await ff.writeFile('orig_copy.mp4', await ff.readFile(`input.${ext}`) as Uint8Array<ArrayBuffer>);
       for (let i = 0; i < loops; i++) {
         listContent += `file 'orig_copy.mp4'\nfile 'reversed.mp4'\n`;
       }
@@ -48,7 +48,7 @@ export default function BoomerangVideoTool() {
 
       await ff.exec(['-f', 'concat', '-safe', '0', '-i', 'list.txt', '-c', 'copy', 'output.mp4']);
 
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con un vídeo más corto.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('reversed.mp4'); } catch { /* ignore */ }

@@ -4,6 +4,7 @@ import { createFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 function crc32(data: Uint8Array): number {
   const t = new Uint32Array(256);
@@ -98,7 +99,7 @@ export default function ExtraerFotogramasTool() {
       for (let i = 1; ; i++) {
         const name = `frame_${String(i).padStart(4, '0')}.${ext}`;
         try {
-          const data = await ff.readFile(name) as Uint8Array;
+          const data = await ff.readFile(name) as Uint8Array<ArrayBuffer>;
           files.push({ name, data });
           await ff.deleteFile(name).catch(() => {});
           setProgress(80 + Math.round((i / Math.max(i, 10)) * 20));
@@ -109,7 +110,7 @@ export default function ExtraerFotogramasTool() {
       if (files.length === 0) throw new Error('No se extrajeron fotogramas.');
       setFrameCount(files.length);
       const zip = buildZip(files);
-      const blob = new Blob([zip], { type: 'application/zip' });
+      const blob = new Blob([toBlobPart(zip)], { type: 'application/zip' });
       setZipSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);

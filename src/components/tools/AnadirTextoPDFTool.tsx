@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Plus, Trash2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface TextEntry {
   id: number;
@@ -86,7 +87,7 @@ export default function AnadirTextoPDFTool() {
       }
 
       const bytes = await pdfDoc.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

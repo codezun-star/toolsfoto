@@ -3,8 +3,8 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL, createCanvas, getContext, canvasToBlob } from '@/lib/utils/canvas';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 export default function PdfAImagenLargaTool() {
   const [file, setFile] = useState<File | null>(null);
@@ -23,8 +23,7 @@ export default function PdfAImagenLargaTool() {
     setResult(null);
     setError(null);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const scale = 1.5;
@@ -35,8 +34,7 @@ export default function PdfAImagenLargaTool() {
         const page = await pdf.getPage(i);
         const vp = page.getViewport({ scale });
         const c = createCanvas(vp.width, vp.height);
-        const ctx = getContext(c);
-        await page.render({ canvasContext: ctx, viewport: vp }).promise;
+        await page.render({ canvas: c, viewport: vp }).promise;
         canvases.push(c);
         maxW = Math.max(maxW, c.width);
         totalH += c.height;

@@ -21,7 +21,7 @@ const faqs = [
   },
   {
     q: '¿Por qué la conversión usa PDF.js de un CDN externo?',
-    a: 'PDF.js necesita un archivo worker para el renderizado en segundo plano. Se carga desde la CDN de Cloudflare con los headers CORS correctos. El renderizado de tu PDF ocurre íntegramente en tu navegador; el contenido del PDF no se envía a ningún servidor.',
+    a: 'PDF.js necesita un archivo worker para el renderizado en segundo plano. Se sirve desde el propio dominio de ToolsFoto, sin pedir nada a servidores de terceros. El renderizado de tu PDF ocurre íntegramente en tu navegador y su contenido no se envía a ningún servidor.',
   },
   {
     q: '¿Los PNGs resultantes tienen fondo transparente?',

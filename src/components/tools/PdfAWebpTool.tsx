@@ -3,8 +3,8 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 interface PageResult { url: string; size: number; page: number }
 
@@ -25,8 +25,7 @@ export default function PdfAWebpTool() {
     setResults([]);
     setError(null);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const out: PageResult[] = [];
@@ -36,8 +35,7 @@ export default function PdfAWebpTool() {
         const canvas = document.createElement('canvas');
         canvas.width = vp.width;
         canvas.height = vp.height;
-        const ctx = canvas.getContext('2d')!;
-        await page.render({ canvasContext: ctx, viewport: vp }).promise;
+        await page.render({ canvas, viewport: vp }).promise;
         const blob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), 'image/webp', quality / 100));
         out.push({ url: URL.createObjectURL(blob), size: blob.size, page: i });
       }

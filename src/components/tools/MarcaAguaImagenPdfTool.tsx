@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { revokeURL } from '@/lib/utils/canvas';
 import { ImagePlus, X } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -55,7 +56,7 @@ export default function MarcaAguaImagenPdfTool() {
         page.drawImage(img, { x, y, width: w, height: h, opacity: opacity / 100 });
       }
       const outBytes = await doc.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([outBytes], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(outBytes)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_marca.pdf');

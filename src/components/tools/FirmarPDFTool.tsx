@@ -3,6 +3,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Trash2 } from 'lucide-react';
 import { revokeURL, getContext } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 export default function FirmarPDFTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -116,7 +117,7 @@ export default function FirmarPDFTool() {
       page.drawImage(pngImage, { x, y, width: dims.width, height: dims.height });
 
       const bytes = await pdfDoc.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

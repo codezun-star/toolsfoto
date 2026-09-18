@@ -116,13 +116,13 @@ export default function MarcaAguaVideoTool() {
         'output.mp4',
       ]);
 
-      const data = (await ff.readFile('output.mp4')) as Uint8Array;
+      const data = (await ff.readFile('output.mp4')) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       for (const name of ['input.mp4', 'watermark.png', 'output.mp4']) {
         try { await ff.deleteFile(name); } catch { /* ignore */ }
       }
 
-      const blob = new Blob([data.buffer], { type: 'video/mp4' });
+      const blob = new Blob([data], { type: 'video/mp4' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

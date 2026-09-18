@@ -61,7 +61,7 @@ export default function UnirVideosTool() {
       const listContent = listLines.join('\n');
       await ff.writeFile('list.txt', new TextEncoder().encode(listContent));
       await ff.exec(['-f', 'concat', '-safe', '0', '-i', 'list.txt', '-c:v', 'libx264', '-crf', '23', '-c:a', 'aac', 'output.mp4']);
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de vídeo.');
       await ff.deleteFile('list.txt');
       await ff.deleteFile('output.mp4');

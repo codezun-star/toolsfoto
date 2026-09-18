@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Upload, Download, Loader2 } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 // WOFF format builder (uncompressed tables)
 // Spec: https://www.w3.org/TR/WOFF/
@@ -214,7 +215,7 @@ export default function ConvertirFuenteTool() {
       }
 
       if (!resultBytes) throw new Error('Error en la conversión.');
-      const blob = new Blob([resultBytes], { type: mime });
+      const blob = new Blob([toBlobPart(resultBytes)], { type: mime });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch (e) {

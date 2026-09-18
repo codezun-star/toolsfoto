@@ -50,7 +50,7 @@ export default function ReemplazarSegmentoTool() {
       // Mute (volume=0) the selected segment, keep the rest
       const filter = `volume=enable='between(t,${startTime},${endTime})':volume=0`;
       await ff.exec(['-i', `input.${ext}`, '-af', filter, `output.${ext}`]);
-      const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      const data = await ff.readFile(`output.${ext}`) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }

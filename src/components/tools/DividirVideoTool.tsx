@@ -56,9 +56,9 @@ export default function DividirVideoTool() {
       for (let i = 0; i < parts + 4; i++) {
         const name = `part_${String(i).padStart(3, '0')}.mp4`;
         try {
-          const data = (await ff.readFile(name)) as Uint8Array;
+          const data = (await ff.readFile(name)) as Uint8Array<ArrayBuffer>;
           if (data && data.length > 0) {
-            out.push({ url: URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' })), size: data.length, index: i });
+            out.push({ url: URL.createObjectURL(new Blob([data], { type: 'video/mp4' })), size: data.length, index: i });
           }
           try { await ff.deleteFile(name); } catch { /* ignore */ }
         } catch {

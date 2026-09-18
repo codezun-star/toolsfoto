@@ -3,6 +3,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 type PageSize = 'a4' | 'letter' | 'auto';
 
@@ -74,7 +75,7 @@ export default function JPGaPDFTool() {
       }
 
       const out = await pdf.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([out], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const a = document.createElement('a'); a.href = url; a.download = 'imagenes.pdf'; a.click();
       revokeURL(url);
     } catch {

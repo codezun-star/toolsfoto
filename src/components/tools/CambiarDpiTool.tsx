@@ -3,6 +3,7 @@ import ImageUploader from '@/components/ui/ImageUploader';
 import { useImageUpload } from '@/hooks/useImageUpload';
 import { loadImage, createCanvas, getContext, canvasToBlob } from '@/lib/utils/canvas';
 import { Download } from 'lucide-react';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 // ── CRC32 (para chunk pHYs de PNG) ──────────────────────────────
 const CRC_TABLE = (() => {
@@ -96,7 +97,7 @@ export default function CambiarDpiTool() {
       const blob = await canvasToBlob(canvas, isPng ? 'image/png' : 'image/jpeg', 0.95);
       const buf = await blob.arrayBuffer();
       const patched = isPng ? setPngDpi(buf, dpi) : setJpegDpi(buf, dpi);
-      const outBlob = new Blob([patched.buffer], { type: isPng ? 'image/png' : 'image/jpeg' });
+      const outBlob = new Blob([toBlobPart(patched)], { type: isPng ? 'image/png' : 'image/jpeg' });
       const url = URL.createObjectURL(outBlob);
       const a = document.createElement('a');
       a.href = url;

@@ -4,8 +4,12 @@ import { formatBytes } from '@/lib/utils/format';
 
 const MAX_PDF_SIZE = 100 * 1024 * 1024; // 100 MB
 
-interface PdfFile {
-  file: File;
+/**
+ * Lo único que la tarjeta de archivo necesita mostrar. Lo cumplen por igual un
+ * `File` nativo y el objeto `{ file, name, size }` que guardan algunas
+ * herramientas, así que ambas formas valen sin envoltorios en cada tool.
+ */
+interface UploadedPdf {
   name: string;
   size: number;
 }
@@ -14,7 +18,7 @@ interface Props {
   label?: string;
   onFile: (file: File) => void;
   onClear: () => void;
-  current: PdfFile | null;
+  current: UploadedPdf | null;
   error?: string | null;
   multiple?: false;
 }

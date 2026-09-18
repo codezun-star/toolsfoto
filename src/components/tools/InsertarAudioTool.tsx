@@ -83,7 +83,7 @@ export default function InsertarAudioTool() {
         'output.mp3',
       ]);
 
-      const data = await ff.readFile('output.mp3') as Uint8Array;
+      const data = await ff.readFile('output.mp3') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`main.${extM}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`insert.${extI}`); } catch { /* ignore */ }

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Copy, CheckCircle2 } from 'lucide-react';
+import type { ReactElement } from 'react';
 
 export default function RegexTesterTool() {
   const [pattern, setPattern] = useState('');
@@ -30,9 +31,9 @@ export default function RegexTesterTool() {
     }
   }, [pattern, flagStr, testText, flags.g]);
 
-  function highlightText(): JSX.Element[] {
+  function highlightText(): ReactElement[] {
     if (!result || result.matches.length === 0 || result.error) return [<span key={0}>{testText}</span>];
-    const parts: JSX.Element[] = [];
+    const parts: ReactElement[] = [];
     let last = 0;
     result.matches.forEach((m, i) => {
       if (m.index > last) parts.push(<span key={`t${i}`}>{testText.slice(last, m.index)}</span>);

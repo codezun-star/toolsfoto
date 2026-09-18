@@ -112,7 +112,7 @@ export default function FotogramasAVideoTool() {
 
       try { await ff.exec(args); } catch (err) { console.error('[FotogramasAVideo] FFmpeg:', err); throw err; }
 
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('archivo vacío');
 
       for (let i = 0; i < images.length; i++) {

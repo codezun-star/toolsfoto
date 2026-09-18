@@ -47,7 +47,7 @@ export default function RevertirVideoTool() {
         throw err;
       }
 
-      const data = await ff.readFile('output.mp4') as Uint8Array;
+      const data = await ff.readFile('output.mp4') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con un clip más corto.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile('output.mp4'); } catch { /* ignore */ }

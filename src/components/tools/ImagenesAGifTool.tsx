@@ -78,7 +78,7 @@ export default function ImagenesAGifTool() {
         '-loop', '0', 'output.gif',
       ]);
 
-      const data = await ff.readFile('output.gif') as Uint8Array;
+      const data = await ff.readFile('output.gif') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un GIF vacío. Prueba con imágenes más pequeñas.');
       await ff.deleteFile('list.txt');
       await ff.deleteFile('output.gif');

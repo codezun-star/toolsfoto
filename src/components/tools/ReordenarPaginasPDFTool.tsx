@@ -3,8 +3,9 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, ChevronUp, ChevronDown } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 interface PageThumb { index: number; url: string }
 
@@ -34,8 +35,7 @@ export default function ReordenarPaginasPDFTool() {
     setLoading(true);
     setError(null);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await f.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const pages: PageThumb[] = [];
@@ -45,7 +45,7 @@ export default function ReordenarPaginasPDFTool() {
         const canvas = document.createElement('canvas');
         canvas.width = vp.width;
         canvas.height = vp.height;
-        await page.render({ canvasContext: canvas.getContext('2d')!, viewport: vp }).promise;
+        await page.render({ canvas, viewport: vp }).promise;
         const blob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), 'image/jpeg', 0.7));
         pages.push({ index: i - 1, url: URL.createObjectURL(blob) });
       }
@@ -82,7 +82,7 @@ export default function ReordenarPaginasPDFTool() {
       const copied = await dst.copyPages(src, order);
       copied.forEach((p) => dst.addPage(p));
       const bytes = await dst.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

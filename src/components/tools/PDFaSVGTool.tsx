@@ -3,8 +3,9 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 function crc32(data: Uint8Array): number {
   const table = new Uint32Array(256);
@@ -59,13 +60,17 @@ function buildZip(files: { name: string; data: Uint8Array }[]): Uint8Array {
 }
 
 async function pageToPngBytes(page: unknown): Promise<Uint8Array> {
-  const p = page as { getViewport: (o: {scale: number}) => {width: number; height: number}; render: (o: object) => {promise: Promise<void>} };
+  // `render` se tipa explícitamente: con `object` TypeScript no avisa si cambia
+  // la API de pdf.js, que es como esta llamada se quedó en `canvasContext`.
+  const p = page as {
+    getViewport: (o: { scale: number }) => { width: number; height: number };
+    render: (o: { canvas: HTMLCanvasElement; viewport: { width: number; height: number } }) => { promise: Promise<void> };
+  };
   const vp = p.getViewport({ scale: 1.5 });
   const canvas = document.createElement('canvas');
   canvas.width = Math.round(vp.width);
   canvas.height = Math.round(vp.height);
-  const ctx = canvas.getContext('2d')!;
-  await p.render({ canvasContext: ctx, viewport: vp }).promise;
+  await p.render({ canvas, viewport: vp }).promise;
   return new Promise((res) => canvas.toBlob((b) => b!.arrayBuffer().then((ab) => res(new Uint8Array(ab))), 'image/png'));
 }
 
@@ -97,8 +102,7 @@ export default function PDFaSVGTool() {
     setSvgPages([]);
     setDone(false);
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const buf = await file.arrayBuffer();
       const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
       const pages: { svg: string; width: number; height: number }[] = [];
@@ -136,7 +140,7 @@ export default function PDFaSVGTool() {
       data: new TextEncoder().encode(p.svg),
     }));
     const zip = buildZip(zipFiles);
-    const blob = new Blob([zip], { type: 'application/zip' });
+    const blob = new Blob([toBlobPart(zip)], { type: 'application/zip' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

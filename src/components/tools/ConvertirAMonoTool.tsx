@@ -48,7 +48,7 @@ export default function ConvertirAMonoTool() {
         throw err;
       }
 
-      const data = (await ff.readFile(`output.${ext}`)) as Uint8Array;
+      const data = (await ff.readFile(`output.${ext}`)) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }

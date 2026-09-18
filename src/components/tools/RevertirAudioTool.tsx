@@ -40,7 +40,7 @@ export default function RevertirAudioTool() {
       const ext = getOutputExt(audio.name);
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       await ff.exec(['-i', `input.${ext}`, '-af', 'areverse', `output.${ext}`]);
-      const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      const data = await ff.readFile(`output.${ext}`) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       await ff.deleteFile(`input.${ext}`);
       await ff.deleteFile(`output.${ext}`);

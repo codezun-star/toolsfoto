@@ -63,7 +63,7 @@ export default function CompresorAudioTool() {
       await ff.writeFile(`input.${ext}`, new Uint8Array(buf));
       const filter = `acompressor=threshold=${threshold}dB:ratio=${ratio}:attack=${attack}:release=${release}:makeup=${makeup}dB`;
       await ff.exec(['-i', `input.${ext}`, '-af', filter, `output.${ext}`]);
-      const data = await ff.readFile(`output.${ext}`) as Uint8Array;
+      const data = await ff.readFile(`output.${ext}`) as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Prueba con otro formato de audio.');
       try { await ff.deleteFile(`input.${ext}`); } catch { /* ignore */ }
       try { await ff.deleteFile(`output.${ext}`); } catch { /* ignore */ }

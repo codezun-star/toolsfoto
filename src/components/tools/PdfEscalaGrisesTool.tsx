@@ -3,8 +3,9 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
+import { loadPdfjs } from '@/lib/utils/pdfjs';
 
-const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 export default function PdfEscalaGrisesTool() {
   const [file, setFile] = useState<File | null>(null);
@@ -24,8 +25,7 @@ export default function PdfEscalaGrisesTool() {
     setProcessing(true);
     setProgress('');
     try {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN;
+      const pdfjsLib = await loadPdfjs();
       const { PDFDocument } = await import('pdf-lib');
       const buf = await file.arrayBuffer();
       const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
@@ -38,7 +38,7 @@ export default function PdfEscalaGrisesTool() {
         canvas.width = vp.width;
         canvas.height = vp.height;
         const ctx = canvas.getContext('2d')!;
-        await page.render({ canvasContext: ctx, viewport: vp }).promise;
+        await page.render({ canvas, viewport: vp }).promise;
         const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const d = imgData.data;
         for (let p = 0; p < d.length; p += 4) {
@@ -53,7 +53,7 @@ export default function PdfEscalaGrisesTool() {
         newPage.drawImage(embedded, { x: 0, y: 0, width: canvas.width, height: canvas.height });
       }
       const bytes = await out.save();
-      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const blob = new Blob([toBlobPart(bytes)], { type: 'application/pdf' });
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {

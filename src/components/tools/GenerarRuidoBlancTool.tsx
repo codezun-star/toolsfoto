@@ -44,7 +44,7 @@ export default function GenerarRuidoBlancTool() {
         '-b:a', '192k',
         'output.mp3',
       ]);
-      const data = await ff.readFile('output.mp3') as Uint8Array;
+      const data = await ff.readFile('output.mp3') as Uint8Array<ArrayBuffer>;
       if (!data || data.length === 0) throw new Error('El procesador produjo un archivo vacío. Intenta con una duración más corta.');
       try { await ff.deleteFile('output.mp3'); } catch { /* ignore */ }
       const blob = new Blob([data], { type: 'audio/mpeg' });

@@ -4,6 +4,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import Slider from '@/components/ui/Slider';
 import { ImagePlus } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { toBlobPart } from '@/lib/utils/bytes';
 
 interface PdfFile { file: File; name: string; size: number }
 
@@ -74,7 +75,7 @@ export default function AnadirImagenPDFTool() {
       page.drawImage(embeddedImg, { x, y, width: imgW, height: imgH });
 
       const outBytes = await doc.save({ useObjectStreams: true });
-      const url = URL.createObjectURL(new Blob([outBytes], { type: 'application/pdf' }));
+      const url = URL.createObjectURL(new Blob([toBlobPart(outBytes)], { type: 'application/pdf' }));
       const a = document.createElement('a');
       a.href = url;
       a.download = pdf.name.replace(/\.pdf$/i, '_con_imagen.pdf');

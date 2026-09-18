@@ -53,7 +53,7 @@
 | `@imgly/background-removal` | Eliminación de fondo con IA (ISNet, ~50 MB) | Dinámica `import()` |
 | `html2canvas` | Captura de HTML como imagen | Dinámica `import()` |
 | `pdf-lib` | Merge, split, rotate, protect, extract pages en PDF | Dinámica `import()` |
-| `pdfjs-dist` | Renderizado y extracción de texto de PDFs | Dinámica `import()` + worker CDN |
+| `pdfjs-dist` | Renderizado y extracción de texto de PDFs | Dinámica vía `loadPdfjs()` — build `legacy` + worker auto-hospedado |
 | `@ffmpeg/ffmpeg` + `@ffmpeg/util` | Procesamiento vídeo/audio client-side con WASM | Dinámica vía `createFFmpeg()` |
 | Canvas API nativa | Todas las herramientas de imagen y la mayoría de developer | — |
 
@@ -148,11 +148,37 @@ El filtro `drawtext` requiere fontconfig y fuentes del sistema. En el entorno WA
 - `runFFmpeg(ff, inputFile, inputName, args, outputName)` — escribe el archivo, ejecuta, lee el resultado, limpia. Usar para herramientas de **1 input, 1 output**.
 - Para herramientas con múltiples inputs/outputs (unir, mezclar, GIF…), usar `ff.exec()` directamente pero gestionar manualmente `writeFile`/`readFile`/`deleteFile` y el bloque try/catch con `console.error`.
 
-#### PDF.js worker CDN
+#### PDF.js — cargar SIEMPRE con `loadPdfjs()`
+
+`src/lib/utils/pdfjs.ts` expone `loadPdfjs()`, la única forma admitida de usar
+pdfjs en el proyecto. **Nunca importar `pdfjs-dist` a pelo ni asignar
+`GlobalWorkerOptions.workerSrc` a mano.**
+
+```ts
+import { loadPdfjs } from '@/lib/utils/pdfjs';
+const pdfjsLib = await loadPdfjs();
 ```
-https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js
-```
-Asignar antes de usar: `pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN`
+
+Dos cosas críticas que resuelve, y por las que las 10 herramientas de pdfjs
+estuvieron rotas:
+
+1. **La versión del worker debe coincidir con la de la API.** pdf.js compara
+   ambas y lanza `The API version "X" does not match the Worker version "Y"`.
+   Antes cada tool fijaba `workerSrc` a un worker 3.11.174 de cdnjs mientras el
+   bundle traía la 5.x de `package.json`. Ahora el worker se importa del propio
+   paquete con `?url`, lo empaqueta Vite y su versión es siempre la instalada.
+2. **Se usa la build `legacy`** (`pdfjs-dist/legacy/build/pdf.mjs`). La build
+   moderna de la 5.x usa `Map.prototype.getOrInsertComputed`, que ni Chrome 141
+   implementa: el render revienta con `getOrInsertComputed is not a function`
+   en cualquier navegador actual. La `legacy` viene transpilada y con polyfills.
+
+Ya no hay dependencia de CDN externa para pdfjs: el worker se sirve desde el
+propio dominio.
+
+**API de render (pdf.js 5.x):** `page.render({ canvas, viewport })`. El antiguo
+`{ canvasContext, viewport }` ya no vale. Ojo con tipar el `page` como `object`
+o `unknown` en helpers: TypeScript no detecta el cambio de API y la llamada se
+queda atrás en silencio (pasó en `CompararPDFsTool` y `PDFaSVGTool`).
 
 ---
 
@@ -205,6 +231,8 @@ toolsfoto-v2/
 │   │   │   ├── canvas.ts           # loadImage(), canvasToBlob(), createCanvas(), getContext(), revokeURL()
 │   │   │   ├── download.ts         # triggerDownload(), getOutputFilename()
 │   │   │   ├── ffmpeg.ts           # createFFmpeg(onProgress?), runFFmpeg(ff, file, name, args, out)
+│   │   │   ├── pdfjs.ts            # loadPdfjs() — única forma admitida de cargar pdfjs
+│   │   │   ├── bytes.ts            # toBlobPart() — Uint8Array de pdf-lib/FFmpeg → BlobPart
 │   │   │   └── format.ts           # formatBytes(), formatDimensions(), formatReduction(), mimeToExtension()
 │   │   └── constants/
 │   │       ├── tools.ts            # Metadata de las herramientas — ToolMeta + ToolDomain
@@ -358,7 +386,9 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 #### Herramientas de PDF
 - Usar `PdfUploader.tsx` (componente standalone, no hook).
 - Gestionar descarga directamente: `URL.createObjectURL` → `<a>.click()` → `URL.revokeObjectURL`.
-- `pdf-lib` y `pdfjs-dist` siempre con import dinámico (`await import(...)`).
+- `pdf-lib` siempre con import dinámico (`await import('pdf-lib')`).
+- `pdfjs-dist` **solo** a través de `loadPdfjs()` de `@/lib/utils/pdfjs` (ver la sección de PDF.js).
+- Al construir el `Blob` del resultado usar `toBlobPart(bytes)` de `@/lib/utils/bytes`, nunca `new Blob([bytes.buffer])`.
 
 #### Herramientas de vídeo y audio
 - Usar `VideoUploader.tsx` (vídeo) o `AudioUploader.tsx` (audio) para la subida.
