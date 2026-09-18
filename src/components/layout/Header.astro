@@ -12,11 +12,11 @@ const currentPath = Astro.url.pathname;
     <!-- Desktop nav -->
     <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]">
       <a href="/" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Inicio</a>
-      <a href="/#imagen" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
-      <a href="/#pdf" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
-      <a href="/#video" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
-      <a href="/#audio" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
-      <a href="/#developer" class="px-3 py-1.5 rounded-lg hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
+      <a href="/imagen" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/imagen' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Imágenes</a>
+      <a href="/pdf" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/pdf' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>PDF</a>
+      <a href="/video" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/video' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Vídeo</a>
+      <a href="/audio" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/audio' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Audio</a>
+      <a href="/developer" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/developer' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Developer</a>
       <a href="/blog" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/blog') ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Blog</a>
     </nav>
 
@@ -47,11 +47,11 @@ const currentPath = Astro.url.pathname;
   <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] bg-white">
     <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1 text-sm font-medium">
       <a href="/" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Inicio</a>
-      <a href="/#imagen" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
-      <a href="/#pdf" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
-      <a href="/#video" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
-      <a href="/#audio" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
-      <a href="/#developer" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
+      <a href="/imagen" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
+      <a href="/pdf" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
+      <a href="/video" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
+      <a href="/audio" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
+      <a href="/developer" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
       <a href="/blog" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Blog</a>
     </nav>
   </div>

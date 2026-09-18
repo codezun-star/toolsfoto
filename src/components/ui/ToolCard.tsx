@@ -192,13 +192,19 @@ const ICONS: Record<string, React.ReactNode> = {
 
 interface Props {
   tool: ToolMeta;
+  /**
+   * Clases extra para la card. `CategoryGrid` la usa para ocultar con CSS las
+   * herramientas fuera de la página actual: así el `<a href>` de las 241
+   * herramientas sigue presente en el HTML y los rastreadores lo encuentran.
+   */
+  className?: string;
 }
 
-export default function ToolCard({ tool }: Props) {
+export default function ToolCard({ tool, className = '' }: Props) {
   return (
     <a
       href={`/${tool.slug}`}
-      className="group flex flex-col gap-3 p-5 bg-white rounded-xl border border-[var(--color-border)] hover:border-[var(--color-tools-border)] hover:shadow-sm transition-all"
+      className={`group flex flex-col gap-3 p-5 bg-white rounded-xl border border-[var(--color-border)] hover:border-[var(--color-tools-border)] hover:shadow-sm transition-all ${className}`}
     >
       <div className="flex items-start justify-between">
         <div className="p-2.5 rounded-lg bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]">

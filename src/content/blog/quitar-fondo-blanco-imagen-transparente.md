@@ -1,6 +1,6 @@
 ---
 titulo: "Cómo quitar el fondo blanco de una imagen y dejarlo transparente"
-descripcion: "Los fondos blancos lisos no necesitan inteligencia artificial: se recortan por color en segundos. Te explico cuándo usar cada método, qué hacen la tolerancia y el suavizado, y por qué el resultado debe ser PNG."
+descripcion: "Los fondos blancos lisos no necesitan IA: se recortan por color en segundos. Qué hacen la tolerancia y el suavizado, y por qué el resultado debe ser PNG."
 categoria: "tutoriales"
 fecha: "2026-08-06"
 keywords:

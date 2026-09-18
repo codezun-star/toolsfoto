@@ -1,6 +1,6 @@
 ---
 titulo: "Unir varios vídeos en uno online: cómo concatenar clips sin perder calidad"
-descripcion: "Juntar dos o más vídeos en un único archivo parece simple, pero la compatibilidad de formatos marca la diferencia entre un resultado nítido o uno lleno de artefactos. Te explico cómo hacerlo bien."
+descripcion: "Juntar dos o más vídeos parece simple, pero la compatibilidad de formatos decide entre un resultado nítido o uno lleno de artefactos. Cómo hacerlo bien."
 categoria: "tutoriales"
 fecha: "2026-05-29"
 keywords:

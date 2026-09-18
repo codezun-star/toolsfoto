@@ -242,7 +242,7 @@ El blog usa el **Content Layer API de Astro 6** con archivos `.md` en `src/conte
 |---|---|
 | `src/content.config.ts` | Schema Zod con `glob` loader (Astro 6) |
 | `src/pages/blog/index.astro` | Listado de artículos ordenados por fecha |
-| `src/pages/blog/[slug].astro` | Template individual con JSON-LD Article, prose styles, compartir y CTA |
+| `src/pages/blog/[slug].astro` | Template individual con JSON-LD unificado en un `@graph` (`Organization`, `WebSite`, `WebPage`, `Article`, `BreadcrumbList`), prose styles, compartir y CTA |
 | `src/content/blog/*.md` | Artículos — el nombre del archivo ES la URL |
 
 ### Schema de artículo (`src/content.config.ts`)
@@ -253,6 +253,7 @@ El blog usa el **Content Layer API de Astro 6** con archivos `.md` en `src/conte
   descripcion?: string,          // para SEO y cards del listado
   categoria: 'herramientas' | 'tips' | 'tutoriales' | 'actualizaciones' | 'general',
   fecha: string,                 // ISO "YYYY-MM-DD" — solo para ordenación, no aparece en la URL
+  actualizado?: string,          // ISO "YYYY-MM-DD" — última revisión; alimenta `dateModified`. Nunca se renderiza
   keywords: string[],            // para meta keywords y JSON-LD Article
   autor: string,                 // default: 'Equipo ToolsFoto'
   publicado: boolean,            // default: true — false oculta el artículo sin borrar el archivo
@@ -459,6 +460,7 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 **`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
 - Recibe `domain: ToolDomain` como prop, filtra `TOOLS` internamente.
 - Muestra 24 herramientas por página (`PER_PAGE = 24`).
+- **Renderiza SIEMPRE las cards de todas las herramientas del dominio y oculta con CSS (`hidden`) las que quedan fuera de la página actual. Nunca recortar el array con `slice()`:** los botones de paginación no son enlaces, así que si el HTML solo contuviera las 24 primeras cards el resto de la categoría se quedaría sin ningún `<a href>` que los rastreadores puedan seguir. Con el recorte activo había 50 herramientas sin un solo enlace interno en todo el sitio. `ToolCard` acepta `className` justamente para esto.
 - Los controles de paginación (Anterior / números / Siguiente) solo se renderizan si hay más de una página.
 - Al cambiar de página hace `window.scrollTo({ top: 0 })` para volver al inicio.
 - Se monta con `client:load` en cada página de categoría.
@@ -554,7 +556,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 302 páginas HTML estáticas** (herramientas + home + legales + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 303 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -583,3 +585,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-07-10 | Sitio sin anuncios: Ezoic eliminado por completo (borrado `EzoicScripts.astro`, quitados sus includes de las 10 plantillas y el redirect `/ads.txt` de `public/_redirects`). Monetag permanece comentado (scripts de `AdScripts.astro` + metas de verificación en los 5 heads) por si se reactiva más adelante. Los headers COOP/COEP siguen retirados (regla vigente: no reactivarlos). |
 | 2026-08-28 | Publicidad Adsterra en las 302 páginas. Nuevo `public/ads/banner.html` (host aislado: cada banner iframe en su propio `window` para que no se pisen los `atOptions` globales de la red) y nuevos `src/components/ads/AdSlot.astro` y `AdNative.astro`. `AdScripts.astro` pasa de 3 scripts comentados a la capa global de anuncios: social bar/popunder, estilos, loader con `IntersectionObserver`, anchor inferior descartable (`sessionStorage`) y 2 rails laterales a partir de 1560px. Huecos: `ToolLayout` (leaderboard + rectangle + nativo), home (leaderboard + nativo + rectangle), las 5 categorías (leaderboard + nativo), blog listado (leaderboard + nativo), artículo (leaderboard + rectangle in-content tras el 2.º H2 + nativo) y `LegalLayout` (leaderboard). `Disallow: /ads/` en `robots.txt`; `privacidad.astro` y `cookies.astro` actualizadas — antes afirmaban que no había publicidad ni cookies publicitarias. |
 | 2026-08-06 | +2 herramientas y +2 artículos. Imagen 59→60: `/quitar-fondo-blanco` (`QuitarFondoBlancoTool.tsx`) — recorte por color con `getImageData`, distancia máxima por canal RGB, banda de suavizado del borde y vista previa sobre patrón a cuadros; exporta PNG. Developer 42→43: `/generador-cron` (`GeneradorCronTool.tsx`) — parser de expresiones cron de 5 campos (`*`, rangos, listas, pasos y nombres `MON`/`JAN`), traducción a español, validación por campo y cálculo de las 5 próximas ejecuciones. Artículos: `quitar-fondo-blanco-imagen-transparente` y `como-funcionan-las-expresiones-cron`. Nuevos iconos `Eraser` y `CalendarClock` en `ToolCard.tsx`. Total: 241 herramientas, 302 páginas. El sitemap y `/llms.txt` se regeneran solos en el build; el JSON-LD lo aporta `ToolLayout`. |
+| 2026-09-18 | Auditoría SEO de todo el sitio y correcciones. (1) **50 herramientas no tenían ni un solo enlace interno en el HTML servido**: `CategoryGrid` recortaba el array con `slice()` y solo publicaba las 24 cards de la primera página, mientras la paginación son botones, no enlaces. Ahora renderiza todas las cards y oculta con CSS las de otras páginas (`ToolCard` acepta `className`); la UX no cambia (24 visibles) y las 241 herramientas quedan enlazadas. (2) El nav del header apuntaba a anclas del home (`/#imagen`) en vez de a las páginas de categoría reales: 10 enlaces × 303 páginas repuntados a `/imagen`, `/pdf`, `/video`, `/audio` y `/developer`, con estado activo. (3) Recuentos obsoletos en las descriptions de las 5 categorías (imagen decía 48 de 60, PDF 32 de 43, vídeo 31 de 42, audio 42 de 53, developer 31 de 43): ahora se derivan de `TOOLS` en `seo.ts` y no pueden volver a desfasarse. (4) 141 meta descriptions superaban el corte de Google (~160); se recortó la coletilla genérica repetida ("Completamente gratis.", "Sin registro, sin subir archivos.", …) y se reescribieron a mano las que no encajaban en el patrón: las 252 quedan entre 70 y 160 caracteres, media 138, sin duplicados. (5) Nueva `src/pages/404.astro` (noindex, fuera del sitemap) con salidas a las 5 categorías y a las herramientas más usadas. (6) `public/favicon.ico` (16/32/48) — los navegadores lo piden solo y devolvía 404. (7) `<meta name="robots">` con `max-snippet:-1` y `max-image-preview:large` en las 5 categorías, el listado del blog y los 49 artículos, que no lo llevaban; `/contacto` declara `index, follow` explícito. (8) Blog: JSON-LD unificado en un `@graph` con `dateModified`, `inLanguage`, `articleSection`, `image` e `isPartOf`, y `publisher.logo` pasa de `favicon.svg` a `favicon-192.png` (Google no admite SVG en `logo`); nuevo campo opcional `actualizado` en el frontmatter; el listado publica `Blog` + `ItemList` con los 49 artículos. (9) `LegalLayout` emite `@graph` con `WebPage`/`ContactPage` y `BreadcrumbList` — `/contacto`, que es indexable, no tenía ningún dato estructurado. (10) `theme-color` y `preconnect`/`dns-prefetch` a Google Tag en las 11 plantillas con head propio. Verificado sobre el HTML construido: 303 páginas, 0 herramientas huérfanas, 307 bloques JSON-LD que parsean, 0 títulos/descriptions/canonicals duplicados. |

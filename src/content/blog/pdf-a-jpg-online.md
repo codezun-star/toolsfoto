@@ -1,6 +1,6 @@
 ---
 titulo: "Convertir PDF a JPG o PNG: cuándo elegir cada formato y cómo hacerlo online"
-descripcion: "Extraer las páginas de un PDF como imágenes es útil para previsualizaciones, presentaciones y edición. Te explico la diferencia entre JPG y PNG para este caso y cómo conseguir la resolución correcta."
+descripcion: "Extraer las páginas de un PDF como imágenes, la diferencia entre JPG y PNG para este caso y cómo conseguir la resolución correcta."
 categoria: "tutoriales"
 fecha: "2026-05-28"
 keywords:

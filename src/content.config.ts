@@ -10,6 +10,9 @@ const blog = defineCollection({
       .enum(['herramientas', 'tips', 'tutoriales', 'actualizaciones', 'general'])
       .default('general'),
     fecha: z.string(),
+    // Fecha de última revisión (ISO "YYYY-MM-DD"). Alimenta `dateModified`
+    // del schema Article. Si se omite se usa `fecha`. Nunca se renderiza.
+    actualizado: z.string().optional(),
     keywords: z.array(z.string()),
     autor: z.string().default('Equipo ToolsFoto'),
     publicado: z.boolean().default(true),

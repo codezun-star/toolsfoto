@@ -1,6 +1,6 @@
 ---
 titulo: "Firmar un PDF online: cómo añadir tu firma sin imprimir ni escanear"
-descripcion: "La firma manuscrita sobre papel escaneado ya no es el único camino. Te explico cómo firmar un PDF directamente online, qué diferencia hay entre firma digital y firma electrónica, y cuándo cada una es válida."
+descripcion: "Cómo firmar un PDF directamente online, qué diferencia hay entre firma digital y firma electrónica, y cuándo cada una es válida."
 categoria: "tutoriales"
 fecha: "2026-05-29"
 keywords:

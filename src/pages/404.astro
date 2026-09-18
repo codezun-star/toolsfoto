@@ -1,0 +1,112 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import ToolCard from '@/components/ui/ToolCard';
+import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { SITE } from '@/lib/constants/seo';
+import '@/styles/global.css';
+
+// Las más buscadas de cada dominio: dan una salida útil a quien aterriza aquí
+// desde un enlace roto o una URL antigua.
+const DESTACADAS = ['comprimir', 'redimensionar', 'unir-pdfs', 'comprimir-pdf', 'comprimir-video', 'cortar-audio', 'generar-qr', 'formatear-json'];
+const sugeridas = DESTACADAS.map(s => TOOL_BY_SLUG[s]).filter(Boolean);
+
+const categorias = [
+  { href: '/imagen',    label: 'Imágenes',  n: TOOLS.filter(t => t.domain === 'imagen').length },
+  { href: '/pdf',       label: 'PDF',       n: TOOLS.filter(t => t.domain === 'pdf').length },
+  { href: '/video',     label: 'Vídeo',     n: TOOLS.filter(t => t.domain === 'video').length },
+  { href: '/audio',     label: 'Audio',     n: TOOLS.filter(t => t.domain === 'audio').length },
+  { href: '/developer', label: 'Developer', n: TOOLS.filter(t => t.domain === 'developer').length },
+];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Página no encontrada (404) | ToolsFoto</title>
+    <meta name="description" content="La página que buscas no existe o ha cambiado de dirección. Explora las 241 herramientas gratuitas de ToolsFoto para imagen, PDF, vídeo, audio y developers." />
+    <meta name="robots" content="noindex, follow" />
+
+    <meta property="og:title" content="Página no encontrada (404) | ToolsFoto" />
+    <meta property="og:description" content="La página que buscas no existe o ha cambiado de dirección." />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ToolsFoto" />
+    <meta property="og:locale" content="es_ES" />
+
+    <meta name="theme-color" content="#E84827" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JDPXVTKVCL');
+    </script>
+  </head>
+  <body>
+    <Header />
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-16">
+      <p class="text-sm font-mono font-semibold text-[var(--color-accent)] mb-3">Error 404</p>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">
+        Esta página no existe
+      </h1>
+      <p class="text-[var(--color-text-secondary)] mt-3 text-lg max-w-2xl leading-relaxed">
+        El enlace que has seguido está roto o la dirección ha cambiado. Ninguna herramienta se ha
+        perdido: sigue habiendo {TOOLS.length} disponibles, todas gratis y sin subir archivos.
+      </p>
+
+      <div class="flex flex-wrap gap-2 mt-8">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
+        >
+          Ir al inicio
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+        <a
+          href="/blog"
+          class="inline-flex items-center px-5 py-2.5 rounded-lg bg-white border border-[var(--color-border)] text-sm font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors"
+        >
+          Leer el blog
+        </a>
+      </div>
+
+      <section class="mt-14">
+        <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">Explora por categoría</h2>
+        <div class="flex flex-wrap gap-2">
+          {categorias.map(c => (
+            <a
+              href={c.href}
+              class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-[var(--color-border)] text-sm font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:border-[var(--color-tools-border)] transition-colors"
+            >
+              {c.label}
+              <span class="text-xs font-mono text-[var(--color-text-muted)]">{c.n}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="mt-14">
+        <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">Las más usadas</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {sugeridas.map(t => <ToolCard tool={t} client:load />)}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>

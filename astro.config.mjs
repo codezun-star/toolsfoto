@@ -14,9 +14,9 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      // Excluir del sitemap las páginas legales (noindex, follow)
+      // Fuera del sitemap: las páginas legales y la 404, todas noindex
       filter: (page) =>
-        !['/privacidad', '/terminos', '/cookies', '/aviso-legal'].some(
+        !['/privacidad', '/terminos', '/cookies', '/aviso-legal', '/404'].some(
           (p) => page === `https://toolsfoto.com${p}` || page === `https://toolsfoto.com${p}/`,
         ),
     }),

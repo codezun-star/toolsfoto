@@ -1,6 +1,6 @@
 ---
 titulo: "Cómo comprimir imágenes sin perder calidad visible"
-descripcion: "Reducir el peso de una imagen hasta un 90% es posible sin que el ojo humano note diferencia. Te explico qué ocurre internamente, qué formatos usar y cómo aplicarlo con ToolsFoto en segundos."
+descripcion: "Reducir el peso de una imagen hasta un 90% sin que el ojo note diferencia. Qué ocurre internamente, qué formatos usar y cómo aplicarlo en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
 keywords:
