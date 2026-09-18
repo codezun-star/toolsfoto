@@ -3,6 +3,7 @@ titulo: "Rotar un vídeo online: corregir la orientación sin perder calidad"
 descripcion: "Grabaste el vídeo con el móvil en vertical y se ve de lado en el ordenador. O necesitas girar 180° una grabación de cámara IP. Te explico cómo corregirlo online sin re-encodificar."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["rotar-video", "voltear-video", "recortar-video", "recortar-area-video"]
 keywords:
   - "rotar vídeo online gratis"
   - "girar vídeo online"

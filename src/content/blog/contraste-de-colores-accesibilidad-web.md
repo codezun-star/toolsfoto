@@ -3,6 +3,7 @@ titulo: "Contraste de colores: la guía para cumplir WCAG en tu web"
 descripcion: "Un buen contraste hace tu web legible para todos y es un requisito de accesibilidad. Te explico qué son los niveles AA y AAA y cómo comprobar tus colores en segundos."
 categoria: "tutoriales"
 fecha: "2026-06-09"
+herramientas: ["contraste-color", "convertir-color", "paleta", "sombra-css"]
 keywords:
   - "contraste de colores WCAG"
   - "accesibilidad web contraste"

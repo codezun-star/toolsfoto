@@ -3,6 +3,7 @@ titulo: "Añadir marca de agua a tus fotos: protege tu trabajo sin complicacione
 descripcion: "Una marca de agua disuade el uso no autorizado de tus imágenes sin arruinar su presentación. Te explico cómo colocarla bien — posición, opacidad, tamaño — y cómo hacerlo online en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["marca-de-agua", "marca-agua-pdf", "marca-agua-video"]
 keywords:
   - "añadir marca de agua a fotos online"
   - "poner watermark imagen gratis"

@@ -3,6 +3,7 @@ titulo: "Dividir un PDF online: separa páginas o extrae fragmentos sin Acrobat"
 descripcion: "Dividir un PDF en partes o extraer páginas concretas es más útil de lo que parece. Te explico los casos de uso y cómo hacerlo gratis desde el navegador."
 categoria: "tutoriales"
 fecha: "2026-05-30"
+herramientas: ["dividir-pdf", "eliminar-paginas-pdf", "reordenar-paginas-pdf", "dividir-cada-n-paginas"]
 keywords:
   - "dividir PDF online gratis"
   - "separar páginas PDF"

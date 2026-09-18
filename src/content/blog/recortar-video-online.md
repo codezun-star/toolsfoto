@@ -3,6 +3,7 @@ titulo: "Recortar un vídeo online: cómo cortar un fragmento sin re-encodificar
 descripcion: "Cortar los primeros diez segundos de un vídeo debería llevar diez segundos, no diez minutos. Te explico cómo hacerlo online y por qué el stream copy preserva la calidad exacta del original."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["recortar-video", "silenciar-video", "recortar"]
 keywords:
   - "recortar video online gratis"
   - "cortar video online sin instalar"

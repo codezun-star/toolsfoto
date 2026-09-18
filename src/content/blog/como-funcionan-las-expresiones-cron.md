@@ -3,6 +3,7 @@ titulo: "Cómo funcionan las expresiones cron (y los errores que se pagan caro)"
 descripcion: "Cinco campos, cuatro símbolos y una excepción que sorprende a casi todo el mundo. Guía práctica para leer y escribir expresiones cron sin que una tarea acabe ejecutándose 1.440 veces al día."
 categoria: "tutoriales"
 fecha: "2026-08-06"
+herramientas: ["generador-cron"]
 keywords:
   - "expresiones cron explicadas"
   - "sintaxis crontab"

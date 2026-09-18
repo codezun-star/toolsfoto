@@ -3,6 +3,7 @@ titulo: "Convertir audio online: guía de formatos y cuándo usar cada uno"
 descripcion: "MP3, WAV, FLAC, AAC, OGG, M4A: cada formato de audio tiene un caso de uso óptimo. Te explico las diferencias y cómo convertir entre ellos online sin instalar programas."
 categoria: "tips"
 fecha: "2026-05-28"
+herramientas: ["convertir-audio", "convertir-a-flac", "convertir"]
 keywords:
   - "convertir audio online gratis"
   - "MP3 a WAV online"

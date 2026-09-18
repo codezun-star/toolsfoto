@@ -3,6 +3,7 @@ titulo: "Código morse: cómo traducir texto y descifrar mensajes"
 descripcion: "El código morse sigue vivo en radioafición, emergencias y como pasatiempo. Te explico cómo funciona, la convención de espacios y barras, y cómo traducir en ambos sentidos."
 categoria: "tutoriales"
 fecha: "2026-06-11"
+herramientas: ["codigo-morse", "texto-a-binario", "base64-texto", "conversor-base"]
 keywords:
   - "traductor código morse"
   - "traducir texto a morse"

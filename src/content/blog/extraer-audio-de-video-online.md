@@ -3,6 +3,7 @@ titulo: "Cómo extraer el audio de un vídeo online (MP3, WAV, AAC)"
 descripcion: "Convertir un vídeo en audio te permite guardar la conferencia, el podcast en vídeo o la música como archivo de audio. Te explico cómo hacerlo desde el navegador sin instalar nada."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["extraer-audio", "video-a-mp3", "audio-a-mp3", "silenciar-video"]
 keywords:
   - "extraer audio de video online"
   - "convertir video a MP3 online"

@@ -3,6 +3,7 @@ titulo: "Cómo crear sombras CSS con box-shadow (guía práctica)"
 descripcion: "Las sombras dan profundidad a tus interfaces. Te explico cómo funciona box-shadow, sus parámetros y cómo conseguir sombras suaves y realistas con un generador visual."
 categoria: "tutoriales"
 fecha: "2026-06-10"
+herramientas: ["sombra-css", "gradiente-css", "convertir-color", "contraste-color"]
 keywords:
   - "generador box-shadow CSS"
   - "crear sombras CSS"

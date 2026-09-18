@@ -3,6 +3,7 @@ titulo: "Cómo cortar audio online: recorta, divide y une fragmentos sin instala
 descripcion: "Cortar un archivo de audio al segundo exacto es posible desde el navegador. Te enseño a recortar, dividir y unir pistas de audio online sin instalar programas."
 categoria: "tutoriales"
 fecha: "2026-05-30"
+herramientas: ["cortar-audio", "convertir-audio", "unir-audios", "audio-a-fragmentos"]
 keywords:
   - "cortar audio online gratis"
   - "recortar MP3 online sin instalar"

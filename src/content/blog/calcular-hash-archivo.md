@@ -3,6 +3,7 @@ titulo: "Calcular el hash de un archivo: MD5, SHA-1 y SHA-256 explicados"
 descripcion: "Los hashes son la forma más fiable de verificar que un archivo no ha sido modificado o corrompido. Te explico las diferencias entre MD5, SHA-1 y SHA-256 y cuándo usar cada uno."
 categoria: "herramientas"
 fecha: "2026-05-30"
+herramientas: ["calcular-hash"]
 keywords:
   - "calcular hash archivo online"
   - "MD5 SHA256 archivo online"

@@ -3,6 +3,7 @@ titulo: "Qué es el DPI de una imagen y cómo cambiarlo a 300 para imprimir"
 descripcion: "El DPI no cambia cómo se ve tu imagen en pantalla, pero es clave al imprimir. Te explico qué significa, por qué te piden 300 DPI y cómo cambiarlo sin alterar los píxeles."
 categoria: "tutoriales"
 fecha: "2026-06-06"
+herramientas: ["cambiar-dpi", "ampliar-imagen"]
 keywords:
   - "qué es el DPI de una imagen"
   - "cambiar DPI imagen a 300"

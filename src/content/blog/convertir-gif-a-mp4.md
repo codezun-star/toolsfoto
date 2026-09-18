@@ -3,6 +3,7 @@ titulo: "Por qué deberías convertir tus GIFs a vídeo MP4 (y cómo hacerlo gra
 descripcion: "Los GIFs son hasta 10 veces más pesados que un MP4 equivalente. Te explicamos por qué el formato GIF está obsoleto y cómo convertirlo a vídeo en segundos."
 categoria: "herramientas"
 fecha: "2026-06-04"
+herramientas: ["gif-a-video", "video-a-gif", "comprimir-gif"]
 keywords:
   - "convertir gif a mp4"
   - "gif a video online gratis"

@@ -3,6 +3,7 @@ titulo: "Cómo unir varios PDF en uno solo sin programas ni registro"
 descripcion: "Combinar varios PDF en un único documento son tres clics. Cómo hacerlo en el navegador, en qué orden quedan las páginas y qué hacer con el tamaño."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["unir-pdfs", "comprimir-pdf", "dividir-pdf", "reordenar-paginas-pdf"]
 keywords:
   - "unir varios PDF en uno solo"
   - "combinar PDF gratis online"

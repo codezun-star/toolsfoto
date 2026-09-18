@@ -3,6 +3,7 @@ titulo: "Cómo quitar el fondo blanco de una imagen y dejarlo transparente"
 descripcion: "Los fondos blancos lisos no necesitan IA: se recortan por color en segundos. Qué hacen la tolerancia y el suavizado, y por qué el resultado debe ser PNG."
 categoria: "tutoriales"
 fecha: "2026-08-06"
+herramientas: ["quitar-fondo-blanco", "eliminar-fondo", "imagen-a-webp"]
 keywords:
   - "quitar fondo blanco imagen"
   - "fondo transparente png"

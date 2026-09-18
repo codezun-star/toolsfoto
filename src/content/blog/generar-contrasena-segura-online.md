@@ -3,6 +3,7 @@ titulo: "Generar contraseñas seguras: por qué tu método actual probablemente 
 descripcion: "Las contraseñas débiles siguen siendo la causa número uno de cuentas comprometidas. Te explico qué hace segura a una contraseña, cómo generarlas correctamente y cómo gestionarlas."
 categoria: "tips"
 fecha: "2026-05-30"
+herramientas: ["generador-contrasenas", "calcular-hash"]
 keywords:
   - "generar contraseña segura online"
   - "crear contraseña fuerte gratis"

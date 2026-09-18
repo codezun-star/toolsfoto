@@ -3,6 +3,7 @@ titulo: "Cómo convertir M4A a MP3 (notas de voz y audio de Apple)"
 descripcion: "El M4A es el formato de audio de Apple y no se reproduce en todas partes. Te explico cómo pasarlo a MP3 universal en segundos, ideal para notas de voz del iPhone."
 categoria: "tutoriales"
 fecha: "2026-06-04"
+herramientas: ["m4a-a-mp3", "wav-a-mp3", "flac-a-mp3", "audio-a-mp3"]
 keywords:
   - "convertir M4A a MP3"
   - "pasar M4A a MP3 online"

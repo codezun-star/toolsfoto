@@ -3,6 +3,7 @@ titulo: "Cómo añadir música o audio a un vídeo gratis y sin programas"
 descripcion: "Añadir una canción, una voz en off o efectos de sonido a un vídeo es cuestión de minutos. Te explico las diferentes opciones según lo que necesites conseguir."
 categoria: "tutoriales"
 fecha: "2026-06-04"
+herramientas: ["anadir-audio-video", "ajustar-volumen-video", "convertir-audio", "fotogramas-a-video"]
 keywords:
   - "añadir musica a un video online gratis"
   - "poner musica a un video"

@@ -3,6 +3,7 @@ titulo: "Comprimir un PDF: cómo reducir su tamaño sin perder texto ni imágene
 descripcion: "Un PDF puede pasar de 20 MB a 2 MB sin que el texto pierda un píxel. Te explico qué lo hace pesado, qué ocurre durante la compresión y cómo hacerlo gratis online."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["comprimir-pdf", "eliminar-paginas-pdf", "extraer-paginas-pdf", "comprimir"]
 keywords:
   - "comprimir PDF online"
   - "reducir tamaño PDF gratis"

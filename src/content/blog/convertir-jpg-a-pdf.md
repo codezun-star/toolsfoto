@@ -3,6 +3,7 @@ titulo: "Convertir JPG a PDF online: cómo juntar varias fotos en un documento"
 descripcion: "Convertir una o varias imágenes a PDF es más sencillo de lo que parece. Te explico cómo hacerlo online, cuándo interesa un PDF de una sola página y cuándo un multi-página."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["jpg-a-pdf", "reordenar-paginas-pdf", "comprimir", "comprimir-pdf"]
 keywords:
   - "convertir JPG a PDF online"
   - "juntar fotos en PDF gratis"

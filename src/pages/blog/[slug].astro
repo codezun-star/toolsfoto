@@ -5,6 +5,8 @@ import AdSlot from '@/components/ads/AdSlot.astro';
 import AdNative from '@/components/ads/AdNative.astro';
 import '@/styles/global.css';
 import { SITE } from '@/lib/constants/seo';
+import { TOOL_BY_SLUG } from '@/lib/constants/tools';
+import ToolCard from '@/components/ui/ToolCard';
 import { getCollection, getEntry, render } from 'astro:content';
 import { jsonLd } from '@/lib/utils/jsonld';
 
@@ -27,6 +29,18 @@ const categorias: Record<string, string> = {
   actualizaciones: 'Novedades',
   general:         'General',
 };
+
+// Herramientas relacionadas del frontmatter. Un slug inexistente rompe el
+// build a propósito: es preferible a publicar un enlace roto en 49 artículos.
+const relacionadas = (post.data.herramientas ?? []).map((slug) => {
+  const tool = TOOL_BY_SLUG[slug];
+  if (!tool) {
+    throw new Error(
+      `El artículo "${post.id}" referencia la herramienta "${slug}", que no existe en TOOLS.`,
+    );
+  }
+  return tool;
+});
 
 const canonical = `${SITE.url}/blog/${post.id}`;
 // `actualizado` solo si el artículo se ha revisado; si no, la fecha original.
@@ -266,6 +280,17 @@ const pageDesc  = post.data.descripcion ?? '';
 
       <!-- Banner nativo: uno por página -->
       <AdNative />
+
+      {relacionadas.length > 0 && (
+        <section class="mt-10">
+          <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">
+            Herramientas para hacerlo
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {relacionadas.map(t => <ToolCard tool={t} client:load />)}
+          </div>
+        </section>
+      )}
 
       <!-- CTA tools -->
       <div class="mt-8 border border-[var(--color-text)] rounded-xl p-6">

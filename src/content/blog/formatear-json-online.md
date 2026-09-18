@@ -3,6 +3,7 @@ titulo: "Formatear y validar JSON online: cómo depurar JSON sin herramientas ad
 descripcion: "JSON mal formateado o con errores de sintaxis rompe APIs y configuraciones. Te explico los errores más comunes, cómo detectarlos y cómo formatear JSON de forma legible en segundos."
 categoria: "herramientas"
 fecha: "2026-05-30"
+herramientas: ["formatear-json", "jwt-decoder", "minificador-js", "minificador-css"]
 keywords:
   - "formatear JSON online gratis"
   - "validar JSON online"

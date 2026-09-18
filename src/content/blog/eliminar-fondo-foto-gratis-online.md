@@ -3,6 +3,7 @@ titulo: "Eliminar el fondo de una foto gratis online con IA"
 descripcion: "Quitar el fondo de una imagen con IA tarda menos de 10 segundos. Te explico cómo funciona, para qué es útil y cómo conseguir el mejor resultado en casos difíciles."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["eliminar-fondo", "ampliar-imagen"]
 keywords:
   - "eliminar fondo foto gratis"
   - "quitar fondo imagen online"

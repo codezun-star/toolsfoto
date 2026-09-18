@@ -3,6 +3,7 @@ titulo: "Cómo convertir PNG a JPG online (y cuándo hacerlo al revés)"
 descripcion: "Pasar de PNG a JPG reduce el peso un 60–80%. Pero hay casos en que convertir JPG a PNG tiene más sentido. Te explico cuándo elegir cada opción y cómo hacerlo en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["png-a-jpg", "jpg-a-png", "imagen-a-webp", "comprimir"]
 keywords:
   - "convertir PNG a JPG online"
   - "pasar PNG a JPG"

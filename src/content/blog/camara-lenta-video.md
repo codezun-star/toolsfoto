@@ -3,6 +3,7 @@ titulo: "Cómo hacer un vídeo a cámara lenta (slow motion) sin aplicaciones"
 descripcion: "El efecto de cámara lenta no necesita ni un iPhone con modo Slo-Mo ni software de pago. Puedes aplicarlo a cualquier vídeo desde el navegador en segundos."
 categoria: "tutoriales"
 fecha: "2026-06-04"
+herramientas: ["cambiar-velocidad", "recortar-video", "convertir-video"]
 keywords:
   - "cámara lenta video online"
   - "slow motion video gratis"

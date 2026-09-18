@@ -3,6 +3,7 @@ titulo: "Cómo hacer una foto carnet digital en casa gratis"
 descripcion: "Las fotos carnet tienen medidas exactas según el trámite: DNI, pasaporte, visado EE.UU. o carnet de conducir. Te explico los tamaños oficiales y cómo generarlas gratis en el navegador."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["foto-carnet", "eliminar-fondo", "cambiar-fondo"]
 keywords:
   - "foto carnet digital online gratis"
   - "medidas foto carnet DNI pasaporte"

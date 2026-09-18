@@ -3,6 +3,7 @@ titulo: "Extraer texto de un PDF online sin programas ni copia-pega manual"
 descripcion: "Sacar el texto de un PDF puede ser sencillo o imposible según cómo fue creado. Te explico la diferencia entre PDF nativo y escaneado, y cómo extraer el contenido en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["extraer-texto-pdf", "pdf-a-jpg", "indice-pdf", "comprimir-pdf"]
 keywords:
   - "extraer texto de PDF online gratis"
   - "copiar texto de PDF sin programa"

@@ -3,6 +3,7 @@ titulo: "Cómo comprimir imágenes sin perder calidad visible"
 descripcion: "Reducir el peso de una imagen hasta un 90% sin que el ojo note diferencia. Qué ocurre internamente, qué formatos usar y cómo aplicarlo en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["comprimir", "comprimir-objetivo", "redimensionar", "imagen-a-webp"]
 keywords:
   - "comprimir imágenes sin perder calidad"
   - "reducir tamaño foto"

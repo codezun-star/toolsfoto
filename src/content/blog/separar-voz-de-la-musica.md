@@ -3,6 +3,7 @@ titulo: "Separar la voz de la música online: cómo funciona y qué esperar"
 descripcion: "Las herramientas de separación de stems usan IA para aislar la voz de una canción del instrumental. Te explico cómo funciona la tecnología, qué calidad esperar y cuándo vale la pena usarla."
 categoria: "herramientas"
 fecha: "2026-05-30"
+herramientas: ["separar-voz"]
 keywords:
   - "separar voz música online gratis"
   - "extraer vocal de canción"

@@ -3,6 +3,7 @@ titulo: "Crear un código QR gratis: tipos, usos y cómo generarlo en segundos"
 descripcion: "Los códigos QR enlazan el mundo físico con el digital. Te explico qué tipos existen, para qué sirve cada uno y cómo generar el tuyo sin registro."
 categoria: "tutoriales"
 fecha: "2026-05-31"
+herramientas: ["generar-qr", "imagen-a-base64"]
 keywords:
   - "crear codigo QR gratis"
   - "generar QR online sin registro"

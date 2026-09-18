@@ -3,6 +3,7 @@ titulo: "Normalizar el volumen del audio online: por qué importa y cómo hacerl
 descripcion: "Un podcast donde algunos episodios suenan mucho más alto que otros, o una mezcla de canciones con volúmenes dispares, se soluciona con la normalización. Te explico qué es y cómo aplicarla."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["normalizar-audio", "cambiar-volumen"]
 keywords:
   - "normalizar audio online"
   - "igualar volumen audio gratis"

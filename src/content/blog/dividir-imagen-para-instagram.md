@@ -3,6 +3,7 @@ titulo: "Cómo dividir una imagen para un feed en mosaico de Instagram"
 descripcion: "El truco del feed en cuadrícula consiste en partir una imagen grande en varias publicaciones. Te explico cómo dividirla en 3x3 y en qué orden subirla para que encaje perfecta."
 categoria: "tutoriales"
 fecha: "2026-06-07"
+herramientas: ["dividir-imagen", "redimensionar-redes", "mosaico"]
 keywords:
   - "dividir imagen para Instagram"
   - "feed en mosaico Instagram"

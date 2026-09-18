@@ -3,6 +3,7 @@ titulo: "Convertir imágenes a WebP: el formato que reduce el peso sin sacrifica
 descripcion: "WebP es compatible con todos los navegadores actuales y reduce el peso de las imágenes un 25–40% respecto a JPG y PNG. Te explico cuándo vale la pena el cambio y cómo convertir en un clic."
 categoria: "tips"
 fecha: "2026-05-28"
+herramientas: ["imagen-a-webp", "redimensionar", "convertir"]
 keywords:
   - "convertir imagen a WebP online"
   - "imagen a WebP gratis"

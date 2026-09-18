@@ -3,6 +3,7 @@ titulo: "Redimensionar imágenes online: cuándo cambiar el tamaño y cuándo co
 descripcion: "Redimensionar y comprimir son dos operaciones distintas que se confunden con frecuencia. Te explico la diferencia, cuándo usar cada una y cómo redimensionar sin perder calidad."
 categoria: "tips"
 fecha: "2026-05-30"
+herramientas: ["redimensionar", "redimensionar-redes", "comprimir", "comprimir-objetivo"]
 keywords:
   - "redimensionar imagen online gratis"
   - "cambiar tamaño imagen online"

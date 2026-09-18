@@ -3,6 +3,7 @@ titulo: "Comprimir un vídeo sin perder calidad visual: guía práctica"
 descripcion: "Reducir el peso de un vídeo sin que se note es posible si sabes qué parámetros tocar. Te explico el proceso y cómo hacerlo desde el navegador con FFmpeg sin instalar nada."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["comprimir-video", "convertir-video", "recortar-video", "silenciar-video"]
 keywords:
   - "comprimir vídeo sin perder calidad"
   - "reducir tamaño video online gratis"

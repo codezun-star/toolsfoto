@@ -3,6 +3,7 @@ titulo: "Unir varios vídeos en uno online: cómo concatenar clips sin perder ca
 descripcion: "Juntar dos o más vídeos parece simple, pero la compatibilidad de formatos decide entre un resultado nítido o uno lleno de artefactos. Cómo hacerlo bien."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["unir-videos", "cambiar-resolucion-video", "convertir-video", "unir-audios"]
 keywords:
   - "unir vídeos online gratis"
   - "juntar videos online"

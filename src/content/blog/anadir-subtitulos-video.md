@@ -3,6 +3,7 @@ titulo: "Añadir subtítulos a un vídeo online: formatos, tiempos y buenas prá
 descripcion: "Los subtítulos mejoran la accesibilidad, el SEO de vídeos y el consumo sin sonido. Te explico cómo funcionan los formatos SRT y VTT y cómo incrustarlos en tu vídeo online."
 categoria: "tutoriales"
 fecha: "2026-05-29"
+herramientas: ["anadir-subtitulos", "transcribir-audio"]
 keywords:
   - "añadir subtítulos a vídeo online"
   - "incrustar subtítulos MP4 online"

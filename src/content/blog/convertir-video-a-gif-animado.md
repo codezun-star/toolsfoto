@@ -3,6 +3,7 @@ titulo: "Cómo convertir un vídeo a GIF animado online"
 descripcion: "Un GIF pesa más que un vídeo pero se reproduce en cualquier app sin botón de play. Te explico cuándo vale la pena convertir y cómo hacerlo con resultados de calidad."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["video-a-gif", "convertir", "convertir-video"]
 keywords:
   - "convertir video a GIF online"
   - "video a GIF animado gratis"

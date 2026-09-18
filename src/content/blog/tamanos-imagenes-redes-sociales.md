@@ -3,6 +3,7 @@ titulo: "Tamaños de imagen para redes sociales: la guía de dimensiones que no 
 descripcion: "Instagram, TikTok, Facebook, LinkedIn, X, YouTube: cada plataforma tiene sus propias especificaciones de imagen. Te doy las dimensiones correctas y los ratios que tienes que conocer."
 categoria: "tips"
 fecha: "2026-05-30"
+herramientas: ["redimensionar-redes", "thumbnail-youtube"]
 keywords:
   - "tamaños imagen redes sociales"
   - "dimensiones foto Instagram Facebook"

@@ -3,6 +3,7 @@ titulo: "Proteger un PDF con contraseña: cómo funciona y cuándo es suficiente
 descripcion: "Añadir contraseña a un PDF evita que cualquiera lo abra sin permiso. Pero hay distintos niveles de protección. Te explico la diferencia y cómo aplicarla online en segundos."
 categoria: "tutoriales"
 fecha: "2026-05-28"
+herramientas: ["proteger-pdf", "generador-contrasenas", "eliminar-password-pdf", "marca-agua-pdf"]
 keywords:
   - "proteger PDF con contraseña online"
   - "añadir contraseña a PDF gratis"

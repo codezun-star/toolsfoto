@@ -3,6 +3,7 @@ titulo: "Cómo imprimir varias páginas de un PDF en una sola hoja"
 descripcion: "Imprimir 2, 4 o 6 páginas por hoja ahorra papel y tinta. Te explico cómo combinarlas en un solo PDF listo para imprimir, sin instalar programas ni subir archivos."
 categoria: "tutoriales"
 fecha: "2026-06-08"
+herramientas: ["n-up-pdf", "paginas-pares-impares", "comprimir-pdf", "unir-pdfs"]
 keywords:
   - "imprimir varias páginas por hoja PDF"
   - "2 páginas por hoja PDF"

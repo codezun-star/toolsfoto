@@ -3,6 +3,7 @@ titulo: "Cómo convertir un vídeo a MP3 (solo el audio)"
 descripcion: "Extrae el audio de cualquier vídeo y guárdalo en MP3 para escucharlo donde quieras. Te explico cuándo conviene, qué bitrate elegir y cómo hacerlo de forma privada en el navegador."
 categoria: "tutoriales"
 fecha: "2026-06-03"
+herramientas: ["video-a-mp3", "audio-a-wav", "convertir-audio", "convertir"]
 keywords:
   - "convertir vídeo a MP3"
   - "extraer audio de un vídeo"

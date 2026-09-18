@@ -3,6 +3,7 @@ titulo: "Cómo convertir WAV a MP3 y reducir el peso hasta un 90%"
 descripcion: "Un WAV puede ocupar 10 MB por minuto. Convertirlo a MP3 reduce drásticamente el tamaño con una pérdida de calidad mínima. Te explico cuándo hacerlo y qué bitrate elegir."
 categoria: "tutoriales"
 fecha: "2026-06-05"
+herramientas: ["wav-a-mp3", "audio-a-wav", "convertir"]
 keywords:
   - "convertir WAV a MP3"
   - "pasar WAV a MP3 online"

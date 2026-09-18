@@ -3,6 +3,7 @@ titulo: "Eliminar los metadatos EXIF de tus fotos: qué revela tu cámara sin qu
 descripcion: "Cada foto que tomas lleva metadatos EXIF con tu ubicación GPS, el modelo de tu teléfono y la fecha exacta. Te explico qué son, qué riesgos implican y cómo borrarlos antes de publicar."
 categoria: "tips"
 fecha: "2026-05-29"
+herramientas: ["eliminar-exif", "comprimir", "redimensionar"]
 keywords:
   - "eliminar metadatos EXIF fotos"
   - "borrar EXIF imagen online"

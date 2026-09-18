@@ -3,6 +3,7 @@ titulo: "Cómo convertir MOV a MP4 sin perder calidad"
 descripcion: "Los iPhone graban en MOV y muchos dispositivos no lo reproducen. Te explico por qué convertir a MP4 y cómo hacerlo en el navegador, sin subir tus vídeos a ningún servidor."
 categoria: "tutoriales"
 fecha: "2026-06-02"
+herramientas: ["mov-a-mp4", "avi-a-mp4", "mkv-a-mp4", "webm-a-mp4"]
 keywords:
   - "convertir MOV a MP4"
   - "pasar vídeo de iPhone a MP4"

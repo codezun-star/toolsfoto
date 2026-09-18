@@ -3,6 +3,7 @@ titulo: "Cómo quitar el audio de un vídeo (sin programas, gratis y online)"
 descripcion: "Silenciar un vídeo o separar su pista de audio es más sencillo de lo que parece. Te explico cuándo hacerlo y cómo hacerlo en segundos desde el navegador."
 categoria: "tutoriales"
 fecha: "2026-06-04"
+herramientas: ["silenciar-video", "anadir-audio-video", "ajustar-volumen-video"]
 keywords:
   - "quitar audio de un video"
   - "silenciar video online gratis"

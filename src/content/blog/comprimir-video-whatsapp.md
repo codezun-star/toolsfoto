@@ -3,6 +3,7 @@ titulo: "Cómo comprimir un vídeo para enviarlo por WhatsApp o Telegram"
 descripcion: "WhatsApp destroza la calidad de tus vídeos al enviarlos. Aprende a comprimirlos tú mismo antes de enviar para controlar el resultado y superar el límite de tamaño."
 categoria: "tutoriales"
 fecha: "2026-06-04"
+herramientas: ["comprimir-video", "recortar-video", "cambiar-resolucion-video", "comprimir"]
 keywords:
   - "comprimir video whatsapp"
   - "enviar video whatsapp sin perder calidad"

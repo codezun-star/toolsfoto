@@ -305,7 +305,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
 
   // ── Nuevas herramientas de imagen ────────────────────────────
   espejo: {
-    title: 'Voltear imagen online gratis — espejo horizontal y vertical | ToolsFoto',
+    title: 'Voltear imagen: espejo horizontal y vertical | ToolsFoto',
     description: 'Voltea o refleja tu imagen en espejo horizontal, vertical o en ambos ejes. Preview instantáneo, sin registro, sin subir archivos. 100% gratis en el navegador.',
     canonical: 'https://toolsfoto.com/espejo',
   },
@@ -320,7 +320,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/redimensionar-redes',
   },
   'efecto-vintage': {
-    title: 'Efecto vintage a fotos online gratis — sepia, retro, polaroid | ToolsFoto',
+    title: 'Efecto vintage a fotos: sepia, retro y polaroid | ToolsFoto',
     description: 'Aplica efectos vintage profesionales a tus fotos: sepia, vintage clásico, efecto cine, polaroid y noir. Slider de intensidad ajustable.',
     canonical: 'https://toolsfoto.com/efecto-vintage',
   },
@@ -483,7 +483,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/efecto-boceto',
   },
   'cambiar-fondo': {
-    title: 'Cambiar fondo de imagen PNG online gratis — e-commerce y diseño | ToolsFoto',
+    title: 'Cambiar fondo de imagen PNG para e-commerce | ToolsFoto',
     description: 'Rellena el fondo de PNGs transparentes con cualquier color sólido: blanco para e-commerce, color corporativo o el tono exacto de tu marca.',
     canonical: 'https://toolsfoto.com/cambiar-fondo',
   },
@@ -523,7 +523,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/recortar-area-video',
   },
   'cambiar-resolucion-video': {
-    title: 'Cambiar resolución de vídeo online gratis — 1080p 720p 480p | ToolsFoto',
+    title: 'Cambiar resolución de vídeo: 1080p, 720p y 480p | ToolsFoto',
     description: 'Escala tu vídeo a 4K, 1080p, 720p, 480p, 360p o resolución personalizada. Mantiene la proporción. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/cambiar-resolucion-video',
   },
@@ -568,7 +568,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/convertir-timestamp',
   },
   'minificador-html': {
-    title: 'Minificador HTML online gratis — comprimir HTML al instante | ToolsFoto',
+    title: 'Minificador HTML: comprimir HTML al instante | ToolsFoto',
     description: 'Minifica HTML eliminando comentarios, espacios y saltos de línea. También formatea HTML comprimido y muestra el porcentaje de reducción.',
     canonical: 'https://toolsfoto.com/minificador-html',
   },
@@ -580,7 +580,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/generador-contrasenas',
   },
   'lorem-ipsum': {
-    title: 'Generador de Lorem Ipsum online gratis — párrafos y palabras | ToolsFoto',
+    title: 'Generador de Lorem Ipsum: párrafos y palabras | ToolsFoto',
     description: 'Genera texto Lorem Ipsum en párrafos, frases o palabras. Cantidad ajustable, descarga como .txt. Perfecto para maquetas y prototipos.',
     canonical: 'https://toolsfoto.com/lorem-ipsum',
   },
@@ -590,7 +590,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/gradiente-css',
   },
   'minificador-js': {
-    title: 'Minificador JavaScript online gratis — comprimir JS al instante | ToolsFoto',
+    title: 'Minificador JavaScript: comprimir JS al instante | ToolsFoto',
     description: 'Minifica JavaScript eliminando comentarios y espacios. También formatea código comprimido y muestra el porcentaje de reducción.',
     canonical: 'https://toolsfoto.com/minificador-js',
   },
@@ -621,7 +621,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/nitidez',
   },
   'ajustar-niveles': {
-    title: 'Ajustar niveles de imagen online gratis — punto negro, blanco y gamma | ToolsFoto',
+    title: 'Ajustar niveles de imagen: negro, blanco y gamma | ToolsFoto',
     description: 'Corrige la exposición: ajusta punto negro, punto blanco y gamma en fotos oscuras, sobreexpuestas o con bajo contraste. Ideal para escaneos y producto.',
     canonical: 'https://toolsfoto.com/ajustar-niveles',
   },
@@ -631,7 +631,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/efecto-oleo',
   },
   'desvanecer-bordes': {
-    title: 'Desvanecer bordes de imagen online gratis — viñeta y fade edges | ToolsFoto',
+    title: 'Desvanecer bordes de imagen: viñeta y fade edges | ToolsFoto',
     description: 'Aplica desvanecimiento gradual en los bordes de tu imagen: viñeta fotográfica o fundido rectangular. Exporta como PNG transparente.',
     canonical: 'https://toolsfoto.com/desvanecer-bordes',
   },
@@ -671,7 +671,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/revertir-video',
   },
   'reducir-fps': {
-    title: 'Reducir FPS de vídeo online gratis — cambiar fotogramas por segundo | ToolsFoto',
+    title: 'Reducir FPS de vídeo y fotogramas por segundo | ToolsFoto',
     description: 'Reduce los fotogramas por segundo de tu vídeo para disminuir el tamaño. Presets: 60, 30, 25, 24, 15 FPS. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/reducir-fps',
   },
@@ -686,7 +686,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/convertir-a-estereo',
   },
   'eliminar-silencio': {
-    title: 'Eliminar silencios de audio online gratis — silence removal | ToolsFoto',
+    title: 'Eliminar silencios de audio (silence removal) | ToolsFoto',
     description: 'Recorta automáticamente los silencios de tu audio. Configura el umbral en dB y la duración mínima. FFmpeg silenceremove, 100% local.',
     canonical: 'https://toolsfoto.com/eliminar-silencio',
   },
@@ -701,12 +701,12 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/formateador-sql',
   },
   'jwt-decoder': {
-    title: 'Decodificador JWT online gratis — leer tokens JSON Web Token | ToolsFoto',
+    title: 'Decodificador JWT: leer tokens JSON Web Token | ToolsFoto',
     description: 'Decodifica y visualiza el header y payload de cualquier token JWT. Decodificación base64url con soporte Unicode. Sin necesidad de clave privada.',
     canonical: 'https://toolsfoto.com/jwt-decoder',
   },
   'esquema-colores': {
-    title: 'Generador de esquemas de colores online gratis — paletas armoniosas | ToolsFoto',
+    title: 'Esquemas de color: generar paletas armoniosas | ToolsFoto',
     description: 'Genera esquemas de colores complementario, análogo, triádico, split-complementario y tetrádico desde un color base. Códigos HEX, RGB y HSL.',
     canonical: 'https://toolsfoto.com/esquema-colores',
   },
@@ -753,7 +753,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/aplanar-pdf',
   },
   'convertir-vertical': {
-    title: 'Convertir vídeo a vertical 9:16 online gratis — Reels TikTok | ToolsFoto',
+    title: 'Vídeo a vertical 9:16 para Reels y TikTok | ToolsFoto',
     description: 'Convierte vídeos horizontales al formato vertical 9:16 o cuadrado 1:1 para Instagram Reels, TikTok y YouTube Shorts. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/convertir-vertical',
   },
@@ -778,12 +778,12 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/reducir-ruido-audio',
   },
   'generar-tono': {
-    title: 'Generador de tonos de audio online gratis — sine square triangle | ToolsFoto',
+    title: 'Generador de tonos: sine, square y triangle | ToolsFoto',
     description: 'Genera tonos de audio puro (sinusoidal, cuadrado, triangular, diente de sierra) con frecuencia y duración configurables. FFmpeg.wasm lavfi, 100% local.',
     canonical: 'https://toolsfoto.com/generar-tono',
   },
   'conversor-base': {
-    title: 'Conversor de bases numéricas online gratis — decimal binario hex | ToolsFoto',
+    title: 'Conversor de bases: decimal, binario y hexadecimal | ToolsFoto',
     description: 'Convierte números entre decimal, binario, hexadecimal y octal al instante. El binario se agrupa en nibbles. Sin registro, sin instalar nada.',
     canonical: 'https://toolsfoto.com/conversor-base',
   },
@@ -856,7 +856,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/extraer-fotogramas',
   },
   'ajuste-color-video': {
-    title: 'Ajuste de color de vídeo online gratis — brillo contraste saturación | ToolsFoto',
+    title: 'Color de vídeo: brillo, contraste y saturación | ToolsFoto',
     description: 'Ajusta brillo, contraste, saturación y gamma de tu vídeo con presets Vivid, Cine, Vintage y B&N. FFmpeg.wasm eq filter, 100% local.',
     canonical: 'https://toolsfoto.com/ajuste-color-video',
   },
@@ -886,7 +886,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/gif-a-video',
   },
   'denoise-video': {
-    title: 'Reducir ruido de vídeo online gratis — eliminar grano digital | ToolsFoto',
+    title: 'Reducir ruido de vídeo y eliminar grano digital | ToolsFoto',
     description: 'Elimina el grano y ruido digital de tus vídeos con 3 niveles de intensidad. Filtro hqdn3d de FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/denoise-video',
   },
@@ -916,7 +916,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/minificador-svg',
   },
   'og-image': {
-    title: 'Generador de imágenes Open Graph online gratis — OG Image 1200×630 | ToolsFoto',
+    title: 'Generador de OG Image Open Graph 1200×630 | ToolsFoto',
     description: 'Crea imágenes Open Graph 1200×630 px para redes sociales con título, subtítulo, colores y logo opcional. Canvas API, 100% en el navegador.',
     canonical: 'https://toolsfoto.com/og-image',
   },
@@ -928,12 +928,12 @@ export const PAGE_SEO: Record<string, PageSEO> = {
 
   // ── 19 herramientas nuevas de audio ───────────────────────────
   'visualizar-forma-onda': {
-    title: 'Visualizar forma de onda de audio online gratis — waveform PNG | ToolsFoto',
+    title: 'Visualizar forma de onda de audio en PNG | ToolsFoto',
     description: 'Genera una imagen PNG de la forma de onda de tu audio. Personaliza colores. Web Audio API + Canvas, 100% en el navegador.',
     canonical: 'https://toolsfoto.com/visualizar-forma-onda',
   },
   'convertir-a-m4a': {
-    title: 'Convertir audio a M4A online gratis — audio AAC para iPhone | ToolsFoto',
+    title: 'Convertir audio a M4A: AAC para iPhone | ToolsFoto',
     description: 'Convierte cualquier audio a M4A (AAC) con calidad 128k, 192k o 320k. Compatible con iPhone e iTunes. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/convertir-a-m4a',
   },
@@ -953,7 +953,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/audio-a-fragmentos',
   },
   'recortar-silencio-inicio': {
-    title: 'Recortar silencio del inicio y final de audio online gratis | ToolsFoto',
+    title: 'Recortar silencio al inicio y final del audio | ToolsFoto',
     description: 'Elimina los silencios del principio y el final de tu audio, manteniendo el interior intacto. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/recortar-silencio-inicio',
   },
@@ -993,7 +993,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/medir-duracion',
   },
   'cambiar-pitch-sin-tempo': {
-    title: 'Cambiar pitch sin cambiar tempo online gratis — cents precisos | ToolsFoto',
+    title: 'Cambiar el pitch sin cambiar el tempo, en cents | ToolsFoto',
     description: 'Ajusta el tono de tu audio en centésimas de semitono (±1200 cents) sin cambiar la velocidad. FFmpeg.wasm, 100% local.',
     canonical: 'https://toolsfoto.com/cambiar-pitch-sin-tempo',
   },
@@ -1018,7 +1018,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/telefono-audio',
   },
   'generar-ruido-blanco': {
-    title: 'Generador de ruido blanco online gratis — white pink brown noise | ToolsFoto',
+    title: 'Generador de ruido blanco, pink y brown noise | ToolsFoto',
     description: 'Genera ruido blanco, rosa o marrón de cualquier duración para masking, pruebas y sleep sounds. FFmpeg lavfi, 100% local.',
     canonical: 'https://toolsfoto.com/generar-ruido-blanco',
   },
@@ -1057,7 +1057,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/imagen',
   },
   pdf: {
-    title: 'Herramientas de PDF online gratis — comprimir, unir, firmar | ToolsFoto',
+    title: 'Herramientas de PDF: comprimir, unir y firmar | ToolsFoto',
     description: `Comprime, une, divide, convierte, firma y protege PDFs online gratis. ${N.pdf} herramientas de PDF, sin registro y sin subir archivos al servidor.`,
     canonical: 'https://toolsfoto.com/pdf',
   },
@@ -1072,7 +1072,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     canonical: 'https://toolsfoto.com/audio',
   },
   developer: {
-    title: 'Herramientas para developers online gratis — JSON, QR, Base64 | ToolsFoto',
+    title: 'Herramientas para developers: JSON, QR y Base64 | ToolsFoto',
     description: `Formatea JSON, genera QR, convierte colores, codifica URLs y calcula hashes. ${N.developer} herramientas para developers, sin registro.`,
     canonical: 'https://toolsfoto.com/developer',
   },
