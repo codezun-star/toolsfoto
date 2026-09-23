@@ -114,7 +114,7 @@ El sitio sirve únicamente este header en todas las rutas:
 **Por qué cada banner va en su propio iframe (crítico — leer antes de tocar los anuncios):**
 Los formatos iframe de Adsterra se configuran con la variable **global** `atOptions`, que el `invoke.js` lee al ejecutarse. Con dos o más banners en la misma página las configuraciones se pisan y solo renderiza uno (o ninguno, con el tamaño equivocado). Por eso cada unidad se carga dentro de `/ads/banner.html`, que le da su propio `window` y por tanto su propio `atOptions`. **Nunca pegar los snippets de `atOptions` directamente en una plantilla.**
 
-**Las 8 unidades:**
+**Las 9 unidades:**
 
 | Formato | Key | Slot |
 |---|---|---|
@@ -126,6 +126,26 @@ Los formatos iframe de Adsterra se configuran con la variable **global** `atOpti
 | 160x300 | `7bee5b15…` | rail izquierdo (`sky-small`) |
 | Nativo | contenedor `934ea823…` | `AdNative`, uno por página |
 | Social bar / popunder | `pl31073442…` | global, una vez por página |
+| Social bar / popunder (2.ª) | `pl29628846…` | global, **inyectada en diferido** por JS — ver abajo |
+
+**Segunda social bar (`pl29628846`) — carga no intrusiva:**
+No va escrita en el HTML como la primera: la inyecta un bloque `is:inline` de
+`AdScripts.astro` solo si se cumplen las cuatro condiciones, pensadas para que
+no moleste ni penalice métricas:
+1. Nunca antes de `load` + `requestIdleCallback` + `DELAY_MS` (7 s). No compite
+   por red ni CPU con el render ni con el primer uso de la herramienta.
+2. Como mucho una vez cada `COOLDOWN_MIN` (15 min) por pestaña, con marca de
+   tiempo en `sessionStorage` (`tf-sb2`). Recorrer diez herramientas seguidas la
+   dispara una vez, no diez.
+3. Nunca en `/privacidad`, `/cookies`, `/terminos`, `/aviso-legal`, `/contacto`
+   ni el 404.
+4. Nunca con `navigator.connection.saveData` activado.
+
+Para ajustar la agresividad, tocar `DELAY_MS` y `COOLDOWN_MIN`; para retirarla,
+borrar ese bloque entero (no afecta al resto de anuncios). Si algún día se
+detecta que las dos unidades `pl…` se pisan entre sí (ambas son popunder), dejar
+solo una: el problema del eCPM que aplicaba a Monetag + Adsterra también aplica
+a dos popunders de la misma red.
 
 **Reglas del loader (`AdScripts.astro`):**
 - Carga diferida con `IntersectionObserver` (`rootMargin: 600px`): el anuncio se pide cuando el hueco se acerca al viewport. No toca el LCP y sube la viewability.
@@ -624,3 +644,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-08-06 | +2 herramientas y +2 artículos. Imagen 59→60: `/quitar-fondo-blanco` (`QuitarFondoBlancoTool.tsx`) — recorte por color con `getImageData`, distancia máxima por canal RGB, banda de suavizado del borde y vista previa sobre patrón a cuadros; exporta PNG. Developer 42→43: `/generador-cron` (`GeneradorCronTool.tsx`) — parser de expresiones cron de 5 campos (`*`, rangos, listas, pasos y nombres `MON`/`JAN`), traducción a español, validación por campo y cálculo de las 5 próximas ejecuciones. Artículos: `quitar-fondo-blanco-imagen-transparente` y `como-funcionan-las-expresiones-cron`. Nuevos iconos `Eraser` y `CalendarClock` en `ToolCard.tsx`. Total: 241 herramientas, 302 páginas. El sitemap y `/llms.txt` se regeneran solos en el build; el JSON-LD lo aporta `ToolLayout`. |
 | 2026-09-18 | Auditoría SEO de todo el sitio y correcciones. (1) **50 herramientas no tenían ni un solo enlace interno en el HTML servido**: `CategoryGrid` recortaba el array con `slice()` y solo publicaba las 24 cards de la primera página, mientras la paginación son botones, no enlaces. Ahora renderiza todas las cards y oculta con CSS las de otras páginas (`ToolCard` acepta `className`); la UX no cambia (24 visibles) y las 241 herramientas quedan enlazadas. (2) El nav del header apuntaba a anclas del home (`/#imagen`) en vez de a las páginas de categoría reales: 10 enlaces × 303 páginas repuntados a `/imagen`, `/pdf`, `/video`, `/audio` y `/developer`, con estado activo. (3) Recuentos obsoletos en las descriptions de las 5 categorías (imagen decía 48 de 60, PDF 32 de 43, vídeo 31 de 42, audio 42 de 53, developer 31 de 43): ahora se derivan de `TOOLS` en `seo.ts` y no pueden volver a desfasarse. (4) 141 meta descriptions superaban el corte de Google (~160); se recortó la coletilla genérica repetida ("Completamente gratis.", "Sin registro, sin subir archivos.", …) y se reescribieron a mano las que no encajaban en el patrón: las 252 quedan entre 70 y 160 caracteres, media 138, sin duplicados. (5) Nueva `src/pages/404.astro` (noindex, fuera del sitemap) con salidas a las 5 categorías y a las herramientas más usadas. (6) `public/favicon.ico` (16/32/48) — los navegadores lo piden solo y devolvía 404. (7) `<meta name="robots">` con `max-snippet:-1` y `max-image-preview:large` en las 5 categorías, el listado del blog y los 49 artículos, que no lo llevaban; `/contacto` declara `index, follow` explícito. (8) Blog: JSON-LD unificado en un `@graph` con `dateModified`, `inLanguage`, `articleSection`, `image` e `isPartOf`, y `publisher.logo` pasa de `favicon.svg` a `favicon-192.png` (Google no admite SVG en `logo`); nuevo campo opcional `actualizado` en el frontmatter; el listado publica `Blog` + `ItemList` con los 49 artículos. (9) `LegalLayout` emite `@graph` con `WebPage`/`ContactPage` y `BreadcrumbList` — `/contacto`, que es indexable, no tenía ningún dato estructurado. (10) `theme-color` y `preconnect`/`dns-prefetch` a Google Tag en las 11 plantillas con head propio. Verificado sobre el HTML construido: 303 páginas, 0 herramientas huérfanas, 307 bloques JSON-LD que parsean, 0 títulos/descriptions/canonicals duplicados. |
 | 2026-09-18 | Segunda tanda tras la auditoría: los 3 puntos que quedaron abiertos, y un fallo de producción que apareció al abrirlos. (1) **Las 10 herramientas de pdfjs estaban rotas**: fijaban `workerSrc` al worker 3.11.174 de cdnjs con pdfjs-dist 5.6.205 en el bundle, y pdf.js aborta si las versiones no coinciden; además la build moderna de la 5.x usa `Map.prototype.getOrInsertComputed`, que ni Chrome 141 implementa. Nuevo `src/lib/utils/pdfjs.ts` con `loadPdfjs()` (build `legacy` + worker del propio paquete vía `?url`, auto-hospedado). `page.render({ canvasContext })` → `{ canvas }` en los 10 sitios; en `CompararPDFsTool` y `PDFaSVGTool` el `page` estaba tipado como `object`/`unknown`, así que tsc no los veía. Verificado con Playwright sobre Chromium 141 y un PDF real: 10/10 producen salida (antes 0/10). (2) **tsc: 124 errores → 0.** `toBlobPart()` en el nuevo `src/lib/utils/bytes.ts` para los 92 casos de `Uint8Array<ArrayBufferLike>` vs `BlobPart`; `PdfUploader.current` estrechado a `{name,size}` (14 casos); `Slider.label` opcional; `EliminarPasswordPDFTool` pasaba a pdf-lib una opción `password` que no existe —la contraseña se ignoraba en silencio y el error culpaba al usuario—; `style` duplicado en `ConvertirVerticalTool`; namespace `JSX` (React 19) en `RegexTesterTool`; interfaz `SpeechRecognition` en `TranscribirAudioTool`. (3) **Blog → herramientas**: nuevo campo `herramientas` en el frontmatter de los 49 artículos (2-4 slugs, curados) y bloque "Herramientas para hacerlo" al final del artículo; un slug inexistente rompe el build. Antes el único enlace del cierre iba a `/`. (4) **Títulos**: los 26 que pasaban de 70 caracteres reescritos quitando el relleno "online gratis" pero conservando las keywords de cola larga del guión; ninguno pasa ya de 70 y la media baja a 55. Los de 61-70 se dejan a propósito: recortarlos tiraría términos como "DNI, pasaporte, visado" a cambio de estética en el SERP. |
+| 2026-09-23 | Segunda unidad de social bar de Adsterra (`pl29628846`) añadida en `AdScripts.astro` con carga no intrusiva: se inyecta por JS tras `load` + idle + 7 s, como mucho una vez cada 15 min por pestaña (`sessionStorage` `tf-sb2`), nunca en las páginas legales/contacto/404 y nunca con el ahorro de datos activo. Las páginas legales no cambian: es la misma red (Adsterra) que ya declaran `privacidad.astro` y `cookies.astro`. |

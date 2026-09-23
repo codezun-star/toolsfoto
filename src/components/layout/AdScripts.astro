@@ -6,7 +6,8 @@
 // todas las páginas), así que lo que hay aquí llega a las 302 páginas.
 //
 // Este archivo aporta tres cosas:
-//   1. El script de social bar / popunder (una sola vez por página).
+//   1. El script de social bar / popunder (una sola vez por página) y una
+//      segunda unidad que se inyecta en diferido y con límite de frecuencia.
 //   2. Los estilos de todos los huecos de anuncio del sitio.
 //   3. El loader: rellena los `.tf-ad` con carga diferida, elige el formato
 //      según el ancho real de pantalla y monta el anchor inferior y los dos
@@ -129,6 +130,73 @@
 
 {/* Social bar / popunder de Adsterra — una vez por página, en todo el sitio. */}
 <script is:inline async data-cfasync="false" src="https://pl31073442.profitableratecpmnetwork.com/d0/ae/e6/d0aee660083cbae90f8e576e5259457b.js"></script>
+
+{/* Segunda unidad de Adsterra (pl29628846) — inyectada en diferido, no en el HTML. */}
+<script is:inline>
+  /**
+   * Unidad pl29628846 — carga no intrusiva.
+   *
+   * A diferencia de la social bar de arriba, esta unidad NO va en el HTML: la
+   * inyecta este bloque solo cuando se cumplen todas las condiciones. La idea
+   * es que exista sin estorbar:
+   *
+   *   1. Nunca antes de `load` + idle + DELAY_MS. Así no compite por red ni por
+   *      CPU con el render ni con el primer uso de la herramienta: no toca el
+   *      LCP y no salta nada más entrar en la página.
+   *   2. Como mucho una vez cada COOLDOWN_MIN minutos por pestaña
+   *      (sessionStorage), no en cada navegación: quien recorre diez
+   *      herramientas seguidas la ve una vez, no diez.
+   *   3. Nunca en las páginas legales, el contacto ni el 404.
+   *   4. Nunca con el modo de ahorro de datos del navegador activado.
+   *
+   * Para hacerla más o menos agresiva basta con tocar DELAY_MS y COOLDOWN_MIN.
+   * Para retirarla, borrar este bloque entero: no afecta al resto de anuncios.
+   */
+  (function () {
+    if (window.__tfSocial2) return;
+    window.__tfSocial2 = true;
+
+    var SRC = 'https://pl29628846.profitableratecpmnetwork.com/1d/2a/69/1d2a69c57a9e23538658bdc921895eb7.js';
+    var KEY = 'tf-sb2';
+    var DELAY_MS = 7000;
+    var COOLDOWN_MIN = 15;
+    var SKIP = ['/privacidad', '/cookies', '/terminos', '/aviso-legal', '/contacto', '/404'];
+
+    var path = location.pathname.replace(/\/+$/, '') || '/';
+    if (SKIP.indexOf(path) !== -1) return;
+
+    // Ahorro de datos: si el usuario lo ha pedido, no se le cuela un script de
+    // terceros de fondo.
+    var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn && conn.saveData) return;
+
+    // Límite de frecuencia. Si sessionStorage no está disponible (modo privado,
+    // almacenamiento bloqueado) se carga igual: mejor eso que perder la unidad.
+    try {
+      var last = parseInt(sessionStorage.getItem(KEY) || '0', 10);
+      if (last && Date.now() - last < COOLDOWN_MIN * 60000) return;
+      sessionStorage.setItem(KEY, String(Date.now()));
+    } catch (e) {}
+
+    function inject() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.setAttribute('data-cfasync', 'false');
+      s.src = SRC;
+      document.body.appendChild(s);
+    }
+
+    function schedule() {
+      setTimeout(function () {
+        if (window.requestIdleCallback) window.requestIdleCallback(inject, { timeout: 3000 });
+        else inject();
+      }, DELAY_MS);
+    }
+
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule);
+  })();
+</script>
 
 <script is:inline>
   /**
