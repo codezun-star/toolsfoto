@@ -204,7 +204,7 @@ export default function ToolCard({ tool, className = '' }: Props) {
   return (
     <a
       href={`/${tool.slug}`}
-      className={`group flex flex-col gap-3 p-5 bg-white rounded-xl border border-[var(--color-border)] hover:border-[var(--color-tools-border)] hover:shadow-sm transition-all ${className}`}
+      className={`group flex flex-col gap-3 p-5 bg-white rounded-xl border border-[var(--color-border)] hover:border-[var(--color-tools-border)] hover:shadow-sm active:scale-[0.98] transition-all ${className}`}
     >
       <div className="flex items-start justify-between">
         <div className="p-2.5 rounded-lg bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]">

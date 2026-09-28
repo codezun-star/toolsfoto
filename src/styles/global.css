@@ -16,11 +16,130 @@
   --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* ── Experiencia de app en móvil ─────────────────────────────────────────────
+   La barra de pestañas inferior (AppShell.astro) solo existe por debajo de
+   768px. Su altura se publica en --tf-tabbar-h para que el body reserve el
+   hueco y el anchor de anuncios se coloque justo encima. */
+:root {
+  --tf-tabbar-base: 62px;
+  --tf-tabbar-h: 0px;
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --tf-tabbar-h: calc(var(--tf-tabbar-base) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Sin zoom por doble toque (el pellizco sigue funcionando): los toques
+     responden al instante, como en una app. */
+  touch-action: manipulation;
+}
+
+/* Con un panel modal abierto la página de fondo no se desplaza. */
+html.tf-lock {
+  overflow: hidden;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
+  /* Hueco para la barra de pestañas y el anchor de anuncios (--tf-anchor-h lo
+     fija AdScripts.astro). viewport-fit=cover: los laterales respetan el notch. */
+  padding-bottom: calc(var(--tf-tabbar-h) + var(--tf-anchor-h, 0px));
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Barra superior fija durante la transición entre páginas. */
+.tf-header {
+  view-transition-name: tf-header;
+}
+
+/* Título compacto de la barra superior en móvil: sustituye al logo cuando el
+   H1 sale de pantalla (ver Header.astro). */
+@media (max-width: 767.98px) {
+  .tf-header-logo,
+  .tf-header-title {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .tf-header-title {
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+  }
+
+  .tf-header.is-titled .tf-header-title {
+    opacity: 1;
+    transform: none;
+  }
+
+  .tf-header.is-titled .tf-header-logo {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+  }
+
+  /* App instalada: el pie web sobra, su contenido está en el menú inferior.
+     Los anuncios no dependen de él (AdScripts va fuera del <footer>). */
+  @media (display-mode: standalone) {
+    .site-footer {
+      display: none;
+    }
+  }
+}
+
+/* Respuesta táctil al pulsar. */
+.tf-press {
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.tf-press:active {
+  transform: scale(0.96);
+}
+
+/* iOS amplía la página al enfocar un campo con letra de menos de 16px.
+   En @layer base para no pisar tamaños grandes puestos con utilidades; los
+   campos con text-xs / text-sm se suben aparte, solo en móvil. */
+@layer base {
+  @media (max-width: 767.98px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  :is(input, select, textarea):is(.text-xs, .text-sm) {
+    font-size: 16px;
+  }
+}
+
+/* Transición suave entre páginas (navegación normal, sin SPA): en Chrome y
+   Safari recientes la página nueva entra con un fundido y las barras superior
+   e inferior se quedan quietas. En el resto de navegadores no hace nada. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
 }
 
 *:focus-visible {

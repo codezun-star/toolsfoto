@@ -1,0 +1,974 @@
+---
+/**
+ * Capa de "app nativa" del sitio. Se incluye una sola vez por página desde
+ * `Footer.astro`, así que llega a todas las plantillas.
+ *
+ * Aporta:
+ *   1. Barra de pestañas inferior (solo móvil, < 768px): Inicio, Imagen, PDF,
+ *      Vídeo y Menú. Resalta la sección actual (una herramienta marca su
+ *      categoría) y, si se pulsa la pestaña de la página en la que ya se está,
+ *      sube al principio como en una app.
+ *   2. Menú en hoja inferior (bottom sheet): categorías con su recuento real,
+ *      blog, instalar la app y páginas de información. Se cierra deslizando
+ *      hacia abajo, tocando fuera, con Escape o con el botón atrás de Android.
+ *   3. Buscador de herramientas (móvil y escritorio, Ctrl+K o "/"). El índice
+ *      (`/search-index.json`) se descarga la primera vez que se abre.
+ *   4. Registro del service worker (`/app-sw.js`) y el aviso de instalación.
+ *
+ * Los dos paneles son <dialog> modales: van en la capa superior del navegador,
+ * por encima de cualquier anuncio, y el foco queda atrapado dentro.
+ */
+import {
+  House, Image, FileText, Video, Menu, Music, Code2, BookOpen, Search, X,
+  ChevronRight, ArrowLeft, Mail, ShieldCheck, Scale, Cookie, Landmark,
+  Share, SquarePlus,
+} from 'lucide-react';
+import { TOOLS, TOOL_BY_SLUG, type ToolDomain } from '@/lib/constants/tools';
+import { currentPath } from '@/lib/utils/path';
+
+const path = currentPath(Astro.url.pathname);
+const tool = TOOL_BY_SLUG[path.slice(1)];
+// Sección actual: 'home', un dominio, 'blog', o el primer tramo de la ruta.
+const section = path === '/' ? 'home' : tool ? tool.domain : path.slice(1).split('/')[0];
+
+const count = (d: ToolDomain) => TOOLS.filter(t => t.domain === d).length;
+
+const TABS = [
+  { id: 'home', href: '/', label: 'Inicio', Icon: House },
+  { id: 'imagen', href: '/imagen', label: 'Imagen', Icon: Image },
+  { id: 'pdf', href: '/pdf', label: 'PDF', Icon: FileText },
+  { id: 'video', href: '/video', label: 'Vídeo', Icon: Video },
+];
+const activeTab = TABS.some(t => t.id === section) ? section : 'menu';
+
+const CATEGORIES = [
+  { id: 'imagen', href: '/imagen', label: 'Imagen', sub: `${count('imagen')} herramientas`, Icon: Image },
+  { id: 'pdf', href: '/pdf', label: 'PDF', sub: `${count('pdf')} herramientas`, Icon: FileText },
+  { id: 'video', href: '/video', label: 'Vídeo', sub: `${count('video')} herramientas`, Icon: Video },
+  { id: 'audio', href: '/audio', label: 'Audio', sub: `${count('audio')} herramientas`, Icon: Music },
+  { id: 'developer', href: '/developer', label: 'Developer', sub: `${count('developer')} herramientas`, Icon: Code2 },
+  { id: 'blog', href: '/blog', label: 'Blog', sub: 'Guías y trucos', Icon: BookOpen },
+];
+
+const INFO = [
+  { href: '/contacto', label: 'Contacto', Icon: Mail },
+  { href: '/privacidad', label: 'Privacidad', Icon: ShieldCheck },
+  { href: '/terminos', label: 'Términos de uso', Icon: Scale },
+  { href: '/cookies', label: 'Cookies', Icon: Cookie },
+  { href: '/aviso-legal', label: 'Aviso legal', Icon: Landmark },
+];
+
+// Sugerencias del buscador vacío: las herramientas más usadas.
+const POPULAR = [
+  'comprimir', 'eliminar-fondo', 'redimensionar', 'convertir', 'comprimir-pdf', 'unir-pdfs',
+  'pdf-a-jpg', 'jpg-a-pdf', 'comprimir-video', 'video-a-mp3', 'cortar-audio', 'generar-qr',
+].filter(slug => TOOL_BY_SLUG[slug]);
+
+const DOMAIN_ICONS = [
+  { domain: 'imagen', Icon: Image },
+  { domain: 'pdf', Icon: FileText },
+  { domain: 'video', Icon: Video },
+  { domain: 'audio', Icon: Music },
+  { domain: 'developer', Icon: Code2 },
+];
+---
+
+<!-- Barra de pestañas inferior (móvil) -->
+<nav class="tf-tabbar" aria-label="Navegación principal">
+  {TABS.map(({ id, href, label, Icon }) => (
+    <a
+      href={href}
+      class="tf-tab"
+      data-tf-tab
+      data-active={activeTab === id ? '' : undefined}
+      aria-current={path === href ? 'page' : undefined}
+    >
+      <span class="tf-tab-icon"><Icon size={22} strokeWidth={activeTab === id ? 2.3 : 1.9} /></span>
+      <span class="tf-tab-label">{label}</span>
+    </a>
+  ))}
+  <button
+    type="button"
+    class="tf-tab"
+    data-tf-menu-open
+    data-active={activeTab === 'menu' ? '' : undefined}
+    aria-haspopup="dialog"
+    aria-controls="tf-menu"
+  >
+    <span class="tf-tab-icon">
+      <Menu size={22} strokeWidth={activeTab === 'menu' ? 2.3 : 1.9} />
+      <span class="tf-badge" data-tf-badge hidden></span>
+    </span>
+    <span class="tf-tab-label">Menú</span>
+  </button>
+</nav>
+
+<!-- Menú (hoja inferior) -->
+<dialog id="tf-menu" class="tf-dialog tf-sheet" aria-labelledby="tf-menu-title">
+  <div class="tf-scrim" data-tf-close></div>
+  <div class="tf-sheet-panel" data-tf-panel>
+    <div class="tf-sheet-grab" data-tf-drag>
+      <span class="tf-sheet-handle" aria-hidden="true"></span>
+      <div class="flex items-center justify-between px-5 pb-2">
+        <p id="tf-menu-title" class="text-xl font-extrabold text-[var(--color-text)]">Menú</p>
+        <button
+          type="button"
+          data-tf-close
+          class="tf-press w-9 h-9 grid place-items-center rounded-full bg-white border border-[var(--color-border)] text-[var(--color-text-secondary)]"
+          aria-label="Cerrar menú"
+        >
+          <X size={18} />
+        </button>
+      </div>
+    </div>
+
+    <div class="tf-sheet-body">
+      <button
+        type="button"
+        data-tf-search-open
+        class="tf-press w-full flex items-center gap-3 h-12 px-4 rounded-xl bg-white border border-[var(--color-border)] text-[15px] text-[var(--color-text-muted)] text-left"
+      >
+        <Search size={18} />
+        Buscar entre {TOOLS.length} herramientas
+      </button>
+
+      <p class="tf-section-label">Categorías</p>
+      <div class="grid grid-cols-2 gap-2.5">
+        {CATEGORIES.map(({ id, href, label, sub, Icon }) => (
+          <a
+            href={href}
+            class={`tf-press flex flex-col items-start gap-2.5 p-3.5 rounded-2xl bg-white border ${section === id ? 'border-[var(--color-accent)]' : 'border-[var(--color-border)]'}`}
+            aria-current={path === href ? 'page' : undefined}
+          >
+            <span class="w-10 h-10 shrink-0 grid place-items-center rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]">
+              <Icon size={20} />
+            </span>
+            <span class="min-w-0">
+              <span class="block font-bold text-[15px] leading-tight text-[var(--color-text)]">{label}</span>
+              <span class="block text-xs text-[var(--color-text-secondary)] mt-0.5">{sub}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div id="tf-install" class="mt-5 p-4 rounded-2xl bg-white border border-[var(--color-border)]" hidden>
+        <div class="flex items-center gap-3">
+          <img src="/icon-192.png" width="44" height="44" alt="" loading="lazy" class="w-11 h-11 rounded-xl shrink-0" />
+          <div class="min-w-0 flex-1">
+            <p class="font-bold text-[15px] text-[var(--color-text)]">Instala la app</p>
+            <p class="text-[13px] leading-snug text-[var(--color-text-secondary)]">Ábrela desde tu pantalla de inicio, a pantalla completa.</p>
+          </div>
+          <button
+            id="tf-install-btn"
+            type="button"
+            class="tf-press shrink-0 h-9 px-4 rounded-full bg-[var(--color-accent)] text-white text-sm font-semibold"
+            hidden
+          >
+            Instalar
+          </button>
+        </div>
+        <p id="tf-install-ios" class="mt-3 text-[13px] leading-relaxed text-[var(--color-text-secondary)]" hidden>
+          Pulsa <Share size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>Compartir</strong> en la barra del navegador y después
+          <SquarePlus size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>Añadir a pantalla de inicio</strong>.
+        </p>
+      </div>
+
+      <p class="tf-section-label">ToolsFoto</p>
+      <nav class="rounded-2xl bg-white border border-[var(--color-border)] overflow-hidden divide-y divide-[var(--color-border)]" aria-label="Información">
+        {INFO.map(({ href, label, Icon }) => (
+          <a
+            href={href}
+            class="flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-[var(--color-text)] active:bg-[var(--color-bg)]"
+            aria-current={path === href ? 'page' : undefined}
+          >
+            <Icon size={19} className="text-[var(--color-text-secondary)]" />
+            {label}
+            <ChevronRight size={18} className="ml-auto text-[var(--color-text-muted)]" />
+          </a>
+        ))}
+      </nav>
+
+      <p class="mt-5 text-center text-xs text-[var(--color-text-muted)]">
+        Tus archivos nunca salen de tu dispositivo
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<!-- Buscador -->
+<dialog id="tf-search" class="tf-dialog tf-search" aria-label="Buscar herramientas">
+  <div class="tf-scrim" data-tf-close></div>
+  <div class="tf-search-panel" data-tf-panel>
+    <div class="tf-search-bar">
+      <button
+        type="button"
+        data-tf-close
+        class="tf-press tf-search-back w-10 h-10 shrink-0 grid place-items-center rounded-full text-[var(--color-text)]"
+        aria-label="Cerrar búsqueda"
+      >
+        <ArrowLeft size={22} />
+      </button>
+      <label class="tf-search-field">
+        <span class="sr-only">Buscar herramientas</span>
+        <Search size={18} />
+        <input
+          id="tf-search-input"
+          class="tf-search-input"
+          type="search"
+          inputmode="search"
+          enterkeyhint="go"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="Buscar herramientas…"
+          role="combobox"
+          aria-expanded="true"
+          aria-autocomplete="list"
+          aria-controls="tf-search-results"
+        />
+      </label>
+      <button
+        type="button"
+        data-tf-close
+        class="tf-search-esc shrink-0 h-8 px-2.5 rounded-lg border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
+        aria-label="Cerrar búsqueda"
+      >
+        Esc
+      </button>
+    </div>
+    <div class="tf-search-body">
+      <p id="tf-search-label" class="tf-section-label">Más usadas</p>
+      <div id="tf-search-results" role="listbox" aria-labelledby="tf-search-label" data-popular={POPULAR.join(',')}></div>
+      <p id="tf-search-empty" class="px-3 py-10 text-center text-sm text-[var(--color-text-secondary)]" role="status" hidden></p>
+    </div>
+  </div>
+</dialog>
+
+<!-- Iconos por dominio para los resultados del buscador (se clonan desde JS) -->
+<template id="tf-search-icons">
+  {DOMAIN_ICONS.map(({ domain, Icon }) => (
+    <span data-domain={domain}><Icon size={20} /></span>
+  ))}
+</template>
+
+<style is:global>
+  /* ── Barra de pestañas ─────────────────────────────────────────────────
+     OJO: estas reglas no van en una capa de Tailwind, así que ganan a las
+     utilidades. No mezclar en estos elementos clases de Tailwind que toquen
+     las mismas propiedades (display, position…). */
+  .tf-tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: var(--tf-tabbar-h);
+    padding: 0 env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    backdrop-filter: saturate(180%) blur(16px);
+    border-top: 1px solid var(--color-border);
+    view-transition-name: tf-tabbar;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  @media (min-width: 768px) {
+    .tf-tabbar { display: none; }
+  }
+
+  .tf-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0;
+    height: var(--tf-tabbar-base);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text-secondary);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+  }
+
+  .tf-tab-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 30px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .tf-tab[data-active] { color: var(--color-accent); }
+  .tf-tab[data-active] .tf-tab-icon { background: var(--color-accent-bg); }
+  .tf-tab:active .tf-tab-icon { transform: scale(0.9); }
+
+  .tf-badge {
+    position: absolute;
+    top: 2px;
+    right: 14px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 2px #fff;
+  }
+
+  /* ── Paneles modales (menú y buscador) ─────────────────────────────────
+     El <dialog> ocupa toda la pantalla y es transparente; lo que se ve es el
+     velo (.tf-scrim) y el panel, que se animan con la clase .is-open. No se
+     toca `display` del dialog: el navegador lo oculta cuando está cerrado. */
+  .tf-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+    color: var(--color-text);
+    overscroll-behavior: contain;
+  }
+
+  .tf-dialog::backdrop { background: transparent; }
+
+  .tf-scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 16, 0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tf-dialog.is-open .tf-scrim { opacity: 1; }
+
+  .tf-sheet-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--color-bg);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.18);
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+  }
+
+  .tf-dialog.is-open .tf-sheet-panel { transform: none; }
+
+  @media (min-width: 640px) {
+    .tf-sheet-panel {
+      left: 50%;
+      right: auto;
+      width: 480px;
+      margin-left: -240px;
+    }
+  }
+
+  .tf-sheet-grab {
+    padding-top: 8px;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  .tf-sheet-handle {
+    display: block;
+    width: 38px;
+    height: 5px;
+    margin: 0 auto 10px;
+    border-radius: 999px;
+    background: #D6D1C9;
+  }
+
+  .tf-sheet-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 4px 16px 20px;
+  }
+
+  .tf-section-label {
+    padding: 20px 4px 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Buscador ─────────────────────────────────────────────────────────── */
+  .tf-search-panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .tf-dialog.is-open .tf-search-panel { opacity: 1; transform: none; }
+
+  .tf-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 12px 8px 8px;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .tf-search-field {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tf-search-field > svg {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+
+  .tf-search-input {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px 0 40px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-size: 16px;
+    outline: none;
+  }
+
+  .tf-search-input:focus { border-color: var(--color-accent); background: #fff; }
+  .tf-search-input:focus-visible { outline: none; }
+  .tf-search-esc { display: none; }
+
+  .tf-search-body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 8px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .tf-search-body .tf-section-label { padding-left: 10px; }
+
+  .tf-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-radius: 14px;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .tf-result:active,
+  .tf-result[aria-selected='true'] { background: #fff; }
+
+  .tf-result-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    background: var(--color-tools-bg);
+    color: var(--color-tools-icon);
+  }
+
+  .tf-result-text { min-width: 0; flex: 1; }
+
+  .tf-result-name {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .tf-result-desc {
+    display: block;
+    margin-top: 1px;
+    overflow: hidden;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* Escritorio: panel centrado en vez de pantalla completa. */
+  @media (min-width: 768px) {
+    .tf-search-panel {
+      inset: auto;
+      top: 10vh;
+      left: 50%;
+      width: 600px;
+      max-height: 72vh;
+      margin-left: -300px;
+      overflow: hidden;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+      transform: translateY(-8px) scale(0.98);
+    }
+
+    .tf-search-bar { padding: 10px 12px; }
+    .tf-search-back { display: none; }
+    .tf-search-esc { display: inline-block; }
+    .tf-result:hover,
+    .tf-result[aria-selected='true'] { background: var(--color-bg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tf-scrim,
+    .tf-sheet-panel,
+    .tf-search-panel { transition: none; }
+  }
+
+  @media print {
+    .tf-tabbar { display: none !important; }
+  }
+</style>
+
+<script>
+  type Entry = { s: string; n: string; d: string; c: string };
+  type Indexed = Entry & { nn: string; nd: string; ns: string };
+
+  interface BeforeInstallPromptEvent extends Event {
+    prompt(): Promise<void>;
+    readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  }
+
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const CLOSE_MS = 320;
+  const closing = new Map<HTMLDialogElement, number>();
+
+  const menu = document.getElementById('tf-menu') as HTMLDialogElement | null;
+  const search = document.getElementById('tf-search') as HTMLDialogElement | null;
+
+  // ── Abrir / cerrar con animación ──────────────────────────────────────────
+
+  function openDialog(dialog: HTMLDialogElement) {
+    const pending = closing.get(dialog);
+    if (pending !== undefined) {
+      clearTimeout(pending);
+      closing.delete(dialog);
+    }
+    if (!dialog.open) dialog.showModal();
+    root.classList.add('tf-lock');
+    void dialog.offsetWidth; // fija el estado inicial para que la transición se vea
+    dialog.classList.add('is-open');
+  }
+
+  function closeDialog(dialog: HTMLDialogElement, immediate = false) {
+    if (!dialog.open) return;
+    const pending = closing.get(dialog);
+    if (pending !== undefined) {
+      if (!immediate) return;
+      clearTimeout(pending);
+    }
+    dialog.classList.remove('is-open');
+    if (immediate || reduceMotion.matches) {
+      closing.delete(dialog);
+      dialog.close();
+      return;
+    }
+    closing.set(dialog, window.setTimeout(() => {
+      closing.delete(dialog);
+      dialog.close();
+    }, CLOSE_MS));
+  }
+
+  document.querySelectorAll<HTMLDialogElement>('dialog.tf-dialog').forEach((dialog) => {
+    // Escape y el botón atrás de Android (CloseWatcher) llegan como `cancel`.
+    dialog.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      closeDialog(dialog);
+    });
+    // Cualquier cierre (animado, forzado por el navegador…) acaba aquí.
+    dialog.addEventListener('close', () => {
+      const pending = closing.get(dialog);
+      if (pending !== undefined) clearTimeout(pending);
+      closing.delete(dialog);
+      dialog.classList.remove('is-open');
+      dialog.querySelectorAll<HTMLElement>('[data-tf-panel]').forEach((panel) => {
+        panel.style.transform = '';
+        panel.style.transition = '';
+      });
+      if (!document.querySelector('dialog.tf-dialog[open]')) root.classList.remove('tf-lock');
+    });
+    dialog.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('[data-tf-close]')) closeDialog(dialog);
+    });
+  });
+
+  // Al volver atrás con bfcache la página se restaura tal cual estaba: si se
+  // salió desde el menú, seguiría abierto.
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    document.querySelectorAll<HTMLDialogElement>('dialog.tf-dialog[open]').forEach((d) => closeDialog(d, true));
+  });
+
+  // ── Menú: abrir y deslizar para cerrar ────────────────────────────────────
+
+  const badge = document.querySelector<HTMLElement>('[data-tf-badge]');
+  const install = document.getElementById('tf-install');
+
+  document.querySelectorAll('[data-tf-menu-open]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!menu) return;
+      openDialog(menu);
+      if (install && !install.hidden) {
+        if (badge) badge.hidden = true;
+        try { localStorage.setItem('tf-install-seen', '1'); } catch { /* sin almacenamiento */ }
+      }
+    });
+  });
+
+  const panel = menu?.querySelector<HTMLElement>('[data-tf-panel]');
+  const grab = menu?.querySelector<HTMLElement>('[data-tf-drag]');
+  if (menu && panel && grab) {
+    let startY = 0;
+    let startT = 0;
+    let dy = 0;
+    let dragging = false;
+
+    grab.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 || (e.target as Element).closest('button, a')) return;
+      dragging = true;
+      startY = e.clientY;
+      startT = e.timeStamp;
+      dy = 0;
+      panel.style.transition = 'none';
+      grab.setPointerCapture(e.pointerId);
+    });
+
+    grab.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      dy = Math.max(0, e.clientY - startY);
+      panel.style.transform = `translateY(${dy}px)`;
+    });
+
+    const release = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      panel.style.transition = '';
+      const velocity = dy / Math.max(1, e.timeStamp - startT);
+      if (dy > 80 || (dy > 20 && velocity > 0.5)) {
+        panel.style.transform = 'translateY(100%)';
+        closeDialog(menu);
+      } else {
+        panel.style.transform = '';
+      }
+    };
+    grab.addEventListener('pointerup', release);
+    grab.addEventListener('pointercancel', release);
+  }
+
+  // ── Pestañas: tocar la actual sube al principio ───────────────────────────
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-tf-tab]').forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      if (tab.getAttribute('aria-current') !== 'page') return;
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    });
+  });
+
+  // ── Buscador ──────────────────────────────────────────────────────────────
+
+  const input = document.getElementById('tf-search-input') as HTMLInputElement | null;
+  const results = document.getElementById('tf-search-results');
+  const label = document.getElementById('tf-search-label');
+  const empty = document.getElementById('tf-search-empty');
+
+  const DOMAIN_LABEL: Record<string, string> = {
+    imagen: 'Imagen', pdf: 'PDF', video: 'Vídeo', audio: 'Audio', developer: 'Developer',
+  };
+
+  const icons = new Map<string, string>();
+  const iconTpl = document.getElementById('tf-search-icons') as HTMLTemplateElement | null;
+  iconTpl?.content.querySelectorAll<HTMLElement>('[data-domain]').forEach((el) => {
+    icons.set(el.dataset.domain ?? '', el.innerHTML);
+  });
+
+  const popular = (results?.dataset.popular ?? '').split(',').filter(Boolean);
+  let index: Indexed[] | null = null;
+  let loading: Promise<Indexed[]> | null = null;
+  let shown: Indexed[] = [];
+  let active = -1;
+
+  const norm = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+  // Sinónimos habituales: quien busca "quitar fondo" tiene que encontrar
+  // "Eliminar fondo (IA)". Un acierto por sinónimo puntúa algo menos.
+  const SYNONYMS: Record<string, string[]> = {
+    quitar: ['eliminar', 'borrar'],
+    eliminar: ['quitar', 'borrar'],
+    borrar: ['eliminar', 'quitar'],
+    foto: ['imagen'],
+    fotos: ['imagen', 'imagenes'],
+    juntar: ['unir', 'combinar'],
+    unir: ['combinar'],
+    pasar: ['convertir'],
+    reducir: ['comprimir'],
+    achicar: ['comprimir', 'reducir'],
+    girar: ['rotar'],
+    rotar: ['girar'],
+    cortar: ['recortar', 'dividir'],
+    separar: ['dividir', 'extraer'],
+    musica: ['audio'],
+    cancion: ['audio'],
+    sonido: ['audio'],
+    clave: ['contrasena'],
+    password: ['contrasena'],
+  };
+
+  function loadIndex(): Promise<Indexed[]> {
+    if (index) return Promise.resolve(index);
+    if (!loading) {
+      loading = fetch('/search-index.json')
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json() as Promise<Entry[]>;
+        })
+        .then((data) => {
+          index = data.map((e) => ({ ...e, nn: norm(e.n), nd: norm(e.d), ns: e.s.replace(/-/g, ' ') }));
+          return index;
+        })
+        .catch((err: unknown) => {
+          loading = null;
+          throw err;
+        });
+    }
+    return loading;
+  }
+
+  function tokenScore(e: Indexed, t: string): number {
+    const at = e.nn.indexOf(t);
+    if (at === 0 || (at > 0 && e.nn[at - 1] === ' ')) return 6;
+    if (at > 0) return 4;
+    if (e.ns.includes(t)) return 3;
+    if (e.nd.includes(t)) return 2;
+    return 0;
+  }
+
+  function find(query: string): Indexed[] {
+    if (!index) return [];
+    const q = norm(query).trim();
+    const tokens = q.split(/[\s\-_/]+/).filter(Boolean);
+    if (!tokens.length) return [];
+    const scored: Array<[number, Indexed]> = [];
+    for (const e of index) {
+      let score = 0;
+      for (const t of tokens) {
+        let best = tokenScore(e, t);
+        for (const alt of SYNONYMS[t] ?? []) best = Math.max(best, tokenScore(e, alt) - 1);
+        if (best <= 0) { score = 0; break; }
+        score += best;
+      }
+      if (score > 0) {
+        if (e.nn.startsWith(q)) score += 5;
+        scored.push([score, e]);
+      }
+    }
+    scored.sort((a, b) => b[0] - a[0] || a[1].n.length - b[1].n.length);
+    return scored.slice(0, 40).map(([, e]) => e);
+  }
+
+  function select(i: number) {
+    if (!results || !input) return;
+    active = i;
+    results.querySelectorAll<HTMLElement>('.tf-result').forEach((el, n) => {
+      el.setAttribute('aria-selected', n === i ? 'true' : 'false');
+      if (n === i) el.scrollIntoView({ block: 'nearest' });
+    });
+    if (i >= 0) input.setAttribute('aria-activedescendant', `tf-r-${i}`);
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  function renderList(items: Indexed[]) {
+    if (!results) return;
+    shown = items;
+    results.replaceChildren(...items.map((e, i) => {
+      const a = document.createElement('a');
+      a.href = `/${e.s}`;
+      a.id = `tf-r-${i}`;
+      a.className = 'tf-result';
+      a.setAttribute('role', 'option');
+      a.setAttribute('aria-selected', 'false');
+      a.innerHTML = `<span class="tf-result-icon">${icons.get(e.c) ?? ''}</span>`
+        + '<span class="tf-result-text"><span class="tf-result-name"></span><span class="tf-result-desc"></span></span>';
+      (a.querySelector('.tf-result-name') as HTMLElement).textContent = e.n;
+      (a.querySelector('.tf-result-desc') as HTMLElement).textContent = `${DOMAIN_LABEL[e.c] ?? ''} · ${e.d}`;
+      return a;
+    }));
+    select(-1);
+  }
+
+  function update() {
+    if (!input || !label || !empty) return;
+    const q = input.value.trim();
+    if (!index) {
+      label.hidden = false;
+      label.textContent = 'Cargando…';
+      renderList([]);
+      empty.hidden = true;
+      return;
+    }
+    if (!q) {
+      label.textContent = 'Más usadas';
+      label.hidden = false;
+      empty.hidden = true;
+      renderList(popular.map((s) => index?.find((e) => e.s === s)).filter((e): e is Indexed => e !== undefined));
+      return;
+    }
+    const found = find(q);
+    renderList(found);
+    label.hidden = found.length === 0;
+    label.textContent = found.length === 1 ? '1 resultado' : `${found.length} resultados`;
+    empty.hidden = found.length > 0;
+    if (!found.length) empty.textContent = `No hay herramientas para «${q}». Prueba con otra palabra: comprimir, pdf, mp3…`;
+  }
+
+  function openSearch() {
+    if (!search || !input) return;
+    if (menu?.open) closeDialog(menu, true);
+    openDialog(search);
+    // El foco tiene que ir dentro del mismo gesto para que iOS abra el teclado.
+    input.focus();
+    input.select();
+    update();
+    loadIndex().then(update).catch(() => {
+      if (!label || !empty) return;
+      label.hidden = true;
+      empty.hidden = false;
+      empty.textContent = 'No se ha podido cargar el buscador. Comprueba tu conexión e inténtalo de nuevo.';
+    });
+  }
+
+  document.querySelectorAll('[data-tf-search-open]').forEach((btn) => {
+    btn.addEventListener('click', openSearch);
+  });
+
+  input?.addEventListener('input', update);
+  input?.addEventListener('keydown', (e) => {
+    // En un <input type="search"> el primer Escape solo vaciaría el campo:
+    // aquí cierra el buscador directamente, como un panel de app.
+    if (e.key === 'Escape' && search) {
+      e.preventDefault();
+      closeDialog(search);
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!shown.length) return;
+      e.preventDefault();
+      const step = e.key === 'ArrowDown' ? 1 : -1;
+      select((active + step + shown.length) % shown.length);
+    } else if (e.key === 'Enter') {
+      const target = shown[active >= 0 ? active : 0];
+      if (!target) return;
+      e.preventDefault();
+      location.href = `/${target.s}`;
+    }
+  });
+
+  // Atajos de teclado: Ctrl/Cmd + K y "/" fuera de un campo de texto.
+  const isTyping = (el: EventTarget | null) =>
+    el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+
+  document.addEventListener('keydown', (e) => {
+    if (search?.open) return;
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openSearch();
+    } else if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey && !isTyping(e.target)) {
+      e.preventDefault();
+      openSearch();
+    }
+  });
+
+  // ── Instalar la app ───────────────────────────────────────────────────────
+
+  const installBtn = document.getElementById('tf-install-btn');
+  const installIos = document.getElementById('tf-install-ios');
+  const nav = navigator as Navigator & { standalone?: boolean };
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || nav.standalone === true;
+  let deferredPrompt: BeforeInstallPromptEvent | null = null;
+
+  function installSeen(): boolean {
+    try { return localStorage.getItem('tf-install-seen') === '1'; } catch { return true; }
+  }
+
+  function showInstall(kind: 'prompt' | 'ios') {
+    if (standalone || !install) return;
+    install.hidden = false;
+    if (installBtn) installBtn.hidden = kind !== 'prompt';
+    if (installIos) installIos.hidden = kind !== 'ios';
+    if (badge && !installSeen()) badge.hidden = false;
+  }
+
+  function hideInstall() {
+    if (install) install.hidden = true;
+    if (badge) badge.hidden = true;
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e as BeforeInstallPromptEvent;
+    showInstall('prompt');
+  });
+
+  installBtn?.addEventListener('click', async () => {
+    const prompt = deferredPrompt;
+    if (!prompt) return;
+    deferredPrompt = null;
+    await prompt.prompt();
+    const { outcome } = await prompt.userChoice;
+    if (outcome === 'accepted') hideInstall();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    hideInstall();
+    const w = window as Window & { gtag?: (...args: unknown[]) => void };
+    w.gtag?.('event', 'pwa_install');
+  });
+
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIos) showInstall('ios');
+
+  // ── Service worker (solo en producción) ───────────────────────────────────
+
+  if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+    const register = () => {
+      navigator.serviceWorker.register('/app-sw.js').catch(() => { /* el sitio funciona igual sin él */ });
+    };
+    if (document.readyState === 'complete') register();
+    else window.addEventListener('load', register, { once: true });
+  }
+</script>

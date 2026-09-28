@@ -8,6 +8,7 @@ import AdNative from '@/components/ads/AdNative.astro';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { jsonLd } from '@/lib/utils/jsonld';
+import AppMeta from './AppMeta.astro';
 
 interface Props {
   slug: string;
@@ -191,7 +192,7 @@ const graph = jsonLd({
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
@@ -223,14 +224,13 @@ const graph = jsonLd({
          SoftwareApplication, BreadcrumbList, HowTo y FAQPage -->
     <script is:inline type="application/ld+json" set:html={graph} />
 
-    <meta name="theme-color" content="#E84827" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <AppMeta />
     {/* Monetag desactivado temporalmente — sitio sin anuncios por ahora */}
     {/* <meta name="monetag" content="7a8a8d7deccc95cced5ef94a9c6e3b73" /> */}
     <!-- Google tag (gtag.js) -->
@@ -243,10 +243,12 @@ const graph = jsonLd({
     </script>
   </head>
   <body>
-    <Header />
+    <Header back={`/${tool.domain}`} title={tool.name} />
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-      <nav class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
+      {/* En móvil la miga de pan la sustituyen el botón atrás de la barra
+          superior y la pestaña activa; sigue en el HTML para los buscadores. */}
+      <nav class="hidden md:flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
         <a href="/" class="hover:text-[var(--color-text)] transition-colors">Inicio</a>
         <span>/</span>
         <a href={`/${tool.domain}`} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
@@ -254,9 +256,9 @@ const graph = jsonLd({
         <span class="text-[var(--color-text)]">{tool.name}</span>
       </nav>
 
-      <div class="mb-8">
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
-        <p class="aeo-answer text-[var(--color-text-secondary)] mt-2 text-lg max-w-2xl">{directAnswer}</p>
+      <div class="mb-6 sm:mb-8">
+        <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
+        <p class="aeo-answer text-[var(--color-text-secondary)] mt-2 text-base sm:text-lg max-w-2xl">{directAnswer}</p>
         <p class="mt-3 text-xs text-[var(--color-text-muted)]">
           Gratis, sin registro y sin subir archivos a ningún servidor: el procesamiento ocurre en tu navegador ·
           <span> Actualizado el <time datetime={dateModified}>{new Date(`${dateModified}T00:00:00Z`).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time></span>

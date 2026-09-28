@@ -1,0 +1,42 @@
+---
+/**
+ * Metadatos de app instalable (PWA) y navegación instantánea.
+ * Va dentro del <head> de las 11 plantillas con head propio, justo después de
+ * los favicons. Es la única fuente de `theme-color` y `apple-touch-icon`.
+ *
+ * - `theme-color` blanco: la barra del navegador (y la de estado en la app
+ *   instalada) se funde con la barra superior blanca del sitio.
+ * - El manifiesto (`/manifest.webmanifest`) lo genera
+ *   `src/pages/manifest.webmanifest.ts` en cada build.
+ * - Speculation Rules: Chrome precarga el HTML de un enlace interno en cuanto
+ *   el usuario apunta o toca, así la página siguiente abre al instante. Solo
+ *   `prefetch` (descarga el documento), nunca `prerender`: prerenderizar
+ *   ejecutaría los scripts de anuncios de páginas que quizá no se visiten.
+ */
+const speculationRules = JSON.stringify({
+  prefetch: [
+    {
+      source: 'document',
+      where: {
+        and: [
+          { href_matches: '/*' },
+          { not: { href_matches: '/ads/*' } },
+          { not: { href_matches: '/offline' } },
+          { not: { selector_matches: '[rel~=nofollow]' } },
+        ],
+      },
+      eagerness: 'moderate',
+    },
+  ],
+});
+---
+<meta name="theme-color" content="#FFFFFF" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="application-name" content="ToolsFoto" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="ToolsFoto" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="format-detection" content="telephone=no" />
+<script is:inline type="speculationrules" set:html={speculationRules} />

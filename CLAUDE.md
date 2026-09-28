@@ -202,6 +202,38 @@ queda atrás en silencio (pasó en `CompararPDFsTool` y `PDFaSVGTool`).
 
 ---
 
+## App móvil (PWA + interfaz nativa)
+
+En móvil (< 768px) el sitio se comporta como una app nativa y además se puede instalar.
+Escritorio no cambia salvo el buscador (icono de lupa, `Ctrl+K` o `/`).
+
+| Pieza | Dónde vive | Qué hace |
+|---|---|---|
+| Barra de pestañas inferior | `AppShell.astro` | Inicio · Imagen · PDF · Vídeo · Menú. Marca la sección actual (una herramienta marca su categoría; audio, developer, blog y legales marcan Menú). Tocar la pestaña de la página actual sube arriba. |
+| Menú (bottom sheet) | `AppShell.astro` | `<dialog>` modal: buscador, las 5 categorías con su recuento real + Blog, "Instala la app" y páginas de información. Se cierra deslizando hacia abajo, tocando fuera, con la X, Escape o el botón atrás de Android. |
+| Buscador | `AppShell.astro` + `src/pages/search-index.json.ts` | Pantalla completa en móvil, panel centrado en escritorio. Descarga `/search-index.json` (generado desde `TOOLS`) la primera vez que se abre. Sin acentos, con sinónimos (`quitar`↔`eliminar`, `foto`↔`imagen`…) y navegación con flechas + Enter. |
+| Barra superior móvil | `Header.astro` | Props `back` y `title`. Con `back`, botón atrás: vuelve en el historial si se llegó desde el sitio y, si no, navega a `back`. Con `title`, el logo se sustituye por el título cuando el H1 sale de pantalla. `ToolLayout`, `LegalLayout` y `blog/[slug]` los pasan. |
+| Metadatos de app | `AppMeta.astro` | En el `<head>` de las 11 plantillas. **Única fuente de `theme-color` (blanco) y `apple-touch-icon`**: no volver a ponerlos en las plantillas. Incluye Speculation Rules (`prefetch` al apuntar/tocar enlaces internos). |
+| Manifiesto | `src/pages/manifest.webmanifest.ts` | Generado en cada build (recuento y accesos directos salen de `TOOLS`). `start_url` lleva `utm_source=pwa` para medir en Analytics el uso de la app instalada. |
+| Service worker | `public/app-sw.js` | Páginas: red primero con copia para offline (máx. 60). `/_astro/*`: caché primero (hash inmutable, máx. 200, sin `.wasm` ni archivos > 5 MB). Iconos/manifiesto/índice: stale-while-revalidate. **Nunca toca terceros ni `/ads/*`.** Se registra solo en producción. |
+| Página sin conexión | `src/pages/offline.astro` | Autocontenida (sin global.css, sin anuncios). Lista las páginas guardadas. noindex y fuera del sitemap. |
+| Transiciones | `global.css` | `@view-transition { navigation: auto; }`: fundido entre páginas en Chrome/Safari recientes, con cabecera y barra de pestañas fijas (`view-transition-name`). Navegación normal, no SPA: anuncios y analytics se cargan en cada página como siempre. |
+
+**Reglas (leer antes de tocar estas piezas):**
+- **No usar `<ClientRouter />` / View Transitions de Astro.** Convierte el sitio en SPA y los scripts `is:inline` de anuncios y gtag no se volverían a ejecutar al navegar.
+- **Speculation Rules solo con `prefetch`, nunca `prerender`**: prerenderizar ejecutaría los anuncios de páginas que el usuario quizá no visite (impresiones inválidas).
+- El service worker se llama `app-sw.js` y no `sw.js` a propósito: algunas redes de anuncios piden subir un `sw.js` a la raíz para sus push. Para invalidar todas sus cachés, subir `VERSION` en el archivo.
+- **Altura reservada abajo:** `global.css` define `--tf-tabbar-h` (0 en escritorio, `62px + safe-area` en móvil) y el `body` reserva `--tf-tabbar-h + --tf-anchor-h`. El anchor de anuncios se coloca con `bottom: var(--tf-tabbar-h)`, justo encima de la barra. Si se toca uno, revisar el otro.
+- Los estilos `tf-*` de `AppShell.astro` y `global.css` están **fuera de las capas de Tailwind**, así que ganan a las utilidades: no mezclar en esos elementos utilidades que toquen las mismas propiedades (p. ej. `md:hidden` en `.tf-tabbar` no funcionaría).
+- Los `<dialog>` no llevan `display` propio: el navegador los oculta cerrados. Abrir/cerrar siempre con `openDialog()`/`closeDialog()` del script de `AppShell`, que animan y gestionan el bloqueo de scroll (`html.tf-lock`).
+- `viewport-fit=cover` en las 11 plantillas: la barra inferior y los paneles usan `env(safe-area-inset-*)`; el `body` respeta los laterales.
+- Campos de texto a 16px en móvil (`global.css`) para que iOS no haga zoom al enfocarlos.
+- En la app instalada (`display-mode: standalone`) el `<footer>` se oculta en móvil; `AppShell` y `AdScripts` van fuera del `<footer>` para seguir visibles.
+- Comparar rutas siempre con `currentPath()` de `@/lib/utils/path`: con `build.format: 'file'`, `Astro.url.pathname` es `/imagen.html` en el build.
+- Iconos de la app: se generan desde el diseño de `favicon.svg` (degradado + "TF"). `icon-maskable-512.png` y `apple-touch-icon.png` van a sangre completa (el sistema recorta las esquinas).
+
+---
+
 ## Estructura de carpetas
 
 ```
@@ -228,7 +260,9 @@ toolsfoto-v2/
 │   │   │   ├── AdSlot.astro          # Hueco de anuncio in-content (lo rellena el loader)
 │   │   │   └── AdNative.astro        # Banner nativo — máximo uno por página
 │   │   ├── layout/
-│   │   │   ├── Header.astro          # Nav: Inicio, Imágenes, PDF, Vídeo, Audio, Dev, Blog
+│   │   │   ├── Header.astro          # Nav escritorio + buscador; en móvil barra de app (atrás + título al desplazar)
+│   │   │   ├── AppShell.astro        # Barra de pestañas móvil, menú en hoja inferior, buscador, PWA (vía Footer)
+│   │   │   ├── AppMeta.astro         # <head>: manifest, theme-color, apple-touch-icon, speculation rules
 │   │   │   ├── Footer.astro          # 5 columnas: Imágenes, PDF, Vídeo, Audio, ToolsFoto (incluye Blog)
 │   │   │   ├── ToolLayout.astro      # Wrapper: SEO + breadcrumb + relacionadas + FAQs
 │   │   │   └── LegalLayout.astro     # Wrapper páginas legales: SEO + breadcrumb + prose
@@ -252,6 +286,7 @@ toolsfoto-v2/
 │   │   │   ├── download.ts         # triggerDownload(), getOutputFilename()
 │   │   │   ├── ffmpeg.ts           # createFFmpeg(onProgress?), runFFmpeg(ff, file, name, args, out)
 │   │   │   ├── pdfjs.ts            # loadPdfjs() — única forma admitida de cargar pdfjs
+│   │   │   ├── path.ts             # currentPath() — normaliza Astro.url.pathname (/imagen.html → /imagen)
 │   │   │   ├── bytes.ts            # toBlobPart() — Uint8Array de pdf-lib/FFmpeg → BlobPart
 │   │   │   └── format.ts           # formatBytes(), formatDimensions(), formatReduction(), mimeToExtension()
 │   │   └── constants/
@@ -262,6 +297,8 @@ toolsfoto-v2/
 ├── public/
 │   ├── hero-bg.jpg              # Imagen de fondo del hero (gradiente full-spectrum, ~73 KB)
 │   ├── favicon.svg / favicon.ico / robots.txt
+│   ├── app-sw.js                # Service worker de la PWA (offline + caché de assets)
+│   ├── icon-192.png / icon-512.png / icon-maskable-512.png / apple-touch-icon.png
 ├── astro.config.mjs
 ├── tsconfig.json
 └── package.json
@@ -353,7 +390,8 @@ Contenido del artículo...
 ### Rutas del blog en la navegación
 
 El blog está enlazado desde:
-- **Header.astro** — link "Blog" en nav escritorio y menú móvil (activo con `bg-[var(--color-accent-bg)]` si `currentPath.startsWith('/blog')`)
+- **Header.astro** — link "Blog" en el nav de escritorio (activo con `bg-[var(--color-accent-bg)]` en `/blog` y `/blog/*`)
+- **AppShell.astro** — tarjeta "Blog" en el menú inferior de móvil
 - **Footer.astro** — link "Blog" en la columna "ToolsFoto"
 
 ### Sitemap
@@ -613,7 +651,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 303 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 304 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -624,7 +662,7 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 - Astro detecta el adapter de Cloudflare y habilita "Cloudflare Images" y "KV sessions" — esos mensajes en el build son informativos, no errores.
 - El `output: "static"` en `astro.config.mjs` genera HTML estático puro. No hay server-side rendering.
 - La depreciación de `punycode` en los logs de build/dev es un warning de Node.js interno de las dependencias, no del código propio.
-- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal` y a la preferencia `tf-anchor` del anuncio inferior. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
+- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal`, la preferencia `tf-anchor` del anuncio inferior, la marca de frecuencia `tf-sb2`, la marca `tf-install-seen` (localStorage) del aviso de instalación y las cachés `tf-*` del service worker (páginas y assets propios para uso offline). Todo ello está descrito en `cookies.astro`. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
 - **Hero background:** `public/hero-bg.jpg` — gradiente full-spectrum (rosa/naranja/azul), 1920px, ~73 KB. Overlay `from-black/75 via-black/55 to-black/30` para legibilidad del texto.
 
 ---
@@ -645,3 +683,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-09-18 | Auditoría SEO de todo el sitio y correcciones. (1) **50 herramientas no tenían ni un solo enlace interno en el HTML servido**: `CategoryGrid` recortaba el array con `slice()` y solo publicaba las 24 cards de la primera página, mientras la paginación son botones, no enlaces. Ahora renderiza todas las cards y oculta con CSS las de otras páginas (`ToolCard` acepta `className`); la UX no cambia (24 visibles) y las 241 herramientas quedan enlazadas. (2) El nav del header apuntaba a anclas del home (`/#imagen`) en vez de a las páginas de categoría reales: 10 enlaces × 303 páginas repuntados a `/imagen`, `/pdf`, `/video`, `/audio` y `/developer`, con estado activo. (3) Recuentos obsoletos en las descriptions de las 5 categorías (imagen decía 48 de 60, PDF 32 de 43, vídeo 31 de 42, audio 42 de 53, developer 31 de 43): ahora se derivan de `TOOLS` en `seo.ts` y no pueden volver a desfasarse. (4) 141 meta descriptions superaban el corte de Google (~160); se recortó la coletilla genérica repetida ("Completamente gratis.", "Sin registro, sin subir archivos.", …) y se reescribieron a mano las que no encajaban en el patrón: las 252 quedan entre 70 y 160 caracteres, media 138, sin duplicados. (5) Nueva `src/pages/404.astro` (noindex, fuera del sitemap) con salidas a las 5 categorías y a las herramientas más usadas. (6) `public/favicon.ico` (16/32/48) — los navegadores lo piden solo y devolvía 404. (7) `<meta name="robots">` con `max-snippet:-1` y `max-image-preview:large` en las 5 categorías, el listado del blog y los 49 artículos, que no lo llevaban; `/contacto` declara `index, follow` explícito. (8) Blog: JSON-LD unificado en un `@graph` con `dateModified`, `inLanguage`, `articleSection`, `image` e `isPartOf`, y `publisher.logo` pasa de `favicon.svg` a `favicon-192.png` (Google no admite SVG en `logo`); nuevo campo opcional `actualizado` en el frontmatter; el listado publica `Blog` + `ItemList` con los 49 artículos. (9) `LegalLayout` emite `@graph` con `WebPage`/`ContactPage` y `BreadcrumbList` — `/contacto`, que es indexable, no tenía ningún dato estructurado. (10) `theme-color` y `preconnect`/`dns-prefetch` a Google Tag en las 11 plantillas con head propio. Verificado sobre el HTML construido: 303 páginas, 0 herramientas huérfanas, 307 bloques JSON-LD que parsean, 0 títulos/descriptions/canonicals duplicados. |
 | 2026-09-18 | Segunda tanda tras la auditoría: los 3 puntos que quedaron abiertos, y un fallo de producción que apareció al abrirlos. (1) **Las 10 herramientas de pdfjs estaban rotas**: fijaban `workerSrc` al worker 3.11.174 de cdnjs con pdfjs-dist 5.6.205 en el bundle, y pdf.js aborta si las versiones no coinciden; además la build moderna de la 5.x usa `Map.prototype.getOrInsertComputed`, que ni Chrome 141 implementa. Nuevo `src/lib/utils/pdfjs.ts` con `loadPdfjs()` (build `legacy` + worker del propio paquete vía `?url`, auto-hospedado). `page.render({ canvasContext })` → `{ canvas }` en los 10 sitios; en `CompararPDFsTool` y `PDFaSVGTool` el `page` estaba tipado como `object`/`unknown`, así que tsc no los veía. Verificado con Playwright sobre Chromium 141 y un PDF real: 10/10 producen salida (antes 0/10). (2) **tsc: 124 errores → 0.** `toBlobPart()` en el nuevo `src/lib/utils/bytes.ts` para los 92 casos de `Uint8Array<ArrayBufferLike>` vs `BlobPart`; `PdfUploader.current` estrechado a `{name,size}` (14 casos); `Slider.label` opcional; `EliminarPasswordPDFTool` pasaba a pdf-lib una opción `password` que no existe —la contraseña se ignoraba en silencio y el error culpaba al usuario—; `style` duplicado en `ConvertirVerticalTool`; namespace `JSX` (React 19) en `RegexTesterTool`; interfaz `SpeechRecognition` en `TranscribirAudioTool`. (3) **Blog → herramientas**: nuevo campo `herramientas` en el frontmatter de los 49 artículos (2-4 slugs, curados) y bloque "Herramientas para hacerlo" al final del artículo; un slug inexistente rompe el build. Antes el único enlace del cierre iba a `/`. (4) **Títulos**: los 26 que pasaban de 70 caracteres reescritos quitando el relleno "online gratis" pero conservando las keywords de cola larga del guión; ninguno pasa ya de 70 y la media baja a 55. Los de 61-70 se dejan a propósito: recortarlos tiraría términos como "DNI, pasaporte, visado" a cambio de estética en el SERP. |
 | 2026-09-23 | Segunda unidad de social bar de Adsterra (`pl29628846`) añadida en `AdScripts.astro` con carga no intrusiva: se inyecta por JS tras `load` + idle + 7 s, como mucho una vez cada 15 min por pestaña (`sessionStorage` `tf-sb2`), nunca en las páginas legales/contacto/404 y nunca con el ahorro de datos activo. Las páginas legales no cambian: es la misma red (Adsterra) que ya declaran `privacidad.astro` y `cookies.astro`. |
+| 2026-09-28 | Interfaz de app nativa en móvil + PWA instalable. (1) Nuevo `AppShell.astro` (incluido vía `Footer.astro`): barra de pestañas inferior (Inicio · Imagen · PDF · Vídeo · Menú) con sección activa, menú en hoja inferior deslizable (categorías con recuento, Blog, instalar app, información) y buscador de herramientas a pantalla completa (`Ctrl+K`/`/` en escritorio) alimentado por el nuevo `/search-index.json`. (2) `Header.astro` reescrito: sin menú hamburguesa; en móvil botón atrás (historial si se viene del sitio, si no la página padre) y título compacto al desplazar; en escritorio, lupa de búsqueda. Corregido de paso el estado activo del nav, que nunca se marcaba porque `Astro.url.pathname` llega como `/imagen.html` (nuevo `currentPath()`); ahora una herramienta marca su categoría. (3) PWA: `manifest.webmanifest` generado desde `TOOLS` (accesos directos a Comprimir imagen, Eliminar fondo, Unir PDFs y Comprimir vídeo), iconos 192/512/maskable y `apple-touch-icon` a sangre, service worker `public/app-sw.js` (offline de páginas visitadas, caché de `/_astro/`) y página `/offline` (noindex, fuera del sitemap). Verificado en Chromium: manifiesto sin errores y 0 errores de instalabilidad. (4) Nuevo `AppMeta.astro` en las 11 plantillas: `theme-color` pasa de `#E84827` a blanco (la barra del navegador se funde con la cabecera), `viewport-fit=cover`, metas de app iOS/Android y Speculation Rules (`prefetch`). (5) `global.css`: transiciones entre páginas (`@view-transition`), sin resaltado de toque ni zoom por doble toque, campos a 16px en móvil, reserva de altura para la barra inferior; el anchor de anuncios se apoya encima de la barra. (6) Ajustes móviles: miga de pan oculta en móvil (sigue en el HTML), hero del home y cabeceras oscuras de categorías/blog más compactas, `ToolCard` con respuesta al pulsar. `cookies.astro` y `privacidad.astro` describen la caché offline y la marca de instalación. 304 páginas. |

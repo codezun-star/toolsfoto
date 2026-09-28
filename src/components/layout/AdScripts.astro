@@ -68,11 +68,12 @@
   .tf-ad-native.is-filled > div { min-height: 1px; }
 
   /* ── Anchor inferior ──────────────────────────────────────────────────── */
-  body { padding-bottom: var(--tf-anchor-h, 0px); }
-
+  /* El hueco que reserva el body (--tf-anchor-h + --tf-tabbar-h) lo declara
+     global.css. En móvil el anchor se apoya encima de la barra de pestañas
+     (AppShell.astro); en escritorio --tf-tabbar-h vale 0. */
   .tf-anchor {
     position: fixed;
-    bottom: 0;
+    bottom: var(--tf-tabbar-h, 0px);
     left: 0;
     right: 0;
     z-index: 9998;

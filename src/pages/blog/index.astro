@@ -8,6 +8,7 @@ import '@/styles/global.css';
 import { SITE } from '@/lib/constants/seo';
 import { getCollection } from 'astro:content';
 import { jsonLd } from '@/lib/utils/jsonld';
+import AppMeta from '@/components/layout/AppMeta.astro';
 
 const todos = await getCollection('blog', (e) => e.data.publicado !== false);
 const sorted = todos
@@ -89,7 +90,7 @@ const graph = jsonLd({
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -117,14 +118,13 @@ const graph = jsonLd({
          ItemList de todos los artículos, y BreadcrumbList -->
     <script is:inline type="application/ld+json" set:html={graph} />
 
-    <meta name="theme-color" content="#E84827" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <AppMeta />
     {/* Monetag desactivado temporalmente — sitio sin anuncios por ahora */}
     {/* <meta name="monetag" content="7a8a8d7deccc95cced5ef94a9c6e3b73" /> */}
     <!-- Google tag (gtag.js) -->
@@ -140,9 +140,9 @@ const graph = jsonLd({
     <Header />
 
     <!-- Page header -->
-    <div class="bg-[var(--color-text)] pt-14">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-        <nav class="flex items-center gap-2 text-xs text-[#888] mb-6 font-mono">
+    <div class="bg-[var(--color-text)] md:pt-14">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-7 md:py-10">
+        <nav class="hidden md:flex items-center gap-2 text-xs text-[#888] mb-6 font-mono">
           <a href="/" class="hover:text-white transition-colors">Inicio</a>
           <span>/</span>
           <span style="color: #0BBFB0;">Blog</span>

@@ -1,80 +1,138 @@
 ---
-const currentPath = Astro.url.pathname;
----
-<header class="sticky top-0 z-50 bg-white border-b border-[var(--color-border)]">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
-    <a href="/" class="shrink-0 leading-none hover:opacity-80 transition-opacity">
-      <span class="text-[20px] font-extrabold tracking-tight" style="letter-spacing: -0.5px;">
-        <span style="color: var(--color-text)">Tools</span><span style="color: #0BBFB0">Foto</span>
-      </span>
-    </a>
+/**
+ * Barra superior.
+ *
+ * - Escritorio (md+): logo, navegación por categorías, buscador y CTA.
+ * - Móvil: se comporta como la barra de una app nativa. En las páginas de
+ *   detalle (herramienta, artículo, legales) muestra un botón atrás y, al
+ *   desplazar la página y perder de vista el H1, el logo se sustituye por el
+ *   título de la página. La navegación principal en móvil vive en la barra de
+ *   pestañas inferior (`AppShell.astro`), por eso aquí ya no hay menú
+ *   hamburguesa.
+ */
+import { ChevronLeft, Search } from 'lucide-react';
+import { TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { currentPath } from '@/lib/utils/path';
 
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]">
-      <a href="/" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Inicio</a>
-      <a href="/imagen" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/imagen' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Imágenes</a>
-      <a href="/pdf" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/pdf' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>PDF</a>
-      <a href="/video" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/video' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Vídeo</a>
-      <a href="/audio" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/audio' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Audio</a>
-      <a href="/developer" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath === '/developer' ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Developer</a>
-      <a href="/blog" class={`px-3 py-1.5 rounded-lg transition-colors ${currentPath.startsWith('/blog') ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}>Blog</a>
+interface Props {
+  /** Página padre. El botón atrás vuelve en el historial si se llegó desde el
+   *  propio sitio; si no (entrada desde Google), navega a esta URL. */
+  back?: string;
+  /** Título compacto que aparece en la barra móvil al desplazar la página. */
+  title?: string;
+}
+
+const { back, title } = Astro.props;
+const path = currentPath(Astro.url.pathname);
+// En las páginas de herramienta se marca la categoría a la que pertenecen.
+const section = TOOL_BY_SLUG[path.slice(1)]?.domain ? `/${TOOL_BY_SLUG[path.slice(1)].domain}` : path;
+
+const NAV = [
+  { href: '/', label: 'Inicio' },
+  { href: '/imagen', label: 'Imágenes' },
+  { href: '/pdf', label: 'PDF' },
+  { href: '/video', label: 'Vídeo' },
+  { href: '/audio', label: 'Audio' },
+  { href: '/developer', label: 'Developer' },
+  { href: '/blog', label: 'Blog' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? section === '/' : section === href || section.startsWith(`${href}/`);
+---
+<header
+  id="tf-header"
+  class="tf-header sticky top-0 z-50 bg-white border-b border-[var(--color-border)]"
+  data-title={title ? '' : undefined}
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-2 md:gap-4">
+    <div class="flex items-center min-w-0 flex-1 md:flex-none">
+      {back && (
+        <a
+          href={back}
+          data-tf-back
+          class="tf-press md:hidden -ml-2 mr-1 w-10 h-10 shrink-0 grid place-items-center rounded-full text-[var(--color-text)] active:bg-[var(--color-bg)]"
+          aria-label="Volver"
+        >
+          <ChevronLeft size={26} strokeWidth={2.25} />
+        </a>
+      )}
+      <div class="relative min-w-0 flex-1 h-10 flex items-center">
+        <a href="/" class="tf-header-logo shrink-0 leading-none hover:opacity-80 transition-opacity" aria-label="ToolsFoto, ir al inicio">
+          <span class="text-[20px] font-extrabold tracking-tight" style="letter-spacing: -0.5px;">
+            <span style="color: var(--color-text)">Tools</span><span style="color: #0BBFB0">Foto</span>
+          </span>
+        </a>
+        {title && (
+          <p class="tf-header-title md:hidden absolute inset-0 truncate leading-10 text-[17px] font-bold text-[var(--color-text)]" aria-hidden="true">
+            {title}
+          </p>
+        )}
+      </div>
+    </div>
+
+    <!-- Nav de escritorio -->
+    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]" aria-label="Principal">
+      {NAV.map(item => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class={`px-3 py-1.5 rounded-lg transition-colors ${isActive(item.href) ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}
+        >{item.label}</a>
+      ))}
     </nav>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1 md:gap-2 shrink-0">
+      <button
+        type="button"
+        data-tf-search-open
+        class="tf-press w-10 h-10 grid place-items-center rounded-full text-[var(--color-text)] md:text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] active:bg-[var(--color-bg)] transition-colors"
+        aria-label="Buscar herramientas"
+        title="Buscar herramientas (Ctrl + K)"
+      >
+        <Search size={21} strokeWidth={2.1} />
+      </button>
       <a
         href="/comprimir"
-        class="px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
+        class="hidden md:inline-flex px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
       >
         Usar gratis
       </a>
-      <!-- Mobile menu button -->
-      <button
-        id="mobile-menu-btn"
-        class="md:hidden p-2 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
-        aria-label="Abrir menú"
-      >
-        <svg id="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
-        </svg>
-        <svg id="icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
     </div>
-  </div>
-
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] bg-white">
-    <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1 text-sm font-medium">
-      <a href="/" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Inicio</a>
-      <a href="/imagen" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Imágenes</a>
-      <a href="/pdf" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">PDF</a>
-      <a href="/video" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Vídeo</a>
-      <a href="/audio" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Audio</a>
-      <a href="/developer" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Developer</a>
-      <a href="/blog" class="px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors">Blog</a>
-    </nav>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const iconMenu = document.getElementById('icon-menu');
-  const iconClose = document.getElementById('icon-close');
+  const header = document.getElementById('tf-header');
 
-  btn?.addEventListener('click', () => {
-    menu?.classList.toggle('hidden');
-    iconMenu?.classList.toggle('hidden');
-    iconClose?.classList.toggle('hidden');
-  });
-
-  // Close menu when a nav link is clicked
-  menu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      menu.classList.add('hidden');
-      iconMenu?.classList.remove('hidden');
-      iconClose?.classList.add('hidden');
+  // Botón atrás: como en una app, vuelve a la pantalla anterior si se llegó
+  // desde el propio sitio (bfcache: instantáneo y conserva el scroll). Si se
+  // entró desde fuera (Google, un enlace compartido), el enlace lleva a la
+  // página padre en vez de sacar al usuario del sitio.
+  document.querySelectorAll<HTMLAnchorElement>('[data-tf-back]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      let fromSite = false;
+      try {
+        fromSite = document.referrer !== '' && new URL(document.referrer).origin === location.origin;
+      } catch {
+        fromSite = false;
+      }
+      if (fromSite && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
     });
   });
+
+  // Título compacto: aparece en la barra cuando el H1 sale por arriba.
+  const h1 = document.querySelector('h1');
+  if (header && header.dataset.title !== undefined && h1 && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        header.classList.toggle('is-titled', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { rootMargin: '-56px 0px 0px 0px' },
+    );
+    observer.observe(h1);
+  }
 </script>

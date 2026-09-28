@@ -8,6 +8,7 @@ import { TOOLS } from '@/lib/constants/tools';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import '@/styles/global.css';
 import { jsonLd } from '@/lib/utils/jsonld';
+import AppMeta from '@/components/layout/AppMeta.astro';
 
 const tools = TOOLS.filter(t => t.domain === 'video');
 const seo = PAGE_SEO['video'];
@@ -18,7 +19,7 @@ const domainLabel = 'Herramientas de vídeo';
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
@@ -71,14 +72,13 @@ const domainLabel = 'Herramientas de vídeo';
       },
     })} />
 
-    <meta name="theme-color" content="#E84827" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <AppMeta />
     <!-- Google tag (gtag.js) -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
     <script is:inline>
@@ -91,9 +91,9 @@ const domainLabel = 'Herramientas de vídeo';
   <body>
     <Header />
 
-    <div class="bg-[var(--color-text)] pt-14">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
-        <nav class="flex items-center gap-2 text-xs text-[#888] mb-6 font-mono">
+    <div class="bg-[var(--color-text)] md:pt-14">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-7 md:py-10">
+        <nav class="hidden md:flex items-center gap-2 text-xs text-[#888] mb-6 font-mono">
           <a href="/" class="hover:text-white transition-colors">Inicio</a>
           <span>/</span>
           <span style="color: #0BBFB0;">Vídeo</span>

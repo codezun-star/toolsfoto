@@ -5,6 +5,7 @@ import AdSlot from '@/components/ads/AdSlot.astro';
 import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { jsonLd } from '@/lib/utils/jsonld';
+import AppMeta from './AppMeta.astro';
 
 interface Props {
   slug: string;
@@ -64,7 +65,7 @@ const graph = jsonLd({
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
@@ -90,14 +91,13 @@ const graph = jsonLd({
 
     <script is:inline type="application/ld+json" set:html={graph} />
 
-    <meta name="theme-color" content="#E84827" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon-192.png" />
+    <AppMeta />
     {/* Monetag desactivado temporalmente — sitio sin anuncios por ahora */}
     {/* <meta name="monetag" content="7a8a8d7deccc95cced5ef94a9c6e3b73" /> */}
     <!-- Google tag (gtag.js) -->
@@ -110,10 +110,10 @@ const graph = jsonLd({
     </script>
   </head>
   <body>
-    <Header />
+    <Header back="/" title={title} />
 
-    <main class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
-      <nav class="flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 pt-6 pb-10 sm:py-10">
+      <nav class="hidden md:flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
         <a href="/" class="hover:text-[var(--color-text)] transition-colors">Inicio</a>
         <span>/</span>
         <span class="text-[var(--color-text)]">{title}</span>
