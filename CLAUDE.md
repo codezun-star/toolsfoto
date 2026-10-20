@@ -125,27 +125,15 @@ Los formatos iframe de Adsterra se configuran con la variable **global** `atOpti
 | 160x600 | `224bdf72…` | rail derecho (`sky`) |
 | 160x300 | `7bee5b15…` | rail izquierdo (`sky-small`) |
 | Nativo | contenedor `934ea823…` | `AdNative`, uno por página |
-| Social bar / popunder | `pl31073442…` | global, una vez por página |
-| Social bar / popunder (2.ª) | `pl29628846…` | global, **inyectada en diferido** por JS — ver abajo |
+| Social bar | `pl31073442…` | global, una vez por página |
 
-**Segunda social bar (`pl29628846`) — carga no intrusiva:**
-No va escrita en el HTML como la primera: la inyecta un bloque `is:inline` de
-`AdScripts.astro` solo si se cumplen las cuatro condiciones, pensadas para que
-no moleste ni penalice métricas:
-1. Nunca antes de `load` + `requestIdleCallback` + `DELAY_MS` (7 s). No compite
-   por red ni CPU con el render ni con el primer uso de la herramienta.
-2. Como mucho una vez cada `COOLDOWN_MIN` (15 min) por pestaña, con marca de
-   tiempo en `sessionStorage` (`tf-sb2`). Recorrer diez herramientas seguidas la
-   dispara una vez, no diez.
-3. Nunca en `/privacidad`, `/cookies`, `/terminos`, `/aviso-legal`, `/contacto`
-   ni el 404.
-4. Nunca con `navigator.connection.saveData` activado.
-
-Para ajustar la agresividad, tocar `DELAY_MS` y `COOLDOWN_MIN`; para retirarla,
-borrar ese bloque entero (no afecta al resto de anuncios). Si algún día se
-detecta que las dos unidades `pl…` se pisan entre sí (ambas son popunder), dejar
-solo una: el problema del eCPM que aplicaba a Monetag + Adsterra también aplica
-a dos popunders de la misma red.
+**Sin popunder.** Hubo una segunda unidad global (`pl29628846…/1d/2a/69/…js`,
+añadida el 2026-09-23 e inyectada en diferido) que era el popunder de la red:
+abre una pestaña detrás al primer clic en cualquier parte de la página. Se quitó
+el 2026-10-20 y **no debe volver**: es el formato que se retiró de los otros
+sitios por las caídas de indexación. El único script de la red fuera de un
+iframe es la social bar; antes de pegar una URL nueva del proveedor, confirmar
+en su panel qué formato es.
 
 **Reglas del loader (`AdScripts.astro`):**
 - Carga diferida con `IntersectionObserver` (`rootMargin: 600px`): el anuncio se pide cuando el hueco se acerca al viewport. No toca el LCP y sube la viewability.
@@ -662,7 +650,7 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 - Astro detecta el adapter de Cloudflare y habilita "Cloudflare Images" y "KV sessions" — esos mensajes en el build son informativos, no errores.
 - El `output: "static"` en `astro.config.mjs` genera HTML estático puro. No hay server-side rendering.
 - La depreciación de `punycode` en los logs de build/dev es un warning de Node.js interno de las dependencias, no del código propio.
-- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal`, la preferencia `tf-anchor` del anuncio inferior, la marca de frecuencia `tf-sb2`, la marca `tf-install-seen` (localStorage) del aviso de instalación y las cachés `tf-*` del service worker (páginas y assets propios para uso offline). Todo ello está descrito en `cookies.astro`. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
+- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal`, la preferencia `tf-anchor` del anuncio inferior, la marca `tf-install-seen` (localStorage) del aviso de instalación y las cachés `tf-*` del service worker (páginas y assets propios para uso offline). Todo ello está descrito en `cookies.astro`. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
 - **Hero background:** `public/hero-bg.jpg` — gradiente full-spectrum (rosa/naranja/azul), 1920px, ~73 KB. Overlay `from-black/75 via-black/55 to-black/30` para legibilidad del texto.
 
 ---
@@ -684,3 +672,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-09-18 | Segunda tanda tras la auditoría: los 3 puntos que quedaron abiertos, y un fallo de producción que apareció al abrirlos. (1) **Las 10 herramientas de pdfjs estaban rotas**: fijaban `workerSrc` al worker 3.11.174 de cdnjs con pdfjs-dist 5.6.205 en el bundle, y pdf.js aborta si las versiones no coinciden; además la build moderna de la 5.x usa `Map.prototype.getOrInsertComputed`, que ni Chrome 141 implementa. Nuevo `src/lib/utils/pdfjs.ts` con `loadPdfjs()` (build `legacy` + worker del propio paquete vía `?url`, auto-hospedado). `page.render({ canvasContext })` → `{ canvas }` en los 10 sitios; en `CompararPDFsTool` y `PDFaSVGTool` el `page` estaba tipado como `object`/`unknown`, así que tsc no los veía. Verificado con Playwright sobre Chromium 141 y un PDF real: 10/10 producen salida (antes 0/10). (2) **tsc: 124 errores → 0.** `toBlobPart()` en el nuevo `src/lib/utils/bytes.ts` para los 92 casos de `Uint8Array<ArrayBufferLike>` vs `BlobPart`; `PdfUploader.current` estrechado a `{name,size}` (14 casos); `Slider.label` opcional; `EliminarPasswordPDFTool` pasaba a pdf-lib una opción `password` que no existe —la contraseña se ignoraba en silencio y el error culpaba al usuario—; `style` duplicado en `ConvertirVerticalTool`; namespace `JSX` (React 19) en `RegexTesterTool`; interfaz `SpeechRecognition` en `TranscribirAudioTool`. (3) **Blog → herramientas**: nuevo campo `herramientas` en el frontmatter de los 49 artículos (2-4 slugs, curados) y bloque "Herramientas para hacerlo" al final del artículo; un slug inexistente rompe el build. Antes el único enlace del cierre iba a `/`. (4) **Títulos**: los 26 que pasaban de 70 caracteres reescritos quitando el relleno "online gratis" pero conservando las keywords de cola larga del guión; ninguno pasa ya de 70 y la media baja a 55. Los de 61-70 se dejan a propósito: recortarlos tiraría términos como "DNI, pasaporte, visado" a cambio de estética en el SERP. |
 | 2026-09-23 | Segunda unidad de social bar de Adsterra (`pl29628846`) añadida en `AdScripts.astro` con carga no intrusiva: se inyecta por JS tras `load` + idle + 7 s, como mucho una vez cada 15 min por pestaña (`sessionStorage` `tf-sb2`), nunca en las páginas legales/contacto/404 y nunca con el ahorro de datos activo. Las páginas legales no cambian: es la misma red (Adsterra) que ya declaran `privacidad.astro` y `cookies.astro`. |
 | 2026-09-28 | Interfaz de app nativa en móvil + PWA instalable. (1) Nuevo `AppShell.astro` (incluido vía `Footer.astro`): barra de pestañas inferior (Inicio · Imagen · PDF · Vídeo · Menú) con sección activa, menú en hoja inferior deslizable (categorías con recuento, Blog, instalar app, información) y buscador de herramientas a pantalla completa (`Ctrl+K`/`/` en escritorio) alimentado por el nuevo `/search-index.json`. (2) `Header.astro` reescrito: sin menú hamburguesa; en móvil botón atrás (historial si se viene del sitio, si no la página padre) y título compacto al desplazar; en escritorio, lupa de búsqueda. Corregido de paso el estado activo del nav, que nunca se marcaba porque `Astro.url.pathname` llega como `/imagen.html` (nuevo `currentPath()`); ahora una herramienta marca su categoría. (3) PWA: `manifest.webmanifest` generado desde `TOOLS` (accesos directos a Comprimir imagen, Eliminar fondo, Unir PDFs y Comprimir vídeo), iconos 192/512/maskable y `apple-touch-icon` a sangre, service worker `public/app-sw.js` (offline de páginas visitadas, caché de `/_astro/`) y página `/offline` (noindex, fuera del sitemap). Verificado en Chromium: manifiesto sin errores y 0 errores de instalabilidad. (4) Nuevo `AppMeta.astro` en las 11 plantillas: `theme-color` pasa de `#E84827` a blanco (la barra del navegador se funde con la cabecera), `viewport-fit=cover`, metas de app iOS/Android y Speculation Rules (`prefetch`). (5) `global.css`: transiciones entre páginas (`@view-transition`), sin resaltado de toque ni zoom por doble toque, campos a 16px en móvil, reserva de altura para la barra inferior; el anchor de anuncios se apoya encima de la barra. (6) Ajustes móviles: miga de pan oculta en móvil (sigue en el HTML), hero del home y cabeceras oscuras de categorías/blog más compactas, `ToolCard` con respuesta al pulsar. `cookies.astro` y `privacidad.astro` describen la caché offline y la marca de instalación. 304 páginas. |
+| 2026-10-20 | **Quitado el popunder.** Fuera la segunda unidad de Adsterra (`pl29628846`) y su bloque de inyección diferida en `AdScripts.astro` (con la marca `tf-sb2`). Banners en iframe, nativo, anchor, rails y social bar siguen igual. |
