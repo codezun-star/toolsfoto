@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JsonYamlTool from '@/components/tools/JsonYamlTool';
+
+const faqs = [
+  {
+    q: "¿Cómo convierto JSON a YAML?",
+    a: "Pega el JSON y el YAML aparece al momento en el cuadro de la derecha. Si el JSON tiene un error de sintaxis, verás el aviso en lugar del resultado.",
+  },
+  {
+    q: "¿Se pierde información en la conversión?",
+    a: "No. YAML es un superconjunto de JSON: cualquier JSON válido tiene una representación YAML equivalente con los mismos objetos, listas, cadenas, números, booleanos y null.",
+  },
+  {
+    q: "¿Por qué usar YAML en lugar de JSON?",
+    a: "YAML es más fácil de leer y escribir a mano: no necesita llaves, comillas ni comas y admite comentarios. Por eso lo usan Kubernetes, Docker Compose, GitHub Actions, Ansible y OpenAPI. JSON es mejor para intercambiar datos entre programas.",
+  },
+  {
+    q: "¿Por qué algunos textos salen entre comillas?",
+    a: "El conversor pone comillas cuando el texto podría confundirse con otro tipo en YAML: por ejemplo \"yes\", \"no\", \"on\", fechas, números con ceros a la izquierda o textos con dos puntos. Así el YAML se lee exactamente igual que el JSON original.",
+  },
+  {
+    q: "¿Puedo hacer la conversión inversa?",
+    a: "Sí: pulsa el botón JSON ⇄ YAML y el resultado pasa a la entrada para convertirlo de vuelta, o usa directamente YAML a JSON.",
+  },
+  {
+    q: "¿Se envían mis datos a algún servidor?",
+    a: "No. La conversión ocurre en tu navegador; no se guarda ni se envía nada.",
+  },
+];
+---
+<ToolLayout
+  slug="json-a-yaml"
+  answer="Pega tu JSON y obtén el YAML equivalente al instante, con la sangría que elijas. El botón de intercambio convierte en sentido contrario. Todo ocurre en tu navegador."
+  howTo={[
+    "Pega el JSON en el cuadro de la izquierda.",
+    "Elige la sangría (2 o 4 espacios).",
+    "Copia o descarga el YAML resultante.",
+  ]}
+  faqs={faqs}
+>
+  <JsonYamlTool initial="json-yaml" client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Configuraciones legibles</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Convierte la respuesta de una API, un <code>package.json</code> o una configuración generada por un programa en <strong class="text-[var(--color-text)]">YAML fácil de revisar</strong> y comentar en un pull request.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Valida el resultado con <a class="underline text-[var(--color-accent)]" href="/formatear-yaml">Formatear YAML</a>, o pasa tus datos a tabla con <a class="underline text-[var(--color-accent)]" href="/json-a-csv">JSON a CSV</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

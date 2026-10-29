@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompararJsonTool from '@/components/tools/CompararJsonTool';
+
+const faqs = [
+  {
+    q: "¿En qué se diferencia de comparar texto?",
+    a: "Una comparación de texto marca como distintos dos JSON que solo cambian en el orden de las claves, los espacios o los saltos de línea. Esta herramienta compara los datos: si los valores son los mismos, los JSON son equivalentes aunque estén escritos de otra forma.",
+  },
+  {
+    q: "¿Qué significa la ruta $.dependencias.astro?",
+    a: "Es la ubicación del cambio dentro del JSON: $ es la raíz, .clave entra en un objeto y [2] en la posición 2 de un array (empezando en 0). Es la notación de JSONPath que usan muchas herramientas.",
+  },
+  {
+    q: "¿Para qué sirve «Ignorar el orden de los arrays»?",
+    a: "Hay listas en las que el orden no importa (etiquetas, permisos, dependencias). Con la opción activada, [\"a\", \"b\"] y [\"b\", \"a\"] se consideran iguales y solo se marcan los elementos que de verdad sobran o faltan.",
+  },
+  {
+    q: "¿Qué es un «cambio de tipo»?",
+    a: "Que la misma clave tiene un tipo distinto en cada JSON: por ejemplo el número 42 frente al texto \"42\", o un objeto frente a una lista. Son cambios importantes porque suelen romper a quien consume esos datos.",
+  },
+  {
+    q: "¿Sirve para comparar respuestas de una API?",
+    a: "Sí, es uno de sus usos principales: pega la respuesta de antes y la de después de un cambio y verás exactamente qué campos han cambiado.",
+  },
+  {
+    q: "¿Se envían mis datos?",
+    a: "No. La comparación se hace en tu navegador.",
+  },
+];
+---
+<ToolLayout
+  slug="comparar-json"
+  answer="Pega dos JSON y verás cada diferencia —claves añadidas, eliminadas o modificadas— con su ruta exacta, sin que importen el orden de las claves ni los espacios. Todo en tu navegador."
+  howTo={[
+    "Pega el JSON original a la izquierda y el nuevo a la derecha.",
+    "Decide si el orden de los arrays importa.",
+    "Revisa la lista de diferencias con la ruta de cada una.",
+  ]}
+  faqs={faqs}
+>
+  <CompararJsonTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Revisa cambios de configuración y APIs</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Detecta qué ha cambiado entre dos versiones de un <code>package.json</code>, una configuración o la respuesta de una API <strong class="text-[var(--color-text)]">sin ruido de formato</strong>.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para comparar texto libre línea a línea usa <a class="underline text-[var(--color-accent)]" href="/comparar-texto">Comparar texto</a>; para ordenar un JSON antes de compararlo, <a class="underline text-[var(--color-accent)]" href="/formatear-json">Formatear JSON</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

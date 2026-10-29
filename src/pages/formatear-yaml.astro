@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import FormatearYamlTool from '@/components/tools/FormatearYamlTool';
+
+const faqs = [
+  {
+    q: "¿Cómo sé si mi YAML es válido?",
+    a: "Pégalo en el cuadro de entrada: la herramienta lo analiza al momento con un parser de YAML 1.2. Si es correcto verás «YAML válido»; si no, el primer error con su línea y su columna, por ejemplo una sangría incoherente, una clave duplicada o unos dos puntos de más.",
+  },
+  {
+    q: "¿Cuáles son los errores de YAML más frecuentes?",
+    a: "Mezclar tabuladores y espacios (YAML no admite tabuladores para sangrar), sangrías que no cuadran entre elementos del mismo nivel, olvidar el espacio después de los dos puntos, valores con dos puntos o almohadillas sin comillas y claves repetidas en el mismo mapa.",
+  },
+  {
+    q: "¿Se pierden los comentarios al formatear?",
+    a: "No: el formateo normal conserva los comentarios en su sitio. Solo se pierden si activas «Ordenar claves», porque ese modo reconstruye el documento desde los datos.",
+  },
+  {
+    q: "¿Sirve para Docker Compose, Kubernetes o GitHub Actions?",
+    a: "Sí. Todos esos archivos son YAML estándar. La herramienta valida la sintaxis; no comprueba el esquema de cada producto (qué claves admite Kubernetes, por ejemplo), así que un YAML válido aún puede tener una opción mal escrita.",
+  },
+  {
+    q: "¿2 o 4 espacios de sangría?",
+    a: "La convención más extendida es 2 espacios (Kubernetes, Docker Compose, GitHub Actions, Ansible). Usa 4 solo si tu proyecto ya lo hace así: lo importante es ser coherente.",
+  },
+  {
+    q: "¿Mis archivos de configuración se envían a algún servidor?",
+    a: "No. El análisis se hace en tu navegador con la librería yaml. Puedes pegar configuraciones con contraseñas o claves sin que salgan de tu equipo, aunque lo recomendable es no guardarlas nunca en texto plano.",
+  },
+];
+---
+<ToolLayout
+  slug="formatear-yaml"
+  answer="Pega tu YAML y verás al instante si es válido; si no, el error con su línea y columna. El resultado sale formateado con sangría uniforme y conservando los comentarios. Todo en tu navegador."
+  howTo={[
+    "Pega el YAML en el cuadro de la izquierda.",
+    "Revisa el aviso de validación: si hay un error, verás la línea y la columna.",
+    "Elige la sangría y, si quieres, ordena las claves.",
+    "Copia o descarga el YAML formateado.",
+  ]}
+  faqs={faqs}
+>
+  <FormatearYamlTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">YAML sin sorpresas en producción</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Un espacio de más en un YAML puede tumbar un despliegue. Valida <strong class="text-[var(--color-text)]">antes de hacer commit</strong> y ten el error localizado al momento, sin esperar a que falle el pipeline.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Herramientas relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Convierte entre formatos con <a class="underline text-[var(--color-accent)]" href="/json-a-yaml">JSON a YAML</a> y <a class="underline text-[var(--color-accent)]" href="/yaml-a-json">YAML a JSON</a>, o formatea <a class="underline text-[var(--color-accent)]" href="/formatear-json">JSON</a> y <a class="underline text-[var(--color-accent)]" href="/formatear-xml">XML</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

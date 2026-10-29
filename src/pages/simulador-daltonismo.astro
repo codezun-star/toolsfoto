@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import SimuladorDaltonismoTool from '@/components/tools/SimuladorDaltonismoTool';
+
+const faqs = [
+  {
+    q: "¿Qué tipos de daltonismo simula?",
+    a: "Deuteranopia (no se perciben los tonos verdes), protanopia (rojos), tritanopia (azules) y acromatopsia (no se percibe el color). Las tres primeras son dicromacias completas; las formas leves (deuteranomalía, protanomalía) se parecen a ellas con menos intensidad.",
+  },
+  {
+    q: "¿Cuántas personas son daltónicas?",
+    a: "En torno al 8 % de los hombres y al 0,5 % de las mujeres de origen europeo tienen algún tipo de daltonismo rojo-verde. En una web con miles de visitas al día, son cientos de personas.",
+  },
+  {
+    q: "¿Qué modelo usa la simulación?",
+    a: "El de Machado, Oliveira y Fernandes (2009), aplicado sobre el color en espacio lineal. Es el mismo modelo que usan las herramientas de accesibilidad de Chrome y Firefox.",
+  },
+  {
+    q: "¿Qué debo buscar en la simulación?",
+    a: "Elementos que solo se distinguen por el color: líneas de un gráfico, estados de error en verde y rojo, enlaces que no se subrayan, mapas de calor o leyendas. Si en la simulación dejan de distinguirse, añade otra pista: etiquetas, iconos, patrones o más contraste.",
+  },
+  {
+    q: "¿Sustituye a probar con usuarios reales?",
+    a: "No, pero detecta la mayoría de problemas en segundos. Combínalo con la comprobación de contraste de color (WCAG) y, si puedes, con pruebas con personas daltónicas.",
+  },
+  {
+    q: "¿Se suben mis imágenes?",
+    a: "No. La simulación se calcula en tu navegador.",
+  },
+];
+---
+<ToolLayout
+  slug="simulador-daltonismo"
+  answer="Sube una imagen —una captura de tu web, un gráfico o un mapa— y verás cómo la perciben las personas con los distintos tipos de daltonismo, para comprobar que no dependes solo del color."
+  howTo={[
+    "Sube una imagen o pega una captura con Ctrl+V.",
+    "Compara la visión normal con cada tipo de daltonismo.",
+    "Descarga la simulación que necesites para compartirla con tu equipo.",
+  ]}
+  faqs={faqs}
+>
+  <SimuladorDaltonismoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Diseño que funciona para todos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las pautas de accesibilidad WCAG piden que <strong class="text-[var(--color-text)]">el color no sea el único medio</strong> para transmitir información. Esta simulación te lo muestra en segundos.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Comprueba también el contraste con <a class="underline text-[var(--color-accent)]" href="/contraste-color">Verificador de contraste</a> y extrae la paleta de una imagen con <a class="underline text-[var(--color-accent)]" href="/colores-imagen">Códigos de color de imagen</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

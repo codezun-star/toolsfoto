@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JsonYamlTool from '@/components/tools/JsonYamlTool';
+
+const faqs = [
+  {
+    q: "¿Cómo convierto YAML a JSON?",
+    a: "Pega el YAML y el JSON aparece al momento a la derecha, formateado con la sangría que elijas. Si el YAML no es válido verás el error en lugar del resultado.",
+  },
+  {
+    q: "¿Qué pasa con los comentarios del YAML?",
+    a: "JSON no admite comentarios, así que se descartan. El resto de la información (objetos, listas, textos, números, booleanos y null) se conserva tal cual.",
+  },
+  {
+    q: "¿Cómo se convierten las anclas y alias (&, *)?",
+    a: "Se resuelven: cada alias se sustituye por una copia de los datos del ancla, porque JSON no tiene referencias.",
+  },
+  {
+    q: "¿Por qué \"yes\" o \"on\" salen como texto y no como true?",
+    a: "Porque la herramienta usa YAML 1.2, la versión actual del estándar, en la que solo true y false son booleanos. En YAML 1.1 (el de algunos programas antiguos) \"yes\", \"no\", \"on\" y \"off\" también lo eran, y eso causaba errores difíciles de ver.",
+  },
+  {
+    q: "¿Sirve para comprobar una configuración de Kubernetes?",
+    a: "Sirve para comprobar que la sintaxis es correcta y ver la estructura resultante, que es lo que recibirá la API. Para validar el esquema concreto de Kubernetes necesitas sus propias herramientas (kubectl --dry-run).",
+  },
+  {
+    q: "¿Mis datos salen de mi equipo?",
+    a: "No. La conversión se hace en tu navegador.",
+  },
+];
+---
+<ToolLayout
+  slug="yaml-a-json"
+  answer="Pega tu YAML y obtén el JSON equivalente, formateado y válido, al instante. Si hay un error de sintaxis verás dónde. Todo ocurre en tu navegador."
+  howTo={[
+    "Pega el YAML en el cuadro de la izquierda.",
+    "Elige la sangría del JSON.",
+    "Copia o descarga el JSON resultante.",
+  ]}
+  faqs={faqs}
+>
+  <JsonYamlTool initial="yaml-json" client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Depura configuraciones</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Ver el YAML como JSON deja claro <strong class="text-[var(--color-text)]">qué es una lista y qué es un objeto</strong>, y si una sangría ha metido una clave donde no debía.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para tipar el resultado en TypeScript usa <a class="underline text-[var(--color-accent)]" href="/json-a-typescript">JSON a TypeScript</a>; para la conversión inversa, <a class="underline text-[var(--color-accent)]" href="/json-a-yaml">JSON a YAML</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

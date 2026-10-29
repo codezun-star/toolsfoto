@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DecodificarCertificadoTool from '@/components/tools/DecodificarCertificadoTool';
+
+const faqs = [
+  {
+    q: "¿Cómo obtengo el certificado de una web?",
+    a: "En Chrome o Edge: haz clic en el icono a la izquierda de la dirección → «La conexión es segura» → «El certificado es válido» → pestaña Detalles → Exportar. En la terminal: openssl s_client -connect dominio.com:443 -showcerts.",
+  },
+  {
+    q: "¿Qué formatos admite?",
+    a: "PEM (el texto entre -----BEGIN CERTIFICATE----- y -----END CERTIFICATE-----, en archivos .pem, .crt o .cer) y DER (binario, normalmente .der o .cer). Si pegas una cadena con varios certificados, se muestran todos, del servidor a la autoridad.",
+  },
+  {
+    q: "¿Qué son los nombres alternativos (SAN)?",
+    a: "Son los dominios, subdominios o IPs para los que es válido el certificado. Los navegadores solo miran esta lista (no el CN del titular), así que si tu dominio no aparece aquí, el navegador mostrará un error de certificado.",
+  },
+  {
+    q: "¿Para qué sirve la huella SHA-256?",
+    a: "Es un identificador único del certificado. Sirve para comprobar que dos certificados son exactamente el mismo, para configurar el pinning de certificados en una app o para verificar uno que te han enviado.",
+  },
+  {
+    q: "¿Comprueba si el certificado es de confianza o está revocado?",
+    a: "No: muestra lo que contiene el certificado y si está dentro de sus fechas de validez. Comprobar la cadena de confianza o la revocación (OCSP, CRL) requiere conectarse a internet, y esta herramienta no envía nada.",
+  },
+  {
+    q: "¿Puedo pegar la clave privada?",
+    a: "No lo hagas en ningún sitio que no controles. Esta herramienta solo lee certificados públicos y no necesita la clave privada; aunque todo ocurre en tu navegador, la clave privada no debe salir del servidor.",
+  },
+];
+---
+<ToolLayout
+  slug="decodificar-certificado"
+  answer="Pega un certificado SSL/TLS en PEM (o sube el .crt, .cer o .der) y verás su titular, emisor, fechas de validez, dominios, clave pública y huellas SHA-256. Todo se analiza en tu navegador."
+  howTo={[
+    "Pega el certificado PEM o sube el archivo.",
+    "Revisa titular, emisor, validez y dominios.",
+    "Copia las huellas si necesitas compararlas.",
+  ]}
+  faqs={faqs}
+>
+  <DecodificarCertificadoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Revisa caducidades y dominios</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Comprueba <strong class="text-[var(--color-text)]">cuántos días le quedan</strong> a un certificado antes de que caduque, qué dominios cubre y quién lo emitió, sin abrir la terminal.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Calcula la huella de cualquier archivo con <a class="underline text-[var(--color-accent)]" href="/calcular-hash">Calcular hash</a> y decodifica tokens con <a class="underline text-[var(--color-accent)]" href="/jwt-decoder">Decodificador JWT</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

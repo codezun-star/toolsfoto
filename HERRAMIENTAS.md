@@ -1,7 +1,7 @@
 # ToolsFoto — Registro completo de herramientas
 
 > Índice general. El detalle de cada categoría está en su archivo propio.
-> **Total: 275 herramientas · 339 páginas HTML estáticas**
+> **Total: 284 herramientas · 348 páginas HTML estáticas**
 
 ## Archivos de detalle
 
@@ -11,7 +11,7 @@
 | PDF | [HERRAMIENTAS-PDF.md](HERRAMIENTAS-PDF.md) | 49 |
 | Vídeo | [HERRAMIENTAS-VIDEO.md](HERRAMIENTAS-VIDEO.md) | 42 |
 | Audio | [HERRAMIENTAS-AUDIO.md](HERRAMIENTAS-AUDIO.md) | 55 |
-| Developer | [HERRAMIENTAS-DEV.md](HERRAMIENTAS-DEV.md) | 43 |
+| Developer | [HERRAMIENTAS-DEV.md](HERRAMIENTAS-DEV.md) | 52 |
 
 ---
 
@@ -29,12 +29,12 @@
 ### Audio (55)
 `/comprimir-audio` · `/convertir-audio` · `/cortar-audio` · `/unir-audios` · `/cambiar-volumen` · `/velocidad-audio` · `/revertir-audio` · `/agregar-fade-audio` · `/mezclar-audios` · `/cambiar-tono` · `/anadir-silencio` · `/convertir-a-mono` · `/eco-audio` · `/convertir-a-estereo` · `/eliminar-silencio` · `/normalizar-audio` · `/ecualizador-audio` · `/reducir-ruido-audio` · `/generar-tono` · `/detector-bpm` · `/separar-voz` · `/transcribir-audio` · `/afinar-audio` · `/visualizar-forma-onda` · `/convertir-a-m4a` · `/robotizar-voz` · `/dividir-audio` · `/audio-a-fragmentos` · `/recortar-silencio-inicio` · `/insertar-audio` · `/reemplazar-segmento` · `/audio-a-base64` · `/convertir-a-flac` · `/analizar-espectro` · `/detectar-tono` · `/medir-duracion` · `/cambiar-pitch-sin-tempo` · `/compresor-audio` · `/distorsion-audio` · `/coro-audio` · `/telefono-audio` · `/generar-ruido-blanco` · `/grabar-audio` · `/audio-a-mp3` · `/wav-a-mp3` · `/m4a-a-mp3` · `/ogg-a-mp3` · `/aac-a-mp3` · `/flac-a-mp3` · `/audio-a-wav` · `/loop-audio` · `/audio-8d` · `/bass-boost` · `/texto-a-voz` · `/mp3-a-wav`
 
-### Developer (43)
-`/svg-a-png` · `/colores-imagen` · `/eliminar-exif` · `/imagen-a-base64` · `/generar-favicon` · `/generar-qr` · `/formatear-json` · `/codificar-url` · `/convertir-color` · `/base64-texto` · `/minificador-css` · `/csv-a-json` · `/calcular-hash` · `/regex-tester` · `/generador-uuid` · `/contador-palabras` · `/convertir-timestamp` · `/minificador-html` · `/generador-contrasenas` · `/lorem-ipsum` · `/gradiente-css` · `/minificador-js` · `/formateador-sql` · `/jwt-decoder` · `/esquema-colores` · `/comparar-texto` · `/conversor-base` · `/entidades-html` · `/minificador-svg` · `/og-image` · `/convertir-fuente` · `/formatear-xml` · `/slugify` · `/mayusculas-minusculas` · `/base64-a-imagen` · `/contraste-color` · `/sombra-css` · `/meta-tags` · `/convertir-bytes` · `/texto-a-binario` · `/codigo-morse` · `/json-a-typescript` · `/generador-cron`
+### Developer (52)
+`/svg-a-png` · `/colores-imagen` · `/eliminar-exif` · `/imagen-a-base64` · `/generar-favicon` · `/generar-qr` · `/formatear-json` · `/codificar-url` · `/convertir-color` · `/base64-texto` · `/minificador-css` · `/csv-a-json` · `/calcular-hash` · `/regex-tester` · `/generador-uuid` · `/contador-palabras` · `/convertir-timestamp` · `/minificador-html` · `/generador-contrasenas` · `/lorem-ipsum` · `/gradiente-css` · `/minificador-js` · `/formateador-sql` · `/jwt-decoder` · `/esquema-colores` · `/comparar-texto` · `/conversor-base` · `/entidades-html` · `/minificador-svg` · `/og-image` · `/convertir-fuente` · `/formatear-xml` · `/slugify` · `/mayusculas-minusculas` · `/base64-a-imagen` · `/contraste-color` · `/sombra-css` · `/meta-tags` · `/convertir-bytes` · `/texto-a-binario` · `/codigo-morse` · `/json-a-typescript` · `/generador-cron` · `/formatear-yaml` · `/json-a-yaml` · `/yaml-a-json` · `/json-a-csv` · `/comparar-json` · `/curl-a-codigo` · `/markdown-a-html` · `/decodificar-certificado` · `/simulador-daltonismo`
 
 ### Páginas legales (5)
 `/privacidad` · `/terminos` · `/cookies` · `/aviso-legal` · `/contacto`
 
 ---
 
-*Última actualización: 2026-10-29 — 275 herramientas, 339 páginas HTML estáticas*
+*Última actualización: 2026-10-29 — 284 herramientas, 348 páginas HTML estáticas*

@@ -30,7 +30,7 @@ const AUDIO_FEATURED = [
 const DEV_FEATURED = [
   'formatear-json', 'generar-qr', 'convertir-color', 'codificar-url',
   'imagen-a-base64', 'generar-favicon', 'calcular-hash', 'base64-texto',
-  'generador-contrasenas', 'generador-uuid', 'regex-tester', 'svg-a-png',
+  'generador-contrasenas', 'curl-a-codigo', 'regex-tester', 'formatear-yaml',
 ];
 
 const TABS: { id: ToolDomain; label: string; Icon: typeof Image }[] = [

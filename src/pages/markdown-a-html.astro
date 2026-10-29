@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MarkdownAHtmlTool from '@/components/tools/MarkdownAHtmlTool';
+
+const faqs = [
+  {
+    q: "¿Qué sintaxis de Markdown admite?",
+    a: "GitHub Flavored Markdown (GFM): títulos, negrita, cursiva, enlaces, imágenes, listas, citas, código en línea y en bloque, tablas, listas de tareas ([ ] y [x]) y texto tachado. Es la variante que usan GitHub, GitLab y la mayoría de documentación técnica.",
+  },
+  {
+    q: "¿Qué diferencia hay entre el fragmento y la página completa?",
+    a: "El fragmento es solo el HTML del contenido, listo para pegar dentro de tu web o CMS. La página completa añade <html>, <head>, el título (tomado del primer #) y unos estilos básicos para que se vea bien al abrirla directamente en el navegador.",
+  },
+  {
+    q: "¿Es segura la vista previa?",
+    a: "Sí. Se muestra en un marco aislado (iframe con sandbox) sin permiso para ejecutar scripts, así que aunque el Markdown contenga HTML con JavaScript, no se ejecuta.",
+  },
+  {
+    q: "¿Puedo usar HTML dentro del Markdown?",
+    a: "Sí, el Markdown admite HTML en línea y se conserva en el resultado. Si vas a publicar Markdown escrito por otras personas en tu web, limpia el HTML resultante en tu servidor.",
+  },
+  {
+    q: "¿Para qué sirve convertir Markdown a HTML?",
+    a: "Para publicar en un CMS que no admite Markdown, enviar un README como correo HTML, crear una página estática rápida o revisar cómo se verá un documento antes de subirlo a GitHub.",
+  },
+  {
+    q: "¿Se guarda lo que escribo?",
+    a: "No. Todo ocurre en tu navegador y no se envía a ningún sitio.",
+  },
+];
+---
+<ToolLayout
+  slug="markdown-a-html"
+  answer="Escribe o pega Markdown y verás la vista previa al momento; copia el HTML generado o descarga una página completa con estilos. Admite tablas, listas de tareas y bloques de código."
+  howTo={[
+    "Escribe o pega tu Markdown.",
+    "Revisa la vista previa o el código HTML.",
+    "Copia el fragmento o descarga la página HTML completa.",
+  ]}
+  faqs={faqs}
+>
+  <MarkdownAHtmlTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Escribe en Markdown, publica en HTML</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Redacta con la comodidad de Markdown y <strong class="text-[var(--color-text)]">lleva el resultado a cualquier sitio</strong> que solo entienda HTML.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Reduce el HTML con <a class="underline text-[var(--color-accent)]" href="/minificador-html">Minificador HTML</a>, escapa caracteres con <a class="underline text-[var(--color-accent)]" href="/entidades-html">Entidades HTML</a> o cuenta palabras con <a class="underline text-[var(--color-accent)]" href="/contador-palabras">Contador de palabras</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

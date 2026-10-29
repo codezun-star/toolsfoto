@@ -319,12 +319,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 275 herramientas
+## Las 284 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 275 herramientas — 86 imagen · 49 PDF · 42 vídeo · 55 audio · 43 developer + 5 legales**
+> **Total: 284 herramientas — 86 imagen · 49 PDF · 42 vídeo · 55 audio · 52 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -532,6 +532,10 @@ Algunas herramientas developer no reciben archivos: trabajan solo con texto o ge
 - Descarga vía `new Blob([text], { type: 'text/plain' })` → `URL.createObjectURL` → `<a>.click()` → `URL.revokeObjectURL`.
 - Sin `useImageUpload`, sin `useDownload`, sin `PdfUploader`.
 
+- **`CopyDownload.tsx`** (`components/ui`): botones «Copiar» y «Descargar» para cualquier resultado de texto. Usarlo en las herramientas nuevas en lugar de repetir la lógica.
+- **YAML:** librería `yaml`. Mostrar siempre los errores con `yamlErrorText()` de `src/lib/utils/yaml-errors.ts` (vienen en inglés). Para escribir YAML usar `version: '1.1'`: entrecomilla `yes`/`on`/fechas y el resultado se lee igual con parsers 1.1 y 1.2.
+- **Vista previa de HTML generado** (Markdown, etc.): siempre en un `<iframe sandbox="" srcDoc>` sin permisos, nunca con `dangerouslySetInnerHTML` en la página.
+
 #### Generación de contraseñas seguras
 - Usar `crypto.getRandomValues(new Uint32Array(length))` — nunca `Math.random()`.
 - Patrón: `Array.from(uint32arr, n => pool[n % pool.length]).join('')`.
@@ -579,7 +583,7 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 | `/pdf` | `src/pages/pdf.astro` | 49 (3 páginas) |
 | `/video` | `src/pages/video.astro` | 42 (2 páginas) |
 | `/audio` | `src/pages/audio.astro` | 55 (3 páginas) |
-| `/developer` | `src/pages/developer.astro` | 43 (2 páginas) |
+| `/developer` | `src/pages/developer.astro` | 52 (3 páginas) |
 
 **`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
 - Recibe `domain: ToolDomain` como prop, filtra `TOOLS` internamente.
@@ -689,7 +693,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 339 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 348 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -728,3 +732,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-29 | **Fase 3 de crecimiento — IA en el navegador.** Imagen 62→65: `/mejorar-calidad-imagen` (Real-ESRGAN ×2/×4 por teselas, WebGPU o WASM), `/borrar-objetos-foto` (LaMa: pincel → relleno del fondo, pegado con borde difuminado sin perder resolución) y `/difuminar-caras` (BlazeFace de MediaPipe a varias escalas para caras pequeñas, difuminar/pixelar/tapar y zonas manuales). Nueva utilidad `onnx.ts` (WebGPU con respaldo WASM en worker, caché de modelos `ai-models-v1`) y carpeta `public/models` con caché inmutable en `_headers`. Verificado con Playwright en Chromium sin GPU: mejora ×4 de 512 px en 29 s con la página respondiendo, borrado en 21-34 s, detección de caras correcta en dos fotos reales. |
 | 2026-10-29 | **Fase 4 de crecimiento — lotes.** Imagen 65→68: `/comprimir-varias-imagenes`, `/redimensionar-varias-imagenes` y `/convertir-varias-imagenes`, las tres sobre `BatchImageTool.tsx` (hasta 200 imágenes, HEIC incluido, resumen de ahorro, descarga individual o en ZIP con el nuevo `zip.ts`). Las versiones individuales (`comprimir`, `redimensionar`, `convertir`, `heic-a-jpg`) enlazan a su versión por lotes en «Otras herramientas». Destacadas del home: entran mejorar calidad, borrar objetos y comprimir varias. Verificado con Playwright: ZIP con nombres y tamaños correctos en los tres modos. |
 | 2026-10-29 | **Fase 5 de crecimiento — cola larga.** +19 páginas con contenido propio servidas por `[landing].astro` desde `landings.ts`: comprimir imagen a 20/50/100/200/500 KB y 1 MB; fotos de documento (DNI España 26×32 mm, tamaño pasaporte 3,5×4,5 cm, tamaño infantil 2,5×3 cm, visa de EE. UU. 2×2 in con datos del DS-160, visado Schengen 35×45 mm, 4×4 cm); conversiones PNG→WebP, JPG→WebP, AVIF→JPG, AVIF→PNG, BMP→JPG, HEIC→PNG y MP3→WAV. Mejoras en los componentes base: `ComprimirObjetivoTool` reduce dimensiones cuando ni con calidad 0,3 alcanza el objetivo (antes se quedaba por encima o en calidad 1 %); `FotoCarnetTool` añade México, Canadá y China, corrige la etiqueta del pasaporte español (26×32, no 35×45) y genera una hoja de 10×15 cm con copias y guías de corte; `BatchImageTool` admite formato fijo. Verificado con Playwright: 20 KB exactos (420×524, calidad 37 %), hoja de 15 copias, BMP y AVIF reales convertidos. |
+| 2026-10-29 | **Fase 6 de crecimiento — developer.** Developer 43→52: `/formatear-yaml`, `/json-a-yaml`, `/yaml-a-json`, `/json-a-csv`, `/comparar-json` (diff estructural con rutas), `/curl-a-codigo` (fetch, axios, Node, Python, PHP), `/markdown-a-html` (GFM con vista previa aislada), `/decodificar-certificado` (X.509 con lector ASN.1 propio y huellas Web Crypto) y `/simulador-daltonismo` (Machado 2009). Nuevas dependencias `yaml` y `marked`; nuevos `CopyDownload.tsx` y `yaml-errors.ts`. Verificado con Playwright: huella SHA-256 idéntica a la de OpenSSL, SAN/EC/RSA leídos de certificados reales, el HTML con `onerror` no se ejecuta en la vista previa, cURL con -u/--data-urlencode/-X convertido correctamente. |

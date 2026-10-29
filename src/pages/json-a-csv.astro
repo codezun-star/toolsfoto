@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import JsonACsvTool from '@/components/tools/JsonACsvTool';
+
+const faqs = [
+  {
+    q: "¿Qué JSON puedo convertir?",
+    a: "Lo habitual es un array de objetos, como el que devuelven la mayoría de APIs ([{...}, {...}]). También acepta un único objeto (sale una fila) o un objeto que contenga un solo array, por ejemplo {\"resultados\": [...]}, que se convierte directamente.",
+  },
+  {
+    q: "¿Qué pasa con los objetos anidados?",
+    a: "Se aplanan en columnas con notación de puntos: {\"direccion\": {\"ciudad\": \"Madrid\"}} genera la columna direccion.ciudad. Las listas de valores simples se unen en una celda separadas por comas.",
+  },
+  {
+    q: "¿Por qué no se ven bien las tildes en Excel?",
+    a: "Excel necesita una marca especial (BOM) para reconocer que el CSV está en UTF-8. Deja activada la opción «Compatible con Excel» y las tildes y eñes se verán bien al abrir el archivo con doble clic.",
+  },
+  {
+    q: "¿Coma o punto y coma?",
+    a: "En Excel configurado en español (y en la mayoría de países que usan la coma decimal) el separador por defecto es el punto y coma. Si al abrir el CSV todo aparece en una sola columna, vuelve a descargarlo con punto y coma.",
+  },
+  {
+    q: "¿Y si cada objeto tiene campos distintos?",
+    a: "Las columnas son la unión de todas las claves de todos los objetos, en el orden en que aparecen. Las celdas de los campos que falten en un objeto quedan vacías.",
+  },
+  {
+    q: "¿Puedo hacer el camino inverso?",
+    a: "Sí, con la herramienta CSV a JSON.",
+  },
+];
+---
+<ToolLayout
+  slug="json-a-csv"
+  answer="Pega un array de objetos JSON y obtén un CSV listo para Excel o Google Sheets: los objetos anidados se aplanan en columnas y puedes elegir el separador. Todo en tu navegador."
+  howTo={[
+    "Pega el JSON (un array de objetos, o un objeto que contenga uno).",
+    "Elige el separador: coma, punto y coma o tabulador.",
+    "Copia el CSV o descárgalo para abrirlo en Excel.",
+  ]}
+  faqs={faqs}
+>
+  <JsonACsvTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De una API a una hoja de cálculo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Exporta datos de una API, una base de datos NoSQL o un log y ábrelos en Excel <strong class="text-[var(--color-text)]">para filtrarlos, ordenarlos o hacer gráficos</strong>, sin escribir un script.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El camino inverso está en <a class="underline text-[var(--color-accent)]" href="/csv-a-json">CSV a JSON</a>; para tablas que están en un PDF, <a class="underline text-[var(--color-accent)]" href="/pdf-a-excel">PDF a Excel</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

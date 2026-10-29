@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Developer (43)
+## Developer (52)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -48,3 +48,12 @@
 | `/codigo-morse` | `CodigoMorseTool.tsx` | Básicas | JS puro — mapa morse bidireccional |
 | `/json-a-typescript` | `JsonATypescriptTool.tsx` | Básicas | JS puro — generador recursivo de interfaces TS |
 | `/generador-cron` | `GeneradorCronTool.tsx` | Básicas | JS puro — parser de 5 campos + descripción en español + próximas ejecuciones |
+| `/formatear-yaml` | `FormatearYamlTool.tsx` | Básicas | `yaml` (YAML 1.2) `parseDocument` → errores con línea/columna en español (`yaml-errors.ts`), sangría 2/4 conservando comentarios, ordenar claves |
+| `/json-a-yaml` | `JsonYamlTool.tsx (`initial="json-yaml"`)` | Básicas | `yaml.stringify` con reglas 1.1 (entrecomilla yes/on/fechas) y botón de intercambio |
+| `/yaml-a-json` | `JsonYamlTool.tsx (`initial="yaml-json"`)` | Básicas | `yaml.parse` (1.2, resuelve anclas y alias) → `JSON.stringify` |
+| `/json-a-csv` | `JsonACsvTool.tsx` | Básicas | Aplanado con notación de puntos, unión de claves, separador , ; o tab y BOM para Excel |
+| `/comparar-json` | `CompararJsonTool.tsx` | Básicas | Diff estructural recursivo con rutas JSONPath ($.a.b[2]), cambios de tipo y opción de ignorar el orden de arrays |
+| `/curl-a-codigo` | `CurlACodigoTool.tsx` | Básicas | Tokenizador estilo bash (comillas, escapes, \ y ^) → fetch, axios, Node.js, Python requests y PHP cURL |
+| `/markdown-a-html` | `MarkdownAHtmlTool.tsx` | Básicas | `marked` (GFM) con vista previa en iframe `sandbox` sin scripts; fragmento o página completa con estilos |
+| `/decodificar-certificado` | `DecodificarCertificadoTool.tsx` | Avanzadas | Lector ASN.1 DER propio: sujeto, emisor, validez, SAN, clave (RSA bits / curva EC), firma, EKU; huellas con `crypto.subtle`; PEM, DER y cadenas |
+| `/simulador-daltonismo` | `SimuladorDaltonismoTool.tsx` | Básicas | Matrices de Machado 2009 sobre RGB lineal (protanopia, deuteranopia, tritanopia) + acromatopsia; descarga a tamaño real |

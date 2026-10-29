@@ -1512,4 +1512,49 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Convierte MP3 a WAV sin compresión (44,1 o 48 kHz) para editar o usar en centralitas y DAW. En tu navegador, gratis y sin registro.',
     canonical: 'https://toolsfoto.com/mp3-a-wav',
   },
+  'formatear-yaml': {
+    title: 'Formatear y validar YAML online gratis | ToolsFoto',
+    description: 'Valida YAML con el error exacto (línea y columna), formatea con sangría uniforme y ordena claves. Para Docker, Kubernetes y CI. Gratis.',
+    canonical: 'https://toolsfoto.com/formatear-yaml',
+  },
+  'json-a-yaml': {
+    title: 'Convertir JSON a YAML online gratis | ToolsFoto',
+    description: 'Convierte JSON a YAML legible al instante, con sangría de 2 o 4 espacios, para Kubernetes, Docker Compose u OpenAPI. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/json-a-yaml',
+  },
+  'yaml-a-json': {
+    title: 'Convertir YAML a JSON online gratis | ToolsFoto',
+    description: 'Convierte YAML a JSON formateado y válido, con errores de sintaxis señalados, para depurar configuraciones o usarlas en una API. Gratis.',
+    canonical: 'https://toolsfoto.com/yaml-a-json',
+  },
+  'json-a-csv': {
+    title: 'Convertir JSON a CSV online gratis (para Excel) | ToolsFoto',
+    description: 'Convierte un array JSON en CSV para Excel o Google Sheets, aplanando objetos anidados y con el separador que elijas. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/json-a-csv',
+  },
+  'comparar-json': {
+    title: 'Comparar dos JSON online gratis: ver diferencias | ToolsFoto',
+    description: 'Compara dos JSON por estructura y ve cada clave añadida, eliminada o modificada con su ruta, sin importar el orden. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/comparar-json',
+  },
+  'curl-a-codigo': {
+    title: 'Convertir cURL a fetch, axios, Python o PHP gratis | ToolsFoto',
+    description: 'Convierte un comando cURL en código fetch, axios, Node.js, Python requests o PHP, con cabeceras, JSON y autenticación. Gratis.',
+    canonical: 'https://toolsfoto.com/curl-a-codigo',
+  },
+  'markdown-a-html': {
+    title: 'Convertir Markdown a HTML online con vista previa | ToolsFoto',
+    description: 'Convierte Markdown a HTML con vista previa en vivo, tablas y bloques de código (GFM). Copia el HTML o descarga la página. Gratis.',
+    canonical: 'https://toolsfoto.com/markdown-a-html',
+  },
+  'decodificar-certificado': {
+    title: 'Decodificar certificado SSL (X.509 PEM) online gratis | ToolsFoto',
+    description: 'Lee un certificado SSL en PEM o DER: titular, emisor, caducidad, dominios SAN, clave y huellas SHA-256. En tu navegador, gratis.',
+    canonical: 'https://toolsfoto.com/decodificar-certificado',
+  },
+  'simulador-daltonismo': {
+    title: 'Simulador de daltonismo online gratis para imágenes | ToolsFoto',
+    description: 'Mira tus imágenes, gráficos o webs como las ve una persona con daltonismo (protanopia, deuteranopia, tritanopia). Gratis y privado.',
+    canonical: 'https://toolsfoto.com/simulador-daltonismo',
+  },
 };

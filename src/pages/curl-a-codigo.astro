@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CurlACodigoTool from '@/components/tools/CurlACodigoTool';
+
+const faqs = [
+  {
+    q: "¿De dónde saco el comando cURL de una petición?",
+    a: "En las herramientas para desarrolladores del navegador (F12), pestaña Red: clic derecho sobre la petición → Copiar → Copiar como cURL (bash). También lo muestran Postman, Insomnia y la documentación de muchas APIs.",
+  },
+  {
+    q: "¿Qué opciones de cURL entiende?",
+    a: "-X/--request, -H/--header, -d/--data y sus variantes (--data-raw, --data-binary, --data-urlencode), --json, -F/--form, -u/--user, -A/--user-agent, -e/--referer, -b/--cookie, -G/--get, -I/--head y --url. Las opciones que no afectan al código (-L, -k, -s, -v, --compressed…) se ignoran.",
+  },
+  {
+    q: "¿Por qué el cuerpo JSON sale como objeto y no como texto?",
+    a: "Si la petición lleva Content-Type: application/json y el cuerpo es JSON válido, el código lo genera como objeto (JSON.stringify en JavaScript, json= en Python), que es más legible y fácil de modificar.",
+  },
+  {
+    q: "¿Funciona con comandos copiados de Windows?",
+    a: "Sí: admite los saltos de línea con ^ de la consola de Windows además de los \\ de bash, y las comillas simples y dobles.",
+  },
+  {
+    q: "¿Es seguro pegar comandos con tokens?",
+    a: "La conversión ocurre en tu navegador y nada se envía. Aun así, los comandos copiados del navegador suelen incluir cookies y tokens de tu sesión: no los compartas tal cual.",
+  },
+  {
+    q: "¿Ejecuta la petición?",
+    a: "No. Solo traduce el comando a código; no se hace ninguna petición a la URL.",
+  },
+];
+---
+<ToolLayout
+  slug="curl-a-codigo"
+  answer="Pega un comando cURL y obtén al momento el código equivalente en fetch, axios, Node.js, Python (requests) o PHP, con sus cabeceras, cuerpo y autenticación. Todo en tu navegador."
+  howTo={[
+    "Pega el comando cURL (puede ocupar varias líneas con \\).",
+    "Elige el lenguaje de destino.",
+    "Copia el código generado.",
+  ]}
+  faqs={faqs}
+>
+  <CurlACodigoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De la documentación a tu código</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Casi toda la documentación de APIs trae ejemplos en cURL. <strong class="text-[var(--color-text)]">Tradúcelos al lenguaje de tu proyecto</strong> sin reescribir cabeceras a mano.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Relacionadas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Revisa el token de la cabecera Authorization con <a class="underline text-[var(--color-accent)]" href="/jwt-decoder">Decodificador JWT</a> y formatea la respuesta con <a class="underline text-[var(--color-accent)]" href="/formatear-json">Formatear JSON</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>
