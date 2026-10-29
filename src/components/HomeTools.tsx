@@ -5,8 +5,8 @@ import { Image, FileText, Code2, Video, Music, ArrowRight } from 'lucide-react';
 
 const IMAGEN_FEATURED = [
   'comprimir', 'redimensionar', 'recortar', 'convertir',
-  'girar', 'eliminar-fondo', 'editor', 'marca-de-agua',
-  'imagen-a-texto', 'recorte-circular', 'collage', 'redimensionar-redes',
+  'eliminar-fondo', 'mejorar-calidad-imagen', 'borrar-objetos-foto', 'comprimir-varias-imagenes',
+  'imagen-a-texto', 'marca-de-agua', 'editor', 'redimensionar-redes',
 ];
 
 const PDF_FEATURED = [

@@ -24,7 +24,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'imagen',
     icon: 'Minimize2',
     color: 'blue',
-    related: ['convertir', 'redimensionar', 'editor'],
+    related: ['comprimir-varias-imagenes', 'convertir', 'redimensionar', 'editor'],
   },
   {
     slug: 'redimensionar',
@@ -35,7 +35,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'imagen',
     icon: 'Scaling',
     color: 'blue',
-    related: ['recortar', 'comprimir', 'convertir'],
+    related: ['redimensionar-varias-imagenes', 'recortar', 'comprimir', 'convertir'],
   },
   {
     slug: 'recortar',
@@ -57,7 +57,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'imagen',
     icon: 'RefreshCw',
     color: 'blue',
-    related: ['comprimir', 'redimensionar', 'editor'],
+    related: ['convertir-varias-imagenes', 'comprimir', 'redimensionar', 'editor'],
   },
   {
     slug: 'girar',
@@ -2135,7 +2135,7 @@ export const TOOLS: ToolMeta[] = [
     domain: 'imagen',
     icon: 'FileImage',
     color: 'blue',
-    related: ['convertir', 'imagen-a-webp', 'comprimir'],
+    related: ['convertir-varias-imagenes', 'convertir', 'imagen-a-webp', 'comprimir'],
   },
   {
     slug: 'pdf-escala-grises',
@@ -2897,6 +2897,40 @@ export const TOOLS: ToolMeta[] = [
     icon: 'ScanFace',
     color: 'blue',
     related: ['pixelar', 'desenfoque', 'eliminar-exif', 'borrar-objetos-foto'],
+  },
+  // ── FASE 4 · LOTES ───────────────────────────────────────────
+  {
+    slug: 'comprimir-varias-imagenes',
+    name: 'Comprimir varias imágenes a la vez',
+    description: 'Comprime hasta 200 imágenes de golpe y descárgalas en un ZIP.',
+    longDescription: 'Reduce el peso de muchas fotos a la vez: arrastra hasta 200 imágenes JPG, PNG, WebP o HEIC, elige la calidad y el ancho máximo, y descárgalas todas juntas en un ZIP. Verás cuánto ocupa cada una antes y después. Sin subir nada a ningún servidor.',
+    category: 'Básicas',
+    domain: 'imagen',
+    icon: 'FolderArchive',
+    color: 'blue',
+    related: ['comprimir', 'redimensionar-varias-imagenes', 'convertir-varias-imagenes', 'comprimir-objetivo'],
+  },
+  {
+    slug: 'redimensionar-varias-imagenes',
+    name: 'Redimensionar varias imágenes',
+    description: 'Cambia el tamaño de muchas imágenes a la vez y descárgalas en ZIP.',
+    longDescription: 'Redimensiona en lote: fija un ancho, un alto, un porcentaje o una caja máxima y aplícalo a todas tus imágenes manteniendo su proporción. Ideal para catálogos, webs y redes sociales. Admite HEIC del iPhone y descarga todo en un ZIP.',
+    category: 'Básicas',
+    domain: 'imagen',
+    icon: 'Images',
+    color: 'blue',
+    related: ['redimensionar', 'comprimir-varias-imagenes', 'convertir-varias-imagenes', 'redimensionar-redes'],
+  },
+  {
+    slug: 'convertir-varias-imagenes',
+    name: 'Convertir varias imágenes',
+    description: 'Convierte muchas imágenes a JPG, PNG o WebP de una vez.',
+    longDescription: 'Convierte en lote imágenes HEIC, PNG, WebP, AVIF, GIF o JPG al formato que necesites (JPG, PNG o WebP), con la calidad que elijas, y descárgalas todas en un ZIP. Perfecto para pasar las fotos del iPhone a JPG. 100% en tu navegador.',
+    category: 'Básicas',
+    domain: 'imagen',
+    icon: 'RefreshCcw',
+    color: 'blue',
+    related: ['convertir', 'heic-a-jpg', 'comprimir-varias-imagenes', 'redimensionar-varias-imagenes'],
   },
 ];
 

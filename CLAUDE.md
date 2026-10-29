@@ -319,12 +319,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 253 herramientas
+## Las 256 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 253 herramientas — 65 imagen · 49 PDF · 42 vídeo · 54 audio · 43 developer + 5 legales**
+> **Total: 256 herramientas — 68 imagen · 49 PDF · 42 vídeo · 54 audio · 43 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -521,6 +521,7 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 - **Imports de librerías pesadas** deben ser dinámicos: `@imgly/background-removal`, `html2canvas`, `pdf-lib`, `pdfjs-dist`, `@ffmpeg/ffmpeg`, `@ffmpeg/util`.
 - **Para herramientas que exportan PNG transparente** (redondear, recorte-circular, sombra, svg-a-png): usar `image/png` en `canvasToBlob`, nunca `image/jpeg`.
 - **Canvas blur con padding:** al aplicar `ctx.filter = 'blur(Xpx)'`, añadir un canvas temporal más grande (pad = blur × 3) para evitar oscurecimiento en los bordes, luego recortar al tamaño original.
+- **Procesamiento por lotes (`BatchImageTool.tsx`):** un único componente con prop `mode` (`compress` | `resize` | `convert`) para las tres páginas de lote. Procesa las imágenes **de una en una** (no en paralelo) para no agotar la memoria con 200 fotos; acepta HEIC con `heic2any`. El ZIP se hace con `makeZip()` de `src/lib/utils/zip.ts` (fflate, nivel 0: las imágenes ya van comprimidas). Para un lote de otro tipo, reutilizar `makeZip()`.
 - **Herramienta Collage:** gestiona su propio estado de imágenes (array de `{url, file}`) sin `useImageUpload`, porque admite múltiples archivos. Revocar URLs al eliminar imágenes.
 - **UnirAudios:** re-encodifica cada archivo a mp3 individualmente antes del concat demuxer, para evitar errores de formato mixto.
 - **RecortarVideo / CortarAudio:** usar `-c copy` para evitar re-encode y preservar calidad.
@@ -574,7 +575,7 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 
 | URL | Archivo | Herramientas |
 |---|---|---|
-| `/imagen` | `src/pages/imagen.astro` | 65 (3 páginas) |
+| `/imagen` | `src/pages/imagen.astro` | 68 (3 páginas) |
 | `/pdf` | `src/pages/pdf.astro` | 49 (3 páginas) |
 | `/video` | `src/pages/video.astro` | 42 (2 páginas) |
 | `/audio` | `src/pages/audio.astro` | 54 (3 páginas) |
@@ -679,7 +680,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 317 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 320 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -716,3 +717,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-29 | **Fase 1 de crecimiento — flujo de archivos.** (1) Pegar con Ctrl+V en todos los uploaders (`useFileReceiver` en `useImageUpload`, `PdfUploader`, `VideoUploader`, `AudioUploader`, `JPGaPDFTool`, `UnirPDFsTool`). (2) "¿Y ahora?" (`NextSteps.tsx`): tras descargar, seguir con el mismo archivo en otra herramienta sin volver a subirlo; el archivo viaja por el buzón de IndexedDB (`inbox.ts`) y la descarga se detecta sin tocar las herramientas (`results.ts`). (3) PWA: `share_target` y `file_handlers` en el manifiesto, recepción en `app-sw.js` y nueva página `/compartir` (noindex) que propone herramientas por tipo de archivo; enlazada desde el menú. (4) Favoritas (estrella junto al H1) y recientes en `localStorage`, mostradas en el home ("Tus herramientas") y en el buscador vacío. (5) La description de la 404 deriva el recuento de `TOOLS`. `cookies.astro` actualizada. 305 páginas. |
 | 2026-10-29 | **Fase 2 de crecimiento — documentos, OCR y voz.** +9 herramientas de alta demanda. Imagen 60→62: `/imagen-a-texto` (OCR con Tesseract.js en 7 idiomas) y `/crear-firma` (firma dibujada o escrita → PNG transparente recortado). PDF 43→49: `/ocr-pdf` (capa de texto invisible sobre el PDF original), `/pdf-a-word` (estructura reconstruida → `docx`), `/word-a-pdf` (`mammoth` → maquetador propio), `/pdf-a-excel` (columnas por solapamiento de intervalos → XLSX propio + CSV), `/excel-a-pdf` (XLSX/CSV → tablas) y `/editar-pdf` (texto, resaltar, tapar y dibujo). Audio 53→54: `/texto-a-voz` (voces neuronales Piper en el navegador, descarga WAV). Nuevas utilidades `ocr.ts`, `pdf-layout.ts` y `xlsx.ts`. Destacadas del home y sugerencias de "¿Y ahora?" actualizadas. `cookies.astro` describe la caché de idiomas OCR y voces (IndexedDB/OPFS). Verificado con Playwright: las 9 producen salida correcta (texto del DOCX/PDF/XLSX comprobado, OCR de imagen y de PDF escaneado, WAV con audio real). Total: 250 herramientas, 314 páginas. |
 | 2026-10-29 | **Fase 3 de crecimiento — IA en el navegador.** Imagen 62→65: `/mejorar-calidad-imagen` (Real-ESRGAN ×2/×4 por teselas, WebGPU o WASM), `/borrar-objetos-foto` (LaMa: pincel → relleno del fondo, pegado con borde difuminado sin perder resolución) y `/difuminar-caras` (BlazeFace de MediaPipe a varias escalas para caras pequeñas, difuminar/pixelar/tapar y zonas manuales). Nueva utilidad `onnx.ts` (WebGPU con respaldo WASM en worker, caché de modelos `ai-models-v1`) y carpeta `public/models` con caché inmutable en `_headers`. Verificado con Playwright en Chromium sin GPU: mejora ×4 de 512 px en 29 s con la página respondiendo, borrado en 21-34 s, detección de caras correcta en dos fotos reales. |
+| 2026-10-29 | **Fase 4 de crecimiento — lotes.** Imagen 65→68: `/comprimir-varias-imagenes`, `/redimensionar-varias-imagenes` y `/convertir-varias-imagenes`, las tres sobre `BatchImageTool.tsx` (hasta 200 imágenes, HEIC incluido, resumen de ahorro, descarga individual o en ZIP con el nuevo `zip.ts`). Las versiones individuales (`comprimir`, `redimensionar`, `convertir`, `heic-a-jpg`) enlazan a su versión por lotes en «Otras herramientas». Destacadas del home: entran mejorar calidad, borrar objetos y comprimir varias. Verificado con Playwright: ZIP con nombres y tamaños correctos en los tres modos. |

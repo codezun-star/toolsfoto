@@ -1,13 +1,13 @@
 # ToolsFoto — Registro completo de herramientas
 
 > Índice general. El detalle de cada categoría está en su archivo propio.
-> **Total: 253 herramientas · 317 páginas HTML estáticas**
+> **Total: 256 herramientas · 320 páginas HTML estáticas**
 
 ## Archivos de detalle
 
 | Categoría | Archivo | Herramientas |
 |---|---|---|
-| Imagen | [HERRAMIENTAS-IMAGEN.md](HERRAMIENTAS-IMAGEN.md) | 65 |
+| Imagen | [HERRAMIENTAS-IMAGEN.md](HERRAMIENTAS-IMAGEN.md) | 68 |
 | PDF | [HERRAMIENTAS-PDF.md](HERRAMIENTAS-PDF.md) | 49 |
 | Vídeo | [HERRAMIENTAS-VIDEO.md](HERRAMIENTAS-VIDEO.md) | 42 |
 | Audio | [HERRAMIENTAS-AUDIO.md](HERRAMIENTAS-AUDIO.md) | 54 |
@@ -17,8 +17,8 @@
 
 ## Slugs rápidos por categoría
 
-### Imagen (65)
-`/comprimir` · `/redimensionar` · `/recortar` · `/convertir` · `/girar` · `/redondear` · `/recorte-circular` · `/marco` · `/desenfoque` · `/marca-de-agua` · `/meme` · `/blancoynegro` · `/invertir` · `/paleta` · `/collage` · `/texto` · `/editor` · `/eliminar-fondo` · `/html-a-imagen` · `/pixelar` · `/sombra` · `/espejo` · `/foto-carnet` · `/redimensionar-redes` · `/efecto-vintage` · `/thumbnail-youtube` · `/imagenes-a-gif` · `/ajustar-hsb` · `/efecto-boceto` · `/cambiar-fondo` · `/mosaico` · `/efecto-duotono` · `/imagen-a-webp` · `/comprimir-objetivo` · `/fondo-degradado` · `/nitidez` · `/ajustar-niveles` · `/efecto-oleo` · `/desvanecer-bordes` · `/ruido` · `/posterizar` · `/vigneta` · `/solarizar` · `/comparar-imagenes` · `/placeholder` · `/efecto-glitch` · `/tilt-shift` · `/imagen-a-ico` · `/heic-a-jpg` · `/png-a-jpg` · `/jpg-a-png` · `/webp-a-jpg` · `/webp-a-png` · `/gif-a-jpg` · `/dividir-imagen` · `/unir-imagenes` · `/imagen-a-ascii` · `/ampliar-imagen` · `/cambiar-dpi` · `/quitar-fondo-blanco` · `/imagen-a-texto` · `/crear-firma` · `/mejorar-calidad-imagen` · `/borrar-objetos-foto` · `/difuminar-caras`
+### Imagen (68)
+`/comprimir` · `/redimensionar` · `/recortar` · `/convertir` · `/girar` · `/redondear` · `/recorte-circular` · `/marco` · `/desenfoque` · `/marca-de-agua` · `/meme` · `/blancoynegro` · `/invertir` · `/paleta` · `/collage` · `/texto` · `/editor` · `/eliminar-fondo` · `/html-a-imagen` · `/pixelar` · `/sombra` · `/espejo` · `/foto-carnet` · `/redimensionar-redes` · `/efecto-vintage` · `/thumbnail-youtube` · `/imagenes-a-gif` · `/ajustar-hsb` · `/efecto-boceto` · `/cambiar-fondo` · `/mosaico` · `/efecto-duotono` · `/imagen-a-webp` · `/comprimir-objetivo` · `/fondo-degradado` · `/nitidez` · `/ajustar-niveles` · `/efecto-oleo` · `/desvanecer-bordes` · `/ruido` · `/posterizar` · `/vigneta` · `/solarizar` · `/comparar-imagenes` · `/placeholder` · `/efecto-glitch` · `/tilt-shift` · `/imagen-a-ico` · `/heic-a-jpg` · `/png-a-jpg` · `/jpg-a-png` · `/webp-a-jpg` · `/webp-a-png` · `/gif-a-jpg` · `/dividir-imagen` · `/unir-imagenes` · `/imagen-a-ascii` · `/ampliar-imagen` · `/cambiar-dpi` · `/quitar-fondo-blanco` · `/imagen-a-texto` · `/crear-firma` · `/mejorar-calidad-imagen` · `/borrar-objetos-foto` · `/difuminar-caras` · `/comprimir-varias-imagenes` · `/redimensionar-varias-imagenes` · `/convertir-varias-imagenes`
 
 ### PDF (49)
 `/comprimir-pdf` · `/unir-pdfs` · `/dividir-pdf` · `/pdf-a-jpg` · `/jpg-a-pdf` · `/rotar-pdf` · `/extraer-paginas-pdf` · `/extraer-texto-pdf` · `/proteger-pdf` · `/eliminar-password-pdf` · `/marca-agua-pdf` · `/numerar-paginas-pdf` · `/firmar-pdf` · `/pdf-a-png` · `/reordenar-paginas-pdf` · `/recortar-pdf` · `/eliminar-paginas-pdf` · `/anadir-imagen-pdf` · `/pdf-en-blanco` · `/anadir-texto-pdf` · `/intercalar-pdfs` · `/escalar-pdf` · `/encabezado-pie-pdf` · `/duplicar-paginas-pdf` · `/insertar-pagina-pdf` · `/fondo-color-pdf` · `/aplanar-pdf` · `/metadatos-pdf` · `/sellar-pdf` · `/pdf-a-svg` · `/comparar-pdfs` · `/indice-pdf` · `/pdf-escala-grises` · `/pdf-a-webp` · `/n-up-pdf` · `/paginas-pares-impares` · `/invertir-orden-pdf` · `/pdf-a-imagen-larga` · `/dividir-pdf-mitad` · `/cambiar-tamano-pdf` · `/marca-agua-imagen-pdf` · `/dividir-cada-n-paginas` · `/unir-pdf-imagenes` · `/ocr-pdf` · `/pdf-a-word` · `/word-a-pdf` · `/pdf-a-excel` · `/excel-a-pdf` · `/editar-pdf`
@@ -37,4 +37,4 @@
 
 ---
 
-*Última actualización: 2026-10-29 — 253 herramientas, 317 páginas HTML estáticas*
+*Última actualización: 2026-10-29 — 256 herramientas, 320 páginas HTML estáticas*

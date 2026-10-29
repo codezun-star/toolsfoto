@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (65)
+## Imagen (68)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -70,3 +70,6 @@
 | `/mejorar-calidad-imagen` | `MejorarCalidadImagenTool.tsx` | Avanzadas | Real-ESRGAN general v3 ×4 (ONNX, 4,9 MB en `public/models`) con `onnx.ts` (WebGPU/WASM), teselas de 128 px con solape de 10, alfa escalado aparte; ×2 = ×4 reducido |
 | `/borrar-objetos-foto` | `BorrarObjetosTool.tsx` | Avanzadas | LaMa de OpenCV Zoo (ONNX, 92 MB desde Hugging Face, Cache Storage `ai-models-v1`): máscara con pincel → recorte cuadrado con contexto a 512 px → pegado con borde difuminado |
 | `/difuminar-caras` | `DifuminarCarasTool.tsx` | Avanzadas | MediaPipe FaceDetector (BlazeFace, `public/models`) a varias escalas (imagen + cuadrículas 2×2 y 3×3) + NMS; difuminar/pixelar/tapar con óvalo o rectángulo; zonas manuales |
+| `/comprimir-varias-imagenes` | `BatchImageTool.tsx (`mode="compress"`)` | Básicas | Lote de hasta 200 (HEIC vía `heic2any`): `createImageBitmap` → canvas → `toBlob` con calidad y ancho máximo; nunca engorda (conserva el original); ZIP con `makeZip()` de `zip.ts` |
+| `/redimensionar-varias-imagenes` | `BatchImageTool.tsx (`mode="resize"`)` | Básicas | Ancho / alto / porcentaje / caja máxima con proporción, opción de no ampliar; formato y calidad; ZIP |
+| `/convertir-varias-imagenes` | `BatchImageTool.tsx (`mode="convert"`)` | Básicas | HEIC/PNG/WebP/AVIF/GIF/BMP/JPG → JPG (fondo blanco), PNG o WebP; ZIP |

@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BatchImageTool from '@/components/tools/BatchImageTool';
+
+const faqs = [
+  {
+    q: '¿Cómo comprimo muchas fotos a la vez?',
+    a: 'Arrastra todas las imágenes a la vez (o selecciónalas con Ctrl o Mayúsculas en el selector de archivos), elige la calidad y el ancho máximo y pulsa «Comprimir». Cada foto se procesa en tu navegador y al terminar puedes descargarlas una a una o todas juntas en un ZIP.',
+  },
+  {
+    q: '¿Cuántas imágenes puedo comprimir de una vez?',
+    a: 'Hasta 200 imágenes por lote, de hasta 50 MB cada una. Se procesan una tras otra para no agotar la memoria del dispositivo, así que un lote de 100 fotos de móvil tarda en torno a un minuto en un ordenador normal. Si necesitas más, haz varios lotes.',
+  },
+  {
+    q: '¿Qué calidad y ancho máximo debo elegir?',
+    a: 'Para web y redes sociales, una calidad del 70-80 % con ancho máximo de 1920 px reduce el peso de una foto de móvil entre un 70 y un 90 % sin diferencia visible. Para enviar por correo, 1280 px y 70 %. Para conservar las fotos con calidad de impresión, deja «Mantener el tamaño» y una calidad del 85-90 %.',
+  },
+  {
+    q: '¿Puede una imagen ocupar más después de comprimirla?',
+    a: 'No. Si al comprimir una imagen el resultado ocupa más que el original (pasa con algunas imágenes ya muy optimizadas), la herramienta conserva el archivo original. Así nunca engordas ninguna foto del lote.',
+  },
+  {
+    q: '¿Admite fotos HEIC del iPhone?',
+    a: 'Sí. Las fotos HEIC se convierten y comprimen automáticamente. Por defecto salen en JPG (el formato «Mismo» guarda en JPG lo que no sea PNG o WebP), que es el que entiende cualquier dispositivo, web o programa.',
+  },
+  {
+    q: '¿Se suben mis fotos a un servidor?',
+    a: 'No. La compresión se hace con la Canvas API dentro de tu navegador: las fotos no salen de tu dispositivo en ningún momento. Por eso no hay límite de uso ni registro, y puedes comprimir fotos personales con total privacidad.',
+  },
+];
+---
+<ToolLayout
+  slug="comprimir-varias-imagenes"
+  answer="Arrastra hasta 200 imágenes a la vez, elige la calidad y el ancho máximo y pulsa «Comprimir»: se procesan en tu navegador y las descargas todas juntas en un ZIP, viendo cuánto has ahorrado en cada una."
+  howTo={[
+    'Arrastra todas tus imágenes (JPG, PNG, WebP o HEIC).',
+    'Elige la calidad, el ancho máximo y el formato.',
+    'Pulsa «Comprimir» y espera a que terminen todas.',
+    'Descarga el ZIP con todas las imágenes comprimidas.',
+  ]}
+  faqs={faqs}
+>
+  <BatchImageTool mode="compress" client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Todo el álbum de una vez</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Comprimir las fotos de un viaje, un catálogo de productos o las imágenes de una web <strong class="text-[var(--color-text)]">una por una es una pérdida de tiempo</strong>. Aquí las arrastras todas, ajustas una vez y te llevas un ZIP. Ideal para liberar espacio en el móvil, enviar fotos por correo o acelerar tu web.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Necesitas un peso exacto?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Si un formulario exige que cada foto pese menos de cierto tamaño, usa <a class="underline text-[var(--color-accent)]" href="/comprimir-objetivo">Comprimir a tamaño objetivo</a>. Para retocar una sola imagen con vista previa, <a class="underline text-[var(--color-accent)]" href="/comprimir">Comprimir imagen</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

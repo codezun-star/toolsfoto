@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BatchImageTool from '@/components/tools/BatchImageTool';
+
+const faqs = [
+  {
+    q: '¿Cómo convierto muchas imágenes a JPG de una vez?',
+    a: 'Arrastra todas las imágenes, deja seleccionado JPG como formato de salida, ajusta la calidad y pulsa «Convertir». Al terminar, descarga todas las imágenes convertidas en un ZIP. También puedes elegir PNG o WebP.',
+  },
+  {
+    q: '¿Sirve para pasar las fotos HEIC del iPhone a JPG?',
+    a: 'Sí, es uno de sus usos principales. El iPhone guarda las fotos en HEIC, un formato que muchos programas, webs y ordenadores con Windows no abren. Arrastra todas las fotos HEIC, elige JPG y obtendrás copias compatibles con cualquier dispositivo.',
+  },
+  {
+    q: '¿Qué formatos de entrada admite?',
+    a: 'JPG, PNG, WebP, AVIF, GIF (se toma el primer fotograma), BMP y HEIC/HEIF. Puedes mezclar formatos en el mismo lote: todas las imágenes salen en el formato elegido.',
+  },
+  {
+    q: '¿Qué pasa con la transparencia al convertir a JPG?',
+    a: 'El JPG no admite transparencia, así que las zonas transparentes de un PNG o WebP se rellenan de blanco (en lugar del negro que verías en otros conversores). Si necesitas conservar la transparencia, convierte a PNG o WebP.',
+  },
+  {
+    q: '¿Qué formato elegir?',
+    a: 'JPG para fotos que vas a compartir o imprimir: es universal. PNG para capturas, logotipos e imágenes con transparencia o texto, sin pérdida de calidad. WebP para webs: pesa entre un 25 y un 35 % menos que JPG con la misma calidad y admite transparencia.',
+  },
+  {
+    q: '¿Mis imágenes salen de mi ordenador?',
+    a: 'No. La conversión se hace en tu navegador, imagen a imagen. No se sube nada a ningún servidor, no hay límite diario y no necesitas registrarte.',
+  },
+];
+---
+<ToolLayout
+  slug="convertir-varias-imagenes"
+  answer="Arrastra todas tus imágenes (HEIC, PNG, WebP, AVIF, GIF o JPG), elige JPG, PNG o WebP y pulsa «Convertir»: se convierten en tu navegador y las descargas juntas en un ZIP."
+  howTo={[
+    'Arrastra todas las imágenes que quieres convertir.',
+    'Elige el formato de salida: JPG, PNG o WebP.',
+    'Ajusta la calidad y pulsa «Convertir».',
+    'Descarga el ZIP con todas las imágenes convertidas.',
+  ]}
+  faqs={faqs}
+>
+  <BatchImageTool mode="convert" client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Adiós a los archivos que no se abren</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Fotos HEIC del iPhone que Windows no muestra, imágenes WebP que un programa antiguo no acepta, PNG enormes que no caben en un correo: <strong class="text-[var(--color-text)]">conviértelas todas de una vez</strong> al formato que necesites.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Conversiones de una sola imagen</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para una imagen suelta con vista previa tienes <a class="underline text-[var(--color-accent)]" href="/heic-a-jpg">HEIC a JPG</a>, <a class="underline text-[var(--color-accent)]" href="/png-a-jpg">PNG a JPG</a>, <a class="underline text-[var(--color-accent)]" href="/webp-a-jpg">WebP a JPG</a> o el conversor general <a class="underline text-[var(--color-accent)]" href="/convertir">Convertir formato</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

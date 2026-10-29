@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BatchImageTool from '@/components/tools/BatchImageTool';
+
+const faqs = [
+  {
+    q: '¿Cómo cambio el tamaño de muchas imágenes a la vez?',
+    a: 'Arrastra todas las imágenes, elige cómo quieres redimensionar (por ancho, por alto, por porcentaje o para que quepan en una caja) e indica la medida. Pulsa «Redimensionar» y descarga todas las imágenes en un ZIP. Cada imagen conserva su proporción.',
+  },
+  {
+    q: '¿Qué diferencia hay entre «Ancho», «Alto» y «Caber en»?',
+    a: '«Ancho» deja todas las imágenes con el mismo ancho (por ejemplo, 1080 px) y el alto que les corresponda. «Alto» hace lo mismo con la altura. «Caber en» ajusta cada imagen para que no supere ni el ancho ni el alto indicados, sin ampliar las que ya son más pequeñas: es la opción para que fotos verticales y horizontales queden dentro de un mismo marco.',
+  },
+  {
+    q: '¿Se deforman las imágenes?',
+    a: 'No. La proporción de cada imagen se mantiene siempre, así que nunca quedan estiradas ni aplastadas. Si necesitas que todas tengan exactamente las mismas medidas (por ejemplo, 1080×1080 para Instagram), recórtalas antes con «Recortar imagen» o usa «Redimensionar para redes».',
+  },
+  {
+    q: '¿Puedo cambiar también el formato o comprimirlas?',
+    a: 'Sí. En el mismo panel eliges el formato de salida (el mismo, JPG, PNG o WebP) y la calidad. Así redimensionas, conviertes y aligeras todas las imágenes en un solo paso.',
+  },
+  {
+    q: '¿Qué tamaño usar para una web o una tienda online?',
+    a: 'Para fotos de producto, entre 1000 y 1600 px de ancho; para imágenes de cabecera, 1920 px; para miniaturas, 400-600 px. Usa formato WebP con calidad del 80 %: es el formato que recomienda Google para que la web cargue rápido.',
+  },
+  {
+    q: '¿Hay límite de imágenes o tengo que registrarme?',
+    a: 'Puedes procesar hasta 200 imágenes por lote, tantas veces como quieras, sin registro. Las imágenes se procesan en tu navegador y no se suben a ningún servidor.',
+  },
+];
+---
+<ToolLayout
+  slug="redimensionar-varias-imagenes"
+  answer="Arrastra todas tus imágenes, elige un ancho, un alto, un porcentaje o una caja máxima y pulsa «Redimensionar»: todas cambian de tamaño manteniendo su proporción y las descargas juntas en un ZIP. Sin subir nada."
+  howTo={[
+    'Arrastra todas las imágenes que quieres redimensionar.',
+    'Elige redimensionar por ancho, alto, porcentaje o caja máxima.',
+    'Ajusta el formato y la calidad si quieres.',
+    'Pulsa «Redimensionar» y descarga el ZIP.',
+  ]}
+  faqs={faqs}
+>
+  <BatchImageTool mode="resize" client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Catálogos y webs con imágenes uniformes</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Una tienda online o un blog se ven más profesionales cuando todas las imágenes tienen el mismo ancho, y cargan más rápido cuando ninguna es más grande de lo necesario. <strong class="text-[var(--color-text)]">Ajusta todo tu catálogo en un minuto</strong>.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Medidas para redes sociales</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Consulta las medidas recomendadas en nuestra guía de <a class="underline text-[var(--color-accent)]" href="/blog/tamanos-imagenes-redes-sociales">tamaños de imagen para redes sociales</a>. Para una sola imagen con recorte incluido, usa <a class="underline text-[var(--color-accent)]" href="/redimensionar-redes">Redimensionar para redes</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

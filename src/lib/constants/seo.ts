@@ -1402,4 +1402,19 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Detecta y difumina, pixela o tapa las caras de una foto automáticamente, y marca matrículas a mano. Privado: en tu navegador.',
     canonical: 'https://toolsfoto.com/difuminar-caras',
   },
+  'comprimir-varias-imagenes': {
+    title: 'Comprimir varias imágenes a la vez online gratis | ToolsFoto',
+    description: 'Comprime hasta 200 fotos JPG, PNG, WebP o HEIC de golpe y descárgalas en un ZIP. Sin subir nada: todo en tu navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-varias-imagenes',
+  },
+  'redimensionar-varias-imagenes': {
+    title: 'Redimensionar varias imágenes a la vez gratis | ToolsFoto',
+    description: 'Cambia el tamaño de muchas imágenes de una vez por ancho, alto o porcentaje, manteniendo la proporción, y bájalas en ZIP. Gratis.',
+    canonical: 'https://toolsfoto.com/redimensionar-varias-imagenes',
+  },
+  'convertir-varias-imagenes': {
+    title: 'Convertir varias imágenes a JPG, PNG o WebP gratis | ToolsFoto',
+    description: 'Convierte en lote fotos HEIC, PNG, WebP o AVIF a JPG, PNG o WebP y descárgalas en un ZIP. En tu navegador, sin subir nada. Gratis.',
+    canonical: 'https://toolsfoto.com/convertir-varias-imagenes',
+  },
 };
