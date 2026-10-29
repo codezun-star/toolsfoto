@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useFileReceiver } from '@/hooks/useFileReceiver';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, Upload, Files } from 'lucide-react';
@@ -14,7 +15,7 @@ export default function UnirPDFsTool() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const addFiles = useCallback((files: FileList) => {
+  const addFiles = useCallback((files: ArrayLike<File>) => {
     const entries: PdfEntry[] = [];
     for (let i = 0; i < files.length; i++) {
       if (files[i].type === 'application/pdf') entries.push({ id: ++nextId, file: files[i] });
@@ -22,6 +23,9 @@ export default function UnirPDFsTool() {
     setPdfs(prev => [...prev, ...entries]);
     setError(null);
   }, []);
+
+  // Archivos pegados con Ctrl+V o recibidos de otra herramienta / app.
+  useFileReceiver((f) => f.type === 'application/pdf', (f) => addFiles([f]), () => true, true);
 
   function remove(id: number) { setPdfs(prev => prev.filter(p => p.id !== id)); }
   function moveUp(idx: number) {

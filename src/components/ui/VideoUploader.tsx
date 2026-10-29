@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Video, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
+import { useFileReceiver } from '@/hooks/useFileReceiver';
 
 const MAX_SIZE = 500 * 1024 * 1024;
 const ACCEPT = 'video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi,.mkv';
@@ -28,6 +29,9 @@ export default function VideoUploader({ label = 'Sube tu vídeo', onFile, onClea
     if (file.size > MAX_SIZE) return;
     onFile({ file, name: file.name, size: file.size });
   }, [onFile]);
+
+  // Archivos pegados con Ctrl+V o recibidos de otra herramienta / app.
+  useFileReceiver((f) => f.type.startsWith('video/') || /\.(mp4|webm|mov|avi|mkv)$/i.test(f.name), handleFile, () => current === null);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -76,6 +80,7 @@ export default function VideoUploader({ label = 'Sube tu vídeo', onFile, onClea
         <div className="text-center">
           <p className="font-semibold text-[var(--color-text)]">{label}</p>
           <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · MP4, WebM, MOV · Máx. 500 MB</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el vídeo copiado con Ctrl+V</p>
         </div>
         <input
           ref={inputRef}

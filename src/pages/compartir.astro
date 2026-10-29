@@ -1,0 +1,70 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import CompartirTool from '@/components/tools/CompartirTool';
+import { TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { NEXT_STEPS, SHARE_EXTRA, type FileKind } from '@/lib/constants/next-steps';
+import { SITE } from '@/lib/constants/seo';
+import '@/styles/global.css';
+import AppMeta from '@/components/layout/AppMeta.astro';
+
+/**
+ * /compartir — destino del share target y de los file handlers de la PWA
+ * (ver `manifest.webmanifest.ts` y `public/app-sw.js`). También sirve como
+ * entrada universal: sueltas un archivo y te propone qué hacer con él.
+ * noindex y fuera del sitemap: es una pantalla de la app, no contenido.
+ */
+const options = Object.fromEntries(
+  (Object.keys(NEXT_STEPS) as FileKind[]).map((kind) => [
+    kind,
+    [...NEXT_STEPS[kind], ...SHARE_EXTRA[kind]]
+      .filter((s) => TOOL_BY_SLUG[s])
+      .map((s) => ({ slug: s, name: TOOL_BY_SLUG[s].name, description: TOOL_BY_SLUG[s].description })),
+  ]),
+) as Record<FileKind, Array<{ slug: string; name: string; description: string }>>;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Abrir un archivo | ToolsFoto</title>
+    <meta name="description" content="Abre una imagen, un PDF, un vídeo o un audio y elige qué hacer con él. Todo se procesa en tu dispositivo, sin subir nada a ningún servidor." />
+    <meta name="robots" content="noindex, follow" />
+    <meta property="og:title" content="Abrir un archivo | ToolsFoto" />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:site_name" content="ToolsFoto" />
+    <meta property="og:locale" content="es_ES" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <AppMeta />
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JDPXVTKVCL');
+    </script>
+  </head>
+  <body>
+    <Header back="/" title="Abrir un archivo" />
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
+      <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">¿Qué quieres hacer con tu archivo?</h1>
+      <p class="text-[var(--color-text-secondary)] mt-2 text-base sm:text-lg max-w-2xl">
+        Elige una herramienta y el archivo se abre en ella directamente. Nada sale de tu dispositivo.
+      </p>
+      <div class="mt-8">
+        <CompartirTool options={options} client:load />
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>

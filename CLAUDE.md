@@ -205,6 +205,7 @@ Escritorio no cambia salvo el buscador (icono de lupa, `Ctrl+K` o `/`).
 | Manifiesto | `src/pages/manifest.webmanifest.ts` | Generado en cada build (recuento y accesos directos salen de `TOOLS`). `start_url` lleva `utm_source=pwa` para medir en Analytics el uso de la app instalada. |
 | Service worker | `public/app-sw.js` | Páginas: red primero con copia para offline (máx. 60). `/_astro/*`: caché primero (hash inmutable, máx. 200, sin `.wasm` ni archivos > 5 MB). Iconos/manifiesto/índice: stale-while-revalidate. **Nunca toca terceros ni `/ads/*`.** Se registra solo en producción. |
 | Página sin conexión | `src/pages/offline.astro` | Autocontenida (sin global.css, sin anuncios). Lista las páginas guardadas. noindex y fuera del sitemap. |
+| Compartir / abrir con | `manifest.webmanifest.ts` + `public/app-sw.js` + `src/pages/compartir.astro` | `share_target` (POST multipart a `/compartir`: el SW deja los archivos en el buzón y redirige) y `file_handlers` ("Abrir con ToolsFoto" en escritorio, leídos con `launchQueue`). `/compartir` es también una entrada universal: sueltas cualquier archivo y propone herramientas. noindex y fuera del sitemap. Enlazada desde el menú ("Abrir un archivo"). |
 | Transiciones | `global.css` | `@view-transition { navigation: auto; }`: fundido entre páginas en Chrome/Safari recientes, con cabecera y barra de pestañas fijas (`view-transition-name`). Navegación normal, no SPA: anuncios y analytics se cargan en cada página como siempre. |
 
 **Reglas (leer antes de tocar estas piezas):**
@@ -219,6 +220,23 @@ Escritorio no cambia salvo el buscador (icono de lupa, `Ctrl+K` o `/`).
 - En la app instalada (`display-mode: standalone`) el `<footer>` se oculta en móvil; `AppShell` y `AdScripts` van fuera del `<footer>` para seguir visibles.
 - Comparar rutas siempre con `currentPath()` de `@/lib/utils/path`: con `build.format: 'file'`, `Astro.url.pathname` es `/imagen.html` en el build.
 - Iconos de la app: se generan desde el diseño de `favicon.svg` (degradado + "TF"). `icon-maskable-512.png` y `apple-touch-icon.png` van a sangre completa (el sistema recorta las esquinas).
+
+---
+
+## Flujo de archivos entre herramientas (pegar, "¿Y ahora?", compartir)
+
+Tres piezas en `src/lib/utils/` que funcionan en todas las herramientas sin tocarlas una a una:
+
+| Pieza | Qué hace |
+|---|---|
+| `inbox.ts` (buzón) | Guarda archivos en IndexedDB (`tf-inbox` → `files` → clave `pending`: `{ files, target, ts }`) para que los abra la página `target`. Se borra al leerlo y caduca a los 10 min. **`public/app-sw.js` escribe con el mismo esquema**: si se cambia uno, cambiar el otro. |
+| `incoming.ts` + `hooks/useFileReceiver.ts` | Registro de receptores. Los uploaders se registran al montar; cada archivo pegado (Ctrl+V) o llegado del buzón va al primer receptor que lo acepta y está vacío. Ya registrados: `useImageUpload` (y por tanto `ImageUploader`), `PdfUploader`, `VideoUploader`, `AudioUploader`, `JPGaPDFTool` y `UnirPDFsTool` (estos dos con `multiple`). **Un uploader nuevo debe llamar a `useFileReceiver`.** |
+| `results.ts` | Detecta el archivo que una herramienta descarga envolviendo `URL.createObjectURL`/`revokeObjectURL` y `HTMLAnchorElement.prototype.click`, y emite `tf:result`. Lo instala `ToolLayout`. Las herramientas no tienen que hacer nada: basta con seguir descargando con `<a download>` + blob URL. |
+
+- **"¿Y ahora?"** (`components/ui/NextSteps.tsx`, montado en `ToolLayout` tras el `<slot />`): al descargar, propone seguir con ese archivo en otra herramienta. La lista por tipo está en `src/lib/constants/next-steps.ts` (`NEXT_STEPS`; `/compartir` añade `SHARE_EXTRA`). **Solo poner ahí herramientas cuyo uploader esté registrado**, o se llega con el uploader vacío.
+- **Favoritas y recientes** (`src/lib/utils/recent.ts`, `localStorage` `tf-favs` / `tf-recent`): estrella junto al H1 (`FavoriteButton.tsx`), sección "Tus herramientas" en el home (`MyTools.tsx`, invisible si no hay nada) y primeras sugerencias del buscador vacío. `ToolLayout` registra la visita.
+- `/search-index.json` incluye el icono (`i`) porque `MyTools` pinta `ToolCard` desde él. `ToolCard` acepta un `Pick<ToolMeta, 'slug' | 'name' | 'description' | 'icon'>`.
+- `cookies.astro` describe `tf-favs`, `tf-recent` y `tf-inbox`.
 
 ---
 
@@ -639,7 +657,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 304 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 305 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -650,7 +668,7 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 - Astro detecta el adapter de Cloudflare y habilita "Cloudflare Images" y "KV sessions" — esos mensajes en el build son informativos, no errores.
 - El `output: "static"` en `astro.config.mjs` genera HTML estático puro. No hay server-side rendering.
 - La depreciación de `punycode` en los logs de build/dev es un warning de Node.js interno de las dependencias, no del código propio.
-- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal`, la preferencia `tf-anchor` del anuncio inferior, la marca `tf-install-seen` (localStorage) del aviso de instalación y las cachés `tf-*` del service worker (páginas y assets propios para uso offline). Todo ello está descrito en `cookies.astro`. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
+- **Cookies:** el sitio usa Google Analytics 4 (gtag en los 5 heads) y publicidad de Adsterra, que instala cookies de terceros. El almacenamiento local propio se limita a la caché del modelo de IA de `@imgly/background-removal`, la preferencia `tf-anchor` del anuncio inferior, la marca `tf-install-seen` (localStorage) del aviso de instalación, las favoritas/recientes (`tf-favs`, `tf-recent`), el buzón de archivos `tf-inbox` (IndexedDB, efímero) y las cachés `tf-*` del service worker (páginas y assets propios para uso offline). Todo ello está descrito en `cookies.astro`. No hay banner de consentimiento (CMP): pendiente de decisión del usuario si se quiere cubrir el EEE/Reino Unido.
 - **Hero background:** `public/hero-bg.jpg` — gradiente full-spectrum (rosa/naranja/azul), 1920px, ~73 KB. Overlay `from-black/75 via-black/55 to-black/30` para legibilidad del texto.
 
 ---
@@ -673,3 +691,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-09-23 | Segunda unidad de social bar de Adsterra (`pl29628846`) añadida en `AdScripts.astro` con carga no intrusiva: se inyecta por JS tras `load` + idle + 7 s, como mucho una vez cada 15 min por pestaña (`sessionStorage` `tf-sb2`), nunca en las páginas legales/contacto/404 y nunca con el ahorro de datos activo. Las páginas legales no cambian: es la misma red (Adsterra) que ya declaran `privacidad.astro` y `cookies.astro`. |
 | 2026-09-28 | Interfaz de app nativa en móvil + PWA instalable. (1) Nuevo `AppShell.astro` (incluido vía `Footer.astro`): barra de pestañas inferior (Inicio · Imagen · PDF · Vídeo · Menú) con sección activa, menú en hoja inferior deslizable (categorías con recuento, Blog, instalar app, información) y buscador de herramientas a pantalla completa (`Ctrl+K`/`/` en escritorio) alimentado por el nuevo `/search-index.json`. (2) `Header.astro` reescrito: sin menú hamburguesa; en móvil botón atrás (historial si se viene del sitio, si no la página padre) y título compacto al desplazar; en escritorio, lupa de búsqueda. Corregido de paso el estado activo del nav, que nunca se marcaba porque `Astro.url.pathname` llega como `/imagen.html` (nuevo `currentPath()`); ahora una herramienta marca su categoría. (3) PWA: `manifest.webmanifest` generado desde `TOOLS` (accesos directos a Comprimir imagen, Eliminar fondo, Unir PDFs y Comprimir vídeo), iconos 192/512/maskable y `apple-touch-icon` a sangre, service worker `public/app-sw.js` (offline de páginas visitadas, caché de `/_astro/`) y página `/offline` (noindex, fuera del sitemap). Verificado en Chromium: manifiesto sin errores y 0 errores de instalabilidad. (4) Nuevo `AppMeta.astro` en las 11 plantillas: `theme-color` pasa de `#E84827` a blanco (la barra del navegador se funde con la cabecera), `viewport-fit=cover`, metas de app iOS/Android y Speculation Rules (`prefetch`). (5) `global.css`: transiciones entre páginas (`@view-transition`), sin resaltado de toque ni zoom por doble toque, campos a 16px en móvil, reserva de altura para la barra inferior; el anchor de anuncios se apoya encima de la barra. (6) Ajustes móviles: miga de pan oculta en móvil (sigue en el HTML), hero del home y cabeceras oscuras de categorías/blog más compactas, `ToolCard` con respuesta al pulsar. `cookies.astro` y `privacidad.astro` describen la caché offline y la marca de instalación. 304 páginas. |
 | 2026-10-20 | **Quitado el popunder.** Fuera la segunda unidad de Adsterra (`pl29628846`) y su bloque de inyección diferida en `AdScripts.astro` (con la marca `tf-sb2`). Banners en iframe, nativo, anchor, rails y social bar siguen igual. |
+| 2026-10-29 | **Fase 1 de crecimiento — flujo de archivos.** (1) Pegar con Ctrl+V en todos los uploaders (`useFileReceiver` en `useImageUpload`, `PdfUploader`, `VideoUploader`, `AudioUploader`, `JPGaPDFTool`, `UnirPDFsTool`). (2) "¿Y ahora?" (`NextSteps.tsx`): tras descargar, seguir con el mismo archivo en otra herramienta sin volver a subirlo; el archivo viaja por el buzón de IndexedDB (`inbox.ts`) y la descarga se detecta sin tocar las herramientas (`results.ts`). (3) PWA: `share_target` y `file_handlers` en el manifiesto, recepción en `app-sw.js` y nueva página `/compartir` (noindex) que propone herramientas por tipo de archivo; enlazada desde el menú. (4) Favoritas (estrella junto al H1) y recientes en `localStorage`, mostradas en el home ("Tus herramientas") y en el buscador vacío. (5) La description de la 404 deriva el recuento de `TOOLS`. `cookies.astro` actualizada. 305 páginas. |

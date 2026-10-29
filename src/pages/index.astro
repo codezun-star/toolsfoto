@@ -2,6 +2,7 @@
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import HomeTools from '@/components/HomeTools';
+import MyTools from '@/components/MyTools';
 import AdSlot from '@/components/ads/AdSlot.astro';
 import AdNative from '@/components/ads/AdNative.astro';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
@@ -242,6 +243,9 @@ const homeGraph = jsonLd({
       <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <AdSlot type="leaderboard" />
       </div>
+
+      <!-- Favoritas y recientes de este navegador (vacío si no hay ninguna) -->
+      <MyTools client:load />
 
       <!-- TOOLS TABS -->
       <div id="herramientas">

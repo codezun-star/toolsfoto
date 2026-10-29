@@ -90,6 +90,7 @@ export default function ImageUploader({
             {isDragging ? 'Suelta la imagen aquí' : 'Arrastra tu imagen o haz clic'}
           </p>
           <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP, AVIF, GIF · Máximo 50 MB</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegarla con Ctrl+V</p>
         </div>
       </button>
 

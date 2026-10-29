@@ -191,7 +191,8 @@ const ICONS: Record<string, React.ReactNode> = {
 };
 
 interface Props {
-  tool: ToolMeta;
+  /** Basta con lo que pinta la card: `MyTools` la alimenta desde el índice del buscador. */
+  tool: Pick<ToolMeta, 'slug' | 'name' | 'description' | 'icon'>;
   /**
    * Clases extra para la card. `CategoryGrid` la usa para ocultar con CSS las
    * herramientas fuera de la página actual: así el `<a href>` de las 241

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Music, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
+import { useFileReceiver } from '@/hooks/useFileReceiver';
 
 const MAX_SIZE = 200 * 1024 * 1024;
 const ACCEPT = 'audio/mpeg,audio/wav,audio/ogg,audio/aac,audio/flac,audio/x-m4a,audio/mp4,.mp3,.wav,.ogg,.aac,.flac,.m4a';
@@ -28,6 +29,9 @@ export default function AudioUploader({ label = 'Sube tu audio', onFile, onClear
     if (file.size > MAX_SIZE) return;
     onFile({ file, name: file.name, size: file.size });
   }, [onFile]);
+
+  // Archivos pegados con Ctrl+V o recibidos de otra herramienta / app.
+  useFileReceiver((f) => f.type.startsWith('audio/') || /\.(mp3|wav|ogg|aac|flac|m4a)$/i.test(f.name), handleFile, () => current === null);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -76,6 +80,7 @@ export default function AudioUploader({ label = 'Sube tu audio', onFile, onClear
         <div className="text-center">
           <p className="font-semibold text-[var(--color-text)]">{label}</p>
           <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · MP3, WAV, OGG, AAC · Máx. 200 MB</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el audio copiado con Ctrl+V</p>
         </div>
         <input
           ref={inputRef}

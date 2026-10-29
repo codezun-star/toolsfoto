@@ -9,6 +9,9 @@ import '@/styles/global.css';
 import { PAGE_SEO, SITE } from '@/lib/constants/seo';
 import { jsonLd } from '@/lib/utils/jsonld';
 import AppMeta from './AppMeta.astro';
+import NextSteps from '@/components/ui/NextSteps';
+import FavoriteButton from '@/components/ui/FavoriteButton';
+import { NEXT_STEPS, type FileKind } from '@/lib/constants/next-steps';
 
 interface Props {
   slug: string;
@@ -25,6 +28,17 @@ const { slug, faqs, answer = '', howTo, dateModified = SITE.dateModified } = Ast
 const tool = TOOL_BY_SLUG[slug];
 const seo = PAGE_SEO[slug];
 const related = TOOLS.filter(t => tool.related.includes(t.slug)).slice(0, 4);
+
+// "¿Y ahora?": siguientes herramientas por tipo de archivo, sin la actual.
+const nextSteps = Object.fromEntries(
+  (Object.keys(NEXT_STEPS) as FileKind[]).map((kind) => [
+    kind,
+    NEXT_STEPS[kind]
+      .filter((s) => s !== slug && TOOL_BY_SLUG[s])
+      .slice(0, 6)
+      .map((s) => ({ slug: s, name: TOOL_BY_SLUG[s].name })),
+  ]),
+) as Record<FileKind, Array<{ slug: string; name: string }>>;
 
 const domainLabel: Record<string, string> = {
   imagen: 'Herramientas de imagen',
@@ -245,7 +259,7 @@ const graph = jsonLd({
   <body>
     <Header back={`/${tool.domain}`} title={tool.name} />
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
+    <main data-tool-slug={slug} class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
       {/* En móvil la miga de pan la sustituyen el botón atrás de la barra
           superior y la pestaña activa; sigue en el HTML para los buscadores. */}
       <nav class="hidden md:flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
@@ -257,7 +271,10 @@ const graph = jsonLd({
       </nav>
 
       <div class="mb-6 sm:mb-8">
-        <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
+        <div class="flex items-start justify-between gap-3">
+          <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
+          <FavoriteButton slug={slug} client:load />
+        </div>
         <p class="aeo-answer text-[var(--color-text-secondary)] mt-2 text-base sm:text-lg max-w-2xl">{directAnswer}</p>
         <p class="mt-3 text-xs text-[var(--color-text-muted)]">
           Gratis, sin registro y sin subir archivos a ningún servidor: el procesamiento ocurre en tu navegador ·
@@ -269,6 +286,9 @@ const graph = jsonLd({
       <AdSlot type="leaderboard" />
 
       <slot />
+
+      {/* "¿Y ahora?": aparece al descargar un resultado */}
+      <NextSteps steps={nextSteps} client:load />
 
       {/* Anuncio tras el resultado: el usuario acaba de terminar su tarea */}
       <AdSlot type="rectangle" />
@@ -301,5 +321,14 @@ const graph = jsonLd({
     </main>
 
     <Footer />
+
+    <script>
+      import { installResultCapture } from '@/lib/utils/results';
+      import { recordRecent } from '@/lib/utils/recent';
+
+      installResultCapture();
+      const toolSlug = document.querySelector<HTMLElement>('[data-tool-slug]')?.dataset.toolSlug;
+      if (toolSlug) recordRecent(toolSlug);
+    </script>
   </body>
 </html>

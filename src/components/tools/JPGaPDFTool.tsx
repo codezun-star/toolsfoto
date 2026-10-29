@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useFileReceiver } from '@/hooks/useFileReceiver';
 import DownloadButton from '@/components/ui/DownloadButton';
 import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
@@ -22,7 +23,7 @@ export default function JPGaPDFTool() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const addFiles = useCallback((files: FileList) => {
+  const addFiles = useCallback((files: ArrayLike<File>) => {
     const entries: ImgEntry[] = [];
     for (let i = 0; i < files.length; i++) {
       const f = files[i];
@@ -31,6 +32,9 @@ export default function JPGaPDFTool() {
     }
     setImages(prev => [...prev, ...entries]);
   }, []);
+
+  // Archivos pegados con Ctrl+V o recibidos de otra herramienta / app.
+  useFileReceiver((f) => ['image/jpeg', 'image/png', 'image/webp'].includes(f.type), (f) => addFiles([f]), () => true, true);
 
   function remove(id: number) {
     setImages(prev => { const e = prev.find(i => i.id === id); if (e) revokeURL(e.url); return prev.filter(i => i.id !== id); });

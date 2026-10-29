@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { FileText, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
+import { useFileReceiver } from '@/hooks/useFileReceiver';
 
 const MAX_PDF_SIZE = 100 * 1024 * 1024; // 100 MB
 
@@ -32,6 +33,9 @@ export default function PdfUploader({ label = 'Sube tu PDF', onFile, onClear, cu
     if (file.size > MAX_PDF_SIZE) return;
     onFile(file);
   }, [onFile]);
+
+  // Archivos pegados con Ctrl+V o recibidos de otra herramienta / app.
+  useFileReceiver((f) => f.type === 'application/pdf', handleFile, () => current === null);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -83,6 +87,7 @@ export default function PdfUploader({ label = 'Sube tu PDF', onFile, onClear, cu
         <div className="text-center">
           <p className="font-semibold text-[var(--color-text)]">{label}</p>
           <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · PDF · Máx. 100 MB</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el PDF copiado con Ctrl+V</p>
         </div>
         <input
           ref={inputRef}

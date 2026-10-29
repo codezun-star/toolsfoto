@@ -21,7 +21,7 @@
 import {
   House, Image, FileText, Video, Menu, Music, Code2, BookOpen, Search, X,
   ChevronRight, ArrowLeft, Mail, ShieldCheck, Scale, Cookie, Landmark,
-  Share, SquarePlus,
+  Share, SquarePlus, FolderOpen,
 } from 'lucide-react';
 import { TOOLS, TOOL_BY_SLUG, type ToolDomain } from '@/lib/constants/tools';
 import { currentPath } from '@/lib/utils/path';
@@ -131,6 +131,14 @@ const DOMAIN_ICONS = [
         <Search size={18} />
         Buscar entre {TOOLS.length} herramientas
       </button>
+      <a
+        href="/compartir"
+        class="tf-press mt-2.5 w-full flex items-center gap-3 h-12 px-4 rounded-xl bg-white border border-[var(--color-border)] text-[15px] font-medium text-[var(--color-text)]"
+      >
+        <FolderOpen size={18} className="text-[var(--color-text-secondary)]" />
+        Abrir un archivo
+        <ChevronRight size={18} className="ml-auto text-[var(--color-text-muted)]" />
+      </a>
 
       <p class="tf-section-label">Categorías</p>
       <div class="grid grid-cols-2 gap-2.5">
@@ -556,6 +564,7 @@ const DOMAIN_ICONS = [
 </style>
 
 <script>
+  import { getFavs, getRecent } from '@/lib/utils/recent';
   type Entry = { s: string; n: string; d: string; c: string };
   type Indexed = Entry & { nn: string; nd: string; ns: string };
 
@@ -843,10 +852,13 @@ const DOMAIN_ICONS = [
       return;
     }
     if (!q) {
-      label.textContent = 'Más usadas';
+      // Primero las favoritas y recientes de este navegador; se completa con las más usadas.
+      const mine = [...new Set([...getFavs(), ...getRecent()])].slice(0, 6);
+      const slugs = [...new Set([...mine, ...popular])].slice(0, 12);
+      label.textContent = mine.length ? 'Tus herramientas y las más usadas' : 'Más usadas';
       label.hidden = false;
       empty.hidden = true;
-      renderList(popular.map((s) => index?.find((e) => e.s === s)).filter((e): e is Indexed => e !== undefined));
+      renderList(slugs.map((s) => index?.find((e) => e.s === s)).filter((e): e is Indexed => e !== undefined));
       return;
     }
     const found = find(q);

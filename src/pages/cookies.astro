@@ -71,6 +71,17 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
       marca en el almacenamiento local para no volver a destacártela.
     </li>
     <li>
+      <strong>Herramientas favoritas y recientes:</strong> si marcas una herramienta con la estrella o la usas, guardamos
+      su nombre en el almacenamiento local (<code>tf-favs</code> y <code>tf-recent</code>) para mostrártela en el inicio y en
+      el buscador. Solo se guarda qué herramientas usas, nunca tus archivos, y no se envía a ningún sitio.
+    </li>
+    <li>
+      <strong>Pasar un archivo a otra herramienta:</strong> cuando eliges «¿Y ahora?» tras descargar un resultado, o
+      compartes un archivo con la app desde otra aplicación, el archivo se guarda un momento en la base de datos local del
+      navegador (IndexedDB, <code>tf-inbox</code>) para abrirlo en la siguiente página. Se borra en cuanto esa página lo
+      recoge y, en cualquier caso, a los 10 minutos deja de usarse. No sale de tu dispositivo.
+    </li>
+    <li>
       <strong>Anuncio inferior descartado:</strong> si cierras la barra de anuncios inferior, guardamos esa preferencia en
       el almacenamiento de sesión para no volver a mostrártela mientras dure la visita.
     </li>

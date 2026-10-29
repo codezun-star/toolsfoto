@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from '@/lib/constants/tools';
 import { fileToObjectURL, revokeURL } from '@/lib/utils/canvas';
+import { useFileReceiver } from './useFileReceiver';
 
 export interface ImageFile {
   file: File;
@@ -42,6 +43,9 @@ export function useImageUpload() {
 
     img.src = url;
   }, [image]);
+
+  // Imágenes pegadas con Ctrl+V o recibidas de otra herramienta / app.
+  useFileReceiver((f) => ACCEPTED_TYPES.includes(f.type), processFile, () => image === null);
 
   const clearImage = useCallback(() => {
     if (image?.url) revokeURL(image.url);

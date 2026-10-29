@@ -16,6 +16,10 @@
  *     actualiza en segundo plano.
  *   - /ads/* queda fuera: los banners van siempre a la red.
  *
+ * Además recibe el "Compartir" de otras apps (share target del manifiesto):
+ * el POST a /compartir deja los archivos en el buzón de IndexedDB con el mismo
+ * esquema que `src/lib/utils/inbox.ts` y redirige a /compartir, que los lee.
+ *
  * Para invalidar todo lo guardado, subir VERSION.
  */
 const VERSION = 'v1';
@@ -49,9 +53,14 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+  const url = new URL(request.url);
+
+  if (request.method === 'POST' && url.origin === self.location.origin && url.pathname === '/compartir') {
+    event.respondWith(receiveShare(request));
+    return;
+  }
   if (request.method !== 'GET') return;
 
-  const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/ads/') || url.pathname.startsWith('/cdn-cgi/') || url.pathname === '/app-sw.js') return;
 
@@ -124,4 +133,35 @@ async function staleWhileRevalidate(event) {
 async function trim(cache, max) {
   const keys = await cache.keys();
   for (let i = 0; i < keys.length - max; i++) await cache.delete(keys[i]);
+}
+
+// ── Compartir desde otra app ─────────────────────────────────────────────────
+
+/** Mismo esquema que src/lib/utils/inbox.ts: base tf-inbox, almacén files, clave pending. */
+function stash(files) {
+  return new Promise((resolve, reject) => {
+    const open = indexedDB.open('tf-inbox', 1);
+    open.onupgradeneeded = () => {
+      if (!open.result.objectStoreNames.contains('files')) open.result.createObjectStore('files');
+    };
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result;
+      const tx = db.transaction('files', 'readwrite');
+      tx.objectStore('files').put({ files, target: '*', ts: Date.now() }, 'pending');
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    };
+  });
+}
+
+async function receiveShare(request) {
+  try {
+    const data = await request.formData();
+    const files = data.getAll('files').filter((f) => f instanceof File && f.size > 0);
+    if (files.length) await stash(files);
+    return Response.redirect(files.length ? '/compartir?recibido=1' : '/compartir', 303);
+  } catch {
+    return Response.redirect('/compartir', 303);
+  }
 }

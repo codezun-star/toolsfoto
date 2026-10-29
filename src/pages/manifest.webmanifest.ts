@@ -33,6 +33,40 @@ export const GET: APIRoute = () => {
       { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
       { src: '/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
     ],
+    // "Compartir" desde otra app (Android/ChromeOS): el service worker recibe
+    // el POST, deja los archivos en el buzón (IndexedDB) y redirige a /compartir.
+    share_target: {
+      action: '/compartir',
+      method: 'POST',
+      enctype: 'multipart/form-data',
+      params: {
+        title: 'title',
+        text: 'text',
+        url: 'url',
+        files: [{ name: 'files', accept: ['image/*', 'application/pdf', '.pdf', 'video/*', 'audio/*'] }],
+      },
+    },
+    // "Abrir con ToolsFoto" en escritorio (app instalada). La página lee los
+    // archivos con `launchQueue` (CompartirTool.tsx).
+    file_handlers: [{
+      action: '/compartir',
+      accept: {
+        'image/jpeg': ['.jpg', '.jpeg'],
+        'image/png': ['.png'],
+        'image/webp': ['.webp'],
+        'image/gif': ['.gif'],
+        'application/pdf': ['.pdf'],
+        'video/mp4': ['.mp4'],
+        'video/webm': ['.webm'],
+        'video/quicktime': ['.mov'],
+        'audio/mpeg': ['.mp3'],
+        'audio/wav': ['.wav'],
+        'audio/ogg': ['.ogg'],
+        'audio/flac': ['.flac'],
+        'audio/mp4': ['.m4a'],
+      },
+    }],
+    launch_handler: { client_mode: 'navigate-existing' },
     shortcuts: SHORTCUTS.filter((slug) => TOOL_BY_SLUG[slug]).map((slug) => ({
       name: TOOL_BY_SLUG[slug].name,
       short_name: TOOL_BY_SLUG[slug].name,
