@@ -14,8 +14,9 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      // Fuera del sitemap: las páginas legales, la 404 y las pantallas de la PWA (sin conexión, compartir), todas noindex
+      // Fuera del sitemap: las páginas legales, la 404, las pantallas de la PWA (sin conexión, compartir) y los widgets incrustables (/embed/*), todas noindex
       filter: (page) =>
+        !page.startsWith('https://toolsfoto.com/embed/') &&
         !['/privacidad', '/terminos', '/cookies', '/aviso-legal', '/404', '/offline', '/compartir'].some(
           (p) => page === `https://toolsfoto.com${p}` || page === `https://toolsfoto.com${p}/`,
         ),

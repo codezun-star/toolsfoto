@@ -247,6 +247,19 @@ Tres piezas en `src/lib/utils/` que funcionan en todas las herramientas sin toca
 
 ---
 
+## Backlinks: widgets incrustables y extensión de navegador
+
+| Pieza | Dónde vive | Qué hace |
+|---|---|---|
+| Widgets | `src/lib/constants/embeds.ts` + `src/pages/embed/[tool].astro` | Versión incrustable (`/embed/<slug>`) de las herramientas de `EMBEDS`: sin cabecera, pie, anuncios ni analytics; `noindex, follow`, canonical a la herramienta y fuera del sitemap. Avisa al padre de su altura con `postMessage({ type: 'toolsfoto:height' })`. Solo herramientas autocontenidas (nada de subidas grandes ni librerías pesadas). |
+| Código para insertar | `components/ui/EmbedSnippet.tsx` | Bloque «Inserta esta herramienta en tu web» que `ToolLayout` muestra en las herramientas con widget. El código incluye **debajo del iframe** un enlace de atribución a la herramienta: ese es el backlink (el enlace de dentro del iframe no cuenta para la web que lo incrusta). Script opcional de altura automática. |
+| Catálogo | `src/pages/widgets.astro` | Página indexable con todos los widgets (vista previa + código). Enlazada desde el pie. |
+| Extensión | `extension/` (Manifest V3) | Menú contextual «Abrir en ToolsFoto» sobre imágenes y popup con accesos. La imagen llega a la página por `postMessage({ type: 'tf-ext-file' })` cuando `incoming.ts` avisa con `tf-ready` / `data-tf-ready`. Instrucciones de prueba y publicación en `extension/README.md`. No forma parte del build de Astro. |
+
+Para añadir un widget: entrada en `EMBEDS` con su altura natural y una rama en `embed/[tool].astro`.
+
+---
+
 ## Estructura de carpetas
 
 ```
@@ -693,7 +706,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 348 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 357 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + widgets y /embed + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -733,3 +746,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-29 | **Fase 4 de crecimiento — lotes.** Imagen 65→68: `/comprimir-varias-imagenes`, `/redimensionar-varias-imagenes` y `/convertir-varias-imagenes`, las tres sobre `BatchImageTool.tsx` (hasta 200 imágenes, HEIC incluido, resumen de ahorro, descarga individual o en ZIP con el nuevo `zip.ts`). Las versiones individuales (`comprimir`, `redimensionar`, `convertir`, `heic-a-jpg`) enlazan a su versión por lotes en «Otras herramientas». Destacadas del home: entran mejorar calidad, borrar objetos y comprimir varias. Verificado con Playwright: ZIP con nombres y tamaños correctos en los tres modos. |
 | 2026-10-29 | **Fase 5 de crecimiento — cola larga.** +19 páginas con contenido propio servidas por `[landing].astro` desde `landings.ts`: comprimir imagen a 20/50/100/200/500 KB y 1 MB; fotos de documento (DNI España 26×32 mm, tamaño pasaporte 3,5×4,5 cm, tamaño infantil 2,5×3 cm, visa de EE. UU. 2×2 in con datos del DS-160, visado Schengen 35×45 mm, 4×4 cm); conversiones PNG→WebP, JPG→WebP, AVIF→JPG, AVIF→PNG, BMP→JPG, HEIC→PNG y MP3→WAV. Mejoras en los componentes base: `ComprimirObjetivoTool` reduce dimensiones cuando ni con calidad 0,3 alcanza el objetivo (antes se quedaba por encima o en calidad 1 %); `FotoCarnetTool` añade México, Canadá y China, corrige la etiqueta del pasaporte español (26×32, no 35×45) y genera una hoja de 10×15 cm con copias y guías de corte; `BatchImageTool` admite formato fijo. Verificado con Playwright: 20 KB exactos (420×524, calidad 37 %), hoja de 15 copias, BMP y AVIF reales convertidos. |
 | 2026-10-29 | **Fase 6 de crecimiento — developer.** Developer 43→52: `/formatear-yaml`, `/json-a-yaml`, `/yaml-a-json`, `/json-a-csv`, `/comparar-json` (diff estructural con rutas), `/curl-a-codigo` (fetch, axios, Node, Python, PHP), `/markdown-a-html` (GFM con vista previa aislada), `/decodificar-certificado` (X.509 con lector ASN.1 propio y huellas Web Crypto) y `/simulador-daltonismo` (Machado 2009). Nuevas dependencias `yaml` y `marked`; nuevos `CopyDownload.tsx` y `yaml-errors.ts`. Verificado con Playwright: huella SHA-256 idéntica a la de OpenSSL, SAN/EC/RSA leídos de certificados reales, el HTML con `onerror` no se ejecuta en la vista previa, cURL con -u/--data-urlencode/-X convertido correctamente. |
+| 2026-10-29 | **Fase 7 de crecimiento — backlinks.** (1) Widgets incrustables para 5 herramientas (`generar-qr`, `contador-palabras`, `contraste-color`, `generador-contrasenas`, `convertir-color`): páginas `/embed/*` (noindex, fuera del sitemap), bloque «Inserta esta herramienta en tu web» con enlace de atribución y altura automática, y catálogo indexable `/widgets` enlazado desde el pie. (2) Tres artículos de referencia citables: `tamanos-foto-carnet-por-pais`, `formatos-de-imagen-jpg-png-webp-avif-heic` y `tamanos-papel-en-pixeles` (tablas calculadas). Blog: 49→52 artículos. (3) Extensión de navegador Manifest V3 en `extension/` («Abrir en ToolsFoto» en el menú contextual de las imágenes); `incoming.ts` acepta su `postMessage` del mismo origen. Verificado con Playwright: widget incrustado desde otro origen con altura ajustada; extensión cargada en Chromium entregando a `/comprimir` una imagen de un origen sin CORS. 357 páginas. |

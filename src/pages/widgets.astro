@@ -1,0 +1,114 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import AppMeta from '@/components/layout/AppMeta.astro';
+import EmbedSnippet from '@/components/ui/EmbedSnippet';
+import { EMBEDS } from '@/lib/constants/embeds';
+import { TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { SITE } from '@/lib/constants/seo';
+import { jsonLd } from '@/lib/utils/jsonld';
+import '@/styles/global.css';
+
+/**
+ * /widgets — catálogo de herramientas incrustables. Indexable: es la página
+ * que se enlaza cuando alguien busca "generador de QR para mi web", y cada
+ * código copiado desde aquí lleva un enlace de atribución a la herramienta.
+ */
+const widgets = EMBEDS.map((e) => ({ ...e, tool: TOOL_BY_SLUG[e.slug] }));
+const title = 'Widgets gratis para tu web: QR, contraseñas y colores | ToolsFoto';
+const description = `Inserta en tu web, blog o aula virtual ${widgets.length} herramientas gratis con un iframe: generador de QR, contador de palabras, contraste de color y más. Sin anuncios.`;
+const canonical = `${SITE.url}/widgets`;
+
+const graph = jsonLd({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'es',
+      isPartOf: { '@type': 'WebSite', name: SITE.name, url: SITE.url },
+    },
+    {
+      '@type': 'ItemList',
+      itemListElement: widgets.map((w, i) => ({ '@type': 'ListItem', position: i + 1, name: w.tool.name, url: `${SITE.url}/${w.slug}` })),
+    },
+  ],
+});
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ToolsFoto" />
+    <meta property="og:locale" content="es_ES" />
+    <script is:inline type="application/ld+json" set:html={graph} />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <AppMeta />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JDPXVTKVCL');
+    </script>
+  </head>
+  <body>
+    <Header back="/" title="Widgets" />
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
+      <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">Widgets gratis para tu web</h1>
+      <p class="text-[var(--color-text-secondary)] mt-2 text-base sm:text-lg max-w-2xl">
+        Añade herramientas útiles a tu web, blog, tienda o aula virtual copiando un código: un generador de QR para tus clientes,
+        un contador de palabras para tus alumnos o un comprobador de contraste para tu equipo de diseño. Son gratis, no muestran
+        anuncios dentro del recuadro y funcionan en cualquier página que admita HTML.
+      </p>
+
+      {widgets.map((w) => (
+        <section class="mt-14" id={w.slug}>
+          <h2 class="text-2xl font-extrabold text-[var(--color-text)]"><a href={`/${w.slug}`} class="hover:text-[var(--color-accent)]">{w.tool.name}</a></h2>
+          <p class="text-[var(--color-text-secondary)] mt-1">{w.tool.description}</p>
+          <iframe
+            src={`/embed/${w.slug}`}
+            title={`${w.tool.name} — vista previa`}
+            loading="lazy"
+            class="mt-5 w-full max-w-[760px] rounded-xl border border-[var(--color-border)] bg-white"
+            style={`height:${w.height}px`}
+          ></iframe>
+          <EmbedSnippet slug={w.slug} name={w.tool.name} height={w.height} client:visible />
+        </section>
+      ))}
+
+      <section class="mt-16 grid gap-8 sm:grid-cols-2">
+        <div>
+          <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Cómo insertarlos</h2>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+            En WordPress, añade un bloque «HTML personalizado» y pega el código. En Blogger, usa la vista HTML de la entrada. En
+            Notion, pega solo la dirección del iframe con <strong class="text-[var(--color-text)]">/embed</strong>. En Moodle o Google Sites, usa la opción de insertar código o URL.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Privacidad para tus visitantes</h2>
+          <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+            Los widgets funcionan dentro del navegador de quien los usa: no recogen datos, no instalan cookies de publicidad ni
+            envían lo que se escribe en ellos a ningún servidor.
+          </p>
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

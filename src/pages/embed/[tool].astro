@@ -1,0 +1,69 @@
+---
+/**
+ * Versión incrustable de una herramienta (`<iframe src="/embed/slug">`).
+ * Sin cabecera, pie, anuncios ni analytics: se muestra dentro de la web de
+ * otra persona. noindex (el contenido ya está en la página de la herramienta)
+ * y fuera del sitemap, pero con enlace visible a ToolsFoto.
+ * Avisa al padre de su altura (`toolsfoto:height`) para que el iframe se
+ * ajuste si quien lo incrusta copió el script opcional.
+ */
+import '@/styles/global.css';
+import GenerarQRTool from '@/components/tools/GenerarQRTool';
+import ContadorPalabrasTool from '@/components/tools/ContadorPalabrasTool';
+import ContrasteColorTool from '@/components/tools/ContrasteColorTool';
+import GeneradorContrasenasTool from '@/components/tools/GeneradorContrasenasTool';
+import ConvertirColorTool from '@/components/tools/ConvertirColorTool';
+import { EMBEDS } from '@/lib/constants/embeds';
+import { TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { SITE } from '@/lib/constants/seo';
+
+export function getStaticPaths() {
+  return EMBEDS.map((e) => ({ params: { tool: e.slug } }));
+}
+
+const { tool: slug } = Astro.params;
+const tool = TOOL_BY_SLUG[slug];
+const toolUrl = `${SITE.url}/${slug}`;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tool.name} | ToolsFoto</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={toolUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="tf-embed" data-slug={slug}>
+    <main class="p-3 sm:p-4">
+      {slug === 'generar-qr' && <GenerarQRTool client:load />}
+      {slug === 'contador-palabras' && <ContadorPalabrasTool client:load />}
+      {slug === 'contraste-color' && <ContrasteColorTool client:load />}
+      {slug === 'generador-contrasenas' && <GeneradorContrasenasTool client:load />}
+      {slug === 'convertir-color' && <ConvertirColorTool client:load />}
+    </main>
+    <p class="px-4 pb-3 text-xs text-[var(--color-text-muted)] text-right">
+      <a href={toolUrl} target="_blank" rel="noopener" class="hover:text-[var(--color-accent)]">{tool.name} gratis · <strong class="text-[var(--color-text)]">Tools<span class="text-[#0BBFB0]">Foto</span></strong></a>
+    </p>
+
+    <style is:global>
+      /* Dentro de un iframe: sin reserva de altura para la barra de la app ni el anuncio inferior. */
+      body.tf-embed { padding-bottom: 0 !important; background: var(--color-bg); }
+    </style>
+    <script is:inline>
+      (function () {
+        var slug = document.body.dataset.slug;
+        var last = 0;
+        function send() {
+          var h = Math.ceil(document.documentElement.scrollHeight);
+          if (h === last || window.parent === window) return;
+          last = h;
+          window.parent.postMessage({ type: 'toolsfoto:height', slug: slug, height: h }, '*');
+        }
+        new ResizeObserver(send).observe(document.documentElement);
+        window.addEventListener('load', send);
+      })();
+    </script>
+  </body>
+</html>

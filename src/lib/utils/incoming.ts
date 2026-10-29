@@ -4,8 +4,11 @@ import { currentPath } from './path';
 /**
  * Entrada de archivos que no vienen del selector ni de arrastrar:
  *   - Pegar con Ctrl+V / Cmd+V una imagen o un archivo copiado.
- *   - El buzón (`inbox.ts`): resultado de otra herramienta, "Compartir" desde
- *     otra app o la extensión de navegador.
+ *   - El buzón (`inbox.ts`): resultado de otra herramienta o "Compartir" desde
+ *     otra app.
+ *   - La extensión de navegador (`extension/`): su content script envía la
+ *     imagen con `postMessage({ type: 'tf-ext-file' })` cuando la página avisa
+ *     de que tiene receptores (`tf-ready` y `data-tf-ready` en <html>).
  *
  * Los uploaders se registran como receptores (vía `useFileReceiver`) en el
  * orden en que se montan. Cada archivo va al primer receptor que lo acepta y
@@ -59,11 +62,26 @@ function checkInbox() {
   }, 60);
 }
 
+interface ExtensionFileMessage { type: 'tf-ext-file'; name: string; mime: string; buffer: ArrayBuffer }
+
+function onMessage(e: MessageEvent) {
+  // Solo mensajes de esta misma ventana (el content script de la extensión
+  // comparte la ventana con la página); nunca de iframes u otras webs.
+  if (e.source !== window || e.origin !== location.origin) return;
+  const data = e.data as Partial<ExtensionFileMessage> | null;
+  if (!data || data.type !== 'tf-ext-file' || !(data.buffer instanceof ArrayBuffer)) return;
+  deliverFiles([new File([data.buffer], data.name || 'imagen', { type: data.mime || '' })]);
+}
+
 export function registerReceiver(receiver: FileReceiver): () => void {
   receivers.push(receiver);
   if (!listening) {
     listening = true;
     document.addEventListener('paste', onPaste);
+    window.addEventListener('message', onMessage);
+    // Aviso para la extensión: ya hay a quién entregar archivos.
+    document.documentElement.dataset.tfReady = '1';
+    window.postMessage({ type: 'tf-ready' }, location.origin);
   }
   checkInbox();
   return () => {

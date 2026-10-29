@@ -12,6 +12,8 @@ import AppMeta from './AppMeta.astro';
 import NextSteps from '@/components/ui/NextSteps';
 import FavoriteButton from '@/components/ui/FavoriteButton';
 import { NEXT_STEPS, type FileKind } from '@/lib/constants/next-steps';
+import EmbedSnippet from '@/components/ui/EmbedSnippet';
+import { EMBED_BY_SLUG } from '@/lib/constants/embeds';
 
 interface Props {
   slug: string;
@@ -28,6 +30,7 @@ const { slug, faqs, answer = '', howTo, dateModified = SITE.dateModified } = Ast
 const tool = TOOL_BY_SLUG[slug];
 const seo = PAGE_SEO[slug];
 const related = TOOLS.filter(t => tool.related.includes(t.slug)).slice(0, 4);
+const embed = EMBED_BY_SLUG[slug];
 
 // "¿Y ahora?": siguientes herramientas por tipo de archivo, sin la actual.
 const nextSteps = Object.fromEntries(
@@ -301,6 +304,9 @@ const graph = jsonLd({
           </div>
         </section>
       )}
+
+      {/* Widget incrustable: código para insertar la herramienta en otra web (backlink) */}
+      {embed && <EmbedSnippet slug={slug} name={tool.name} height={embed.height} client:visible />}
 
       {/* Banner nativo: uno por página (id de contenedor fijo de la red) */}
       <AdNative />

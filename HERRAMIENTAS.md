@@ -1,7 +1,7 @@
 # ToolsFoto — Registro completo de herramientas
 
 > Índice general. El detalle de cada categoría está en su archivo propio.
-> **Total: 284 herramientas · 348 páginas HTML estáticas**
+> **Total: 284 herramientas · 357 páginas HTML estáticas**
 
 ## Archivos de detalle
 
@@ -37,4 +37,4 @@
 
 ---
 
-*Última actualización: 2026-10-29 — 284 herramientas, 348 páginas HTML estáticas*
+*Última actualización: 2026-10-29 — 284 herramientas, 357 páginas HTML estáticas*
