@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import EditarPdfTool from '@/components/tools/EditarPdfTool';
+
+const faqs = [
+  {
+    q: '¿Cómo edito un PDF gratis?',
+    a: 'Sube el PDF y elige una herramienta en la barra: «Texto» para escribir (teclea el texto y toca la página donde quieres colocarlo), «Resaltar» para marcar párrafos, «Tapar» para cubrir con blanco y «Dibujar» para trazar a mano alzada. Cuando termines, pulsa «Descargar PDF editado».',
+  },
+  {
+    q: '¿Puedo cambiar el texto que ya tiene el PDF?',
+    a: 'No se puede reescribir directamente el texto original, porque un PDF no guarda párrafos editables sino letras colocadas en posiciones fijas. La forma práctica de corregirlo es tapar la palabra o la frase con «Tapar» y escribir encima el texto nuevo con «Texto». Para cambios extensos, convierte el documento con «PDF a Word», edítalo y vuelve a pasarlo a PDF.',
+  },
+  {
+    q: '¿Tapar con blanco elimina la información?',
+    a: 'Tapar oculta visualmente el contenido, pero el texto original sigue dentro del PDF y alguien podría extraerlo. Para documentos en los que tengas que eliminar datos sensibles de verdad (DNI, datos bancarios), tapa la zona y después pasa el PDF por «Aplanar PDF» o por «PDF a JPG» y «JPG a PDF», que convierten las páginas en imágenes.',
+  },
+  {
+    q: '¿Sirve para rellenar formularios?',
+    a: 'Sí: con la herramienta «Texto» puedes escribir sobre cualquier casilla o línea, aunque el formulario no tenga campos interactivos. Ajusta el tamaño de letra para que encaje y coloca cada dato tocando su posición. Para firmar, crea tu firma con «Crear firma digital» y añádela con «Firmar PDF».',
+  },
+  {
+    q: '¿Me equivoqué, cómo lo deshago?',
+    a: 'Pulsa «Deshacer» para quitar el último cambio, tantas veces como necesites, o el icono de la papelera para quitar todos. Los cambios no se aplican al archivo hasta que pulsas «Descargar PDF editado», así que el original nunca se modifica.',
+  },
+  {
+    q: '¿Se pierde calidad o se sube mi PDF?',
+    a: 'Ninguna de las dos cosas. Los cambios se escriben sobre el PDF original con pdf-lib, que conserva su texto, sus imágenes y su resolución. Todo el proceso ocurre en tu navegador, sin subir el documento a ningún servidor.',
+  },
+];
+---
+<ToolLayout
+  slug="editar-pdf"
+  answer="Sube el PDF y usa la barra de herramientas para escribir texto, resaltar, tapar con blanco o dibujar sobre cualquier página. Después descarga el PDF editado: los cambios se escriben sobre el original, sin perder calidad y sin subir el archivo."
+  howTo={[
+    'Sube el PDF que quieres editar.',
+    'Elige Texto, Resaltar, Tapar o Dibujar en la barra de herramientas.',
+    'Toca o arrastra sobre la página para aplicar cada cambio.',
+    'Pulsa «Descargar PDF editado».',
+  ]}
+  faqs={faqs}
+>
+  <EditarPdfTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Correcciones rápidas sin Acrobat</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Añadir una fecha, completar un formulario, corregir un dato, marcar las cláusulas importantes de un contrato o tachar lo que sobra son tareas de un minuto que no justifican instalar un programa. Aquí lo haces <strong class="text-[var(--color-text)]">desde el navegador del ordenador o del móvil</strong>, gratis y sin marca de agua.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Más herramientas de edición</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Para insertar un logotipo o una foto usa <a class="underline text-[var(--color-accent)]" href="/anadir-imagen-pdf">Añadir imagen a PDF</a>; para reorganizar el documento, <a class="underline text-[var(--color-accent)]" href="/reordenar-paginas-pdf">Reordenar páginas</a> o <a class="underline text-[var(--color-accent)]" href="/eliminar-paginas-pdf">Eliminar páginas</a>; y para firmarlo, <a class="underline text-[var(--color-accent)]" href="/firmar-pdf">Firmar PDF</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Audio (53)
+## Audio (54)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -58,3 +58,4 @@
 | `/loop-audio` | `LoopAudioTool.tsx` | Básicas | FFmpeg.wasm — `-stream_loop` N repeticiones |
 | `/audio-8d` | `Audio8dTool.tsx` | Creativas | FFmpeg.wasm — filtro `apulsator` (paneo 8D) |
 | `/bass-boost` | `BassBoostTool.tsx` | Creativas | FFmpeg.wasm — filtro `bass=g=` ganancia en dB |
+| `/texto-a-voz` | `TextoAVozTool.tsx` | Avanzadas | `@diffusionstudio/vits-web` (voces Piper VITS + ONNX Runtime, modelos de Hugging Face en OPFS) por frases + unión de WAV; Web Speech API para escucha inmediata |

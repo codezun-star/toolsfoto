@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ImagenATextoTool from '@/components/tools/ImagenATextoTool';
+
+const faqs = [
+  {
+    q: '¿Cómo extraigo el texto de una imagen?',
+    a: 'Sube la foto o captura, elige el idioma del texto y pulsa «Extraer texto». En unos segundos verás el texto reconocido en un cuadro editable: puedes corregir cualquier error y después copiarlo o descargarlo como .txt. El reconocimiento (OCR) se hace en tu navegador con Tesseract, sin subir la imagen a ningún servidor.',
+  },
+  {
+    q: '¿Qué es el OCR?',
+    a: 'OCR (Optical Character Recognition, reconocimiento óptico de caracteres) es la técnica que convierte el texto que aparece en una imagen en texto real que se puede copiar, editar y buscar. Aquí usamos Tesseract, el motor de OCR de código abierto que mantiene Google desde 2006, compilado a WebAssembly para que funcione dentro del navegador.',
+  },
+  {
+    q: '¿Reconoce tildes, eñes y otros idiomas?',
+    a: 'Sí, siempre que elijas el idioma correcto: con «Español» reconoce á, é, í, ó, ú, ü, ñ, ¿ y ¡. También admite inglés, portugués, francés, alemán, italiano y catalán, y la combinación español + inglés para textos mezclados. Cada idioma se descarga una sola vez (entre 2 y 15 MB) y queda guardado en tu navegador.',
+  },
+  {
+    q: '¿Cómo consigo mejores resultados?',
+    a: 'El OCR funciona mejor con texto nítido, bien iluminado y recto. Recorta la imagen para dejar solo la zona con texto, evita sombras y reflejos y, si la foto está torcida, gírala antes. Las capturas de pantalla y los documentos escaneados suelen dar una precisión superior al 95 %. La letra manuscrita y los textos muy decorados se reconocen peor.',
+  },
+  {
+    q: '¿Puedo pasar a texto un PDF escaneado?',
+    a: 'Para PDF usa la herramienta OCR de PDF: reconoce todas las páginas de una vez y puede devolverte el mismo PDF con una capa de texto buscable, o solo el texto. Esta herramienta está pensada para imágenes sueltas: fotos del móvil, capturas, JPG, PNG o WebP.',
+  },
+  {
+    q: '¿Mis imágenes se suben a algún servidor?',
+    a: 'No. Lo único que se descarga de internet la primera vez es el motor de OCR y los datos del idioma; la imagen se procesa en la memoria de tu dispositivo y nunca sale de él. Por eso puedes usarla con documentos privados como DNI, contratos o facturas.',
+  },
+];
+---
+<ToolLayout
+  slug="imagen-a-texto"
+  answer="Sube una foto o captura, elige el idioma y pulsa «Extraer texto»: el OCR reconoce el texto en tu navegador y te lo muestra listo para corregir, copiar o descargar. La imagen no se sube a ningún servidor."
+  howTo={[
+    'Arrastra la imagen con texto o pégala con Ctrl+V.',
+    'Elige el idioma del texto (español por defecto).',
+    'Pulsa «Extraer texto» y espera unos segundos.',
+    'Revisa el resultado, corrígelo si hace falta y cópialo o descárgalo en .txt.',
+  ]}
+  faqs={faqs}
+>
+  <ImagenATextoTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">De foto a texto editable en segundos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Copiar a mano el texto de una foto es lento y propenso a errores. Con el OCR puedes pasar a texto <strong class="text-[var(--color-text)]">apuntes de clase, recetas, tickets, carteles, páginas de libros o capturas de pantalla</strong> y pegarlo directamente en Word, en un correo o en un traductor. Como el resultado es editable, corregir las pocas palabras que el motor no lea bien lleva un momento.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">OCR privado, sin subir tus documentos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        La mayoría de servicios de OCR online suben tu imagen a sus servidores para procesarla. Aquí el motor se ejecuta <strong class="text-[var(--color-text)]">dentro de tu navegador</strong>: es la opción adecuada para documentos de identidad, nóminas, contratos o datos médicos. Una vez descargado el idioma, incluso funciona sin conexión.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

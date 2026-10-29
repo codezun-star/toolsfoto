@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CrearFirmaTool from '@/components/tools/CrearFirmaTool';
+
+const faqs = [
+  {
+    q: '¿Cómo creo mi firma digital?',
+    a: 'Elige «Dibujar» y firma en el recuadro con el dedo, el ratón o un lápiz digital; o elige «Escribir», teclea tu nombre y escoge un estilo de letra manuscrita. Ajusta el color y el grosor y pulsa «Descargar firma». Obtendrás un PNG con el fondo transparente y recortado al tamaño de la firma.',
+  },
+  {
+    q: '¿Por qué en PNG transparente?',
+    a: 'Porque así la firma se coloca sobre cualquier documento sin un rectángulo blanco alrededor: encima de una línea de firma, de un fondo de color o de un sello. El formato JPG no admite transparencia y dejaría un recuadro visible. Además, la imagen se recorta automáticamente al contorno de la firma.',
+  },
+  {
+    q: '¿Esta firma tiene validez legal?',
+    a: 'Una imagen de tu firma es una firma electrónica simple: sirve para muchos trámites cotidianos (contratos privados, autorizaciones, albaranes, formularios internos), pero no equivale a una firma electrónica avanzada o cualificada con certificado digital, que es la que exigen la mayoría de trámites con la Administración. Si tienes dudas, consulta qué tipo de firma pide el destinatario.',
+  },
+  {
+    q: '¿Cómo pongo la firma en un PDF?',
+    a: 'Descarga la firma y ábrela en «Firmar PDF» o «Añadir imagen a PDF»: allí eliges la página y la posición. También puedes usar «Editar PDF» para escribir texto, la fecha o tus datos junto a la firma. En Word, inserta el PNG como imagen y ajusta su ajuste de texto a «Delante del texto».',
+  },
+  {
+    q: '¿Qué resolución debo elegir?',
+    a: '«Alta» (el doble de resolución) es la opción recomendada: se ve nítida en pantalla y al imprimir sin pesar mucho. Elige «Muy alta» si vas a imprimir la firma en tamaño grande, y «Normal» si solo la necesitas para un correo electrónico.',
+  },
+  {
+    q: '¿Se guarda mi firma en algún sitio?',
+    a: 'No. La firma se dibuja y se genera en tu navegador; no se envía a ningún servidor ni se almacena. Al cerrar la página desaparece, así que guarda el archivo descargado en un lugar seguro.',
+  },
+];
+---
+<ToolLayout
+  slug="crear-firma"
+  answer="Dibuja tu firma con el dedo o el ratón (o escribe tu nombre con letra manuscrita) y descárgala como PNG transparente y recortado, lista para PDF, Word o correo. Nada se sube a ningún servidor."
+  howTo={[
+    'Elige «Dibujar» o «Escribir».',
+    'Firma en el recuadro o teclea tu nombre y escoge un estilo de letra.',
+    'Ajusta el color, el grosor y la resolución.',
+    'Pulsa «Descargar firma» para obtener el PNG transparente.',
+  ]}
+  faqs={faqs}
+>
+  <CrearFirmaTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Firma con el móvil como con un bolígrafo</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El trazo se suaviza con curvas y cambia de grosor según la velocidad, como una pluma: <strong class="text-[var(--color-text)]">más fino en los trazos rápidos y más grueso en los lentos</strong>. Con un lápiz digital (Apple Pencil, S Pen) se usa la presión real. El resultado es mucho más natural que una firma hecha con líneas de grosor fijo.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Ya tienes tu firma en papel?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Fírmala sobre un folio blanco, hazle una foto con buena luz y pásala por <a class="underline text-[var(--color-accent)]" href="/quitar-fondo-blanco">Quitar fondo blanco</a>: obtendrás tu firma auténtica en PNG transparente. Después recórtala con <a class="underline text-[var(--color-accent)]" href="/recortar">Recortar imagen</a> para dejar solo el trazo.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

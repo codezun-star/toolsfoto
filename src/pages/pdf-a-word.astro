@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PdfAWordTool from '@/components/tools/PdfAWordTool';
+
+const faqs = [
+  {
+    q: '¿Cómo convierto un PDF a Word gratis?',
+    a: 'Sube el PDF y pulsa «Convertir a Word». En unos segundos se descarga un archivo .docx que puedes abrir y editar en Microsoft Word, LibreOffice, Pages o Google Docs. No hace falta registrarse, no hay límite de documentos y el archivo no sale de tu dispositivo.',
+  },
+  {
+    q: '¿Qué se conserva del PDF original?',
+    a: 'Todo el texto, organizado en párrafos que fluyen al editar, los títulos (detectados por el tamaño de letra), las listas con viñetas o números, la negrita, la cursiva, el texto centrado y los saltos de página. Las imágenes, los gráficos y la maquetación exacta en columnas no se trasladan: el objetivo es un documento cómodo de editar, no una copia visual.',
+  },
+  {
+    q: '¿Funciona con PDF escaneados?',
+    a: 'No directamente: un PDF escaneado no contiene texto, solo imágenes de las páginas. La herramienta lo detecta y te avisa. En ese caso pásalo antes por «OCR de PDF», que reconoce el texto, y después convierte el resultado a Word.',
+  },
+  {
+    q: '¿Para qué sirve «Mantener los saltos de línea»?',
+    a: 'Por defecto las líneas del PDF se unen en párrafos, que es lo que quieres para editar un texto corrido: si añades una palabra, el párrafo se reajusta solo. Si el documento es un poema, una dirección postal o un listado donde cada línea importa, activa la opción y cada línea conservará su salto.',
+  },
+  {
+    q: '¿Puedo convertir un PDF protegido?',
+    a: 'Si el PDF pide contraseña para abrirlo, primero quítasela con «Eliminar contraseña PDF» (necesitas conocerla). Los PDF que solo tienen restricciones de edición o copia suelen poder convertirse directamente.',
+  },
+  {
+    q: '¿Mis documentos se suben a internet?',
+    a: 'No. La lectura del PDF (con pdf.js) y la creación del .docx ocurren en tu navegador. Es la forma más segura de convertir contratos, currículums, trabajos o documentación de empresa sin cederlos a un servicio externo.',
+  },
+];
+---
+<ToolLayout
+  slug="pdf-a-word"
+  answer="Sube tu PDF y pulsa «Convertir a Word»: se descarga un .docx editable con los párrafos, títulos, listas, negrita y cursiva del original. La conversión ocurre en tu navegador, sin subir el archivo."
+  howTo={[
+    'Sube el PDF que quieres editar.',
+    'Decide si quieres unir las líneas en párrafos (recomendado) o mantener cada salto de línea.',
+    'Pulsa «Convertir a Word».',
+    'Abre el .docx descargado en Word, LibreOffice o Google Docs.',
+  ]}
+  faqs={faqs}
+>
+  <PdfAWordTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Edita lo que antes era de solo lectura</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Actualiza un currículum del que solo conservas el PDF, reutiliza el texto de un informe, corrige un contrato o traduce un documento: al pasarlo a Word <strong class="text-[var(--color-text)]">recuperas el texto con su estructura</strong>, así que no tienes que volver a escribirlo ni pelearte con copiar y pegar línea a línea.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Y de vuelta a PDF cuando termines</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cuando acabes de editar, guarda el documento y conviértelo otra vez con <a class="underline text-[var(--color-accent)]" href="/word-a-pdf">Word a PDF</a>. Si el PDF tenía tablas con cifras, prueba también <a class="underline text-[var(--color-accent)]" href="/pdf-a-excel">PDF a Excel</a>, que las coloca en filas y columnas.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

@@ -12,7 +12,7 @@ export type FileKind = 'image' | 'pdf' | 'video' | 'audio';
 
 export const NEXT_STEPS: Record<FileKind, string[]> = {
   image: ['comprimir', 'redimensionar', 'recortar', 'convertir', 'eliminar-fondo', 'jpg-a-pdf', 'marca-de-agua', 'imagen-a-texto'],
-  pdf: ['comprimir-pdf', 'unir-pdfs', 'firmar-pdf', 'proteger-pdf', 'numerar-paginas-pdf', 'pdf-a-jpg', 'dividir-pdf', 'marca-agua-pdf'],
+  pdf: ['comprimir-pdf', 'unir-pdfs', 'editar-pdf', 'firmar-pdf', 'pdf-a-word', 'proteger-pdf', 'numerar-paginas-pdf', 'pdf-a-jpg'],
   video: ['comprimir-video', 'recortar-video', 'video-a-gif', 'extraer-audio', 'cambiar-velocidad', 'silenciar-video', 'anadir-subtitulos'],
   audio: ['comprimir-audio', 'cortar-audio', 'convertir-audio', 'normalizar-audio', 'cambiar-volumen', 'audio-a-video'],
 };
@@ -20,7 +20,7 @@ export const NEXT_STEPS: Record<FileKind, string[]> = {
 /** `/compartir` ofrece, además de las de "¿Y ahora?", estas otras. */
 export const SHARE_EXTRA: Record<FileKind, string[]> = {
   image: ['girar', 'recorte-circular', 'redimensionar-redes', 'foto-carnet', 'blancoynegro'],
-  pdf: ['rotar-pdf', 'extraer-texto-pdf', 'pdf-a-png', 'eliminar-paginas-pdf'],
+  pdf: ['pdf-a-excel', 'ocr-pdf', 'rotar-pdf', 'dividir-pdf', 'eliminar-paginas-pdf'],
   video: ['convertir-video', 'rotar-video', 'video-a-mp3', 'comprimir-para-whatsapp'],
   audio: ['velocidad-audio', 'cambiar-tono', 'reducir-ruido-audio', 'eliminar-silencio'],
 };

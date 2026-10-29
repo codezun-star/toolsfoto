@@ -26,6 +26,7 @@ import {
   Bot, Phone, Users2, ArrowDownToLine, ListPlus, Replace,
   ZoomIn, Ruler, Slice, RadioTower,
   Eraser, CalendarClock,
+  ScanText, Signature, FileSearch, FileType, FileInput, FileSpreadsheet, Sheet, FilePen, Speech,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -188,6 +189,15 @@ const ICONS: Record<string, React.ReactNode> = {
   RadioTower: <RadioTower size={20} />,
   Eraser: <Eraser size={20} />,
   CalendarClock: <CalendarClock size={20} />,
+  ScanText: <ScanText size={20} />,
+  Signature: <Signature size={20} />,
+  FileSearch: <FileSearch size={20} />,
+  FileType: <FileType size={20} />,
+  FileInput: <FileInput size={20} />,
+  FileSpreadsheet: <FileSpreadsheet size={20} />,
+  Sheet: <Sheet size={20} />,
+  FilePen: <FilePen size={20} />,
+  Speech: <Speech size={20} />,
 };
 
 interface Props {

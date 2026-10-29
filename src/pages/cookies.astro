@@ -58,8 +58,11 @@ import LegalLayout from '@/components/layout/LegalLayout.astro';
   </p>
   <ul>
     <li>
-      <strong>Modelo de IA (eliminación de fondo):</strong> el navegador puede almacenar en caché el modelo de inteligencia
-      artificial (~50 MB) para que las siguientes ejecuciones sean más rápidas. Este dato nunca sale de tu dispositivo.
+      <strong>Modelos de IA, OCR y voces:</strong> el navegador puede guardar en su caché, en IndexedDB o en su
+      almacenamiento privado de archivos (OPFS) los modelos que descargan algunas herramientas la primera vez que las
+      usas: el modelo de eliminación de fondo (~50 MB), los datos de idioma del reconocimiento de texto (OCR) y las voces
+      de «Texto a voz». Así las siguientes veces funcionan al momento. Son archivos públicos del motor, nunca tus
+      archivos, y no salen de tu dispositivo.
     </li>
     <li>
       <strong>Uso sin conexión y app instalable:</strong> el sitio guarda en la caché del navegador (Cache API) una copia

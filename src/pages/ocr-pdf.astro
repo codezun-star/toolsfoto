@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import OcrPdfTool from '@/components/tools/OcrPdfTool';
+
+const faqs = [
+  {
+    q: '¿Qué hace el OCR de PDF?',
+    a: 'Un PDF escaneado es, en realidad, una colección de fotos de páginas: no tiene texto, así que no puedes buscar ni copiar nada. El OCR reconoce las letras de cada página y añade una capa de texto invisible justo encima de cada palabra. El PDF se ve exactamente igual, pero ahora Ctrl+F encuentra palabras y puedes seleccionar y copiar el contenido.',
+  },
+  {
+    q: '¿Pierde calidad mi PDF?',
+    a: 'No. La herramienta no vuelve a generar las páginas: escribe la capa de texto sobre el PDF original, que conserva sus imágenes, su resolución y su tamaño de página. El archivo solo crece unos pocos kilobytes por página, lo que ocupa el texto añadido.',
+  },
+  {
+    q: '¿Cuánto tarda?',
+    a: 'Depende del número de páginas y de la potencia de tu dispositivo: lo normal son entre 3 y 8 segundos por página en un ordenador y algo más en el móvil. La primera vez se descargan además el motor de OCR y el idioma (unos 10 MB), que quedan guardados para las siguientes veces. Se procesan hasta 60 páginas por documento.',
+  },
+  {
+    q: '¿En qué idiomas funciona?',
+    a: 'Español, inglés, portugués, francés, alemán, italiano y catalán, además de la combinación español + inglés. Elegir el idioma del documento es importante: el motor usa un diccionario de cada idioma para acertar con tildes, eñes y palabras habituales.',
+  },
+  {
+    q: '¿Puedo obtener solo el texto?',
+    a: 'Sí. Elige «Solo el texto (.txt)» y descargarás todo el texto reconocido, separado por páginas. En ambos modos el texto aparece también en el panel de la derecha para que lo copies directamente.',
+  },
+  {
+    q: '¿Es seguro para documentos confidenciales?',
+    a: 'Sí. El PDF se procesa en tu navegador con Tesseract compilado a WebAssembly: ninguna página se envía a un servidor. Puedes usarlo con contratos, escrituras, historiales médicos o documentación de empresa.',
+  },
+];
+---
+<ToolLayout
+  slug="ocr-pdf"
+  answer="Sube un PDF escaneado, elige el idioma y la herramienta reconoce el texto de cada página con OCR y añade una capa de texto invisible: el PDF se ve igual pero ya se puede buscar, seleccionar y copiar. Todo en tu navegador."
+  howTo={[
+    'Sube el PDF escaneado.',
+    'Elige el idioma del documento.',
+    'Escoge el resultado: PDF con texto buscable o solo el texto.',
+    'Pulsa el botón y descarga el resultado cuando termine.',
+  ]}
+  faqs={faqs}
+>
+  <OcrPdfTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Encuentra cualquier dato en tus escaneos</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Facturas antiguas, contratos firmados, apuntes fotocopiados o documentación que llegó en papel: una vez pasados por OCR, puedes <strong class="text-[var(--color-text)]">buscar un nombre, un importe o una fecha</strong> en segundos, y tu ordenador y tu gestor documental los indexarán como cualquier otro documento.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">El paso previo para editar o convertir</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las herramientas de conversión necesitan texto. Tras el OCR puedes llevar el documento a <a class="underline text-[var(--color-accent)]" href="/pdf-a-word">PDF a Word</a> para editarlo o a <a class="underline text-[var(--color-accent)]" href="/pdf-a-excel">PDF a Excel</a> para trabajar con sus tablas, y reducir su peso con <a class="underline text-[var(--color-accent)]" href="/comprimir-pdf">Comprimir PDF</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

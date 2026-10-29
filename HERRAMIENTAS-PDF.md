@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## PDF (43)
+## PDF (49)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -48,3 +48,9 @@
 | `/marca-agua-imagen-pdf` | `MarcaAguaImagenPdfTool.tsx` | Avanzadas | pdf-lib `embedPng/Jpg` + `drawImage` con opacidad y posición |
 | `/dividir-cada-n-paginas` | `DividirCadaNPaginasTool.tsx` | Básicas | pdf-lib `copyPages` en lotes de N páginas |
 | `/unir-pdf-imagenes` | `UnirPdfImagenesTool.tsx` | Básicas | pdf-lib `copyPages` + `embedPng/Jpg` mixto reordenable |
+| `/ocr-pdf` | `OcrPdfTool.tsx` | Avanzadas | pdf.js render + Tesseract (bloques/palabras) + pdf-lib: capa de texto invisible (`opacity: 0`) sobre el PDF original, colocada con `viewport.convertToPdfPoint` |
+| `/pdf-a-word` | `PdfAWordTool.tsx` | Básicas | pdf.js `getTextContent` + fuentes de `commonObjs` → líneas/párrafos/títulos/listas → `docx` |
+| `/word-a-pdf` | `WordAPdfTool.tsx` | Básicas | `mammoth` (DOCX → HTML) → bloques → `layoutPdf()` de `pdf-layout.ts` (pdf-lib, Helvetica WinAnsi) |
+| `/pdf-a-excel` | `PdfAExcelTool.tsx` | Avanzadas | pdf.js posiciones → filas por Y y columnas por solapamiento de intervalos X → `writeXlsx()` de `xlsx.ts` (fflate) + CSV |
+| `/excel-a-pdf` | `ExcelAPdfTool.tsx` | Básicas | `readXlsx()`/`parseCsv()` de `xlsx.ts` → tablas en `layoutPdf()` con cabecera repetida |
+| `/editar-pdf` | `EditarPdfTool.tsx` | Avanzadas | pdf.js render + overlay SVG (texto, resaltar, tapar, dibujo) → pdf-lib `drawText`/`drawRectangle`/`drawLine` vía `convertToPdfPoint` |

@@ -6,13 +6,13 @@ import { Image, FileText, Code2, Video, Music, ArrowRight } from 'lucide-react';
 const IMAGEN_FEATURED = [
   'comprimir', 'redimensionar', 'recortar', 'convertir',
   'girar', 'eliminar-fondo', 'editor', 'marca-de-agua',
-  'blancoynegro', 'recorte-circular', 'collage', 'redimensionar-redes',
+  'imagen-a-texto', 'recorte-circular', 'collage', 'redimensionar-redes',
 ];
 
 const PDF_FEATURED = [
-  'comprimir-pdf', 'unir-pdfs', 'dividir-pdf', 'pdf-a-jpg',
-  'jpg-a-pdf', 'rotar-pdf', 'extraer-paginas-pdf', 'extraer-texto-pdf',
-  'proteger-pdf', 'firmar-pdf', 'marca-agua-pdf', 'reordenar-paginas-pdf',
+  'comprimir-pdf', 'unir-pdfs', 'pdf-a-word', 'word-a-pdf',
+  'editar-pdf', 'dividir-pdf', 'pdf-a-jpg', 'jpg-a-pdf',
+  'firmar-pdf', 'pdf-a-excel', 'ocr-pdf', 'proteger-pdf',
 ];
 
 const VIDEO_FEATURED = [
@@ -24,7 +24,7 @@ const VIDEO_FEATURED = [
 const AUDIO_FEATURED = [
   'comprimir-audio', 'convertir-audio', 'cortar-audio', 'cambiar-volumen',
   'unir-audios', 'mezclar-audios', 'normalizar-audio', 'cambiar-tono',
-  'velocidad-audio', 'reducir-ruido-audio', 'ecualizador-audio', 'transcribir-audio',
+  'velocidad-audio', 'reducir-ruido-audio', 'texto-a-voz', 'transcribir-audio',
 ];
 
 const DEV_FEATURED = [

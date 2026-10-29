@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ExcelAPdfTool from '@/components/tools/ExcelAPdfTool';
+
+const faqs = [
+  {
+    q: '¿Cómo convierto un Excel a PDF?',
+    a: 'Sube el archivo .xlsx o .csv, elige qué hojas incluir, la orientación y el tamaño de letra, y pulsa «Convertir a PDF». Cada hoja se maqueta como una tabla con bordes y se descarga un único PDF. No necesitas Excel ni registrarte.',
+  },
+  {
+    q: '¿Qué pasa con las tablas que no caben en el ancho de la página?',
+    a: 'Las columnas se reparten el ancho disponible en proporción a su contenido y el texto largo se parte en varias líneas dentro de la celda, así que todo cabe sin cortarse. Para tablas con muchas columnas, elige la orientación horizontal y reduce el tamaño de letra a 6 o 7 puntos.',
+  },
+  {
+    q: '¿Se repite la cabecera en cada página?',
+    a: 'Sí, si dejas marcada la opción «La primera fila es la cabecera». Esa fila aparece en negrita con fondo gris y se repite al principio de cada página nueva, para que una tabla larga se pueda leer sin volver a la primera hoja.',
+  },
+  {
+    q: '¿Se incluyen las fórmulas, los colores y los gráficos?',
+    a: 'Se incluye el resultado de cada celda (el valor que calcula la fórmula), las fechas con formato dd/mm/aaaa y los números con el formato español. No se trasladan los colores de las celdas, los gráficos, las imágenes ni las celdas combinadas.',
+  },
+  {
+    q: '¿Funciona con archivos .xls antiguos o de Numbers?',
+    a: 'El formato .xls de Excel 97-2003 no se puede leer en el navegador: guárdalo como .xlsx desde Excel, LibreOffice o Google Sheets. Desde Numbers, usa Archivo → Exportar a → Excel. Los archivos CSV se admiten directamente, con coma, punto y coma o tabulador como separador.',
+  },
+  {
+    q: '¿Mis datos salen de mi ordenador?',
+    a: 'No. La hoja de cálculo se lee y el PDF se genera en tu navegador: no hay subida de archivos. Puedes convertir con tranquilidad presupuestos, nóminas o listados de clientes.',
+  },
+];
+---
+<ToolLayout
+  slug="excel-a-pdf"
+  answer="Sube tu hoja .xlsx o .csv, elige hojas, orientación y tamaño de letra, y descarga un PDF con tablas limpias y la cabecera repetida en cada página. La conversión ocurre en tu navegador."
+  howTo={[
+    'Sube el archivo de Excel (.xlsx) o CSV.',
+    'Elige las hojas, la orientación y el tamaño de letra.',
+    'Pulsa «Convertir a PDF» y descarga el resultado.',
+  ]}
+  faqs={faqs}
+>
+  <ExcelAPdfTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Presupuestos e informes listos para enviar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Enviar una hoja de cálculo invita a que se modifique por error y no siempre se ve bien en el móvil del destinatario. En PDF, <strong class="text-[var(--color-text)]">presupuestos, listados de precios, horarios o informes</strong> se ven igual en cualquier dispositivo y se imprimen sin sorpresas.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">¿Tienes los datos en un PDF?</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Haz el camino inverso con <a class="underline text-[var(--color-accent)]" href="/pdf-a-excel">PDF a Excel</a>, que extrae las tablas de un PDF a una hoja editable. Y si tu documento es de texto, usa <a class="underline text-[var(--color-accent)]" href="/word-a-pdf">Word a PDF</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

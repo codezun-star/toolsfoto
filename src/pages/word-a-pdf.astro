@@ -1,0 +1,57 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import WordAPdfTool from '@/components/tools/WordAPdfTool';
+
+const faqs = [
+  {
+    q: '¿Cómo paso un Word a PDF sin programas?',
+    a: 'Sube el documento .docx y pulsa «Convertir a PDF». El navegador lee el documento, compone las páginas en tamaño A4 y descarga el PDF. No necesitas tener Word instalado ni crear una cuenta.',
+  },
+  {
+    q: '¿Qué elementos del documento se conservan?',
+    a: 'Títulos, párrafos, listas con viñetas y numeradas (también anidadas), tablas, imágenes, negrita y cursiva. El texto del PDF es texto real: se puede seleccionar, copiar y buscar. No se trasladan los cuadros de texto, las formas, las columnas ni los encabezados y pies de página; si el documento los tiene, la herramienta te avisa.',
+  },
+  {
+    q: '¿Quedará idéntico al original?',
+    a: 'Quedará limpio y legible, pero no idéntico píxel a píxel: el PDF usa una tipografía estándar (Helvetica) y márgenes uniformes en A4, en lugar de las fuentes y el diseño exactos de tu documento. Si necesitas una copia exacta del diseño, usa «Guardar como PDF» desde Word o LibreOffice.',
+  },
+  {
+    q: '¿Sirve para archivos .doc antiguos?',
+    a: 'No. El formato .doc de Word 97-2003 es binario y no se puede leer en el navegador. Ábrelo en Word, LibreOffice o Google Docs y guárdalo como .docx; después conviértelo aquí.',
+  },
+  {
+    q: '¿Puedo convertir un Excel o varias imágenes a PDF?',
+    a: 'Sí, con otras herramientas del sitio: «Excel a PDF» convierte hojas de cálculo .xlsx y CSV, y «JPG a PDF» une varias imágenes en un solo PDF. Para juntar varios PDF en uno, usa «Unir PDFs».',
+  },
+  {
+    q: '¿Se sube mi documento a un servidor?',
+    a: 'No. La conversión se hace en tu navegador con mammoth y pdf-lib. Tu documento no viaja por internet, lo que la hace adecuada para currículums, contratos o documentación interna.',
+  },
+];
+---
+<ToolLayout
+  slug="word-a-pdf"
+  answer="Sube tu documento .docx y pulsa «Convertir a PDF»: se descarga un PDF A4 con títulos, párrafos, listas, tablas, imágenes y texto seleccionable. Todo ocurre en tu navegador, sin subir el archivo."
+  howTo={[
+    'Sube el documento de Word en formato .docx.',
+    'Pulsa «Convertir a PDF».',
+    'Descarga el PDF y revísalo.',
+  ]}
+  faqs={faqs}
+>
+  <WordAPdfTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">PDF para enviar, imprimir o presentar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        El PDF se ve igual en cualquier dispositivo y no se puede modificar sin querer. Es el formato que piden <strong class="text-[var(--color-text)]">las ofertas de empleo, las universidades y la mayoría de plataformas</strong> para currículums, trabajos y solicitudes. Conviértelo desde el móvil o desde un ordenador sin Office.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Completa el documento</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Después de convertirlo puedes <a class="underline text-[var(--color-accent)]" href="/firmar-pdf">firmarlo</a>, <a class="underline text-[var(--color-accent)]" href="/numerar-paginas-pdf">numerar sus páginas</a>, <a class="underline text-[var(--color-accent)]" href="/proteger-pdf">protegerlo con contraseña</a> o <a class="underline text-[var(--color-accent)]" href="/unir-pdfs">unirlo con otros PDF</a>, sin volver a subirlo: aparecerán como sugerencias al descargar.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

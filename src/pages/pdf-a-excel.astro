@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import PdfAExcelTool from '@/components/tools/PdfAExcelTool';
+
+const faqs = [
+  {
+    q: '¿Cómo paso una tabla de un PDF a Excel?',
+    a: 'Sube el PDF, indica si las cifras usan coma decimal (1.234,56) o punto decimal (1,234.56) y pulsa «Convertir a Excel». La herramienta detecta las filas y columnas por la posición del texto, te muestra una vista previa y descarga un .xlsx que abre en Excel, LibreOffice, Numbers o Google Sheets.',
+  },
+  {
+    q: '¿Las cifras se pueden sumar en Excel?',
+    a: 'Sí. Con la opción «Convertir las cifras en números» activada, los importes y cantidades se guardan como números, no como texto, así que puedes sumarlos, ordenarlos o hacer gráficos directamente. Los códigos con ceros a la izquierda (códigos postales, referencias) se mantienen como texto para no perder esos ceros.',
+  },
+  {
+    q: '¿Qué PDF funcionan mejor?',
+    a: 'Los generados digitalmente: facturas, extractos bancarios, listados de un programa de gestión, informes exportados o tablas de una web guardada como PDF. Cuanto más regular sea la tabla (columnas alineadas, una fila por línea), mejor será el resultado. Los PDF escaneados necesitan antes «OCR de PDF».',
+  },
+  {
+    q: '¿Una hoja por página o todo en una?',
+    a: '«Una por página» crea una pestaña de Excel por cada página del PDF, útil para revisar el resultado. «Todo en una» encadena todas las filas en una sola hoja, que es lo que quieres si la tabla continúa a lo largo de varias páginas (como un extracto de varios meses).',
+  },
+  {
+    q: '¿Puedo descargar el resultado en CSV?',
+    a: 'Sí. Tras la conversión aparece el botón «Descargar también en CSV». El CSV usa punto y coma como separador cuando eliges coma decimal (el formato que espera Excel en español) e incluye la marca UTF-8 para que las tildes se vean bien.',
+  },
+  {
+    q: '¿Es seguro convertir extractos bancarios?',
+    a: 'Sí. El PDF se lee y la hoja de cálculo se genera en tu navegador: ningún dato sale de tu dispositivo. Por eso es una buena opción para extractos, nóminas o facturas con datos personales.',
+  },
+];
+---
+<ToolLayout
+  slug="pdf-a-excel"
+  answer="Sube el PDF y pulsa «Convertir a Excel»: la herramienta reconstruye las filas y columnas de sus tablas por la posición del texto, convierte las cifras en números y descarga un .xlsx (o un CSV). Sin subir el archivo."
+  howTo={[
+    'Sube el PDF con la tabla (factura, extracto, informe…).',
+    'Elige el separador decimal y si quieres una hoja por página o todo junto.',
+    'Pulsa «Convertir a Excel» y revisa la vista previa.',
+    'Abre el .xlsx descargado o descarga también el CSV.',
+  ]}
+  faqs={faqs}
+>
+  <PdfAExcelTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Deja de copiar cifras a mano</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Conciliar un extracto bancario, sumar los gastos de un trimestre o analizar un listado de ventas exportado en PDF es mucho más fácil en una hoja de cálculo. La conversión coloca <strong class="text-[var(--color-text)]">cada importe en su celda y como número</strong>, incluso cuando las cifras están alineadas a la derecha.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">El camino inverso</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Cuando termines de trabajar con los datos, convierte la hoja de nuevo a PDF con <a class="underline text-[var(--color-accent)]" href="/excel-a-pdf">Excel a PDF</a>. Si lo que necesitas es el texto del documento y no sus tablas, usa <a class="underline text-[var(--color-accent)]" href="/pdf-a-word">PDF a Word</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

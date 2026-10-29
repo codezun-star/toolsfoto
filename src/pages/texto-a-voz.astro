@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import TextoAVozTool from '@/components/tools/TextoAVozTool';
+
+const faqs = [
+  {
+    q: '¿Cómo convierto un texto en audio?',
+    a: 'Escribe o pega el texto, elige una voz y pulsa «Generar audio». Cuando termine podrás escucharlo en el reproductor y descargarlo en WAV. Si solo quieres oírlo al momento, pulsa «Escuchar ya con la voz del navegador», que usa las voces instaladas en tu sistema.',
+  },
+  {
+    q: '¿Qué voces hay en español?',
+    a: 'Cuatro voces neuronales: dos de España (Dave y Sharvard) y dos de México (Claude, de alta calidad, y Ald). Además hay voces en inglés de Estados Unidos y Reino Unido, portugués de Brasil, francés, alemán, italiano y catalán. Son modelos Piper (VITS), que suenan mucho más naturales que las voces robóticas clásicas.',
+  },
+  {
+    q: '¿Por qué tarda la primera vez?',
+    a: 'Porque el modelo de la voz se descarga a tu navegador (entre 28 y 114 MB según la voz) junto con el diccionario de pronunciación. Queda guardado en el almacenamiento privado del navegador, así que las siguientes veces la generación empieza al momento y funciona incluso sin conexión.',
+  },
+  {
+    q: '¿Puedo descargar el audio en MP3?',
+    a: 'El audio se genera en WAV, el formato sin pérdida que produce el modelo. Al descargarlo aparecerán sugerencias para seguir trabajando con él: elige «Convertir audio» para pasarlo a MP3, OGG o M4A sin volver a subirlo, o «Comprimir audio» si quieres reducir su peso.',
+  },
+  {
+    q: '¿Hay límite de texto?',
+    a: 'Cada conversión admite hasta 5.000 caracteres, aproximadamente cinco minutos de audio. El texto se divide en frases que se generan una tras otra y se unen con una pausa natural. Para textos más largos, conviértelos por partes y únelos después con «Unir audios».',
+  },
+  {
+    q: '¿Puedo usar el audio en vídeos o proyectos comerciales?',
+    a: 'El audio lo generas tú en tu dispositivo, sin marcas de agua. Las voces Piper se publican con licencias abiertas, pero cada voz tiene la suya: si vas a usar el audio con fines comerciales, revisa la licencia de la voz elegida en el repositorio de Piper (rhasspy/piper-voices).',
+  },
+];
+---
+<ToolLayout
+  slug="texto-a-voz"
+  answer="Escribe o pega tu texto, elige una de las voces naturales en español de España o México (u otros idiomas) y pulsa «Generar audio»: el audio se crea en tu navegador y se descarga en WAV. El texto no sale de tu dispositivo."
+  howTo={[
+    'Escribe o pega el texto (hasta 5.000 caracteres).',
+    'Elige una voz.',
+    'Pulsa «Generar audio» y espera a que termine.',
+    'Escúchalo y descárgalo en WAV.',
+  ]}
+  faqs={faqs}
+>
+  <TextoAVozTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Locuciones para vídeos, clases y presentaciones</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Pon voz a un vídeo de YouTube o TikTok, prepara un audio para una presentación, convierte apuntes en un podcast para repasar o crea mensajes para una centralita. Después puedes llevar el audio a <a class="underline text-[var(--color-accent)]" href="/anadir-audio-video">Añadir audio a vídeo</a> o a <a class="underline text-[var(--color-accent)]" href="/audio-a-video">Audio a vídeo</a>.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Voces neuronales que funcionan sin servidor</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Las voces Piper se ejecutan con ONNX Runtime en WebAssembly <strong class="text-[var(--color-text)]">dentro de tu navegador</strong>. A diferencia de los servicios de voz en la nube, tu texto no se envía a ningún sitio, no hay límite diario de caracteres y no necesitas una cuenta.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

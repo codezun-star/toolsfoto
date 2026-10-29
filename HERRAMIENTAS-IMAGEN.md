@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (60)
+## Imagen (62)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -65,3 +65,5 @@
 | `/ampliar-imagen` | `AmpliarImagenTool.tsx` | Básicas | Canvas `imageSmoothingQuality: high` upscale 2-4× |
 | `/cambiar-dpi` | `CambiarDpiTool.tsx` | Básicas | Patch JFIF (JPG) + chunk pHYs con CRC32 (PNG) |
 | `/quitar-fondo-blanco` | `QuitarFondoBlancoTool.tsx` | Básicas | `getImageData` → distancia por canal RGB → alfa 0 con banda de suavizado |
+| `/imagen-a-texto` | `ImagenATextoTool.tsx` | Avanzadas | Tesseract.js (WASM, `createOcrWorker` de `ocr.ts`) — OCR en 7 idiomas, texto editable |
+| `/crear-firma` | `CrearFirmaTool.tsx` | Básicas | Canvas con pointer events, curvas cuadráticas y grosor por velocidad/presión; recorte por alfa → PNG transparente |

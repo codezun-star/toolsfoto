@@ -1342,4 +1342,49 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Crea expresiones cron, tradúcelas a español y consulta sus próximas ejecuciones. Plantillas listas y validación campo a campo. Gratis.',
     canonical: 'https://toolsfoto.com/generador-cron',
   },
+  'imagen-a-texto': {
+    title: 'Imagen a texto (OCR) gratis: extraer texto de una foto | ToolsFoto',
+    description: 'Extrae el texto de fotos, capturas y documentos escaneados con OCR en tu navegador. Español, inglés y más idiomas. Sin subir la imagen. Gratis.',
+    canonical: 'https://toolsfoto.com/imagen-a-texto',
+  },
+  'crear-firma': {
+    title: 'Crear firma digital online gratis en PNG transparente | ToolsFoto',
+    description: 'Dibuja tu firma con el dedo o el ratón, o escríbela con letra manuscrita, y descárgala en PNG transparente para PDF y Word. Gratis.',
+    canonical: 'https://toolsfoto.com/crear-firma',
+  },
+  'ocr-pdf': {
+    title: 'OCR de PDF online gratis: PDF escaneado a PDF buscable | ToolsFoto',
+    description: 'Convierte un PDF escaneado en un PDF con texto que se puede buscar, seleccionar y copiar. OCR en español en tu navegador. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/ocr-pdf',
+  },
+  'pdf-a-word': {
+    title: 'Convertir PDF a Word online gratis (.docx editable) | ToolsFoto',
+    description: 'Convierte PDF a Word editable conservando párrafos, títulos, listas y negritas. Sin subir el archivo: todo ocurre en tu navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/pdf-a-word',
+  },
+  'word-a-pdf': {
+    title: 'Convertir Word a PDF online gratis (.docx a PDF) | ToolsFoto',
+    description: 'Convierte documentos de Word (.docx) a PDF con tablas, imágenes y texto seleccionable. En tu navegador, sin subir nada. Gratis y sin registro.',
+    canonical: 'https://toolsfoto.com/word-a-pdf',
+  },
+  'pdf-a-excel': {
+    title: 'Convertir PDF a Excel online gratis (tablas a .xlsx) | ToolsFoto',
+    description: 'Extrae las tablas de facturas, extractos e informes en PDF a Excel, con las cifras como números. Descarga .xlsx o CSV. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/pdf-a-excel',
+  },
+  'excel-a-pdf': {
+    title: 'Convertir Excel a PDF online gratis (.xlsx y CSV) | ToolsFoto',
+    description: 'Convierte hojas de Excel o CSV a PDF con la cabecera en cada página y orientación horizontal o vertical. En tu navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/excel-a-pdf',
+  },
+  'editar-pdf': {
+    title: 'Editar PDF online gratis: añadir texto, resaltar y tapar | ToolsFoto',
+    description: 'Escribe sobre tu PDF, resalta, tapa con blanco y dibuja a mano alzada sin instalar nada. Tu archivo no sale del navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/editar-pdf',
+  },
+  'texto-a-voz': {
+    title: 'Texto a voz online gratis con voces naturales en español | ToolsFoto',
+    description: 'Convierte texto en voz con voces neuronales en español de España y México y descarga el audio. Se genera en tu navegador. Gratis.',
+    canonical: 'https://toolsfoto.com/texto-a-voz',
+  },
 };
