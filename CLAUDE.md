@@ -60,6 +60,8 @@
 | `mammoth` | DOCX → HTML semántico (`word-a-pdf`) | Dinámica `import()` |
 | `fflate` | ZIP (lector/escritor XLSX de `xlsx.ts`) | Dinámica `import()` |
 | `@diffusionstudio/vits-web` | Texto a voz con voces Piper (ONNX Runtime 1.18 desde cdnjs, fonemizador desde jsDelivr, modelos de Hugging Face guardados en OPFS) | Dinámica `import()` |
+| `onnxruntime-web` (1.21.0, la misma que trae `@imgly`) | IA propia (`mejorar-calidad-imagen`, `borrar-objetos-foto`) vía `onnx.ts` | Dinámica `import()` |
+| `@mediapipe/tasks-vision` | Detección de caras (`difuminar-caras`); WASM desde jsDelivr, modelo en `public/models` | Dinámica `import()` |
 | Canvas API nativa | Todas las herramientas de imagen y la mayoría de developer | — |
 
 #### FFmpeg.wasm — detalles de integración
@@ -317,12 +319,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 250 herramientas
+## Las 253 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 250 herramientas — 62 imagen · 49 PDF · 42 vídeo · 54 audio · 43 developer + 5 legales**
+> **Total: 253 herramientas — 65 imagen · 49 PDF · 42 vídeo · 54 audio · 43 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -497,6 +499,14 @@ Todos los tokens están definidos en `src/styles/global.css` con `@theme {}` de 
 - **Coordenadas pdf.js → pdf-lib:** usar siempre `viewport.convertToPdfPoint(x, y)`; tiene en cuenta la rotación y el CropBox de la página (`ocr-pdf`, `editar-pdf`).
 - **PDF escaneados:** las herramientas que leen texto (`pdf-a-word`, `pdf-a-excel`) detectan PDFs casi sin texto y remiten a `ocr-pdf`.
 
+#### IA en el navegador (ONNX Runtime y MediaPipe)
+- **`src/lib/utils/onnx.ts`** — `loadOrt()`, `fetchModel(url, onProgress)`, `createSession(model, { gpu })`, `hasWebGpu()`. Nunca importar `onnxruntime-web` a pelo.
+  - Con `gpu: true` y un adaptador WebGPU real, la inferencia va en la GPU. En cualquier otro caso usa WASM **en un worker** (`env.wasm.proxy = true`): sin proxy, una inferencia larga congela la página entera (LaMa tarda 20-40 s en CPU). El modo se fija en la primera sesión de la página.
+  - Los modelos se guardan en la Cache Storage `ai-models-v1` (no empieza por `tf-`, así que `app-sw.js` no la borra). Hugging Face redirige a URLs firmadas distintas cada vez: sin esta caché se volverían a bajar los 92 MB de LaMa en cada visita.
+  - Reutilizar la sesión entre ejecuciones en la misma página (`useRef`) y liberarla al desmontar.
+- **Modelos en `public/models/`** (≤ 25 MB, límite de Cloudflare Pages): `realesr-general-x4v3.onnx` (Real-ESRGAN, BSD-3, sha256 `7b10e800…`) y `blaze-face-short-range-v1.tflite` (MediaPipe, Apache-2.0). El nombre lleva versión; `_headers` les da caché inmutable. Los mayores de 25 MB (LaMa, 92 MB) se cargan de Hugging Face, que envía CORS.
+- **Procesar por teselas** las imágenes grandes (Real-ESRGAN: 128 px con 10 px de solape que se descarta al pegar): controla la memoria y permite mostrar progreso.
+
 #### Herramientas developer
 - Canvas API directamente cuando el input es imagen.
 - `FileReader` para operaciones de bytes sin renderizado.
@@ -564,7 +574,7 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 
 | URL | Archivo | Herramientas |
 |---|---|---|
-| `/imagen` | `src/pages/imagen.astro` | 62 (3 páginas) |
+| `/imagen` | `src/pages/imagen.astro` | 65 (3 páginas) |
 | `/pdf` | `src/pages/pdf.astro` | 49 (3 páginas) |
 | `/video` | `src/pages/video.astro` | 42 (2 páginas) |
 | `/audio` | `src/pages/audio.astro` | 54 (3 páginas) |
@@ -669,7 +679,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 314 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 317 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -705,3 +715,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-20 | **Quitado el popunder.** Fuera la segunda unidad de Adsterra (`pl29628846`) y su bloque de inyección diferida en `AdScripts.astro` (con la marca `tf-sb2`). Banners en iframe, nativo, anchor, rails y social bar siguen igual. |
 | 2026-10-29 | **Fase 1 de crecimiento — flujo de archivos.** (1) Pegar con Ctrl+V en todos los uploaders (`useFileReceiver` en `useImageUpload`, `PdfUploader`, `VideoUploader`, `AudioUploader`, `JPGaPDFTool`, `UnirPDFsTool`). (2) "¿Y ahora?" (`NextSteps.tsx`): tras descargar, seguir con el mismo archivo en otra herramienta sin volver a subirlo; el archivo viaja por el buzón de IndexedDB (`inbox.ts`) y la descarga se detecta sin tocar las herramientas (`results.ts`). (3) PWA: `share_target` y `file_handlers` en el manifiesto, recepción en `app-sw.js` y nueva página `/compartir` (noindex) que propone herramientas por tipo de archivo; enlazada desde el menú. (4) Favoritas (estrella junto al H1) y recientes en `localStorage`, mostradas en el home ("Tus herramientas") y en el buscador vacío. (5) La description de la 404 deriva el recuento de `TOOLS`. `cookies.astro` actualizada. 305 páginas. |
 | 2026-10-29 | **Fase 2 de crecimiento — documentos, OCR y voz.** +9 herramientas de alta demanda. Imagen 60→62: `/imagen-a-texto` (OCR con Tesseract.js en 7 idiomas) y `/crear-firma` (firma dibujada o escrita → PNG transparente recortado). PDF 43→49: `/ocr-pdf` (capa de texto invisible sobre el PDF original), `/pdf-a-word` (estructura reconstruida → `docx`), `/word-a-pdf` (`mammoth` → maquetador propio), `/pdf-a-excel` (columnas por solapamiento de intervalos → XLSX propio + CSV), `/excel-a-pdf` (XLSX/CSV → tablas) y `/editar-pdf` (texto, resaltar, tapar y dibujo). Audio 53→54: `/texto-a-voz` (voces neuronales Piper en el navegador, descarga WAV). Nuevas utilidades `ocr.ts`, `pdf-layout.ts` y `xlsx.ts`. Destacadas del home y sugerencias de "¿Y ahora?" actualizadas. `cookies.astro` describe la caché de idiomas OCR y voces (IndexedDB/OPFS). Verificado con Playwright: las 9 producen salida correcta (texto del DOCX/PDF/XLSX comprobado, OCR de imagen y de PDF escaneado, WAV con audio real). Total: 250 herramientas, 314 páginas. |
+| 2026-10-29 | **Fase 3 de crecimiento — IA en el navegador.** Imagen 62→65: `/mejorar-calidad-imagen` (Real-ESRGAN ×2/×4 por teselas, WebGPU o WASM), `/borrar-objetos-foto` (LaMa: pincel → relleno del fondo, pegado con borde difuminado sin perder resolución) y `/difuminar-caras` (BlazeFace de MediaPipe a varias escalas para caras pequeñas, difuminar/pixelar/tapar y zonas manuales). Nueva utilidad `onnx.ts` (WebGPU con respaldo WASM en worker, caché de modelos `ai-models-v1`) y carpeta `public/models` con caché inmutable en `_headers`. Verificado con Playwright en Chromium sin GPU: mejora ×4 de 512 px en 29 s con la página respondiendo, borrado en 21-34 s, detección de caras correcta en dos fotos reales. |

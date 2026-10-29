@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import DifuminarCarasTool from '@/components/tools/DifuminarCarasTool';
+
+const faqs = [
+  {
+    q: '¿Cómo difumino las caras de una foto?',
+    a: 'Sube la foto y la herramienta detecta las caras automáticamente y las marca con un recuadro. Elige el efecto (difuminar, pixelar o tapar), la intensidad y la forma, y descarga la imagen. Si alguna cara no debe ocultarse, tócala para desactivarla; si falta alguna, arrastra sobre la foto para marcarla.',
+  },
+  {
+    q: '¿Detecta caras pequeñas en fotos de grupo?',
+    a: 'Sí. Además de analizar la foto completa, la divide en cuadrículas de 2×2 y 3×3 y busca caras en cada trozo ampliado, lo que permite encontrar caras pequeñas o lejanas que un detector normal pasaría por alto. Aun así, revisa siempre el resultado: caras de perfil, tapadas o muy pequeñas pueden escaparse y conviene marcarlas a mano.',
+  },
+  {
+    q: '¿Puedo ocultar matrículas, carteles o datos?',
+    a: 'Sí. Arrastra sobre la foto para dibujar un recuadro en cualquier zona: matrículas, nombres en una pantalla, direcciones, documentos o cualquier otro dato. Se le aplica el mismo efecto que a las caras.',
+  },
+  {
+    q: '¿Qué efecto es más seguro?',
+    a: '«Tapar» es irreversible: sustituye la zona por un bloque sólido. Un desenfoque o un pixelado suaves pueden, en algunos casos, revertirse en parte con técnicas avanzadas; si necesitas anonimizar de verdad, usa «Tapar» o sube la intensidad al máximo.',
+  },
+  {
+    q: '¿Por qué anonimizar fotos?',
+    a: 'Para publicar fotos de menores, de eventos o de la calle respetando la privacidad de quienes aparecen, y para cumplir la normativa de protección de datos (RGPD) cuando una persona no ha dado su consentimiento. También es habitual en fotos de incidencias, siniestros o denuncias que se comparten en redes.',
+  },
+  {
+    q: '¿Se sube mi foto a algún sitio?',
+    a: 'No. La detección se hace con el modelo BlazeFace de Google MediaPipe dentro de tu navegador y el efecto se aplica con la Canvas API. La foto nunca sale de tu dispositivo, lo que tiene todo el sentido en una herramienta de privacidad.',
+  },
+];
+---
+<ToolLayout
+  slug="difuminar-caras"
+  answer="Sube una foto y las caras se detectan automáticamente —también las pequeñas de una foto de grupo— para difuminarlas, pixelarlas o taparlas. Puedes desactivar caras y marcar matrículas a mano. Todo ocurre en tu navegador."
+  howTo={[
+    'Sube la foto.',
+    'Revisa las caras detectadas: toca para desactivar, arrastra para añadir zonas.',
+    'Elige el efecto, la intensidad y la forma.',
+    'Descarga la imagen anonimizada.',
+  ]}
+  faqs={faqs}
+>
+  <DifuminarCarasTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Privacidad antes de publicar</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Colegios, asociaciones, comercios y particulares comparten a diario fotos de grupo. Difuminar las caras de quien no ha dado permiso, y en especial las de menores, <strong class="text-[var(--color-text)]">evita problemas y es una buena práctica</strong> en redes sociales y webs.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Completa la limpieza de la foto</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Una foto puede revelar más que caras: sus metadatos guardan la ubicación GPS y el modelo del móvil. Pásala también por <a class="underline text-[var(--color-accent)]" href="/eliminar-exif">Eliminar EXIF</a>. Para pixelar zonas libres con más control, usa <a class="underline text-[var(--color-accent)]" href="/pixelar">Pixelar imagen</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

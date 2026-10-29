@@ -1387,4 +1387,19 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     description: 'Convierte texto en voz con voces neuronales en español de España y México y descarga el audio. Se genera en tu navegador. Gratis.',
     canonical: 'https://toolsfoto.com/texto-a-voz',
   },
+  'mejorar-calidad-imagen': {
+    title: 'Mejorar calidad de imagen con IA online gratis | ToolsFoto',
+    description: 'Aumenta la resolución de fotos borrosas o pequeñas ×2 o ×4 con IA (Real-ESRGAN) y quita ruido y pixelado. En tu navegador, gratis.',
+    canonical: 'https://toolsfoto.com/mejorar-calidad-imagen',
+  },
+  'borrar-objetos-foto': {
+    title: 'Borrar objetos o personas de una foto con IA gratis | ToolsFoto',
+    description: 'Elimina personas, objetos, cables o textos de tus fotos pintando encima: la IA rellena el fondo. Sin subir la imagen. Gratis.',
+    canonical: 'https://toolsfoto.com/borrar-objetos-foto',
+  },
+  'difuminar-caras': {
+    title: 'Difuminar caras en fotos automáticamente online gratis | ToolsFoto',
+    description: 'Detecta y difumina, pixela o tapa las caras de una foto automáticamente, y marca matrículas a mano. Privado: en tu navegador.',
+    canonical: 'https://toolsfoto.com/difuminar-caras',
+  },
 };

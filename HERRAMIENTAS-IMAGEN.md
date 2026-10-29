@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (62)
+## Imagen (65)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -67,3 +67,6 @@
 | `/quitar-fondo-blanco` | `QuitarFondoBlancoTool.tsx` | Básicas | `getImageData` → distancia por canal RGB → alfa 0 con banda de suavizado |
 | `/imagen-a-texto` | `ImagenATextoTool.tsx` | Avanzadas | Tesseract.js (WASM, `createOcrWorker` de `ocr.ts`) — OCR en 7 idiomas, texto editable |
 | `/crear-firma` | `CrearFirmaTool.tsx` | Básicas | Canvas con pointer events, curvas cuadráticas y grosor por velocidad/presión; recorte por alfa → PNG transparente |
+| `/mejorar-calidad-imagen` | `MejorarCalidadImagenTool.tsx` | Avanzadas | Real-ESRGAN general v3 ×4 (ONNX, 4,9 MB en `public/models`) con `onnx.ts` (WebGPU/WASM), teselas de 128 px con solape de 10, alfa escalado aparte; ×2 = ×4 reducido |
+| `/borrar-objetos-foto` | `BorrarObjetosTool.tsx` | Avanzadas | LaMa de OpenCV Zoo (ONNX, 92 MB desde Hugging Face, Cache Storage `ai-models-v1`): máscara con pincel → recorte cuadrado con contexto a 512 px → pegado con borde difuminado |
+| `/difuminar-caras` | `DifuminarCarasTool.tsx` | Avanzadas | MediaPipe FaceDetector (BlazeFace, `public/models`) a varias escalas (imagen + cuadrículas 2×2 y 3×3) + NMS; difuminar/pixelar/tapar con óvalo o rectángulo; zonas manuales |

@@ -27,6 +27,7 @@ import {
   ZoomIn, Ruler, Slice, RadioTower,
   Eraser, CalendarClock,
   ScanText, Signature, FileSearch, FileType, FileInput, FileSpreadsheet, Sheet, FilePen, Speech,
+  WandSparkles, ScanFace,
 } from 'lucide-react';
 import type { ToolMeta } from '@/lib/constants/tools';
 
@@ -198,6 +199,8 @@ const ICONS: Record<string, React.ReactNode> = {
   Sheet: <Sheet size={20} />,
   FilePen: <FilePen size={20} />,
   Speech: <Speech size={20} />,
+  WandSparkles: <WandSparkles size={20} />,
+  ScanFace: <ScanFace size={20} />,
 };
 
 interface Props {

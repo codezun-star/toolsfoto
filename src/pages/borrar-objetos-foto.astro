@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import BorrarObjetosTool from '@/components/tools/BorrarObjetosTool';
+
+const faqs = [
+  {
+    q: '¿Cómo borro una persona o un objeto de una foto?',
+    a: 'Sube la foto, pinta con el pincel encima de lo que quieras eliminar (cubriéndolo entero, con un pequeño margen) y pulsa «Borrar lo marcado». La IA rellena la zona con lo que debería haber detrás: cielo, pared, césped, arena… Puedes repetirlo tantas veces como quieras y descargar la foto al final.',
+  },
+  {
+    q: '¿Qué tecnología usa?',
+    a: 'LaMa (Large Mask Inpainting), un modelo de inteligencia artificial de código abierto especializado en rellenar zonas grandes de una imagen de forma coherente con su entorno. Usamos la versión optimizada de OpenCV, que se ejecuta en tu navegador con ONNX Runtime.',
+  },
+  {
+    q: '¿Por qué tarda la primera vez?',
+    a: 'Porque el modelo pesa 92 MB y se descarga una sola vez. Después queda guardado en tu navegador y cada borrado tarda entre 10 y 40 segundos, según la potencia de tu dispositivo. Si estás con datos móviles, te recomendamos usarlo con wifi la primera vez.',
+  },
+  {
+    q: '¿Qué resultados puedo esperar?',
+    a: 'Funciona muy bien con fondos naturales y repetitivos: personas en la playa, turistas delante de un monumento, cables contra el cielo, manchas, granos, fechas impresas o marcas en una pared. Con objetos muy grandes sobre fondos complejos (por ejemplo, la mitad de un edificio) el relleno puede verse borroso: borra por partes y en varias pasadas para mejorar el resultado.',
+  },
+  {
+    q: '¿Pierde resolución la foto?',
+    a: 'No. La IA solo trabaja sobre un recorte alrededor de lo que has pintado y después se pega con el borde suavizado sobre tu foto. El resto de la imagen queda exactamente igual. Las fotos de más de 2.400 píxeles de lado se reducen a ese tamaño para que el navegador pueda trabajar con fluidez.',
+  },
+  {
+    q: '¿Mis fotos se suben a algún servidor?',
+    a: 'No. Lo único que se descarga de internet es el modelo de IA; tu foto se procesa en la memoria de tu dispositivo. Puedes usarlo con fotos personales con total tranquilidad.',
+  },
+];
+---
+<ToolLayout
+  slug="borrar-objetos-foto"
+  answer="Sube la foto, pinta encima de la persona, el objeto o el texto que sobra y pulsa «Borrar lo marcado»: la IA (LaMa) rellena la zona con el fondo que debería haber detrás. Todo en tu navegador y sin perder resolución."
+  howTo={[
+    'Sube la foto.',
+    'Pinta con el pincel encima de lo que quieras borrar.',
+    'Pulsa «Borrar lo marcado» y repite si hace falta.',
+    'Descarga la foto limpia.',
+  ]}
+  faqs={faqs}
+>
+  <BorrarObjetosTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">La foto de viaje que querías hacer</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Quita a los desconocidos que se colaron en la foto, el coche aparcado delante de la fachada o la farola que atraviesa el paisaje. <strong class="text-[var(--color-text)]">Pinta generoso</strong>, cubriendo también la sombra del objeto, y si queda algún resto, márcalo y vuelve a borrar.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Fotos de producto e inmobiliarias más limpias</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Elimina enchufes, manchas, etiquetas o reflejos antes de publicar. Para cambiar todo el fondo de una vez usa <a class="underline text-[var(--color-accent)]" href="/eliminar-fondo">Eliminar fondo</a> o <a class="underline text-[var(--color-accent)]" href="/cambiar-fondo">Cambiar fondo</a>, y si la foto es pequeña, <a class="underline text-[var(--color-accent)]" href="/mejorar-calidad-imagen">mejora su calidad con IA</a>.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

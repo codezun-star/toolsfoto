@@ -1,0 +1,58 @@
+---
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import MejorarCalidadImagenTool from '@/components/tools/MejorarCalidadImagenTool';
+
+const faqs = [
+  {
+    q: '¿Cómo mejoro la calidad de una foto con IA?',
+    a: 'Sube la imagen, elige si quieres ampliarla ×2 o ×4 y pulsa «Mejorar con IA». El modelo Real-ESRGAN procesa la foto por partes y al terminar puedes comparar el antes y el después deslizando la barra, y descargar el resultado en PNG.',
+  },
+  {
+    q: '¿En qué se diferencia de ampliar la imagen normalmente?',
+    a: 'Un ampliado normal (bicúbico) solo estira los píxeles que ya existen: la foto queda más grande pero igual de borrosa. La IA ha aprendido de millones de imágenes cómo son los bordes, las texturas y los detalles, y los reconstruye al ampliar: quita el desenfoque, el ruido y los bloques del JPG. El resultado es notablemente más nítido.',
+  },
+  {
+    q: '¿Para qué fotos funciona mejor?',
+    a: 'Para fotos pequeñas o comprimidas: imágenes descargadas de redes sociales o WhatsApp, capturas, fotos antiguas escaneadas a baja resolución, logotipos o fotos de producto. En caras muy pequeñas o textos diminutos la IA puede inventar detalle que no estaba en el original; revisa siempre el resultado con el comparador.',
+  },
+  {
+    q: '¿Por qué a veces reduce primero mi imagen?',
+    a: 'Ampliar ×4 multiplica por 16 el número de píxeles. Para que el navegador no se quede sin memoria, la imagen de entrada se limita a unos 2 megapíxeles si tu equipo tiene WebGPU y a unos 0,6 si procesa con el procesador. Se te avisa cuando ocurre; el resultado sigue siendo cuatro veces más grande que la imagen procesada.',
+  },
+  {
+    q: '¿Cuánto tarda?',
+    a: 'La primera vez se descarga el modelo (5 MB, servido desde nuestro propio dominio). Después, con un navegador que admita WebGPU (Chrome, Edge o Safari recientes) una foto tarda pocos segundos; sin WebGPU se procesa en el procesador y puede tardar uno o dos minutos. La barra muestra el progreso.',
+  },
+  {
+    q: '¿Se suben mis fotos a un servidor?',
+    a: 'No. La IA se ejecuta dentro de tu navegador con ONNX Runtime: la imagen nunca sale de tu dispositivo. Es la diferencia con la mayoría de servicios de mejora con IA, que suben tu foto a sus servidores y a menudo ponen marca de agua o piden registro.',
+  },
+];
+---
+<ToolLayout
+  slug="mejorar-calidad-imagen"
+  answer="Sube una foto pequeña, borrosa o pixelada y pulsa «Mejorar con IA»: Real-ESRGAN la amplía ×2 o ×4 reconstruyendo el detalle y quitando ruido y bloques de compresión. Todo ocurre en tu navegador, sin subir la imagen."
+  howTo={[
+    'Sube la imagen que quieres mejorar.',
+    'Elige el aumento: ×2 o ×4.',
+    'Pulsa «Mejorar con IA» y espera a que termine.',
+    'Compara el antes y el después y descarga el PNG.',
+  ]}
+  faqs={faqs}
+>
+  <MejorarCalidadImagenTool client:load />
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Recupera fotos que creías perdidas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Esa foto que solo conservas en el tamaño en que te la mandaron por WhatsApp, el logotipo que necesitas imprimir y solo tienes en miniatura o la imagen de producto que se ve pixelada en tu tienda: <strong class="text-[var(--color-text)]">la IA les devuelve nitidez y resolución</strong> suficiente para usarlas en grande.
+      </p>
+    </div>
+    <div>
+      <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">Combínala con otras herramientas</h2>
+      <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+        Después de mejorarla, <a class="underline text-[var(--color-accent)]" href="/eliminar-fondo">quita el fondo</a>, <a class="underline text-[var(--color-accent)]" href="/borrar-objetos-foto">borra objetos que sobran</a> o <a class="underline text-[var(--color-accent)]" href="/comprimir">comprímela</a> para la web: el PNG resultante pesa más que el original porque tiene muchos más píxeles.
+      </p>
+    </div>
+  </section>
+</ToolLayout>

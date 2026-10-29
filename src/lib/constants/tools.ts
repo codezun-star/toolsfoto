@@ -2864,6 +2864,40 @@ export const TOOLS: ToolMeta[] = [
     color: 'blue',
     related: ['transcribir-audio', 'convertir-audio', 'grabar-audio', 'wav-a-mp3'],
   },
+  // ── FASE 3 · IA EN EL NAVEGADOR ──────────────────────────────
+  {
+    slug: 'mejorar-calidad-imagen',
+    name: 'Mejorar calidad de imagen (IA)',
+    description: 'Aumenta la resolución y la nitidez de tus fotos con IA.',
+    longDescription: 'Mejora la calidad de fotos borrosas, pequeñas o pixeladas con Real-ESRGAN, un modelo de inteligencia artificial que reconstruye el detalle al ampliar ×2 o ×4 y elimina ruido y bloques de compresión. Funciona en tu navegador, sin subir la imagen.',
+    category: 'Avanzadas',
+    domain: 'imagen',
+    icon: 'Sparkles',
+    color: 'blue',
+    related: ['ampliar-imagen', 'nitidez', 'borrar-objetos-foto', 'eliminar-fondo'],
+  },
+  {
+    slug: 'borrar-objetos-foto',
+    name: 'Borrar objetos de una foto (IA)',
+    description: 'Elimina personas, objetos o textos de una foto pintando encima.',
+    longDescription: 'Borra de tus fotos lo que sobra: personas al fondo, cables, papeleras, textos o marcas. Pinta encima con el pincel y la IA (LaMa) rellena la zona con lo que debería haber detrás. El resto de la imagen conserva su resolución original.',
+    category: 'Avanzadas',
+    domain: 'imagen',
+    icon: 'WandSparkles',
+    color: 'blue',
+    related: ['eliminar-fondo', 'mejorar-calidad-imagen', 'difuminar-caras', 'recortar'],
+  },
+  {
+    slug: 'difuminar-caras',
+    name: 'Difuminar caras',
+    description: 'Detecta y difumina automáticamente las caras de una foto.',
+    longDescription: 'Anonimiza tus fotos en un clic: la herramienta detecta las caras automáticamente, incluso las pequeñas de una foto de grupo, y las difumina, pixela o tapa. Puedes desactivar caras concretas y marcar a mano matrículas u otras zonas. Todo en tu navegador.',
+    category: 'Avanzadas',
+    domain: 'imagen',
+    icon: 'ScanFace',
+    color: 'blue',
+    related: ['pixelar', 'desenfoque', 'eliminar-exif', 'borrar-objetos-foto'],
+  },
 ];
 
 export const TOOL_BY_SLUG: Record<string, ToolMeta> = Object.fromEntries(
