@@ -319,12 +319,12 @@ toolsfoto-v2/
 
 ---
 
-## Las 256 herramientas
+## Las 275 herramientas
 
 > Las tablas completas están divididas por categoría para no sobrecargar este archivo:
 > [`HERRAMIENTAS-IMAGEN.md`](./HERRAMIENTAS-IMAGEN.md) · [`HERRAMIENTAS-PDF.md`](./HERRAMIENTAS-PDF.md) · [`HERRAMIENTAS-VIDEO.md`](./HERRAMIENTAS-VIDEO.md) · [`HERRAMIENTAS-AUDIO.md`](./HERRAMIENTAS-AUDIO.md) · [`HERRAMIENTAS-DEV.md`](./HERRAMIENTAS-DEV.md)
 > El índice general con slugs rápidos está en [`HERRAMIENTAS.md`](./HERRAMIENTAS.md).
-> **Total: 256 herramientas — 68 imagen · 49 PDF · 42 vídeo · 54 audio · 43 developer + 5 legales**
+> **Total: 275 herramientas — 86 imagen · 49 PDF · 42 vídeo · 55 audio · 43 developer + 5 legales**
 
 Al añadir una herramienta nueva, actualizar el archivo de dominio correspondiente y el índice en `HERRAMIENTAS.md`.
 
@@ -544,7 +544,7 @@ Algunas herramientas developer no reciben archivos: trabajan solo con texto o ge
 - Valores extremos: usar `toExponential(6)` cuando `|n| >= 1e12` o `|n| < 1e-6`.
 
 #### Búsqueda binaria de calidad JPEG (ComprimirObjetivo)
-- `lo=0.01, hi=1.0`, hasta `ITERS=15` iteraciones, converge en ±0.003 de calidad.
+- `lo=0.3, hi=1.0`, hasta `ITERS=15` iteraciones, converge en ±0.003 de calidad. Si ni con calidad 0,3 cabe, se reduce la imagen un 20 % y se repite (hasta un lado mínimo de 160 px, donde ya se acepta calidad 0,1): con objetivos de 20-50 KB compensa más perder píxeles que calidad. Prop `initialKB` para las páginas «comprimir imagen a X KB».
 - `const mid = (lo + hi) / 2; const blob = await canvasToBlob(canvas, 'image/jpeg', mid);`
 - Si `blob.size <= targetBytes` → guardar como `best`, subir `lo`; si no → bajar `hi`.
 - Siempre exporta JPEG (transparencia → fondo blanco).
@@ -575,10 +575,10 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 
 | URL | Archivo | Herramientas |
 |---|---|---|
-| `/imagen` | `src/pages/imagen.astro` | 68 (3 páginas) |
+| `/imagen` | `src/pages/imagen.astro` | 86 (4 páginas) |
 | `/pdf` | `src/pages/pdf.astro` | 49 (3 páginas) |
 | `/video` | `src/pages/video.astro` | 42 (2 páginas) |
-| `/audio` | `src/pages/audio.astro` | 54 (3 páginas) |
+| `/audio` | `src/pages/audio.astro` | 55 (3 páginas) |
 | `/developer` | `src/pages/developer.astro` | 43 (2 páginas) |
 
 **`CategoryGrid.tsx`** (`src/components/ui/CategoryGrid.tsx`) — componente React reutilizable:
@@ -590,6 +590,15 @@ Cada dominio tiene una página estática que lista **todas** sus herramientas co
 - Se monta con `client:load` en cada página de categoría.
 
 **Regla de URLs:** las URLs de herramientas individuales (`/comprimir`, `/redimensionar`, etc.) están indexadas en Google y **no se tocan bajo ningún concepto**. Nunca mover ni renombrar archivos en `src/pages/` que correspondan a herramientas. Las páginas de categoría son archivos nuevos que no colisionan con ningún slug de herramienta.
+
+### Páginas de cola larga (`[landing].astro` + `landings.ts`)
+Variantes de herramientas existentes con un preset fijado y **contenido propio** ("comprimir imagen a 50 KB", "foto tamaño infantil", "PNG a WebP"…). Excepción documentada a la regla de un `.astro` por herramienta:
+- **Contenido** en `src/lib/constants/landings.ts` (`LANDINGS`): `tool` (qué componente y con qué preset: `target-kb`, `id-photo`, `image-format`, `audio-wav`), `answer`, `howTo`, `faqs` (≥ 5) y `sections` (HTML propio con enlaces internos).
+- **Ruta** única `src/pages/[landing].astro` con `getStaticPaths()` desde `LANDINGS`. Las rutas estáticas tienen prioridad, así que no pisa ninguna herramienta.
+- Cada entrada necesita además su ficha en `tools.ts` y su SEO en `seo.ts` (así sale en categorías, buscador, sitemap y `llms.txt`), y su fila en el `HERRAMIENTAS-*.md` del dominio.
+- Para añadir una familia nueva: nuevo `kind` en `LandingTool`, prop opcional en el componente base (sin cambiar su comportamiento por defecto) y una rama en `[landing].astro`.
+- **No crear páginas que solo cambien dos palabras.** Cada una debe responder a la búsqueda con datos propios (requisitos oficiales, usos, dudas reales); si no hay nada distinto que decir, mejor no crearla.
+- Componentes base con props para esto: `ComprimirObjetivoTool` (`initialKB`), `FotoCarnetTool` (`initialSize`; incluye medidas oficiales de varios países y hoja de 10 × 15 cm), `BatchImageTool` (`format`, `dropLabel`).
 
 ### Lucide icons en .astro templates
 En archivos `.astro`, los componentes React (incluidos iconos Lucide) necesitan `className`, no `class`. También necesitan `client:load` si se usan en una zona interactiva.
@@ -680,7 +689,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 320 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 339 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -718,3 +727,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-29 | **Fase 2 de crecimiento — documentos, OCR y voz.** +9 herramientas de alta demanda. Imagen 60→62: `/imagen-a-texto` (OCR con Tesseract.js en 7 idiomas) y `/crear-firma` (firma dibujada o escrita → PNG transparente recortado). PDF 43→49: `/ocr-pdf` (capa de texto invisible sobre el PDF original), `/pdf-a-word` (estructura reconstruida → `docx`), `/word-a-pdf` (`mammoth` → maquetador propio), `/pdf-a-excel` (columnas por solapamiento de intervalos → XLSX propio + CSV), `/excel-a-pdf` (XLSX/CSV → tablas) y `/editar-pdf` (texto, resaltar, tapar y dibujo). Audio 53→54: `/texto-a-voz` (voces neuronales Piper en el navegador, descarga WAV). Nuevas utilidades `ocr.ts`, `pdf-layout.ts` y `xlsx.ts`. Destacadas del home y sugerencias de "¿Y ahora?" actualizadas. `cookies.astro` describe la caché de idiomas OCR y voces (IndexedDB/OPFS). Verificado con Playwright: las 9 producen salida correcta (texto del DOCX/PDF/XLSX comprobado, OCR de imagen y de PDF escaneado, WAV con audio real). Total: 250 herramientas, 314 páginas. |
 | 2026-10-29 | **Fase 3 de crecimiento — IA en el navegador.** Imagen 62→65: `/mejorar-calidad-imagen` (Real-ESRGAN ×2/×4 por teselas, WebGPU o WASM), `/borrar-objetos-foto` (LaMa: pincel → relleno del fondo, pegado con borde difuminado sin perder resolución) y `/difuminar-caras` (BlazeFace de MediaPipe a varias escalas para caras pequeñas, difuminar/pixelar/tapar y zonas manuales). Nueva utilidad `onnx.ts` (WebGPU con respaldo WASM en worker, caché de modelos `ai-models-v1`) y carpeta `public/models` con caché inmutable en `_headers`. Verificado con Playwright en Chromium sin GPU: mejora ×4 de 512 px en 29 s con la página respondiendo, borrado en 21-34 s, detección de caras correcta en dos fotos reales. |
 | 2026-10-29 | **Fase 4 de crecimiento — lotes.** Imagen 65→68: `/comprimir-varias-imagenes`, `/redimensionar-varias-imagenes` y `/convertir-varias-imagenes`, las tres sobre `BatchImageTool.tsx` (hasta 200 imágenes, HEIC incluido, resumen de ahorro, descarga individual o en ZIP con el nuevo `zip.ts`). Las versiones individuales (`comprimir`, `redimensionar`, `convertir`, `heic-a-jpg`) enlazan a su versión por lotes en «Otras herramientas». Destacadas del home: entran mejorar calidad, borrar objetos y comprimir varias. Verificado con Playwright: ZIP con nombres y tamaños correctos en los tres modos. |
+| 2026-10-29 | **Fase 5 de crecimiento — cola larga.** +19 páginas con contenido propio servidas por `[landing].astro` desde `landings.ts`: comprimir imagen a 20/50/100/200/500 KB y 1 MB; fotos de documento (DNI España 26×32 mm, tamaño pasaporte 3,5×4,5 cm, tamaño infantil 2,5×3 cm, visa de EE. UU. 2×2 in con datos del DS-160, visado Schengen 35×45 mm, 4×4 cm); conversiones PNG→WebP, JPG→WebP, AVIF→JPG, AVIF→PNG, BMP→JPG, HEIC→PNG y MP3→WAV. Mejoras en los componentes base: `ComprimirObjetivoTool` reduce dimensiones cuando ni con calidad 0,3 alcanza el objetivo (antes se quedaba por encima o en calidad 1 %); `FotoCarnetTool` añade México, Canadá y China, corrige la etiqueta del pasaporte español (26×32, no 35×45) y genera una hoja de 10×15 cm con copias y guías de corte; `BatchImageTool` admite formato fijo. Verificado con Playwright: 20 KB exactos (420×524, calidad 37 %), hoja de 15 copias, BMP y AVIF reales convertidos. |

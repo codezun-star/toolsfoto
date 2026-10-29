@@ -1,0 +1,38 @@
+---
+/**
+ * Páginas de cola larga ("comprimir imagen a 50 KB", "foto tamaño infantil",
+ * "PNG a WebP"…): una herramienta existente con un preset fijado y contenido
+ * propio, definido en `src/lib/constants/landings.ts`. Las rutas estáticas
+ * de `src/pages/` tienen prioridad, así que esta solo genera los slugs de
+ * `LANDINGS`.
+ */
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import ComprimirObjetivoTool from '@/components/tools/ComprimirObjetivoTool';
+import FotoCarnetTool from '@/components/tools/FotoCarnetTool';
+import BatchImageTool from '@/components/tools/BatchImageTool';
+import AudioAWavTool from '@/components/tools/AudioAWavTool';
+import { LANDINGS, type Landing } from '@/lib/constants/landings';
+
+export function getStaticPaths() {
+  return LANDINGS.map((landing) => ({ params: { landing: landing.slug }, props: { landing } }));
+}
+
+interface Props { landing: Landing }
+
+const { landing } = Astro.props;
+const { tool } = landing;
+---
+<ToolLayout slug={landing.slug} answer={landing.answer} howTo={landing.howTo} faqs={landing.faqs}>
+  {tool.kind === 'target-kb' && <ComprimirObjetivoTool initialKB={tool.kb} client:load />}
+  {tool.kind === 'id-photo' && <FotoCarnetTool initialSize={tool.size} client:load />}
+  {tool.kind === 'image-format' && <BatchImageTool mode="convert" format={tool.format} dropLabel={tool.dropLabel} client:load />}
+  {tool.kind === 'audio-wav' && <AudioAWavTool client:load />}
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    {landing.sections.map((s) => (
+      <div>
+        <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">{s.title}</h2>
+        <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed" set:html={s.body} />
+      </div>
+    ))}
+  </section>
+</ToolLayout>

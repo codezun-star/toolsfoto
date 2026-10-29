@@ -7,19 +7,33 @@ import { useState } from 'react';
 
 interface PhotoSize { id: string; label: string; desc: string; w: number; h: number }
 
+/** Medidas oficiales a 300 ppp (px = mm / 25,4 × 300). */
 const PHOTO_SIZES: PhotoSize[] = [
-  { id: 'dni', label: 'DNI / Carnet español', desc: '26 × 32 mm (307 × 378 px)', w: 307, h: 378 },
-  { id: 'pasaporte', label: 'Pasaporte España / ICAO', desc: '35 × 45 mm (413 × 531 px)', w: 413, h: 531 },
-  { id: 'pasaporte-usa', label: 'Pasaporte USA', desc: '2 × 2 in (600 × 600 px)', w: 600, h: 600 },
-  { id: 'visa', label: 'Visa / Schengen', desc: '35 × 45 mm (413 × 531 px)', w: 413, h: 531 },
+  { id: 'dni', label: 'DNI y pasaporte de España', desc: '26 × 32 mm (307 × 378 px)', w: 307, h: 378 },
+  { id: 'pasaporte', label: 'Pasaporte / visado ICAO (UE, Reino Unido)', desc: '35 × 45 mm (413 × 531 px)', w: 413, h: 531 },
+  { id: 'visa', label: 'Visado Schengen', desc: '35 × 45 mm (413 × 531 px)', w: 413, h: 531 },
+  { id: 'pasaporte-usa', label: 'Pasaporte y visa de EE. UU.', desc: '2 × 2 in (600 × 600 px)', w: 600, h: 600 },
+  { id: 'mx-pasaporte', label: 'Tamaño pasaporte 3,5 × 4,5 cm', desc: '35 × 45 mm (413 × 531 px)', w: 413, h: 531 },
+  { id: 'mx-infantil', label: 'Tamaño infantil (México)', desc: '2,5 × 3 cm (295 × 354 px)', w: 295, h: 354 },
   { id: '4x4', label: 'Carnet 4 × 4 cm', desc: '4 × 4 cm (472 × 472 px)', w: 472, h: 472 },
+  { id: 'canada', label: 'Pasaporte de Canadá', desc: '50 × 70 mm (591 × 827 px)', w: 591, h: 827 },
+  { id: 'china', label: 'Visado de China', desc: '33 × 48 mm (390 × 567 px)', w: 390, h: 567 },
   { id: 'linkedin', label: 'Foto perfil LinkedIn', desc: '400 × 400 px', w: 400, h: 400 },
 ];
 
-export default function FotoCarnetTool() {
+/** Hoja de 15 × 10 cm a 300 ppp (el tamaño de foto estándar de cualquier tienda o máquina de revelado). */
+const SHEET_W = 1772;
+const SHEET_H = 1181;
+
+interface Props {
+  /** Tipo de foto seleccionado al abrir. Lo usan las páginas por país o documento. */
+  initialSize?: string;
+}
+
+export default function FotoCarnetTool({ initialSize = 'pasaporte' }: Props) {
   const upload = useImageUpload();
   const { download } = useDownload(upload.image?.file.name);
-  const [sizeId, setSizeId] = useState('pasaporte');
+  const [sizeId, setSizeId] = useState(PHOTO_SIZES.some((p) => p.id === initialSize) ? initialSize : 'pasaporte');
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [processing, setProcessing] = useState(false);
@@ -71,6 +85,33 @@ export default function FotoCarnetTool() {
   }
 
   const selected = PHOTO_SIZES.find((s) => s.id === sizeId)!;
+
+  /** Varias copias en una hoja de 15 × 10 cm con guías de corte, lista para revelar. */
+  async function downloadSheet() {
+    if (!resultUrl) return;
+    const img = await loadImage(resultUrl);
+    const gap = 24; // 2 mm
+    const cols = Math.max(1, Math.floor((SHEET_W - gap) / (selected.w + gap)));
+    const rows = Math.max(1, Math.floor((SHEET_H - gap) / (selected.h + gap)));
+    const ox = (SHEET_W - (cols * selected.w + (cols - 1) * gap)) / 2;
+    const oy = (SHEET_H - (rows * selected.h + (rows - 1) * gap)) / 2;
+    const sheet = createCanvas(SHEET_W, SHEET_H);
+    const ctx = getContext(sheet);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, SHEET_W, SHEET_H);
+    ctx.strokeStyle = '#CCCCCC';
+    ctx.lineWidth = 1;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = ox + c * (selected.w + gap);
+        const y = oy + r * (selected.h + gap);
+        ctx.drawImage(img, x, y, selected.w, selected.h);
+        ctx.strokeRect(x - 0.5, y - 0.5, selected.w + 1, selected.h + 1);
+      }
+    }
+    const blob = await canvasToBlob(sheet, 'image/jpeg', 0.95);
+    download(blob, `hoja-10x15-${cols * rows}-copias`, 'jpg');
+  }
 
   return (
     <div className="space-y-6">
@@ -145,6 +186,12 @@ export default function FotoCarnetTool() {
             label="Descargar foto carnet"
             className="w-full"
           />
+          <button
+            onClick={downloadSheet}
+            className="w-full py-3 rounded-xl border border-[var(--color-border)] bg-white text-sm font-semibold text-[var(--color-text)] hover:border-[var(--color-accent)] transition-colors"
+          >
+            Descargar hoja para imprimir (10 × 15 cm, varias copias)
+          </button>
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
             Procesar otra imagen
           </button>

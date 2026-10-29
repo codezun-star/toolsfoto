@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Imagen (68)
+## Imagen (86)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -73,3 +73,21 @@
 | `/comprimir-varias-imagenes` | `BatchImageTool.tsx (`mode="compress"`)` | Básicas | Lote de hasta 200 (HEIC vía `heic2any`): `createImageBitmap` → canvas → `toBlob` con calidad y ancho máximo; nunca engorda (conserva el original); ZIP con `makeZip()` de `zip.ts` |
 | `/redimensionar-varias-imagenes` | `BatchImageTool.tsx (`mode="resize"`)` | Básicas | Ancho / alto / porcentaje / caja máxima con proporción, opción de no ampliar; formato y calidad; ZIP |
 | `/convertir-varias-imagenes` | `BatchImageTool.tsx (`mode="convert"`)` | Básicas | HEIC/PNG/WebP/AVIF/GIF/BMP/JPG → JPG (fondo blanco), PNG o WebP; ZIP |
+| `/comprimir-imagen-20kb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/comprimir-imagen-50kb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/comprimir-imagen-100kb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/comprimir-imagen-200kb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/comprimir-imagen-500kb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/comprimir-imagen-1mb` | `[landing].astro → ComprimirObjetivoTool.tsx` | Básicas | `initialKB` fijado; búsqueda binaria de calidad + reducción de dimensiones si no cabe (contenido en `landings.ts`) |
+| `/foto-dni` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="dni"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/foto-tamano-pasaporte` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="mx-pasaporte"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/foto-tamano-infantil` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="mx-infantil"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/foto-visa-estados-unidos` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="pasaporte-usa"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/foto-visado-schengen` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="visa"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/foto-4x4` | `[landing].astro → FotoCarnetTool.tsx` | Básicas | `initialSize="4x4"`; recorte centrado al tamaño oficial a 300 ppp + hoja 10 × 15 cm con copias |
+| `/png-a-webp` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (WebP); lote hasta 200 + ZIP |
+| `/jpg-a-webp` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (WebP); lote hasta 200 + ZIP |
+| `/avif-a-jpg` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (JPG); lote hasta 200 + ZIP |
+| `/avif-a-png` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (PNG); lote hasta 200 + ZIP |
+| `/bmp-a-jpg` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (JPG); lote hasta 200 + ZIP |
+| `/heic-a-png` | `[landing].astro → BatchImageTool.tsx` | Básicas | `mode="convert"` con `format` fijo (PNG); lote hasta 200 + ZIP |

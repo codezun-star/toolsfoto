@@ -8,7 +8,7 @@ import { useFileReceiver } from '@/hooks/useFileReceiver';
 
 export type BatchMode = 'compress' | 'resize' | 'convert';
 
-type OutFormat = 'keep' | 'image/jpeg' | 'image/png' | 'image/webp';
+export type OutFormat = 'keep' | 'image/jpeg' | 'image/png' | 'image/webp';
 type ResizeBy = 'width' | 'height' | 'percent' | 'fit';
 
 interface Item {
@@ -46,7 +46,13 @@ function baseName(name: string) {
   return dot > 0 ? name.slice(0, dot) : name;
 }
 
-interface Props { mode: BatchMode }
+interface Props {
+  mode: BatchMode;
+  /** Formato fijo de salida: las páginas "PNG a WebP", "AVIF a JPG"… no muestran el selector. */
+  format?: Exclude<OutFormat, 'keep'>;
+  /** Texto del área de subida, p. ej. "Arrastra tus imágenes AVIF". */
+  dropLabel?: string;
+}
 
 /**
  * Procesa muchas imágenes de una vez y las descarga juntas en un ZIP.
@@ -54,7 +60,7 @@ interface Props { mode: BatchMode }
  * y `/convertir-varias-imagenes` (prop `mode`). Las imágenes se procesan una
  * a una para no agotar la memoria con lotes grandes; acepta HEIC del iPhone.
  */
-export default function BatchImageTool({ mode }: Props) {
+export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }: Props) {
   const [items, setItems] = useState<Item[]>([]);
   const [running, setRunning] = useState(false);
   const [zipping, setZipping] = useState(false);
@@ -63,7 +69,7 @@ export default function BatchImageTool({ mode }: Props) {
   // Opciones
   const [quality, setQuality] = useState(mode === 'compress' ? 75 : 90);
   const [maxWidth, setMaxWidth] = useState(mode === 'compress' ? 1920 : 0);
-  const [format, setFormat] = useState<OutFormat>(mode === 'convert' ? 'image/jpeg' : 'keep');
+  const [format, setFormat] = useState<OutFormat>(fixedFormat ?? (mode === 'convert' ? 'image/jpeg' : 'keep'));
   const [resizeBy, setResizeBy] = useState<ResizeBy>('width');
   const [size, setSize] = useState(1080);
   const [size2, setSize2] = useState(1080);
@@ -210,7 +216,7 @@ export default function BatchImageTool({ mode }: Props) {
         >
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
           <div>
-            <p className="font-semibold text-[var(--color-text)]">{items.length ? 'Añadir más imágenes' : 'Arrastra todas tus imágenes o haz clic'}</p>
+            <p className="font-semibold text-[var(--color-text)]">{items.length ? 'Añadir más imágenes' : dropLabel ?? 'Arrastra todas tus imágenes o haz clic'}</p>
             <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP, AVIF, GIF y HEIC · Hasta {MAX_FILES} a la vez</p>
           </div>
           <input
@@ -313,6 +319,12 @@ export default function BatchImageTool({ mode }: Props) {
             </label>
           )}
 
+          {fixedFormat ? (
+            <p className="text-sm text-[var(--color-text)]">
+              Formato de salida: <strong>{EXT[fixedFormat].toUpperCase()}</strong>
+              {fixedFormat === 'image/jpeg' && <span className="block text-xs text-[var(--color-text-muted)] mt-1">Las zonas transparentes se rellenan de blanco.</span>}
+            </p>
+          ) : (
           <div>
             <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Formato de salida</p>
             <div className="grid grid-cols-2 gap-2">
@@ -322,6 +334,7 @@ export default function BatchImageTool({ mode }: Props) {
               <button className={seg(format === 'image/webp')} onClick={() => setFormat('image/webp')}>WebP</button>
             </div>
           </div>
+          )}
 
           {mode === 'compress' && format === 'keep' && items.some((i) => i.file.type === 'image/png') && (
             <p className="text-xs text-[var(--color-text-muted)]">Los PNG apenas se reducen manteniendo el formato. Para aligerarlos de verdad, elige WebP (conserva la transparencia) o JPG.</p>

@@ -1,7 +1,7 @@
 > Parte de la documentación de ToolsFoto.
 > Ver índice general en [HERRAMIENTAS.md](HERRAMIENTAS.md)
 
-## Audio (54)
+## Audio (55)
 
 | Slug | Componente | Categoría | Tecnología |
 |---|---|---|---|
@@ -59,3 +59,4 @@
 | `/audio-8d` | `Audio8dTool.tsx` | Creativas | FFmpeg.wasm — filtro `apulsator` (paneo 8D) |
 | `/bass-boost` | `BassBoostTool.tsx` | Creativas | FFmpeg.wasm — filtro `bass=g=` ganancia en dB |
 | `/texto-a-voz` | `TextoAVozTool.tsx` | Avanzadas | `@diffusionstudio/vits-web` (voces Piper VITS + ONNX Runtime, modelos de Hugging Face en OPFS) por frases + unión de WAV; Web Speech API para escucha inmediata |
+| `/mp3-a-wav` | `[landing].astro → AudioAWavTool.tsx` | Básicas | FFmpeg.wasm — `pcm_s16le` a 44,1/48 kHz (misma herramienta que `/audio-a-wav`, contenido propio) |

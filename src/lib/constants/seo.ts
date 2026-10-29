@@ -311,7 +311,7 @@ export const PAGE_SEO: Record<string, PageSEO> = {
   },
   'foto-carnet': {
     title: 'Foto carnet online gratis — DNI, pasaporte, visado | ToolsFoto',
-    description: 'Crea fotos de carnet para DNI, pasaporte, carnet de conducir y visado con los tamaños oficiales. Recorte automático, descarga en PNG.',
+    description: 'Crea fotos de carnet para DNI, pasaporte y visado con los tamaños oficiales de varios países e imprime varias copias en una hoja 10 × 15.',
     canonical: 'https://toolsfoto.com/foto-carnet',
   },
   'redimensionar-redes': {
@@ -1416,5 +1416,100 @@ export const PAGE_SEO: Record<string, PageSEO> = {
     title: 'Convertir varias imágenes a JPG, PNG o WebP gratis | ToolsFoto',
     description: 'Convierte en lote fotos HEIC, PNG, WebP o AVIF a JPG, PNG o WebP y descárgalas en un ZIP. En tu navegador, sin subir nada. Gratis.',
     canonical: 'https://toolsfoto.com/convertir-varias-imagenes',
+  },
+  'comprimir-imagen-20kb': {
+    title: 'Comprimir imagen a 20 KB online gratis | ToolsFoto',
+    description: 'Reduce una foto o una firma a menos de 20 KB para formularios oficiales, con la máxima calidad posible. En tu navegador, sin subir nada.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-20kb',
+  },
+  'comprimir-imagen-50kb': {
+    title: 'Comprimir imagen a 50 KB online gratis | ToolsFoto',
+    description: 'Deja tu foto por debajo de 50 KB con la mejor calidad posible para solicitudes, becas y fotos de perfil. Gratis y sin subir archivos.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-50kb',
+  },
+  'comprimir-imagen-100kb': {
+    title: 'Comprimir imagen a 100 KB online gratis | ToolsFoto',
+    description: 'Reduce el peso de tu foto a 100 KB o menos con la máxima calidad, para formularios y currículums. En tu navegador, gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-100kb',
+  },
+  'comprimir-imagen-200kb': {
+    title: 'Comprimir imagen a 200 KB online gratis | ToolsFoto',
+    description: 'Comprime tu imagen por debajo de 200 KB con calidad alta, por ejemplo para el DS-160 del visado de EE. UU. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-200kb',
+  },
+  'comprimir-imagen-500kb': {
+    title: 'Comprimir imagen a 500 KB online gratis | ToolsFoto',
+    description: 'Reduce tus fotos a 500 KB o menos sin perder resolución, para adjuntos, anuncios y webs. En tu navegador, sin registro y gratis.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-500kb',
+  },
+  'comprimir-imagen-1mb': {
+    title: 'Comprimir imagen a 1 MB online gratis | ToolsFoto',
+    description: 'Deja tu imagen por debajo de 1 MB, el límite de subida más común, sin perder resolución. Gratis, sin registro y en tu navegador.',
+    canonical: 'https://toolsfoto.com/comprimir-imagen-1mb',
+  },
+  'foto-dni': {
+    title: 'Foto DNI online gratis: tamaño 26 × 32 mm para imprimir | ToolsFoto',
+    description: 'Haz la foto del DNI y del pasaporte español (26 × 32 mm, fondo blanco) con el móvil e imprime varias copias en una hoja 10 × 15.',
+    canonical: 'https://toolsfoto.com/foto-dni',
+  },
+  'foto-tamano-pasaporte': {
+    title: 'Foto tamaño pasaporte 3,5 × 4,5 cm online gratis | ToolsFoto',
+    description: 'Recorta tu foto al tamaño pasaporte (3,5 × 4,5 cm) con fondo blanco e imprime varias copias en una hoja 10 × 15. Gratis.',
+    canonical: 'https://toolsfoto.com/foto-tamano-pasaporte',
+  },
+  'foto-tamano-infantil': {
+    title: 'Foto tamaño infantil 2,5 × 3 cm online gratis | ToolsFoto',
+    description: 'Haz fotos tamaño infantil (2,5 × 3 cm) con fondo blanco y descarga una hoja 10 × 15 con 15 copias para imprimir. Gratis.',
+    canonical: 'https://toolsfoto.com/foto-tamano-infantil',
+  },
+  'foto-visa-estados-unidos': {
+    title: 'Foto para visa de Estados Unidos 2 × 2 (DS-160) gratis | ToolsFoto',
+    description: 'Crea la foto de la visa americana: 2 × 2 pulgadas, 600 × 600 px y fondo blanco, lista para el DS-160 o para imprimir. Gratis.',
+    canonical: 'https://toolsfoto.com/foto-visa-estados-unidos',
+  },
+  'foto-visado-schengen': {
+    title: 'Foto para visado Schengen 35 × 45 mm online gratis | ToolsFoto',
+    description: 'Haz la foto del visado Schengen (35 × 45 mm, fondo claro, norma ICAO) con el móvil y descárgala o imprímela. Gratis.',
+    canonical: 'https://toolsfoto.com/foto-visado-schengen',
+  },
+  'foto-4x4': {
+    title: 'Foto 4 × 4 cm online gratis para carnés e imprimir | ToolsFoto',
+    description: 'Haz fotos de 4 × 4 cm con el fondo que te pidan y descarga una hoja 10 × 15 con seis copias para imprimir. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/foto-4x4',
+  },
+  'png-a-webp': {
+    title: 'Convertir PNG a WebP online gratis (con transparencia) | ToolsFoto',
+    description: 'Convierte PNG a WebP conservando la transparencia y con mucho menos peso. Hasta 200 a la vez, descarga en ZIP. Gratis.',
+    canonical: 'https://toolsfoto.com/png-a-webp',
+  },
+  'jpg-a-webp': {
+    title: 'Convertir JPG a WebP online gratis (por lotes) | ToolsFoto',
+    description: 'Convierte tus fotos JPG a WebP con un 25-35 % menos de peso. Hasta 200 a la vez y descarga en ZIP. En tu navegador, gratis.',
+    canonical: 'https://toolsfoto.com/jpg-a-webp',
+  },
+  'avif-a-jpg': {
+    title: 'Convertir AVIF a JPG online gratis | ToolsFoto',
+    description: 'Convierte imágenes AVIF a JPG para abrirlas en cualquier programa o web. Varias a la vez, descarga en ZIP. Gratis y sin subir nada.',
+    canonical: 'https://toolsfoto.com/avif-a-jpg',
+  },
+  'avif-a-png': {
+    title: 'Convertir AVIF a PNG online gratis (con transparencia) | ToolsFoto',
+    description: 'Convierte AVIF a PNG sin pérdida y conservando la transparencia. Varias imágenes a la vez y descarga en ZIP. Gratis.',
+    canonical: 'https://toolsfoto.com/avif-a-png',
+  },
+  'bmp-a-jpg': {
+    title: 'Convertir BMP a JPG online gratis (por lotes) | ToolsFoto',
+    description: 'Convierte imágenes BMP a JPG y reduce su peso más de un 90 %. Hasta 200 a la vez y descarga en ZIP. En tu navegador, gratis.',
+    canonical: 'https://toolsfoto.com/bmp-a-jpg',
+  },
+  'heic-a-png': {
+    title: 'Convertir HEIC a PNG online gratis (fotos de iPhone) | ToolsFoto',
+    description: 'Convierte fotos HEIC del iPhone a PNG sin pérdida, compatibles con Windows y Android. Hasta 200 a la vez. Gratis y privado.',
+    canonical: 'https://toolsfoto.com/heic-a-png',
+  },
+  'mp3-a-wav': {
+    title: 'Convertir MP3 a WAV online gratis | ToolsFoto',
+    description: 'Convierte MP3 a WAV sin compresión (44,1 o 48 kHz) para editar o usar en centralitas y DAW. En tu navegador, gratis y sin registro.',
+    canonical: 'https://toolsfoto.com/mp3-a-wav',
   },
 };
