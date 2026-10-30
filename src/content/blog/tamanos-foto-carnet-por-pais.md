@@ -1,5 +1,5 @@
 ---
-titulo: "Tamaños de foto carnet por país y documento: tabla completa en mm y píxeles"
+titulo: "Tamaños de foto carnet por país: tabla en mm y píxeles"
 descripcion: "Medidas de la foto del DNI, el pasaporte y los visados más pedidos (España, México, EE. UU., Schengen, Canadá, China…) en milímetros y en píxeles a 300 ppp."
 categoria: "tips"
 fecha: "2026-10-29"

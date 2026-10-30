@@ -19,10 +19,17 @@ function toTimeStr(sec: number): string {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
+/** Formatos que se cortan copiando el audio tal cual (`-c copy`), sin recodificar. */
+const COPY_EXTS = ['mp3', 'wav', 'ogg', 'aac', 'flac', 'm4a'];
+
+function inputExt(filename: string): string {
+  return filename.match(/\.(\w+)$/)?.[1]?.toLowerCase() ?? '';
+}
+
+/** Cualquier otro formato se recodifica a MP3: copiar su audio dentro de un .mp3 falla. */
 function getOutputExt(filename: string): string {
-  const m = filename.match(/\.(\w+)$/);
-  const ext = m?.[1]?.toLowerCase() ?? 'mp3';
-  return ['mp3', 'wav', 'ogg', 'aac', 'flac'].includes(ext) ? ext : 'mp3';
+  const ext = inputExt(filename);
+  return COPY_EXTS.includes(ext) ? ext : 'mp3';
 }
 
 function CortarAudioTool() {
@@ -75,9 +82,11 @@ function CortarAudioTool() {
     setError(null);
     setResultUrl(null);
     try {
+      const src = inputExt(audio.name);
       const ext = getOutputExt(audio.name);
+      const codec = COPY_EXTS.includes(src) ? ['-c', 'copy'] : ['-c:a', 'libmp3lame', '-q:a', '2'];
       const ff = await createFFmpeg(setProgress);
-      const blob = await runFFmpeg(ff, audio.file, `input.${ext}`, ['-ss', String(start), '-to', String(end), '-c', 'copy'], `output.${ext}`);
+      const blob = await runFFmpeg(ff, audio.file, `input.${src || 'audio'}`, ['-ss', String(start), '-to', String(end), ...codec], `output.${ext}`);
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);

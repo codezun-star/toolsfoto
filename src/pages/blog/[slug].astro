@@ -122,7 +122,9 @@ const graph = jsonLd({
   '@graph': [orgSchema, siteSchema, webPageSchema, articleSchema, breadcrumbSchema],
 });
 
-const pageTitle = `${post.data.titulo} — ToolsFoto`;
+// La marca solo se añade si cabe en los ~70 caracteres que muestra Google:
+// en los títulos largos desplazaría las palabras clave fuera del corte.
+const pageTitle = post.data.titulo.length <= 58 ? `${post.data.titulo} — ToolsFoto` : post.data.titulo;
 const pageDesc  = post.data.descripcion ?? '';
 ---
 

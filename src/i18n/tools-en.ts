@@ -755,7 +755,7 @@ export const EN_TOOLS: EnTool[] = [
     howTo: ['Upload your audio file.', 'Listen to it and note the start and end of the part you want.', 'Enter the start and end times (mm:ss).', 'Press “Cut audio” and download the result.'],
     faqs: [
       { q: 'Does cutting lose quality?', a: 'No. The segment is copied as it is, without decoding and encoding again, so the quality is identical to the original and the process is very fast.' },
-      { q: 'Which formats are supported?', a: 'MP3, WAV, OGG, AAC and FLAC up to 200 MB. The cut keeps the format of the original file.' },
+      { q: 'Which formats are supported?', a: 'MP3, WAV, OGG, AAC, FLAC and M4A up to 200 MB. The cut keeps the format of the original file; other audio formats are saved as MP3.' },
       { q: 'Why is the cut slightly off?', a: 'Copying without re-encoding cuts at the nearest audio frame, which can shift the edges by a few hundredths of a second. For ringtones and clips it is imperceptible.' },
       { q: 'Can I make a ringtone?', a: 'Yes. Cut 20–30 seconds of the song. For iPhone, convert the result to AAC with Convert audio.' },
       { q: 'How do I enter the times?', a: 'As minutes and seconds (mm:ss), for example 01:30 for one and a half minutes. The label shows the total length of the audio so you know the maximum.' },

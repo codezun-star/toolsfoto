@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Copy, CheckCircle2, RefreshCw } from 'lucide-react';
 
 function generateUUID(): string {
@@ -10,7 +10,10 @@ function generateUUID(): string {
 }
 
 export default function GeneradorUUIDTool() {
-  const [uuids, setUuids] = useState<string[]>(() => [generateUUID()]);
+  // Se genera al montar, no en el render estático: si no, el HTML y la
+  // hidratación traerían UUID distintos (error #418 de React).
+  const [uuids, setUuids] = useState<string[]>([]);
+  useEffect(() => { setUuids([generateUUID()]); }, []);
   const [count, setCount] = useState(5);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
   const [copiedAll, setCopiedAll] = useState(false);

@@ -1,5 +1,5 @@
 ---
-titulo: "Tamaños de papel en píxeles: A4, A3, carta y fotos a 72, 96, 150 y 300 ppp"
+titulo: "Tamaño A4, A3 y carta en píxeles a 72, 96, 150 y 300 ppp"
 descripcion: "Tabla de equivalencias de los tamaños de papel más usados (A4, A3, A5, carta, oficio, 10 × 15) en píxeles según la resolución, y cómo calcular cualquier medida."
 categoria: "tips"
 fecha: "2026-10-29"

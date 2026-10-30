@@ -14,7 +14,7 @@ import { ChevronLeft, Search, Languages } from 'lucide-react';
 import { TOOL_BY_SLUG } from '@/lib/constants/tools';
 import { currentPath } from '@/lib/utils/path';
 import { translator, type Lang } from '@/i18n';
-import { EN_TOOLS } from '@/i18n/tools-en';
+import { EN_TOOLS, EN_BY_SLUG } from '@/i18n/tools-en';
 
 interface Props {
   /** Página padre. El botón atrás vuelve en el historial si se llegó desde el
@@ -56,8 +56,14 @@ const NAV = en
       { href: '/developer', label: 'Developer' },
       { href: '/blog', label: 'Blog' },
     ];
-// En inglés no hay páginas de categoría: solo se marca «Home» en la portada.
-const enSection = path === '/en' ? '/en' : '';
+// En inglés las categorías son anclas de la portada: una herramienta marca la
+// suya y, en la portada, el script de abajo mueve la marca según la sección visible.
+const EN_ANCHOR: Record<string, string> = { imagen: 'image', pdf: 'pdf', video: 'video', audio: 'audio', developer: 'developer' };
+const enDomain = en ? TOOL_BY_SLUG[EN_BY_SLUG[path.slice(4)]?.es ?? '']?.domain : undefined;
+const enSection = path === '/en' ? '/en' : enDomain ? `/en#${EN_ANCHOR[enDomain]}` : '';
+const spy = en && path === '/en';
+const ACTIVE = 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]';
+const IDLE = 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]';
 
 const isActive = (href: string) =>
   en ? href === enSection
@@ -95,12 +101,18 @@ const isActive = (href: string) =>
     </div>
 
     <!-- Nav de escritorio -->
-    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]" aria-label={t('Principal')}>
+    <nav
+      class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]"
+      aria-label={t('Principal')}
+      data-tf-spy={spy ? '' : undefined}
+      data-active-class={spy ? ACTIVE : undefined}
+      data-idle-class={spy ? IDLE : undefined}
+    >
       {NAV.map(item => (
         <a
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
-          class={`px-3 py-1.5 rounded-lg transition-colors ${isActive(item.href) ? 'text-[var(--color-accent)] bg-[var(--color-accent-bg)]' : 'hover:text-[var(--color-text)] hover:bg-[var(--color-bg)]'}`}
+          class={`px-3 py-1.5 rounded-lg transition-colors ${isActive(item.href) ? ACTIVE : IDLE}`}
         >{item.label}</a>
       ))}
     </nav>
@@ -169,5 +181,60 @@ const isActive = (href: string) =>
       { rootMargin: '-56px 0px 0px 0px' },
     );
     observer.observe(h1);
+  }
+
+  // Portada inglesa: las categorías son secciones de la misma página, así que
+  // la marca del nav (y de la barra de pestañas móvil) sigue a la sección
+  // visible en vez de quedarse fija en «Home».
+  const spyNav = document.querySelector<HTMLElement>('[data-tf-spy]');
+  const sections = ['image', 'pdf', 'video', 'audio', 'developer']
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+  if (spyNav && sections.length) {
+    const active = (spyNav.dataset.activeClass ?? '').split(' ');
+    const idle = (spyNav.dataset.idleClass ?? '').split(' ');
+    const mark = (id: string) => {
+      const target = id ? `/en#${id}` : '/en';
+      spyNav.querySelectorAll<HTMLAnchorElement>('a').forEach((a) => {
+        const on = a.getAttribute('href') === target;
+        a.classList.remove(...(on ? idle : active));
+        a.classList.add(...(on ? active : idle));
+        if (on) a.setAttribute('aria-current', id ? 'location' : 'page');
+        else a.removeAttribute('aria-current');
+      });
+      // Pestañas: Imagen, PDF y Vídeo tienen la suya; audio y developer, el menú.
+      const tabs = document.querySelectorAll<HTMLElement>('.tf-tabbar .tf-tab');
+      const match = [...tabs].find((tab) => tab.getAttribute('href') === target);
+      tabs.forEach((tab) => {
+        const on = match ? tab === match : tab.hasAttribute('data-tf-menu-open');
+        tab.toggleAttribute('data-active', on);
+      });
+    };
+    let lockUntil = 0;
+    const fromScroll = () => {
+      if (Date.now() < lockUntil) return;
+      const line = window.innerHeight * 0.35;
+      let current = '';
+      for (const s of sections) if (s.getBoundingClientRect().top <= line) current = s.id;
+      // Al final de la página la última sección no llega a la línea: se marca igual.
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) current = sections[sections.length - 1].id;
+      mark(current);
+    };
+    const fromHash = () => {
+      const id = location.hash.slice(1);
+      if (!sections.some((s) => s.id === id)) return;
+      // Al saltar a una de las últimas secciones la página no puede subirla
+      // hasta arriba: se respeta la sección pulsada hasta que el salto termine.
+      lockUntil = Date.now() + 800;
+      mark(id);
+    };
+    let frame = 0;
+    window.addEventListener('scroll', () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(fromScroll);
+    }, { passive: true });
+    window.addEventListener('hashchange', fromHash);
+    if (location.hash) fromHash();
+    else fromScroll();
   }
 </script>
