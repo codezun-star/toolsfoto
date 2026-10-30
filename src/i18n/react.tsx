@@ -20,8 +20,11 @@ export function useT() {
 
 export function withLang<P extends object>(Component: ComponentType<P>) {
   function WithLang(props: P & { lang?: Lang }) {
+    // Sin `lang` hereda el del contexto: así una base envuelta (VideoToMp4Base)
+    // dentro de otra herramienta envuelta no vuelve al español.
+    const outer = useContext(LangContext);
     return (
-      <LangContext.Provider value={props.lang ?? 'es'}>
+      <LangContext.Provider value={props.lang ?? outer}>
         <Component {...props} />
       </LangContext.Provider>
     );

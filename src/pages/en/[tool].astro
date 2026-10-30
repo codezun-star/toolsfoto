@@ -30,6 +30,18 @@ import GenerarQRTool from '@/components/tools/GenerarQRTool';
 import FormatearJSONTool from '@/components/tools/FormatearJSONTool';
 import GeneradorContrasenasTool from '@/components/tools/GeneradorContrasenasTool';
 import ContadorPalabrasTool from '@/components/tools/ContadorPalabrasTool';
+import DifuminarCarasTool from '@/components/tools/DifuminarCarasTool';
+import CrearFirmaTool from '@/components/tools/CrearFirmaTool';
+import EditarPdfTool from '@/components/tools/EditarPdfTool';
+import FirmarPDFTool from '@/components/tools/FirmarPDFTool';
+import OcrPdfTool from '@/components/tools/OcrPdfTool';
+import ComprimirVideoTool from '@/components/tools/ComprimirVideoTool';
+import VideoAGifTool from '@/components/tools/VideoAGifTool';
+import VideoAMp3Tool from '@/components/tools/VideoAMp3Tool';
+import MovAMp4Tool from '@/components/tools/MovAMp4Tool';
+import CortarAudioTool from '@/components/tools/CortarAudioTool';
+import ConvertirAudioTool from '@/components/tools/ConvertirAudioTool';
+import TextoAVozTool from '@/components/tools/TextoAVozTool';
 import { EN_TOOLS, EN_BY_SLUG, type EnTool } from '@/i18n/tools-en';
 
 export function getStaticPaths() {
@@ -74,6 +86,18 @@ const es = tool.es;
   {es === 'formatear-json' && <FormatearJSONTool lang="en" client:load />}
   {es === 'generador-contrasenas' && <GeneradorContrasenasTool lang="en" client:load />}
   {es === 'contador-palabras' && <ContadorPalabrasTool lang="en" client:load />}
+  {es === 'difuminar-caras' && <DifuminarCarasTool lang="en" client:load />}
+  {es === 'crear-firma' && <CrearFirmaTool lang="en" client:load />}
+  {es === 'editar-pdf' && <EditarPdfTool lang="en" client:load />}
+  {es === 'firmar-pdf' && <FirmarPDFTool lang="en" client:load />}
+  {es === 'ocr-pdf' && <OcrPdfTool lang="en" client:load />}
+  {es === 'comprimir-video' && <ComprimirVideoTool lang="en" client:load />}
+  {es === 'video-a-gif' && <VideoAGifTool lang="en" client:load />}
+  {es === 'video-a-mp3' && <VideoAMp3Tool lang="en" client:load />}
+  {es === 'mov-a-mp4' && <MovAMp4Tool lang="en" client:load />}
+  {es === 'cortar-audio' && <CortarAudioTool lang="en" client:load />}
+  {es === 'convertir-audio' && <ConvertirAudioTool lang="en" client:load />}
+  {es === 'texto-a-voz' && <TextoAVozTool lang="en" client:load />}
   <section class="mt-14 grid gap-8 sm:grid-cols-2">
     {tool.sections.map((s) => (
       <div>

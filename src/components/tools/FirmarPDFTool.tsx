@@ -4,8 +4,10 @@ import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2, Trash2 } from 'lucide-react';
 import { revokeURL, getContext } from '@/lib/utils/canvas';
 import { toBlobPart } from '@/lib/utils/bytes';
+import { useT, withLang } from '@/i18n/react';
 
-export default function FirmarPDFTool() {
+function FirmarPDFTool() {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [drawing, setDrawing] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
@@ -121,7 +123,7 @@ export default function FirmarPDFTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
-      setError('Error al firmar el PDF. Comprueba que el archivo no está protegido.');
+      setError(t('Error al firmar el PDF. Comprueba que el archivo no está protegido.'));
     } finally {
       setProcessing(false);
     }
@@ -131,14 +133,14 @@ export default function FirmarPDFTool() {
     if (!resultUrl || !file) return;
     const a = document.createElement('a');
     a.href = resultUrl;
-    a.download = file.name.replace('.pdf', '_firmado.pdf');
+    a.download = file.name.replace('.pdf', t('_firmado.pdf'));
     a.click();
   }
 
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Paso 1 — Dibuja tu firma</p>
+        <p className="text-sm font-semibold text-[var(--color-text)] mb-3">{t('Paso 1 — Dibuja tu firma')}</p>
         <div className="relative bg-white rounded-xl border-2 border-[var(--color-border)] overflow-hidden" style={{ touchAction: 'none' }}>
           <canvas
             ref={canvasRef}
@@ -155,14 +157,14 @@ export default function FirmarPDFTool() {
           />
           <button onClick={clearCanvas} className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-white border border-[var(--color-border)] rounded-lg text-xs text-[var(--color-text-secondary)] hover:text-red-600 hover:border-red-300 transition-colors">
             <Trash2 size={12} />
-            Borrar
+            {t('Borrar')}
           </button>
         </div>
-        {!hasSignature && <p className="text-xs text-[var(--color-text-muted)] mt-1.5">Dibuja con el ratón o el dedo en el área blanca de arriba.</p>}
+        {!hasSignature && <p className="text-xs text-[var(--color-text-muted)] mt-1.5">{t('Dibuja con el ratón o el dedo en el área blanca de arriba.')}</p>}
       </div>
 
       <div>
-        <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Paso 2 — Sube el PDF</p>
+        <p className="text-sm font-semibold text-[var(--color-text)] mb-3">{t('Paso 2 — Sube el PDF')}</p>
         <PdfUploader onFile={handleFile} onClear={handleClear} current={file} />
       </div>
 
@@ -170,24 +172,24 @@ export default function FirmarPDFTool() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Página ({totalPages} total)</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Página ({n} en total)', { n: totalPages })}</label>
               <input type="number" min={1} max={totalPages} value={pageNum} onChange={(e) => setPageNum(Math.min(totalPages, Math.max(1, Number(e.target.value))))} className="w-full px-3 py-2 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Posición X (%)</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Posición X (%)')}</label>
               <input type="number" min={0} max={90} value={xPct} onChange={(e) => setXPct(Number(e.target.value))} className="w-full px-3 py-2 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Posición Y desde arriba (%)</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Posición Y desde arriba (%)')}</label>
               <input type="number" min={0} max={90} value={yPct} onChange={(e) => setYPct(Number(e.target.value))} className="w-full px-3 py-2 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Ancho firma (pt)</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Ancho firma (pt)')}</label>
               <input type="number" min={50} max={400} value={sigWidth} onChange={(e) => setSigWidth(Number(e.target.value))} className="w-full px-3 py-2 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none" />
             </div>
           </div>
           <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
-            Insertar firma en el PDF
+            {t('Insertar firma en el PDF')}
           </button>
         </div>
       )}
@@ -195,22 +197,22 @@ export default function FirmarPDFTool() {
       {processing && (
         <div className="p-6 text-center">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
-          <p className="text-sm mt-3">Insertando firma…</p>
+          <p className="text-sm mt-3">{t('Insertando firma…')}</p>
         </div>
       )}
 
       {resultUrl && file && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
           <div className="flex justify-between text-sm">
-            <span>Original: <strong>{formatBytes(file.size)}</strong></span>
-            <span>Firmado: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></span>
+            <span>{t('Original:')} <strong>{formatBytes(file.size)}</strong></span>
+            <span>{t('Firmado:')} <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></span>
           </div>
           <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
             <Download size={18} />
-            Descargar PDF firmado
+            {t('Descargar PDF firmado')}
           </button>
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-            Firmar otro PDF
+            {t('Firmar otro PDF')}
           </button>
         </div>
       )}
@@ -219,3 +221,5 @@ export default function FirmarPDFTool() {
     </div>
   );
 }
+
+export default withLang(FirmarPDFTool);

@@ -4,12 +4,13 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import ImageUploader from '@/components/ui/ImageUploader';
 import { revokeURL } from '@/lib/utils/canvas';
 import { createOcrWorker, ocrStatusLabel, OCR_LANGUAGES } from '@/lib/utils/ocr';
-import { useT, withLang } from '@/i18n/react';
+import { useLang, useT, withLang } from '@/i18n/react';
 
 function ImagenATextoTool() {
   const t = useT();
   const { image, error: uploadError, isDragging, clearImage, onDrop, onDragOver, onDragLeave, onFileChange } = useImageUpload();
-  const [lang, setLang] = useState('spa');
+  const uiLang = useLang();
+  const [lang, setLang] = useState(uiLang === 'en' ? 'eng' : 'spa');
   const [text, setText] = useState('');
   const [confidence, setConfidence] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);

@@ -4,8 +4,10 @@ import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
-export default function VideoAGifTool() {
+function VideoAGifTool() {
+  const t = useT();
   const [video, setVideo] = useState<VideoFile | null>(null);
   const [startSec, setStartSec] = useState('0');
   const [duration, setDuration] = useState('3');
@@ -44,7 +46,7 @@ export default function VideoAGifTool() {
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
     } catch {
-      setError('Error al convertir a GIF. Prueba con una duración más corta o un ancho menor.');
+      setError(t('Error al convertir a GIF. Prueba con una duración más corta o un ancho menor.'));
     } finally {
       setProcessing(false);
     }
@@ -60,13 +62,13 @@ export default function VideoAGifTool() {
 
   return (
     <div className="space-y-6">
-      <VideoUploader label="Sube tu vídeo" onFile={setVideo} onClear={handleClear} current={video} />
+      <VideoUploader label={t('Sube tu vídeo')} onFile={setVideo} onClear={handleClear} current={video} />
 
       {video && !processing && !resultUrl && (
         <div className="space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">Inicio (seg)</label>
+              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">{t('Inicio (seg)')}</label>
               <input
                 type="number"
                 min="0"
@@ -77,7 +79,7 @@ export default function VideoAGifTool() {
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">Duración (seg)</label>
+              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">{t('Duración (seg)')}</label>
               <input
                 type="number"
                 min="1"
@@ -102,7 +104,7 @@ export default function VideoAGifTool() {
               </select>
             </div>
             <div>
-              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">Ancho (px)</label>
+              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">{t('Ancho (px)')}</label>
               <select
                 value={width}
                 onChange={e => setWidth(e.target.value)}
@@ -115,12 +117,12 @@ export default function VideoAGifTool() {
               </select>
             </div>
           </div>
-          <p className="text-xs text-[var(--color-text-muted)]">Los GIF con más de 5 segundos o 640 px pueden ser muy grandes. Se recomienda mantener la duración corta.</p>
+          <p className="text-xs text-[var(--color-text-muted)]">{t('Los GIF con más de 5 segundos o 640 px pueden ser muy grandes. Se recomienda mantener la duración corta.')}</p>
           <button
             onClick={process}
             className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
-            Convertir a GIF
+            {t('Convertir a GIF')}
           </button>
         </div>
       )}
@@ -129,7 +131,7 @@ export default function VideoAGifTool() {
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
           <p className="text-sm font-medium text-[var(--color-text)]">
-            {progress === 0 ? 'Cargando procesador…' : `Generando GIF… ${progress}%`}
+            {progress === 0 ? t('Cargando procesador…') : t('Generando GIF… {p}%', { p: progress })}
           </p>
           <div className="w-full bg-[var(--color-bg)] rounded-full h-1.5">
             <div className="bg-[var(--color-accent)] h-1.5 rounded-full transition-all" style={{ width: `${progress}%` }} />
@@ -139,17 +141,17 @@ export default function VideoAGifTool() {
 
       {resultUrl && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
-          <img src={resultUrl} alt="GIF generado" className="rounded-lg max-w-full mx-auto border border-[var(--color-border)]" />
+          <img src={resultUrl} alt={t('GIF generado')} className="rounded-lg max-w-full mx-auto border border-[var(--color-border)]" />
           <p className="text-sm text-center text-[var(--color-text-muted)]">{formatBytes(resultSize)}</p>
           <button
             onClick={download}
             className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
             <Download size={18} />
-            Descargar GIF
+            {t('Descargar GIF')}
           </button>
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-            Crear otro GIF
+            {t('Crear otro GIF')}
           </button>
         </div>
       )}
@@ -158,3 +160,5 @@ export default function VideoAGifTool() {
     </div>
   );
 }
+
+export default withLang(VideoAGifTool);

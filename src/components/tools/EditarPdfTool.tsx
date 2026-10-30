@@ -4,6 +4,7 @@ import PdfUploader from '@/components/ui/PdfUploader';
 import { loadPdfjs } from '@/lib/utils/pdfjs';
 import { toBlobPart } from '@/lib/utils/bytes';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useT, withLang } from '@/i18n/react';
 
 type Tool = 'move' | 'text' | 'highlight' | 'whiteout' | 'draw';
 
@@ -31,12 +32,13 @@ function hexToRgb(hex: string): [number, number, number] {
  * tiene en cuenta la rotación de la página y su CropBox. pdf-lib las escribe
  * sobre el PDF original, sin rasterizarlo.
  */
-export default function EditarPdfTool() {
+function EditarPdfTool() {
+  const t = useT();
   const [file, setFile] = useState<File | null>(null);
   const [views, setViews] = useState<View[]>([]);
   const [annots, setAnnots] = useState<Annot[]>([]);
   const [tool, setTool] = useState<Tool>('text');
-  const [text, setText] = useState('Texto');
+  const [text, setText] = useState(t('Texto'));
   const [size, setSize] = useState(16);
   const [color, setColor] = useState(COLORS[0]);
   const [loading, setLoading] = useState(false);
@@ -81,10 +83,10 @@ export default function EditarPdfTool() {
           canvas.height = Math.ceil(hi.height);
           await page.render({ canvas, viewport: hi }).promise;
         }
-        if (doc.numPages > MAX_PAGES) setError(`Se muestran las ${MAX_PAGES} primeras páginas de ${doc.numPages}. El resto se conserva sin cambios al guardar.`);
+        if (doc.numPages > MAX_PAGES) setError(t('Se muestran las {m} primeras páginas de {n}. El resto se conserva sin cambios al guardar.', { m: MAX_PAGES, n: doc.numPages }));
       } catch (err) {
         console.error('[EditarPdfTool] Error al abrir:', err);
-        setError('No se ha podido abrir el PDF. Si está protegido con contraseña, quítasela primero.');
+        setError(t('No se ha podido abrir el PDF. Si está protegido con contraseña, quítasela primero.'));
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -180,23 +182,23 @@ export default function EditarPdfTool() {
       const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
       const link = document.createElement('a');
       link.href = url;
-      link.download = file.name.replace(/\.pdf$/i, '') + '-editado.pdf';
+      link.download = file.name.replace(/\.pdf$/i, '') + t('-editado.pdf');
       link.click();
       revokeURL(url);
     } catch (err) {
       console.error('[EditarPdfTool] Error al guardar:', err);
-      setError('No se ha podido guardar el PDF. Inténtalo de nuevo.');
+      setError(t('No se ha podido guardar el PDF. Inténtalo de nuevo.'));
     } finally {
       setSaving(false);
     }
   }
 
   const TOOLS: Array<[Tool, string, typeof Type]> = [
-    ['text', 'Texto', Type],
-    ['highlight', 'Resaltar', Highlighter],
-    ['whiteout', 'Tapar', Square],
-    ['draw', 'Dibujar', PenLine],
-    ['move', 'Desplazar', Hand],
+    ['text', t('Texto'), Type],
+    ['highlight', t('Resaltar'), Highlighter],
+    ['whiteout', t('Tapar'), Square],
+    ['draw', t('Dibujar'), PenLine],
+    ['move', t('Desplazar'), Hand],
   ];
 
   const renderAnnot = (a: Annot, key: string | number) => {
@@ -218,7 +220,7 @@ export default function EditarPdfTool() {
   if (!file) {
     return (
       <div className="max-w-2xl">
-        <PdfUploader label="Sube el PDF que quieres editar" onFile={(f) => { setFile(f); setAnnots([]); }} onClear={clear} current={null} />
+        <PdfUploader label={t('Sube el PDF que quieres editar')} onFile={(f) => { setFile(f); setAnnots([]); }} onClear={clear} current={null} />
       </div>
     );
   }
@@ -240,10 +242,10 @@ export default function EditarPdfTool() {
             </button>
           ))}
           <div className="flex gap-1.5 ml-auto">
-            <button onClick={() => setAnnots((a) => a.slice(0, -1))} disabled={!annots.length} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40" title="Deshacer">
-              <Undo2 size={15} /> <span className="hidden sm:inline">Deshacer</span>
+            <button onClick={() => setAnnots((a) => a.slice(0, -1))} disabled={!annots.length} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40" title={t('Deshacer')}>
+              <Undo2 size={15} /> <span className="hidden sm:inline">{t('Deshacer')}</span>
             </button>
-            <button onClick={() => setAnnots([])} disabled={!annots.length} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40" title="Quitar todos los cambios">
+            <button onClick={() => setAnnots([])} disabled={!annots.length} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40" title={t('Quitar todos los cambios')}>
               <Trash2 size={15} />
             </button>
           </div>
@@ -253,7 +255,7 @@ export default function EditarPdfTool() {
             <input
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Escribe el texto y toca la página"
+              placeholder={t('Escribe el texto y toca la página')}
               className="flex-1 min-w-[180px] px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm focus:outline-none focus:border-[var(--color-accent)]"
             />
           )}
@@ -265,22 +267,22 @@ export default function EditarPdfTool() {
                 ))}
               </div>
               <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-                {tool === 'text' ? 'Tamaño' : 'Grosor'}
+                {tool === 'text' ? t('Tamaño') : t('Grosor')}
                 <input type="range" min={8} max={48} value={size} onChange={(e) => setSize(Number(e.target.value))} className="accent-[var(--color-accent)] w-24" />
               </label>
             </>
           )}
           <p className="text-xs text-[var(--color-text-muted)]">
-            {tool === 'text' && 'Toca la página donde quieras colocar el texto.'}
-            {tool === 'highlight' && 'Arrastra sobre el texto que quieras resaltar.'}
-            {tool === 'whiteout' && 'Arrastra para tapar con blanco lo que quieras ocultar.'}
-            {tool === 'draw' && 'Dibuja a mano alzada sobre la página.'}
-            {tool === 'move' && 'Modo lectura: desplázate sin añadir nada.'}
+            {tool === 'text' && t('Toca la página donde quieras colocar el texto.')}
+            {tool === 'highlight' && t('Arrastra sobre el texto que quieras resaltar.')}
+            {tool === 'whiteout' && t('Arrastra para tapar con blanco lo que quieras ocultar.')}
+            {tool === 'draw' && t('Dibuja a mano alzada sobre la página.')}
+            {tool === 'move' && t('Modo lectura: desplázate sin añadir nada.')}
           </p>
         </div>
       </div>
 
-      {loading && <p className="text-sm text-[var(--color-text-secondary)]">Cargando páginas…</p>}
+      {loading && <p className="text-sm text-[var(--color-text-secondary)]">{t('Cargando páginas…')}</p>}
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
 
       <div className="space-y-6">
@@ -300,7 +302,7 @@ export default function EditarPdfTool() {
                 {draft && draft.page === i && renderAnnot(draft, 'draft')}
               </svg>
             </div>
-            <figcaption className="text-center text-xs text-[var(--color-text-muted)] mt-1.5">Página {i + 1}</figcaption>
+            <figcaption className="text-center text-xs text-[var(--color-text-muted)] mt-1.5">{t('Página {n}', { n: i + 1 })}</figcaption>
           </figure>
         ))}
       </div>
@@ -313,10 +315,12 @@ export default function EditarPdfTool() {
             className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm shadow-lg hover:bg-[#C93D1E] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
           >
             <Download size={16} />
-            {saving ? 'Guardando…' : `Descargar PDF editado (${annots.length} ${annots.length === 1 ? 'cambio' : 'cambios'})`}
+            {saving ? t('Guardando…') : t(annots.length === 1 ? 'Descargar PDF editado ({n} cambio)' : 'Descargar PDF editado ({n} cambios)', { n: annots.length })}
           </button>
         </div>
       )}
     </div>
   );
 }
+
+export default withLang(EditarPdfTool);

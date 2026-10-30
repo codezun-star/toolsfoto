@@ -4,10 +4,12 @@ import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 const BITRATES = [128, 192, 256, 320];
 
-export default function VideoAMp3Tool() {
+function VideoAMp3Tool() {
+  const t = useT();
   const [video, setVideo] = useState<VideoFile | null>(null);
   const [bitrate, setBitrate] = useState(192);
   const [processing, setProcessing] = useState(false);
@@ -38,7 +40,7 @@ export default function VideoAMp3Tool() {
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
     } catch {
-      setError('Error al extraer el audio. Asegúrate de que el vídeo tiene pista de audio.');
+      setError(t('Error al extraer el audio. Asegúrate de que el vídeo tiene pista de audio.'));
     } finally {
       setProcessing(false);
     }
@@ -54,27 +56,27 @@ export default function VideoAMp3Tool() {
 
   return (
     <div className="space-y-6">
-      <VideoUploader label="Sube tu vídeo" onFile={setVideo} onClear={handleClear} current={video} />
+      <VideoUploader label={t('Sube tu vídeo')} onFile={setVideo} onClear={handleClear} current={video} />
 
       {video && !processing && !resultUrl && (
         <div className="space-y-4">
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Calidad MP3 (bitrate)</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-3">{t('Calidad MP3 (bitrate)')}</p>
             <div className="grid grid-cols-4 gap-3">
               {BITRATES.map((b) => (
                 <button key={b} onClick={() => setBitrate(b)} className={['px-3 py-3 rounded-xl border text-sm font-semibold transition-colors', bitrate === b ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)] text-[var(--color-accent)]' : 'border-[var(--color-border)] hover:border-[var(--color-tools-border)] text-[var(--color-text-secondary)]'].join(' ')}>{b} kbps</button>
               ))}
             </div>
           </div>
-          <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">Extraer MP3</button>
-          <p className="text-xs text-[var(--color-text-muted)] text-center">La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo.</p>
+          <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">{t('Extraer MP3')}</button>
+          <p className="text-xs text-[var(--color-text-muted)] text-center">{t('La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo.')}</p>
         </div>
       )}
 
       {processing && (
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
-          <p className="text-sm font-medium text-[var(--color-text)]">{progress === 0 ? 'Cargando procesador…' : `Extrayendo… ${progress}%`}</p>
+          <p className="text-sm font-medium text-[var(--color-text)]">{progress === 0 ? t('Cargando procesador…') : t('Extrayendo… {p}%', { p: progress })}</p>
           <div className="w-full bg-[var(--color-bg)] rounded-full h-1.5"><div className="bg-[var(--color-accent)] h-1.5 rounded-full transition-all" style={{ width: `${progress}%` }} /></div>
         </div>
       )}
@@ -83,8 +85,8 @@ export default function VideoAMp3Tool() {
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
           <audio controls src={resultUrl} className="w-full" />
           <p className="text-sm text-[var(--color-text-secondary)]">MP3 ({bitrate} kbps): <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></p>
-          <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"><Download size={18} /> Descargar MP3</button>
-          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Procesar otro vídeo</button>
+          <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"><Download size={18} /> {t('Descargar MP3')}</button>
+          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">{t('Procesar otro vídeo')}</button>
         </div>
       )}
 
@@ -92,3 +94,5 @@ export default function VideoAMp3Tool() {
     </div>
   );
 }
+
+export default withLang(VideoAMp3Tool);

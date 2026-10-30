@@ -4,12 +4,14 @@ import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 interface Props {
   sourceLabel: string;
 }
 
-export default function VideoToMp4Base({ sourceLabel }: Props) {
+function VideoToMp4Base({ sourceLabel }: Props) {
+  const t = useT();
   const [video, setVideo] = useState<VideoFile | null>(null);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -39,7 +41,7 @@ export default function VideoToMp4Base({ sourceLabel }: Props) {
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
     } catch {
-      setError(`Error al convertir el vídeo. Asegúrate de que el archivo es un ${sourceLabel} válido.`);
+      setError(t('Error al convertir el vídeo. Asegúrate de que el archivo es un {f} válido.', { f: sourceLabel }));
     } finally {
       setProcessing(false);
     }
@@ -55,19 +57,19 @@ export default function VideoToMp4Base({ sourceLabel }: Props) {
 
   return (
     <div className="space-y-6">
-      <VideoUploader label={`Sube tu ${sourceLabel}`} onFile={setVideo} onClear={handleClear} current={video} />
+      <VideoUploader label={t('Sube tu {f}', { f: sourceLabel })} onFile={setVideo} onClear={handleClear} current={video} />
 
       {video && !processing && !resultUrl && (
         <div className="space-y-4">
-          <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">Convertir a MP4</button>
-          <p className="text-xs text-[var(--color-text-muted)] text-center">La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo.</p>
+          <button onClick={process} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">{t('Convertir a {f}', { f: 'MP4' })}</button>
+          <p className="text-xs text-[var(--color-text-muted)] text-center">{t('La primera vez descarga el procesador (~30 MB). Las siguientes veces es instantáneo.')}</p>
         </div>
       )}
 
       {processing && (
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
-          <p className="text-sm font-medium text-[var(--color-text)]">{progress === 0 ? 'Cargando procesador…' : `Convirtiendo… ${progress}%`}</p>
+          <p className="text-sm font-medium text-[var(--color-text)]">{progress === 0 ? t('Cargando procesador…') : t('Convirtiendo… {p}%', { p: progress })}</p>
           <div className="w-full bg-[var(--color-bg)] rounded-full h-1.5"><div className="bg-[var(--color-accent)] h-1.5 rounded-full transition-all" style={{ width: `${progress}%` }} /></div>
         </div>
       )}
@@ -75,11 +77,11 @@ export default function VideoToMp4Base({ sourceLabel }: Props) {
       {resultUrl && video && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-[var(--color-text-secondary)]">Original: <strong className="text-[var(--color-text)]">{formatBytes(video.size)}</strong></span>
+            <span className="text-[var(--color-text-secondary)]">{t('Original:')} <strong className="text-[var(--color-text)]">{formatBytes(video.size)}</strong></span>
             <span className="text-[var(--color-text-secondary)]">MP4: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong></span>
           </div>
-          <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"><Download size={18} /> Descargar MP4</button>
-          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Convertir otro vídeo</button>
+          <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"><Download size={18} /> {t('Descargar MP4')}</button>
+          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">{t('Convertir otro vídeo')}</button>
         </div>
       )}
 
@@ -87,3 +89,5 @@ export default function VideoToMp4Base({ sourceLabel }: Props) {
     </div>
   );
 }
+
+export default withLang(VideoToMp4Base);

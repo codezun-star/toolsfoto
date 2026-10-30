@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Speech, Download, Play, Square } from 'lucide-react';
 import type { VoiceId } from '@diffusionstudio/vits-web';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useLang, useT, withLang } from '@/i18n/react';
+import { LOCALE } from '@/i18n';
 
 interface VoiceOption { id: VoiceId; label: string; lang: string; mb: number }
 
@@ -62,9 +64,11 @@ async function joinWavs(blobs: Blob[]): Promise<Blob> {
  * dispositivo. Además permite escuchar al momento con la voz del sistema
  * (Web Speech API), que no se puede descargar.
  */
-export default function TextoAVozTool() {
+function TextoAVozTool() {
+  const t = useT();
+  const lang = useLang();
   const [text, setText] = useState('');
-  const [voice, setVoice] = useState<VoiceId>('es_ES-davefx-medium');
+  const [voice, setVoice] = useState<VoiceId>(lang === 'en' ? 'en_US-lessac-medium' : 'es_ES-davefx-medium');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState('');
   const [progress, setProgress] = useState(0);
@@ -86,7 +90,7 @@ export default function TextoAVozTool() {
     setLoading(true);
     setError(null);
     setProgress(0);
-    setStatus('Preparando la voz…');
+    setStatus(t('Preparando la voz…'));
     try {
       const tts = await import('@diffusionstudio/vits-web');
       const parts = chunks(clean.slice(0, MAX_CHARS));
@@ -94,11 +98,11 @@ export default function TextoAVozTool() {
       for (let i = 0; i < parts.length; i++) {
         const wav = await tts.predict({ text: parts[i], voiceId: voice }, (p) => {
           if (p.total && p.loaded < p.total) {
-            setStatus(`Descargando la voz… ${Math.round((p.loaded / p.total) * 100)}%`);
+            setStatus(t('Descargando la voz… {p}%', { p: Math.round((p.loaded / p.total) * 100) }));
           }
         });
         blobs.push(wav);
-        setStatus(`Generando audio… ${i + 1} de ${parts.length}`);
+        setStatus(t('Generando audio… {i} de {n}', { i: i + 1, n: parts.length }));
         setProgress(Math.round(((i + 1) / parts.length) * 100));
       }
       const blob = blobs.length === 1 ? new Blob([blobs[0]], { type: 'audio/wav' }) : await joinWavs(blobs);
@@ -108,7 +112,7 @@ export default function TextoAVozTool() {
       setAudio({ url, blob });
     } catch (err) {
       console.error('[TextoAVozTool] Error:', err);
-      setError('No se ha podido generar el audio. La primera vez hay que descargar la voz: comprueba tu conexión e inténtalo de nuevo.');
+      setError(t('No se ha podido generar el audio. La primera vez hay que descargar la voz: comprueba tu conexión e inténtalo de nuevo.'));
     } finally {
       setLoading(false);
     }
@@ -119,14 +123,14 @@ export default function TextoAVozTool() {
     const url = URL.createObjectURL(audio.blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'texto-a-voz.wav';
+    a.download = t('texto-a-voz.wav');
     a.click();
     revokeURL(url);
   }
 
   function handleSpeak() {
     if (typeof speechSynthesis === 'undefined') {
-      setError('Tu navegador no incluye voces del sistema. Usa «Generar audio».');
+      setError(t('Tu navegador no incluye voces del sistema. Usa «Generar audio».'));
       return;
     }
     if (speaking) { speechSynthesis.cancel(); setSpeaking(false); return; }
@@ -144,31 +148,31 @@ export default function TextoAVozTool() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="space-y-3">
-        <label className="block text-sm font-semibold text-[var(--color-text)]" htmlFor="tts-text">Texto</label>
+        <label className="block text-sm font-semibold text-[var(--color-text)]" htmlFor="tts-text">{t('Texto')}</label>
         <textarea
           id="tts-text"
           value={text}
           onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
           rows={14}
-          placeholder="Escribe o pega aquí el texto que quieres convertir en voz…"
+          placeholder={t('Escribe o pega aquí el texto que quieres convertir en voz…')}
           className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-border)] text-sm text-[var(--color-text)] bg-white resize-y focus:outline-none focus:border-[var(--color-accent)] leading-relaxed"
         />
-        <p className="text-xs text-[var(--color-text-muted)] text-right">{text.length.toLocaleString('es-ES')} / {MAX_CHARS.toLocaleString('es-ES')} caracteres</p>
+        <p className="text-xs text-[var(--color-text-muted)] text-right">{t('{a} / {b} caracteres', { a: text.length.toLocaleString(LOCALE[lang].html), b: MAX_CHARS.toLocaleString(LOCALE[lang].html) })}</p>
       </div>
 
       <div className="space-y-4">
         <div className="p-4 bg-white rounded-xl border border-[var(--color-border)] space-y-2">
-          <label className="block text-sm font-semibold text-[var(--color-text)]" htmlFor="tts-voice">Voz</label>
+          <label className="block text-sm font-semibold text-[var(--color-text)]" htmlFor="tts-voice">{t('Voz')}</label>
           <select
             id="tts-voice"
             value={voice}
             onChange={(e) => setVoice(e.target.value as VoiceId)}
             className="w-full px-3 py-2.5 rounded-lg border border-[var(--color-border)] bg-white text-sm focus:outline-none focus:border-[var(--color-accent)]"
           >
-            {VOICES.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
+            {VOICES.map((v) => <option key={v.id} value={v.id}>{t(v.label)}</option>)}
           </select>
           <p className="text-xs text-[var(--color-text-muted)]">
-            La primera vez se descarga la voz (unos {option.mb} MB) y queda guardada en tu navegador. Las siguientes veces se genera al momento.
+            {t('La primera vez se descarga la voz (unos {mb} MB) y queda guardada en tu navegador. Las siguientes veces se genera al momento.', { mb: option.mb })}
           </p>
         </div>
 
@@ -178,7 +182,7 @@ export default function TextoAVozTool() {
           className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           <Speech size={16} />
-          {loading ? status : 'Generar audio'}
+          {loading ? status : t('Generar audio')}
         </button>
 
         {loading && (
@@ -193,7 +197,7 @@ export default function TextoAVozTool() {
           className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-white text-sm font-medium text-[var(--color-text)] hover:border-[var(--color-accent)] disabled:opacity-40 transition-colors"
         >
           {speaking ? <Square size={15} /> : <Play size={15} />}
-          {speaking ? 'Parar' : 'Escuchar ya con la voz del navegador'}
+          {speaking ? t('Parar') : t('Escuchar ya con la voz del navegador')}
         </button>
 
         {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
@@ -206,12 +210,14 @@ export default function TextoAVozTool() {
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--color-text)] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
             >
               <Download size={15} />
-              Descargar audio (WAV)
+              {t('Descargar audio (WAV)')}
             </button>
-            <p className="text-xs text-[var(--color-text-muted)]">¿Lo necesitas en MP3? Tras descargarlo, elige «Convertir audio» en las sugerencias de abajo.</p>
+            <p className="text-xs text-[var(--color-text-muted)]">{t('¿Lo necesitas en MP3? Tras descargarlo, elige «Convertir audio» en las sugerencias de abajo.')}</p>
           </div>
         )}
       </div>
     </div>
   );
 }
+
+export default withLang(TextoAVozTool);

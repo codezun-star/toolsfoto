@@ -4,6 +4,7 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import ImageUploader from '@/components/ui/ImageUploader';
 import { loadImage, canvasToBlob, createCanvas, getContext } from '@/lib/utils/canvas';
 import { triggerDownload, getOutputFilename } from '@/lib/utils/download';
+import { useT, withLang } from '@/i18n/react';
 
 /** BlazeFace (rango corto) de MediaPipe, alojado en el propio sitio (230 KB). */
 const MODEL_URL = '/models/blaze-face-short-range-v1.tflite';
@@ -73,7 +74,8 @@ function applyEffects(ctx: CanvasRenderingContext2D, source: CanvasImageSource, 
  * activar o desactivar con un toque, y se pueden añadir zonas a mano
  * (matrículas, carteles, una cara que no se haya detectado).
  */
-export default function DifuminarCarasTool() {
+function DifuminarCarasTool() {
+  const t = useT();
   const { image, error: uploadError, isDragging, clearImage, onDrop, onDragOver, onDragLeave, onFileChange } = useImageUpload();
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [effect, setEffect] = useState<Effect>('blur');
@@ -131,10 +133,10 @@ export default function DifuminarCarasTool() {
       const kept: Box[] = [];
       for (const b of found) if (!kept.some((k) => iou(k, b) > 0.35)) kept.push(b);
       setBoxes(kept);
-      if (!kept.length) setError('No se ha detectado ninguna cara. Puedes marcarlas a mano arrastrando sobre la foto.');
+      if (!kept.length) setError(t('No se ha detectado ninguna cara. Puedes marcarlas a mano arrastrando sobre la foto.'));
     } catch (err) {
       console.error('[DifuminarCarasTool] Error:', err);
-      setError('No se ha podido cargar el detector de caras. Comprueba tu conexión o marca las caras a mano arrastrando sobre la foto.');
+      setError(t('No se ha podido cargar el detector de caras. Comprueba tu conexión o marca las caras a mano arrastrando sobre la foto.'));
     } finally {
       setDetecting(false);
     }
@@ -196,7 +198,7 @@ export default function DifuminarCarasTool() {
     applyEffects(ctx, base, boxes, 1, effect, strength, shape, PAD);
     const png = image.file.type === 'image/png';
     const blob = await canvasToBlob(out, png ? 'image/png' : 'image/jpeg', 0.92);
-    triggerDownload(blob, getOutputFilename(image.file.name, 'anonimizada', png ? 'png' : 'jpg'));
+    triggerDownload(blob, getOutputFilename(image.file.name, t('anonimizada'), png ? 'png' : 'jpg'));
   }
 
   const active = boxes.filter((b) => b.on).length;
@@ -242,11 +244,11 @@ export default function DifuminarCarasTool() {
             </svg>
           )}
           {detecting && (
-            <p className="absolute inset-x-0 top-3 mx-auto w-fit text-xs font-medium bg-black/70 text-white px-3 py-1.5 rounded-full">Buscando caras…</p>
+            <p className="absolute inset-x-0 top-3 mx-auto w-fit text-xs font-medium bg-black/70 text-white px-3 py-1.5 rounded-full">{t('Buscando caras…')}</p>
           )}
         </div>
         <p className="text-xs text-[var(--color-text-muted)] flex items-center gap-1.5">
-          <Plus size={13} /> Toca un recuadro para activarlo o desactivarlo. Arrastra sobre la foto para añadir una zona a mano.
+          <Plus size={13} /> {t('Toca un recuadro para activarlo o desactivarlo. Arrastra sobre la foto para añadir una zona a mano.')}
         </p>
       </div>
 
@@ -254,27 +256,27 @@ export default function DifuminarCarasTool() {
         <div className="p-4 bg-white rounded-xl border border-[var(--color-border)] space-y-4">
           <p className="text-sm text-[var(--color-text)] flex items-center gap-2">
             <ScanFace size={16} className="text-[var(--color-tools-icon)]" />
-            {detecting ? 'Detectando…' : `${active} de ${boxes.length} zonas ocultas`}
+            {detecting ? t('Detectando…') : t('{a} de {n} zonas ocultas', { a: active, n: boxes.length })}
           </p>
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Efecto</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Efecto')}</p>
             <div className="flex gap-2">
-              <button className={seg(effect === 'blur')} onClick={() => setEffect('blur')}>Difuminar</button>
-              <button className={seg(effect === 'pixelate')} onClick={() => setEffect('pixelate')}>Pixelar</button>
-              <button className={seg(effect === 'solid')} onClick={() => setEffect('solid')}>Tapar</button>
+              <button className={seg(effect === 'blur')} onClick={() => setEffect('blur')}>{t('Difuminar')}</button>
+              <button className={seg(effect === 'pixelate')} onClick={() => setEffect('pixelate')}>{t('Pixelar')}</button>
+              <button className={seg(effect === 'solid')} onClick={() => setEffect('solid')}>{t('Tapar')}</button>
             </div>
           </div>
           {effect !== 'solid' && (
             <label className="block text-sm text-[var(--color-text-secondary)]">
-              Intensidad
+              {t('Intensidad')}
               <input type="range" min={20} max={100} value={strength} onChange={(e) => setStrength(Number(e.target.value))} className="w-full accent-[var(--color-accent)] mt-1" />
             </label>
           )}
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Forma</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Forma')}</p>
             <div className="flex gap-2">
-              <button className={seg(shape === 'ellipse')} onClick={() => setShape('ellipse')}>Óvalo</button>
-              <button className={seg(shape === 'rect')} onClick={() => setShape('rect')}>Rectángulo</button>
+              <button className={seg(shape === 'ellipse')} onClick={() => setShape('ellipse')}>{t('Óvalo')}</button>
+              <button className={seg(shape === 'rect')} onClick={() => setShape('rect')}>{t('Rectángulo')}</button>
             </div>
           </div>
         </div>
@@ -284,11 +286,13 @@ export default function DifuminarCarasTool() {
           className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] disabled:opacity-40 transition-colors"
         >
           <Download size={16} />
-          Descargar imagen
+          {t('Descargar imagen')}
         </button>
         {error && <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">{error}</p>}
-        <button onClick={clearImage} className="w-full text-sm text-[var(--color-accent)] hover:underline">Usar otra imagen</button>
+        <button onClick={clearImage} className="w-full text-sm text-[var(--color-accent)] hover:underline">{t('Usar otra imagen')}</button>
       </div>
     </div>
   );
 }
+
+export default withLang(DifuminarCarasTool);

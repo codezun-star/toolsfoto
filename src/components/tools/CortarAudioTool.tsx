@@ -4,6 +4,7 @@ import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 function toSeconds(val: string): number {
   const parts = val.split(':').map(Number);
@@ -24,7 +25,8 @@ function getOutputExt(filename: string): string {
   return ['mp3', 'wav', 'ogg', 'aac', 'flac'].includes(ext) ? ext : 'mp3';
 }
 
-export default function CortarAudioTool() {
+function CortarAudioTool() {
+  const t = useT();
   const [audio, setAudio] = useState<AudioFile | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioDuration, setAudioDuration] = useState(0);
@@ -66,7 +68,7 @@ export default function CortarAudioTool() {
     if (!audio) return;
     const start = toSeconds(startTime);
     const end = toSeconds(endTime);
-    if (end <= start) { setError('El tiempo de fin debe ser mayor que el de inicio.'); return; }
+    if (end <= start) { setError(t('El tiempo de fin debe ser mayor que el de inicio.')); return; }
     if (resultUrl) revokeURL(resultUrl);
     setProcessing(true);
     setProgress(0);
@@ -80,7 +82,7 @@ export default function CortarAudioTool() {
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
     } catch {
-      setError('Error al cortar el audio. Prueba con un rango de tiempo diferente.');
+      setError(t('Error al cortar el audio. Prueba con un rango de tiempo diferente.'));
     } finally {
       setProcessing(false);
     }
@@ -90,13 +92,13 @@ export default function CortarAudioTool() {
     if (!resultUrl || !audio) return;
     const a = document.createElement('a');
     a.href = resultUrl;
-    a.download = audio.name.replace(/\.[^.]+$/, '_cortado.' + getOutputExt(audio.name));
+    a.download = audio.name.replace(/\.[^.]+$/, t('_cortado.') + getOutputExt(audio.name));
     a.click();
   }
 
   return (
     <div className="space-y-6">
-      <AudioUploader label="Sube tu audio" onFile={handleFile} onClear={handleClear} current={audio} />
+      <AudioUploader label={t('Sube tu audio')} onFile={handleFile} onClear={handleClear} current={audio} />
 
       {audioUrl && audio && !processing && !resultUrl && (
         <div className="space-y-4">
@@ -110,7 +112,7 @@ export default function CortarAudioTool() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">
-                Inicio {audioDuration > 0 && <span className="font-normal normal-case">(máx. {toTimeStr(audioDuration)})</span>}
+                {t('Inicio del corte')} {audioDuration > 0 && <span className="font-normal normal-case">({t('máx.')} {toTimeStr(audioDuration)})</span>}
               </label>
               <input
                 type="text"
@@ -121,7 +123,7 @@ export default function CortarAudioTool() {
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">Fin</label>
+              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">{t('Fin del corte')}</label>
               <input
                 type="text"
                 placeholder="mm:ss"
@@ -135,7 +137,7 @@ export default function CortarAudioTool() {
             onClick={process}
             className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
-            Cortar audio
+            {t('Cortar audio')}
           </button>
         </div>
       )}
@@ -144,7 +146,7 @@ export default function CortarAudioTool() {
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
           <p className="text-sm font-medium text-[var(--color-text)]">
-            {progress === 0 ? 'Cargando procesador…' : `Cortando… ${progress}%`}
+            {progress === 0 ? t('Cargando procesador…') : t('Cortando… {p}%', { p: progress })}
           </p>
           <div className="w-full bg-[var(--color-bg)] rounded-full h-1.5">
             <div className="bg-[var(--color-accent)] h-1.5 rounded-full transition-all" style={{ width: `${progress}%` }} />
@@ -161,10 +163,10 @@ export default function CortarAudioTool() {
             className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
             <Download size={18} />
-            Descargar audio cortado
+            {t('Descargar audio cortado')}
           </button>
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-            Cortar otro audio
+            {t('Cortar otro audio')}
           </button>
         </div>
       )}
@@ -173,3 +175,5 @@ export default function CortarAudioTool() {
     </div>
   );
 }
+
+export default withLang(CortarAudioTool);

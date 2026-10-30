@@ -4,6 +4,7 @@ import { createFFmpeg, runFFmpeg } from '@/lib/utils/ffmpeg';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Download, Loader2 } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 const FORMATS = [
   { label: 'MP3', ext: 'mp3', args: ['-acodec', 'libmp3lame', '-q:a', '2'] },
@@ -12,7 +13,8 @@ const FORMATS = [
   { label: 'AAC', ext: 'aac', args: ['-acodec', 'aac', '-b:a', '192k'] },
 ];
 
-export default function ConvertirAudioTool() {
+function ConvertirAudioTool() {
+  const t = useT();
   const [audio, setAudio] = useState<AudioFile | null>(null);
   const [format, setFormat] = useState(0);
   const [processing, setProcessing] = useState(false);
@@ -44,7 +46,7 @@ export default function ConvertirAudioTool() {
       setResultUrl(URL.createObjectURL(blob));
       setProgress(100);
     } catch {
-      setError('Error al convertir el audio. Asegúrate de que el archivo es un formato válido.');
+      setError(t('Error al convertir el audio. Asegúrate de que el archivo es un formato válido.'));
     } finally {
       setProcessing(false);
     }
@@ -61,12 +63,12 @@ export default function ConvertirAudioTool() {
 
   return (
     <div className="space-y-6">
-      <AudioUploader label="Sube tu audio" onFile={setAudio} onClear={handleClear} current={audio} />
+      <AudioUploader label={t('Sube tu audio')} onFile={setAudio} onClear={handleClear} current={audio} />
 
       {audio && !processing && !resultUrl && (
         <div className="space-y-4">
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-3">Formato de salida</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-3">{t('Formato de salida')}</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {FORMATS.map((f, i) => (
                 <button
@@ -88,7 +90,7 @@ export default function ConvertirAudioTool() {
             onClick={process}
             className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
-            Convertir audio
+            {t('Convertir audio')}
           </button>
         </div>
       )}
@@ -97,7 +99,7 @@ export default function ConvertirAudioTool() {
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
           <p className="text-sm font-medium text-[var(--color-text)]">
-            {progress === 0 ? 'Cargando procesador…' : `Convirtiendo… ${progress}%`}
+            {progress === 0 ? t('Cargando procesador…') : t('Convirtiendo… {p}%', { p: progress })}
           </p>
           <div className="w-full bg-[var(--color-bg)] rounded-full h-1.5">
             <div className="bg-[var(--color-accent)] h-1.5 rounded-full transition-all" style={{ width: `${progress}%` }} />
@@ -108,17 +110,17 @@ export default function ConvertirAudioTool() {
       {resultUrl && audio && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
           <p className="text-sm text-[var(--color-text-secondary)]">
-            Convertido a <strong>{FORMATS[format].label}</strong>: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong>
+            {t('Convertido a')} <strong>{FORMATS[format].label}</strong>: <strong className="text-[var(--color-accent)]">{formatBytes(resultSize)}</strong>
           </p>
           <button
             onClick={download}
             className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors"
           >
             <Download size={18} />
-            Descargar {FORMATS[format].label}
+            {t('Descargar {f}', { f: FORMATS[format].label })}
           </button>
           <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-            Convertir otro audio
+            {t('Convertir otro audio')}
           </button>
         </div>
       )}
@@ -127,3 +129,5 @@ export default function ConvertirAudioTool() {
     </div>
   );
 }
+
+export default withLang(ConvertirAudioTool);
