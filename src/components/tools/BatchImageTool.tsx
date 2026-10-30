@@ -5,6 +5,7 @@ import { formatBytes, formatReduction } from '@/lib/utils/format';
 import { triggerDownload } from '@/lib/utils/download';
 import { makeZip } from '@/lib/utils/zip';
 import { useFileReceiver } from '@/hooks/useFileReceiver';
+import { useT, withLang } from '@/i18n/react';
 
 export type BatchMode = 'compress' | 'resize' | 'convert';
 
@@ -60,7 +61,8 @@ interface Props {
  * y `/convertir-varias-imagenes` (prop `mode`). Las imágenes se procesan una
  * a una para no agotar la memoria con lotes grandes; acepta HEIC del iPhone.
  */
-export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }: Props) {
+function BatchImageTool({ mode, format: fixedFormat, dropLabel }: Props) {
+  const t = useT();
   const [items, setItems] = useState<Item[]>([]);
   const [running, setRunning] = useState(false);
   const [zipping, setZipping] = useState(false);
@@ -88,7 +90,7 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
     const accepted = valid.slice(0, Math.max(0, room));
     const skipped = incoming.length - accepted.length;
     setError(skipped > 0
-      ? `${skipped} ${skipped === 1 ? 'archivo no se ha añadido' : 'archivos no se han añadido'}: solo se admiten imágenes de hasta 50 MB y un máximo de ${MAX_FILES} por lote.`
+      ? t(skipped === 1 ? '{n} archivo no se ha añadido: solo se admiten imágenes de hasta 50 MB y un máximo de {max} por lote.' : '{n} archivos no se han añadido: solo se admiten imágenes de hasta 50 MB y un máximo de {max} por lote.', { n: skipped, max: MAX_FILES })
       : null);
     if (!accepted.length) return;
     setItems((prev) => [...prev, ...accepted.map((file) => ({
@@ -154,7 +156,7 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
     if (mode === 'compress' && blob.size >= it.file.size && type === it.file.type && w === srcW) blob = it.file;
     canvas.width = 0;
     canvas.height = 0;
-    const suffix = mode === 'compress' ? '-comprimida' : mode === 'resize' ? `-${w}x${h}` : '';
+    const suffix = mode === 'compress' ? `-${t('comprimida')}` : mode === 'resize' ? `-${w}x${h}` : '';
     return { out: blob, outName: `${baseName(it.file.name)}${suffix}.${EXT[type] ?? 'jpg'}`, w, h };
   }
 
@@ -186,10 +188,10 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
     setZipping(true);
     try {
       const zip = await makeZip(done.map((i) => ({ name: i.outName as string, blob: i.out as Blob })));
-      const name = mode === 'compress' ? 'imagenes-comprimidas' : mode === 'resize' ? 'imagenes-redimensionadas' : 'imagenes-convertidas';
+      const name = mode === 'compress' ? t('imagenes-comprimidas') : mode === 'resize' ? t('imagenes-redimensionadas') : t('imagenes-convertidas');
       triggerDownload(zip, `${name}.zip`);
     } catch {
-      setError('No se ha podido crear el ZIP. Si el lote es muy grande, descarga las imágenes por separado o divide el lote.');
+      setError(t('No se ha podido crear el ZIP. Si el lote es muy grande, descarga las imágenes por separado o divide el lote.'));
     } finally {
       setZipping(false);
     }
@@ -216,8 +218,8 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
         >
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
           <div>
-            <p className="font-semibold text-[var(--color-text)]">{items.length ? 'Añadir más imágenes' : dropLabel ?? 'Arrastra todas tus imágenes o haz clic'}</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP, AVIF, GIF y HEIC · Hasta {MAX_FILES} a la vez</p>
+            <p className="font-semibold text-[var(--color-text)]">{items.length ? t('Añadir más imágenes') : dropLabel ?? t('Arrastra todas tus imágenes o haz clic')}</p>
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('JPG, PNG, WebP, AVIF, GIF y HEIC · Hasta {n} a la vez', { n: MAX_FILES })}</p>
           </div>
           <input
             ref={inputRef}
@@ -234,8 +236,8 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
         {items.length > 0 && (
           <div className="rounded-xl border border-[var(--color-border)] bg-white">
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--color-border)]">
-              <p className="text-sm font-semibold text-[var(--color-text)]">{items.length} {items.length === 1 ? 'imagen' : 'imágenes'}</p>
-              <button onClick={clearAll} disabled={running} className="text-xs text-[var(--color-accent)] hover:underline disabled:opacity-40">Quitar todas</button>
+              <p className="text-sm font-semibold text-[var(--color-text)]">{t(items.length === 1 ? '{n} imagen' : '{n} imágenes', { n: items.length })}</p>
+              <button onClick={clearAll} disabled={running} className="text-xs text-[var(--color-accent)] hover:underline disabled:opacity-40">{t('Quitar todas')}</button>
             </div>
             <ul className="divide-y divide-[var(--color-border)] max-h-[480px] overflow-y-auto">
               {items.map((it) => (
@@ -253,13 +255,13 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
                   </div>
                   {it.status === 'working' && <Loader2 size={16} className="animate-spin text-[var(--color-accent)]" />}
                   {it.status === 'done' && (
-                    <button onClick={() => it.out && it.outName && triggerDownload(it.out, it.outName)} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-tools-icon)]" aria-label={`Descargar ${it.outName}`}>
+                    <button onClick={() => it.out && it.outName && triggerDownload(it.out, it.outName)} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-tools-icon)]" aria-label={t('Descargar {f}', { f: it.outName ?? '' })}>
                       <CheckCircle2 size={16} className="inline" /> <Download size={14} className="inline" />
                     </button>
                   )}
-                  {it.status === 'error' && <span title="No se ha podido procesar"><AlertCircle size={16} className="text-red-600" /></span>}
+                  {it.status === 'error' && <span title={t('No se ha podido procesar')}><AlertCircle size={16} className="text-red-600" /></span>}
                   {!running && (
-                    <button onClick={() => remove(it.id)} className="p-1 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-accent)]" aria-label={`Quitar ${it.file.name}`}>
+                    <button onClick={() => remove(it.id)} className="p-1 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-accent)]" aria-label={t('Quitar {f}', { f: it.file.name })}>
                       <X size={15} />
                     </button>
                   )}
@@ -275,60 +277,60 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
           {mode === 'resize' && (
             <>
               <div>
-                <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Redimensionar por</p>
+                <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Redimensionar por')}</p>
                 <div className="grid grid-cols-2 gap-2">
-                  <button className={seg(resizeBy === 'width')} onClick={() => setResizeBy('width')}>Ancho</button>
-                  <button className={seg(resizeBy === 'height')} onClick={() => setResizeBy('height')}>Alto</button>
-                  <button className={seg(resizeBy === 'percent')} onClick={() => setResizeBy('percent')}>Porcentaje</button>
-                  <button className={seg(resizeBy === 'fit')} onClick={() => setResizeBy('fit')}>Caber en</button>
+                  <button className={seg(resizeBy === 'width')} onClick={() => setResizeBy('width')}>{t('Ancho')}</button>
+                  <button className={seg(resizeBy === 'height')} onClick={() => setResizeBy('height')}>{t('Alto')}</button>
+                  <button className={seg(resizeBy === 'percent')} onClick={() => setResizeBy('percent')}>{t('Porcentaje')}</button>
+                  <button className={seg(resizeBy === 'fit')} onClick={() => setResizeBy('fit')}>{t('Caber en')}</button>
                 </div>
               </div>
               {resizeBy === 'percent' ? (
                 <label className="block text-sm text-[var(--color-text-secondary)]">
-                  {percent} % del tamaño original
+                  {t('{p} % del tamaño original', { p: percent })}
                   <input type="range" min={5} max={200} value={percent} onChange={(e) => setPercent(Number(e.target.value))} className="w-full accent-[var(--color-accent)] mt-1" />
                 </label>
               ) : (
                 <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-                  <input type="number" min={1} max={12000} value={size} onChange={(e) => setSize(Math.max(1, Number(e.target.value)))} className={num} aria-label={resizeBy === 'height' ? 'Alto en píxeles' : 'Ancho en píxeles'} />
-                  {resizeBy === 'fit' && <>×<input type="number" min={1} max={12000} value={size2} onChange={(e) => setSize2(Math.max(1, Number(e.target.value)))} className={num} aria-label="Alto máximo en píxeles" /></>}
+                  <input type="number" min={1} max={12000} value={size} onChange={(e) => setSize(Math.max(1, Number(e.target.value)))} className={num} aria-label={resizeBy === 'height' ? t('Alto en píxeles') : t('Ancho en píxeles')} />
+                  {resizeBy === 'fit' && <>×<input type="number" min={1} max={12000} value={size2} onChange={(e) => setSize2(Math.max(1, Number(e.target.value)))} className={num} aria-label={t('Alto máximo en píxeles')} /></>}
                   px
                 </div>
               )}
               {resizeBy !== 'percent' && (
                 <label className="flex items-center gap-2 text-sm text-[var(--color-text)]">
                   <input type="checkbox" checked={noUpscale} onChange={(e) => setNoUpscale(e.target.checked)} className="accent-[var(--color-accent)]" />
-                  No ampliar las imágenes más pequeñas
+                  {t('No ampliar las imágenes más pequeñas')}
                 </label>
               )}
-              <p className="text-xs text-[var(--color-text-muted)]">Se mantiene siempre la proporción de cada imagen.</p>
+              <p className="text-xs text-[var(--color-text-muted)]">{t('Se mantiene siempre la proporción de cada imagen.')}</p>
             </>
           )}
 
           {mode === 'compress' && (
             <label className="block text-sm text-[var(--color-text-secondary)]">
-              Ancho máximo
+              {t('Ancho máximo')}
               <select value={maxWidth} onChange={(e) => setMaxWidth(Number(e.target.value))} className="w-full mt-1 px-3 py-2 rounded-lg border border-[var(--color-border)] bg-white text-sm">
-                <option value={0}>Mantener el tamaño</option>
-                <option value={3840}>3840 px (4K)</option>
+                <option value={0}>{t('Mantener el tamaño')}</option>
+                <option value={3840}>{t('3840 px (4K)')}</option>
                 <option value={2560}>2560 px</option>
-                <option value={1920}>1920 px (Full HD, recomendado)</option>
-                <option value={1280}>1280 px (web)</option>
-                <option value={800}>800 px (miniaturas)</option>
+                <option value={1920}>{t('1920 px (Full HD, recomendado)')}</option>
+                <option value={1280}>{t('1280 px (web)')}</option>
+                <option value={800}>{t('800 px (miniaturas)')}</option>
               </select>
             </label>
           )}
 
           {fixedFormat ? (
             <p className="text-sm text-[var(--color-text)]">
-              Formato de salida: <strong>{EXT[fixedFormat].toUpperCase()}</strong>
-              {fixedFormat === 'image/jpeg' && <span className="block text-xs text-[var(--color-text-muted)] mt-1">Las zonas transparentes se rellenan de blanco.</span>}
+              {t('Formato de salida:')} <strong>{EXT[fixedFormat].toUpperCase()}</strong>
+              {fixedFormat === 'image/jpeg' && <span className="block text-xs text-[var(--color-text-muted)] mt-1">{t('Las zonas transparentes se rellenan de blanco.')}</span>}
             </p>
           ) : (
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Formato de salida</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Formato de salida')}</p>
             <div className="grid grid-cols-2 gap-2">
-              {mode !== 'convert' && <button className={seg(format === 'keep')} onClick={() => setFormat('keep')}>Mismo</button>}
+              {mode !== 'convert' && <button className={seg(format === 'keep')} onClick={() => setFormat('keep')}>{t('Mismo')}</button>}
               <button className={seg(format === 'image/jpeg')} onClick={() => setFormat('image/jpeg')}>JPG</button>
               <button className={seg(format === 'image/png')} onClick={() => setFormat('image/png')}>PNG</button>
               <button className={seg(format === 'image/webp')} onClick={() => setFormat('image/webp')}>WebP</button>
@@ -337,12 +339,12 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
           )}
 
           {mode === 'compress' && format === 'keep' && items.some((i) => i.file.type === 'image/png') && (
-            <p className="text-xs text-[var(--color-text-muted)]">Los PNG apenas se reducen manteniendo el formato. Para aligerarlos de verdad, elige WebP (conserva la transparencia) o JPG.</p>
+            <p className="text-xs text-[var(--color-text-muted)]">{t('Los PNG apenas se reducen manteniendo el formato. Para aligerarlos de verdad, elige WebP (conserva la transparencia) o JPG.')}</p>
           )}
 
           {format !== 'image/png' && (
             <label className="block text-sm text-[var(--color-text-secondary)]">
-              Calidad: {quality} %
+              {t('Calidad: {q} %', { q: quality })}
               <input type="range" min={30} max={100} value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-[var(--color-accent)] mt-1" />
             </label>
           )}
@@ -355,16 +357,16 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
         >
           {running ? <Loader2 size={16} className="animate-spin" /> : <Play size={16} />}
           {running
-            ? `Procesando ${done.length + 1} de ${items.length}…`
-            : mode === 'compress' ? `Comprimir ${pending || ''} ${pending === 1 ? 'imagen' : 'imágenes'}`
-            : mode === 'resize' ? `Redimensionar ${pending || ''} ${pending === 1 ? 'imagen' : 'imágenes'}`
-            : `Convertir ${pending || ''} ${pending === 1 ? 'imagen' : 'imágenes'}`}
+            ? t('Procesando {i} de {n}…', { i: done.length + 1, n: items.length })
+            : mode === 'compress' ? t(pending === 1 ? 'Comprimir {n} imagen' : 'Comprimir {n} imágenes', { n: pending || '' })
+            : mode === 'resize' ? t(pending === 1 ? 'Redimensionar {n} imagen' : 'Redimensionar {n} imágenes', { n: pending || '' })
+            : t(pending === 1 ? 'Convertir {n} imagen' : 'Convertir {n} imágenes', { n: pending || '' })}
         </button>
 
         {done.length > 0 && (
           <div className="p-4 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-3">
             <p className="text-sm text-[var(--color-text)]">
-              <strong>{done.length}</strong> listas · {formatBytes(totalIn)} → <strong>{formatBytes(totalOut)}</strong>
+              <strong>{done.length}</strong> {t('listas')} · {formatBytes(totalIn)} → <strong>{formatBytes(totalOut)}</strong>
               {mode === 'compress' && totalIn > 0 && <span className="text-[var(--color-tools-icon)] font-semibold"> (−{formatReduction(totalIn, totalOut)})</span>}
             </p>
             <button
@@ -373,7 +375,7 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
               className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-text)] text-white font-semibold text-sm hover:opacity-90 disabled:opacity-50 transition-opacity"
             >
               <FolderArchive size={16} />
-              {zipping ? 'Creando ZIP…' : 'Descargar todas (ZIP)'}
+              {zipping ? t('Creando ZIP…') : t('Descargar todas (ZIP)')}
             </button>
           </div>
         )}
@@ -381,3 +383,5 @@ export default function BatchImageTool({ mode, format: fixedFormat, dropLabel }:
     </div>
   );
 }
+
+export default withLang(BatchImageTool);

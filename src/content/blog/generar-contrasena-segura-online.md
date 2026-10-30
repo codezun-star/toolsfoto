@@ -19,7 +19,7 @@ publicado: true
 
 "Mi cumpleaños y el nombre de mi mascota" no es una contraseña segura. Tampoco lo son variaciones de `123456`, los nombres de tus hijos, ni la misma contraseña que usas para todo. **La mayoría de cuentas comprometidas lo son por contraseñas débiles o reutilizadas** — y el problema es que nunca lo sabes hasta que ya ha pasado.
 
-La herramienta [Generador de contraseñas](/generar-contrasena) de ToolsFoto crea contraseñas aleatorias seguras directamente en tu navegador, sin enviar nada a ningún servidor.
+La herramienta [Generador de contraseñas](/generador-contrasenas) de ToolsFoto crea contraseñas aleatorias seguras directamente en tu navegador, sin enviar nada a ningún servidor.
 
 ## Qué hace insegura a una contraseña
 
@@ -64,7 +64,7 @@ Un gestor de contraseñas almacena todas tus contraseñas cifradas con una únic
 
 ## Cómo generar una contraseña segura con ToolsFoto
 
-1. Abre [Generador de contraseñas](/generar-contrasena).
+1. Abre [Generador de contraseñas](/generador-contrasenas).
 2. Elige la longitud (mínimo 16 caracteres recomendado).
 3. Activa los tipos de caracteres que necesitas (mayúsculas, minúsculas, números, símbolos).
 4. Copia la contraseña generada.

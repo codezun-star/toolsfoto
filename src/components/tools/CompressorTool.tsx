@@ -7,6 +7,7 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
 import { formatBytes, formatReduction } from '@/lib/utils/format';
 import { TrendingDown } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 interface Result {
   blob: Blob;
@@ -14,7 +15,8 @@ interface Result {
   size: number;
 }
 
-export default function CompressorTool() {
+function CompressorTool() {
+  const t = useT();
   const upload = useImageUpload();
   const [quality, setQuality] = useState(80);
   const [result, setResult] = useState<Result | null>(null);
@@ -45,7 +47,7 @@ export default function CompressorTool() {
         return { blob: compressed, url: URL.createObjectURL(compressed), size: compressed.size };
       });
     } catch {
-      setError('Error al comprimir la imagen. Intenta con otra imagen.');
+      setError(t('Error al comprimir la imagen. Intenta con otra imagen.'));
     } finally {
       setLoading(false);
     }
@@ -53,7 +55,7 @@ export default function CompressorTool() {
 
   function handleDownload() {
     if (!result) return;
-    download(result.blob, 'comprimida');
+    download(result.blob, t('comprimida'));
   }
 
   const reduction = upload.image && result
@@ -77,9 +79,9 @@ export default function CompressorTool() {
 
       <div className="space-y-5">
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)]">
-          <h2 className="font-bold text-[var(--color-text)] mb-4">Configuración</h2>
+          <h2 className="font-bold text-[var(--color-text)] mb-4">{t('Configuración')}</h2>
           <Slider
-            label="Calidad"
+            label={t('Calidad')}
             value={quality}
             min={10}
             max={100}
@@ -88,20 +90,20 @@ export default function CompressorTool() {
             onChange={(v) => { setQuality(v); clearResult(); }}
           />
           <p className="text-xs text-[var(--color-text-muted)] mt-2">
-            Valores entre 70-85% ofrecen el mejor balance calidad/tamaño.
+            {t('Valores entre 70-85% ofrecen el mejor balance calidad/tamaño.')}
           </p>
         </div>
 
         {upload.image && (
           <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-3">
-            <h2 className="font-bold text-[var(--color-text)]">Comparativa</h2>
+            <h2 className="font-bold text-[var(--color-text)]">{t('Comparativa')}</h2>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="p-3 bg-[var(--color-bg)] rounded-lg">
-                <p className="text-[var(--color-text-muted)]">Original</p>
+                <p className="text-[var(--color-text-muted)]">{t('Original')}</p>
                 <p className="font-bold text-[var(--color-text)] mt-1">{formatBytes(upload.image.file.size)}</p>
               </div>
               <div className={['p-3 rounded-lg', result ? 'bg-green-50' : 'bg-[var(--color-bg)]'].join(' ')}>
-                <p className="text-[var(--color-text-muted)]">Comprimida</p>
+                <p className="text-[var(--color-text-muted)]">{t('Comprimida')}</p>
                 <p className={['font-bold mt-1', result ? 'text-green-700' : 'text-[var(--color-text-muted)]'].join(' ')}>
                   {result ? formatBytes(result.size) : '—'}
                 </p>
@@ -110,7 +112,7 @@ export default function CompressorTool() {
             {reduction && (
               <div className="flex items-center gap-2 p-3 bg-green-50 rounded-lg border border-green-100">
                 <TrendingDown size={16} className="text-green-600 shrink-0" />
-                <span className="text-sm text-green-700 font-medium">Ahorro: {reduction} menos</span>
+                <span className="text-sm text-green-700 font-medium">{t('Ahorro: {r} menos', { r: reduction })}</span>
               </div>
             )}
           </div>
@@ -126,7 +128,7 @@ export default function CompressorTool() {
             disabled={!upload.image || loading}
             className="flex-1 px-4 py-3 rounded-xl border border-[var(--color-border)] bg-white font-semibold text-sm hover:bg-[var(--color-bg)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
-            {loading ? 'Comprimiendo…' : 'Comprimir'}
+            {loading ? t('Comprimiendo…') : t('Comprimir')}
           </button>
           <DownloadButton
             onClick={handleDownload}
@@ -140,26 +142,26 @@ export default function CompressorTool() {
       {/* Comparativa visual — ocupa ambas columnas */}
       {result && upload.image && (
         <div className="lg:col-span-2 p-5 bg-white rounded-xl border border-[var(--color-border)]">
-          <h2 className="font-bold text-[var(--color-text)] mb-4">Vista previa</h2>
+          <h2 className="font-bold text-[var(--color-text)] mb-4">{t('Vista previa')}</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-xs text-[var(--color-text-muted)] mb-2">
-                Original · <span className="font-medium">{formatBytes(upload.image.file.size)}</span>
+                {t('Original')} · <span className="font-medium">{formatBytes(upload.image.file.size)}</span>
               </p>
               <img
                 src={upload.image.url}
-                alt="Original"
+                alt={t('Original')}
                 className="w-full rounded-lg object-contain max-h-72 bg-[var(--color-bg)]"
               />
             </div>
             <div>
               <p className="text-xs text-[var(--color-text-muted)] mb-2">
-                Comprimida · <span className="font-medium text-green-700">{formatBytes(result.size)}</span>
-                {reduction && <span className="text-green-600"> ({reduction} menos)</span>}
+                {t('Comprimida')} · <span className="font-medium text-green-700">{formatBytes(result.size)}</span>
+                {reduction && <span className="text-green-600"> ({t('{r} menos', { r: reduction })})</span>}
               </p>
               <img
                 src={result.url}
-                alt="Comprimida"
+                alt={t('Comprimida')}
                 className="w-full rounded-lg object-contain max-h-72 bg-[var(--color-bg)]"
               />
             </div>
@@ -169,3 +171,5 @@ export default function CompressorTool() {
     </div>
   );
 }
+
+export default withLang(CompressorTool);

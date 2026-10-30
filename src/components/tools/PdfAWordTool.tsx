@@ -3,6 +3,7 @@ import { FileType } from 'lucide-react';
 import PdfUploader from '@/components/ui/PdfUploader';
 import { loadPdfjs } from '@/lib/utils/pdfjs';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useT, withLang } from '@/i18n/react';
 
 interface Piece { text: string; x: number; y: number; w: number; size: number; bold: boolean; italic: boolean }
 interface Line { pieces: Piece[]; y: number; x: number; right: number; size: number }
@@ -40,7 +41,8 @@ function median(values: number[]): number {
  * títulos por tamaño de letra, listas por viñetas y negrita/cursiva por el
  * nombre de la fuente. Genera el .docx con la librería `docx`.
  */
-export default function PdfAWordTool() {
+function PdfAWordTool() {
+  const tr = useT();
   const [file, setFile] = useState<File | null>(null);
   const [keepLines, setKeepLines] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,7 +62,7 @@ export default function PdfAWordTool() {
       let chars = 0;
 
       for (let n = 1; n <= doc.numPages; n++) {
-        setStatus(`Leyendo página ${n} de ${doc.numPages}…`);
+        setStatus(tr('Leyendo página {i} de {n}…', { i: n, n: doc.numPages }));
         const page = await doc.getPage(n);
         const pageWidth = page.getViewport({ scale: 1 }).width;
         // La lista de operadores carga las fuentes: así se sabe cuál es negrita o cursiva.
@@ -114,11 +116,11 @@ export default function PdfAWordTool() {
       }
 
       if (chars < 20 * doc.numPages) {
-        setError('Este PDF apenas tiene texto: parece escaneado (las páginas son imágenes). Pásalo primero por «OCR de PDF» para reconocer el texto y después conviértelo a Word.');
+        setError(tr('Este PDF apenas tiene texto: parece escaneado (las páginas son imágenes). Pásalo primero por «OCR de PDF» para reconocer el texto y después conviértelo a Word.'));
         return;
       }
 
-      setStatus('Creando el documento Word…');
+      setStatus(tr('Creando el documento Word…'));
       const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = await import('docx');
       const body = median(paras.flatMap((p) => p.lines.map((l) => l.size)));
       let lastPage = 1;
@@ -178,10 +180,10 @@ export default function PdfAWordTool() {
       a.download = file.name.replace(/\.pdf$/i, '') + '.docx';
       a.click();
       revokeURL(url);
-      setDone(`Listo: ${doc.numPages} ${doc.numPages === 1 ? 'página convertida' : 'páginas convertidas'} a Word.`);
+      setDone(tr(doc.numPages === 1 ? 'Listo: {n} página convertida a Word.' : 'Listo: {n} páginas convertidas a Word.', { n: doc.numPages }));
     } catch (err) {
       console.error('[PdfAWordTool] Error:', err);
-      setError('No se ha podido convertir el PDF. Si está protegido con contraseña, quítasela primero e inténtalo de nuevo.');
+      setError(tr('No se ha podido convertir el PDF. Si está protegido con contraseña, quítasela primero e inténtalo de nuevo.'));
     } finally {
       setLoading(false);
     }
@@ -194,9 +196,9 @@ export default function PdfAWordTool() {
       <label className="flex items-start gap-3 p-4 bg-white rounded-xl border border-[var(--color-border)] cursor-pointer">
         <input type="checkbox" checked={keepLines} onChange={(e) => setKeepLines(e.target.checked)} className="mt-1 accent-[var(--color-accent)]" />
         <span>
-          <span className="block text-sm font-medium text-[var(--color-text)]">Mantener los saltos de línea del PDF</span>
+          <span className="block text-sm font-medium text-[var(--color-text)]">{tr('Mantener los saltos de línea del PDF')}</span>
           <span className="block text-xs text-[var(--color-text-secondary)] mt-0.5">
-            Desactivado (recomendado), las líneas se unen en párrafos que fluyen al editar. Actívalo para poemas, direcciones o listados.
+            {tr('Desactivado (recomendado), las líneas se unen en párrafos que fluyen al editar. Actívalo para poemas, direcciones o listados.')}
           </span>
         </span>
       </label>
@@ -207,16 +209,17 @@ export default function PdfAWordTool() {
         className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <FileType size={16} />
-        {loading ? status : 'Convertir a Word'}
+        {loading ? status : tr('Convertir a Word')}
       </button>
 
       {done && <p className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">{done}</p>}
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
 
       <p className="text-xs text-[var(--color-text-muted)]">
-        Se conservan el texto, los párrafos, los títulos, las listas, la negrita y la cursiva. Las imágenes y el diseño exacto
-        de columnas no se trasladan: el objetivo es un documento que puedas editar con comodidad.
+        {tr('Se conservan el texto, los párrafos, los títulos, las listas, la negrita y la cursiva. Las imágenes y el diseño exacto de columnas no se trasladan: el objetivo es un documento que puedas editar con comodidad.')}
       </p>
     </div>
   );
 }
+
+export default withLang(PdfAWordTool);

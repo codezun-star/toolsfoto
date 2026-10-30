@@ -5,6 +5,7 @@ import { loadPdfjs } from '@/lib/utils/pdfjs';
 import { writeXlsx, type Cell, type Sheet } from '@/lib/utils/xlsx';
 import { toBlobPart } from '@/lib/utils/bytes';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useT, withLang } from '@/i18n/react';
 
 interface Piece { text: string; x: number; y: number; w: number; size: number }
 type Decimal = ',' | '.';
@@ -98,7 +99,8 @@ function pageToRows(pieces: Piece[], pageWidth: number, decimal: Decimal, conver
  * (`xlsx.ts`). Funciona con PDFs generados digitalmente (facturas, extractos,
  * informes); los escaneados necesitan antes OCR.
  */
-export default function PdfAExcelTool() {
+function PdfAExcelTool() {
+  const tr = useT();
   const [file, setFile] = useState<File | null>(null);
   const [mode, setMode] = useState<'pages' | 'single'>('pages');
   const [decimal, setDecimal] = useState<Decimal>(',');
@@ -131,7 +133,7 @@ export default function PdfAExcelTool() {
       const perPage: Cell[][][] = [];
       let chars = 0;
       for (let n = 1; n <= doc.numPages; n++) {
-        setStatus(`Leyendo página ${n} de ${doc.numPages}…`);
+        setStatus(tr('Leyendo página {i} de {n}…', { i: n, n: doc.numPages }));
         const page = await doc.getPage(n);
         const width = page.getViewport({ scale: 1 }).width;
         const content = await page.getTextContent();
@@ -146,19 +148,19 @@ export default function PdfAExcelTool() {
         page.cleanup();
       }
       if (chars < 10 * doc.numPages) {
-        setError('Este PDF apenas tiene texto: parece escaneado. Pásalo primero por «OCR de PDF» y conviértelo después a Excel.');
+        setError(tr('Este PDF apenas tiene texto: parece escaneado. Pásalo primero por «OCR de PDF» y conviértelo después a Excel.'));
         return;
       }
       const result: Sheet[] = mode === 'pages'
-        ? perPage.map((rows, i) => ({ name: `Página ${i + 1}`, rows }))
-        : [{ name: 'Datos', rows: perPage.flat() }];
+        ? perPage.map((rows, i) => ({ name: tr('Página {n}', { n: i + 1 }), rows }))
+        : [{ name: tr('Datos'), rows: perPage.flat() }];
       setSheets(result);
       setPreview(result[0].rows.slice(0, 12));
       const bytes = await writeXlsx(result);
       save(new Blob([toBlobPart(bytes)], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), file.name.replace(/\.pdf$/i, '') + '.xlsx');
     } catch (err) {
       console.error('[PdfAExcelTool] Error:', err);
-      setError('No se ha podido convertir el PDF. Si está protegido con contraseña, quítasela primero e inténtalo de nuevo.');
+      setError(tr('No se ha podido convertir el PDF. Si está protegido con contraseña, quítasela primero e inténtalo de nuevo.'));
     } finally {
       setLoading(false);
     }
@@ -183,22 +185,22 @@ export default function PdfAExcelTool() {
 
         <div className="p-4 bg-white rounded-xl border border-[var(--color-border)] space-y-4">
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Hojas</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{tr('Hojas')}</p>
             <div className="flex gap-2">
-              <label className={radio(mode === 'pages')}><input type="radio" className="sr-only" checked={mode === 'pages'} onChange={() => setMode('pages')} />Una por página</label>
-              <label className={radio(mode === 'single')}><input type="radio" className="sr-only" checked={mode === 'single'} onChange={() => setMode('single')} />Todo en una</label>
+              <label className={radio(mode === 'pages')}><input type="radio" className="sr-only" checked={mode === 'pages'} onChange={() => setMode('pages')} />{tr('Una por página')}</label>
+              <label className={radio(mode === 'single')}><input type="radio" className="sr-only" checked={mode === 'single'} onChange={() => setMode('single')} />{tr('Todo en una')}</label>
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Separador decimal del PDF</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{tr('Separador decimal del PDF')}</p>
             <div className="flex gap-2">
-              <label className={radio(decimal === ',')}><input type="radio" className="sr-only" checked={decimal === ','} onChange={() => setDecimal(',')} />Coma (1.234,56)</label>
-              <label className={radio(decimal === '.')}><input type="radio" className="sr-only" checked={decimal === '.'} onChange={() => setDecimal('.')} />Punto (1,234.56)</label>
+              <label className={radio(decimal === ',')}><input type="radio" className="sr-only" checked={decimal === ','} onChange={() => setDecimal(',')} />{tr('Coma (1.234,56)')}</label>
+              <label className={radio(decimal === '.')}><input type="radio" className="sr-only" checked={decimal === '.'} onChange={() => setDecimal('.')} />{tr('Punto (1,234.56)')}</label>
             </div>
           </div>
           <label className="flex items-center gap-2 text-sm text-[var(--color-text)]">
             <input type="checkbox" checked={convert} onChange={(e) => setConvert(e.target.checked)} className="accent-[var(--color-accent)]" />
-            Convertir las cifras en números (para poder sumar en Excel)
+            {tr('Convertir las cifras en números (para poder sumar en Excel)')}
           </label>
         </div>
       </div>
@@ -209,7 +211,7 @@ export default function PdfAExcelTool() {
         className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <FileSpreadsheet size={16} />
-        {loading ? status : 'Convertir a Excel'}
+        {loading ? status : tr('Convertir a Excel')}
       </button>
 
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
@@ -217,9 +219,9 @@ export default function PdfAExcelTool() {
       {preview && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-[var(--color-text)]">Vista previa (primeras filas de la primera hoja)</p>
+            <p className="text-sm font-semibold text-[var(--color-text)]">{tr('Vista previa (primeras filas de la primera hoja)')}</p>
             <button onClick={downloadCsv} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)] text-xs font-medium hover:bg-[var(--color-bg)] transition-colors">
-              <Download size={13} /> Descargar también en CSV
+              <Download size={13} /> {tr('Descargar también en CSV')}
             </button>
           </div>
           <div className="overflow-x-auto rounded-xl border border-[var(--color-border)] bg-white">
@@ -228,7 +230,7 @@ export default function PdfAExcelTool() {
                 {preview.map((row, r) => (
                   <tr key={r} className="border-b border-[var(--color-border)] last:border-0">
                     {row.map((c, i) => (
-                      <td key={i} className={`px-2.5 py-1.5 whitespace-nowrap ${typeof c === 'number' ? 'text-right tabular-nums' : ''}`}>{c === null ? '' : typeof c === 'number' ? c.toLocaleString('es-ES', { maximumFractionDigits: 10 }) : String(c)}</td>
+                      <td key={i} className={`px-2.5 py-1.5 whitespace-nowrap ${typeof c === 'number' ? 'text-right tabular-nums' : ''}`}>{c === null ? '' : typeof c === 'number' ? c.toLocaleString(decimal === ',' ? 'es-ES' : 'en-US', { maximumFractionDigits: 10 }) : String(c)}</td>
                     ))}
                   </tr>
                 ))}
@@ -240,3 +242,5 @@ export default function PdfAExcelTool() {
     </div>
   );
 }
+
+export default withLang(PdfAExcelTool);

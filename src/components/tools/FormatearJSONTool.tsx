@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Copy, Download, CheckCircle2 } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useT, withLang } from '@/i18n/react';
 
-export default function FormatearJSONTool() {
+function FormatearJSONTool() {
+  const t = useT();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +16,7 @@ export default function FormatearJSONTool() {
       const parsed = JSON.parse(input);
       setOutput(JSON.stringify(parsed, null, spaces));
     } catch (e) {
-      setError(`JSON inválido: ${(e as Error).message}`);
+      setError(t('JSON inválido: {m}', { m: (e as Error).message }));
       setOutput('');
     }
   }
@@ -25,7 +27,7 @@ export default function FormatearJSONTool() {
       const parsed = JSON.parse(input);
       setOutput(JSON.stringify(parsed));
     } catch (e) {
-      setError(`JSON inválido: ${(e as Error).message}`);
+      setError(t('JSON inválido: {m}', { m: (e as Error).message }));
       setOutput('');
     }
   }
@@ -34,10 +36,10 @@ export default function FormatearJSONTool() {
     setError(null);
     try {
       JSON.parse(input);
-      setError('✓ JSON válido');
+      setError(`✓ ${t('JSON válido')}`);
       setOutput('');
     } catch (e) {
-      setError(`JSON inválido: ${(e as Error).message}`);
+      setError(t('JSON inválido: {m}', { m: (e as Error).message }));
       setOutput('');
     }
   }
@@ -63,7 +65,7 @@ export default function FormatearJSONTool() {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">JSON de entrada</label>
+        <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">{t('JSON de entrada')}</label>
         <textarea
           className="w-full h-56 font-mono text-sm p-4 rounded-xl border border-[var(--color-border)] bg-white focus:outline-none focus:border-[var(--color-accent)] resize-y"
           placeholder={'{\n  "clave": "valor"\n}'}
@@ -79,28 +81,28 @@ export default function FormatearJSONTool() {
           disabled={!input.trim()}
           className="px-4 py-2.5 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] transition-colors disabled:opacity-40"
         >
-          Formatear (2 espacios)
+          {t('Formatear (2 espacios)')}
         </button>
         <button
           onClick={() => format(4)}
           disabled={!input.trim()}
           className="px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-[var(--color-text)] font-medium text-sm hover:border-[var(--color-accent)] transition-colors disabled:opacity-40"
         >
-          Formatear (4 espacios)
+          {t('Formatear (4 espacios)')}
         </button>
         <button
           onClick={minify}
           disabled={!input.trim()}
           className="px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-[var(--color-text)] font-medium text-sm hover:border-[var(--color-accent)] transition-colors disabled:opacity-40"
         >
-          Minificar
+          {t('Minificar')}
         </button>
         <button
           onClick={validate}
           disabled={!input.trim()}
           className="px-4 py-2.5 rounded-xl border border-[var(--color-border)] text-[var(--color-text)] font-medium text-sm hover:border-[var(--color-accent)] transition-colors disabled:opacity-40"
         >
-          Validar
+          {t('Validar')}
         </button>
       </div>
 
@@ -113,14 +115,14 @@ export default function FormatearJSONTool() {
       {output && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-semibold text-[var(--color-text)]">Resultado</label>
+            <label className="text-sm font-semibold text-[var(--color-text)]">{t('Resultado')}</label>
             <div className="flex gap-2">
               <button
                 onClick={copy}
                 className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors"
               >
                 {copied ? <CheckCircle2 size={13} className="text-green-600" /> : <Copy size={13} />}
-                {copied ? 'Copiado' : 'Copiar'}
+                {copied ? t('Copiado') : t('Copiar')}
               </button>
               <button
                 onClick={download}
@@ -141,3 +143,5 @@ export default function FormatearJSONTool() {
     </div>
   );
 }
+
+export default withLang(FormatearJSONTool);

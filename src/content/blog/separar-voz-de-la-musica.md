@@ -19,7 +19,7 @@ publicado: true
 
 Quieres la pista instrumental de una canción para cantar encima. O necesitas el audio sin música de una grabación para reutizar la voz. O eres productor y quieres escuchar cómo está mezclada la voz en una referencia. Hasta hace pocos años, separar la voz de la música requería las pistas multitracks originales. Hoy la inteligencia artificial lo hace a partir de la mezcla final, con resultados que sorprenden para muchos usos.
 
-La herramienta [Separar voz de la música](/separar-voz-musica) de ToolsFoto usa modelos de IA para separar vocales e instrumental directamente en el navegador.
+La herramienta [Separar voz de la música](/separar-voz) de ToolsFoto usa modelos de IA para separar vocales e instrumental directamente en el navegador.
 
 ## Cómo funciona la separación de stems con IA
 
@@ -78,7 +78,7 @@ La separación técnica de voz e instrumental es posible, pero el uso de los ste
 
 ## Cómo usar la herramienta
 
-1. Abre [Separar voz de la música](/separar-voz-musica).
+1. Abre [Separar voz de la música](/separar-voz).
 2. Sube tu archivo de audio (MP3, WAV, OGG, AAC, M4A).
 3. Espera el procesamiento — el modelo de IA trabaja directamente en el navegador.
 4. Descarga la pista vocal o el instrumental por separado.

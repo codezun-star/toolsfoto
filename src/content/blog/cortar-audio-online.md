@@ -59,9 +59,9 @@ La primera vez que uses la herramienta se descarga FFmpeg.wasm (~30 MB). Las sig
 Si lo que necesitas va más allá del corte:
 
 - [Unir audios](/unir-audios) — fusiona varios archivos de audio en uno solo, en el orden que elijas.
-- [Cambiar volumen audio](/cambiar-volumen-audio) — sube o baja el nivel de volumen del archivo.
+- [Cambiar volumen audio](/cambiar-volumen) — sube o baja el nivel de volumen del archivo.
 - [Convertir audio](/convertir-audio) — cambia el formato entre MP3, WAV, OGG, AAC, FLAC y M4A.
-- [Extraer audio de vídeo](/extraer-audio-de-video) — extrae la pista de audio de un vídeo como archivo independiente.
+- [Extraer audio de vídeo](/extraer-audio) — extrae la pista de audio de un vídeo como archivo independiente.
 
 ## Edición de audio para podcasters y productores en LATAM
 

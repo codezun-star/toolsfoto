@@ -61,9 +61,9 @@ El archivo resultante tendrá la misma resolución y calidad visual que el origi
 
 ### Cómo extraer el audio por separado
 
-Si quieres quedarte también con el audio (para guardarlo o reutilizarlo), la herramienta [Extraer audio de vídeo](/extraer-audio-de-video) saca la pista de audio como MP3 o WAV.
+Si quieres quedarte también con el audio (para guardarlo o reutilizarlo), la herramienta [Extraer audio de vídeo](/extraer-audio) saca la pista de audio como MP3 o WAV.
 
-1. Abre [Extraer audio de vídeo](/extraer-audio-de-video).
+1. Abre [Extraer audio de vídeo](/extraer-audio).
 2. Sube el vídeo.
 3. Elige el formato: **MP3** (comprimido, más ligero) o **WAV** (sin pérdida, mayor tamaño).
 4. Descarga el archivo de audio.

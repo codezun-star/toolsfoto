@@ -5,10 +5,12 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
 import { loadImage, createCanvas, getContext, canvasToBlob } from '@/lib/utils/canvas';
 import { Lock, Unlock } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 type Mode = 'pixels' | 'percent';
 
-export default function ResizerTool() {
+function ResizerTool() {
+  const t = useT();
   const upload = useImageUpload();
   const [mode, setMode] = useState<Mode>('pixels');
   const [width, setWidth] = useState<number>(0);
@@ -53,7 +55,7 @@ export default function ResizerTool() {
         targetW = width;
         targetH = height;
       }
-      if (targetW < 1 || targetH < 1) throw new Error('Las dimensiones deben ser mayores a 0.');
+      if (targetW < 1 || targetH < 1) throw new Error(t('Las dimensiones deben ser mayores a 0.'));
 
       const img = await loadImage(upload.image.url);
       const canvas = createCanvas(targetW, targetH);
@@ -63,9 +65,9 @@ export default function ResizerTool() {
       ctx.drawImage(img, 0, 0, targetW, targetH);
       const blob = await canvasToBlob(canvas, upload.image.file.type);
       const ext = upload.image.file.name.split('.').pop() ?? 'png';
-      download(blob, 'redimensionada', ext);
+      download(blob, t('redimensionada'), ext);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Error al redimensionar la imagen.');
+      setError(e instanceof Error ? e.message : t('Error al redimensionar la imagen.'));
     } finally {
       setLoading(false);
     }
@@ -86,7 +88,7 @@ export default function ResizerTool() {
 
       <div className="space-y-5">
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)]">
-          <h2 className="font-bold text-[var(--color-text)] mb-4">Configuración</h2>
+          <h2 className="font-bold text-[var(--color-text)] mb-4">{t('Configuración')}</h2>
 
           <div className="flex gap-2 mb-5">
             {(['pixels', 'percent'] as Mode[]).map(m => (
@@ -100,7 +102,7 @@ export default function ResizerTool() {
                     : 'bg-white text-[var(--color-text-secondary)] border-[var(--color-border)] hover:bg-[var(--color-bg)]',
                 ].join(' ')}
               >
-                {m === 'pixels' ? 'Píxeles' : 'Porcentaje'}
+                {m === 'pixels' ? t('Píxeles') : t('Porcentaje')}
               </button>
             ))}
           </div>
@@ -109,7 +111,7 @@ export default function ResizerTool() {
             <div className="space-y-3">
               <div className="flex items-end gap-3">
                 <div className="flex-1 space-y-1">
-                  <label className="text-sm font-medium text-[var(--color-text)]">Ancho (px)</label>
+                  <label className="text-sm font-medium text-[var(--color-text)]">{t('Ancho (px)')}</label>
                   <input
                     type="number"
                     value={width}
@@ -122,12 +124,12 @@ export default function ResizerTool() {
                 <button
                   onClick={() => setLocked(l => !l)}
                   className="mb-0.5 p-2 rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-bg)] transition-colors"
-                  title={locked ? 'Desbloquear proporción' : 'Bloquear proporción'}
+                  title={locked ? t('Desbloquear proporción') : t('Bloquear proporción')}
                 >
                   {locked ? <Lock size={16} className="text-[var(--color-accent)]" /> : <Unlock size={16} className="text-[var(--color-text-muted)]" />}
                 </button>
                 <div className="flex-1 space-y-1">
-                  <label className="text-sm font-medium text-[var(--color-text)]">Alto (px)</label>
+                  <label className="text-sm font-medium text-[var(--color-text)]">{t('Alto (px)')}</label>
                   <input
                     type="number"
                     value={height}
@@ -141,7 +143,7 @@ export default function ResizerTool() {
             </div>
           ) : (
             <div className="space-y-2">
-              <label className="text-sm font-medium text-[var(--color-text)]">Escala: {percent}%</label>
+              <label className="text-sm font-medium text-[var(--color-text)]">{t('Escala: {p}%', { p: percent })}</label>
               <input
                 type="range"
                 min={1}
@@ -152,7 +154,7 @@ export default function ResizerTool() {
               />
               {upload.image && (
                 <p className="text-xs text-[var(--color-text-muted)]">
-                  Resultado: {Math.round(upload.image.width * percent / 100)} × {Math.round(upload.image.height * percent / 100)} px
+                  {t('Resultado: {w} × {h} px', { w: Math.round(upload.image.width * percent / 100), h: Math.round(upload.image.height * percent / 100) })}
                 </p>
               )}
             </div>
@@ -167,10 +169,12 @@ export default function ResizerTool() {
           onClick={handleResize}
           loading={loading}
           disabled={!upload.image}
-          label="Redimensionar y descargar"
+          label={t('Redimensionar y descargar')}
           className="w-full"
         />
       </div>
     </div>
   );
 }
+
+export default withLang(ResizerTool);

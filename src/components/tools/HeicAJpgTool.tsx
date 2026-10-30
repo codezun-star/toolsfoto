@@ -2,10 +2,12 @@ import { useState, useRef } from 'react';
 import { Download, Loader2, Upload, X } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
 import { revokeURL } from '@/lib/utils/canvas';
+import { useT, withLang } from '@/i18n/react';
 
 type HeicFn = (o: { blob: Blob; toType?: string; quality?: number }) => Promise<Blob | Blob[]>;
 
-export default function HeicAJpgTool() {
+function HeicAJpgTool() {
+  const t = useT();
   const [file, setFile] = useState<File | null>(null);
   const [format, setFormat] = useState<'image/jpeg' | 'image/png'>('image/jpeg');
   const [quality, setQuality] = useState(0.9);
@@ -21,7 +23,7 @@ export default function HeicAJpgTool() {
   function pick(f: File | undefined) {
     if (!f) return;
     const ok = /\.(heic|heif)$/i.test(f.name) || f.type === 'image/heic' || f.type === 'image/heif';
-    if (!ok) { setError('Selecciona un archivo HEIC o HEIF (.heic / .heif).'); return; }
+    if (!ok) { setError(t('Selecciona un archivo HEIC o HEIF (.heic / .heif).')); return; }
     clearResult();
     setError(null);
     setFile(f);
@@ -39,7 +41,7 @@ export default function HeicAJpgTool() {
       setResultSize(blob.size);
       setResultUrl(URL.createObjectURL(blob));
     } catch {
-      setError('No se pudo convertir el archivo. Asegúrate de que es un HEIC/HEIF válido.');
+      setError(t('No se pudo convertir el archivo. Asegúrate de que es un HEIC/HEIF válido.'));
     } finally {
       setProcessing(false);
     }
@@ -60,8 +62,8 @@ export default function HeicAJpgTool() {
         <label className="flex flex-col items-center justify-center gap-3 p-8 rounded-xl border-2 border-dashed border-[var(--color-border)] bg-white hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-bg)] cursor-pointer transition-colors">
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
           <div className="text-center">
-            <p className="font-semibold text-[var(--color-text)]">Sube tu archivo HEIC</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · .heic / .heif</p>
+            <p className="font-semibold text-[var(--color-text)]">{t('Sube tu archivo HEIC')}</p>
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra aquí o haz clic · .heic / .heif')}</p>
           </div>
           <input ref={inputRef} type="file" accept=".heic,.heif,image/heic,image/heif" className="hidden"
             onChange={(e) => { pick(e.target.files?.[0]); e.target.value = ''; }} />
@@ -73,7 +75,7 @@ export default function HeicAJpgTool() {
             <p className="text-sm font-medium text-[var(--color-text)] truncate">{file.name}</p>
             <p className="text-xs text-[var(--color-text-muted)] mt-0.5">{formatBytes(file.size)}</p>
           </div>
-          <button onClick={handleClear} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" aria-label="Quitar"><X size={16} /></button>
+          <button onClick={handleClear} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors" aria-label={t('Quitar')}><X size={16} /></button>
         </div>
       )}
 
@@ -83,18 +85,18 @@ export default function HeicAJpgTool() {
             {([['image/jpeg', 'JPG'], ['image/png', 'PNG']] as const).map(([val, lbl]) => (
               <button key={val} onClick={() => setFormat(val)}
                 className={`flex-1 py-2 rounded-lg border text-sm font-medium transition-colors ${format === val ? 'border-[var(--color-accent)] bg-[var(--color-accent-bg)] text-[var(--color-accent)]' : 'border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)]'}`}>
-                Convertir a {lbl}
+                {t('Convertir a {f}', { f: lbl })}
               </button>
             ))}
           </div>
           {format === 'image/jpeg' && (
             <div>
-              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">Calidad JPG: {Math.round(quality * 100)}%</label>
+              <label className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide block mb-1.5">{t('Calidad JPG: {q}%', { q: Math.round(quality * 100) })}</label>
               <input type="range" min="0.4" max="1" step="0.05" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-[var(--color-accent)]" />
             </div>
           )}
           <button onClick={convert} className="w-full py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
-            Convertir
+            {t('Convertir')}
           </button>
         </div>
       )}
@@ -102,24 +104,26 @@ export default function HeicAJpgTool() {
       {processing && (
         <div className="p-6 bg-white rounded-xl border border-[var(--color-border)] text-center space-y-3">
           <Loader2 size={28} className="animate-spin mx-auto text-[var(--color-accent)]" />
-          <p className="text-sm font-medium text-[var(--color-text)]">Convirtiendo HEIC…</p>
+          <p className="text-sm font-medium text-[var(--color-text)]">{t('Convirtiendo HEIC…')}</p>
         </div>
       )}
 
       {resultUrl && (
         <div className="p-5 bg-white rounded-xl border border-[var(--color-tools-border)] space-y-4">
-          <img src={resultUrl} alt="Resultado de la conversión" className="rounded-lg max-w-full mx-auto border border-[var(--color-border)]" />
+          <img src={resultUrl} alt={t('Resultado de la conversión')} className="rounded-lg max-w-full mx-auto border border-[var(--color-border)]" />
           <p className="text-sm text-center text-[var(--color-text-muted)]">{formatBytes(resultSize)}</p>
           <button onClick={download} className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors">
-            <Download size={18} /> Descargar {format === 'image/png' ? 'PNG' : 'JPG'}
+            <Download size={18} /> {t('Descargar {f}', { f: format === 'image/png' ? 'PNG' : 'JPG' })}
           </button>
-          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">Convertir otro</button>
+          <button onClick={handleClear} className="w-full py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">{t('Convertir otro')}</button>
         </div>
       )}
 
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-4">{error}</p>}
 
-      <p className="text-xs text-[var(--color-text-muted)]">La primera conversión descarga el decodificador HEIC (~1 MB). Todo se procesa en tu navegador; el archivo no se sube a ningún servidor.</p>
+      <p className="text-xs text-[var(--color-text-muted)]">{t('La primera conversión descarga el decodificador HEIC (~1 MB). Todo se procesa en tu navegador; el archivo no se sube a ningún servidor.')}</p>
     </div>
   );
 }
+
+export default withLang(HeicAJpgTool);

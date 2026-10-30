@@ -5,6 +5,7 @@ import { toBlobPart } from '@/lib/utils/bytes';
 import { revokeURL } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { useFileReceiver } from '@/hooks/useFileReceiver';
+import { useT, withLang } from '@/i18n/react';
 
 const MAX_SIZE = 50 * 1024 * 1024;
 const isDocx = (f: File) => /\.docx$/i.test(f.name) || f.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
@@ -110,7 +111,8 @@ function htmlToBlocks(html: string): Block[] {
  * propio (`pdf-layout.ts`) lo compone en páginas A4 con pdf-lib. El texto
  * del PDF queda seleccionable.
  */
-export default function WordAPdfTool() {
+function WordAPdfTool() {
+  const t = useT();
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -122,11 +124,11 @@ export default function WordAPdfTool() {
     setError(null);
     setWarning(null);
     if (/\.doc$/i.test(f.name)) {
-      setError('El formato antiguo .doc (Word 97-2003) no se puede leer en el navegador. Ábrelo en Word o LibreOffice y guárdalo como .docx.');
+      setError(t('El formato antiguo .doc (Word 97-2003) no se puede leer en el navegador. Ábrelo en Word o LibreOffice y guárdalo como .docx.'));
       return;
     }
-    if (!isDocx(f)) { setError('Sube un documento de Word en formato .docx.'); return; }
-    if (f.size > MAX_SIZE) { setError('El archivo supera el límite de 50 MB.'); return; }
+    if (!isDocx(f)) { setError(t('Sube un documento de Word en formato .docx.')); return; }
+    if (f.size > MAX_SIZE) { setError(t('El archivo supera el límite de 50 MB.')); return; }
     setFile(f);
   }
 
@@ -142,7 +144,7 @@ export default function WordAPdfTool() {
       const { value: html, messages } = await mammoth.convertToHtml({ arrayBuffer: await file.arrayBuffer() });
       const blocks = htmlToBlocks(html);
       if (!blocks.length) {
-        setError('El documento está vacío o no tiene contenido que se pueda convertir.');
+        setError(t('El documento está vacío o no tiene contenido que se pueda convertir.'));
         return;
       }
       const bytes = await layoutPdf(blocks);
@@ -153,11 +155,11 @@ export default function WordAPdfTool() {
       a.click();
       revokeURL(url);
       if (messages.some((m) => m.type === 'warning')) {
-        setWarning('PDF creado. Algunos elementos avanzados (cuadros de texto, formas, columnas o encabezados de página) no se han podido trasladar.');
+        setWarning(t('PDF creado. Algunos elementos avanzados (cuadros de texto, formas, columnas o encabezados de página) no se han podido trasladar.'));
       }
     } catch (err) {
       console.error('[WordAPdfTool] Error:', err);
-      setError('No se ha podido leer el documento. Comprueba que es un .docx válido y que no está protegido con contraseña.');
+      setError(t('No se ha podido leer el documento. Comprueba que es un .docx válido y que no está protegido con contraseña.'));
     } finally {
       setLoading(false);
     }
@@ -172,7 +174,7 @@ export default function WordAPdfTool() {
             <p className="text-sm font-medium text-[var(--color-text)] truncate">{file.name}</p>
             <p className="text-xs text-[var(--color-text-muted)] mt-0.5">{formatBytes(file.size)}</p>
           </div>
-          <button onClick={() => setFile(null)} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)]" aria-label="Eliminar archivo">
+          <button onClick={() => setFile(null)} className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)]" aria-label={t('Eliminar archivo')}>
             <X size={16} />
           </button>
         </div>
@@ -188,8 +190,8 @@ export default function WordAPdfTool() {
         >
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
           <div>
-            <p className="font-semibold text-[var(--color-text)]">Sube tu documento de Word</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · DOCX · Máx. 50 MB</p>
+            <p className="font-semibold text-[var(--color-text)]">{t('Sube tu documento de Word')}</p>
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra aquí o haz clic · DOCX · Máx. 50 MB')}</p>
           </div>
           <input
             ref={inputRef}
@@ -207,16 +209,17 @@ export default function WordAPdfTool() {
         className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--color-accent)] text-white font-semibold text-sm hover:bg-[#C93D1E] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
       >
         <FileInput size={16} />
-        {loading ? 'Convirtiendo…' : 'Convertir a PDF'}
+        {loading ? t('Convirtiendo…') : t('Convertir a {f}', { f: 'PDF' })}
       </button>
 
       {warning && <p className="text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">{warning}</p>}
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
 
       <p className="text-xs text-[var(--color-text-muted)]">
-        Se conservan los títulos, párrafos, listas, tablas, imágenes, negrita y cursiva. El PDF usa una tipografía estándar
-        (Helvetica) en tamaño A4, así que el resultado es limpio y legible aunque no idéntico píxel a píxel al original.
+        {t('Se conservan los títulos, párrafos, listas, tablas, imágenes, negrita y cursiva. El PDF usa una tipografía estándar (Helvetica) en tamaño A4, así que el resultado es limpio y legible aunque no idéntico píxel a píxel al original.')}
       </p>
     </div>
   );
 }
+
+export default withLang(WordAPdfTool);

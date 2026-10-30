@@ -4,12 +4,14 @@ import { RESULT_EVENT, type ResultDetail } from '@/lib/utils/results';
 import { stashFiles } from '@/lib/utils/inbox';
 import { fileKind, type FileKind } from '@/lib/constants/next-steps';
 import { formatBytes } from '@/lib/utils/format';
+import { translate, type Lang } from '@/i18n';
 
 interface Step { slug: string; name: string }
 
 interface Props {
   /** Sugerencias por tipo de archivo, ya sin la herramienta actual (las calcula `ToolLayout`). */
   steps: Record<FileKind, Step[]>;
+  lang?: Lang;
 }
 
 type Gtag = (...args: unknown[]) => void;
@@ -19,7 +21,8 @@ type Gtag = (...args: unknown[]) => void;
  * archivo en otra herramienta sin volver a subirlo. El archivo viaja por el
  * buzón (`inbox.ts`) y lo recoge el uploader de la página de destino.
  */
-export default function NextSteps({ steps }: Props) {
+export default function NextSteps({ steps, lang = 'es' }: Props) {
+  const t = (es: string) => translate(lang, es);
   const [file, setFile] = useState<File | null>(null);
   const [kind, setKind] = useState<FileKind | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
@@ -50,7 +53,7 @@ export default function NextSteps({ steps }: Props) {
       location.href = `/${slug}`;
     } catch {
       setBusy(null);
-      setError('No se ha podido pasar el archivo. Descárgalo y súbelo en la otra herramienta.');
+      setError(t('No se ha podido pasar el archivo. Descárgalo y súbelo en la otra herramienta.'));
     }
   }
 
@@ -59,16 +62,16 @@ export default function NextSteps({ steps }: Props) {
       <div className="flex items-start gap-3">
         <CircleCheck size={22} className="text-[var(--color-tools-icon)] shrink-0 mt-0.5" />
         <div className="min-w-0 flex-1">
-          <p className="font-bold text-[var(--color-text)]">¿Y ahora? Sigue con este archivo</p>
+          <p className="font-bold text-[var(--color-text)]">{t('¿Y ahora? Sigue con este archivo')}</p>
           <p className="text-sm text-[var(--color-text-secondary)] mt-0.5 truncate">
-            {file.name} · {formatBytes(file.size)} · sin volver a subirlo
+            {file.name} · {formatBytes(file.size)} · {t('sin volver a subirlo')}
           </p>
         </div>
         <button
           type="button"
           onClick={() => setFile(null)}
           className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
-          aria-label="Cerrar sugerencias"
+          aria-label={t('Cerrar sugerencias')}
         >
           <X size={16} />
         </button>
@@ -82,7 +85,7 @@ export default function NextSteps({ steps }: Props) {
             onClick={() => go(s.slug)}
             className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg)] text-sm font-medium text-[var(--color-text)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:opacity-50 transition-colors"
           >
-            {busy === s.slug ? 'Abriendo…' : s.name}
+            {busy === s.slug ? t('Abriendo…') : s.name}
             <ArrowRight size={14} />
           </button>
         ))}

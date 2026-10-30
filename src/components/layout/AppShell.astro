@@ -25,44 +25,73 @@ import {
 } from 'lucide-react';
 import { TOOLS, TOOL_BY_SLUG, type ToolDomain } from '@/lib/constants/tools';
 import { currentPath } from '@/lib/utils/path';
+import { translator, type Lang } from '@/i18n';
+import { EN_TOOLS, EN_BY_SLUG } from '@/i18n/tools-en';
 
+interface Props { lang?: Lang }
+
+const { lang = 'es' } = Astro.props;
+const t = translator(lang);
+const en = lang === 'en';
 const path = currentPath(Astro.url.pathname);
-const tool = TOOL_BY_SLUG[path.slice(1)];
+const tool = en ? TOOL_BY_SLUG[EN_BY_SLUG[path.slice(4)]?.es ?? ''] : TOOL_BY_SLUG[path.slice(1)];
 // Sección actual: 'home', un dominio, 'blog', o el primer tramo de la ruta.
-const section = path === '/' ? 'home' : tool ? tool.domain : path.slice(1).split('/')[0];
+const section = path === '/' || path === '/en' ? 'home' : tool ? tool.domain : path.slice(1).split('/')[0];
 
-const count = (d: ToolDomain) => TOOLS.filter(t => t.domain === d).length;
+// En inglés solo cuentan (y se enlazan) las herramientas traducidas, en las secciones del home /en.
+const count = (d: ToolDomain) => (en ? EN_TOOLS.filter(x => TOOL_BY_SLUG[x.es]?.domain === d) : TOOLS.filter(x => x.domain === d)).length;
+const EN_ANCHOR: Record<string, string> = { imagen: 'image', pdf: 'pdf', video: 'video', audio: 'audio', developer: 'developer' };
+// En inglés, una sección sin herramientas traducidas todavía lleva a la portada /en (nunca a un ancla vacía).
+const catHref = (d: string) => (en ? (count(d as ToolDomain) > 0 ? `/en#${EN_ANCHOR[d]}` : '/en') : `/${d}`);
+const toolsLabel = (n: number) => t('{n} herramientas', { n });
 
 const TABS = [
-  { id: 'home', href: '/', label: 'Inicio', Icon: House },
-  { id: 'imagen', href: '/imagen', label: 'Imagen', Icon: Image },
-  { id: 'pdf', href: '/pdf', label: 'PDF', Icon: FileText },
-  { id: 'video', href: '/video', label: 'Vídeo', Icon: Video },
+  { id: 'home', href: en ? '/en' : '/', label: t('Inicio'), Icon: House },
+  { id: 'imagen', href: catHref('imagen'), label: t('Imagen'), Icon: Image },
+  { id: 'pdf', href: catHref('pdf'), label: 'PDF', Icon: FileText },
+  { id: 'video', href: catHref('video'), label: t('Vídeo'), Icon: Video },
 ];
-const activeTab = TABS.some(t => t.id === section) ? section : 'menu';
+const activeTab = TABS.some(x => x.id === section) ? section : 'menu';
 
 const CATEGORIES = [
-  { id: 'imagen', href: '/imagen', label: 'Imagen', sub: `${count('imagen')} herramientas`, Icon: Image },
-  { id: 'pdf', href: '/pdf', label: 'PDF', sub: `${count('pdf')} herramientas`, Icon: FileText },
-  { id: 'video', href: '/video', label: 'Vídeo', sub: `${count('video')} herramientas`, Icon: Video },
-  { id: 'audio', href: '/audio', label: 'Audio', sub: `${count('audio')} herramientas`, Icon: Music },
-  { id: 'developer', href: '/developer', label: 'Developer', sub: `${count('developer')} herramientas`, Icon: Code2 },
-  { id: 'blog', href: '/blog', label: 'Blog', sub: 'Guías y trucos', Icon: BookOpen },
-];
+  { id: 'imagen', href: catHref('imagen'), label: t('Imagen'), sub: toolsLabel(count('imagen')), Icon: Image },
+  { id: 'pdf', href: catHref('pdf'), label: 'PDF', sub: toolsLabel(count('pdf')), Icon: FileText },
+  { id: 'video', href: catHref('video'), label: t('Vídeo'), sub: toolsLabel(count('video')), Icon: Video },
+  { id: 'audio', href: catHref('audio'), label: 'Audio', sub: toolsLabel(count('audio')), Icon: Music },
+  { id: 'developer', href: catHref('developer'), label: 'Developer', sub: toolsLabel(count('developer')), Icon: Code2 },
+  ...(en ? [] : [{ id: 'blog', href: '/blog', label: 'Blog', sub: 'Guías y trucos', Icon: BookOpen }]),
+].filter(c => c.id === 'blog' || count(c.id as ToolDomain) > 0);
 
 const INFO = [
-  { href: '/contacto', label: 'Contacto', Icon: Mail },
-  { href: '/privacidad', label: 'Privacidad', Icon: ShieldCheck },
-  { href: '/terminos', label: 'Términos de uso', Icon: Scale },
+  { href: '/contacto', label: t('Contacto'), Icon: Mail },
+  { href: '/privacidad', label: t('Privacidad'), Icon: ShieldCheck },
+  { href: '/terminos', label: t('Términos de uso'), Icon: Scale },
   { href: '/cookies', label: 'Cookies', Icon: Cookie },
-  { href: '/aviso-legal', label: 'Aviso legal', Icon: Landmark },
+  { href: '/aviso-legal', label: t('Aviso legal'), Icon: Landmark },
 ];
 
 // Sugerencias del buscador vacío: las herramientas más usadas.
-const POPULAR = [
-  'comprimir', 'eliminar-fondo', 'redimensionar', 'pdf-a-word', 'comprimir-pdf', 'unir-pdfs',
-  'pdf-a-jpg', 'jpg-a-pdf', 'comprimir-video', 'video-a-mp3', 'imagen-a-texto', 'generar-qr',
-].filter(slug => TOOL_BY_SLUG[slug]);
+const POPULAR = en
+  ? ['compress-image', 'remove-background', 'resize-image', 'pdf-to-word', 'compress-pdf', 'merge-pdf',
+     'pdf-to-jpg', 'jpg-to-pdf', 'image-to-text', 'heic-to-jpg', 'qr-code-generator', 'json-formatter']
+      .filter(slug => EN_BY_SLUG[slug]).map(slug => `en/${slug}`)
+  : [
+      'comprimir', 'eliminar-fondo', 'redimensionar', 'pdf-a-word', 'comprimir-pdf', 'unir-pdfs',
+      'pdf-a-jpg', 'jpg-a-pdf', 'comprimir-video', 'video-a-mp3', 'imagen-a-texto', 'generar-qr',
+    ].filter(slug => TOOL_BY_SLUG[slug]);
+
+// Textos que usa el script del buscador (se leen del JSON de abajo).
+const SCRIPT_TEXT = {
+  index: en ? '/search-index-en.json' : '/search-index.json',
+  domains: { imagen: t('Imagen'), pdf: 'PDF', video: t('Vídeo'), audio: 'Audio', developer: 'Developer' },
+  loading: t('Cargando…'),
+  mine: t('Tus herramientas y las más usadas'),
+  popular: t('Más usadas'),
+  one: t('1 resultado'),
+  many: t('{n} resultados'),
+  none: t('No hay herramientas para «{q}». Prueba con otra palabra: comprimir, pdf, mp3…'),
+  error: t('No se ha podido cargar el buscador. Comprueba tu conexión e inténtalo de nuevo.'),
+};
 
 const DOMAIN_ICONS = [
   { domain: 'imagen', Icon: Image },
@@ -74,7 +103,7 @@ const DOMAIN_ICONS = [
 ---
 
 <!-- Barra de pestañas inferior (móvil) -->
-<nav class="tf-tabbar" aria-label="Navegación principal">
+<nav class="tf-tabbar" aria-label={t('Navegación principal')}>
   {TABS.map(({ id, href, label, Icon }) => (
     <a
       href={href}
@@ -99,7 +128,7 @@ const DOMAIN_ICONS = [
       <Menu size={22} strokeWidth={activeTab === 'menu' ? 2.3 : 1.9} />
       <span class="tf-badge" data-tf-badge hidden></span>
     </span>
-    <span class="tf-tab-label">Menú</span>
+    <span class="tf-tab-label">{t('Menú')}</span>
   </button>
 </nav>
 
@@ -110,12 +139,12 @@ const DOMAIN_ICONS = [
     <div class="tf-sheet-grab" data-tf-drag>
       <span class="tf-sheet-handle" aria-hidden="true"></span>
       <div class="flex items-center justify-between px-5 pb-2">
-        <p id="tf-menu-title" class="text-xl font-extrabold text-[var(--color-text)]">Menú</p>
+        <p id="tf-menu-title" class="text-xl font-extrabold text-[var(--color-text)]">{t('Menú')}</p>
         <button
           type="button"
           data-tf-close
           class="tf-press w-9 h-9 grid place-items-center rounded-full bg-white border border-[var(--color-border)] text-[var(--color-text-secondary)]"
-          aria-label="Cerrar menú"
+          aria-label={t('Cerrar menú')}
         >
           <X size={18} />
         </button>
@@ -129,18 +158,18 @@ const DOMAIN_ICONS = [
         class="tf-press w-full flex items-center gap-3 h-12 px-4 rounded-xl bg-white border border-[var(--color-border)] text-[15px] text-[var(--color-text-muted)] text-left"
       >
         <Search size={18} />
-        Buscar entre {TOOLS.length} herramientas
+        {t('Buscar entre {n} herramientas', { n: en ? EN_TOOLS.length : TOOLS.length })}
       </button>
       <a
         href="/compartir"
         class="tf-press mt-2.5 w-full flex items-center gap-3 h-12 px-4 rounded-xl bg-white border border-[var(--color-border)] text-[15px] font-medium text-[var(--color-text)]"
       >
         <FolderOpen size={18} className="text-[var(--color-text-secondary)]" />
-        Abrir un archivo
+        {t('Abrir un archivo')}
         <ChevronRight size={18} className="ml-auto text-[var(--color-text-muted)]" />
       </a>
 
-      <p class="tf-section-label">Categorías</p>
+      <p class="tf-section-label">{t('Categorías')}</p>
       <div class="grid grid-cols-2 gap-2.5">
         {CATEGORIES.map(({ id, href, label, sub, Icon }) => (
           <a
@@ -163,8 +192,8 @@ const DOMAIN_ICONS = [
         <div class="flex items-center gap-3">
           <img src="/icon-192.png" width="44" height="44" alt="" loading="lazy" class="w-11 h-11 rounded-xl shrink-0" />
           <div class="min-w-0 flex-1">
-            <p class="font-bold text-[15px] text-[var(--color-text)]">Instala la app</p>
-            <p class="text-[13px] leading-snug text-[var(--color-text-secondary)]">Ábrela desde tu pantalla de inicio, a pantalla completa.</p>
+            <p class="font-bold text-[15px] text-[var(--color-text)]">{t('Instala la app')}</p>
+            <p class="text-[13px] leading-snug text-[var(--color-text-secondary)]">{t('Ábrela desde tu pantalla de inicio, a pantalla completa.')}</p>
           </div>
           <button
             id="tf-install-btn"
@@ -172,17 +201,17 @@ const DOMAIN_ICONS = [
             class="tf-press shrink-0 h-9 px-4 rounded-full bg-[var(--color-accent)] text-white text-sm font-semibold"
             hidden
           >
-            Instalar
+            {t('Instalar')}
           </button>
         </div>
         <p id="tf-install-ios" class="mt-3 text-[13px] leading-relaxed text-[var(--color-text-secondary)]" hidden>
-          Pulsa <Share size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>Compartir</strong> en la barra del navegador y después
-          <SquarePlus size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>Añadir a pantalla de inicio</strong>.
+          {t('Pulsa')} <Share size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>{t('Compartir')}</strong> {t('en la barra del navegador y después')}
+          <SquarePlus size={15} className="inline -mt-0.5 text-[var(--color-accent)]" /> <strong>{t('Añadir a pantalla de inicio')}</strong>.
         </p>
       </div>
 
       <p class="tf-section-label">ToolsFoto</p>
-      <nav class="rounded-2xl bg-white border border-[var(--color-border)] overflow-hidden divide-y divide-[var(--color-border)]" aria-label="Información">
+      <nav class="rounded-2xl bg-white border border-[var(--color-border)] overflow-hidden divide-y divide-[var(--color-border)]" aria-label={t('Información')}>
         {INFO.map(({ href, label, Icon }) => (
           <a
             href={href}
@@ -197,14 +226,14 @@ const DOMAIN_ICONS = [
       </nav>
 
       <p class="mt-5 text-center text-xs text-[var(--color-text-muted)]">
-        Tus archivos nunca salen de tu dispositivo
+        {t('Tus archivos nunca salen de tu dispositivo')}
       </p>
     </div>
   </div>
 </dialog>
 
 <!-- Buscador -->
-<dialog id="tf-search" class="tf-dialog tf-search" aria-label="Buscar herramientas">
+<dialog id="tf-search" class="tf-dialog tf-search" aria-label={t('Buscar herramientas')}>
   <div class="tf-scrim" data-tf-close></div>
   <div class="tf-search-panel" data-tf-panel>
     <div class="tf-search-bar">
@@ -212,12 +241,12 @@ const DOMAIN_ICONS = [
         type="button"
         data-tf-close
         class="tf-press tf-search-back w-10 h-10 shrink-0 grid place-items-center rounded-full text-[var(--color-text)]"
-        aria-label="Cerrar búsqueda"
+        aria-label={t('Cerrar búsqueda')}
       >
         <ArrowLeft size={22} />
       </button>
       <label class="tf-search-field">
-        <span class="sr-only">Buscar herramientas</span>
+        <span class="sr-only">{t('Buscar herramientas')}</span>
         <Search size={18} />
         <input
           id="tf-search-input"
@@ -228,7 +257,7 @@ const DOMAIN_ICONS = [
           autocomplete="off"
           autocapitalize="off"
           spellcheck="false"
-          placeholder="Buscar herramientas…"
+          placeholder={t('Buscar herramientas…')}
           role="combobox"
           aria-expanded="true"
           aria-autocomplete="list"
@@ -239,18 +268,21 @@ const DOMAIN_ICONS = [
         type="button"
         data-tf-close
         class="tf-search-esc shrink-0 h-8 px-2.5 rounded-lg border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text)]"
-        aria-label="Cerrar búsqueda"
+        aria-label={t('Cerrar búsqueda')}
       >
         Esc
       </button>
     </div>
     <div class="tf-search-body">
-      <p id="tf-search-label" class="tf-section-label">Más usadas</p>
+      <p id="tf-search-label" class="tf-section-label">{t('Más usadas')}</p>
       <div id="tf-search-results" role="listbox" aria-labelledby="tf-search-label" data-popular={POPULAR.join(',')}></div>
       <p id="tf-search-empty" class="px-3 py-10 text-center text-sm text-[var(--color-text-secondary)]" role="status" hidden></p>
     </div>
   </div>
 </dialog>
+
+<!-- Textos del buscador en el idioma de la página (los lee el script) -->
+<script type="application/json" id="tf-shell-text" set:html={JSON.stringify(SCRIPT_TEXT)} />
 
 <!-- Iconos por dominio para los resultados del buscador (se clonan desde JS) -->
 <template id="tf-search-icons">
@@ -717,9 +749,12 @@ const DOMAIN_ICONS = [
   const label = document.getElementById('tf-search-label');
   const empty = document.getElementById('tf-search-empty');
 
-  const DOMAIN_LABEL: Record<string, string> = {
-    imagen: 'Imagen', pdf: 'PDF', video: 'Vídeo', audio: 'Audio', developer: 'Developer',
-  };
+  interface ShellText {
+    index: string; domains: Record<string, string>; loading: string; mine: string; popular: string;
+    one: string; many: string; none: string; error: string;
+  }
+  const TEXT = JSON.parse(document.getElementById('tf-shell-text')?.textContent ?? '{}') as ShellText;
+  const DOMAIN_LABEL = TEXT.domains;
 
   const icons = new Map<string, string>();
   const iconTpl = document.getElementById('tf-search-icons') as HTMLTemplateElement | null;
@@ -756,13 +791,25 @@ const DOMAIN_ICONS = [
     cancion: ['audio'],
     sonido: ['audio'],
     clave: ['contrasena'],
-    password: ['contrasena'],
+    password: ['contrasena', 'password'],
+    // Inglés
+    remove: ['delete', 'erase'],
+    delete: ['remove'],
+    erase: ['remove'],
+    photo: ['image'],
+    picture: ['image'],
+    combine: ['merge'],
+    join: ['merge'],
+    shrink: ['compress'],
+    reduce: ['compress'],
+    make: ['generator'],
+    create: ['generator'],
   };
 
   function loadIndex(): Promise<Indexed[]> {
     if (index) return Promise.resolve(index);
     if (!loading) {
-      loading = fetch('/search-index.json')
+      loading = fetch(TEXT.index)
         .then((r) => {
           if (!r.ok) throw new Error(`HTTP ${r.status}`);
           return r.json() as Promise<Entry[]>;
@@ -846,16 +893,16 @@ const DOMAIN_ICONS = [
     const q = input.value.trim();
     if (!index) {
       label.hidden = false;
-      label.textContent = 'Cargando…';
+      label.textContent = TEXT.loading;
       renderList([]);
       empty.hidden = true;
       return;
     }
     if (!q) {
       // Primero las favoritas y recientes de este navegador; se completa con las más usadas.
-      const mine = [...new Set([...getFavs(), ...getRecent()])].slice(0, 6);
+      const mine = [...new Set([...getFavs(), ...getRecent()])].filter((s) => index?.some((e) => e.s === s)).slice(0, 6);
       const slugs = [...new Set([...mine, ...popular])].slice(0, 12);
-      label.textContent = mine.length ? 'Tus herramientas y las más usadas' : 'Más usadas';
+      label.textContent = mine.length ? TEXT.mine : TEXT.popular;
       label.hidden = false;
       empty.hidden = true;
       renderList(slugs.map((s) => index?.find((e) => e.s === s)).filter((e): e is Indexed => e !== undefined));
@@ -864,9 +911,9 @@ const DOMAIN_ICONS = [
     const found = find(q);
     renderList(found);
     label.hidden = found.length === 0;
-    label.textContent = found.length === 1 ? '1 resultado' : `${found.length} resultados`;
+    label.textContent = found.length === 1 ? TEXT.one : TEXT.many.replace('{n}', String(found.length));
     empty.hidden = found.length > 0;
-    if (!found.length) empty.textContent = `No hay herramientas para «${q}». Prueba con otra palabra: comprimir, pdf, mp3…`;
+    if (!found.length) empty.textContent = TEXT.none.replace('{q}', q);
   }
 
   function openSearch() {
@@ -881,7 +928,7 @@ const DOMAIN_ICONS = [
       if (!label || !empty) return;
       label.hidden = true;
       empty.hidden = false;
-      empty.textContent = 'No se ha podido cargar el buscador. Comprueba tu conexión e inténtalo de nuevo.';
+      empty.textContent = TEXT.error;
     });
   }
 

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Download } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 const SIZES = [200, 400, 600, 800];
 const CORRECTION_LEVELS = [
@@ -9,7 +10,8 @@ const CORRECTION_LEVELS = [
   { id: 'H', label: 'H — Máximo (30%)' },
 ];
 
-export default function GenerarQRTool() {
+function GenerarQRTool() {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [text, setText] = useState('https://toolsfoto.com');
   const [size, setSize] = useState(400);
@@ -35,7 +37,7 @@ export default function GenerarQRTool() {
         color: { dark: fgColor, light: bgColor },
       });
     } catch {
-      setError('No se pudo generar el código QR. El texto puede ser demasiado largo.');
+      setError(t('No se pudo generar el código QR. El texto puede ser demasiado largo.'));
     }
   }
 
@@ -52,17 +54,17 @@ export default function GenerarQRTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">URL o texto</label>
+            <label className="block text-sm font-semibold text-[var(--color-text)] mb-2">{t('URL o texto')}</label>
             <textarea
               className="w-full h-28 px-4 py-3 text-sm rounded-xl border border-[var(--color-border)] bg-white focus:outline-none focus:border-[var(--color-accent)] resize-none"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="https://ejemplo.com o cualquier texto…"
+              placeholder={t('https://ejemplo.com o cualquier texto…')}
             />
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Tamaño</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Tamaño')}</p>
             <div className="flex flex-wrap gap-2">
               {SIZES.map((s) => (
                 <button
@@ -82,7 +84,7 @@ export default function GenerarQRTool() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Corrección de errores</p>
+            <p className="text-sm font-semibold text-[var(--color-text)] mb-2">{t('Corrección de errores')}</p>
             <div className="space-y-1.5">
               {CORRECTION_LEVELS.map((c) => (
                 <button
@@ -95,7 +97,7 @@ export default function GenerarQRTool() {
                       : 'border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-tools-border)]',
                   ].join(' ')}
                 >
-                  {c.label}
+                  {t(c.label)}
                 </button>
               ))}
             </div>
@@ -103,11 +105,11 @@ export default function GenerarQRTool() {
 
           <div className="flex gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Color QR</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Color QR')}</label>
               <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="w-12 h-10 rounded-lg border border-[var(--color-border)] cursor-pointer p-0.5" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">Fondo</label>
+              <label className="block text-xs font-semibold text-[var(--color-text)] mb-1.5">{t('Fondo')}</label>
               <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="w-12 h-10 rounded-lg border border-[var(--color-border)] cursor-pointer p-0.5" />
             </div>
           </div>
@@ -126,10 +128,12 @@ export default function GenerarQRTool() {
             className="flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors disabled:opacity-40"
           >
             <Download size={18} />
-            Descargar PNG
+            {t('Descargar PNG')}
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+export default withLang(GenerarQRTool);

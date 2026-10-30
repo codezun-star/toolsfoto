@@ -6,6 +6,7 @@ import { useDownload } from '@/hooks/useDownload';
 import { loadImage, createCanvas, getContext, canvasToBlob } from '@/lib/utils/canvas';
 import { formatBytes } from '@/lib/utils/format';
 import { Info } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 type Format = 'image/jpeg' | 'image/png' | 'image/webp' | 'image/avif';
 
@@ -23,7 +24,8 @@ interface Result {
   ext: string;
 }
 
-export default function ConverterTool() {
+function ConverterTool() {
+  const t = useT();
   const upload = useImageUpload();
   const [format, setFormat] = useState<Format>('image/webp');
   const [quality, setQuality] = useState(90);
@@ -58,7 +60,7 @@ export default function ConverterTool() {
       const blob = await canvasToBlob(canvas, format, quality / 100);
       setResult({ blob, url: URL.createObjectURL(blob), size: blob.size, ext });
     } catch {
-      setError('Error al convertir la imagen. Intenta con otro formato.');
+      setError(t('Error al convertir la imagen. Intenta con otro formato.'));
     } finally {
       setLoading(false);
     }
@@ -66,7 +68,7 @@ export default function ConverterTool() {
 
   function handleDownload() {
     if (!result) return;
-    download(result.blob, 'convertida', result.ext);
+    download(result.blob, t('convertida'), result.ext);
   }
 
   const selectedFormat = FORMATS.find((f) => f.mime === format);
@@ -91,21 +93,21 @@ export default function ConverterTool() {
           <div className="p-4 bg-white rounded-xl border border-[var(--color-border)] space-y-3">
             <div className="grid grid-cols-2 gap-3 text-xs text-[var(--color-text-muted)]">
               <div>
-                <p className="mb-1.5">Original</p>
+                <p className="mb-1.5">{t('Original')}</p>
                 <img
                   src={upload.image.url}
-                  alt="Original"
+                  alt={t('Original')}
                   className="w-full rounded-lg object-contain max-h-40 bg-[var(--color-bg)]"
                 />
                 <p className="mt-1.5 font-medium text-[var(--color-text)]">{formatBytes(upload.image.file.size)}</p>
               </div>
               <div>
                 <p className="mb-1.5">
-                  Convertida · <span className="font-semibold text-[var(--color-accent)] uppercase">{selectedFormat?.label}</span>
+                  {t('Convertida')} · <span className="font-semibold text-[var(--color-accent)] uppercase">{selectedFormat?.label}</span>
                 </p>
                 <img
                   src={result.url}
-                  alt="Convertida"
+                  alt={t('Convertida')}
                   className="w-full rounded-lg object-contain max-h-40 bg-[var(--color-bg)]"
                   style={format === 'image/jpeg' ? { background: bgColor } : undefined}
                 />
@@ -119,7 +121,7 @@ export default function ConverterTool() {
       {/* Columna derecha: controles */}
       <div className="space-y-5">
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)]">
-          <h2 className="font-bold text-[var(--color-text)] mb-4">Formato de salida</h2>
+          <h2 className="font-bold text-[var(--color-text)] mb-4">{t('Formato de salida')}</h2>
           <div className="grid grid-cols-2 gap-2">
             {FORMATS.map((f) => (
               <button
@@ -143,14 +145,14 @@ export default function ConverterTool() {
           {selectedFormat && (
             <div className="flex items-start gap-2 mt-3 p-2.5 bg-[var(--color-bg)] rounded-lg">
               <Info size={14} className="text-[var(--color-text-muted)] shrink-0 mt-0.5" />
-              <p className="text-xs text-[var(--color-text-secondary)]">{selectedFormat.note}</p>
+              <p className="text-xs text-[var(--color-text-secondary)]">{t(selectedFormat.note)}</p>
             </div>
           )}
 
           {showQuality && (
             <div className="mt-4 space-y-1.5">
               <div className="flex justify-between text-sm">
-                <label className="font-medium text-[var(--color-text)]">Calidad</label>
+                <label className="font-medium text-[var(--color-text)]">{t('Calidad')}</label>
                 <span className="text-[var(--color-text-secondary)]">{quality}%</span>
               </div>
               <input
@@ -163,7 +165,7 @@ export default function ConverterTool() {
 
           {format === 'image/jpeg' && (
             <div className="mt-4 flex items-center gap-3">
-              <label className="text-sm font-medium text-[var(--color-text)]">Fondo (opaco)</label>
+              <label className="text-sm font-medium text-[var(--color-text)]">{t('Fondo (opaco)')}</label>
               <input
                 type="color"
                 value={bgColor}
@@ -184,7 +186,7 @@ export default function ConverterTool() {
             disabled={!upload.image || loading}
             className="flex-1 px-4 py-3 rounded-xl border border-[var(--color-border)] bg-white font-semibold text-sm hover:bg-[var(--color-bg)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
-            {loading ? 'Convirtiendo…' : `Convertir a ${selectedFormat?.label}`}
+            {loading ? t('Convirtiendo…') : t('Convertir a {f}', { f: selectedFormat?.label ?? '' })}
           </button>
           <DownloadButton
             onClick={handleDownload}
@@ -195,10 +197,12 @@ export default function ConverterTool() {
         </div>
         {!result && upload.image && (
           <p className="text-xs text-[var(--color-text-muted)] text-center">
-            Haz clic en "Convertir" para ver la previsualización y el tamaño real.
+            {t('Haz clic en "Convertir" para ver la previsualización y el tamaño real.')}
           </p>
         )}
       </div>
     </div>
   );
 }
+
+export default withLang(ConverterTool);

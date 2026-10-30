@@ -1,4 +1,5 @@
 import { Download, Loader2 } from 'lucide-react';
+import { useT } from '@/i18n/react';
 
 interface Props {
   onClick: () => void;
@@ -8,7 +9,8 @@ interface Props {
   className?: string;
 }
 
-export default function DownloadButton({ onClick, loading = false, disabled = false, label = 'Descargar', className = '' }: Props) {
+export default function DownloadButton({ onClick, loading = false, disabled = false, label, className = '' }: Props) {
+  const t = useT();
   return (
     <button
       onClick={onClick}
@@ -25,7 +27,7 @@ export default function DownloadButton({ onClick, loading = false, disabled = fa
       ) : (
         <Download size={18} />
       )}
-      {loading ? 'Procesando...' : label}
+      {loading ? t('Procesando...') : label ?? t('Descargar')}
     </button>
   );
 }

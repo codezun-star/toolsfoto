@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { FileText, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
 import { useFileReceiver } from '@/hooks/useFileReceiver';
+import { useT } from '@/i18n/react';
 
 const MAX_PDF_SIZE = 100 * 1024 * 1024; // 100 MB
 
@@ -24,8 +25,10 @@ interface Props {
   multiple?: false;
 }
 
-export default function PdfUploader({ label = 'Sube tu PDF', onFile, onClear, current, error }: Props) {
+export default function PdfUploader({ label, onFile, onClear, current, error }: Props) {
   const [dragging, setDragging] = useState(false);
+  const t = useT();
+  const title = label ?? t('Sube tu PDF');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback((file: File) => {
@@ -60,7 +63,7 @@ export default function PdfUploader({ label = 'Sube tu PDF', onFile, onClear, cu
         <button
           onClick={onClear}
           className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
-          aria-label="Eliminar archivo"
+          aria-label={t('Eliminar archivo')}
         >
           <X size={16} />
         </button>
@@ -85,9 +88,9 @@ export default function PdfUploader({ label = 'Sube tu PDF', onFile, onClear, cu
           <Upload size={24} />
         </div>
         <div className="text-center">
-          <p className="font-semibold text-[var(--color-text)]">{label}</p>
-          <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · PDF · Máx. 100 MB</p>
-          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el PDF copiado con Ctrl+V</p>
+          <p className="font-semibold text-[var(--color-text)]">{title}</p>
+          <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra aquí o haz clic · PDF · Máx. 100 MB')}</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">{t('También puedes pegar el PDF copiado con Ctrl+V')}</p>
         </div>
         <input
           ref={inputRef}

@@ -17,7 +17,7 @@ autor: "Equipo ToolsFoto"
 publicado: true
 ---
 
-Tienes una conferencia grabada en MP4, un podcast que alguien subió en formato vídeo a YouTube, una entrevista en MKV, o una canción en formato vídeo. **Extraer el audio de un vídeo** y guardarlo como MP3, WAV o AAC es inmediato con la herramienta [Extraer audio](/extraer-audio-de-video) de ToolsFoto — sin instalar nada, sin enviar el archivo a ningún servidor.
+Tienes una conferencia grabada en MP4, un podcast que alguien subió en formato vídeo a YouTube, una entrevista en MKV, o una canción en formato vídeo. **Extraer el audio de un vídeo** y guardarlo como MP3, WAV o AAC es inmediato con la herramienta [Extraer audio](/extraer-audio) de ToolsFoto — sin instalar nada, sin enviar el archivo a ningún servidor.
 
 ## Qué significa extraer audio técnicamente
 
@@ -51,11 +51,11 @@ Las grabaciones de Zoom, Meet o Teams en MP4 suelen pesar 300–600 MB/hora. El 
 Si grabaste en vídeo (mejor encuadre, más fácil de editar visualmente) pero el canal de distribución es un podcast de solo audio, extraer el audio es el primer paso antes de la edición y la publicación.
 
 **Aislar audio de un vídeo para editarlo**
-Si necesitas aplicar un ecualizador, reducir ruido o añadir música de fondo al audio de un vídeo, primero extrae el audio, edítalo con tu herramienta preferida y luego combínalo de nuevo con el vídeo usando [Reemplazar audio en vídeo](/reemplazar-audio-video).
+Si necesitas aplicar un ecualizador, reducir ruido o añadir música de fondo al audio de un vídeo, primero extrae el audio, edítalo con tu herramienta preferida y luego combínalo de nuevo con el vídeo usando [Reemplazar audio en vídeo](/anadir-audio-video).
 
 ## Cómo extraer audio con ToolsFoto
 
-1. Abre [Extraer audio de vídeo](/extraer-audio-de-video).
+1. Abre [Extraer audio de vídeo](/extraer-audio).
 2. Sube tu vídeo (MP4, WebM, MOV, AVI, MKV — hasta 500 MB).
 3. Selecciona el formato de salida (MP3, WAV, AAC, OGG o FLAC).
 4. Haz clic en **Extraer** y descarga el archivo de audio.

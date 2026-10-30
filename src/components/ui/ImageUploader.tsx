@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Upload, ImageIcon, X, RefreshCw } from 'lucide-react';
 import { formatBytes, formatDimensions } from '@/lib/utils/format';
 import type { ImageFile } from '@/hooks/useImageUpload';
+import { useT } from '@/i18n/react';
 
 interface Props {
   image: ImageFile | null;
@@ -19,6 +20,7 @@ export default function ImageUploader({
   onDrop, onDragOver, onDragLeave, onFileChange, onClear,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const t = useT();
 
   if (image) {
     return (
@@ -26,13 +28,13 @@ export default function ImageUploader({
         <div className="relative">
           <img
             src={image.url}
-            alt="Vista previa"
+            alt={t('Vista previa')}
             className="w-full max-h-80 object-contain bg-[#F8F8F8]"
           />
           <button
             onClick={onClear}
             className="absolute top-3 right-3 p-1.5 rounded-full bg-white/90 border border-[var(--color-border)] hover:bg-red-50 hover:border-red-200 transition-colors"
-            title="Eliminar imagen"
+            title={t('Eliminar imagen')}
           >
             <X size={16} className="text-[var(--color-text-secondary)]" />
           </button>
@@ -50,7 +52,7 @@ export default function ImageUploader({
               className="flex items-center gap-1.5 text-xs text-[var(--color-accent)] hover:underline"
             >
               <RefreshCw size={12} />
-              Cambiar
+              {t('Cambiar')}
             </button>
           </div>
         </div>
@@ -87,10 +89,10 @@ export default function ImageUploader({
         </div>
         <div>
           <p className="font-semibold text-[var(--color-text)]">
-            {isDragging ? 'Suelta la imagen aquí' : 'Arrastra tu imagen o haz clic'}
+            {isDragging ? t('Suelta la imagen aquí') : t('Arrastra tu imagen o haz clic')}
           </p>
-          <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP, AVIF, GIF · Máximo 50 MB</p>
-          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegarla con Ctrl+V</p>
+          <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('JPG, PNG, WebP, AVIF, GIF · Máximo 50 MB')}</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">{t('También puedes pegarla con Ctrl+V')}</p>
         </div>
       </button>
 

@@ -6,6 +6,7 @@ import ImageUploader from '@/components/ui/ImageUploader';
 import { loadImage, canvasToBlob, createCanvas, getContext } from '@/lib/utils/canvas';
 import { triggerDownload, getOutputFilename } from '@/lib/utils/download';
 import { loadOrt, fetchModel, createSession } from '@/lib/utils/onnx';
+import { useT, withLang } from '@/i18n/react';
 
 /**
  * LaMa (Large Mask Inpainting, Apache-2.0) en la versión ONNX de OpenCV Zoo:
@@ -26,7 +27,8 @@ type Stroke = { r: number; points: Array<[number, number]> };
  * pinta y se vuelve a pegar solo la zona marcada, con el borde suavizado,
  * sobre la foto original: el resto de la imagen conserva su resolución.
  */
-export default function BorrarObjetosTool() {
+function BorrarObjetosTool() {
+  const t = useT();
   const { image, error: uploadError, isDragging, clearImage, onDrop, onDragOver, onDragLeave, onFileChange } = useImageUpload();
   const viewRef = useRef<HTMLCanvasElement>(null);
   const workRef = useRef<HTMLCanvasElement | null>(null);
@@ -187,13 +189,13 @@ export default function BorrarObjetosTool() {
 
       const ort = await loadOrt();
       if (!sessionRef.current) {
-        setStatus('Descargando el modelo de IA…');
-        const model = await fetchModel(MODEL_URL, (p) => setStatus(`Descargando el modelo de IA… ${Math.round(p * 100)}%`));
-        setStatus('Preparando la IA…');
+        setStatus(t('Descargando el modelo de IA…'));
+        const model = await fetchModel(MODEL_URL, (p) => setStatus(t('Descargando el modelo de IA… {p}%', { p: Math.round(p * 100) })));
+        setStatus(t('Preparando la IA…'));
         sessionRef.current = await createSession(model);
       }
       const session = sessionRef.current;
-      setStatus('Borrando…');
+      setStatus(t('Borrando…'));
       const out = await session.run({
         image: new ort.Tensor('float32', imageT, [1, 3, SIZE, SIZE]),
         mask: new ort.Tensor('float32', maskT, [1, 1, SIZE, SIZE]),
@@ -227,7 +229,7 @@ export default function BorrarObjetosTool() {
       setEdits((n) => n + 1);
     } catch (err) {
       console.error('[BorrarObjetosTool] Error:', err);
-      setError('No se ha podido borrar. La primera vez se descarga el modelo de IA (92 MB): comprueba tu conexión y vuelve a intentarlo.');
+      setError(t('No se ha podido borrar. La primera vez se descarga el modelo de IA (92 MB): comprueba tu conexión y vuelve a intentarlo.'));
     } finally {
       setLoading(false);
     }
@@ -246,7 +248,7 @@ export default function BorrarObjetosTool() {
     if (!work || !image) return;
     const jpg = image.file.type === 'image/jpeg';
     const blob = await canvasToBlob(work, jpg ? 'image/jpeg' : 'image/png', 0.95);
-    triggerDownload(blob, getOutputFilename(image.file.name, 'sin-objetos', jpg ? 'jpg' : 'png'));
+    triggerDownload(blob, getOutputFilename(image.file.name, t('sin-objetos'), jpg ? 'jpg' : 'png'));
   }
 
   if (!image) {
@@ -261,15 +263,15 @@ export default function BorrarObjetosTool() {
     <div className="space-y-4">
       <div className="sticky top-16 z-30 p-3 bg-white rounded-xl border border-[var(--color-border)] shadow-sm flex flex-wrap items-center gap-3">
         <label className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-          Pincel
+          {t('Pincel')}
           <input type="range" min={8} max={90} value={brush} onChange={(e) => setBrush(Number(e.target.value))} className="accent-[var(--color-accent)] w-28" />
           <span className="inline-block rounded-full bg-[var(--color-accent)] opacity-60" style={{ width: Math.min(28, brush / 2.5), height: Math.min(28, brush / 2.5) }} />
         </label>
         <button onClick={() => setStrokes((s) => s.slice(0, -1))} disabled={!strokes.length || loading} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40">
-          <Undo2 size={14} /> Deshacer trazo
+          <Undo2 size={14} /> {t('Deshacer trazo')}
         </button>
         <button onClick={undoErase} disabled={!history.current.length || loading} className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-[var(--color-border)] text-sm disabled:opacity-40">
-          <RotateCcw size={14} /> Deshacer borrado
+          <RotateCcw size={14} /> {t('Deshacer borrado')}
         </button>
         <div className="flex gap-2 ml-auto">
           <button
@@ -277,17 +279,17 @@ export default function BorrarObjetosTool() {
             disabled={!strokes.length || loading}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold disabled:opacity-40"
           >
-            <Wand2 size={15} /> {loading ? status : 'Borrar lo marcado'}
+            <Wand2 size={15} /> {loading ? status : t('Borrar lo marcado')}
           </button>
           <button onClick={handleDownload} disabled={loading || edits === 0} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-text)] text-white text-sm font-semibold disabled:opacity-40">
-            <Download size={15} /> Descargar
+            <Download size={15} /> {t('Descargar')}
           </button>
         </div>
       </div>
 
       {loading && (
         <p className="text-xs text-[var(--color-text-muted)]">
-          La primera vez se descarga el modelo de IA (92 MB). Cada borrado tarda entre 10 y 40 segundos según la potencia de tu dispositivo; puedes seguir usando la página mientras tanto.
+          {t('La primera vez se descarga el modelo de IA (92 MB). Cada borrado tarda entre 10 y 40 segundos según la potencia de tu dispositivo; puedes seguir usando la página mientras tanto.')}
         </p>
       )}
       {error && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>}
@@ -300,18 +302,20 @@ export default function BorrarObjetosTool() {
           onPointerUp={onUp}
           onPointerCancel={onUp}
           className={`block w-full h-auto touch-none ${loading ? 'opacity-70' : 'cursor-crosshair'}`}
-          aria-label="Pinta sobre lo que quieres borrar"
+          aria-label={t('Pinta sobre lo que quieres borrar')}
         />
         {!strokes.length && edits === 0 && (
           <p className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-xs sm:text-sm font-medium bg-black/60 text-white px-3 py-1.5 rounded-full flex items-center gap-1.5">
-            <Eraser size={14} /> Pinta encima de lo que quieras borrar
+            <Eraser size={14} /> {t('Pinta encima de lo que quieras borrar')}
           </p>
         )}
       </div>
       <div className="flex justify-between text-xs text-[var(--color-text-muted)]">
         <span>{size ? `${size.w} × ${size.h} px` : ''}</span>
-        <button onClick={clearImage} className="text-[var(--color-accent)] hover:underline">Usar otra imagen</button>
+        <button onClick={clearImage} className="text-[var(--color-accent)] hover:underline">{t('Usar otra imagen')}</button>
       </div>
     </div>
   );
 }
+
+export default withLang(BorrarObjetosTool);

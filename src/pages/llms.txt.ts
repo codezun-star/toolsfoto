@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { TOOLS, type ToolDomain } from '@/lib/constants/tools';
 import { SITE } from '@/lib/constants/seo';
+import { EN_TOOLS } from '@/i18n/tools-en';
 
 /**
  * /llms.txt — índice legible por motores de respuesta (ChatGPT, Perplexity,
@@ -63,6 +64,14 @@ export const GET: APIRoute = async () => {
     }
     lines.push('');
   }
+
+  // Versión en inglés: herramientas traducidas en /en.
+  lines.push('## English version');
+  lines.push('');
+  lines.push(`${EN_TOOLS.length} tools are available in English at ${SITE.url}/en (same in-browser processing, no uploads):`);
+  lines.push('');
+  for (const t of EN_TOOLS) lines.push(`- [${t.name}](${SITE.url}/en/${t.slug}): ${t.description}`);
+  lines.push('');
 
   lines.push('## Sobre el sitio');
   lines.push('');

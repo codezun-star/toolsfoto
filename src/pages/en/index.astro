@@ -1,0 +1,129 @@
+---
+/**
+ * /en — portada en inglés. Lista las herramientas traducidas por secciones
+ * con ancla (#image, #pdf…), que hacen de páginas de categoría en inglés.
+ * `hreflang` cruzado con la portada española.
+ */
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import AppMeta from '@/components/layout/AppMeta.astro';
+import ToolCard from '@/components/ui/ToolCard';
+import AdSlot from '@/components/ads/AdSlot.astro';
+import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { EN_TOOLS } from '@/i18n/tools-en';
+import { SITE } from '@/lib/constants/seo';
+import { jsonLd } from '@/lib/utils/jsonld';
+import { ShieldCheck, Zap, BadgeCheck } from 'lucide-react';
+import '@/styles/global.css';
+
+const SECTIONS = [
+  { id: 'image', domain: 'imagen', title: 'Image tools' },
+  { id: 'pdf', domain: 'pdf', title: 'PDF tools' },
+  { id: 'video', domain: 'video', title: 'Video tools' },
+  { id: 'audio', domain: 'audio', title: 'Audio tools' },
+  { id: 'developer', domain: 'developer', title: 'Developer tools' },
+].map((s) => ({
+  ...s,
+  tools: EN_TOOLS.filter((t) => TOOL_BY_SLUG[t.es]?.domain === s.domain).map((t) => ({
+    slug: `en/${t.slug}`, name: t.name, description: t.description, icon: TOOL_BY_SLUG[t.es].icon,
+  })),
+})).filter((s) => s.tools.length > 0);
+
+const title = 'ToolsFoto: Free Online Image, PDF, Video and Audio Tools';
+const description = `${EN_TOOLS.length} free online tools to compress, convert, edit and create images, PDFs, video and audio. No sign-up, and your files never leave your browser.`;
+const canonical = `${SITE.url}/en`;
+
+const graph = jsonLd({
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': `${SITE.url}/#website`, name: SITE.name, url: SITE.url, inLanguage: ['es', 'en'] },
+    {
+      '@type': 'CollectionPage', '@id': `${canonical}#webpage`, url: canonical, name: title, description, inLanguage: 'en',
+      isPartOf: { '@id': `${SITE.url}/#website` },
+    },
+    {
+      '@type': 'ItemList',
+      itemListElement: EN_TOOLS.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.name, url: `${SITE.url}/en/${t.slug}` })),
+    },
+  ],
+});
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={SITE.url} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={SITE.url} />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={SITE.ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ToolsFoto" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={graph} />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <AppMeta />
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JDPXVTKVCL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JDPXVTKVCL');
+    </script>
+  </head>
+  <body>
+    <Header lang="en" alternate="/" />
+    <main>
+      <section class="bg-[var(--color-text)] text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+          <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight max-w-3xl">Free online tools for images, PDFs, video and audio</h1>
+          <p class="mt-4 text-base sm:text-lg text-white/75 max-w-2xl">
+            Compress, convert, edit and create files in seconds. Everything runs in your browser: no sign-up, no watermarks,
+            and your files are never uploaded to a server.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/85">
+            <span class="flex items-center gap-2"><ShieldCheck size={17} className="text-[#0BBFB0]" /> 100% private</span>
+            <span class="flex items-center gap-2"><Zap size={17} className="text-[#0BBFB0]" /> No sign-up</span>
+            <span class="flex items-center gap-2"><BadgeCheck size={17} className="text-[#0BBFB0]" /> Free, no watermark</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <AdSlot type="leaderboard" />
+
+        {SECTIONS.map((s) => (
+          <section id={s.id} class="pt-12 scroll-mt-20">
+            <h2 class="text-2xl font-extrabold text-[var(--color-text)] mb-5">{s.title}</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {s.tools.map((t) => <ToolCard tool={t} client:load />)}
+            </div>
+          </section>
+        ))}
+
+        <section class="mt-16 mb-6 p-6 rounded-2xl bg-white border border-[var(--color-border)]">
+          <h2 class="text-xl font-extrabold text-[var(--color-text)]">More tools in Spanish</h2>
+          <p class="text-[var(--color-text-secondary)] mt-2 max-w-3xl">
+            ToolsFoto has <strong class="text-[var(--color-text)]">{TOOLS.length} tools</strong> in its Spanish version, and we are translating more every week.
+            The interface is simple enough to use even if you don’t speak Spanish.
+          </p>
+          <a href="/" hreflang="es" lang="es" class="inline-flex mt-4 px-5 py-2.5 rounded-xl bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E]">Browse all {TOOLS.length} tools (Spanish)</a>
+        </section>
+
+        <AdSlot type="rectangle" />
+      </div>
+    </main>
+    <Footer lang="en" alternate="/" />
+  </body>
+</html>

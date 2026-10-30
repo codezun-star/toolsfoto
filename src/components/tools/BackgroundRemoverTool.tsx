@@ -5,6 +5,7 @@ import { useImageUpload } from '@/hooks/useImageUpload';
 import { useDownload } from '@/hooks/useDownload';
 import { createCanvas, getContext, canvasToBlob, loadImage } from '@/lib/utils/canvas';
 import { Loader2, CheckCircle } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 const STEPS = [
   'Cargando modelo de IA...',
@@ -13,7 +14,8 @@ const STEPS = [
   'Aplicando acabados...',
 ];
 
-export default function BackgroundRemoverTool() {
+function BackgroundRemoverTool() {
+  const t = useT();
   const upload = useImageUpload();
   const [result, setResult] = useState<string | null>(null);
   const [bgColor, setBgColor] = useState<string>('transparent');
@@ -42,7 +44,7 @@ export default function BackgroundRemoverTool() {
       const url = URL.createObjectURL(blob);
       setResult(url);
     } catch {
-      setError('Error al eliminar el fondo. Intenta con otra imagen o comprueba tu conexión.');
+      setError(t('Error al eliminar el fondo. Intenta con otra imagen o comprueba tu conexión.'));
     } finally {
       setLoading(false);
     }
@@ -64,9 +66,9 @@ export default function BackgroundRemoverTool() {
       const mime = bgColor === 'transparent' ? 'image/png' : 'image/jpeg';
       const ext = bgColor === 'transparent' ? 'png' : 'jpg';
       const blob = await canvasToBlob(canvas, mime, 0.92);
-      download(blob, 'sin-fondo', ext);
+      download(blob, t('sin-fondo'), ext);
     } catch {
-      setError('Error al descargar la imagen.');
+      setError(t('Error al descargar la imagen.'));
     }
   }
 
@@ -89,20 +91,20 @@ export default function BackgroundRemoverTool() {
                   : bgColor,
               }}
             >
-              <img src={result} alt="Sin fondo" className="max-w-full max-h-72 object-contain" />
+              <img src={result} alt={t('Sin fondo')} className="max-w-full max-h-72 object-contain" />
               <div className="absolute top-2 right-2 flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full">
                 <CheckCircle size={12} />
-                Fondo eliminado
+                {t('Fondo eliminado')}
               </div>
             </div>
             <div className="px-4 py-2 border-t border-[var(--color-border)] flex justify-between items-center">
               <button onClick={() => { URL.revokeObjectURL(result); setResult(null); upload.clearImage(); }}
                 className="text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors">
-                Nueva imagen
+                {t('Nueva imagen')}
               </button>
               <button onClick={() => setResult(null)}
                 className="text-xs text-[var(--color-accent)] hover:underline">
-                Repetir
+                {t('Repetir')}
               </button>
             </div>
           </div>
@@ -112,15 +114,15 @@ export default function BackgroundRemoverTool() {
       <div className="space-y-5">
         {!result ? (
           <div className="p-5 bg-white rounded-xl border border-[var(--color-border)]">
-            <h2 className="font-bold text-[var(--color-text)] mb-2">Eliminación con IA</h2>
+            <h2 className="font-bold text-[var(--color-text)] mb-2">{t('Eliminación con IA')}</h2>
             <p className="text-sm text-[var(--color-text-secondary)]">
-              Usa el modelo ISNet para detectar y eliminar el fondo automáticamente. El primer uso descarga el modelo (~50 MB), los siguientes son instantáneos.
+              {t('Usa el modelo ISNet para detectar y eliminar el fondo automáticamente. El primer uso descarga el modelo (~50 MB), los siguientes son instantáneos.')}
             </p>
             {loading && (
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
                   <Loader2 size={14} className="animate-spin text-[var(--color-accent)]" />
-                  {STEPS[stepIdx]}
+                  {t(STEPS[stepIdx])}
                 </div>
                 <div className="h-1.5 bg-[var(--color-bg)] rounded-full overflow-hidden">
                   <div
@@ -133,7 +135,7 @@ export default function BackgroundRemoverTool() {
           </div>
         ) : (
           <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-3">
-            <h2 className="font-bold text-[var(--color-text)]">Fondo de reemplazo</h2>
+            <h2 className="font-bold text-[var(--color-text)]">{t('Fondo de reemplazo')}</h2>
             <div className="flex flex-wrap gap-2">
               {['transparent', '#ffffff', '#000000', '#ff0000', '#0000ff', '#00ff00'].map(c => (
                 <button key={c} onClick={() => setBgColor(c)}
@@ -142,16 +144,16 @@ export default function BackgroundRemoverTool() {
                   style={c === 'transparent'
                     ? { background: 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 10px 10px' }
                     : { background: c }}
-                  title={c === 'transparent' ? 'Transparente (PNG)' : c}
+                  title={c === 'transparent' ? t('Transparente (PNG)') : c}
                 />
               ))}
               <input type="color" value={bgColor === 'transparent' ? '#ffffff' : bgColor}
                 onChange={e => setBgColor(e.target.value)}
                 className="h-9 w-9 rounded-lg border border-[var(--color-border)] cursor-pointer"
-                title="Color personalizado" />
+                title={t('Color personalizado')} />
             </div>
             <p className="text-xs text-[var(--color-text-muted)]">
-              {bgColor === 'transparent' ? 'Se descargará como PNG con transparencia.' : 'Se descargará como JPG con el fondo seleccionado.'}
+              {bgColor === 'transparent' ? t('Se descargará como PNG con transparencia.') : t('Se descargará como JPG con el fondo seleccionado.')}
             </p>
           </div>
         )}
@@ -164,12 +166,14 @@ export default function BackgroundRemoverTool() {
             disabled={!upload.image || loading}
             className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-[var(--color-accent)] text-white hover:bg-[#C93D1E] disabled:opacity-40 disabled:cursor-not-allowed transition-all"
           >
-            {loading ? <><Loader2 size={18} className="animate-spin" /> Procesando...</> : 'Eliminar fondo con IA'}
+            {loading ? <><Loader2 size={18} className="animate-spin" /> {t('Procesando...')}</> : t('Eliminar fondo con IA')}
           </button>
         ) : (
-          <DownloadButton onClick={handleDownload} label="Descargar imagen" className="w-full" />
+          <DownloadButton onClick={handleDownload} label={t('Descargar imagen')} className="w-full" />
         )}
       </div>
     </div>
   );
 }
+
+export default withLang(BackgroundRemoverTool);

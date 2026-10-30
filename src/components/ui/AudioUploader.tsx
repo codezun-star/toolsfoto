@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { Music, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
 import { useFileReceiver } from '@/hooks/useFileReceiver';
+import { useT } from '@/i18n/react';
 
 const MAX_SIZE = 200 * 1024 * 1024;
 const ACCEPT = 'audio/mpeg,audio/wav,audio/ogg,audio/aac,audio/flac,audio/x-m4a,audio/mp4,.mp3,.wav,.ogg,.aac,.flac,.m4a';
@@ -20,8 +21,10 @@ interface Props {
   error?: string | null;
 }
 
-export default function AudioUploader({ label = 'Sube tu audio', onFile, onClear, current, error }: Props) {
+export default function AudioUploader({ label, onFile, onClear, current, error }: Props) {
   const [dragging, setDragging] = useState(false);
+  const t = useT();
+  const title = label ?? t('Sube tu audio');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback((file: File) => {
@@ -53,7 +56,7 @@ export default function AudioUploader({ label = 'Sube tu audio', onFile, onClear
         <button
           onClick={onClear}
           className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
-          aria-label="Eliminar archivo"
+          aria-label={t('Eliminar archivo')}
         >
           <X size={16} />
         </button>
@@ -78,9 +81,9 @@ export default function AudioUploader({ label = 'Sube tu audio', onFile, onClear
           <Upload size={24} />
         </div>
         <div className="text-center">
-          <p className="font-semibold text-[var(--color-text)]">{label}</p>
-          <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · MP3, WAV, OGG, AAC · Máx. 200 MB</p>
-          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el audio copiado con Ctrl+V</p>
+          <p className="font-semibold text-[var(--color-text)]">{title}</p>
+          <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra aquí o haz clic · MP3, WAV, OGG, AAC · Máx. 200 MB')}</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">{t('También puedes pegar el audio copiado con Ctrl+V')}</p>
         </div>
         <input
           ref={inputRef}

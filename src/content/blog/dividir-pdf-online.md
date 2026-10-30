@@ -35,7 +35,7 @@ La herramienta de ToolsFoto cubre los tres casos.
 
 Si lo que necesitas es **eliminar páginas** del PDF manteniendo el resto como un único documento, la herramienta correcta es [Eliminar páginas PDF](/eliminar-paginas-pdf) — produce un único PDF sin las páginas que marques como innecesarias.
 
-Si lo que necesitas es **juntar** varios PDFs en uno, usa [Unir PDFs](/unir-pdf).
+Si lo que necesitas es **juntar** varios PDFs en uno, usa [Unir PDFs](/unir-pdfs).
 
 Si necesitas **reordenar** las páginas antes de dividir, [Reordenar páginas PDF](/reordenar-paginas-pdf) te permite arrastrar las páginas al orden correcto y luego descarga el PDF reordenado, que puedes dividir a continuación.
 

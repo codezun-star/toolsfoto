@@ -45,6 +45,8 @@
     text-align: center;
   }
 
+  html[lang='en'] .tf-ad.is-filled::before { content: 'Advertisement'; }
+
   .tf-ad.is-filled::before {
     content: 'Publicidad';
     display: block;
@@ -174,11 +176,15 @@
       return horizontal();
     }
 
+    // Etiquetas en el idioma de la página (las páginas /en llevan <html lang="en">).
+    var EN = document.documentElement.lang === 'en';
+    var LABEL = EN ? 'Advertisement' : 'Publicidad';
+
     function buildFrame(size) {
       var wh = size.split('x');
       var f = document.createElement('iframe');
       f.src = '/ads/banner.html?s=' + size;
-      f.title = 'Publicidad';
+      f.title = LABEL;
       f.width = wh[0];
       f.height = wh[1];
       f.setAttribute('frameborder', '0');
@@ -236,12 +242,12 @@
 
       var bar = document.createElement('aside');
       bar.className = 'tf-anchor';
-      bar.setAttribute('aria-label', 'Publicidad');
+      bar.setAttribute('aria-label', LABEL);
 
       var close = document.createElement('button');
       close.type = 'button';
       close.className = 'tf-anchor-close';
-      close.setAttribute('aria-label', 'Cerrar anuncio');
+      close.setAttribute('aria-label', EN ? 'Close ad' : 'Cerrar anuncio');
       close.textContent = '✕';
       close.addEventListener('click', function () {
         if (bar.parentNode) bar.parentNode.removeChild(bar);
@@ -267,7 +273,7 @@
       for (var i = 0; i < rails.length; i++) {
         var rail = document.createElement('aside');
         rail.className = 'tf-rail ' + rails[i][0];
-        rail.setAttribute('aria-label', 'Publicidad');
+        rail.setAttribute('aria-label', LABEL);
         var slot = document.createElement('div');
         slot.className = 'tf-ad';
         slot.setAttribute('data-ad', rails[i][1]);

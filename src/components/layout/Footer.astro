@@ -1,10 +1,54 @@
 ---
 import AdScripts from './AdScripts.astro';
 import AppShell from './AppShell.astro';
+import { TOOLS, TOOL_BY_SLUG } from '@/lib/constants/tools';
+import { EN_TOOLS } from '@/i18n/tools-en';
+import type { Lang } from '@/i18n';
+
+interface Props {
+  lang?: Lang;
+  /** La misma página en el otro idioma. */
+  alternate?: string;
+}
+
+const { lang = 'es', alternate } = Astro.props;
+const en = lang === 'en';
 const year = new Date().getFullYear();
+
+// Pie en inglés: las herramientas traducidas de cada dominio.
+const EN_COLUMNS = [
+  { domain: 'imagen', label: 'Image', anchor: 'image' },
+  { domain: 'pdf', label: 'PDF', anchor: 'pdf' },
+  { domain: 'video', label: 'Video', anchor: 'video' },
+  { domain: 'developer', label: 'Developer', anchor: 'developer' },
+].map((c) => ({ ...c, tools: EN_TOOLS.filter((t) => TOOL_BY_SLUG[t.es]?.domain === c.domain).slice(0, 5) }))
+  .filter((c) => c.tools.length > 0);
 ---
 <footer class="site-footer border-t border-[var(--color-border)] bg-white mt-20">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    {en ? (
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 text-sm">
+        {EN_COLUMNS.map((c) => (
+          <div>
+            <p class="font-bold text-[var(--color-text)] mb-3">{c.label}</p>
+            <nav class="space-y-2 text-[var(--color-text-muted)]">
+              {c.tools.map((t) => <a href={`/en/${t.slug}`} class="block hover:text-[var(--color-text)] transition-colors">{t.name}</a>)}
+              <a href={`/en#${c.anchor}`} class="block hover:text-[var(--color-accent)] transition-colors text-xs mt-1">See all →</a>
+            </nav>
+          </div>
+        ))}
+        <div>
+          <p class="font-bold text-[var(--color-text)] mb-3">ToolsFoto</p>
+          <nav class="space-y-2 text-[var(--color-text-muted)]">
+            <a href="/en" class="block hover:text-[var(--color-text)] transition-colors">Home</a>
+            <a href={alternate ?? '/'} hreflang="es" lang="es" class="block hover:text-[var(--color-text)] transition-colors">Español ({TOOLS.length} herramientas)</a>
+            <a href="/contacto" class="block hover:text-[var(--color-text)] transition-colors">Contact <span class="text-xs">(ES)</span></a>
+            <a href="/privacidad" class="block hover:text-[var(--color-text)] transition-colors">Privacy <span class="text-xs">(ES)</span></a>
+            <a href="/terminos" class="block hover:text-[var(--color-text)] transition-colors">Terms <span class="text-xs">(ES)</span></a>
+          </nav>
+        </div>
+      </div>
+    ) : (
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 mb-8 text-sm">
       <div>
         <p class="font-bold text-[var(--color-text)] mb-3">Imágenes</p>
@@ -65,16 +109,20 @@ const year = new Date().getFullYear();
           <a href="/contacto" class="block hover:text-[var(--color-text)] transition-colors">Contacto</a>
           <a href="/privacidad" class="block hover:text-[var(--color-text)] transition-colors">Privacidad</a>
           <a href="/terminos" class="block hover:text-[var(--color-text)] transition-colors">Términos</a>
+          <a href="/en" hreflang="en" lang="en" class="block hover:text-[var(--color-text)] transition-colors">English</a>
         </nav>
       </div>
     </div>
+    )}
     <div class="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--color-text-muted)]">
-      <p>© {year} ToolsFoto · 241 herramientas · Tus archivos nunca salen de tu dispositivo</p>
-      <a href="/cookies" class="hover:text-[var(--color-text)] transition-colors">Política de cookies</a>
+      {en
+        ? <p>© {year} ToolsFoto · {EN_TOOLS.length} tools in English · Your files never leave your device</p>
+        : <p>© {year} ToolsFoto · {TOOLS.length} herramientas · Tus archivos nunca salen de tu dispositivo</p>}
+      <a href="/cookies" class="hover:text-[var(--color-text)] transition-colors">{en ? 'Cookie policy (ES)' : 'Política de cookies'}</a>
     </div>
   </div>
 </footer>
 {/* Barra de pestañas, menú, buscador y PWA — fuera del <footer> a propósito:
     en la app instalada el pie se oculta y esto tiene que seguir visible. */}
-<AppShell />
+<AppShell lang={lang} />
 <AdScripts />

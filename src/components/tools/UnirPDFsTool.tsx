@@ -5,12 +5,14 @@ import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, Upload, Files } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
 import { toBlobPart } from '@/lib/utils/bytes';
+import { useT, withLang } from '@/i18n/react';
 
 interface PdfEntry { id: number; file: File }
 
 let nextId = 0;
 
-export default function UnirPDFsTool() {
+function UnirPDFsTool() {
+  const t = useT();
   const [pdfs, setPdfs] = useState<PdfEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,10 +53,10 @@ export default function UnirPDFsTool() {
       }
       const out = await merged.save({ useObjectStreams: true });
       const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
-      const a = document.createElement('a'); a.href = url; a.download = 'union.pdf'; a.click();
+      const a = document.createElement('a'); a.href = url; a.download = t('union.pdf'); a.click();
       revokeURL(url);
     } catch {
-      setError('Error al unir los PDFs. Comprueba que no estén protegidos con contraseña.');
+      setError(t('Error al unir los PDFs. Comprueba que no estén protegidos con contraseña.'));
     } finally {
       setLoading(false);
     }
@@ -70,8 +72,8 @@ export default function UnirPDFsTool() {
         >
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><Upload size={24} /></div>
           <div className="text-center">
-            <p className="font-semibold text-[var(--color-text)]">Añadir PDFs</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra o haz clic · Múltiples archivos</p>
+            <p className="font-semibold text-[var(--color-text)]">{t('Añadir PDFs')}</p>
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra o haz clic · Múltiples archivos')}</p>
           </div>
           <input type="file" accept="application/pdf" multiple className="hidden"
             onChange={(e) => { if (e.target.files) { addFiles(e.target.files); e.target.value = ''; } }} />
@@ -97,10 +99,10 @@ export default function UnirPDFsTool() {
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)]">
           <h2 className="font-bold text-[var(--color-text)] mb-2">Resumen</h2>
           <p className="text-sm text-[var(--color-text-secondary)]">
-            {pdfs.length === 0 ? 'Añade al menos 2 PDFs para unirlos.' : `${pdfs.length} archivo${pdfs.length !== 1 ? 's' : ''} listos para unir.`}
+            {pdfs.length === 0 ? t('Añade al menos 2 PDFs para unirlos.') : t(pdfs.length === 1 ? '{n} archivo listo para unir.' : '{n} archivos listos para unir.', { n: pdfs.length })}
           </p>
           <p className="text-xs text-[var(--color-text-muted)] mt-2">
-            Usa las flechas para reordenar. El primer archivo de la lista será la primera página del resultado.
+            {t('Usa las flechas para reordenar. El primer archivo de la lista será la primera página del resultado.')}
           </p>
         </div>
 
@@ -112,10 +114,12 @@ export default function UnirPDFsTool() {
           onClick={handleMerge}
           disabled={pdfs.length < 2 || loading}
           loading={loading}
-          label="Unir y descargar PDF"
+          label={t('Unir y descargar PDF')}
           className="w-full"
         />
       </div>
     </div>
   );
 }
+
+export default withLang(UnirPDFsTool);

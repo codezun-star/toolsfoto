@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, RefreshCw, KeyRound, Check } from 'lucide-react';
+import { useT, withLang } from '@/i18n/react';
 
 interface Options {
   length: number;
@@ -41,7 +42,8 @@ function strength(pw: string): { label: string; color: string; pct: number } {
   return { label: 'Excelente', color: '#22C55E', pct: 100 };
 }
 
-export default function GeneradorContrasenasTool() {
+function GeneradorContrasenasTool() {
+  const t = useT();
   const [opts, setOpts] = useState<Options>({ length: 16, upper: true, lower: true, numbers: true, symbols: true });
   const [count, setCount] = useState(5);
   const [passwords, setPasswords] = useState<string[]>([]);
@@ -75,7 +77,7 @@ export default function GeneradorContrasenasTool() {
       <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-5">
         <div>
           <div className="flex justify-between mb-2">
-            <label className="text-sm font-semibold text-[var(--color-text)]">Longitud</label>
+            <label className="text-sm font-semibold text-[var(--color-text)]">{t('Longitud')}</label>
             <span className="text-sm font-mono font-bold text-[var(--color-accent)]">{opts.length} caracteres</span>
           </div>
           <input
@@ -101,7 +103,7 @@ export default function GeneradorContrasenasTool() {
                 checked={opts[key]}
                 onChange={(e) => setOpts((o) => ({ ...o, [key]: e.target.checked }))}
               />
-              <span className={`text-xs font-bold ${opts[key] ? 'text-[var(--color-accent)]' : 'text-[var(--color-text)]'}`}>{label}</span>
+              <span className={`text-xs font-bold ${opts[key] ? 'text-[var(--color-accent)]' : 'text-[var(--color-text)]'}`}>{t(label)}</span>
               <span className="text-xs text-[var(--color-text-muted)] font-mono">{ex}</span>
             </label>
           ))}
@@ -109,19 +111,19 @@ export default function GeneradorContrasenasTool() {
 
         {previewPw && (
           <div>
-            <p className="text-xs font-semibold text-[var(--color-text-muted)] mb-1">Fortaleza</p>
+            <p className="text-xs font-semibold text-[var(--color-text-muted)] mb-1">{t('Fortaleza')}</p>
             <div className="flex items-center gap-3">
               <div className="flex-1 bg-[var(--color-bg)] rounded-full h-2">
                 <div className="h-2 rounded-full transition-all" style={{ width: `${str.pct}%`, background: str.color }} />
               </div>
-              <span className="text-xs font-semibold" style={{ color: str.color }}>{str.label}</span>
+              <span className="text-xs font-semibold" style={{ color: str.color }}>{t(str.label)}</span>
             </div>
           </div>
         )}
 
         <div>
           <div className="flex justify-between mb-2">
-            <label className="text-sm font-semibold text-[var(--color-text)]">Cantidad</label>
+            <label className="text-sm font-semibold text-[var(--color-text)]">{t('Cantidad')}</label>
             <span className="text-sm font-mono font-bold text-[var(--color-accent)]">{count}</span>
           </div>
           <input type="range" min={1} max={20} value={count} onChange={(e) => setCount(Number(e.target.value))} className="w-full accent-[var(--color-accent)]" />
@@ -134,16 +136,16 @@ export default function GeneradorContrasenasTool() {
         className="w-full flex items-center justify-center gap-2 py-3 bg-[var(--color-accent)] text-white font-semibold rounded-xl hover:bg-[#C93D1E] transition-colors disabled:opacity-50"
       >
         <KeyRound size={18} />
-        Generar {count} {count === 1 ? 'contraseña' : 'contraseñas'}
+        {t(count === 1 ? 'Generar {n} contraseña' : 'Generar {n} contraseñas', { n: count })}
       </button>
 
       {passwords.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">{passwords.length} contraseñas generadas</p>
+            <p className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">{t(passwords.length === 1 ? '{n} contraseña generada' : '{n} contraseñas generadas', { n: passwords.length })}</p>
             <button onClick={copyAll} className="flex items-center gap-1.5 text-xs font-semibold text-[var(--color-accent)] hover:underline">
               {copiedAll ? <Check size={13} /> : <Copy size={13} />}
-              {copiedAll ? 'Copiadas' : 'Copiar todas'}
+              {copiedAll ? t('Copiadas') : t('Copiar todas')}
             </button>
           </div>
           {passwords.map((pw, i) => (
@@ -160,7 +162,9 @@ export default function GeneradorContrasenasTool() {
         </div>
       )}
 
-      {!hasPool && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-4">Selecciona al menos un tipo de carácter.</p>}
+      {!hasPool && <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-4">{t('Selecciona al menos un tipo de carácter.')}</p>}
     </div>
   );
 }
+
+export default withLang(GeneradorContrasenasTool);

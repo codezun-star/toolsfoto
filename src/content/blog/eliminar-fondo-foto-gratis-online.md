@@ -47,7 +47,7 @@ En estos casos el resultado puede requerir refinado manual en un editor de imág
 
 El PNG con fondo transparente puede usarse para:
 
-- **Colocar sobre un fondo nuevo:** usa [Añadir fondo a imagen](/anadir-fondo) para poner una fotografía, un color sólido o un degradado detrás del sujeto recortado.
+- **Colocar sobre un fondo nuevo:** usa [Cambiar fondo](/cambiar-fondo) para poner una fotografía, un color sólido o un degradado detrás del sujeto recortado.
 - **Crear composiciones:** abre el PNG en Canva, Figma o cualquier editor y combínalo con otros elementos.
 - **Catálogo de producto:** sube el PNG directamente a tu tienda — Shopify, WooCommerce y Mercado Libre aceptan PNG con fondo transparente y muchos de ellos aplican automáticamente el fondo blanco estándar.
 - **Sello o sticker:** convierte el PNG en un sticker para WhatsApp o Telegram, o en un elemento gráfico para presentaciones.
@@ -57,7 +57,7 @@ El PNG con fondo transparente puede usarse para:
 Si el recorte tiene bordes irregulares o ha recortado partes del sujeto que no debería:
 
 - **Aumenta la resolución de la imagen de entrada:** el modelo trabaja mejor con imágenes de al menos 800×800 píxeles. Si la imagen es muy pequeña, usa [Ampliar imagen](/ampliar-imagen) antes de procesar.
-- **Mejora el contraste antes de recortar:** si el sujeto y el fondo tienen tonos similares, aumentar el contraste con [Ajustar imagen](/ajustar-imagen) puede ayudar al modelo a distinguirlos mejor.
+- **Mejora el contraste antes de recortar:** si el sujeto y el fondo tienen tonos similares, aumentar el contraste con [Ajustar niveles](/ajustar-niveles) puede ayudar al modelo a distinguirlos mejor.
 - **Acepta los bordes imperfectos en el sujeto:** en la mayoría de los usos prácticos (catálogo online, presentación, red social), los bordes del modelo son más que suficientes y el usuario final no los nota.
 
 ## Eliminación de fondo para el comercio electrónico de LATAM

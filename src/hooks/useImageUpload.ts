@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from '@/lib/constants/tools';
 import { fileToObjectURL, revokeURL } from '@/lib/utils/canvas';
 import { useFileReceiver } from './useFileReceiver';
+import { useT } from '@/i18n/react';
 
 export interface ImageFile {
   file: File;
@@ -14,17 +15,18 @@ export function useImageUpload() {
   const [image, setImage] = useState<ImageFile | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const t = useT();
 
   const processFile = useCallback((file: File) => {
     setError(null);
 
     if (!ACCEPTED_TYPES.includes(file.type)) {
-      setError('Formato no soportado. Acepta JPG, PNG, WebP, AVIF y GIF.');
+      setError(t('Formato no soportado. Acepta JPG, PNG, WebP, AVIF y GIF.'));
       return;
     }
 
     if (file.size > MAX_FILE_SIZE) {
-      setError('El archivo supera el límite de 50 MB.');
+      setError(t('El archivo supera el límite de 50 MB.'));
       return;
     }
 
@@ -38,11 +40,11 @@ export function useImageUpload() {
 
     img.onerror = () => {
       revokeURL(url);
-      setError('No se pudo leer la imagen. Verifica que el archivo no esté dañado.');
+      setError(t('No se pudo leer la imagen. Verifica que el archivo no esté dañado.'));
     };
 
     img.src = url;
-  }, [image]);
+  }, [image, t]);
 
   // Imágenes pegadas con Ctrl+V o recibidas de otra herramienta / app.
   useFileReceiver((f) => ACCEPTED_TYPES.includes(f.type), processFile, () => image === null);

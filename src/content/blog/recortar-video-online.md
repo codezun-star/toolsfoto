@@ -62,7 +62,7 @@ Si grabaste varias tomas seguidas o un evento largo, puedes hacer múltiples rec
 
 Si después de recortar necesitas eliminar también el audio del vídeo (por ejemplo, para añadir una locución diferente), usa [Silenciar vídeo](/silenciar-video) — elimina la pista de audio sin tocar ni un píxel del vídeo.
 
-Si lo que quieres es extraer solo el audio del fragmento recortado, combina el recorte con [Extraer audio de vídeo](/extraer-audio-de-video) para quedarte con la pista de sonido en MP3, WAV o AAC.
+Si lo que quieres es extraer solo el audio del fragmento recortado, combina el recorte con [Extraer audio de vídeo](/extraer-audio) para quedarte con la pista de sonido en MP3, WAV o AAC.
 
 ## Recortar vídeo para redes sociales: el caso de los creadores en LATAM
 

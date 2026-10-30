@@ -101,6 +101,9 @@ const homeGraph = jsonLd({
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
+    <link rel="alternate" hreflang="es" href="https://toolsfoto.com" />
+    <link rel="alternate" hreflang="en" href="https://toolsfoto.com/en" />
+    <link rel="alternate" hreflang="x-default" href="https://toolsfoto.com" />
     <link rel="alternate" type="text/plain" href={`${SITE.url}/llms.txt`} title="Índice para motores de respuesta (llms.txt)" />
 
     <!-- Indexación: permite fragmentos completos en resultados y respuestas generadas -->
@@ -146,7 +149,7 @@ const homeGraph = jsonLd({
     </script>
   </head>
   <body>
-    <Header />
+    <Header alternate="/en" />
 
     <main>
       <!-- Hero -->
@@ -272,7 +275,7 @@ const homeGraph = jsonLd({
       </div>
     </main>
 
-    <Footer />
+    <Footer alternate="/en" />
 
     <script is:inline>
       const DOMAINS = ['imagen', 'pdf', 'video', 'audio', 'developer'];

@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { Video, X, Upload } from 'lucide-react';
 import { formatBytes } from '@/lib/utils/format';
 import { useFileReceiver } from '@/hooks/useFileReceiver';
+import { useT } from '@/i18n/react';
 
 const MAX_SIZE = 500 * 1024 * 1024;
 const ACCEPT = 'video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi,.mkv';
@@ -20,8 +21,10 @@ interface Props {
   error?: string | null;
 }
 
-export default function VideoUploader({ label = 'Sube tu vídeo', onFile, onClear, current, error }: Props) {
+export default function VideoUploader({ label, onFile, onClear, current, error }: Props) {
   const [dragging, setDragging] = useState(false);
+  const t = useT();
+  const title = label ?? t('Sube tu vídeo');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback((file: File) => {
@@ -53,7 +56,7 @@ export default function VideoUploader({ label = 'Sube tu vídeo', onFile, onClea
         <button
           onClick={onClear}
           className="p-1.5 rounded-lg hover:bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
-          aria-label="Eliminar archivo"
+          aria-label={t('Eliminar archivo')}
         >
           <X size={16} />
         </button>
@@ -78,9 +81,9 @@ export default function VideoUploader({ label = 'Sube tu vídeo', onFile, onClea
           <Upload size={24} />
         </div>
         <div className="text-center">
-          <p className="font-semibold text-[var(--color-text)]">{label}</p>
-          <p className="text-sm text-[var(--color-text-muted)] mt-1">Arrastra aquí o haz clic · MP4, WebM, MOV · Máx. 500 MB</p>
-          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">También puedes pegar el vídeo copiado con Ctrl+V</p>
+          <p className="font-semibold text-[var(--color-text)]">{title}</p>
+          <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('Arrastra aquí o haz clic · MP4, WebM, MOV · Máx. 500 MB')}</p>
+          <p className="hidden md:block text-xs text-[var(--color-text-muted)] mt-1">{t('También puedes pegar el vídeo copiado con Ctrl+V')}</p>
         </div>
         <input
           ref={inputRef}

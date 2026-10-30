@@ -14,6 +14,8 @@ import FavoriteButton from '@/components/ui/FavoriteButton';
 import { NEXT_STEPS, type FileKind } from '@/lib/constants/next-steps';
 import EmbedSnippet from '@/components/ui/EmbedSnippet';
 import { EMBED_BY_SLUG } from '@/lib/constants/embeds';
+import { translator, LOCALE, type Lang } from '@/i18n';
+import { EN_BY_ES, enPath } from '@/i18n/tools-en';
 
 interface Props {
   slug: string;
@@ -24,40 +26,60 @@ interface Props {
   howTo?: string[];
   /** Fecha de última revisión del contenido (ISO YYYY-MM-DD). */
   dateModified?: string;
+  /** Idioma de la página. En inglés, `slug` sigue siendo el español y el contenido sale de `tools-en.ts`. */
+  lang?: Lang;
 }
 
-const { slug, faqs, answer = '', howTo, dateModified = SITE.dateModified } = Astro.props;
-const tool = TOOL_BY_SLUG[slug];
-const seo = PAGE_SEO[slug];
-const related = TOOLS.filter(t => tool.related.includes(t.slug)).slice(0, 4);
-const embed = EMBED_BY_SLUG[slug];
+const { slug, faqs, answer = '', howTo, dateModified = SITE.dateModified, lang = 'es' } = Astro.props;
+const t = translator(lang);
+const en = lang === 'en';
+const base = TOOL_BY_SLUG[slug];
+const enTool = EN_BY_ES[slug];
+if (en && !enTool) throw new Error(`[ToolLayout] «${slug}» no tiene versión en inglés en src/i18n/tools-en.ts`);
+
+// Ficha y SEO en el idioma de la página. El dominio y el icono son los de la herramienta española.
+const tool = en
+  ? { ...base, slug: `en/${enTool.slug}`, name: enTool.name, description: enTool.description, longDescription: enTool.longDescription }
+  : base;
+const seo = en
+  ? { title: enTool.title, description: enTool.metaDescription, canonical: `${SITE.url}/en/${enTool.slug}` }
+  : PAGE_SEO[slug];
+
+// hreflang: la misma herramienta en el otro idioma, si existe.
+const esUrl = `${SITE.url}/${slug}`;
+const enUrl = enPath(slug) ? `${SITE.url}${enPath(slug)}` : null;
+
+// Relacionadas: en inglés solo las que tienen versión en inglés.
+const related = en
+  ? enTool.related.map((s) => EN_BY_ES[s] && TOOL_BY_SLUG[s] ? { ...TOOL_BY_SLUG[s], slug: `en/${EN_BY_ES[s].slug}`, name: EN_BY_ES[s].name, description: EN_BY_ES[s].description } : null)
+      .filter((x): x is NonNullable<typeof x> => x !== null).slice(0, 4)
+  : TOOLS.filter(t => base.related.includes(t.slug)).slice(0, 4);
+const embed = en ? undefined : EMBED_BY_SLUG[slug];
+const home = en ? '/en' : '/';
 
 // "¿Y ahora?": siguientes herramientas por tipo de archivo, sin la actual.
 const nextSteps = Object.fromEntries(
   (Object.keys(NEXT_STEPS) as FileKind[]).map((kind) => [
     kind,
     NEXT_STEPS[kind]
-      .filter((s) => s !== slug && TOOL_BY_SLUG[s])
+      .filter((s) => s !== slug && TOOL_BY_SLUG[s] && (!en || EN_BY_ES[s]))
       .slice(0, 6)
-      .map((s) => ({ slug: s, name: TOOL_BY_SLUG[s].name })),
+      .map((s) => (en ? { slug: `en/${EN_BY_ES[s].slug}`, name: EN_BY_ES[s].name } : { slug: s, name: TOOL_BY_SLUG[s].name })),
   ]),
 ) as Record<FileKind, Array<{ slug: string; name: string }>>;
 
 const domainLabel: Record<string, string> = {
-  imagen: 'Herramientas de imagen',
-  pdf: 'Herramientas PDF',
-  video: 'Herramientas de vídeo',
-  audio: 'Herramientas de audio',
-  developer: 'Herramientas para developers',
+  imagen: t('Herramientas de imagen'),
+  pdf: t('Herramientas PDF'),
+  video: t('Herramientas de vídeo'),
+  audio: t('Herramientas de audio'),
+  developer: t('Herramientas para developers'),
 };
 
-const domainHref: Record<string, string> = {
-  imagen: `${SITE.url}/imagen`,
-  pdf: `${SITE.url}/pdf`,
-  video: `${SITE.url}/video`,
-  audio: `${SITE.url}/audio`,
-  developer: `${SITE.url}/developer`,
-};
+// En inglés no hay páginas de categoría: la miga de pan va a la sección del home.
+const EN_SECTION: Record<string, string> = { imagen: 'image', pdf: 'pdf', video: 'video', audio: 'audio', developer: 'developer' };
+const domainPath = en ? `/en#${EN_SECTION[base.domain]}` : `/${base.domain}`;
+const domainHref: Record<string, string> = { [base.domain]: `${SITE.url}${domainPath}` };
 
 const appCategory: Record<string, string> = {
   imagen: 'MultimediaApplication',
@@ -73,17 +95,18 @@ const directAnswer = answer || tool.longDescription;
 // Pasos por defecto según el tipo de herramienta (el flujo real del sitio)
 const defaultSteps: Record<string, string[]> = {
   developer: [
-    `Abre ${tool.name} e introduce el texto o los valores de entrada.`,
-    'Ajusta las opciones disponibles según el resultado que necesites.',
-    'Copia o descarga el resultado generado.',
+    t('Abre {name} e introduce el texto o los valores de entrada.', { name: tool.name }),
+    t('Ajusta las opciones disponibles según el resultado que necesites.'),
+    t('Copia o descarga el resultado generado.'),
   ],
   default: [
-    `Arrastra tu archivo a ${tool.name} o pulsa para seleccionarlo. El archivo no se sube a ningún servidor.`,
-    'Ajusta las opciones disponibles según el resultado que necesites.',
-    'Pulsa el botón de procesar y descarga el archivo resultante.',
+    t('Arrastra tu archivo a {name} o pulsa para seleccionarlo. El archivo no se sube a ningún servidor.', { name: tool.name }),
+    t('Ajusta las opciones disponibles según el resultado que necesites.'),
+    t('Pulsa el botón de procesar y descarga el archivo resultante.'),
   ],
 };
 const howToSteps = howTo ?? defaultSteps[tool.domain] ?? defaultSteps.default;
+const inLanguage = LOCALE[lang].html;
 
 const orgSchema = {
   '@type': 'Organization',
@@ -91,12 +114,12 @@ const orgSchema = {
   name: SITE.name,
   url: SITE.url,
   logo: { '@type': 'ImageObject', url: `${SITE.url}/favicon-192.png` },
-  description: 'Herramientas online para imágenes, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.',
+  description: t('Herramientas online para imágenes, PDF, vídeo, audio y developers. 100% gratuitas, sin registro y sin subir archivos al servidor. Todo se procesa en tu navegador.'),
   contactPoint: {
     '@type': 'ContactPoint',
     email: 'codezun@gmail.com',
     contactType: 'customer support',
-    availableLanguage: 'Spanish',
+    availableLanguage: ['Spanish', 'English'],
   },
 };
 
@@ -105,8 +128,8 @@ const siteSchema = {
   '@id': `${SITE.url}/#website`,
   name: SITE.name,
   url: SITE.url,
-  description: SITE.description,
-  inLanguage: 'es',
+  description: t(SITE.description),
+  inLanguage: ['es', 'en'],
   publisher: { '@id': `${SITE.url}/#organization` },
 };
 
@@ -116,7 +139,7 @@ const pageSchema = {
   url: seo.canonical,
   name: seo.title,
   description: seo.description,
-  inLanguage: 'es',
+  inLanguage,
   isPartOf: { '@id': `${SITE.url}/#website` },
   about: { '@type': 'Thing', name: tool.name },
   dateModified,
@@ -133,14 +156,14 @@ const appSchema = {
   url: seo.canonical,
   applicationCategory: appCategory[tool.domain] ?? 'MultimediaApplication',
   operatingSystem: 'Web',
-  browserRequirements: 'Requiere JavaScript. Funciona en cualquier navegador moderno.',
-  inLanguage: 'es',
+  browserRequirements: t('Requiere JavaScript. Funciona en cualquier navegador moderno.'),
+  inLanguage,
   isAccessibleForFree: true,
   dateModified,
   featureList: [
-    'Procesamiento 100% en el navegador, sin subir archivos a ningún servidor',
-    'Sin registro ni instalación',
-    'Sin marca de agua ni límite de archivos',
+    t('Procesamiento 100% en el navegador, sin subir archivos a ningún servidor'),
+    t('Sin registro ni instalación'),
+    t('Sin marca de agua ni límite de archivos'),
   ],
   offers: {
     '@type': 'Offer',
@@ -155,7 +178,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   '@id': `${seo.canonical}#breadcrumb`,
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE.url },
+    { '@type': 'ListItem', position: 1, name: t('Inicio'), item: en ? `${SITE.url}/en` : SITE.url },
     { '@type': 'ListItem', position: 2, name: domainLabel[tool.domain], item: domainHref[tool.domain] },
     { '@type': 'ListItem', position: 3, name: tool.name, item: seo.canonical },
   ],
@@ -164,17 +187,17 @@ const breadcrumbSchema = {
 const howToSchema = {
   '@type': 'HowTo',
   '@id': `${seo.canonical}#howto`,
-  name: `Cómo usar ${tool.name}`,
-  description: `Pasos para usar ${tool.name} en ${SITE.name}, gratis y sin subir archivos a ningún servidor.`,
-  inLanguage: 'es',
+  name: t('Cómo usar {name}', { name: tool.name }),
+  description: t('Pasos para usar {name} en {site}, gratis y sin subir archivos a ningún servidor.', { name: tool.name, site: SITE.name }),
+  inLanguage,
   totalTime: 'PT1M',
   estimatedCost: { '@type': 'MonetaryAmount', currency: 'USD', value: '0' },
   step: howToSteps.map((text, i) => ({
     '@type': 'HowToStep',
     position: i + 1,
-    name: `Paso ${i + 1}`,
+    name: t('Paso {n}', { n: i + 1 }),
     text,
-    url: `${seo.canonical}#paso-${i + 1}`,
+    url: `${seo.canonical}#${en ? 'step' : 'paso'}-${i + 1}`,
   })),
 };
 
@@ -182,7 +205,7 @@ const faqSchema = faqs && faqs.length > 0
   ? {
       '@type': 'FAQPage',
       '@id': `${seo.canonical}#faq`,
-      inLanguage: 'es',
+      inLanguage,
       mainEntity: faqs.map(faq => ({
         '@type': 'Question',
         name: faq.q,
@@ -206,14 +229,21 @@ const graph = jsonLd({
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={LOCALE[lang].html}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={seo.canonical} />
-    <link rel="alternate" type="text/plain" href={`${SITE.url}/llms.txt`} title="Índice para motores de respuesta (llms.txt)" />
+    {enUrl && (
+      <>
+        <link rel="alternate" hreflang="es" href={esUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={esUrl} />
+      </>
+    )}
+    <link rel="alternate" type="text/plain" href={`${SITE.url}/llms.txt`} title={t('Índice para motores de respuesta (llms.txt)')} />
 
     <!-- Indexación: permite fragmentos completos en resultados y respuestas generadas -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -225,11 +255,12 @@ const graph = jsonLd({
     <meta property="og:image" content={SITE.ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="ToolsFoto — herramientas online para imagen, PDF, vídeo y audio" />
+    <meta property="og:image:alt" content={t('ToolsFoto — herramientas online para imagen, PDF, vídeo y audio')} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={seo.canonical} />
     <meta property="og:site_name" content="ToolsFoto" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={LOCALE[lang].og} />
+    {enUrl && <meta property="og:locale:alternate" content={en ? 'es_ES' : 'en_US'} />}
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content={SITE.twitterHandle} />
@@ -260,15 +291,15 @@ const graph = jsonLd({
     </script>
   </head>
   <body>
-    <Header back={`/${tool.domain}`} title={tool.name} />
+    <Header back={domainPath} title={tool.name} lang={lang} alternate={en ? `/${slug}` : enPath(slug) ?? undefined} />
 
     <main data-tool-slug={slug} class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-10 sm:py-10">
       {/* En móvil la miga de pan la sustituyen el botón atrás de la barra
           superior y la pestaña activa; sigue en el HTML para los buscadores. */}
       <nav class="hidden md:flex items-center gap-2 text-sm text-[var(--color-text-muted)] mb-8">
-        <a href="/" class="hover:text-[var(--color-text)] transition-colors">Inicio</a>
+        <a href={home} class="hover:text-[var(--color-text)] transition-colors">{t('Inicio')}</a>
         <span>/</span>
-        <a href={`/${tool.domain}`} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
+        <a href={domainPath} class="hover:text-[var(--color-text)] transition-colors">{domainLabel[tool.domain]}</a>
         <span>/</span>
         <span class="text-[var(--color-text)]">{tool.name}</span>
       </nav>
@@ -276,12 +307,12 @@ const graph = jsonLd({
       <div class="mb-6 sm:mb-8">
         <div class="flex items-start justify-between gap-3">
           <h1 class="text-[28px] sm:text-4xl font-extrabold text-[var(--color-text)] leading-tight">{tool.name}</h1>
-          <FavoriteButton slug={slug} client:load />
+          {!en && <FavoriteButton slug={slug} client:load />}
         </div>
         <p class="aeo-answer text-[var(--color-text-secondary)] mt-2 text-base sm:text-lg max-w-2xl">{directAnswer}</p>
         <p class="mt-3 text-xs text-[var(--color-text-muted)]">
-          Gratis, sin registro y sin subir archivos a ningún servidor: el procesamiento ocurre en tu navegador ·
-          <span> Actualizado el <time datetime={dateModified}>{new Date(`${dateModified}T00:00:00Z`).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time></span>
+          {t('Gratis, sin registro y sin subir archivos a ningún servidor: el procesamiento ocurre en tu navegador')} ·
+          <span> {t('Actualizado el')} <time datetime={dateModified}>{new Date(`${dateModified}T00:00:00Z`).toLocaleDateString(en ? 'en-US' : 'es-ES', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}</time></span>
         </p>
       </div>
 
@@ -291,14 +322,14 @@ const graph = jsonLd({
       <slot />
 
       {/* "¿Y ahora?": aparece al descargar un resultado */}
-      <NextSteps steps={nextSteps} client:load />
+      <NextSteps steps={nextSteps} lang={lang} client:load />
 
       {/* Anuncio tras el resultado: el usuario acaba de terminar su tarea */}
       <AdSlot type="rectangle" />
 
       {related.length > 0 && (
         <section class="mt-20">
-          <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">Otras herramientas</h2>
+          <h2 class="text-xl font-bold text-[var(--color-text)] mb-5">{t('Otras herramientas')}</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {related.map(t => <ToolCard tool={t} client:load />)}
           </div>
@@ -313,7 +344,7 @@ const graph = jsonLd({
 
       {faqs && faqs.length > 0 && (
         <section class="mt-16">
-          <h2 class="text-2xl font-extrabold text-[var(--color-text)] mb-6">Preguntas frecuentes</h2>
+          <h2 class="text-2xl font-extrabold text-[var(--color-text)] mb-6">{t('Preguntas frecuentes')}</h2>
           <dl class="space-y-4">
             {faqs.map((faq) => (
               <div class="p-5 bg-white rounded-xl border border-[var(--color-border)]">
@@ -326,15 +357,16 @@ const graph = jsonLd({
       )}
     </main>
 
-    <Footer />
+    <Footer lang={lang} alternate={en ? `/${slug}` : enPath(slug) ?? undefined} />
 
     <script>
       import { installResultCapture } from '@/lib/utils/results';
       import { recordRecent } from '@/lib/utils/recent';
 
       installResultCapture();
+      // Recientes solo en español: el índice del buscador (y por tanto «Tus herramientas») es el español.
       const toolSlug = document.querySelector<HTMLElement>('[data-tool-slug]')?.dataset.toolSlug;
-      if (toolSlug) recordRecent(toolSlug);
+      if (toolSlug && document.documentElement.lang === 'es') recordRecent(toolSlug);
     </script>
   </body>
 </html>

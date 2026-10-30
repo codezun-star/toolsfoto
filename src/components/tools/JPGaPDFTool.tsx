@@ -5,6 +5,7 @@ import { formatBytes } from '@/lib/utils/format';
 import { X, ChevronUp, ChevronDown, ImagePlus } from 'lucide-react';
 import { revokeURL } from '@/lib/utils/canvas';
 import { toBlobPart } from '@/lib/utils/bytes';
+import { useT, withLang } from '@/i18n/react';
 
 type PageSize = 'a4' | 'letter' | 'auto';
 
@@ -17,7 +18,8 @@ const PAGE_DIMS: Record<Exclude<PageSize, 'auto'>, [number, number]> = {
   letter: [612, 792],
 };
 
-export default function JPGaPDFTool() {
+function JPGaPDFTool() {
+  const t = useT();
   const [images, setImages] = useState<ImgEntry[]>([]);
   const [pageSize, setPageSize] = useState<PageSize>('a4');
   const [loading, setLoading] = useState(false);
@@ -80,10 +82,10 @@ export default function JPGaPDFTool() {
 
       const out = await pdf.save({ useObjectStreams: true });
       const url = URL.createObjectURL(new Blob([toBlobPart(out)], { type: 'application/pdf' }));
-      const a = document.createElement('a'); a.href = url; a.download = 'imagenes.pdf'; a.click();
+      const a = document.createElement('a'); a.href = url; a.download = t('imagenes.pdf'); a.click();
       revokeURL(url);
     } catch {
-      setError('Error al crear el PDF. Intenta con otro formato de imagen.');
+      setError(t('Error al crear el PDF. Intenta con otro formato de imagen.'));
     } finally {
       setLoading(false);
     }
@@ -99,8 +101,8 @@ export default function JPGaPDFTool() {
         >
           <div className="p-3 rounded-xl bg-[var(--color-tools-bg)] text-[var(--color-tools-icon)]"><ImagePlus size={24} /></div>
           <div className="text-center">
-            <p className="font-semibold text-[var(--color-text)]">Añadir imágenes</p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-1">JPG, PNG, WebP · Múltiples archivos</p>
+            <p className="font-semibold text-[var(--color-text)]">{t('Añadir imágenes')}</p>
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">{t('JPG, PNG, WebP · Múltiples archivos')}</p>
           </div>
           <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden"
             onChange={(e) => { if (e.target.files) { addFiles(e.target.files); e.target.value = ''; } }} />
@@ -124,17 +126,17 @@ export default function JPGaPDFTool() {
 
       <div className="space-y-5">
         <div className="p-5 bg-white rounded-xl border border-[var(--color-border)] space-y-4">
-          <h2 className="font-bold text-[var(--color-text)]">Tamaño de página</h2>
+          <h2 className="font-bold text-[var(--color-text)]">{t('Tamaño de página')}</h2>
           <div className="grid grid-cols-3 gap-2">
             {(['a4', 'letter', 'auto'] as PageSize[]).map(s => (
               <button key={s} onClick={() => setPageSize(s)}
                 className={['py-2.5 rounded-lg text-xs font-medium border transition-colors', pageSize === s ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]' : 'bg-white text-[var(--color-text-secondary)] border-[var(--color-border)] hover:bg-[var(--color-bg)]'].join(' ')}>
-                {s === 'a4' ? 'A4' : s === 'letter' ? 'Carta' : 'Automático'}
+                {s === 'a4' ? 'A4' : s === 'letter' ? t('Carta') : t('Automático')}
               </button>
             ))}
           </div>
           <p className="text-xs text-[var(--color-text-muted)]">
-            {pageSize === 'auto' ? 'Cada página tendrá el tamaño de su imagen.' : `Todas las páginas serán tamaño ${pageSize.toUpperCase()}. La imagen se centra manteniendo la proporción.`}
+            {pageSize === 'auto' ? t('Cada página tendrá el tamaño de su imagen.') : t('Todas las páginas serán tamaño {s}. La imagen se centra manteniendo la proporción.', { s: pageSize === 'letter' ? t('Carta') : pageSize.toUpperCase() })}
           </p>
         </div>
 
@@ -144,10 +146,12 @@ export default function JPGaPDFTool() {
           onClick={handleCreate}
           disabled={images.length === 0 || loading}
           loading={loading}
-          label={`Crear PDF (${images.length} página${images.length !== 1 ? 's' : ''})`}
+          label={t(images.length === 1 ? 'Crear PDF ({n} página)' : 'Crear PDF ({n} páginas)', { n: images.length })}
           className="w-full"
         />
       </div>
     </div>
   );
 }
+
+export default withLang(JPGaPDFTool);

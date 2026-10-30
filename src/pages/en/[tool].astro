@@ -1,0 +1,85 @@
+---
+/**
+ * Herramientas en inglés: /en/<slug>. El contenido sale de
+ * `src/i18n/tools-en.ts` y el componente es el mismo que en español, con
+ * `lang="en"` (los componentes traducidos exportan `withLang(...)`).
+ */
+import ToolLayout from '@/components/layout/ToolLayout.astro';
+import CompressorTool from '@/components/tools/CompressorTool';
+import ResizerTool from '@/components/tools/ResizerTool';
+import CropperTool from '@/components/tools/CropperTool';
+import ConverterTool from '@/components/tools/ConverterTool';
+import BackgroundRemoverTool from '@/components/tools/BackgroundRemoverTool';
+import HeicAJpgTool from '@/components/tools/HeicAJpgTool';
+import PngAJpgTool from '@/components/tools/PngAJpgTool';
+import JpgAPngTool from '@/components/tools/JpgAPngTool';
+import WebpAJpgTool from '@/components/tools/WebpAJpgTool';
+import ImagenATextoTool from '@/components/tools/ImagenATextoTool';
+import MejorarCalidadImagenTool from '@/components/tools/MejorarCalidadImagenTool';
+import BorrarObjetosTool from '@/components/tools/BorrarObjetosTool';
+import BatchImageTool from '@/components/tools/BatchImageTool';
+import ComprimirPDFTool from '@/components/tools/ComprimirPDFTool';
+import UnirPDFsTool from '@/components/tools/UnirPDFsTool';
+import DividirPDFTool from '@/components/tools/DividirPDFTool';
+import PDFaJPGTool from '@/components/tools/PDFaJPGTool';
+import JPGaPDFTool from '@/components/tools/JPGaPDFTool';
+import PdfAWordTool from '@/components/tools/PdfAWordTool';
+import WordAPdfTool from '@/components/tools/WordAPdfTool';
+import PdfAExcelTool from '@/components/tools/PdfAExcelTool';
+import GenerarQRTool from '@/components/tools/GenerarQRTool';
+import FormatearJSONTool from '@/components/tools/FormatearJSONTool';
+import GeneradorContrasenasTool from '@/components/tools/GeneradorContrasenasTool';
+import ContadorPalabrasTool from '@/components/tools/ContadorPalabrasTool';
+import { EN_TOOLS, EN_BY_SLUG, type EnTool } from '@/i18n/tools-en';
+
+export function getStaticPaths() {
+  // Los enlaces internos de las secciones deben apuntar a páginas en inglés que existan.
+  for (const tool of EN_TOOLS) {
+    for (const section of tool.sections) {
+      for (const [, href] of section.body.matchAll(/href="\/en\/([^"#?]+)"/g)) {
+        if (!EN_BY_SLUG[href]) throw new Error(`[en/${tool.slug}] enlaza a /en/${href}, que no existe en tools-en.ts`);
+      }
+    }
+  }
+  return EN_TOOLS.map((tool) => ({ params: { tool: tool.slug }, props: { tool } }));
+}
+
+interface Props { tool: EnTool }
+const { tool } = Astro.props;
+const es = tool.es;
+---
+<ToolLayout slug={es} lang="en" answer={tool.answer} howTo={tool.howTo} faqs={tool.faqs}>
+  {es === 'comprimir' && <CompressorTool lang="en" client:load />}
+  {es === 'redimensionar' && <ResizerTool lang="en" client:load />}
+  {es === 'recortar' && <CropperTool lang="en" client:load />}
+  {es === 'convertir' && <ConverterTool lang="en" client:load />}
+  {es === 'eliminar-fondo' && <BackgroundRemoverTool lang="en" client:load />}
+  {es === 'heic-a-jpg' && <HeicAJpgTool lang="en" client:load />}
+  {es === 'png-a-jpg' && <PngAJpgTool lang="en" client:load />}
+  {es === 'jpg-a-png' && <JpgAPngTool lang="en" client:load />}
+  {es === 'webp-a-jpg' && <WebpAJpgTool lang="en" client:load />}
+  {es === 'imagen-a-texto' && <ImagenATextoTool lang="en" client:load />}
+  {es === 'mejorar-calidad-imagen' && <MejorarCalidadImagenTool lang="en" client:load />}
+  {es === 'borrar-objetos-foto' && <BorrarObjetosTool lang="en" client:load />}
+  {es === 'comprimir-varias-imagenes' && <BatchImageTool mode="compress" lang="en" client:load />}
+  {es === 'comprimir-pdf' && <ComprimirPDFTool lang="en" client:load />}
+  {es === 'unir-pdfs' && <UnirPDFsTool lang="en" client:load />}
+  {es === 'dividir-pdf' && <DividirPDFTool lang="en" client:load />}
+  {es === 'pdf-a-jpg' && <PDFaJPGTool lang="en" client:load />}
+  {es === 'jpg-a-pdf' && <JPGaPDFTool lang="en" client:load />}
+  {es === 'pdf-a-word' && <PdfAWordTool lang="en" client:load />}
+  {es === 'word-a-pdf' && <WordAPdfTool lang="en" client:load />}
+  {es === 'pdf-a-excel' && <PdfAExcelTool lang="en" client:load />}
+  {es === 'generar-qr' && <GenerarQRTool lang="en" client:load />}
+  {es === 'formatear-json' && <FormatearJSONTool lang="en" client:load />}
+  {es === 'generador-contrasenas' && <GeneradorContrasenasTool lang="en" client:load />}
+  {es === 'contador-palabras' && <ContadorPalabrasTool lang="en" client:load />}
+  <section class="mt-14 grid gap-8 sm:grid-cols-2">
+    {tool.sections.map((s) => (
+      <div>
+        <h2 class="text-lg font-extrabold text-[var(--color-text)] mb-3">{s.title}</h2>
+        <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed" set:html={s.body} />
+      </div>
+    ))}
+  </section>
+</ToolLayout>

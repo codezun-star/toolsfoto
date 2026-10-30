@@ -10,9 +10,11 @@
  *   pestañas inferior (`AppShell.astro`), por eso aquí ya no hay menú
  *   hamburguesa.
  */
-import { ChevronLeft, Search } from 'lucide-react';
+import { ChevronLeft, Search, Languages } from 'lucide-react';
 import { TOOL_BY_SLUG } from '@/lib/constants/tools';
 import { currentPath } from '@/lib/utils/path';
+import { translator, type Lang } from '@/i18n';
+import { EN_TOOLS } from '@/i18n/tools-en';
 
 interface Props {
   /** Página padre. El botón atrás vuelve en el historial si se llegó desde el
@@ -20,25 +22,46 @@ interface Props {
   back?: string;
   /** Título compacto que aparece en la barra móvil al desplazar la página. */
   title?: string;
+  lang?: Lang;
+  /** La misma página en el otro idioma (enlace «English» / «Español»). */
+  alternate?: string;
 }
 
-const { back, title } = Astro.props;
+const { back, title, lang = 'es', alternate } = Astro.props;
+const t = translator(lang);
+const en = lang === 'en';
 const path = currentPath(Astro.url.pathname);
 // En las páginas de herramienta se marca la categoría a la que pertenecen.
 const section = TOOL_BY_SLUG[path.slice(1)]?.domain ? `/${TOOL_BY_SLUG[path.slice(1)].domain}` : path;
 
-const NAV = [
-  { href: '/', label: 'Inicio' },
-  { href: '/imagen', label: 'Imágenes' },
-  { href: '/pdf', label: 'PDF' },
-  { href: '/video', label: 'Vídeo' },
-  { href: '/audio', label: 'Audio' },
-  { href: '/developer', label: 'Developer' },
-  { href: '/blog', label: 'Blog' },
-];
+const NAV = en
+  ? [
+      { href: '/en', label: 'Home' },
+      { href: '/en#image', label: 'Image' },
+      { href: '/en#pdf', label: 'PDF' },
+      { href: '/en#video', label: 'Video' },
+      { href: '/en#audio', label: 'Audio' },
+      { href: '/en#developer', label: 'Developer' },
+    ].filter((item) => {
+      // Solo las secciones que ya tienen herramientas traducidas.
+      const domain = { image: 'imagen', pdf: 'pdf', video: 'video', audio: 'audio', developer: 'developer' }[item.href.split('#')[1] ?? ''];
+      return !domain || EN_TOOLS.some((t) => TOOL_BY_SLUG[t.es]?.domain === domain);
+    })
+  : [
+      { href: '/', label: 'Inicio' },
+      { href: '/imagen', label: 'Imágenes' },
+      { href: '/pdf', label: 'PDF' },
+      { href: '/video', label: 'Vídeo' },
+      { href: '/audio', label: 'Audio' },
+      { href: '/developer', label: 'Developer' },
+      { href: '/blog', label: 'Blog' },
+    ];
+// En inglés no hay páginas de categoría: solo se marca «Home» en la portada.
+const enSection = path === '/en' ? '/en' : '';
 
 const isActive = (href: string) =>
-  href === '/' ? section === '/' : section === href || section.startsWith(`${href}/`);
+  en ? href === enSection
+    : href === '/' ? section === '/' : section === href || section.startsWith(`${href}/`);
 ---
 <header
   id="tf-header"
@@ -52,13 +75,13 @@ const isActive = (href: string) =>
           href={back}
           data-tf-back
           class="tf-press md:hidden -ml-2 mr-1 w-10 h-10 shrink-0 grid place-items-center rounded-full text-[var(--color-text)] active:bg-[var(--color-bg)]"
-          aria-label="Volver"
+          aria-label={t('Volver')}
         >
           <ChevronLeft size={26} strokeWidth={2.25} />
         </a>
       )}
       <div class="relative min-w-0 flex-1 h-10 flex items-center">
-        <a href="/" class="tf-header-logo shrink-0 leading-none hover:opacity-80 transition-opacity" aria-label="ToolsFoto, ir al inicio">
+        <a href={en ? '/en' : '/'} class="tf-header-logo shrink-0 leading-none hover:opacity-80 transition-opacity" aria-label={t('ToolsFoto, ir al inicio')}>
           <span class="text-[20px] font-extrabold tracking-tight" style="letter-spacing: -0.5px;">
             <span style="color: var(--color-text)">Tools</span><span style="color: #0BBFB0">Foto</span>
           </span>
@@ -72,7 +95,7 @@ const isActive = (href: string) =>
     </div>
 
     <!-- Nav de escritorio -->
-    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]" aria-label="Principal">
+    <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-[var(--color-text-secondary)]" aria-label={t('Principal')}>
       {NAV.map(item => (
         <a
           href={item.href}
@@ -83,20 +106,32 @@ const isActive = (href: string) =>
     </nav>
 
     <div class="flex items-center gap-1 md:gap-2 shrink-0">
+      {alternate && (
+        <a
+          href={alternate}
+          hreflang={en ? 'es' : 'en'}
+          lang={en ? 'es' : 'en'}
+          class="tf-press h-10 px-2.5 inline-flex items-center gap-1.5 rounded-full text-sm font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] transition-colors"
+          title={en ? 'Ver en español' : 'View in English'}
+        >
+          <Languages size={18} />
+          <span class="hidden sm:inline">{en ? 'Español' : 'English'}</span>
+        </a>
+      )}
       <button
         type="button"
         data-tf-search-open
         class="tf-press w-10 h-10 grid place-items-center rounded-full text-[var(--color-text)] md:text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg)] active:bg-[var(--color-bg)] transition-colors"
-        aria-label="Buscar herramientas"
-        title="Buscar herramientas (Ctrl + K)"
+        aria-label={t('Buscar herramientas')}
+        title={t('Buscar herramientas (Ctrl + K)')}
       >
         <Search size={21} strokeWidth={2.1} />
       </button>
       <a
-        href="/comprimir"
+        href={en ? '/en/compress-image' : '/comprimir'}
         class="hidden md:inline-flex px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white text-sm font-semibold hover:bg-[#C93D1E] transition-colors"
       >
-        Usar gratis
+        {t('Usar gratis')}
       </a>
     </div>
   </div>

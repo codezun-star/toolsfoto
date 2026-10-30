@@ -260,6 +260,22 @@ Para añadir un widget: entrada en `EMBEDS` con su altura natural y una rama en 
 
 ---
 
+## Versión en inglés (`/en`)
+
+| Pieza | Dónde vive | Qué hace |
+|---|---|---|
+| Traducción de la interfaz | `src/i18n/index.ts` (`translate`, `translator`, `LOCALE`) + `src/i18n/en.ts` (`EN`) | La **clave es la frase en español** tal cual: `t('Comprimir imagen')`. Variables con llaves: `t('Comprimir {n} imágenes', { n })`. Sin traducción se muestra el español (y avisa en `npm run dev`). |
+| Componentes React | `src/i18n/react.tsx` (`withLang`, `useT`, `useLang`) | Cada herramienta traducida exporta `withLang(Componente)` y usa `const t = useT()`. Uploaders, `DownloadButton` y `useImageUpload` leen el idioma del contexto: en español no cambian nada. Si el componente ya usa una variable `t` (p. ej. un texto), llamar al traductor `tr`. |
+| Contenido y SEO en inglés | `src/i18n/tools-en.ts` (`EN_TOOLS`) | Por herramienta: slug inglés, nombre, descripciones, título (≤ 70), meta description (70-160), respuesta directa, pasos, ≥ 5 FAQs, secciones y relacionadas (slugs españoles; solo se muestran las que tienen versión en inglés). |
+| Rutas | `src/pages/en/[tool].astro` + `src/pages/en/index.astro` | `/en/<slug>` y portada `/en` con secciones ancla (`#image`, `#pdf`…) que hacen de categorías. El build **falla** si una sección enlaza a una `/en/...` que no existe. |
+| Layout bilingüe | `ToolLayout`, `Header`, `Footer`, `AppShell` (prop `lang`) | `hreflang` es/en/x-default recíproco, `og:locale`, JSON-LD en inglés, selector de idioma («English» / «Español»), buscador con `/search-index-en.json`, pie y menú en inglés. Las secciones sin herramientas traducidas no se enlazan. Los anuncios se etiquetan «Advertisement» si `<html lang="en">`. |
+
+**Para traducir una herramienta más:** (1) envolver sus textos con `t()` y exportar `withLang(...)`; (2) añadir las frases a `en.ts` (las literales se comprueban buscando `t('...')`; las que se traducen en tiempo de ejecución —etiquetas de constantes, estados— hay que añadirlas a mano); (3) entrada en `EN_TOOLS`; (4) rama en `en/[tool].astro`; (5) build y comprobar la página en inglés en el navegador, usándola, porque muchos textos solo aparecen tras subir un archivo.
+
+**Recientes y favoritas** solo se registran en español (el índice de «Tus herramientas» es el español). Las páginas legales y el blog siguen solo en español: el pie en inglés las marca con «(ES)».
+
+---
+
 ## Estructura de carpetas
 
 ```
@@ -706,7 +722,7 @@ npm run preview  # Preview del build local
 ```
 
 El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar el directorio de output a `dist/`.
-**El build genera actualmente 357 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + widgets y /embed + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
+**El build genera actualmente 383 páginas HTML estáticas** (herramientas + home + categorías + legales + 404 + offline + compartir + widgets y /embed + blog index + artículos del blog). Al agregar una herramienta o un artículo, el contador sube en 1.
 
 ---
 
@@ -747,3 +763,4 @@ El build genera archivos estáticos en `dist/`. Para Cloudflare Pages, apuntar e
 | 2026-10-29 | **Fase 5 de crecimiento — cola larga.** +19 páginas con contenido propio servidas por `[landing].astro` desde `landings.ts`: comprimir imagen a 20/50/100/200/500 KB y 1 MB; fotos de documento (DNI España 26×32 mm, tamaño pasaporte 3,5×4,5 cm, tamaño infantil 2,5×3 cm, visa de EE. UU. 2×2 in con datos del DS-160, visado Schengen 35×45 mm, 4×4 cm); conversiones PNG→WebP, JPG→WebP, AVIF→JPG, AVIF→PNG, BMP→JPG, HEIC→PNG y MP3→WAV. Mejoras en los componentes base: `ComprimirObjetivoTool` reduce dimensiones cuando ni con calidad 0,3 alcanza el objetivo (antes se quedaba por encima o en calidad 1 %); `FotoCarnetTool` añade México, Canadá y China, corrige la etiqueta del pasaporte español (26×32, no 35×45) y genera una hoja de 10×15 cm con copias y guías de corte; `BatchImageTool` admite formato fijo. Verificado con Playwright: 20 KB exactos (420×524, calidad 37 %), hoja de 15 copias, BMP y AVIF reales convertidos. |
 | 2026-10-29 | **Fase 6 de crecimiento — developer.** Developer 43→52: `/formatear-yaml`, `/json-a-yaml`, `/yaml-a-json`, `/json-a-csv`, `/comparar-json` (diff estructural con rutas), `/curl-a-codigo` (fetch, axios, Node, Python, PHP), `/markdown-a-html` (GFM con vista previa aislada), `/decodificar-certificado` (X.509 con lector ASN.1 propio y huellas Web Crypto) y `/simulador-daltonismo` (Machado 2009). Nuevas dependencias `yaml` y `marked`; nuevos `CopyDownload.tsx` y `yaml-errors.ts`. Verificado con Playwright: huella SHA-256 idéntica a la de OpenSSL, SAN/EC/RSA leídos de certificados reales, el HTML con `onerror` no se ejecuta en la vista previa, cURL con -u/--data-urlencode/-X convertido correctamente. |
 | 2026-10-29 | **Fase 7 de crecimiento — backlinks.** (1) Widgets incrustables para 5 herramientas (`generar-qr`, `contador-palabras`, `contraste-color`, `generador-contrasenas`, `convertir-color`): páginas `/embed/*` (noindex, fuera del sitemap), bloque «Inserta esta herramienta en tu web» con enlace de atribución y altura automática, y catálogo indexable `/widgets` enlazado desde el pie. (2) Tres artículos de referencia citables: `tamanos-foto-carnet-por-pais`, `formatos-de-imagen-jpg-png-webp-avif-heic` y `tamanos-papel-en-pixeles` (tablas calculadas). Blog: 49→52 artículos. (3) Extensión de navegador Manifest V3 en `extension/` («Abrir en ToolsFoto» en el menú contextual de las imágenes); `incoming.ts` acepta su `postMessage` del mismo origen. Verificado con Playwright: widget incrustado desde otro origen con altura ajustada; extensión cargada en Chromium entregando a `/comprimir` una imagen de un origen sin CORS. 357 páginas. |
+| 2026-10-30 | **Fase 8 de crecimiento — versión en inglés (tanda 1).** Infraestructura i18n (`src/i18n/`: `translate`, `withLang`/`useT`, diccionario `en.ts` con clave española, contenido `tools-en.ts`) y layout bilingüe (`ToolLayout`, `Header`, `Footer`, `AppShell` y etiquetas de anuncios con `lang`; `hreflang` recíproco, selector de idioma, buscador `/search-index-en.json`, sección inglesa en `/llms.txt`). 25 herramientas en `/en/*` (comprimir, redimensionar, recortar, convertir, quitar fondo, HEIC/PNG/JPG/WebP, OCR, mejorar calidad, borrar objetos, lotes, comprimir/unir/dividir PDF, PDF↔JPG, PDF↔Word, PDF a Excel, QR, JSON, contraseñas y contador de palabras) y portada `/en`. Corregidos de paso 8 enlaces rotos en artículos antiguos del blog que apuntaban a herramientas inexistentes (`/unir-pdf`, `/extraer-audio-de-video`, `/generar-contrasena`…) y el recuento fijo «241 herramientas» del pie. Validado sobre el build: 0 enlaces internos rotos en las 384 páginas, 0 canónicas incorrectas, `hreflang` recíproco en las 52 páginas que lo llevan, 0 claves sin traducir y 0 textos en español en las páginas en inglés, también tras usar cada herramienta en Chromium. |
